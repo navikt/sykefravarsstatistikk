@@ -1,0 +1,38 @@
+# TODO Legg til caching
+
+defaults: &defaults
+  docker:
+    - image: circleci/node
+
+version: 2.1
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Installer avhengigheter
+          command: |
+            npm ci
+      - run:
+          name: Kjør enhetstester
+          command: npm run test
+      - run:
+          name: Bygg produksjonsversjon av React app
+          command: npm run build
+      - setup_remote_docker
+      - run:
+          name: Bygg Docker image
+          command: docker build -t "navikt/sykefravarsstatistikk:$CIRCLE_SHA1" .
+      - run:
+          name: Push Docker image
+          command: |
+            echo $DOCKER_PASSWORD | docker login --username $DOCKER_LOGIN --password-stdin
+            docker push "navikt/sykefravarsstatistikk:$CIRCLE_SHA1"
+            echo "Docker image: $CIRCLE_SHA1"
+
+workflows:
+  version: 2.1
+  bygg_og_deploy:
+    jobs:
+      - build
