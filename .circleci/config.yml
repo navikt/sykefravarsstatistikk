@@ -6,7 +6,7 @@ defaults: &defaults
 
 version: 2.1
 jobs:
-  build:
+  bygg:
     <<: *defaults
     steps:
       - checkout
@@ -31,9 +31,61 @@ jobs:
             docker push "navikt/sykefravarsstatistikk:$CIRCLE_SHA1"
             echo "Docker image: $CIRCLE_SHA1"
 
+  deploy-til-dev:
+    docker:
+      - image: 'navikt/deployment-cli:v0.3.0'
+    steps:
+      - deploy:
+          cluster: "dev-sbs"
+          nais-yaml: "dev-nais.yaml"
+
+  deploy-til-prod:
+    docker:
+      - image: 'navikt/deployment-cli:v0.3.0'
+    steps:
+      - deploy:
+          cluster: "prod-sbs"
+          nais-yaml: "prod-nais.yaml"
+
+commands:
+  deploy:
+    description: Deploy til et gitt miljø
+    parameters:
+      cluster:
+        type: string
+      nais-yaml:
+        type: string
+    steps:
+      - checkout
+      - run:
+          name: Deploy til << parameters.cluster >>
+          command: deployment-cli deploy create --cluster=<< parameters.cluster >> --repository=navikt/sykefravarsstatistikk --team=teamtag --resource=<< parameters.nais-yaml >> --version=$CIRCLE_SHA1 --ref=$CIRCLE_BRANCH
+
 workflows:
   version: 2.1
   bygg_og_deploy:
     jobs:
-      - build:
+      - bygg:
           context: NAIS deployment
+      - deploy-til-dev:
+          requires:
+            - bygg
+          filters:
+            branches:
+              only:
+                - master
+      - godkjenn-til-prod:
+          type: approval
+          requires:
+            - bygg
+          filters:
+            branches:
+              only:
+                - master
+      - deploy-til-prod:
+          requires:
+            - godkjenn-til-prod
+          filters:
+            branches:
+              only:
+                - master
