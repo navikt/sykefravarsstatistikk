@@ -1,0 +1,19 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+    name: sykefravarsstatistikk
+    namespace: default
+    labels:
+        team: teamtag
+spec:
+    image: navikt/sykefravarsstatistikk:123cc088892b94c52a6b2168520b89131f687514
+    team: teamtag
+    port: 3000
+    ingresses:
+        - https://arbeidsgiver-q.nav.no/sykefravarsstatistikk/
+    liveness:
+        path: /sykefravarsstatistikk/internal/isAlive
+        initialDelay: 20
+    readiness:
+        path: /sykefravarsstatistikk/internal/isReady
+        initialDelay: 20
