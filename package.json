@@ -2,6 +2,7 @@
   "name": "sykefravarsstatistikk",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/sykefravarsstatistikk",
   "dependencies": {
     "@craco/craco": "^5.4.0",
     "@types/jest": "24.0.18",
