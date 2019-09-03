@@ -10,6 +10,7 @@
     "@types/react": "16.9.2",
     "@types/react-dom": "16.9.0",
     "classnames": "^2.2.6",
+    "core-js": "^3.2.1",
     "craco-less": "^1.12.0",
     "lodash.throttle": "^4.1.1",
     "nav-frontend-chevron-style": "^0.3.5",
