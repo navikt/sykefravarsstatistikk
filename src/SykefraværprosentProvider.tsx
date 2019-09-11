@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FunctionComponent, useEffect, useState} from "react";
+import { FunctionComponent, useEffect, useState } from 'react';
 
 export type Sykefraværprosent = {
     land: number;
@@ -11,8 +11,10 @@ const defaultSykefraværprosent: Sykefraværprosent = {
 
 export const SykefraværprosentContext = React.createContext(defaultSykefraværprosent);
 
-export const SykefraværprosentProvider: FunctionComponent = (props)  => {
-    const [sykefraværState, setSykefraværState] = useState<Sykefraværprosent>(defaultSykefraværprosent);
+export const SykefraværprosentProvider: FunctionComponent = props => {
+    const [sykefraværState, setSykefraværState] = useState<Sykefraværprosent>(
+        defaultSykefraværprosent
+    );
 
     useEffect(() => {
         fetch('/api/sykefravarprosent')
@@ -24,8 +26,8 @@ export const SykefraværprosentProvider: FunctionComponent = (props)  => {
                 }
             })
             .then(response => response.json())
-            .then(json => setSykefraværState(json)
-            ).catch(console.log);
+            .then(json => setSykefraværState(json))
+            .catch(console.log);
     }, [setSykefraværState]);
 
     return (
