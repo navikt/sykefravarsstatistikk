@@ -28,10 +28,15 @@ const proxyConfig = {
     logLevel: 'debug', // TODO: fjern logLevel debug
 };
 
+
 if (envProperties.APIGW_HEADER) {
+    console.log(`[DEBUG] APIGW header har lengden: ${envProperties.APIGW_HEADER.length}`);
+    console.log("[DEBUG] legger til APIGW_HEADER header");
     proxyConfig.headers = {
         'x-nav-apiKey': envProperties.APIGW_HEADER,
     };
+} else {
+    console.log("[DEBUG] ingen APIGW_HEADER header");
 }
 
 const startServer = () => {
