@@ -1,12 +1,11 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-
 const proxy = require('http-proxy-middleware');
 
+const BASE_PATH = require('./paths');
 const DEFAULT_PORT = 3000;
 const PORT = process.env.PORT || DEFAULT_PORT;
-const BASE_PATH = '/sykefravarsstatistikk';
 
 const buildPath = path.join(__dirname, '../../build');
 
@@ -15,13 +14,20 @@ const envProperties = {
     APIGW_HEADER: process.env.APIGW_HEADER,
 };
 
+const API_PATH = `${BASE_PATH}/api`;
+const TARGET_PATH = '/sykefravarsstatistikk-api';
+const TARGET = `${envProperties.API_GATEWAY}`;
+
+
 const proxyConfig = {
+    target: TARGET,
     changeOrigin: true,
-    pathRewrite: { '/api': '/sykefravarsstatistikk-api' },
-    target: envProperties.API_GATEWAY,
+    pathRewrite: (path, req) => path.replace(API_PATH, TARGET_PATH),
     secure: true,
     xfwd: true,
+    logLevel: 'debug', // TODO: fjern logLevel debug
 };
+
 
 if (envProperties.APIGW_HEADER) {
     proxyConfig.headers = {
@@ -30,12 +36,17 @@ if (envProperties.APIGW_HEADER) {
 }
 
 const startServer = () => {
+    app.use(BASE_PATH, express.static(buildPath));
+
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
 
-    app.use('/api/sykefravarprosent', proxy(proxyConfig));
-
-    app.use(BASE_PATH, express.static(buildPath));
+    app.use(
+        proxy(
+            API_PATH,
+            proxyConfig
+        )
+    );
 
     app.use(BASE_PATH, (_, res) => {
         res.sendFile(path.resolve(buildPath, 'index.html'));

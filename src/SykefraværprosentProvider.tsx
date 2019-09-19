@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FunctionComponent, useEffect, useState } from 'react';
+import BASE_PATH from './server/paths';
 
 export type Sykefraværprosent = {
     land: number;
@@ -8,6 +9,7 @@ export type Sykefraværprosent = {
 const defaultSykefraværprosent: Sykefraværprosent = {
     land: 0.0,
 };
+const SYKEFRAVARPROSENT_PATH = `${BASE_PATH}/api/sykefravarprosent`;
 
 export const SykefraværprosentContext = React.createContext(defaultSykefraværprosent);
 
@@ -17,7 +19,7 @@ export const SykefraværprosentProvider: FunctionComponent = props => {
     );
 
     useEffect(() => {
-        fetch('/api/sykefravarprosent')
+        fetch(SYKEFRAVARPROSENT_PATH)
             .then(response => {
                 if (response.ok) {
                     return response;
