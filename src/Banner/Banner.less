@@ -1,0 +1,25 @@
+@import '~nav-frontend-core/less/_variabler';
+
+.banner {
+  height: 7.5rem;
+  background-color: @navBlaLighten80;
+  border-bottom: 0.2rem solid @navBlaLighten60;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+
+  &__innhold {
+    margin: 0 auto;
+    max-width: @screen-sm-min;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+}
+
+@media (min-width: @screen-sm-min) {
+  .banner {
+    height: 11rem;
+  }
+}
