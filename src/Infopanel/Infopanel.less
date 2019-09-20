@@ -1,0 +1,21 @@
+@import '../variables';
+
+.infopanel {
+  border: 2px solid @navBlaLighten60;
+  padding: 2rem 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  &__overskrift {
+    margin-bottom: 1.5rem;
+  }
+
+  &__tekst-wrapper {
+  }
+
+  @media(min-width: @screen-sm-min) {
+    padding: 2rem 3rem;
+    flex-direction: row-reverse;
+  }
+}
