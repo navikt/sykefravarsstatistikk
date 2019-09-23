@@ -3,11 +3,13 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import BASE_PATH from './server/paths';
 
 export type Sykefraværprosent = {
+    kvartal: number;
     land: number;
 };
 
 const defaultSykefraværprosent: Sykefraværprosent = {
-    land: 0.0,
+    kvartal: 1,
+    land: 0.0
 };
 const SYKEFRAVARPROSENT_PATH = `${BASE_PATH}/api/sykefravarprosent`;
 
