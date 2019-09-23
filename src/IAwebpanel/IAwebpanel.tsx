@@ -17,7 +17,12 @@ const IAwebpanel: React.FunctionComponent = () => {
                         I IA-web kan du se flere detaljer om sykefraværet til virksomheten
                     </Normaltekst>
                 </div>
-                <a href="http://localhost:3000/sykefravarsstatistikk/">Gå til IA-web</a>
+                <a
+                    href="https://www.altinn.no/Pages/ServiceEngine/Start/StartService.aspx?ServiceEditionCode=2&ServiceCode=3403&Oselect=true&M=SP"
+                    className="lenke"
+                >
+                    Gå til IA-web
+                </a>
             </div>
         </PanelBase>
     );
