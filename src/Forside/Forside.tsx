@@ -1,15 +1,15 @@
-import * as React from "react";
-import Infopanel from "../Infopanel/Infopanel";
-import "./Forside.less";
+import * as React from 'react';
+import Infopanel from '../Infopanel/Infopanel';
+import './Forside.less';
+import IAwebpanel from '../IAwebpanel/IAwebpanel';
 
-const Forside : React.FunctionComponent = () => {
-
+const Forside: React.FunctionComponent = () => {
     return (
         <div className="forside">
-            <Infopanel/>
+            <Infopanel />
+            <IAwebpanel />
         </div>
     );
-
-}
+};
 
 export default Forside;
