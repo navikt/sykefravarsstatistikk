@@ -8,7 +8,7 @@ import illustrasjon from './forst-rrelse.svg';
 const Infopanel: React.FunctionComponent = () => {
     return (
         <PanelBase className="infopanel">
-            <img src={illustrasjon} alt="" />
+            <img src={illustrasjon} alt="" className="infopanel__illustrasjon"/>
             <div className="infopanel__tekst-wrapper">
                 <Systemtittel className="infopanel__overskrift" tag="h2">
                     Se statistikk om virksomhetens sykefravær

@@ -11,11 +11,20 @@
         margin-bottom: 1.5rem;
     }
 
-    &__tekst-wrapper {
-    }
-
     @media (min-width: @screen-sm-min) {
         padding: 2rem 3rem;
         flex-direction: row-reverse;
+        position: relative;
+
+        &__tekst-wrapper {
+            margin-right: 4rem;
+        }
+
+        &__illustrasjon {
+            position: absolute;
+            bottom: 0;
+            right: 2rem;
+
+        }
     }
 }
