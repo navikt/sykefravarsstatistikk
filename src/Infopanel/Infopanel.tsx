@@ -3,7 +3,7 @@ import PanelBase from 'nav-frontend-paneler';
 import './Infopanel.less';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 
-import illustrasjon from './forst-rrelse.svg';
+import illustrasjon from './Forstørrelse.svg';
 
 const Infopanel: React.FunctionComponent = () => {
     return (
