@@ -9,7 +9,7 @@ export type Sykefraværprosent = {
 
 const defaultSykefraværprosent: Sykefraværprosent = {
     kvartal: 1,
-    land: 0.0
+    land: 5.5
 };
 const SYKEFRAVARPROSENT_PATH = `${BASE_PATH}/api/sykefravarprosent`;
 

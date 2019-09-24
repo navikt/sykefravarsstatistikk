@@ -3,17 +3,12 @@ import Infopanel from '../Infopanel/Infopanel';
 import './Forside.less';
 import IAwebpanel from '../IAwebpanel/IAwebpanel';
 import Legemeldtsykefravarpanel from '../Legemeldtsykefravarpanel/Legemeldtsykefravarpanel';
-import { Sykefraværprosent } from '../SykefraværprosentProvider';
 
-
-const Forside: React.FunctionComponent<Sykefraværprosent> = sykefraværprosent => {
+const Forside: React.FunctionComponent = () => {
     return (
         <div className="forside">
             <Infopanel />
-            <Legemeldtsykefravarpanel
-                kvartal={sykefraværprosent.kvartal}
-                land={sykefraværprosent.land}
-            />
+            <Legemeldtsykefravarpanel />
             <IAwebpanel />
         </div>
     );
