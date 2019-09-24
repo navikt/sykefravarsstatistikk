@@ -7,7 +7,7 @@ import illustrasjon from './sort.svg';
 const IAwebpanel: React.FunctionComponent = () => {
     return (
         <PanelBase className="iawebpanel">
-            <img src={illustrasjon} alt="" />
+            <img src={illustrasjon} alt="" className="iawebpanel__illustrasjon"/>
             <div className="iawebpanel__tekst-wrapper">
                 <div className="iawebpanel__overskrift">
                     <Systemtittel className="iawebpanel__overskrift" tag="h2">
