@@ -1,15 +1,16 @@
 import React, { FunctionComponent, useContext } from 'react';
 import PanelBase from 'nav-frontend-paneler';
 import './Legemeldtsykefravarpanel.less';
-import { Systemtittel } from 'nav-frontend-typografi';
-import { Sykefraværprosent, SykefraværprosentContext } from './../SykefraværprosentProvider';
+import {Normaltekst, Systemtittel} from 'nav-frontend-typografi';
+import {SammenligningContext, Sammenligning} from '../SammenligningProvider';
 
 const Legemeldtsykefravarpanel: FunctionComponent = () => {
-    const sykefraværprosent: Sykefraværprosent = useContext(SykefraværprosentContext);
+    const sammenligning: Sammenligning = useContext(SammenligningContext);
     return (
         <PanelBase className="legemeldtsykefravarpanel">
             <div className="legemeldtsykefravarpanel__tekst-wrapper">
-                <Systemtittel>Legemeldt sykefravær i {sykefraværprosent.kvartal}. kvartal</Systemtittel>
+                <Systemtittel>Legemeldt sykefravær i {sammenligning.kvartal}. kvartal {sammenligning.år}</Systemtittel>
+                <Normaltekst>{sammenligning.land.prosent}% {sammenligning.land.label}</Normaltekst>
             </div>
         </PanelBase>
     );

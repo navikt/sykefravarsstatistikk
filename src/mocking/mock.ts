@@ -1,4 +1,4 @@
 import fetchMock from 'fetch-mock';
-import sykefravarsprosent from './sykefravarsprosent.json';
+import sykefravarsprosent from './sammenligning.json';
 
 fetchMock.get("/sykefravarsstatistikk/api/sykefravarprosent", sykefravarsprosent);

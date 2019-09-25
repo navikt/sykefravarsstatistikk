@@ -1,0 +1,20 @@
+{
+  "kvartal": 2,
+  "år": 2019,
+  "land": {
+    "label": "Norge",
+    "prosent": 5.5
+  },
+  "sektor": {
+    "label": "Privat og offentlig næringsvirksomhet",
+    "prosent": 4.1
+  },
+  "næring": {
+    "label": "Tjenester tilknyttet informasjonsteknologi",
+    "prosent": 3.8
+  },
+  "virksomhet": {
+    "label": "Fisk og fugl AS",
+    "prosent": 4.7
+  }
+}
