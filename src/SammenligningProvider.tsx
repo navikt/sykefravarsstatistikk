@@ -6,6 +6,9 @@ export type Sammenligning = {
     kvartal: number;
     år: number;
     land: Sykefraværprosent;
+    sektor: Sykefraværprosent;
+    næring: Sykefraværprosent;
+    virksomhet: Sykefraværprosent;
 };
 
 export type Sykefraværprosent = {
@@ -13,6 +16,9 @@ export type Sykefraværprosent = {
     prosent: number;
 };
 
+const defaultSykefraværprosent: Sykefraværprosent = {
+    label: '', prosent: 0.0
+};
 const defaultSammenligning: Sammenligning = {
     kvartal: 1,
     år: 2019,
@@ -20,6 +26,9 @@ const defaultSammenligning: Sammenligning = {
         label: 'Norge',
         prosent: 0.0,
     },
+    sektor: defaultSykefraværprosent,
+    næring: defaultSykefraværprosent,
+    virksomhet: defaultSykefraværprosent
 };
 const SYKEFRAVARPROSENT_PATH = `${BASE_PATH}/api/sykefravarprosent`;
 
