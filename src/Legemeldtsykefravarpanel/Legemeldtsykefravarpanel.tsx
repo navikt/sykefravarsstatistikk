@@ -4,6 +4,7 @@ import './Legemeldtsykefravarpanel.less';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Sammenligning, SammenligningContext } from '../SammenligningProvider';
 import Sykefravarsprosentpanel from './Sykefravarsprosentpanel/Sykefravarsprosentpanel';
+import Lesmeriawebpanel from './Lesmeriawebpanel/Lesemeriawevpanel';
 
 const Legemeldtsykefravarpanel: FunctionComponent = () => {
     const sammenligning: Sammenligning = useContext(SammenligningContext);
@@ -30,6 +31,13 @@ const Legemeldtsykefravarpanel: FunctionComponent = () => {
                     prosent={sammenligning.land.prosent}
                 ></Sykefravarsprosentpanel>
 
+                <Lesmeriawebpanel åpneLabel="Hvordan beregnes disse tallene?" lukkLabel="Lukk">
+                    <div className="lesmeriawebpanel__innhold">
+                        Hovedkildene for sykefravær på web er sykefraværsregisteret, A-ordningen og
+                        Enhetsregistret. Enhetsregistret fra Statistisk Sentralbyrå inneholder
+                        organisasjonsstrukturen for alle bedriftene.
+                    </div>
+                </Lesmeriawebpanel>
             </div>
         </PanelBase>
     );
