@@ -1,0 +1,26 @@
+@import '../../variables';
+
+.iawebpanel {
+    margin-top: 1.5rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+
+    &__overskrift {
+        margin-bottom: 1rem;
+    }
+
+    &__illustrasjon {
+        margin-bottom: 1rem;
+    }
+
+
+    @media (min-width: @screen-sm-min) {
+        flex-direction: row;
+
+        &__tekst-wrapper {
+            margin-left: 2rem;
+        }
+
+    }
+}
