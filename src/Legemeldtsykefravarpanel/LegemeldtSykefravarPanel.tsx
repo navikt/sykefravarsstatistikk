@@ -3,8 +3,8 @@ import PanelBase from 'nav-frontend-paneler';
 import './LegemeldtSykefravarPanel.less';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Sammenligning, SammenligningContext } from '../SammenligningProvider';
-import Sykefravarsprosentpanel from './Sykefravarsprosentpanel/Sykefravarsprosentpanel';
 import Lesmeriawebpanel from './Lesmeriawebpanel/Lesemeriawevpanel';
+import Sykefraværsprosentpanel from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 
 const LegemeldtSykefravarPanel: FunctionComponent = () => {
     const sammenligning: Sammenligning = useContext(SammenligningContext);
@@ -14,19 +14,19 @@ const LegemeldtSykefravarPanel: FunctionComponent = () => {
                 <Systemtittel className="legemeldtsykefravarpanel__overskrift">
                     Legemeldt sykefravær i {sammenligning.kvartal}. kvartal {sammenligning.år}
                 </Systemtittel>
-                <Sykefravarsprosentpanel
+                <Sykefraværsprosentpanel
                     label={sammenligning.virksomhet.label}
                     prosent={sammenligning.virksomhet.prosent}
                 />
-                <Sykefravarsprosentpanel
+                <Sykefraværsprosentpanel
                     label={sammenligning.næring.label}
                     prosent={sammenligning.næring.prosent}
                 />
-                <Sykefravarsprosentpanel
+                <Sykefraværsprosentpanel
                     label={sammenligning.sektor.label}
                     prosent={sammenligning.sektor.prosent}
                 />
-                <Sykefravarsprosentpanel
+                <Sykefraværsprosentpanel
                     label={sammenligning.land.label}
                     prosent={sammenligning.land.prosent}
                 />
