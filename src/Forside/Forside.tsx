@@ -2,13 +2,13 @@ import * as React from 'react';
 import Infopanel from '../Infopanel/Infopanel';
 import './Forside.less';
 import IAwebpanel from '../IAwebpanel/IAwebpanel';
-import Legemeldtsykefravarpanel from '../Legemeldtsykefravarpanel/Legemeldtsykefravarpanel';
+import LegemeldtSykefravarPanel from '../Legemeldtsykefravarpanel/LegemeldtSykefravarPanel';
 
 const Forside: React.FunctionComponent = () => {
     return (
         <div className="forside">
             <Infopanel />
-            <Legemeldtsykefravarpanel />
+            <LegemeldtSykefravarPanel />
             <IAwebpanel />
         </div>
     );

@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useContext } from 'react';
 import PanelBase from 'nav-frontend-paneler';
-import './Legemeldtsykefravarpanel.less';
+import './LegemeldtSykefravarPanel.less';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { Sammenligning, SammenligningContext } from '../SammenligningProvider';
 import Sykefravarsprosentpanel from './Sykefravarsprosentpanel/Sykefravarsprosentpanel';
 import Lesmeriawebpanel from './Lesmeriawebpanel/Lesemeriawevpanel';
 
-const Legemeldtsykefravarpanel: FunctionComponent = () => {
+const LegemeldtSykefravarPanel: FunctionComponent = () => {
     const sammenligning: Sammenligning = useContext(SammenligningContext);
     return (
         <PanelBase className="legemeldtsykefravarpanel">
@@ -17,19 +17,19 @@ const Legemeldtsykefravarpanel: FunctionComponent = () => {
                 <Sykefravarsprosentpanel
                     label={sammenligning.virksomhet.label}
                     prosent={sammenligning.virksomhet.prosent}
-                ></Sykefravarsprosentpanel>
+                />
                 <Sykefravarsprosentpanel
                     label={sammenligning.næring.label}
                     prosent={sammenligning.næring.prosent}
-                ></Sykefravarsprosentpanel>
+                />
                 <Sykefravarsprosentpanel
                     label={sammenligning.sektor.label}
                     prosent={sammenligning.sektor.prosent}
-                ></Sykefravarsprosentpanel>
+                />
                 <Sykefravarsprosentpanel
                     label={sammenligning.land.label}
                     prosent={sammenligning.land.prosent}
-                ></Sykefravarsprosentpanel>
+                />
 
                 <Lesmeriawebpanel åpneLabel="Hvordan beregnes disse tallene?" lukkLabel="Lukk">
                     <div className="lesmeriawebpanel__innhold">
@@ -43,4 +43,4 @@ const Legemeldtsykefravarpanel: FunctionComponent = () => {
     );
 };
 
-export default Legemeldtsykefravarpanel;
+export default LegemeldtSykefravarPanel;

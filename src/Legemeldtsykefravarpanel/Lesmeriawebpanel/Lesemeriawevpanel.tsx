@@ -1,7 +1,7 @@
 import * as React from "react";
-import InfoToggler from "./InfoToggler";
+import InfoToggler from "./InfoToggler/InfoToggler";
 import {Normaltekst} from "nav-frontend-typografi";
-import EkspanderbartInnhold from './EkspanderbartInnhold';
+import EkspanderbartInnhold from './EkspanderbartInnhold/EkspanderbartInnhold';
 import { useState } from 'react';
 import './lesmeriawebpanel.less';
 
