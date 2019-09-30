@@ -1,4 +1,4 @@
-import {formaterProsent} from "./Sykefravarsprosentpanel";
+import {formaterProsent} from "./Sykefraværsprosentpanel";
 
 it('formater tall med komma i stedet for punktum', () => {
     expect(formaterProsent(99.9)).toEqual('99,9');
