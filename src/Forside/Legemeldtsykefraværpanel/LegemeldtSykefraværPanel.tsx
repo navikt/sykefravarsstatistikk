@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useContext } from 'react';
 import PanelBase from 'nav-frontend-paneler';
-import './LegemeldtSykefravarPanel.less';
+import './LegemeldtSykefraværPanel.less';
 import { Systemtittel } from 'nav-frontend-typografi';
-import { Sammenligning, SammenligningContext } from '../SammenligningProvider';
 import Lesmeriawebpanel from './Lesmeriawebpanel/Lesemeriawevpanel';
 import Sykefraværsprosentpanel from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
+import { Sammenligning, SammenligningContext } from '../../SammenligningProvider';
 
-const LegemeldtSykefravarPanel: FunctionComponent = () => {
+const LegemeldtSykefraværPanel: FunctionComponent = () => {
     const sammenligning: Sammenligning = useContext(SammenligningContext);
     return (
         <PanelBase className="legemeldtsykefravarpanel">
@@ -43,4 +43,4 @@ const LegemeldtSykefravarPanel: FunctionComponent = () => {
     );
 };
 
-export default LegemeldtSykefravarPanel;
+export default LegemeldtSykefraværPanel;

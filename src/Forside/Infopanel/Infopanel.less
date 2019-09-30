@@ -1,27 +1,27 @@
-@import '../variables';
+@import '../../variables';
 
-.iawebpanel {
-    margin-top: 1.5rem;
+.infopanel {
+    border: 2px solid @navBlaLighten60;
     padding: 2rem 2rem;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
 
     &__overskrift {
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
     }
 
     &__illustrasjon {
         margin-bottom: 1rem;
     }
 
-
     @media (min-width: @screen-sm-min) {
         padding: 2rem 2rem;
-        flex-direction: row;
+        flex-direction: row-reverse;
+        position: relative;
 
         &__tekst-wrapper {
-            margin-left: 2rem;
+            margin-right: 2rem;
         }
-
     }
 }

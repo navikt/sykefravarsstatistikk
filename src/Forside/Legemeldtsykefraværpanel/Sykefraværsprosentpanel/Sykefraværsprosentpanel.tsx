@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
-import './Sykefravarsprosentpanel.less';
+import './Sykefraværsprosentpanel.less';
 
 interface Props {
     label: string;
