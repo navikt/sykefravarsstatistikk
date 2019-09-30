@@ -5,15 +5,10 @@ import { Collapse } from 'react-collapse';
 import './ekspanderbartInnhold.less';
 
 export interface Props {
-    /** Innholdet som skal vises */
     children: React.ReactNode;
-    /** Overstyre state for om den skal vises eller ikke */
     erApen?: boolean;
-    /** Default off */
     ariaLive?: 'assertive' | 'polite' | 'off';
-    /** Om skjul/vis skal animeres. Default true */
     animert?: boolean;
-    /** Om noe av innholdet er ekspandertbart */
     harEkspanderbartInnhold?: boolean;
 }
 
