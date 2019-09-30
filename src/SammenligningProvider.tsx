@@ -30,7 +30,7 @@ const defaultSammenligning: Sammenligning = {
     næring: defaultSykefraværprosent,
     virksomhet: defaultSykefraværprosent
 };
-const SYKEFRAVARPROSENT_PATH = `${BASE_PATH}/api/sykefravarprosent`;
+const SAMMENLIGNING_PATH = `${BASE_PATH}/api/sammenligning`;
 
 export const SammenligningContext = React.createContext(defaultSammenligning);
 
@@ -40,7 +40,7 @@ export const SammenligningProvider: FunctionComponent = props => {
     );
 
     useEffect(() => {
-        fetch(SYKEFRAVARPROSENT_PATH)
+        fetch(SAMMENLIGNING_PATH)
             .then(response => {
                 if (response.ok) {
                     return response;
