@@ -15,7 +15,7 @@ const Lesmeriawebpanel : React.FunctionComponent<Props> = ({ åpneLabel, lukkLab
     const [åpen, setÅpen] = useState<boolean>(false);
 
     return (
-        <div className={'lesmeriawebpanel'}>
+        <div className="lesmeriawebpanel">
             <div className="lesmeriawebpanel__toggler">
                 <InfoToggler onToggle={() => setÅpen(!åpen)} åpen={åpen}>
                     <Normaltekst tag="span">{åpen ? lukkLabel : åpneLabel}</Normaltekst>
