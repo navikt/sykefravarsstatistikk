@@ -6,9 +6,11 @@
   "dependencies": {
     "@craco/craco": "^5.4.0",
     "@navikt/bedriftsmeny": "^1.0.11",
+    "@types/classnames": "^2.2.9",
     "@types/jest": "24.0.18",
     "@types/node": "12.7.3",
     "@types/react": "16.9.2",
+    "@types/react-collapse": "^4.0.2",
     "@types/react-dom": "16.9.0",
     "@types/react-router-dom": "^5.1.0",
     "classnames": "^2.2.6",

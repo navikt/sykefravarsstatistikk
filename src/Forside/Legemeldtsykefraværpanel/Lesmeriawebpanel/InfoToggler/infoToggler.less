@@ -1,0 +1,26 @@
+@import '../../../../variables.less';
+
+.infoToggler {
+    border: none;
+    background: transparent;
+    padding: 0;
+    align-self: start;
+    color: @navBla;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 3px #254b6d;
+    }
+
+    &__label  {
+        text-decoration: underline;
+        margin-right: 0.5rem;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}

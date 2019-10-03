@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
-import './Sykefravarsprosentpanel.less';
+import './Sykefraværsprosentpanel.less';
 
 interface Props {
     label: string;
@@ -14,7 +14,7 @@ export const formaterProsent = (prosent: number): string => {
         .replace('.', ',');
 };
 
-const Sykefravarsprosentpanel: React.FunctionComponent<Props> = props => {
+const Sykefraværsprosentpanel: React.FunctionComponent<Props> = props => {
     return (
         <div className="sykefravarsprosentpanel">
             <Element>{formaterProsent(props.prosent)}&nbsp;%</Element>
@@ -23,4 +23,4 @@ const Sykefravarsprosentpanel: React.FunctionComponent<Props> = props => {
     );
 };
 
-export default Sykefravarsprosentpanel;
+export default Sykefraværsprosentpanel;
