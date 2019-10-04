@@ -5,7 +5,7 @@ import { SammenligningProvider } from './SammenligningProvider';
 import Banner from './Banner/Banner';
 import Forside from './Forside/Forside';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { OrganisasjonstreProvider } from './OrganisasjonstreProvider';
+import { OrganisasjonstreProvider } from './OrganisasjonstreProvider/OrganisasjonstreProvider';
 
 const App: React.FC = () => {
     return (

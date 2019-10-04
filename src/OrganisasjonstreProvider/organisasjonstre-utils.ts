@@ -1,6 +1,3 @@
-import * as React from 'react';
-import { FunctionComponent, useEffect, useState } from 'react';
-
 export interface AltinnOrganisasjon {
     Name: string;
     Type: string;
@@ -10,7 +7,7 @@ export interface AltinnOrganisasjon {
     ParentOrganizationNumber: string | null;
 }
 
-interface Organisasjon {
+export interface Organisasjon {
     navn: string;
     orgnr: string;
     harTilgang?: boolean; // TODO Denne er kanskje relevant
@@ -22,12 +19,6 @@ interface JuridiskEnhetMedUnderenheter {
 }
 
 export type Organisasjonstre = JuridiskEnhetMedUnderenheter[];
-
-const defaultOrganisasjonstre: Organisasjonstre = [];
-
-export const OrganisasjonstreContext = React.createContext<Organisasjonstre>(
-    defaultOrganisasjonstre
-);
 
 const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (): Promise<AltinnOrganisasjon[]> => {
     // TODO Feilhåndtering
@@ -66,17 +57,18 @@ const plukkUtJuridiskeEnheter = (
     return altinnOrganisasjoner.filter(org => org.Type === 'Enterprise');
 };
 
-const mapTilOrganisasjoner = (altinnOrganisasjoner: AltinnOrganisasjon[]): Organisasjon[] => {
-    return altinnOrganisasjoner.map(altinnOrganisasjon => {
-        const org: Organisasjon = {
-            navn: altinnOrganisasjon.Name,
-            orgnr: altinnOrganisasjon.OrganizationNumber,
-        };
-        return org;
-    });
+const mapTilOrganisasjon = (
+    altinnOrganisasjon: AltinnOrganisasjon,
+    harTilgang: boolean
+): Organisasjon => {
+    return {
+        navn: altinnOrganisasjon.Name,
+        orgnr: altinnOrganisasjon.OrganizationNumber,
+        harTilgang: harTilgang,
+    };
 };
 
-export const finnOrgnumreTilJuridiskeEnheterSomBrukerIkkeHarTilgangTil = (
+export const finnOrgnumreTilManglendeJuridiskeEnheter = (
     altinnOrganisasjoner: AltinnOrganisasjon[]
 ): string[] => {
     const orgnumreBrukerHarTilgangTil = altinnOrganisasjoner.map(org => org.OrganizationNumber);
@@ -97,49 +89,53 @@ export const finnOrgnumreTilJuridiskeEnheterSomBrukerIkkeHarTilgangTil = (
     return fjernDupliserteOrgnumre(juridiskeEnheterBrukerIkkeHarTilgangTil);
 };
 
-const genererOrganisasjonstre = async (
+const hentManglendeJuridiskeEnheter = async (
     altinnOrganisasjoner: AltinnOrganisasjon[]
-): Promise<Organisasjonstre> => {
-    const orgnrUtenTilgang: string[] = finnOrgnumreTilJuridiskeEnheterSomBrukerIkkeHarTilgangTil(
+): Promise<Organisasjon[]> => {
+    const manglendeOrgnumre: string[] = finnOrgnumreTilManglendeJuridiskeEnheter(
         altinnOrganisasjoner
     );
-    const juridiskeEnheterUtenTilgang = await hentJuridiskeEnheter(orgnrUtenTilgang);
-    const alleJuridiskeEnheter: Organisasjon[] = [
-        ...mapTilOrganisasjoner(plukkUtJuridiskeEnheter(altinnOrganisasjoner)),
-        ...juridiskeEnheterUtenTilgang,
-    ];
-
-    return alleJuridiskeEnheter.map(juridiskEnhet => {
-        const underenheter = altinnOrganisasjoner.filter(
-            altinnOrganisasjon =>
-                altinnOrganisasjon.ParentOrganizationNumber === juridiskEnhet.orgnr
-        );
-        console.log(`juridisk enhet ${juridiskEnhet.orgnr} med underenheter ${underenheter.map(org=>org.OrganizationNumber)}`);
-        const juridiskEnhetMedUnderenheter: JuridiskEnhetMedUnderenheter = {
-            juridiskEnhet: juridiskEnhet,
-            underenheter: mapTilOrganisasjoner(underenheter),
-        };
-        return juridiskEnhetMedUnderenheter;
-    });
+    return await hentJuridiskeEnheter(manglendeOrgnumre);
 };
 
-export const OrganisasjonstreProvider: FunctionComponent = props => {
-    const [organisasjonstre, setOrganisasjonstre] = useState<Organisasjonstre>(
-        defaultOrganisasjonstre
+export const mapTilOrganisasjonstre = (
+    altinnOrganisasjoner: AltinnOrganisasjon[],
+    manglendeJuridiskeEnheter: Organisasjon[]
+): Organisasjonstre => {
+    const juridiskeEnheterMedTilgang = plukkUtJuridiskeEnheter(altinnOrganisasjoner).map(
+        altinnOrganisasjon => mapTilOrganisasjon(altinnOrganisasjon, true)
     );
 
-    useEffect(() => {
-        hentAltinnOrganisasjonerBrukerHarTilgangTil()
-            .then(organisasjoner => genererOrganisasjonstre(organisasjoner))
-            .then(organisasjonstre => {
-                console.log(organisasjonstre);
-                setOrganisasjonstre(organisasjonstre);
-            });
-    }, []);
+    const juridiskeEnheterUtenTilgang = manglendeJuridiskeEnheter.map(org => {
+        return { ...org, harTilgang: false };
+    });
 
-    return (
-        <OrganisasjonstreContext.Provider value={organisasjonstre}>
-            {props.children}
-        </OrganisasjonstreContext.Provider>
-    );
+    const hentUnderenheterTilhørendeJuridiskEnhet = (
+        juridiskEnhet: Organisasjon
+    ): Organisasjon[] => {
+        return altinnOrganisasjoner
+            .filter(
+                altinnOrganisasjon =>
+                    altinnOrganisasjon.ParentOrganizationNumber === juridiskEnhet.orgnr
+            )
+            .map(altinnOrganisasjon => mapTilOrganisasjon(altinnOrganisasjon, true));
+    };
+
+    const organisasjonstre: Organisasjonstre = [
+        ...juridiskeEnheterUtenTilgang,
+        ...juridiskeEnheterMedTilgang,
+    ].map(juridiskEnhet => {
+        return {
+            juridiskEnhet: juridiskEnhet,
+            underenheter: hentUnderenheterTilhørendeJuridiskEnhet(juridiskEnhet),
+        };
+    });
+
+    return organisasjonstre;
+};
+
+export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<Organisasjonstre> => {
+    const altinnOrganisasjoner = await hentAltinnOrganisasjonerBrukerHarTilgangTil();
+    const manglendeJuridiskeEnheter = await hentManglendeJuridiskeEnheter(altinnOrganisasjoner);
+    return mapTilOrganisasjonstre(altinnOrganisasjoner, manglendeJuridiskeEnheter);
 };
