@@ -111,5 +111,7 @@ export const mapTilOrganisasjonstre = (
 export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<Organisasjonstre> => {
     const altinnOrganisasjoner = await hentAltinnOrganisasjonerBrukerHarTilgangTil();
     const manglendeJuridiskeEnheter = await hentManglendeJuridiskeEnheter(altinnOrganisasjoner);
+    console.log('altinnOrganisasjoner', altinnOrganisasjoner);
+    console.log('manglendeJuridiskeEnheter', manglendeJuridiskeEnheter);
     return mapTilOrganisasjonstre(altinnOrganisasjoner, manglendeJuridiskeEnheter);
 };
