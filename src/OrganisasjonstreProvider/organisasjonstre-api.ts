@@ -5,7 +5,7 @@ export const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (): Promise<
 > => {
     try {
         const respons = await fetch(
-            'https://arbeidsgiver.nais.preprod.local/ditt-nav-arbeidsgiver-api/organisasjoner'
+            'https://arbeidsgiver-q.nav.no/min-side-arbeidsgiver/api/organisasjoner'
         );
         return await respons.json();
     } catch (error) {
