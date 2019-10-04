@@ -1,7 +1,4 @@
-import {
-    hentAltinnOrganisasjonerBrukerHarTilgangTil,
-    hentJuridiskeEnheter,
-} from './organisasjonstre-api';
+import { hentAltinnOrganisasjonerBrukerHarTilgangTil, hentJuridiskeEnheter, } from './organisasjonstre-api';
 
 export interface AltinnOrganisasjon {
     Name: string;
@@ -111,7 +108,5 @@ export const mapTilOrganisasjonstre = (
 export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<Organisasjonstre> => {
     const altinnOrganisasjoner = await hentAltinnOrganisasjonerBrukerHarTilgangTil();
     const manglendeJuridiskeEnheter = await hentManglendeJuridiskeEnheter(altinnOrganisasjoner);
-    console.log('altinnOrganisasjoner', altinnOrganisasjoner);
-    console.log('manglendeJuridiskeEnheter', manglendeJuridiskeEnheter);
     return mapTilOrganisasjonstre(altinnOrganisasjoner, manglendeJuridiskeEnheter);
 };
