@@ -10,7 +10,7 @@ export interface AltinnOrganisasjon {
 export interface Organisasjon {
     navn: string;
     orgnr: string;
-    harTilgang?: boolean; // TODO Denne er kanskje relevant
+    harTilgang?: boolean;
 }
 
 interface JuridiskEnhetMedUnderenheter {
@@ -34,15 +34,13 @@ const hentJuridiskeEnheter = async (orgnumre: string[]): Promise<Organisasjon[]>
     const urlTilBrreg =
         'https://data.brreg.no/enhetsregisteret/api/enheter/?organisasjonsnummer=' +
         orgnumre.join(',');
-    const respons = await fetch(urlTilBrreg);
-    console.log('respons', respons);
-    const responsJson = await respons.json();
+    const respons = await fetch(urlTilBrreg).then(res => res.json());
 
-    if (!responsJson._embedded) {
+    if (!respons._embedded) {
         return [];
     }
 
-    return responsJson._embedded.enheter.map((juridiskEnhetFraBrreg: any) => {
+    return respons._embedded.enheter.map((juridiskEnhetFraBrreg: any) => {
         const organisasjon: Organisasjon = {
             navn: juridiskEnhetFraBrreg.navn,
             orgnr: juridiskEnhetFraBrreg.organisasjonsnummer,

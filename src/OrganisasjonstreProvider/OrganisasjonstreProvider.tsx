@@ -18,7 +18,7 @@ export const OrganisasjonstreProvider: FunctionComponent = props => {
 
     useEffect(() => {
         hentOrganisasjonerOgGenererOrganisasjonstre().then(organisasjonstre =>
-        {setOrganisasjonstre(organisasjonstre); console.log(organisasjonstre)}
+            setOrganisasjonstre(organisasjonstre)
         );
     }, []);
 

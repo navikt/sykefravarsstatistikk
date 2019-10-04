@@ -38,20 +38,26 @@ const finnUnderenhetOrgnumreTilJuridiskEnhet = (
             juridiskEnhetMedUnderenheter =>
                 juridiskEnhetMedUnderenheter.juridiskEnhet.orgnr === juridiskEnhetOrgnr
         )!
-        .underenheter
-        .map(org => org.orgnr)
+        .underenheter.map(org => org.orgnr)
         .sort();
 };
 
-const finnJuridiskEnhet = (organisasjonstre: Organisasjonstre, juridiskEnhetOrgnr: string): Organisasjon => {
+const finnJuridiskEnhet = (
+    organisasjonstre: Organisasjonstre,
+    juridiskEnhetOrgnr: string
+): Organisasjon => {
     return organisasjonstre
         .map(juridiskMedUnderenheter => juridiskMedUnderenheter.juridiskEnhet)
         .find(org => org.orgnr === juridiskEnhetOrgnr)!;
 };
 
-const finnUnderenhet = (organisasjonstre: Organisasjonstre, underenhetOrgnr: string): Organisasjon => {
-    const nøstedeUnderenheter: Organisasjon[][] = organisasjonstre
-        .map(juridiskMedUnderenheter => juridiskMedUnderenheter.underenheter);
+const finnUnderenhet = (
+    organisasjonstre: Organisasjonstre,
+    underenhetOrgnr: string
+): Organisasjon => {
+    const nøstedeUnderenheter: Organisasjon[][] = organisasjonstre.map(
+        juridiskMedUnderenheter => juridiskMedUnderenheter.underenheter
+    );
     const underenheter = ([] as Organisasjon[]).concat(...nøstedeUnderenheter);
     return underenheter.find(org => org.orgnr === underenhetOrgnr)!;
 };
@@ -69,7 +75,7 @@ describe('Tester for finnOrgnumreTilManglendeJuridiskeEnheter', () => {
     });
 
     test('skal ikke returnere null', () => {
-        const altinnOrganisasjoner: AltinnOrganisasjon[] = [
+        const altinnOrganisasjoner = [
             { ...ALTINN_JURIDISK_ENHET, OrganizationNumber: '10', ParentOrganizationNumber: null },
         ];
         const resultat = finnOrgnumreTilManglendeJuridiskeEnheter(altinnOrganisasjoner);
@@ -116,9 +122,7 @@ describe('Tester for mapTilOrganisasjonstre', () => {
             { ...ALTINN_UNDERENHET, OrganizationNumber: '3', ParentOrganizationNumber: '10' },
         ];
 
-        const manglendeJuridiskeEnheter: Organisasjon[] = [
-            { ...ORGANISASJON, orgnr: '20' },
-        ];
+        const manglendeJuridiskeEnheter: Organisasjon[] = [{ ...ORGANISASJON, orgnr: '20' }];
 
         const resultat = mapTilOrganisasjonstre(altinnOrganisasjoner, manglendeJuridiskeEnheter);
 
