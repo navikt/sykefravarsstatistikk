@@ -1,3 +1,8 @@
+import {
+    hentAltinnOrganisasjonerBrukerHarTilgangTil,
+    hentJuridiskeEnheter,
+} from './organisasjonstre-api';
+
 export interface AltinnOrganisasjon {
     Name: string;
     Type: string;
@@ -19,35 +24,6 @@ interface JuridiskEnhetMedUnderenheter {
 }
 
 export type Organisasjonstre = JuridiskEnhetMedUnderenheter[];
-
-const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (): Promise<AltinnOrganisasjon[]> => {
-    // TODO Feilhåndtering
-    const respons = await fetch('/test');
-    return await respons.json();
-};
-
-const hentJuridiskeEnheter = async (orgnumre: string[]): Promise<Organisasjon[]> => {
-    if (!orgnumre || orgnumre.length === 0) {
-        return [];
-    }
-    // TODO Feilhåndtering
-    const urlTilBrreg =
-        'https://data.brreg.no/enhetsregisteret/api/enheter/?organisasjonsnummer=' +
-        orgnumre.join(',');
-    const respons = await fetch(urlTilBrreg).then(res => res.json());
-
-    if (!respons._embedded) {
-        return [];
-    }
-
-    return respons._embedded.enheter.map((juridiskEnhetFraBrreg: any) => {
-        const organisasjon: Organisasjon = {
-            navn: juridiskEnhetFraBrreg.navn,
-            orgnr: juridiskEnhetFraBrreg.organisasjonsnummer,
-        };
-        return organisasjon;
-    });
-};
 
 const plukkUtJuridiskeEnheter = (
     altinnOrganisasjoner: AltinnOrganisasjon[]
