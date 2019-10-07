@@ -32,9 +32,7 @@ export type RestOrganisasjonstre = RestRessurs<Organisasjonstre>;
 export const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (): Promise<
     AltinnOrganisasjon[]
 > => {
-    const respons = await fetch(
-        'https://arbeidsgiver-q.nav.no/min-side-arbeidsgiver/api/organisasjoner'
-    );
+    const respons = await fetch('/min-side-arbeidsgiver/api/organisasjoner');
     if (!respons.ok) {
         throw new Error('Feil ved henting av organisasjoner fra Altinn');
     }
@@ -45,6 +43,7 @@ export const hentJuridiskeEnheter = async (orgnumre: string[]): Promise<Organisa
     if (!orgnumre || orgnumre.length === 0) {
         return [];
     }
+
     const urlTilBrreg =
         'https://data.brreg.no/enhetsregisteret/api/enheter/?organisasjonsnummer=' +
         orgnumre.join(',');
