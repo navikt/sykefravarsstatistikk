@@ -27,6 +27,8 @@ interface Feil {
 
 export type RestRessurs<T> = IkkeLastet | LasterInn | Suksess<T> | Feil;
 
+export type RestOrganisasjonstre = RestRessurs<Organisasjonstre>;
+
 export const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (): Promise<
     AltinnOrganisasjon[]
 > => {

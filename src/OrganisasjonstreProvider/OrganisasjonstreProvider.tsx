@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { FunctionComponent, useEffect, useState } from 'react';
-import {
-    hentOrganisasjonerOgGenererOrganisasjonstre,
-    Organisasjonstre,
-} from './organisasjonstre-utils';
+import { hentOrganisasjonerOgGenererOrganisasjonstre, } from './organisasjonstre-utils';
+import { RestOrganisasjonstre, RestStatus } from './organisasjonstre-api';
 
-const defaultOrganisasjonstre: Organisasjonstre = [];
+const defaultOrganisasjonstre: RestOrganisasjonstre = {
+    status: RestStatus.LasterInn,
+};
 
-export const OrganisasjonstreContext = React.createContext<Organisasjonstre>(
+export const OrganisasjonstreContext = React.createContext<RestOrganisasjonstre>(
     defaultOrganisasjonstre
 );
 
 export const OrganisasjonstreProvider: FunctionComponent = props => {
-    const [organisasjonstre, setOrganisasjonstre] = useState<Organisasjonstre>(
+    const [organisasjonstre, setOrganisasjonstre] = useState<RestOrganisasjonstre>(
         defaultOrganisasjonstre
     );
 
