@@ -1,4 +1,8 @@
-import { hentAltinnOrganisasjonerBrukerHarTilgangTil, hentJuridiskeEnheter, } from './organisasjonstre-api';
+import {
+    hentAltinnOrganisasjonerBrukerHarTilgangTil,
+    hentJuridiskeEnheter,
+    RestRessurs, RestStatus,
+} from './organisasjonstre-api';
 
 export interface AltinnOrganisasjon {
     Name: string;
@@ -105,8 +109,18 @@ export const mapTilOrganisasjonstre = (
     return organisasjonstre;
 };
 
-export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<Organisasjonstre> => {
-    const altinnOrganisasjoner = await hentAltinnOrganisasjonerBrukerHarTilgangTil();
-    const manglendeJuridiskeEnheter = await hentManglendeJuridiskeEnheter(altinnOrganisasjoner);
-    return mapTilOrganisasjonstre(altinnOrganisasjoner, manglendeJuridiskeEnheter);
+export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<RestRessurs<Organisasjonstre>> => {
+    try {
+        const altinnOrganisasjoner = await hentAltinnOrganisasjonerBrukerHarTilgangTil();
+        const manglendeJuridiskeEnheter = await hentManglendeJuridiskeEnheter(altinnOrganisasjoner);
+        return {
+            status: RestStatus.Suksess,
+            data: mapTilOrganisasjonstre(altinnOrganisasjoner, manglendeJuridiskeEnheter),
+        };
+    } catch (error) {
+        return {
+            status: RestStatus.Feil,
+            error: 'Feil ved henting av organisasjonstre',
+        }
+    }
 };
