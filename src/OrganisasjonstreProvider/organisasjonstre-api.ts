@@ -48,17 +48,19 @@ export const hentJuridiskeEnheter = async (orgnumre: string[]): Promise<Organisa
         'https://data.brreg.no/enhetsregisteret/api/enheter/?organisasjonsnummer=' +
         orgnumre.join(',');
 
-    const respons = await fetch(urlTilBrreg).then(res => res.json());
+    const respons = await fetch(urlTilBrreg);
 
     if (!respons.ok) {
         throw new Error('Feil ved henting av organisasjoner fra Brønnøysundregistrene');
     }
 
-    if (!respons._embedded) {
+    const responsJson = await respons.json();
+
+    if (!responsJson._embedded) {
         return [];
     }
 
-    return respons._embedded.enheter.map((juridiskEnhetFraBrreg: any) => {
+    return responsJson._embedded.enheter.map((juridiskEnhetFraBrreg: any) => {
         const organisasjon: Organisasjon = {
             navn: juridiskEnhetFraBrreg.navn,
             orgnr: juridiskEnhetFraBrreg.organisasjonsnummer,
