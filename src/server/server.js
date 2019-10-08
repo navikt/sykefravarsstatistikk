@@ -25,7 +25,7 @@ const proxyConfig = {
     pathRewrite: (path, req) => path.replace(API_PATH, TARGET_PATH),
     secure: true,
     xfwd: true,
-    logLevel: 'debug', // TODO: fjern logLevel debug
+    logLevel: 'info',
 };
 
 
