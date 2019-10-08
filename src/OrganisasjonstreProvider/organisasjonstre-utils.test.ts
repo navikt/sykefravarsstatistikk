@@ -156,8 +156,6 @@ describe('Tester for mapTilOrganisasjonstre', () => {
     });
 
     test('skal filtrere bort juridiske enheter uten underenheter', () => {
-        // TODO Denne funksjonaliteten finnes i dagens bedriftsvelger. Er det noe vi vil ha?
-
         const altinnOrganisasjoner: AltinnOrganisasjon[] = [
             { ...ALTINN_JURIDISK_ENHET, OrganizationNumber: '10' },
         ];
