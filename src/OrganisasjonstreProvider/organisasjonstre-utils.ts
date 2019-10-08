@@ -26,6 +26,22 @@ interface JuridiskEnhetMedUnderenheter {
 
 export type Organisasjonstre = JuridiskEnhetMedUnderenheter[];
 
+export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<RestRessurs<Organisasjonstre>> => {
+    try {
+        const altinnOrganisasjoner = await hentAltinnOrganisasjonerBrukerHarTilgangTil();
+        const manglendeJuridiskeEnheter = await hentManglendeJuridiskeEnheter(altinnOrganisasjoner);
+        return {
+            status: RestStatus.Suksess,
+            data: mapTilOrganisasjonstre(altinnOrganisasjoner, manglendeJuridiskeEnheter),
+        };
+    } catch (error) {
+        return {
+            status: RestStatus.Feil,
+            error: 'Feil ved henting av organisasjonstre',
+        }
+    }
+};
+
 const plukkUtJuridiskeEnheter = (
     altinnOrganisasjoner: AltinnOrganisasjon[]
 ): AltinnOrganisasjon[] => {
@@ -107,20 +123,4 @@ export const mapTilOrganisasjonstre = (
     });
 
     return organisasjonstre;
-};
-
-export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<RestRessurs<Organisasjonstre>> => {
-    try {
-        const altinnOrganisasjoner = await hentAltinnOrganisasjonerBrukerHarTilgangTil();
-        const manglendeJuridiskeEnheter = await hentManglendeJuridiskeEnheter(altinnOrganisasjoner);
-        return {
-            status: RestStatus.Suksess,
-            data: mapTilOrganisasjonstre(altinnOrganisasjoner, manglendeJuridiskeEnheter),
-        };
-    } catch (error) {
-        return {
-            status: RestStatus.Feil,
-            error: 'Feil ved henting av organisasjonstre',
-        }
-    }
 };
