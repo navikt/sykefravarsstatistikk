@@ -1,7 +1,8 @@
 import {
     hentAltinnOrganisasjonerBrukerHarTilgangTil,
     hentJuridiskeEnheter,
-    RestRessurs, RestStatus,
+    RestRessurs,
+    RestStatus,
 } from './organisasjonstre-api';
 
 export interface AltinnOrganisasjon {
@@ -99,17 +100,23 @@ export const mapTilOrganisasjonstre = (
     const organisasjonstre: Organisasjonstre = [
         ...juridiskeEnheterUtenTilgang,
         ...juridiskeEnheterMedTilgang,
-    ].map(juridiskEnhet => {
-        return {
-            juridiskEnhet: juridiskEnhet,
-            underenheter: hentUnderenheterTilhørendeJuridiskEnhet(juridiskEnhet),
-        };
-    });
+    ]
+        .map(juridiskEnhet => {
+            return {
+                juridiskEnhet: juridiskEnhet,
+                underenheter: hentUnderenheterTilhørendeJuridiskEnhet(juridiskEnhet),
+            };
+        })
+        .filter(
+            juridiskEnhetMedUnderenheter => juridiskEnhetMedUnderenheter.underenheter.length > 0
+        );
 
     return organisasjonstre;
 };
 
-export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<RestRessurs<Organisasjonstre>> => {
+export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<
+    RestRessurs<Organisasjonstre>
+> => {
     try {
         const altinnOrganisasjoner = await hentAltinnOrganisasjonerBrukerHarTilgangTil();
         const manglendeJuridiskeEnheter = await hentManglendeJuridiskeEnheter(altinnOrganisasjoner);
@@ -121,6 +128,6 @@ export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<Res
         return {
             status: RestStatus.Feil,
             error: 'Feil ved henting av organisasjonstre',
-        }
+        };
     }
 };

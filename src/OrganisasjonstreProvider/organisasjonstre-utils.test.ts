@@ -136,6 +136,7 @@ describe('Tester for mapTilOrganisasjonstre', () => {
             { ...ALTINN_JURIDISK_ENHET, OrganizationNumber: '10' },
             { ...ALTINN_UNDERENHET, OrganizationNumber: '2', ParentOrganizationNumber: '20' },
             { ...ALTINN_UNDERENHET, OrganizationNumber: '3', ParentOrganizationNumber: '10' },
+            { ...ALTINN_UNDERENHET, OrganizationNumber: '4', ParentOrganizationNumber: '30' },
         ];
 
         const manglendeJuridiskeEnheter: Organisasjon[] = [
@@ -151,6 +152,7 @@ describe('Tester for mapTilOrganisasjonstre', () => {
         expect(finnUnderenhet(resultat, '1').harTilgang).toBe(true);
         expect(finnUnderenhet(resultat, '2').harTilgang).toBe(true);
         expect(finnUnderenhet(resultat, '3').harTilgang).toBe(true);
+        expect(finnUnderenhet(resultat, '4').harTilgang).toBe(true);
     });
 
     test('skal filtrere bort juridiske enheter uten underenheter', () => {
