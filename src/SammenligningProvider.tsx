@@ -34,6 +34,7 @@ const sammenligningPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sammenli
 
 export const SammenligningContext = React.createContext(defaultSammenligning);
 
+// TODO Se om dette kan gjøres på en bedre måte
 const hentOrgnrFraUrl = (): string => {
     const bedriftQuery = window.location.search.substr(1)
         .split("&")
