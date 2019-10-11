@@ -30,17 +30,30 @@ const defaultSammenligning: Sammenligning = {
     næring: defaultSykefraværprosent,
     virksomhet: defaultSykefraværprosent
 };
-const SAMMENLIGNING_PATH = `${BASE_PATH}/api/sammenligning`;
+const sammenligningPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sammenligning`;
 
 export const SammenligningContext = React.createContext(defaultSammenligning);
+
+// TODO Se om dette kan gjøres på en bedre måte
+const hentOrgnrFraUrl = (): string => {
+    const bedriftQuery = window.location.search.substr(1)
+        .split("&")
+        .find(str => str.startsWith("bedrift"));
+    if (bedriftQuery) {
+        const orgnr = bedriftQuery.split("=")[1];
+        return orgnr || "";
+    }
+    return "";
+};
 
 export const SammenligningProvider: FunctionComponent = props => {
     const [sammenligningState, setSammenligningState] = useState<Sammenligning>(
         defaultSammenligning
     );
+    const orgnr = hentOrgnrFraUrl();
 
     useEffect(() => {
-        fetch(SAMMENLIGNING_PATH)
+        fetch(sammenligningPath(orgnr), { credentials: 'include' })
             .then(response => {
                 if (response.ok) {
                     return response;
@@ -51,7 +64,7 @@ export const SammenligningProvider: FunctionComponent = props => {
             .then(response => response.json())
             .then(json => setSammenligningState(json))
             .catch(console.log);
-    }, [setSammenligningState]);
+    }, [setSammenligningState, orgnr]);
 
     return (
         <SammenligningContext.Provider value={sammenligningState}>
