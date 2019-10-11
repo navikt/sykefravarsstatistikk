@@ -52,7 +52,7 @@ export const SammenligningProvider: FunctionComponent = props => {
     const orgnr = hentOrgnrFraUrl();
 
     useEffect(() => {
-        fetch(sammenligningPath(orgnr))
+        fetch(sammenligningPath(orgnr), { credentials: 'include' })
             .then(response => {
                 if (response.ok) {
                     return response;
