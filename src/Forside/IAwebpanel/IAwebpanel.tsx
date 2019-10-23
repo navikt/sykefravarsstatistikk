@@ -7,14 +7,15 @@ import illustrasjon from './sort.svg';
 const IAwebpanel: React.FunctionComponent = () => {
     return (
         <PanelBase className="iawebpanel">
-            <img src={illustrasjon} alt="" className="iawebpanel__illustrasjon"/>
+            <img src={illustrasjon} alt="" className="iawebpanel__illustrasjon" />
             <div className="iawebpanel__tekst-wrapper">
                 <div className="iawebpanel__overskrift">
                     <Systemtittel className="iawebpanel__overskrift" tag="h2">
-                        Se mer statistikk i IA-web
+                        Se mer i Sykefraværsstatistikk for virksomheter (IA-web)
                     </Systemtittel>
                     <Normaltekst>
-                        I IA-web kan du se flere detaljer om sykefraværet til virksomheten
+                        Her kan du se flere detaljer om virksomhetens sykefravær, kostnadskalkulator
+                        og tjenester som er mottatt fra NAV Arbeidslivssenter.
                     </Normaltekst>
                 </div>
                 <a

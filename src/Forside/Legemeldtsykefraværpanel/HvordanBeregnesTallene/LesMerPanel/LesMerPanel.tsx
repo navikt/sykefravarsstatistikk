@@ -3,14 +3,14 @@ import InfoToggler from "./InfoToggler/InfoToggler";
 import {Normaltekst} from "nav-frontend-typografi";
 import EkspanderbartInnhold from './EkspanderbartInnhold/EkspanderbartInnhold';
 import { useState } from 'react';
-import './lesmeriawebpanel.less';
+import './LesMerPanel.less';
 
 interface Props {
     åpneLabel: string;
     lukkLabel: string;
 }
 
-const Lesmeriawebpanel : React.FunctionComponent<Props> = ({ åpneLabel, lukkLabel, children }) => {
+const LesMerPanel : React.FunctionComponent<Props> = ({ åpneLabel, lukkLabel, children }) => {
 
     const [åpen, setÅpen] = useState<boolean>(false);
 
@@ -29,4 +29,4 @@ const Lesmeriawebpanel : React.FunctionComponent<Props> = ({ åpneLabel, lukkLab
     );
 }
 
-export default Lesmeriawebpanel
+export default LesMerPanel

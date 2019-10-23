@@ -8,14 +8,15 @@ import illustrasjon from './Forstørrelse.svg';
 const Infopanel: React.FunctionComponent = () => {
     return (
         <PanelBase className="infopanel">
-            <img src={illustrasjon} alt="" className="infopanel__illustrasjon"/>
+            <img src={illustrasjon} alt="" className="infopanel__illustrasjon" />
             <div className="infopanel__tekst-wrapper">
                 <Systemtittel className="infopanel__overskrift" tag="h2">
-                    Se statistikk om virksomhetens sykefravær
+                    Hvordan er sykefraværet deres sammenlignet med andre?
                 </Systemtittel>
                 <Normaltekst>
-                    NAV samler statistikk om sykefraværet i Norge. Her kan du sammenligne din
-                    virksomhet med næringen og sektoren virksomheten tilhører.
+                    NAV og SSB utarbeider statistikk om sykefraværet i Norge. Her kan du sammenligne
+                    sykefraværet i din virksomhet, med gjennomsnittet for virksomheter som tilhører
+                    samme næring og sektor som deg.
                 </Normaltekst>
             </div>
         </PanelBase>
