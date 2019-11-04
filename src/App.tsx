@@ -11,12 +11,12 @@ const App: React.FC = () => {
     return (
         <div className="app">
             <OrganisasjonstreProvider>
-                <SammenligningProvider>
-                    <BrowserRouter basename={'/sykefravarsstatistikk'}>
+                <BrowserRouter basename={'/sykefravarsstatistikk'}>
+                    <SammenligningProvider>
                         <Banner tekst="Sykefraværsstatistikk" />
                         <Route path="/" exact={true} component={Forside} />
-                    </BrowserRouter>
-                </SammenligningProvider>
+                    </SammenligningProvider>
+                </BrowserRouter>
             </OrganisasjonstreProvider>
         </div>
     );
