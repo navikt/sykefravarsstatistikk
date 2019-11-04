@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FunctionComponent, useEffect, useState } from 'react';
 import BASE_PATH from './server/paths';
+import { useOrgnr } from './orgnr-hook';
 
 export type Sammenligning = {
     kvartal: number;
@@ -34,25 +35,16 @@ const sammenligningPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sammenli
 
 export const SammenligningContext = React.createContext(defaultSammenligning);
 
-// TODO Se om dette kan gjøres på en bedre måte
-const hentOrgnrFraUrl = (): string => {
-    const bedriftQuery = window.location.search.substr(1)
-        .split("&")
-        .find(str => str.startsWith("bedrift"));
-    if (bedriftQuery) {
-        const orgnr = bedriftQuery.split("=")[1];
-        return orgnr || "";
-    }
-    return "";
-};
-
 export const SammenligningProvider: FunctionComponent = props => {
     const [sammenligningState, setSammenligningState] = useState<Sammenligning>(
         defaultSammenligning
     );
-    const orgnr = hentOrgnrFraUrl();
+    const orgnr = useOrgnr();
 
     useEffect(() => {
+        if (!orgnr) {
+            return;
+        }
         fetch(sammenligningPath(orgnr), { credentials: 'include' })
             .then(response => {
                 if (response.ok) {
