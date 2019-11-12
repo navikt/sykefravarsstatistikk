@@ -5,10 +5,7 @@
     "label": "Norge",
     "prosent": 5.5
   },
-  "sektor": {
-    "label": "Privat og offentlig næringsvirksomhet",
-    "prosent": 4.1
-  },
+  "sektor": null,
   "næring": {
     "label": "Tjenester tilknyttet informasjonsteknologi",
     "prosent": 3.8
