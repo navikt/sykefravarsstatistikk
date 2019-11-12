@@ -15,20 +15,16 @@ const LegemeldtSykefraværPanel: FunctionComponent = () => {
                     Legemeldt sykefravær i {sammenligning.kvartal}. kvartal {sammenligning.år}
                 </Systemtittel>
                 <Sykefraværsprosentpanel
-                    label={sammenligning.virksomhet.label}
-                    prosent={sammenligning.virksomhet.prosent}
+                    sykefraværprosent={sammenligning.virksomhet}
                 />
                 <Sykefraværsprosentpanel
-                    label={sammenligning.næring.label}
-                    prosent={sammenligning.næring.prosent}
+                    sykefraværprosent={sammenligning.næring}
                 />
                 <Sykefraværsprosentpanel
-                    label={sammenligning.sektor.label}
-                    prosent={sammenligning.sektor.prosent}
+                    sykefraværprosent={sammenligning.sektor}
                 />
                 <Sykefraværsprosentpanel
-                    label={sammenligning.land.label}
-                    prosent={sammenligning.land.prosent}
+                    sykefraværprosent={sammenligning.land}
                 />
                 <HvordanBeregnesTallene />
             </div>
