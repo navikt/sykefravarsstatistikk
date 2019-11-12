@@ -6,10 +6,10 @@ import { useOrgnr } from './orgnr-hook';
 export type Sammenligning = {
     kvartal: number;
     år: number;
-    land: Sykefraværprosent;
-    sektor: Sykefraværprosent;
-    næring: Sykefraværprosent;
-    virksomhet: Sykefraværprosent;
+    land: Sykefraværprosent | null;
+    sektor: Sykefraværprosent | null;
+    næring: Sykefraværprosent | null;
+    virksomhet: Sykefraværprosent | null;
 };
 
 export type Sykefraværprosent = {

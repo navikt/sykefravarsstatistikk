@@ -4,7 +4,7 @@ import './Sykefraværsprosentpanel.less';
 import { Sykefraværprosent } from '../../../SammenligningProvider';
 
 interface Props {
-    sykefraværprosent: Sykefraværprosent;
+    sykefraværprosent: Sykefraværprosent | null;
 }
 
 export const formaterProsent = (prosent: number): string => {
