@@ -6,11 +6,10 @@ Denne appen gir arbeidsgivere muligheten til å sammenligne sykefraværet i egen
 
 # Komme i gang
 
-Installere avhengigheter: `npm install`
-
-Kjøre applikasjon med mock: `npm run mock`
-
-Kjøre applikasjonen normalt: `npm start` (NB! Krever integrasjon med `sykefravarsstatistikk-api` og `ditt-nav-arbeidsgiver-api`)
+- Installere avhengigheter: `npm install`
+- Kjøre applikasjon med mock: `npm run mock`
+- Kjøre applikasjonen mot egen backend, alt annet mocket: `npm run mock-msa` (NB! Krever at `sykefravarsstatistikk-api` kjører på port 8080)
+- Kjøre applikasjonen normalt: `npm start` (NB! Krever integrasjon med `sykefravarsstatistikk-api` og `ditt-nav-arbeidsgiver-api`)
 
 ---
 
