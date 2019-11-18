@@ -1,17 +1,16 @@
-import * as React from "react";
-import InfoToggler from "./InfoToggler/InfoToggler";
-import {Normaltekst} from "nav-frontend-typografi";
-import EkspanderbartInnhold from './EkspanderbartInnhold/EkspanderbartInnhold';
+import * as React from 'react';
 import { useState } from 'react';
+import InfoToggler from './InfoToggler/InfoToggler';
+import { Normaltekst } from 'nav-frontend-typografi';
 import './LesMerPanel.less';
+import { Collapse } from 'react-collapse';
 
 interface Props {
     åpneLabel: string;
     lukkLabel: string;
 }
 
-const LesMerPanel : React.FunctionComponent<Props> = ({ åpneLabel, lukkLabel, children }) => {
-
+const LesMerPanel: React.FunctionComponent<Props> = ({ åpneLabel, lukkLabel, children }) => {
     const [åpen, setÅpen] = useState<boolean>(false);
 
     return (
@@ -22,11 +21,10 @@ const LesMerPanel : React.FunctionComponent<Props> = ({ åpneLabel, lukkLabel, c
                 </InfoToggler>
             </div>
             <div className="lesmeriawebpanel__innhold">
-                <EkspanderbartInnhold erApen={åpen}>{children}</EkspanderbartInnhold>
+                <Collapse isOpened={åpen}>{children}</Collapse>
             </div>
         </div>
-
     );
-}
+};
 
-export default LesMerPanel
+export default LesMerPanel;
