@@ -14,7 +14,8 @@ export type Sammenligning = {
 
 export type Sykefraværprosent = {
     label: string;
-    prosent: number;
+    prosent: number | null;
+    erMaskert?: boolean;
 };
 
 const defaultSykefraværprosent: Sykefraværprosent = {

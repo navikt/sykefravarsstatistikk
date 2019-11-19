@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
+import { Normaltekst, Element, Systemtittel } from 'nav-frontend-typografi';
 import './Sykefraværsprosentpanel.less';
 import { Sykefraværprosent } from '../../../SammenligningProvider';
 
 interface Props {
+    label?: string;
     sykefraværprosent: Sykefraværprosent | null;
 }
 
@@ -15,14 +16,18 @@ export const formaterProsent = (prosent: number): string => {
 };
 
 const Sykefraværsprosentpanel: React.FunctionComponent<Props> = props => {
-    if (!props.sykefraværprosent) {
+    const sykefravær = props.sykefraværprosent;
+    if (!sykefravær || !sykefravær.prosent) {
         return null;
     }
-    const {prosent, label} = props.sykefraværprosent;
+
     return (
         <div className="sykefravarsprosentpanel">
-            <Element>{formaterProsent(prosent)}&nbsp;%</Element>
-            <Normaltekst className="sykefravarsprosentpanel__label">{label}</Normaltekst>
+            <Systemtittel>{formaterProsent(sykefravær.prosent)}&nbsp;%</Systemtittel>
+            <div className="sykefravarsprosentpanel__innhold">
+                {!!props.label && <Element>{props.label}</Element>}
+                <Normaltekst>{sykefravær.label}</Normaltekst>
+            </div>
         </div>
     );
 };

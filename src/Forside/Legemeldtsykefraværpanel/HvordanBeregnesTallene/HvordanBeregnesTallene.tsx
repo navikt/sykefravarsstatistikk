@@ -23,7 +23,7 @@ export const HvordanBeregnesTallene: FunctionComponent = () => (
         <Element className="hvordan-beregnes-tallene__punkt">Avtalte dagsverk:</Element>
         <Normaltekst>
             Dager man etter avtalen skal være på jobb, korrigert for stillingsandel. I praksis
-            regnes mandag til fredag med unntak av offentlige fridager (f. eks 17. mai og
+            regnes mandag til fredag med unntak av offentlige fridager (f.eks. 17. mai og
             Skjærtorsdag) som ”dager man skulle ha vært på jobb”.
         </Normaltekst>
     </LesMerPanel>

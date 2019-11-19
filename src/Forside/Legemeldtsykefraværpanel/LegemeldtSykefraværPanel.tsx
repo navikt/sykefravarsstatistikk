@@ -8,24 +8,38 @@ import { HvordanBeregnesTallene } from './HvordanBeregnesTallene/HvordanBeregnes
 
 const LegemeldtSykefraværPanel: FunctionComponent = () => {
     const sammenligning: Sammenligning = useContext(SammenligningContext);
+
+    let sykefraværVirksomhet;
+
+    if (sammenligning.virksomhet && sammenligning.virksomhet.erMaskert) {
+        sykefraværVirksomhet = (
+            <div>Det er for få ansatte i virksomheten til at vi kan vise sykefraværet</div>
+        );
+    } else {
+        sykefraværVirksomhet = (
+            <Sykefraværsprosentpanel
+                label={'Din virksomhet:'}
+                sykefraværprosent={sammenligning.virksomhet}
+            />
+        );
+    }
+
     return (
         <PanelBase className="legemeldtsykefravarpanel">
             <div className="legemeldtsykefravarpanel__tekst-wrapper">
                 <Systemtittel className="legemeldtsykefravarpanel__overskrift">
                     Legemeldt sykefravær i {sammenligning.kvartal}. kvartal {sammenligning.år}
                 </Systemtittel>
+                {sykefraværVirksomhet}
                 <Sykefraværsprosentpanel
-                    sykefraværprosent={sammenligning.virksomhet}
-                />
-                <Sykefraværsprosentpanel
+                    label={'Næringen virksomheten tilhører:'}
                     sykefraværprosent={sammenligning.næring}
                 />
                 <Sykefraværsprosentpanel
+                    label={'Sektoren virksomheten tilhører:'}
                     sykefraværprosent={sammenligning.sektor}
                 />
-                <Sykefraværsprosentpanel
-                    sykefraværprosent={sammenligning.land}
-                />
+                <Sykefraværsprosentpanel sykefraværprosent={sammenligning.land} />
                 <HvordanBeregnesTallene />
             </div>
         </PanelBase>
