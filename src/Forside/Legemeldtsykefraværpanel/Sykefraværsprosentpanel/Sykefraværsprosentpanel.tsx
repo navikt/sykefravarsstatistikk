@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Normaltekst, Element, Systemtittel } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './Sykefraværsprosentpanel.less';
 import { Sykefraværprosent } from '../../../SammenligningProvider';
 
 interface Props {
     label?: string;
     sykefraværprosent: Sykefraværprosent | null;
+    labelHvisMaskert?: string;
 }
 
 export const formaterProsent = (prosent: number): string => {

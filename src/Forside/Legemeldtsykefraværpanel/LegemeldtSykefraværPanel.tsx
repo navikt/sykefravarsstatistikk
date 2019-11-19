@@ -5,15 +5,18 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import Sykefraværsprosentpanel from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { Sammenligning, SammenligningContext } from '../../SammenligningProvider';
 import { HvordanBeregnesTallene } from './HvordanBeregnesTallene/HvordanBeregnesTallene';
+import { DataErMaskertPanel } from './DataErMaskertPanel/DataErMaskertPanel';
 
 const LegemeldtSykefraværPanel: FunctionComponent = () => {
     const sammenligning: Sammenligning = useContext(SammenligningContext);
 
     let sykefraværVirksomhet;
 
+    console.log(sammenligning);
+
     if (sammenligning.virksomhet && sammenligning.virksomhet.erMaskert) {
         sykefraværVirksomhet = (
-            <div>Det er for få ansatte i virksomheten til at vi kan vise sykefraværet</div>
+            <DataErMaskertPanel label="Det er for få ansatte i virksomheten til at vi kan vise sykefraværet"/>
         );
     } else {
         sykefraværVirksomhet = (
