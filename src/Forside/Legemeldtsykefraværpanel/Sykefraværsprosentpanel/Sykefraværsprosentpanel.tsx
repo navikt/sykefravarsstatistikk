@@ -3,10 +3,9 @@ import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './Sykefraværsprosentpanel.less';
 import { Sykefraværprosent } from '../../../SammenligningProvider';
 
-interface Props {
+export interface SykefraværprosentpanelProps {
     label?: string;
     sykefraværprosent: Sykefraværprosent | null;
-    labelHvisMaskert?: string;
 }
 
 export const formaterProsent = (prosent: number): string => {
@@ -16,7 +15,7 @@ export const formaterProsent = (prosent: number): string => {
         .replace('.', ',');
 };
 
-const Sykefraværsprosentpanel: React.FunctionComponent<Props> = props => {
+const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelProps> = props => {
     const sykefravær = props.sykefraværprosent;
     if (!sykefravær || !sykefravær.prosent) {
         return null;

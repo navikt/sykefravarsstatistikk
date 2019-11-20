@@ -56,7 +56,7 @@
     "mock-msa": "REACT_APP_MOCK_MSA=true npm start",
     "serve": "node src/server/server.js",
     "build": "craco build",
-    "test": "craco test",
+    "test": "craco test ./",
     "eject": "craco eject"
   },
   "eslintConfig": {

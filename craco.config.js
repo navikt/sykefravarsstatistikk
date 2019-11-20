@@ -33,7 +33,8 @@ module.exports = {
     },
     jest: {
         configure: {
-            setupFilesAfterEnv: ['<rootDir>/setupTests.js']
+            setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+            moduleFileExtensions: ['js', 'ts', 'tsx'],
         }
     },
 };

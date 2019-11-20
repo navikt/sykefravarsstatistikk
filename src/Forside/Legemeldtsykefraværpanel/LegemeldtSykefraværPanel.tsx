@@ -5,27 +5,10 @@ import { Systemtittel } from 'nav-frontend-typografi';
 import Sykefraværsprosentpanel from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { Sammenligning, SammenligningContext } from '../../SammenligningProvider';
 import { HvordanBeregnesTallene } from './HvordanBeregnesTallene/HvordanBeregnesTallene';
-import { DataErMaskertPanel } from './DataErMaskertPanel/DataErMaskertPanel';
+import MaskertSykefraværprosentpanel from './MaskertSykefraværprosentpanel/MaskertSykefraværprosentpanel';
 
 const LegemeldtSykefraværPanel: FunctionComponent = () => {
     const sammenligning: Sammenligning = useContext(SammenligningContext);
-
-    let sykefraværVirksomhet;
-
-    console.log(sammenligning);
-
-    if (sammenligning.virksomhet && sammenligning.virksomhet.erMaskert) {
-        sykefraværVirksomhet = (
-            <DataErMaskertPanel label="Det er for få ansatte i virksomheten til at vi kan vise sykefraværet"/>
-        );
-    } else {
-        sykefraværVirksomhet = (
-            <Sykefraværsprosentpanel
-                label={'Din virksomhet:'}
-                sykefraværprosent={sammenligning.virksomhet}
-            />
-        );
-    }
 
     return (
         <PanelBase className="legemeldtsykefravarpanel">
@@ -33,13 +16,17 @@ const LegemeldtSykefraværPanel: FunctionComponent = () => {
                 <Systemtittel className="legemeldtsykefravarpanel__overskrift">
                     Legemeldt sykefravær i {sammenligning.kvartal}. kvartal {sammenligning.år}
                 </Systemtittel>
-                {sykefraværVirksomhet}
+                <MaskertSykefraværprosentpanel
+                    sykefraværprosent={sammenligning.virksomhet}
+                    label="Din virksomhet:"
+                    labelHvisMaskert="Det er for få ansatte i virksomheten til at vi kan vise sykefraværet"
+                />
                 <Sykefraværsprosentpanel
-                    label={'Næringen virksomheten tilhører:'}
+                    label="Næringen virksomheten tilhører:"
                     sykefraværprosent={sammenligning.næring}
                 />
                 <Sykefraværsprosentpanel
-                    label={'Sektoren virksomheten tilhører:'}
+                    label="Sektoren virksomheten tilhører:"
                     sykefraværprosent={sammenligning.sektor}
                 />
                 <Sykefraværsprosentpanel sykefraværprosent={sammenligning.land} />
