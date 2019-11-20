@@ -5,7 +5,7 @@ import { Sykefraværprosent } from '../../../SammenligningProvider';
 
 export interface SykefraværprosentpanelProps {
     label?: string;
-    sykefraværprosent: Sykefraværprosent | null;
+    sykefraværprosent: Sykefraværprosent;
 }
 
 export const formaterProsent = (prosent: number): string => {
@@ -16,17 +16,13 @@ export const formaterProsent = (prosent: number): string => {
 };
 
 const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelProps> = props => {
-    const sykefravær = props.sykefraværprosent;
-    if (!sykefravær || !sykefravær.prosent) {
-        return null;
-    }
-
+    const { prosent, label } = props.sykefraværprosent;
     return (
         <div className="sykefravarsprosentpanel">
-            <Systemtittel>{formaterProsent(sykefravær.prosent)}&nbsp;%</Systemtittel>
+            <Systemtittel>{formaterProsent(prosent!)}&nbsp;%</Systemtittel>
             <div className="sykefravarsprosentpanel__innhold">
-                {!!props.label && <Element>{props.label}</Element>}
-                <Normaltekst>{sykefravær.label}</Normaltekst>
+                {!!props.label && <Element>{label}</Element>}
+                <Normaltekst>{label}</Normaltekst>
             </div>
         </div>
     );

@@ -6,10 +6,10 @@ import { useOrgnr } from './orgnr-hook';
 export type Sammenligning = {
     kvartal: number;
     år: number;
-    land: Sykefraværprosent | null;
-    sektor: Sykefraværprosent | null;
-    næring: Sykefraværprosent | null;
-    virksomhet: Sykefraværprosent | null;
+    land: Sykefraværprosent;
+    sektor: Sykefraværprosent;
+    næring: Sykefraværprosent;
+    virksomhet: Sykefraværprosent;
 };
 
 export type Sykefraværprosent = {
@@ -19,7 +19,8 @@ export type Sykefraværprosent = {
 };
 
 const defaultSykefraværprosent: Sykefraværprosent = {
-    label: '', prosent: 0.0
+    label: '',
+    prosent: 0.0,
 };
 const defaultSammenligning: Sammenligning = {
     kvartal: 1,
@@ -30,7 +31,7 @@ const defaultSammenligning: Sammenligning = {
     },
     sektor: defaultSykefraværprosent,
     næring: defaultSykefraværprosent,
-    virksomhet: defaultSykefraværprosent
+    virksomhet: defaultSykefraværprosent,
 };
 const sammenligningPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sammenligning`;
 
