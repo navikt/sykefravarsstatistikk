@@ -16,14 +16,25 @@ export const formaterProsent = (prosent: number): string => {
 };
 
 const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelProps> = props => {
-    const { prosent, label } = props.sykefraværprosent;
+    const sykefraværprosent = props.sykefraværprosent;
+
+    const skalViseLabel = !!props.label;
+
+    const innhold = skalViseLabel ? (
+        <div className="sykefravarsprosentpanel__innhold">
+            <Element>{props.label}</Element>
+            <Normaltekst>{sykefraværprosent.label}</Normaltekst>
+        </div>
+    ) : (
+        <Normaltekst className="sykefravarsprosentpanel__innhold">
+            {sykefraværprosent.label}
+        </Normaltekst>
+    );
+
     return (
         <div className="sykefravarsprosentpanel">
-            <Systemtittel>{formaterProsent(prosent!)}&nbsp;%</Systemtittel>
-            <div className="sykefravarsprosentpanel__innhold">
-                {!!props.label && <Element>{label}</Element>}
-                <Normaltekst>{label}</Normaltekst>
-            </div>
+            <Systemtittel>{formaterProsent(sykefraværprosent.prosent!)}&nbsp;%</Systemtittel>
+            {innhold}
         </div>
     );
 };

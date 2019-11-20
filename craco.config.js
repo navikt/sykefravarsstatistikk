@@ -1,11 +1,7 @@
 const CracoLessPlugin = require('craco-less');
 const proxy = require('http-proxy-middleware');
-const { configure } = require('enzyme');
-const Adapter = require('enzyme-adapter-react-16');
 
 const apiProxyPath = '/sykefravarsstatistikk/api';
-
-console.log('craco config');
 
 module.exports = {
     plugins: [{ plugin: CracoLessPlugin }],
@@ -34,7 +30,6 @@ module.exports = {
     jest: {
         configure: {
             setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
-            moduleFileExtensions: ['js', 'ts', 'tsx'],
-        }
+        },
     },
 };

@@ -1,26 +1,26 @@
 @import '../../../../variables.less';
 
-.lesmeriawebpanel {
+.les-mer-panel {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     margin-top: 1rem;
     margin-bottom: 0.5rem;
 
-  .ReactCollapse--collapse {
-    transition: height 500ms;
-  }
+    .ReactCollapse--collapse {
+        transition: height 500ms;
+    }
 
     &__toggler {
         order: 2;
+
+      &--åpen {
+        margin-top: 0.75rem;
+      }
     }
 
     &__innhold {
         order: 1;
         margin-top: 0.25rem;
-    }
-
-    &--åpen {
-        margin-top: 0.75rem;
     }
 }

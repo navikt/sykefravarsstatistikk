@@ -12,7 +12,7 @@ describe('Tester for MaskertSykefraværprosentpanel', () => {
             ...tommeProps,
             sykefraværprosent: {
                 label: 'Fisk og fugl AS',
-                prosent: 4.7,
+                prosent: null,
                 erMaskert: true,
             },
         };
