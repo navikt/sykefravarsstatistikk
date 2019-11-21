@@ -14,7 +14,7 @@ module.exports = {
                     pathRewrite: (path, req) => path.replace(apiProxyPath, ''),
                 })
             );
-        }
+        },
     },
     eslint: {
         enable: true,
@@ -26,5 +26,10 @@ module.exports = {
                 'react/jsx-pascal-case': 'off',
             },
         },
-    }
+    },
+    jest: {
+        configure: {
+            setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+        },
+    },
 };
