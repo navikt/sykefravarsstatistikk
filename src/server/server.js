@@ -28,7 +28,7 @@ const proxyConfig = {
         if (urlErWhitelistet) {
             return path.replace(API_PATH, TARGET_PATH)
         }
-        return '/';
+        return TARGET_PATH + '/not-found';
     },
     secure: true,
     xfwd: true,
