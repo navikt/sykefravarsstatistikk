@@ -22,7 +22,14 @@ const TARGET = `${envProperties.API_GATEWAY}`;
 const proxyConfig = {
     target: TARGET,
     changeOrigin: true,
-    pathRewrite: (path, req) => path.replace(API_PATH, TARGET_PATH),
+    pathRewrite: (path, req) => {
+        const urlErWhitelistet = new RegExp('^' + API_PATH + '/[0-9]{9}/sammenligning$').test(path);
+
+        if (urlErWhitelistet) {
+            return path.replace(API_PATH, TARGET_PATH)
+        }
+        return TARGET_PATH + '/not-found';
+    },
     secure: true,
     xfwd: true,
     logLevel: 'info',
