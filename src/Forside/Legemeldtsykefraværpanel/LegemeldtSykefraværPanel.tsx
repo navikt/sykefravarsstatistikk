@@ -20,6 +20,7 @@ const LegemeldtSykefraværPanel: FunctionComponent = () => {
                     sykefraværprosent={sammenligning.virksomhet}
                     label="Din virksomhet:"
                     labelHvisMaskert="Det er for få ansatte i virksomheten til at vi kan vise sykefraværet"
+                    labelHvisNull="gåkke det her"
                 />
                 <Sykefraværsprosentpanel
                     label="Næringen virksomheten tilhører:"
