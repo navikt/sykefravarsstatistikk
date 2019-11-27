@@ -19,7 +19,7 @@ const LegemeldtSykefraværPanel: FunctionComponent = () => {
                 <MaskertSykefraværprosentpanel
                     sykefraværprosent={sammenligning.virksomhet}
                     label="Din virksomhet:"
-                    labelHvisMaskert="Det er for få ansatte i virksomheten til at vi kan vise sykefraværet"
+                    labelHvisMaskert="Det er for få personer i datagrunnlaget til at vi kan vise sykefraværet."
                     labelHvisNull={`Vi kan ikke vise informasjon om sykefraværet til virksomheten din. Det kan være fordi det ikke er registrert sykefravær for virksomheten i ${
                         sammenligning.kvartal
                     }. kvartal ${sammenligning.år}.`}
@@ -42,3 +42,4 @@ const LegemeldtSykefraværPanel: FunctionComponent = () => {
 };
 
 export default LegemeldtSykefraværPanel;
+
