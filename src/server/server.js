@@ -2,6 +2,8 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const proxy = require('http-proxy-middleware');
+const getDecorator = require('./decorator');
+const mustacheExpress = require('mustache-express');
 
 const BASE_PATH = require('./paths');
 const DEFAULT_PORT = 3000;
@@ -18,6 +20,9 @@ const API_PATH = `${BASE_PATH}/api`;
 const TARGET_PATH = '/sykefravarsstatistikk-api';
 const TARGET = `${envProperties.API_GATEWAY}`;
 
+app.engine('html', mustacheExpress());
+app.set('view engine', 'mustache');
+app.set('views', buildPath);
 
 const proxyConfig = {
     target: TARGET,
@@ -26,7 +31,7 @@ const proxyConfig = {
         const urlErWhitelistet = new RegExp('^' + API_PATH + '/[0-9]{9}/sammenligning$').test(path);
 
         if (urlErWhitelistet) {
-            return path.replace(API_PATH, TARGET_PATH)
+            return path.replace(API_PATH, TARGET_PATH);
         }
         return TARGET_PATH + '/not-found';
     },
@@ -35,25 +40,37 @@ const proxyConfig = {
     logLevel: 'info',
 };
 
-
 if (envProperties.APIGW_HEADER) {
     proxyConfig.headers = {
         'x-nav-apiKey': envProperties.APIGW_HEADER,
     };
 }
+const renderAppMedDecorator = decoratorFragments => {
+    return new Promise((resolve, reject) => {
+        app.render('index.html', decoratorFragments, (err, html) => {
+            console.log('setter på decorator');
+            if (err) {
+                console.log('err', err);
+                reject(err);
+            } else {
+                console.log('html', html);
+                resolve(html);
+            }
+        });
+    });
+};
 
-const startServer = () => {
-    app.use(BASE_PATH, express.static(buildPath));
+const startServer = html => {
+    app.use(BASE_PATH, express.static(buildPath, {index: false }));
+
+    app.get(BASE_PATH + '/*', (req, res) => {
+        res.send(html);
+    });
 
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
 
-    app.use(
-        proxy(
-            API_PATH,
-            proxyConfig
-        )
-    );
+    app.use(proxy(API_PATH, proxyConfig));
 
     app.use(BASE_PATH, (_, res) => {
         res.sendFile(path.resolve(buildPath, 'index.html'));
@@ -68,4 +85,12 @@ const startServer = () => {
     });
 };
 
-startServer();
+getDecorator()
+    .then(renderAppMedDecorator, error => {
+        console.error('Kunne ikke hente dekoratør ', error);
+        process.exit(1);
+    })
+    .then(startServer, error => {
+        console.error('Kunne ikke rendre app ', error);
+        process.exit(1);
+    });
