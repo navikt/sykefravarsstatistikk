@@ -58,7 +58,7 @@ const renderAppMedDecorator = decoratorFragments => {
 };
 
 const startServer = html => {
-    app.use(BASE_PATH, express.static(buildPath));
+    app.use(BASE_PATH, express.static(buildPath, {index: false }));
 
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
