@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import './Sykefraværsprosentpanel.less';
 import { Sykefraværprosent } from '../../../SammenligningProvider';
 
@@ -33,7 +33,9 @@ const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelP
 
     return (
         <div className="sykefravarsprosentpanel">
-            <Systemtittel>{formaterProsent(sykefraværprosent.prosent!)}&nbsp;%</Systemtittel>
+            <Undertittel className="sykefravarsprosentpanel__prosent">
+                {formaterProsent(sykefraværprosent.prosent!)}&nbsp;%
+            </Undertittel>
             {innhold}
         </div>
     );
