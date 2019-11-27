@@ -48,12 +48,9 @@ if (envProperties.APIGW_HEADER) {
 const renderAppMedDecorator = decoratorFragments => {
     return new Promise((resolve, reject) => {
         app.render('index.html', decoratorFragments, (err, html) => {
-            console.log('setter på decorator');
             if (err) {
-                console.log('err', err);
                 reject(err);
             } else {
-                console.log('html', html);
                 resolve(html);
             }
         });
@@ -61,19 +58,16 @@ const renderAppMedDecorator = decoratorFragments => {
 };
 
 const startServer = html => {
-    app.use(BASE_PATH, express.static(buildPath, {index: false }));
-
-    app.get(BASE_PATH + '/*', (req, res) => {
-        res.send(html);
-    });
+    app.use(BASE_PATH, express.static(buildPath));
 
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
 
     app.use(proxy(API_PATH, proxyConfig));
 
-    app.use(BASE_PATH, (_, res) => {
-        res.sendFile(path.resolve(buildPath, 'index.html'));
+    app.get(BASE_PATH, (req, res) => {
+        console.log('hit');
+        res.send(html);
     });
 
     app.use('/', (_, res) => {
