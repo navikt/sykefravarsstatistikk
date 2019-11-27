@@ -57,7 +57,6 @@ describe('Tester for MaskertSykefraværprosentpanel', () => {
     });
 });
 
-
 const tommeProps: MaskertSykefraværprosentpanelProps = {
     label: '',
     labelHvisMaskert: '',
