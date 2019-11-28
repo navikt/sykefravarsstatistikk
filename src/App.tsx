@@ -1,12 +1,11 @@
 import React from 'react';
-
-import './app.less';
 import { SammenligningProvider } from './SammenligningProvider';
 import Banner from './Banner/Banner';
 import Forside from './Forside/Forside';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { OrganisasjonstreProvider } from './OrganisasjonstreProvider/OrganisasjonstreProvider';
-import { BASE_PATH } from './paths';
+import { BASE_PATH } from './server/konstanter';
+import './app.less';
 
 const App: React.FC = () => {
     return (
