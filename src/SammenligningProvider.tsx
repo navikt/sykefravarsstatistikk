@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FunctionComponent, useEffect, useState } from 'react';
-import BASE_PATH from './server/paths';
 import { useOrgnr } from './orgnr-hook';
+import { BASE_PATH } from './paths';
 
 export type Sammenligning = {
     kvartal: number;
