@@ -14,7 +14,7 @@ const LegemeldtSykefraværPanel: FunctionComponent = () => {
         <PanelBase className="legemeldtsykefravarpanel">
             <div className="legemeldtsykefravarpanel__tekst-wrapper">
                 <Systemtittel className="legemeldtsykefravarpanel__overskrift">
-                    Legemeldt sykefravær i {sammenligning.kvartal}. kvartal {sammenligning.år}
+                    Legemeldt sykefravær i {sammenligning.kvartal}. kvartal {sammenligning.årstall}
                 </Systemtittel>
                 <MaskertSykefraværprosentpanel
                     sykefraværprosent={sammenligning.virksomhet}
@@ -22,7 +22,7 @@ const LegemeldtSykefraværPanel: FunctionComponent = () => {
                     labelHvisMaskert="Det er for få personer i datagrunnlaget til at vi kan vise sykefraværet."
                     labelHvisNull={`Vi kan ikke vise informasjon om sykefraværet til virksomheten din. Det kan være fordi det ikke er registrert sykefravær for virksomheten i ${
                         sammenligning.kvartal
-                    }. kvartal ${sammenligning.år}.`}
+                    }. kvartal ${sammenligning.årstall}.`}
                 />
                 <Sykefraværsprosentpanel
                     label="Næringen virksomheten tilhører:"

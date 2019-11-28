@@ -5,7 +5,7 @@ import { BASE_PATH } from './server/konstanter';
 
 export type Sammenligning = {
     kvartal: number;
-    år: number;
+    årstall: number;
     land: Sykefraværprosent;
     sektor: Sykefraværprosent;
     næring: Sykefraværprosent;
@@ -24,7 +24,7 @@ const defaultSykefraværprosent: Sykefraværprosent = {
 };
 const defaultSammenligning: Sammenligning = {
     kvartal: 1,
-    år: 2019,
+    årstall: 2019,
     land: {
         label: 'Norge',
         prosent: 0.0,

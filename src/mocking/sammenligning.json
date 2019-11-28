@@ -1,6 +1,6 @@
 {
   "kvartal": 2,
-  "år": 2019,
+  "årstall": 2019,
   "land": {
     "label": "Norge",
     "prosent": 5.5
@@ -15,7 +15,7 @@
   },
   "virksomhet": {
     "label": "Fisk og fugl AS",
-    "prosent": 16.8,
-    "erMaskert": false
+    "prosent": null,
+    "erMaskert": true
   }
 }
