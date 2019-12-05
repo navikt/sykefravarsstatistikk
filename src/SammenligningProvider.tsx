@@ -52,12 +52,27 @@ export const SammenligningProvider: FunctionComponent = props => {
                 if (response.ok) {
                     return response;
                 } else {
+                    console.log('Status=', response.status);
+                    const errorSammenligning: Sammenligning = {
+                        kvartal: 4,
+                        årstall: 2018,
+                        land: {
+                            label: 'NOT AVAILABLE',
+                            prosent: 0.0,
+                        },
+                        sektor: defaultSykefraværprosent,
+                        næring: defaultSykefraværprosent,
+                        virksomhet: defaultSykefraværprosent,
+                    };
+                    setSammenligningState(errorSammenligning);
                     throw new Error(response.statusText);
                 }
             })
             .then(response => response.json())
             .then(json => setSammenligningState(json))
-            .catch(console.log);
+            .catch( (error) => {
+                console.log(error);
+            });
     }, [setSammenligningState, orgnr]);
 
     return (
