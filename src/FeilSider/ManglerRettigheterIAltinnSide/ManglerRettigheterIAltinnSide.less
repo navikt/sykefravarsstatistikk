@@ -1,0 +1,34 @@
+@import '../../variables';
+
+.error-side-panel {
+  border: 2px solid @navBlaLighten60;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  .error-side-panel {
+    &__overskrift {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__illustrasjon {
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: @screen-sm-min) {
+    flex-direction: row-reverse;
+    position: relative;
+    padding: 2rem;
+
+    &__tekst-wrapper {
+      margin-right: 2rem;
+    }
+
+    &__illustrasjon {
+      margin-bottom: 0;
+    }
+  }
+}
+

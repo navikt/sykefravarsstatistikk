@@ -1,11 +1,11 @@
 import React from 'react';
 import { SammenligningProvider } from './SammenligningProvider';
 import Banner from './Banner/Banner';
-import Forside from './Forside/Forside';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { OrganisasjonstreProvider } from './OrganisasjonstreProvider/OrganisasjonstreProvider';
 import { BASE_PATH } from './server/konstanter';
 import './app.less';
+import ForsideEllerFeilside from "./ForsideEllerFeil/ForsideEllerFeilside";
 
 const App: React.FC = () => {
     return (
@@ -14,7 +14,7 @@ const App: React.FC = () => {
                 <BrowserRouter basename={BASE_PATH}>
                     <SammenligningProvider>
                         <Banner tekst="Sykefraværsstatistikk" />
-                        <Route path="/" exact={true} component={Forside} />
+                        <Route path="/" exact={true} component={ForsideEllerFeilside} />
                     </SammenligningProvider>
                 </BrowserRouter>
             </OrganisasjonstreProvider>
