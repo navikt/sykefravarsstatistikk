@@ -18,15 +18,17 @@ export type Sykefraværprosent = {
     erMaskert?: boolean;
 };
 
-export enum Status {
+export enum RestSammenligningStatus {
     'Suksess' ,
     'LasterInn',
-    'Feil'
+    'IkkeAutorisert',
+    'HarIkkeRettigheterIAltinn',
+    'IkkeInnlogget',
+    'Error'
 }
 
 export type RestSammenligning = {
-    status: Status,
-    kode: number,
+    status: RestSammenligningStatus,
     sammenligning: Sammenligning
 }
 
@@ -48,15 +50,31 @@ const defaultSammenligning: Sammenligning = {
 };
 
 const defaultRestSammenligning: RestSammenligning = {
-    status: Status.LasterInn,
-    kode: 0,
+    status: RestSammenligningStatus.LasterInn,
     sammenligning: defaultSammenligning
 };
 
 const sammenligningPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sammenligning`;
 
-export const SammenligningContext = React.createContext(defaultSammenligning);
 export const RestSammenligningContext = React.createContext(defaultRestSammenligning);
+
+function getRestSammenligningStatus(responseStatus: Number) : RestSammenligningStatus {
+    switch (responseStatus) {
+        case 200 : {
+            return RestSammenligningStatus.Suksess;
+        }
+        case 401 : {
+            return RestSammenligningStatus.IkkeAutorisert;
+        }
+        case 403 : {
+            return RestSammenligningStatus.HarIkkeRettigheterIAltinn;
+        }
+        default: {
+            return RestSammenligningStatus.Error;
+        }
+    }
+}
+
 
 export const SammenligningProvider: FunctionComponent = props => {
     const [restSammenligningState, setRestSammenligningState] = useState<RestSammenligning>(
@@ -69,26 +87,26 @@ export const SammenligningProvider: FunctionComponent = props => {
         if (!orgnr) {
             return;
         }
-        fetch(sammenligningPath(orgnr), { credentials: 'include' })
+        fetch(sammenligningPath(orgnr), {credentials: 'include'})
             .then(response => {
-                if (response.ok) {
-                    return response;
-                } else {
-                    setRestSammenligningState(
-                        {
-                            status: Status.Feil,
-                            kode: response.status,
-                            sammenligning: defaultSammenligning
-                        }
-                    );
-                    throw new Error(response.statusText);
+                    if (response.ok) {
+                        return response;
+                    } else {
+                        const restSammenligningStatus = getRestSammenligningStatus(response.status);
+                        setRestSammenligningState(
+                            {
+                                status: restSammenligningStatus,
+                                sammenligning: defaultSammenligning
+                            }
+                        );
+                        throw new Error(response.statusText);
+                    }
                 }
-            })
+            )
             .then(response => response.json())
             .then(json => {
                 setRestSammenligningState({
-                    status: Status.Suksess,
-                    kode: 200,
+                    status: RestSammenligningStatus.Suksess,
                     sammenligning: json
                 })
             })

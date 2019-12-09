@@ -56,7 +56,7 @@
   "scripts": {
     "start": "craco start",
     "mock": "REACT_APP_MOCK_ALL=true npm start",
-    "mock-403": "REACT_APP_MOCK_403=true npm start",
+    "mock-forbidden": "REACT_APP_MOCK_FORBIDDEN=true npm start",
     "mock-msa": "REACT_APP_MOCK_MSA=true npm start",
     "serve": "node src/server/server.js",
     "build": "craco build",
