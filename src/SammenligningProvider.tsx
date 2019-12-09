@@ -18,51 +18,23 @@ export type Sykefraværprosent = {
     erMaskert?: boolean;
 };
 
-// TODO: opprett type Sammenligning???
-export interface SammenligningInterface {
-    kvartal: number;
-    årstall: number;
-    land: Sykefraværprosent;
-    sektor: Sykefraværprosent;
-    næring: Sykefraværprosent;
-    virksomhet: Sykefraværprosent;
-};
-
-
 export enum Status {
     'Suksess' ,
     'LasterInn',
     'Feil'
 }
 
-interface Suksess<T> {
-    status: Status.Suksess;
-    data: T;
-}
-
-interface Feil<T> {
-    status: Status.Feil;
-    kode: Number;
-    data: T;
-}
-
-interface LasterInn<T> {
-    status: Status.LasterInn;
-    data: T;
-}
-
-type Nettressurs<T> = LasterInn<T> | Feil<T> | Suksess<T>;
-//export type RestSammenligning = Nettressurs<Sammenligning>;
 export type RestSammenligning = {
     status: Status,
+    kode: number,
     sammenligning: Sammenligning
 }
-
 
 const defaultSykefraværprosent: Sykefraværprosent = {
     label: '',
     prosent: 0.0,
 };
+
 const defaultSammenligning: Sammenligning = {
     kvartal: 1,
     årstall: 2019,
@@ -74,7 +46,12 @@ const defaultSammenligning: Sammenligning = {
     næring: defaultSykefraværprosent,
     virksomhet: defaultSykefraværprosent,
 };
-const defaultRestSammenligning: RestSammenligning = {status: Status.LasterInn, sammenligning: defaultSammenligning};
+
+const defaultRestSammenligning: RestSammenligning = {
+    status: Status.LasterInn,
+    kode: 0,
+    sammenligning: defaultSammenligning
+};
 
 const sammenligningPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sammenligning`;
 
@@ -82,14 +59,8 @@ export const SammenligningContext = React.createContext(defaultSammenligning);
 export const RestSammenligningContext = React.createContext(defaultRestSammenligning);
 
 export const SammenligningProvider: FunctionComponent = props => {
-    const [sammenligningState, setSammenligningState] = useState<Sammenligning>(
-        defaultSammenligning
-    );
     const [restSammenligningState, setRestSammenligningState] = useState<RestSammenligning>(
-        {
-            status: Status.LasterInn,
-            sammenligning: defaultSammenligning
-        }
+        defaultRestSammenligning
     );
 
     const orgnr = useOrgnr();
@@ -103,10 +74,10 @@ export const SammenligningProvider: FunctionComponent = props => {
                 if (response.ok) {
                     return response;
                 } else {
-                    console.log('Status=', response.status);
                     setRestSammenligningState(
                         {
                             status: Status.Feil,
+                            kode: response.status,
                             sammenligning: defaultSammenligning
                         }
                     );
@@ -117,20 +88,16 @@ export const SammenligningProvider: FunctionComponent = props => {
             .then(json => {
                 setRestSammenligningState({
                     status: Status.Suksess,
+                    kode: 200,
                     sammenligning: json
                 })
-                setSammenligningState(json);
             })
             .catch( (error) => {
                 console.log(error);
             });
-    }, [setSammenligningState, orgnr]);
+    }, [setRestSammenligningState, orgnr]);
 
     return (
-        /*
-        <SammenligningContext.Provider value={sammenligningState}>
-            {props.children}
-        </SammenligningContext.Provider>*/
         <RestSammenligningContext.Provider value={restSammenligningState}>
             {props.children}
         </RestSammenligningContext.Provider>

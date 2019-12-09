@@ -9,9 +9,12 @@ const ForsideEllerFeilside: FunctionComponent = () => {
     const renderForsideEllerFeilside = () => {
         if (sammenligningWithStatusContext.status === Status.Suksess) {
             return <Forside/>
-        } else if (sammenligningWithStatusContext.status === Status.Feil) {
-            console.log(sammenligningWithStatusContext.status);
+        } else if (sammenligningWithStatusContext.status === Status.Feil && sammenligningWithStatusContext.kode === 403) {
+            console.log(sammenligningWithStatusContext.kode);
             return <ManglerRettigheterIAltinnSide/>
+        } else if (sammenligningWithStatusContext.status === Status.Feil) {
+            console.log(sammenligningWithStatusContext.kode);
+            return <Forside/>
         }
     };
 
