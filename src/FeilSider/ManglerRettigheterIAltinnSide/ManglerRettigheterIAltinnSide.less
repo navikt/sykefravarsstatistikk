@@ -1,34 +1,44 @@
 @import '../../variables';
 
-.error-side-panel {
-  border: 2px solid @navBlaLighten60;
-  padding: 2rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+.feilside {
+  max-width: 40rem;
+  margin: 2rem auto 0;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
 
-  .error-side-panel {
-    &__overskrift {
-      margin-bottom: 1.5rem;
+  @media (min-width: @screen-sm-min) {
+    padding: 0;
+  }
+
+}
+
+.mangler-rettigheter-i-altinn-panel {
+  max-width: 60rem;
+  padding: 1.5rem;
+  display: flex;
+
+  &__tekst_og_ikon {
+    display: flex;
+    padding-bottom: 2rem;
+    justify-content: center;
+
+    &__ikon {
+      margin-right: 1rem;
     }
   }
 
-  &__illustrasjon {
-    margin-bottom: 1rem;
+  &__overskrift {
+    margin-bottom: 1.5rem;
+  }
+
+  &__tekst-wrapper {
+    justify-content: center;
   }
 
   @media (min-width: @screen-sm-min) {
-    flex-direction: row-reverse;
+    flex-direction: row;
     position: relative;
     padding: 2rem;
-
-    &__tekst-wrapper {
-      margin-right: 2rem;
-    }
-
-    &__illustrasjon {
-      margin-bottom: 0;
-    }
   }
 }
 
