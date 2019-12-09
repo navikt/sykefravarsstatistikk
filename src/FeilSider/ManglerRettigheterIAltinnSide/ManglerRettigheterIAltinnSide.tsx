@@ -27,21 +27,25 @@ const ManglerRettigheterIAltinnSide: React.FunctionComponent = () => {
                             For å se sykefraværsstatistikk kan du
                         </Element>
                     </div>
-                    <ul>
-                        <li>
-                            <Normaltekst>
-                                Bytte til en virksomhet der du har tilgang til sykefraværsstatistikk
-                            </Normaltekst>
-                        </li>
-                        <li>
-                            <Normaltekst>
-                                Be om tilgang til Altinn for denne virksomhet
-                            </Normaltekst>
-                        </li>
-                    </ul>
-                    <Lenke href={'https://www.altinn.no/hjelp/profil/roller-og-rettigheter/'}>
-                        Les mer om hvordan tilgangsstyringen i Altinn fungerer
-                    </Lenke>
+                    <div className="mangler-rettigheter-i-altinn-panel__list-wrapper">
+                        <ul>
+                            <li>
+                                <Normaltekst>
+                                    Bytte til en virksomhet der du har tilgang til sykefraværsstatistikk
+                                </Normaltekst>
+                            </li>
+                            <li>
+                                <Normaltekst>
+                                    Be om tilgang til Altinn for denne virksomhet
+                                </Normaltekst>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="mangler-rettigheter-i-altinn-panel__lenke">
+                        <Lenke href={'https://www.altinn.no/hjelp/profil/roller-og-rettigheter/'}>
+                            Les mer om hvordan tilgangsstyringen i Altinn fungerer
+                        </Lenke>
+                    </div>
                 </div>
             </PanelBase>
         </div>
