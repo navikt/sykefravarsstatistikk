@@ -3,12 +3,16 @@ import PanelBase from 'nav-frontend-paneler';
 import './LegemeldtSykefraværPanel.less';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Sykefraværsprosentpanel from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
-import { Sammenligning, SammenligningContext } from '../../SammenligningProvider';
+import {
+    RestSammenligningContext,
+    RestSammenligning
+} from '../../SammenligningProvider';
 import { HvordanBeregnesTallene } from './HvordanBeregnesTallene/HvordanBeregnesTallene';
 import MaskertSykefraværprosentpanel from './MaskertSykefraværprosentpanel/MaskertSykefraværprosentpanel';
 
 const LegemeldtSykefraværPanel: FunctionComponent = () => {
-    const sammenligning: Sammenligning = useContext(SammenligningContext);
+    const restSammenligning: RestSammenligning = useContext(RestSammenligningContext);
+    const sammenligning = restSammenligning.sammenligning;
 
     return (
         <PanelBase className="legemeldtsykefravarpanel">
