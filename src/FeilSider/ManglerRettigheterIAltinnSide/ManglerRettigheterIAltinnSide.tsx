@@ -37,7 +37,7 @@ const ManglerRettigheterIAltinnSide: React.FunctionComponent = () => {
                         </li>
                     </ul>
                     <Lenke className="mangler-rettigheter-i-altinn-panel__lenke"
-                           href={'https://www.altinn.no/hjelp/profil/roller-og-rettigheter/'}>
+                           href={'https://arbeidsgiver.nav.no/min-side-arbeidsgiver/informasjon-om-tilgangsstyring'}>
                         Les mer om hvordan tilgangsstyringen i Altinn fungerer
                     </Lenke>
                 </div>
