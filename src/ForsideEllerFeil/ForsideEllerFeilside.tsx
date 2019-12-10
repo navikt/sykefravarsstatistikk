@@ -7,11 +7,9 @@ const ForsideEllerFeilside: FunctionComponent = () => {
     const sammenligningWithStatusContext = useContext(RestSammenligningContext);
 
     const renderForsideEllerFeilside = () => {
-        if (sammenligningWithStatusContext.status === RestSammenligningStatus.Suksess) {
-            return <Forside/>
-        } else if (sammenligningWithStatusContext.status === RestSammenligningStatus.HarIkkeRettigheterIAltinn) {
+        if (sammenligningWithStatusContext.status === RestSammenligningStatus.HarIkkeRettigheterIAltinn) {
             return <ManglerRettigheterIAltinnSide/>
-        } else if (sammenligningWithStatusContext.status === RestSammenligningStatus.Error) {
+        } else {
             return <Forside/>
         }
     };

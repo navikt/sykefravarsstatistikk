@@ -8,10 +8,8 @@ const mockMinSideArbeidsgiver = () => fetchMock.get('/min-side-arbeidsgiver/api/
 
 if (process.env.REACT_APP_MOCK_ALL) {
     mockSammenligning();
+    //mockSammenligningForbidden();
     mockMinSideArbeidsgiver().spy()
-} else if (process.env.REACT_APP_MOCK_FORBIDDEN) {
-    mockSammenligningForbidden();
-    mockMinSideArbeidsgiver().spy();
 } else if (process.env.REACT_APP_MOCK_MSA) {
     mockMinSideArbeidsgiver().spy()
 }

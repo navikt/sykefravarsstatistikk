@@ -21,7 +21,6 @@ export type Sykefraværprosent = {
 export enum RestSammenligningStatus {
     'Suksess' ,
     'LasterInn',
-    'IkkeAutorisert',
     'HarIkkeRettigheterIAltinn',
     'IkkeInnlogget',
     'Error'
@@ -58,13 +57,13 @@ const sammenligningPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sammenli
 
 export const RestSammenligningContext = React.createContext(defaultRestSammenligning);
 
-function getRestSammenligningStatus(responseStatus: Number) : RestSammenligningStatus {
+function getRestSammenligningStatus(responseStatus: number) : RestSammenligningStatus {
     switch (responseStatus) {
         case 200 : {
             return RestSammenligningStatus.Suksess;
         }
         case 401 : {
-            return RestSammenligningStatus.IkkeAutorisert;
+            return RestSammenligningStatus.IkkeInnlogget;
         }
         case 403 : {
             return RestSammenligningStatus.HarIkkeRettigheterIAltinn;
