@@ -1,0 +1,66 @@
+@import '../../variables';
+
+.feilside {
+  //max-width: 40rem;
+  margin: 2rem auto 0;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  background-color: white;
+
+
+  @media (min-width: @screen-sm-min) {
+    padding: 1.5rem;
+  }
+
+}
+
+.ikke-innlogget-side-panel {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: row;
+//  justify-content: center;
+  justify-content: space-around;
+  text-align: center;
+  align-items: center;
+  align-self: center;
+
+  &__illustrasjon {
+    margin-bottom: 3rem;
+  }
+
+
+  &__sidetittel {
+    margin-bottom: 3rem;
+  }
+
+  &__overskrift {
+    margin-bottom: 1.5rem;
+  }
+
+  &__tekst-wrapper {
+    justify-content: center;
+  }
+
+  &__loginKnapp-wrapper {
+    color: #6ab889;
+    margin-top: 1.5rem;
+  }
+
+  .ikke-innlogget-side-panel{
+    &__lenke {
+      margin-bottom: 1.5rem;
+    }
+
+
+  }
+
+
+
+  @media (min-width: @screen-sm-min) {
+    flex-direction: row;
+    position: relative;
+    padding: 2rem;
+  }
+}
+
