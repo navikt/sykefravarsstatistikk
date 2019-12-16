@@ -9,13 +9,13 @@ import './IkkeInnloggetSide.less';
 import Sidetittel from "nav-frontend-typografi/lib/sidetittel";
 
 
-const IkkeInnlogget: React.FunctionComponent = () => {
+export const IkkeInnloggetSide: React.FunctionComponent = () => {
     const redirectTilLogin = () => {
         if (environment.MILJO === 'prod-sbs' || environment.MILJO === 'dev-sbs') {
             window.location.href = '/min-side-arbeidsgiver/redirect-til-login';
         } else {
             document.cookie = 'nav-esso=0123456789..*; path=/;';
-            document.cookie = 'selvbetjening-idtoken =0123456789..*; path=/;';
+            document.cookie = 'selvbetjening-idtoken=0123456789..*; path=/;';
             window.location.href = '/min-side-arbeidsgiver/';
         }
     };
@@ -57,4 +57,4 @@ const IkkeInnlogget: React.FunctionComponent = () => {
     );
 }
 
-export default IkkeInnlogget;
+export default IkkeInnloggetSide;
