@@ -23,6 +23,10 @@ export const OrganisasjonstreProvider: FunctionComponent = props => {
         );
     }, []);
 
+    if (!organisasjonstre) {
+        return null;
+    }
+
     if (organisasjonstre.status === RestStatus.IkkeInnlogget) {
         return (
             <IkkeInnloggetSide/>
