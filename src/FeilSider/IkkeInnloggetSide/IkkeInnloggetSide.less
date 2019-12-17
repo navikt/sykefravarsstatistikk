@@ -5,7 +5,12 @@
   margin: 2rem auto 0;
   padding-right: 0.5rem;
   padding-left: 0.5rem;
-  background: white;
+
+  &__wrapper {
+    background: white;
+    min-height: 100vh;
+    padding-bottom: 5rem;
+  }
 
   @media (min-width: @screen-sm-min) {
     padding: 1.5rem;
@@ -49,14 +54,11 @@
     &__lenke {
       margin-bottom: 1.5rem;
     }
-
-
   }
 
   @media (min-width: @screen-sm-min) {
     flex-direction: row;
     position: relative;
-    padding: 2rem;
   }
 }
 

@@ -9,16 +9,14 @@ import ForsideEllerFeilside from "./ForsideEllerFeil/ForsideEllerFeilside";
 
 const App: React.FC = () => {
     return (
-        <div className="app">
-            <OrganisasjonstreProvider>
-                <BrowserRouter basename={BASE_PATH}>
-                    <SammenligningProvider>
-                        <Banner tekst="Sykefraværsstatistikk"/>
-                        <Route path="/" exact={true} component={ForsideEllerFeilside}/>
-                    </SammenligningProvider>
-                </BrowserRouter>
-            </OrganisasjonstreProvider>
-        </div>
+        <OrganisasjonstreProvider>
+            <BrowserRouter basename={BASE_PATH}>
+                <SammenligningProvider>
+                    <Banner tekst="Sykefraværsstatistikk"/>
+                    <Route path="/" exact={true} component={ForsideEllerFeilside}/>
+                </SammenligningProvider>
+            </BrowserRouter>
+        </OrganisasjonstreProvider>
     );
 };
 

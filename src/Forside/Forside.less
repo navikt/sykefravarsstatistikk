@@ -1,18 +1,16 @@
 @import '../variables';
 
-.app {
-    background-color: @navLysGra;
-    min-height: 100vh;
-    padding-bottom: 5rem;
-}
-
 .forside {
     max-width: 60rem;
-    margin: 2rem auto 0;
+    padding-top: 2rem;
+    margin: 0 auto 0;
     padding-right: 0.5rem;
     padding-left: 0.5rem;
 
-    @media (min-width: @screen-sm-min) {
-        padding: 0;
+    &__wrapper {
+        background-color: @navLysGra;
+        min-height: 100vh;
+        padding-bottom: 5rem;
     }
+
 }

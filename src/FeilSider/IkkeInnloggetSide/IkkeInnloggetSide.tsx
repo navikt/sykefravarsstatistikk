@@ -14,34 +14,38 @@ export const IkkeInnloggetSide: React.FunctionComponent = () => {
     };
 
     return (
-        <div className="feilside">
-            <PanelBase className="ikke-innlogget-side-panel">
-                <div>
-                    <img src={illustrasjonSvg}
-                         className="ikke-innlogget-side-panel__illustrasjon" alt=""/>
+        <div className="feilside__wrapper">
+            <div className="feilside">
+                <PanelBase className="ikke-innlogget-side-panel">
+                    <div>
+                        <img src={illustrasjonSvg}
+                             className="ikke-innlogget-side-panel__illustrasjon" alt=""/>
 
-                    <Sidetittel className="ikke-innlogget-side-panel__sidetittel">
-                        Sykefraværsstatistikk
-                    </Sidetittel>
+                        <Sidetittel className="ikke-innlogget-side-panel__sidetittel">
+                            Sykefraværsstatistikk
+                        </Sidetittel>
 
-                    <div className="ikke-innlogget-side-panel__tekst-wrapper">
-                        <Normaltekst className="ikke-innlogget-side-panel__overskrift">
-                            Se statistikk om sykefraværet i din virksomhet og sammenligne dere med andre virksomheter. For å se statistikken må du logge inn. Tilgangstyringen skjer gjennom Altinn.
-                        </Normaltekst>
+                        <div className="ikke-innlogget-side-panel__tekst-wrapper">
+                            <Normaltekst className="ikke-innlogget-side-panel__overskrift">
+                                Se statistikk om sykefraværet i din virksomhet og sammenligne dere med andre
+                                virksomheter. For å se statistikken må du logge inn. Tilgangstyringen skjer gjennom
+                                Altinn.
+                            </Normaltekst>
 
-                        <Lenke className="ikke-innlogget-side-panel__lenke"
-                               href={'https://arbeidsgiver.nav.no/min-side-arbeidsgiver/informasjon-om-tilgangsstyring'}>
-                            Les mer om roller og tilganger
-                        </Lenke>
+                            <Lenke className="ikke-innlogget-side-panel__lenke"
+                                   href={'https://arbeidsgiver.nav.no/min-side-arbeidsgiver/informasjon-om-tilgangsstyring'}>
+                                Les mer om roller og tilganger
+                            </Lenke>
 
-                        <div className="ikke-innlogget-side-panel__loginKnapp-wrapper">
-                            <Hovedknapp onClick={redirectTilLogin}>
-                                Logg inn
-                            </Hovedknapp>
+                            <div className="ikke-innlogget-side-panel__loginKnapp-wrapper">
+                                <Hovedknapp onClick={redirectTilLogin}>
+                                    Logg inn
+                                </Hovedknapp>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </PanelBase>
+                </PanelBase>
+            </div>
         </div>
     );
 }
