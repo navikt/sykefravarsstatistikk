@@ -69,10 +69,22 @@ workflows:
           context: tag-ci
           requires:
             - bygg
-          #filters:
-            #branches:
-              #only:
-                #- master
+          filters:
+            branches:
+              only:
+                - master
+      - godkjenn-til-dev:
+          type: approval
+          requires:
+            - bygg
+          filters:
+            branches:
+              ignore:
+                - master
+      - deploy-til-dev:
+          context: tag-ci
+          requires:
+            - godkjenn-til-dev
       - godkjenn-til-prod:
           type: approval
           requires:
