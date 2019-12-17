@@ -4,20 +4,13 @@ import {Hovedknapp} from 'nav-frontend-knapper';
 import illustrasjonSvg from "./statistikk-ikon.svg";
 import {Normaltekst} from "nav-frontend-typografi";
 import Lenke from "nav-frontend-lenker";
-import environment from '../../utils/environment';
 import './IkkeInnloggetSide.less';
 import Sidetittel from "nav-frontend-typografi/lib/sidetittel";
 
 
 export const IkkeInnloggetSide: React.FunctionComponent = () => {
     const redirectTilLogin = () => {
-        if (environment.MILJO === 'prod-sbs' || environment.MILJO === 'dev-sbs') {
-            window.location.href = '/min-side-arbeidsgiver/redirect-til-login';
-        } else {
-            document.cookie = 'nav-esso=0123456789..*; path=/;';
-            document.cookie = 'selvbetjening-idtoken=0123456789..*; path=/;';
-            window.location.href = '/min-side-arbeidsgiver/';
-        }
+            window.location.href = '/sykefravarsstatistikk/redirect-til-login';
     };
 
     return (
@@ -34,10 +27,6 @@ export const IkkeInnloggetSide: React.FunctionComponent = () => {
                     <div className="ikke-innlogget-side-panel__tekst-wrapper">
                         <Normaltekst className="ikke-innlogget-side-panel__overskrift">
                             Se statistikk om sykefraværet i din virksomhet og sammenligne dere med andre virksomheter. For å se statistikken må du logge inn. Tilgangstyringen skjer gjennom Altinn.
-                        </Normaltekst>
-                        <Normaltekst className="ikke-innlogget-side-panel__overskrift">
-
-
                         </Normaltekst>
 
                         <Lenke className="ikke-innlogget-side-panel__lenke"

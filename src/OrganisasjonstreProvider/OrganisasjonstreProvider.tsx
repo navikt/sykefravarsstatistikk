@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { FunctionComponent, useEffect, useState } from 'react';
-import { hentOrganisasjonerOgGenererOrganisasjonstre, } from './organisasjonstre-utils';
-import { RestOrganisasjonstre, RestStatus } from './organisasjonstre-api';
+import {FunctionComponent, useEffect, useState} from 'react';
+import {hentOrganisasjonerOgGenererOrganisasjonstre,} from './organisasjonstre-utils';
+import {RestOrganisasjonstre, RestStatus} from './organisasjonstre-api';
+import IkkeInnloggetSide from "../FeilSider/IkkeInnloggetSide/IkkeInnloggetSide";
 
 const defaultOrganisasjonstre: RestOrganisasjonstre = {
     status: RestStatus.LasterInn,
@@ -22,9 +23,15 @@ export const OrganisasjonstreProvider: FunctionComponent = props => {
         );
     }, []);
 
-    return (
-        <OrganisasjonstreContext.Provider value={organisasjonstre}>
-            {props.children}
-        </OrganisasjonstreContext.Provider>
-    );
+    if (organisasjonstre.status === RestStatus.IkkeInnlogget) {
+        return (
+            <IkkeInnloggetSide/>
+        );
+    } else {
+        return (
+            <OrganisasjonstreContext.Provider value={organisasjonstre}>
+                {props.children}
+            </OrganisasjonstreContext.Provider>
+        );
+    }
 };
