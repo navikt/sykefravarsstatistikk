@@ -4,7 +4,6 @@ import Banner from './Banner/Banner';
 import {BrowserRouter, Route} from 'react-router-dom';
 import {OrganisasjonstreProvider} from './OrganisasjonstreProvider/OrganisasjonstreProvider';
 import {BASE_PATH} from './server/konstanter';
-import './app.less';
 import ForsideEllerFeilside from "./ForsideEllerFeil/ForsideEllerFeilside";
 
 const App: React.FC = () => {
