@@ -15,6 +15,9 @@ const ForsideEllerFeilside: FunctionComponent = () => {
             case RestSammenligningStatus.IkkeInnlogget: {
                 return <IkkeInnloggetSide/>
             }
+            case RestSammenligningStatus.LasterInn: {
+                return null;
+            }
             default: {
                 return <Forside/>
             }
