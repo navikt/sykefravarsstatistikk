@@ -14,8 +14,8 @@ export const IkkeInnloggetSide: React.FunctionComponent = () => {
     };
 
     return (
-        <div className="feilside__wrapper">
-            <div className="feilside">
+        <div className="ikke-innlogget-side__wrapper">
+            <div className="ikke-innlogget-side">
                 <PanelBase className="ikke-innlogget-side-panel">
                     <div>
                         <img src={illustrasjonSvg}
