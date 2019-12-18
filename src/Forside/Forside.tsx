@@ -8,11 +8,10 @@ const Forside: React.FunctionComponent = () => {
     return (
         <div className="forside__wrapper">
             <div className="forside">
-                <Infopanel/>
-                <LegemeldtSykefraværPanel/>
-                <IAwebpanel/>
+                <Infopanel />
+                <LegemeldtSykefraværPanel />
+                <IAwebpanel />
             </div>
-
         </div>
     );
 };
