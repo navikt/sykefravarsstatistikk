@@ -1,5 +1,4 @@
 import React from 'react';
-import PanelBase from 'nav-frontend-paneler';
 import informasjonsirkelSvg from './informasjon-sirkel.svg';
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './ManglerRettigheterIAltinnSide.less';
