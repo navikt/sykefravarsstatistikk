@@ -3,6 +3,7 @@ import {RestSammenligningContext, RestSammenligningStatus} from '../Sammenlignin
 import ManglerRettigheterIAltinnSide from "../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide";
 import IkkeInnloggetSide from "../FeilSider/IkkeInnloggetSide/IkkeInnloggetSide";
 import Forside from "../Forside/Forside";
+import Lasteside from '../Lasteside/Lasteside';
 
 const ForsideEllerFeilside: FunctionComponent = () => {
     const sammenligningWithStatusContext = useContext(RestSammenligningContext);
@@ -16,7 +17,7 @@ const ForsideEllerFeilside: FunctionComponent = () => {
                 return <IkkeInnloggetSide/>
             }
             case RestSammenligningStatus.LasterInn: {
-                return null;
+                return <Lasteside />;
             }
             default: {
                 return <Forside/>
