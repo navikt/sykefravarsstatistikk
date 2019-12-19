@@ -3,6 +3,7 @@ import {FunctionComponent, useEffect, useState} from 'react';
 import {hentOrganisasjonerOgGenererOrganisasjonstre,} from './organisasjonstre-utils';
 import {RestOrganisasjonstre, RestStatus} from './organisasjonstre-api';
 import IkkeInnloggetSide from "../FeilSider/IkkeInnloggetSide/IkkeInnloggetSide";
+import Lasteside from "../Lasteside/Lasteside";
 
 const defaultOrganisasjonstre: RestOrganisasjonstre = {
     status: RestStatus.LasterInn,
@@ -24,7 +25,7 @@ export const OrganisasjonstreProvider: FunctionComponent = props => {
     }, []);
 
     if (!organisasjonstre) {
-        return null;
+        return <Lasteside/>;
     }
 
     if (organisasjonstre.status === RestStatus.IkkeInnlogget) {
