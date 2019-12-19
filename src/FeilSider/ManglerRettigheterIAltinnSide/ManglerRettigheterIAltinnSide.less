@@ -1,25 +1,21 @@
 @import '../../variables';
 
-.feilside {
+.mangler-rettigheter-i-altinn {
   max-width: 40rem;
-  margin: 2rem auto 0;
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
+  margin: 0 auto 2rem;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 0.25rem;
 
-  @media (min-width: @screen-sm-min) {
-    padding: 1.5rem;
+  &__wrapper {
+    padding-top: 2rem;
+    padding-bottom: 5rem;
+    min-height: 50rem;
+    background-color: @navLysGra;
   }
-
-}
-
-.mangler-rettigheter-i-altinn-panel {
-  width: 100%;
-  padding: 1.5rem;
-  display: flex;
 
   &__tekst_og_ikon {
     display: flex;
-    margin-top: 2rem;
     padding-bottom: 2rem;
     justify-content: center;
 
@@ -28,10 +24,11 @@
     }
   }
 
-  &__overskrift {
-    margin-bottom: 1.5rem;
+  .mangler-rettigheter-i-altinn {
+    &__overskrift {
+      margin-bottom: 1.5rem;
+    }
   }
-
   &__tekst-wrapper {
     justify-content: center;
   }
@@ -42,12 +39,12 @@
 
   &__lenke {
     margin-bottom: 1.5rem;
+    .typo-normal();
   }
 
   @media (min-width: @screen-sm-min) {
-    flex-direction: row;
-    position: relative;
-    padding: 2rem;
+    padding: 3rem;
   }
+
 }
 

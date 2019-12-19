@@ -6,10 +6,12 @@ import LegemeldtSykefraværPanel from './Legemeldtsykefraværpanel/LegemeldtSyke
 
 const Forside: React.FunctionComponent = () => {
     return (
-        <div className="forside">
-            <Infopanel />
-            <LegemeldtSykefraværPanel />
-            <IAwebpanel />
+        <div className="forside__wrapper">
+            <div className="forside">
+                <Infopanel />
+                <LegemeldtSykefraværPanel />
+                <IAwebpanel />
+            </div>
         </div>
     );
 };
