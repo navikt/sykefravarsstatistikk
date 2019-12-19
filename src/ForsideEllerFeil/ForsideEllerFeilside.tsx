@@ -8,28 +8,20 @@ import Lasteside from '../Lasteside/Lasteside';
 const ForsideEllerFeilside: FunctionComponent = () => {
     const sammenligningWithStatusContext = useContext(RestSammenligningContext);
 
-    const renderForsideEllerFeilside = () => {
-        switch (sammenligningWithStatusContext.status) {
-            case RestSammenligningStatus.HarIkkeRettigheterIAltinn: {
-                return <ManglerRettigheterIAltinnSide/>
-            }
-            case RestSammenligningStatus.IkkeInnlogget: {
-                return <IkkeInnloggetSide/>
-            }
-            case RestSammenligningStatus.LasterInn: {
-                return <Lasteside />;
-            }
-            default: {
-                return <Forside/>
-            }
+    switch (sammenligningWithStatusContext.status) {
+        case RestSammenligningStatus.HarIkkeRettigheterIAltinn: {
+            return <ManglerRettigheterIAltinnSide/>
         }
-    };
-
-    return (
-        <div>
-            {renderForsideEllerFeilside()}
-        </div>);
-
+        case RestSammenligningStatus.IkkeInnlogget: {
+            return <IkkeInnloggetSide/>
+        }
+        case RestSammenligningStatus.LasterInn: {
+            return <Lasteside />;
+        }
+        default: {
+            return <Forside/>
+        }
+    }
 }
 
 export default ForsideEllerFeilside;
