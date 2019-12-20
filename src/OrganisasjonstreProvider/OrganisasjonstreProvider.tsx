@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {FunctionComponent, useEffect, useState} from 'react';
-import {hentOrganisasjonerOgGenererOrganisasjonstre,} from './organisasjonstre-utils';
-import {RestOrganisasjonstre, RestStatus} from './organisasjonstre-api';
+import { FunctionComponent, useEffect, useState } from 'react';
+import { hentOrganisasjonerOgGenererOrganisasjonstre, } from './organisasjonstre-utils';
+import { RestOrganisasjonstre, RestStatus } from './organisasjonstre-api';
 import IkkeInnloggetSide from "../FeilSider/IkkeInnloggetSide/IkkeInnloggetSide";
 import Lasteside from "../Lasteside/Lasteside";
 
@@ -24,11 +24,11 @@ export const OrganisasjonstreProvider: FunctionComponent = props => {
         );
     }, []);
 
-    if (!organisasjonstre) {
-        return <Lasteside/>;
-    }
 
-    if (organisasjonstre.status === RestStatus.IkkeInnlogget) {
+
+    if (organisasjonstre.status === RestStatus.LasterInn) {
+        return <Lasteside/>;
+    } else if (organisasjonstre.status === RestStatus.IkkeInnlogget) {
         return (
             <IkkeInnloggetSide/>
         );
