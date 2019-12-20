@@ -15,7 +15,7 @@
   },
   "virksomhet": {
     "label": "Fisk og fugl AS",
-    "prosent": 6.6,
-    "erMaskert": false
+    "prosent": null,
+    "erMaskert": true
   }
 }
