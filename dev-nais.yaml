@@ -4,10 +4,10 @@ metadata:
     name: sykefravarsstatistikk
     namespace: default
     labels:
-        team: teamtag
+        team: {{team}}
 spec:
-    image: navikt/sykefravarsstatistikk:{{version}}
-    team: teamtag
+    image: {{version}}
+    team: {{team}}
     port: 3000
     vault:
         enabled: true

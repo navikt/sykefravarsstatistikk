@@ -1,65 +1,63 @@
-# TODO Legg til caching
-
-defaults: &defaults
-  docker:
-    - image: circleci/node
-
 version: 2.1
+orbs:
+  nais: navikt/nais-deployment@dev:master
+
 jobs:
   bygg:
-    <<: *defaults
+    docker:
+      - image: circleci/node:12.4.0-browsers
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - npm-packages-{{ checksum "package-lock.json" }}
       - run:
           name: Installer avhengigheter
-          command: |
-            npm ci
+          command: npm ci
+      - save_cache:
+          key: npm-packages-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.cache/npm
       - run:
           name: Kjør enhetstester
           command: npm run test
       - run:
           name: Bygg produksjonsversjon av React app
           command: npm run build
-      - setup_remote_docker
-      - run:
-          name: Bygg Docker image
-          command: docker build -t "navikt/sykefravarsstatistikk:$CIRCLE_SHA1" .
-      - run:
-          name: Push Docker image
-          command: |
-            echo $DOCKER_PASSWORD | docker login --username $DOCKER_LOGIN --password-stdin
-            docker push "navikt/sykefravarsstatistikk:$CIRCLE_SHA1"
-            echo "Docker image: $CIRCLE_SHA1"
+      - nais/docker:
+          image: navikt/sykefravarsstatistikk
 
   deploy-til-dev:
     docker:
-      - image: 'navikt/deployment-cli:v0.3.0'
-    steps:
-      - deploy:
-          cluster: "dev-sbs"
-          nais-yaml: "dev-nais.yaml"
-
-  deploy-til-prod:
-    docker:
-      - image: 'navikt/deployment-cli:v0.3.0'
-    steps:
-      - deploy:
-          cluster: "prod-sbs"
-          nais-yaml: "prod-nais.yaml"
-
-commands:
-  deploy:
-    description: Deploy til et gitt miljø
-    parameters:
-      cluster:
-        type: string
-      nais-yaml:
-        type: string
+      - image: navikt/deployment-cli:0.4.2
     steps:
       - checkout
       - run:
-          name: Deploy til << parameters.cluster >>
-          command: deployment-cli deploy create --cluster=<< parameters.cluster >> --repository=navikt/sykefravarsstatistikk --team=teamtag --resource=<< parameters.nais-yaml >> --version=$CIRCLE_SHA1 --ref=$CIRCLE_BRANCH
+          name: Unpack Private Key
+          command: echo $GITHUB_PRIVATE_KEY | base64 -d > .circleci/github.key.pem
+      - nais/deploy-with-gh-app:
+          repo: navikt/sykefravarsstatistikk
+          image: navikt/sykefravarsstatistikk
+          github-app-id: 43789
+          nais-template: dev-nais.yaml
+          environment: dev-sbs
+          team: teamtag
+
+  deploy-til-prod:
+    docker:
+      - image: navikt/deployment-cli:0.4.2
+    steps:
+      - checkout
+      - run:
+          name: Unpack Private Key
+          command: echo $GITHUB_PRIVATE_KEY | base64 -d > .circleci/github.key.pem
+      - nais/deploy-with-gh-app:
+          repo: navikt/sykefravarsstatistikk
+          image: navikt/sykefravarsstatistikk
+          github-app-id: 43789
+          nais-template: prod-nais.yaml
+          environment: prod-sbs
+          team: teamtag
 
 workflows:
   version: 2.1
@@ -68,12 +66,25 @@ workflows:
       - bygg:
           context: NAIS deployment
       - deploy-til-dev:
+          context: tag-ci
           requires:
             - bygg
           filters:
             branches:
               only:
                 - master
+      - godkjenn-til-dev:
+          type: approval
+          requires:
+            - bygg
+          filters:
+            branches:
+              ignore:
+                - master
+      - deploy-til-dev:
+          context: tag-ci
+          requires:
+            - godkjenn-til-dev
       - godkjenn-til-prod:
           type: approval
           requires:
@@ -83,6 +94,7 @@ workflows:
               only:
                 - master
       - deploy-til-prod:
+          context: tag-ci
           requires:
             - godkjenn-til-prod
           filters:
