@@ -3,6 +3,7 @@ import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
 import PanelBase from 'nav-frontend-paneler';
 import './IAwebpanel.less';
 import illustrasjon from './sort.svg';
+import { sendEvent } from '../../utils/metrikk-api';
 
 const IAwebpanel: React.FunctionComponent = () => {
     return (
@@ -21,6 +22,7 @@ const IAwebpanel: React.FunctionComponent = () => {
                 <a
                     href="https://www.altinn.no/Pages/ServiceEngine/Start/StartService.aspx?ServiceEditionCode=2&ServiceCode=3403&Oselect=true&M=SP"
                     className="lenke"
+                    onClick={() => sendEvent('sykefravarsstatistikk.klikk-til-iaweb')}
                 >
                     Gå til IA-web
                 </a>

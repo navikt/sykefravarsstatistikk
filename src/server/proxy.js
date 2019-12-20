@@ -1,26 +1,32 @@
-const { BASE_PATH } = require('./konstanter');
+const { FRONTEND_API_PATH } = require('./konstanter');
 const proxyMiddleware = require('http-proxy-middleware');
-
-const API_PATH = `${BASE_PATH}/api`;
 
 const envProperties = {
     API_GATEWAY: process.env.API_GATEWAY || 'http://localhost:8080',
     APIGW_HEADER: process.env.APIGW_HEADER,
 };
 
-const TARGET_BACKEND_PATH = '/sykefravarsstatistikk-api';
+const BACKEND_API_PATH = '/sykefravarsstatistikk-api';
 const API_GATEWAY_BASEURL = `${envProperties.API_GATEWAY}`;
+
+const listeAvTillatteUrler = [
+    new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sammenligning$'),
+    new RegExp('^/sykefravarsstatistikk/api/metrikker/[a-zA-Z0-9._-]+$')
+];
 
 const proxyConfig = {
     target: API_GATEWAY_BASEURL,
     changeOrigin: true,
     pathRewrite: (path, req) => {
-        const urlErWhitelistet = new RegExp('^' + API_PATH + '/[0-9]{9}/sammenligning$').test(path);
+        const urlErWhitelistet = listeAvTillatteUrler
+            .filter(regexp => regexp.test(path))
+            .length > 0;
+
 
         if (urlErWhitelistet) {
-            return path.replace(API_PATH, TARGET_BACKEND_PATH);
+            return path.replace(FRONTEND_API_PATH, BACKEND_API_PATH);
         }
-        return TARGET_BACKEND_PATH + '/not-found';
+        return BACKEND_API_PATH + '/not-found';
     },
     secure: true,
     xfwd: true,
@@ -33,6 +39,6 @@ if (envProperties.APIGW_HEADER) {
     };
 }
 
-const proxy = proxyMiddleware(API_PATH, proxyConfig);
+const proxy = proxyMiddleware(FRONTEND_API_PATH, proxyConfig);
 
 module.exports = proxy;
