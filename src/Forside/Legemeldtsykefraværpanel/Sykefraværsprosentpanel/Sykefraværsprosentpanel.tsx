@@ -18,20 +18,13 @@ export const formaterProsent = (prosent: number): string => {
 };
 
 const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelProps> = props => {
-    const { sykefraværprosent, laster } = props;
+    const { sykefraværprosent, laster, label } = props;
 
-
-    const labelErGittMed = !!props.label;
-
-    const tekst = labelErGittMed ? (
+    const tekst = (
         <div className="sykefravarsprosentpanel__innhold">
-            <Element>{props.label}</Element>
+            {label && <Element>{props.label}</Element>}
             <Normaltekst>{sykefraværprosent.label}</Normaltekst>
         </div>
-    ) : (
-        <Normaltekst className="sykefravarsprosentpanel__innhold">
-            {sykefraværprosent.label}
-        </Normaltekst>
     );
 
     const prosent = (
@@ -40,18 +33,20 @@ const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelP
         </Undertittel>
     );
 
-    const innhold = laster ? (
-        <div className="sykefravarsprosentpanel__lasting">
-            <Skeleton height={40} />
-        </div>
-    ) : (
+    const innhold = (
         <>
             {prosent}
             {tekst}
         </>
     );
 
-    return <div className="sykefravarsprosentpanel">{innhold}</div>;
+    const innholdLaster = (
+        <div className="sykefravarsprosentpanel__lasting">
+            <Skeleton height={40} />
+        </div>
+    );
+
+    return <div className="sykefravarsprosentpanel">{laster ? innholdLaster : innhold}</div>;
 };
 
 export default Sykefraværsprosentpanel;
