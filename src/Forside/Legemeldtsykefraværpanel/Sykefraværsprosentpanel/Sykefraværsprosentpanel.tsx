@@ -2,10 +2,12 @@ import * as React from 'react';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import './Sykefraværsprosentpanel.less';
 import { Sykefraværprosent } from '../../../SammenligningProvider';
+import Skeleton from 'react-loading-skeleton';
 
 export interface SykefraværprosentpanelProps {
     label?: string;
     sykefraværprosent: Sykefraværprosent;
+    laster: boolean;
 }
 
 export const formaterProsent = (prosent: number): string => {
@@ -16,11 +18,12 @@ export const formaterProsent = (prosent: number): string => {
 };
 
 const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelProps> = props => {
-    const sykefraværprosent = props.sykefraværprosent;
+    const { sykefraværprosent, laster } = props;
 
-    const skalViseLabel = !!props.label;
 
-    const innhold = skalViseLabel ? (
+    const labelErGittMed = !!props.label;
+
+    const tekst = labelErGittMed ? (
         <div className="sykefravarsprosentpanel__innhold">
             <Element>{props.label}</Element>
             <Normaltekst>{sykefraværprosent.label}</Normaltekst>
@@ -31,14 +34,24 @@ const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelP
         </Normaltekst>
     );
 
-    return (
-        <div className="sykefravarsprosentpanel">
-            <Undertittel className="sykefravarsprosentpanel__prosent">
-                {formaterProsent(sykefraværprosent.prosent!)}&nbsp;%
-            </Undertittel>
-            {innhold}
-        </div>
+    const prosent = (
+        <Undertittel className="sykefravarsprosentpanel__prosent">
+            {formaterProsent(sykefraværprosent.prosent!)}&nbsp;%
+        </Undertittel>
     );
+
+    const innhold = laster ? (
+        <div className="sykefravarsprosentpanel__lasting">
+            <Skeleton height={40} />
+        </div>
+    ) : (
+        <>
+            {prosent}
+            {tekst}
+        </>
+    );
+
+    return <div className="sykefravarsprosentpanel">{innhold}</div>;
 };
 
 export default Sykefraværsprosentpanel;
