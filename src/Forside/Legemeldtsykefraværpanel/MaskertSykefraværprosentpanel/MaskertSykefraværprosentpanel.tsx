@@ -12,14 +12,20 @@ export type MaskertSykefraværprosentpanelProps = SykefraværprosentpanelProps &
 const MaskertSykefraværprosentpanel: FunctionComponent<
     MaskertSykefraværprosentpanelProps
 > = props => {
-    const { sykefraværprosent, label, labelHvisMaskert, labelHvisNull } = props;
+    const { sykefraværprosent, label, labelHvisMaskert, labelHvisNull, laster } = props;
 
     if (sykefraværprosent.erMaskert) {
         return <DataKanIkkeVisesPanel label={labelHvisMaskert} />;
     } else if (sykefraværprosent.prosent === null) {
         return <DataKanIkkeVisesPanel label={labelHvisNull} />;
     } else {
-        return <Sykefraværsprosentpanel label={label} sykefraværprosent={sykefraværprosent} />;
+        return (
+            <Sykefraværsprosentpanel
+                label={label}
+                sykefraværprosent={sykefraværprosent}
+                laster={laster}
+            />
+        );
     }
 };
 

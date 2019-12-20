@@ -86,6 +86,7 @@ export const SammenligningProvider: FunctionComponent = props => {
         if (!orgnr) {
             return;
         }
+        setRestSammenligningState(defaultRestSammenligning);
         fetch(sammenligningPath(orgnr), {credentials: 'include'})
             .then(response => {
                     if (response.ok) {
