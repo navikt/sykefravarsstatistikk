@@ -6,7 +6,7 @@ const envProperties = {
     APIGW_HEADER: process.env.APIGW_HEADER,
 };
 
-const TARGET_BACKEND_PATH = '/sykefravarsstatistikk-api';
+const BACKEND_API_PATH = '/sykefravarsstatistikk-api';
 const API_GATEWAY_BASEURL = `${envProperties.API_GATEWAY}`;
 
 const listeAvTillatteUrler = [
@@ -24,9 +24,9 @@ const proxyConfig = {
 
 
         if (urlErWhitelistet) {
-            return path.replace(FRONTEND_API_PATH, TARGET_BACKEND_PATH);
+            return path.replace(FRONTEND_API_PATH, BACKEND_API_PATH);
         }
-        return TARGET_BACKEND_PATH + '/not-found';
+        return BACKEND_API_PATH + '/not-found';
     },
     secure: true,
     xfwd: true,
