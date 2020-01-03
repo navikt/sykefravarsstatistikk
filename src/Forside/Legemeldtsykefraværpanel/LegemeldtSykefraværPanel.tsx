@@ -1,16 +1,13 @@
 import React, { FunctionComponent, useContext } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import PanelBase from 'nav-frontend-paneler';
 import './LegemeldtSykefraværPanel.less';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Sykefraværsprosentpanel from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
-import {
-    RestSammenligning,
-    RestSammenligningContext,
-    RestSammenligningStatus,
-} from '../../SammenligningProvider';
+import { RestSammenligningContext } from '../../SammenligningProvider';
+import {RestSammenligning, RestSammenligningStatus} from "../../api/sammenligningApi";
 import { HvordanBeregnesTallene } from './HvordanBeregnesTallene/HvordanBeregnesTallene';
 import MaskertSykefraværprosentpanel from './MaskertSykefraværprosentpanel/MaskertSykefraværprosentpanel';
-import Skeleton from 'react-loading-skeleton';
 
 const LegemeldtSykefraværPanel: FunctionComponent = () => {
     const restSammenligning: RestSammenligning = useContext(RestSammenligningContext);
