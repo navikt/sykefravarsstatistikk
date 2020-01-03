@@ -81,7 +81,6 @@ export const hentRestSammenligning = async (orgnr: string): Promise<RestSammenli
             sammenligning: json
         }
     } else {
-
         return {
             status: restSammenligningStatus,
             sammenligning: defaultSammenligning
