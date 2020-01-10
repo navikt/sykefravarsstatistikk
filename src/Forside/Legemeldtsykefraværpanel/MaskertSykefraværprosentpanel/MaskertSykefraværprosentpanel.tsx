@@ -3,16 +3,18 @@ import Sykefraværsprosentpanel, {
     SykefraværprosentpanelProps,
 } from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { DataKanIkkeVisesPanel } from './DataKanIkkeVisesPanel/DataKanIkkeVisesPanel';
+import {Sykefraværprosent} from "../../../SammenligningProvider";
 
 export type MaskertSykefraværprosentpanelProps = SykefraværprosentpanelProps & {
     labelHvisMaskert: string;
     labelHvisNull: string;
+    sykefraværprosent: Sykefraværprosent;
 };
 
 const MaskertSykefraværprosentpanel: FunctionComponent<
     MaskertSykefraværprosentpanelProps
 > = props => {
-    const { sykefraværprosent, label, labelHvisMaskert, labelHvisNull, laster } = props;
+    const { sykefraværprosent, children, labelHvisMaskert, labelHvisNull, laster } = props;
 
     if (sykefraværprosent.erMaskert) {
         return <DataKanIkkeVisesPanel label={labelHvisMaskert} />;
@@ -21,10 +23,11 @@ const MaskertSykefraværprosentpanel: FunctionComponent<
     } else {
         return (
             <Sykefraværsprosentpanel
-                label={label}
                 sykefraværprosent={sykefraværprosent}
                 laster={laster}
-            />
+            >
+                {children}
+            </Sykefraværsprosentpanel>
         );
     }
 };
