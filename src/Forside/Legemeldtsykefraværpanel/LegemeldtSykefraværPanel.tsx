@@ -1,14 +1,14 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, {FunctionComponent, useContext} from 'react';
 import PanelBase from 'nav-frontend-paneler';
 import './LegemeldtSykefraværPanel.less';
-import { Systemtittel } from 'nav-frontend-typografi';
+import {Systemtittel} from 'nav-frontend-typografi';
 import Sykefraværsprosentpanel from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import {
     RestSammenligning,
     RestSammenligningContext,
     RestSammenligningStatus,
 } from '../../SammenligningProvider';
-import { HvordanBeregnesTallene } from './HvordanBeregnesTallene/HvordanBeregnesTallene';
+import {HvordanBeregnesTallene} from './HvordanBeregnesTallene/HvordanBeregnesTallene';
 import MaskertSykefraværprosentpanel from './MaskertSykefraværprosentpanel/MaskertSykefraværprosentpanel';
 import Skeleton from 'react-loading-skeleton';
 
@@ -18,7 +18,7 @@ const LegemeldtSykefraværPanel: FunctionComponent = () => {
     const laster = restSammenligning.status === RestSammenligningStatus.LasterInn;
 
     const overskrift = laster ? (
-        <Skeleton height={28} />
+        <Skeleton height={28}/>
     ) : (
         <Systemtittel className="legemeldtsykefravarpanel__overskrift">
             Legemeldt sykefravær i {sammenligning.kvartal}. kvartal {sammenligning.årstall}
@@ -38,11 +38,20 @@ const LegemeldtSykefraværPanel: FunctionComponent = () => {
                     }. kvartal ${sammenligning.årstall}.`}
                     laster={laster}
                 />
-                <Sykefraværsprosentpanel
-                    label="Næringen virksomheten tilhører:"
-                    sykefraværprosent={sammenligning.næring}
-                    laster={laster}
-                />
+                {sammenligning.næring && (
+                    <Sykefraværsprosentpanel
+                        label="Næringen virksomheten tilhører:"
+                        sykefraværprosent={sammenligning.næring}
+                        laster={laster}
+                    />
+                )}
+                {sammenligning.bransje && (
+                    <Sykefraværsprosentpanel
+                        label="Bransjen virksomheten tilhører:"
+                        sykefraværprosent={sammenligning.bransje}
+                        laster={laster}
+                    />
+                )}
                 {sammenligning.sektor && (
                     <Sykefraværsprosentpanel
                         label="Sektoren virksomheten tilhører:"
@@ -50,8 +59,8 @@ const LegemeldtSykefraværPanel: FunctionComponent = () => {
                         laster={laster}
                     />
                 )}
-                <Sykefraværsprosentpanel sykefraværprosent={sammenligning.land} laster={laster} />
-                <HvordanBeregnesTallene />
+                <Sykefraværsprosentpanel sykefraværprosent={sammenligning.land} laster={laster}/>
+                <HvordanBeregnesTallene/>
             </div>
         </PanelBase>
     );
