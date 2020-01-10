@@ -3,10 +3,12 @@ import Sykefraværsprosentpanel, {
     SykefraværprosentpanelProps,
 } from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { DataKanIkkeVisesPanel } from './DataKanIkkeVisesPanel/DataKanIkkeVisesPanel';
+import {Sykefraværprosent} from "../../../SammenligningProvider";
 
 export type MaskertSykefraværprosentpanelProps = SykefraværprosentpanelProps & {
     labelHvisMaskert: string;
     labelHvisNull: string;
+    sykefraværprosent: Sykefraværprosent;
 };
 
 const MaskertSykefraværprosentpanel: FunctionComponent<

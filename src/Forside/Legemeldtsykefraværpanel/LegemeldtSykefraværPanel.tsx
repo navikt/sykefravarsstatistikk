@@ -40,35 +40,29 @@ const LegemeldtSykefraværPanel: FunctionComponent = () => {
                 >
                     Din virksomhet:
                 </MaskertSykefraværprosentpanel>
-                {sammenligning.næring && (
-                    <Sykefraværsprosentpanel
-                        sykefraværprosent={sammenligning.næring}
-                        laster={laster}
-                    >
-                        Næringen virksomheten tilhører:
-                    </Sykefraværsprosentpanel>
-                )}
-                {sammenligning.bransje && (
-                    <Sykefraværsprosentpanel
-                        sykefraværprosent={sammenligning.bransje}
-                        laster={laster}
-                    >
-                        <div className="legemeldtsykefravarpanel__bransje-label">
-                            Bransjen virksomheten tilhører:
-                            <Hjelpetekst className="legemeldtsykefravarpanel__bransje-hjelpetekst">
-                                Bransjen er definert i samsvar med bransjeprogrammene under IA-avtalen 2019–2022.
-                            </Hjelpetekst>
-                        </div>
-                    </Sykefraværsprosentpanel>
-                )}
-                {sammenligning.sektor && (
-                    <Sykefraværsprosentpanel
-                        sykefraværprosent={sammenligning.sektor}
-                        laster={laster}
-                    >
-                        Sektoren virksomheten tilhører:
-                    </Sykefraværsprosentpanel>
-                )}
+                <Sykefraværsprosentpanel
+                    sykefraværprosent={sammenligning.næring}
+                    laster={laster}
+                >
+                    Næringen virksomheten tilhører:
+                </Sykefraværsprosentpanel>
+                <Sykefraværsprosentpanel
+                    sykefraværprosent={sammenligning.bransje}
+                    laster={laster}
+                >
+                    <div className="legemeldtsykefravarpanel__bransje-label">
+                        Bransjen virksomheten tilhører:
+                        <Hjelpetekst className="legemeldtsykefravarpanel__bransje-hjelpetekst">
+                            Bransjen er definert i samsvar med bransjeprogrammene under IA-avtalen 2019–2022.
+                        </Hjelpetekst>
+                    </div>
+                </Sykefraværsprosentpanel>
+                <Sykefraværsprosentpanel
+                    sykefraværprosent={sammenligning.sektor}
+                    laster={laster}
+                >
+                    Sektoren virksomheten tilhører:
+                </Sykefraværsprosentpanel>
                 <Sykefraværsprosentpanel sykefraværprosent={sammenligning.land} laster={laster}/>
                 <HvordanBeregnesTallene/>
             </div>
