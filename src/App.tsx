@@ -5,6 +5,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import {OrganisasjonstreProvider} from './OrganisasjonstreProvider/OrganisasjonstreProvider';
 import {BASE_PATH} from './server/konstanter';
 import ForsideEllerFeilside from "./ForsideEllerFeil/ForsideEllerFeilside";
+import Kalkulator from './Kostnadskalkulator/Kalkulator';
 
 const App: React.FC = () => {
     return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
                 <SammenligningProvider>
                     <Banner tekst="Sykefraværsstatistikk"/>
                     <Route path="/" exact={true} component={ForsideEllerFeilside}/>
+                    <Route path="/kalkulator" exact={true} component={Kalkulator}/>
                 </SammenligningProvider>
             </BrowserRouter>
         </OrganisasjonstreProvider>
