@@ -7,7 +7,7 @@ Denne appen gir arbeidsgivere muligheten til å sammenligne sykefraværet i egen
 # Komme i gang
 
 - Installere avhengigheter: `npm install`
-- Kjøre applikasjon med mock: `npm run mock`
+- Kjøre applikasjon med mock: `npm run mock` (for Windows: `npm run wock`)
    * ved behov kan funksjonen `mockSammenligningForbidden()` aktiveres i `mock.ts` for å fremprovosere en 403 response fra API-et  
 - Kjøre applikasjonen mot egen backend, alt annet mocket: `npm run mock-msa` (NB! Krever at `sykefravarsstatistikk-api` kjører på port 8080)
     * For å få et gyldig token lokalt, besøk `http://localhost:8080/sykefravarsstatistikk-api/local/cookie?subject=<test-fnr>&cookiename=selvbetjening-idtoken&redirect=http://localhost:3000/sykefravarsstatistikk`
