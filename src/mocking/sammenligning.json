@@ -9,9 +9,10 @@
     "label": "Privat og offentlig næringsvirksomhet",
     "prosent": 4.1
   },
-  "næring": {
-    "label": "Tjenester tilknyttet informasjonsteknologi",
-    "prosent": 3.8
+  "næring": null,
+  "bransje": {
+    "label": "IT-bransjen",
+    "prosent": 3.3
   },
   "virksomhet": {
     "label": "Fisk og fugl AS",

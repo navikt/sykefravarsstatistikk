@@ -13,7 +13,8 @@ export type Sammenligning = {
     årstall: number;
     land: Sykefraværprosent;
     sektor: Sykefraværprosent;
-    næring: Sykefraværprosent;
+    næring?: Sykefraværprosent;
+    bransje?: Sykefraværprosent;
     virksomhet: Sykefraværprosent;
 };
 

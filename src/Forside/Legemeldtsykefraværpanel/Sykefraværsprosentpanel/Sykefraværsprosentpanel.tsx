@@ -5,8 +5,7 @@ import Skeleton from 'react-loading-skeleton';
 import {Sykefraværprosent} from "../../../api/sammenligningApi";
 
 export interface SykefraværprosentpanelProps {
-    label?: string;
-    sykefraværprosent: Sykefraværprosent;
+    sykefraværprosent?: Sykefraværprosent;
     laster: boolean;
 }
 
@@ -18,11 +17,15 @@ export const formaterProsent = (prosent: number): string => {
 };
 
 const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelProps> = props => {
-    const { sykefraværprosent, laster, label } = props;
+    const { sykefraværprosent, laster, children } = props;
+
+    if (!sykefraværprosent) {
+        return null;
+    }
 
     const tekst = (
         <div className="sykefravarsprosentpanel__innhold">
-            {label && <Element>{props.label}</Element>}
+            {children && <Element tag="div">{children}</Element>}
             <Normaltekst>{sykefraværprosent.label}</Normaltekst>
         </div>
     );
