@@ -3,7 +3,8 @@ import Sykefraværsprosentpanel, {
     SykefraværprosentpanelProps,
 } from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { DataKanIkkeVisesPanel } from './DataKanIkkeVisesPanel/DataKanIkkeVisesPanel';
-import {Sykefraværprosent} from "../../../SammenligningProvider";
+import {Sykefraværprosent} from "../../../api/sammenligningApi";
+
 
 export type MaskertSykefraværprosentpanelProps = SykefraværprosentpanelProps & {
     labelHvisMaskert: string;
