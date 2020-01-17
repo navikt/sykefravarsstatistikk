@@ -66,8 +66,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "mock": "REACT_APP_MOCK_ALL=true npm start",
-    "mock-msa": "REACT_APP_MOCK_MSA=true npm start",
+    "mock": "REACT_APP_MOCK=true npm start",
     "serve": "node src/server/server.js",
     "build": "craco build",
     "test": "craco test ./",
