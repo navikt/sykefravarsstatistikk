@@ -1,14 +1,11 @@
-import React, {FunctionComponent, useContext} from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 import PanelBase from 'nav-frontend-paneler';
 import './LegemeldtSykefraværPanel.less';
 import {Systemtittel} from 'nav-frontend-typografi';
 import Sykefraværsprosentpanel from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
-import {
-    RestSammenligning,
-    RestSammenligningContext,
-    RestSammenligningStatus,
-} from '../../SammenligningProvider';
-import {HvordanBeregnesTallene} from './HvordanBeregnesTallene/HvordanBeregnesTallene';
+import { RestSammenligningContext } from '../../SammenligningProvider';
+import {RestSammenligning, RestSammenligningStatus} from "../../api/sammenligningApi";
+import { HvordanBeregnesTallene } from './HvordanBeregnesTallene/HvordanBeregnesTallene';
 import MaskertSykefraværprosentpanel from './MaskertSykefraværprosentpanel/MaskertSykefraværprosentpanel';
 import Skeleton from 'react-loading-skeleton';
 import Hjelpetekst from "nav-frontend-hjelpetekst";

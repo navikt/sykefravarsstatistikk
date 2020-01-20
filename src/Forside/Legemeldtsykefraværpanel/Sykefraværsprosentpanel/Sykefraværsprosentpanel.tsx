@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import './Sykefraværsprosentpanel.less';
-import { Sykefraværprosent } from '../../../SammenligningProvider';
 import Skeleton from 'react-loading-skeleton';
+import {Sykefraværprosent} from "../../../api/sammenligningApi";
 
 export interface SykefraværprosentpanelProps {
     sykefraværprosent?: Sykefraværprosent;
