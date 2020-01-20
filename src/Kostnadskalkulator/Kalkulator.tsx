@@ -1,10 +1,24 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './Kalkulator.less';
 import LesMerPanel from '../Forside/Legemeldtsykefraværpanel/HvordanBeregnesTallene/LesMerPanel/LesMerPanel';
 import { Input } from 'nav-frontend-skjema';
 
-const Kalkulator: FunctionComponent = () => (
+const Kalkulator: FunctionComponent = () => {
+    const [tapteDagsverk, setTapteDagsverk] = useState<number>();
+    const [kostnadDagsverk,setKostnadDagsverk]=useState<number>();
+
+    const setStateHvisValueErTall = (event: React.ChangeEvent<HTMLInputElement>, setState: (tall: number | undefined) => void) => {
+
+        const value = event.target.value;
+        if (parseInt(value) > 0) {
+            setState(parseInt(value));
+        } else if (value === '') {
+            setState(undefined);
+        }
+    };
+
+    return(
     <div className="kalkulator__wrapper">
         <div className="kalkulator">
             <Systemtittel className="kalkulator__tittel">Kostnadskalkulator</Systemtittel>
@@ -20,11 +34,12 @@ const Kalkulator: FunctionComponent = () => (
             </LesMerPanel>
 
             <Normaltekst>Deres tapte dagsverk siste 12 mnd: 1230</Normaltekst>
-            <Input label={<Element>Antall tapte dagsverk</Element>}></Input>
 
-            <Input label={<Element>Kostnad per dagsverk</Element>}></Input>
 
+            <Input label={<Element>Kostnad per dagsverk</Element>} onChange={event => setStateHvisValueErTall(event, setKostnadDagsverk)} value={kostnadDagsverk || ''}/>
+            <Input label={<Element>Antall tapte dagsverk</Element>} onChange={event => setStateHvisValueErTall(event, setTapteDagsverk)} value={tapteDagsverk || ''}/>
+            <Normaltekst>Din kostnad er: {tapteDagsverk&&kostnadDagsverk? tapteDagsverk*kostnadDagsverk:''}</Normaltekst>
         </div>
-    </div>
-);
+    </div>)
+};
 export default Kalkulator;
