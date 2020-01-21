@@ -78,9 +78,9 @@ export const mapTilOrganisasjonstre = (
     altinnOrganisasjoner: AltinnOrganisasjon[],
     manglendeJuridiskeEnheter: Organisasjon[]
 ): Organisasjonstre => {
-    const juridiskeEnheterMedTilgang = plukkUtJuridiskeEnheter(altinnOrganisasjoner).map(
-        altinnOrganisasjon => mapTilOrganisasjon(altinnOrganisasjon, true)
-    );
+    const juridiskeEnheterMedTilgang = plukkUtJuridiskeEnheter(
+        altinnOrganisasjoner
+    ).map(altinnOrganisasjon => mapTilOrganisasjon(altinnOrganisasjon, true));
 
     const juridiskeEnheterUtenTilgang = manglendeJuridiskeEnheter.map(org => {
         return { ...org, harTilgang: false };
@@ -114,9 +114,9 @@ export const mapTilOrganisasjonstre = (
     return organisasjonstre;
 };
 
-export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<
-    RestRessurs<Organisasjonstre>
-> => {
+export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<RestRessurs<
+    Organisasjonstre
+>> => {
     try {
         const altinnOrganisasjoner = await hentAltinnOrganisasjonerBrukerHarTilgangTil();
         const manglendeJuridiskeEnheter = await hentManglendeJuridiskeEnheter(altinnOrganisasjoner);

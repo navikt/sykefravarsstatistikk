@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { FunctionComponent, useEffect, useState } from 'react';
-import { hentOrganisasjonerOgGenererOrganisasjonstre, } from './organisasjonstre-utils';
+import { hentOrganisasjonerOgGenererOrganisasjonstre } from './organisasjonstre-utils';
 import { RestOrganisasjonstre, RestStatus } from './organisasjonstre-api';
-import IkkeInnloggetSide from "../FeilSider/IkkeInnloggetSide/IkkeInnloggetSide";
-import Lasteside from "../Lasteside/Lasteside";
+import IkkeInnloggetSide from '../FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
+import Lasteside from '../Lasteside/Lasteside';
 
 const defaultOrganisasjonstre: RestOrganisasjonstre = {
     status: RestStatus.LasterInn,
@@ -24,14 +24,10 @@ export const OrganisasjonstreProvider: FunctionComponent = props => {
         );
     }, []);
 
-
-
     if (organisasjonstre.status === RestStatus.LasterInn) {
-        return <Lasteside/>;
+        return <Lasteside />;
     } else if (organisasjonstre.status === RestStatus.IkkeInnlogget) {
-        return (
-            <IkkeInnloggetSide/>
-        );
+        return <IkkeInnloggetSide />;
     } else {
         return (
             <OrganisasjonstreContext.Provider value={organisasjonstre}>

@@ -1,11 +1,11 @@
-import {BASE_PATH} from "../server/konstanter";
+import { BASE_PATH } from '../server/konstanter';
 
 export enum RestSammenligningStatus {
-    'Suksess' ,
+    'Suksess',
     'LasterInn',
     'HarIkkeRettigheterIAltinn',
     'IkkeInnlogget',
-    'Error'
+    'Error',
 }
 
 export type Sammenligning = {
@@ -25,9 +25,9 @@ export type Sykefraværprosent = {
 };
 
 export type RestSammenligning = {
-    status: RestSammenligningStatus,
-    sammenligning: Sammenligning
-}
+    status: RestSammenligningStatus;
+    sammenligning: Sammenligning;
+};
 
 const defaultSykefraværprosent: Sykefraværprosent = {
     label: '',
@@ -46,18 +46,17 @@ export const defaultSammenligning: Sammenligning = {
     virksomhet: defaultSykefraværprosent,
 };
 
-
 const sammenligningPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sammenligning`;
 
 const getRestSammenligningStatus = (responseStatus: number): RestSammenligningStatus => {
     switch (responseStatus) {
-        case 200 : {
+        case 200: {
             return RestSammenligningStatus.Suksess;
         }
-        case 401 : {
+        case 401: {
             return RestSammenligningStatus.IkkeInnlogget;
         }
-        case 403 : {
+        case 403: {
             return RestSammenligningStatus.HarIkkeRettigheterIAltinn;
         }
         default: {
@@ -67,10 +66,9 @@ const getRestSammenligningStatus = (responseStatus: number): RestSammenligningSt
 };
 
 export const hentRestSammenligning = async (orgnr: string): Promise<RestSammenligning> => {
-
     const response = await fetch(sammenligningPath(orgnr), {
         method: 'GET',
-        credentials: 'include'
+        credentials: 'include',
     });
 
     const restSammenligningStatus = getRestSammenligningStatus(response.status);
@@ -79,12 +77,12 @@ export const hentRestSammenligning = async (orgnr: string): Promise<RestSammenli
         let json = await response.json();
         return {
             status: restSammenligningStatus,
-            sammenligning: json
-        }
+            sammenligning: json,
+        };
     } else {
         return {
             status: restSammenligningStatus,
-            sammenligning: defaultSammenligning
+            sammenligning: defaultSammenligning,
         };
     }
 };

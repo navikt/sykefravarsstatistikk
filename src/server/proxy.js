@@ -11,17 +11,15 @@ const API_GATEWAY_BASEURL = `${envProperties.API_GATEWAY}`;
 
 const listeAvTillatteUrler = [
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sammenligning$'),
-    new RegExp('^/sykefravarsstatistikk/api/metrikker/[a-zA-Z0-9._-]+$')
+    new RegExp('^/sykefravarsstatistikk/api/metrikker/[a-zA-Z0-9._-]+$'),
 ];
 
 const proxyConfig = {
     target: API_GATEWAY_BASEURL,
     changeOrigin: true,
     pathRewrite: (path, req) => {
-        const urlErWhitelistet = listeAvTillatteUrler
-            .filter(regexp => regexp.test(path))
-            .length > 0;
-
+        const urlErWhitelistet =
+            listeAvTillatteUrler.filter(regexp => regexp.test(path)).length > 0;
 
         if (urlErWhitelistet) {
             return path.replace(FRONTEND_API_PATH, BACKEND_API_PATH);

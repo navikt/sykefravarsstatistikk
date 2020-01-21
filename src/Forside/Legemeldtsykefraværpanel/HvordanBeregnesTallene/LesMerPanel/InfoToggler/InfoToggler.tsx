@@ -3,7 +3,6 @@ import NavFrontendChevron from 'nav-frontend-chevron';
 
 import './infoToggler.less';
 
-
 interface Props {
     children: React.ReactNode;
     onToggle: () => void;

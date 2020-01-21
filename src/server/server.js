@@ -30,7 +30,8 @@ const startServer = html => {
     app.use(BASE_PATH, express.static(buildPath, { index: false }));
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
-        const loginUrl = process.env.LOGIN_URL ||
+        const loginUrl =
+            process.env.LOGIN_URL ||
             'http://localhost:8080/sykefravarsstatistikk-api/local/cookie?subject=01065500791&cookiename=selvbetjening-idtoken&redirect=http://localhost:3000/sykefravarsstatistikk';
         res.redirect(loginUrl);
     });

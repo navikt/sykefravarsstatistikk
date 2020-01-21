@@ -1,50 +1,48 @@
 @import '../../variables';
 
 .mangler-rettigheter-i-altinn {
-  max-width: 40rem;
-  margin: 0 auto 2rem;
-  padding: 2rem;
-  background-color: white;
-  border-radius: 0.25rem;
+    max-width: 40rem;
+    margin: 0 auto 2rem;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0.25rem;
 
-  &__wrapper {
-    padding-top: 2rem;
-    padding-bottom: 5rem;
-    min-height: 50rem;
-    background-color: @navLysGra;
-  }
-
-  &__tekst_og_ikon {
-    display: flex;
-    padding-bottom: 2rem;
-    justify-content: center;
-
-    &__ikon {
-      margin-right: 1rem;
+    &__wrapper {
+        padding-top: 2rem;
+        padding-bottom: 5rem;
+        min-height: 50rem;
+        background-color: @navLysGra;
     }
-  }
 
-  .mangler-rettigheter-i-altinn {
-    &__overskrift {
-      margin-bottom: 1.5rem;
+    &__tekst_og_ikon {
+        display: flex;
+        padding-bottom: 2rem;
+        justify-content: center;
+
+        &__ikon {
+            margin-right: 1rem;
+        }
     }
-  }
-  &__tekst-wrapper {
-    justify-content: center;
-  }
 
-  &__list-wrapper {
-    margin-bottom: 2rem;
-  }
+    .mangler-rettigheter-i-altinn {
+        &__overskrift {
+            margin-bottom: 1.5rem;
+        }
+    }
+    &__tekst-wrapper {
+        justify-content: center;
+    }
 
-  &__lenke {
-    margin-bottom: 1.5rem;
-    .typo-normal();
-  }
+    &__list-wrapper {
+        margin-bottom: 2rem;
+    }
 
-  @media (min-width: @screen-sm-min) {
-    padding: 3rem;
-  }
+    &__lenke {
+        margin-bottom: 1.5rem;
+        .typo-normal();
+    }
 
+    @media (min-width: @screen-sm-min) {
+        padding: 3rem;
+    }
 }
-

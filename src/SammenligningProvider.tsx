@@ -5,16 +5,15 @@ import {
     defaultSammenligning,
     hentRestSammenligning,
     RestSammenligning,
-    RestSammenligningStatus
-} from "./api/sammenligningApi";
+    RestSammenligningStatus,
+} from './api/sammenligningApi';
 
 const defaultRestSammenligning: RestSammenligning = {
     status: RestSammenligningStatus.LasterInn,
-    sammenligning: defaultSammenligning
+    sammenligning: defaultSammenligning,
 };
 
 export const RestSammenligningContext = React.createContext(defaultRestSammenligning);
-
 
 export const SammenligningProvider: FunctionComponent = props => {
     const [restSammenligningState, setRestSammenligningState] = useState<RestSammenligning>(
@@ -34,7 +33,6 @@ export const SammenligningProvider: FunctionComponent = props => {
             setRestSammenligningState(restSammenligningResponse);
         };
         getSammenligning();
-
     }, [setRestSammenligningState, orgnr]);
 
     return (

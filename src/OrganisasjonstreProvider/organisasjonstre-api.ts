@@ -34,12 +34,12 @@ export type RestRessurs<T> = IkkeLastet | LasterInn | Suksess<T> | IkkeInnlogget
 
 export type RestOrganisasjonstre = RestRessurs<Organisasjonstre>;
 
-function getRestStatus(responseStatus: number) : RestStatus {
+function getRestStatus(responseStatus: number): RestStatus {
     switch (responseStatus) {
-        case 200 : {
+        case 200: {
             return RestStatus.Suksess;
         }
-        case 401 : {
+        case 401: {
             return RestStatus.IkkeInnlogget;
         }
         default: {
@@ -48,15 +48,13 @@ function getRestStatus(responseStatus: number) : RestStatus {
     }
 }
 
-export const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (): Promise<
-    AltinnOrganisasjon[]
-> => {
+export const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (): Promise<AltinnOrganisasjon[]> => {
     const respons = await fetch('/min-side-arbeidsgiver/api/organisasjoner');
     const restStatus: RestStatus = getRestStatus(respons.status);
 
     if (restStatus !== RestStatus.Suksess) {
         const error = {
-            status: restStatus
+            status: restStatus,
         };
 
         return Promise.reject(error);

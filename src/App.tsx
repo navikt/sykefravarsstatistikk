@@ -1,10 +1,10 @@
 import React from 'react';
-import {SammenligningProvider} from './SammenligningProvider';
+import { SammenligningProvider } from './SammenligningProvider';
 import Banner from './Banner/Banner';
-import {BrowserRouter, Route} from 'react-router-dom';
-import {OrganisasjonstreProvider} from './OrganisasjonstreProvider/OrganisasjonstreProvider';
-import {BASE_PATH} from './server/konstanter';
-import ForsideEllerFeilside from "./ForsideEllerFeil/ForsideEllerFeilside";
+import { BrowserRouter, Route } from 'react-router-dom';
+import { OrganisasjonstreProvider } from './OrganisasjonstreProvider/OrganisasjonstreProvider';
+import { BASE_PATH } from './server/konstanter';
+import ForsideEllerFeilside from './ForsideEllerFeil/ForsideEllerFeilside';
 import Kalkulator from './Kostnadskalkulator/Kalkulator';
 
 const App: React.FC = () => {
@@ -12,9 +12,9 @@ const App: React.FC = () => {
         <OrganisasjonstreProvider>
             <BrowserRouter basename={BASE_PATH}>
                 <SammenligningProvider>
-                    <Banner tekst="Sykefraværsstatistikk"/>
-                    <Route path="/" exact={true} component={ForsideEllerFeilside}/>
-                    <Route path="/kalkulator" exact={true} component={Kalkulator}/>
+                    <Banner tekst="Sykefraværsstatistikk" />
+                    <Route path="/" exact={true} component={ForsideEllerFeilside} />
+                    <Route path="/kalkulator" exact={true} component={Kalkulator} />
                 </SammenligningProvider>
             </BrowserRouter>
         </OrganisasjonstreProvider>
@@ -22,4 +22,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
