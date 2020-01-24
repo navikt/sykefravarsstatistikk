@@ -5,8 +5,13 @@ import LesMerPanel from '../Forside/Legemeldtsykefraværpanel/HvordanBeregnesTal
 import { Input } from 'nav-frontend-skjema';
 import Brødsmulesti from '../Brødsmulesti/Brødsmulesti';
 
-const Kalkulator: FunctionComponent = () => {
-    const [tapteDagsverk, setTapteDagsverk] = useState<number | undefined>(0);
+interface Props {
+    defaultTapteDagsverk: number;
+}
+
+const Kalkulator: FunctionComponent<Props> = (props) => {
+
+    const [tapteDagsverk, setTapteDagsverk] = useState<number | undefined>(props.defaultTapteDagsverk);
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2500);
 
     const setStateHvisValueErTall = (

@@ -43,3 +43,19 @@ export const defaultSammenligning: Sammenligning = {
     næring: defaultSykefraværprosent,
     virksomhet: defaultSykefraværprosent,
 };
+export const getRestSammenligningStatus = (responseStatus: number): RestSammenligningStatus => {
+    switch (responseStatus) {
+        case 200: {
+            return RestSammenligningStatus.Suksess;
+        }
+        case 401: {
+            return RestSammenligningStatus.IkkeInnlogget;
+        }
+        case 403: {
+            return RestSammenligningStatus.HarIkkeRettigheterIAltinn;
+        }
+        default: {
+            return RestSammenligningStatus.Error;
+        }
+    }
+};

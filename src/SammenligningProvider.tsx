@@ -6,7 +6,7 @@ import {
     RestSammenligning,
     RestSammenligningStatus,
 } from './api/sammenligning';
-import { hentRestSammenligning } from './api/sammenligningApi';
+import { hentRestSammenligning } from './api/api';
 
 const defaultRestSammenligning: RestSammenligning = {
     status: RestSammenligningStatus.LasterInn,

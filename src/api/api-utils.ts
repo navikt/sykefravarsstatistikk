@@ -30,7 +30,7 @@ interface Suksess<T> {
 
 interface Feil {
     status: RestStatus.Feil;
-    error: string;
+
 }
 
 export type RestRessurs<T> =

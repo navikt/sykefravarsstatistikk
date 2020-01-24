@@ -5,7 +5,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { OrganisasjonstreProvider } from './OrganisasjonstreProvider/OrganisasjonstreProvider';
 import { BASE_PATH } from './server/konstanter';
 import ForsideEllerFeilside from './ForsideEllerFeil/ForsideEllerFeilside';
-import Kalkulator from './Kalkulator/Kalkulator';
+import KalkulatorWrapper from './Kalkulator/KalkulatorWrapper';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -17,7 +17,7 @@ const App: React.FC = () => {
                 <SammenligningProvider>
                     <Banner tekst="Sykefraværsstatistikk" />
                     <Route path={PATH_FORSIDE} exact={true} component={ForsideEllerFeilside} />
-                    <Route path={PATH_KALKULATOR} exact={true} component={Kalkulator} />
+                    <Route path={PATH_KALKULATOR} exact={true} component={KalkulatorWrapper} />
                 </SammenligningProvider>
             </BrowserRouter>
         </OrganisasjonstreProvider>

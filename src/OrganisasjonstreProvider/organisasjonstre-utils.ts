@@ -126,7 +126,6 @@ export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<Res
     } catch (error) {
         return {
             status: error.status || RestStatus.Feil,
-            error: 'Feil ved henting av organisasjonstre',
         };
     }
 };

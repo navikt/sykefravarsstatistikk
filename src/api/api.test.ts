@@ -1,4 +1,6 @@
-import { hentRestSammenligning, RestSammenligningStatus } from './sammenligningApi';
+import { hentRestSammenligning } from './api';
+import { RestSammenligningStatus } from './sammenligning';
+
 import fetchMock from 'fetch-mock';
 
 describe('Tester for hentRestSammenligning', () => {
