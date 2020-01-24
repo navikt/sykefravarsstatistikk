@@ -4,7 +4,7 @@ import './LegemeldtSykefraværPanel.less';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Sykefraværsprosentpanel from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { RestSammenligningContext } from '../../SammenligningProvider';
-import { RestSammenligning, RestSammenligningStatus } from '../../api/sammenligningApi';
+import { RestSammenligning, RestSammenligningStatus } from '../../api/sammenligning';
 import { HvordanBeregnesTallene } from './HvordanBeregnesTallene/HvordanBeregnesTallene';
 import MaskertSykefraværprosentpanel from './MaskertSykefraværprosentpanel/MaskertSykefraværprosentpanel';
 import Skeleton from 'react-loading-skeleton';

@@ -3,10 +3,10 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import { useOrgnr } from './utils/orgnr-hook';
 import {
     defaultSammenligning,
-    hentRestSammenligning,
     RestSammenligning,
     RestSammenligningStatus,
-} from './api/sammenligningApi';
+} from './api/sammenligning';
+import { hentRestSammenligning } from './api/sammenligningApi';
 
 const defaultRestSammenligning: RestSammenligning = {
     status: RestSammenligningStatus.LasterInn,

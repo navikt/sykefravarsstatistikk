@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { hentOrganisasjonerOgGenererOrganisasjonstre } from './organisasjonstre-utils';
-import { RestOrganisasjonstre, RestStatus } from './organisasjonstre-api';
+import { RestOrganisasjonstre } from '../api/organisasjonstre-api';
+import { RestStatus } from '../api/api-utils';
 import IkkeInnloggetSide from '../FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
 import Lasteside from '../Lasteside/Lasteside';
 

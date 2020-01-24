@@ -10,7 +10,7 @@ import {
     Organisasjon,
     Organisasjonstre,
 } from '../OrganisasjonstreProvider/organisasjonstre-utils';
-import { RestStatus } from '../OrganisasjonstreProvider/organisasjonstre-api';
+import { RestStatus } from '../api/api-utils';
 
 interface Props {
     tekst: string;
