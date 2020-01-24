@@ -4,7 +4,7 @@ import organisasjoner from './organisasjoner.json';
 import tapteDagsverk from './tapteDagsverk.json';
 
 const MOCK_MIN_SIDE_ARBEIDSGIVER = true;
-const MOCK_SYKEFRAVÆRSSTATISTIKK = false;
+const MOCK_SYKEFRAVÆRSSTATISTIKK = true;
 const MOCK_TAPTEDAGSVERK = true;
 
 if (MOCK_MIN_SIDE_ARBEIDSGIVER) {

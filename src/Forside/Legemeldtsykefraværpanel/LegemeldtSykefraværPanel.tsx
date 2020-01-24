@@ -9,6 +9,7 @@ import { HvordanBeregnesTallene } from './HvordanBeregnesTallene/HvordanBeregnes
 import MaskertSykefraværprosentpanel from './MaskertSykefraværprosentpanel/MaskertSykefraværprosentpanel';
 import Skeleton from 'react-loading-skeleton';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 
 const LegemeldtSykefraværPanel: FunctionComponent = () => {
     const restSammenligning: RestSammenligning = useContext(RestSammenligningContext);
@@ -23,10 +24,17 @@ const LegemeldtSykefraværPanel: FunctionComponent = () => {
         </Systemtittel>
     );
 
+    const feilmelding = restSammenligning.status === RestSammenligningStatus.Error && (
+        <AlertStripeFeil className="legemeldtsykefravarpanel__feilmelding">
+            Kunne ikke vise sykefraværet.
+        </AlertStripeFeil>
+    );
+
     return (
         <PanelBase className="legemeldtsykefravarpanel">
             <div className="legemeldtsykefravarpanel__tekst-wrapper">
                 {overskrift}
+                {feilmelding}
                 <MaskertSykefraværprosentpanel
                     sykefraværprosent={sammenligning.virksomhet}
                     labelHvisMaskert="Det er for få personer i datagrunnlaget til at vi kan vise sykefraværet."
