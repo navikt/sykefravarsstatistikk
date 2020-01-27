@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import LesMerPanel from './LesMerPanel/LesMerPanel';
+import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import './HvordanBeregnesTallene.less';
 
 export const HvordanBeregnesTallene: FunctionComponent = () => (
-    <LesMerPanel åpneLabel="Hvordan beregnes disse tallene?" lukkLabel="Lukk">
+    <LesMerPanel åpneLabel="Hvordan beregnes disse tallene?" lukkLabel="Lukk" className="hvordan-beregnes-tallene">
         <Element className="hvordan-beregnes-tallene__punkt">Legemeldt sykefravær:</Element>
         <Normaltekst>
             Sykefraværsregisteret er hovedkilden til informasjon om legemeldt sykefravær.

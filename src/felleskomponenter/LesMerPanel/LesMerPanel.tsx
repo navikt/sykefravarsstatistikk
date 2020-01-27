@@ -9,9 +9,10 @@ import classNames from 'classnames';
 interface Props {
     åpneLabel: string;
     lukkLabel: string;
+    className?: string;
 }
 
-const LesMerPanel: React.FunctionComponent<Props> = ({ åpneLabel, lukkLabel, children }) => {
+const LesMerPanel: React.FunctionComponent<Props> = ({ åpneLabel, lukkLabel, children , className}) => {
     const [åpen, setÅpen] = useState<boolean>(false);
 
     return (
@@ -19,7 +20,8 @@ const LesMerPanel: React.FunctionComponent<Props> = ({ åpneLabel, lukkLabel, ch
             <div
                 className={classNames(
                     'les-mer-panel__toggler',
-                    åpen && 'les-mer-panel__toggler--åpen'
+                    åpen && 'les-mer-panel__toggler--åpen',
+                    className
                 )}
             >
                 <InfoToggler onToggle={() => setÅpen(!åpen)} åpen={åpen}>
