@@ -21,7 +21,7 @@ const Brødsmulesti: FunctionComponent = () => {
                         Sykefraværsstatistikk
                     </Link>
                 </li>{' '}
-                / <li>Sykefraværskalkulator</li>
+                / <li>Kostnadskalkulator</li>
             </ol>
         </Normaltekst>
     );
