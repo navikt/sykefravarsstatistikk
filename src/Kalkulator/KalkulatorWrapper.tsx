@@ -21,15 +21,8 @@ const KalkulatorWrapper: FunctionComponent = () => {
             }
         };
         hentTapteDagsverkOgSettState();
-
     }, [orgnr, restTapteDagsverk]);
 
-    if (restTapteDagsverk.status !== RestStatus.Suksess) {
-        return null;
-    }
-
-    return (
-        <Kalkulator defaultTapteDagsverk={summerTapteDagsverk(restTapteDagsverk.data)}/>
-    );
+    return <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />;
 };
 export default KalkulatorWrapper;

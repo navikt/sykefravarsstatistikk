@@ -1,22 +1,38 @@
-import React, { FunctionComponent, useState } from 'react';
-import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import React, {FunctionComponent, useEffect, useState} from 'react';
+import {Element, Normaltekst, Systemtittel} from 'nav-frontend-typografi';
 import './Kalkulator.less';
 import LesMerPanel from '../felleskomponenter/LesMerPanel/LesMerPanel';
-import { Input } from 'nav-frontend-skjema';
+import {Input} from 'nav-frontend-skjema';
 import Brødsmulesti from '../Brødsmulesti/Brødsmulesti';
 import Kostnad from './Kostnad/Kostnad';
+import {RestStatus} from '../api/api-utils';
+import {RestTapteDagsverk} from '../api/tapteDagsverk';
+import {summerTapteDagsverk} from './kalkulator-util';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 
 interface Props {
-    defaultTapteDagsverk: number;
+    defaultTapteDagsverk: RestTapteDagsverk;
 }
 
 const Kalkulator: FunctionComponent<Props> = props => {
-    const [tapteDagsverk, setTapteDagsverk] = useState<number | undefined>(
-        props.defaultTapteDagsverk
-    );
+    const defaultTapteDagsverk = props.defaultTapteDagsverk;
+    const [tapteDagsverk, setTapteDagsverk] = useState<number | undefined>();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
     const totalKostnad = tapteDagsverk && kostnadDagsverk ? tapteDagsverk * kostnadDagsverk : 0;
+
+    useEffect(() => {
+        if ((defaultTapteDagsverk.status === RestStatus.Suksess) && (!tapteDagsverk)) {
+            setTapteDagsverk(summerTapteDagsverk(defaultTapteDagsverk.data));
+        }
+    }, [props.defaultTapteDagsverk]);
+
+    const tapteDagsverkSiste12Mnd =
+        defaultTapteDagsverk.status === RestStatus.Suksess ? (
+            summerTapteDagsverk(defaultTapteDagsverk.data)
+        ) : (
+            <NavFrontendSpinner className="kalkulator__spinner"/>
+        );
 
     return (
         <div className="kalkulator__wrapper">
@@ -56,7 +72,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         type="number"
                     />
                     <Normaltekst>
-                        Deres tapte dagsverk siste 12 mnd: {props.defaultTapteDagsverk}
+                        Deres tapte dagsverk siste 12 mnd: {tapteDagsverkSiste12Mnd}
                     </Normaltekst>
                     <LesMerPanel
                         åpneLabel="Les mer her"
