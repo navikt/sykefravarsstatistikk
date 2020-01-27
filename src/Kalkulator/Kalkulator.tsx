@@ -14,7 +14,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
     const [tapteDagsverk, setTapteDagsverk] = useState<number | undefined>(
         props.defaultTapteDagsverk
     );
-    const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2500);
+    const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
     const totalKostnad = tapteDagsverk && kostnadDagsverk ? tapteDagsverk * kostnadDagsverk : 0;
 
@@ -34,17 +34,17 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         maxLength={15}
                         type="number"
                     />
-                    <Normaltekst>
-                        Deres tapte dagsverk siste 12 mnd: {props.defaultTapteDagsverk}
-                    </Normaltekst>
+                    <Normaltekst>Gjennomsnittlig kostnad per dagsverk: 2600&nbsp;kr</Normaltekst>
                     <LesMerPanel
                         åpneLabel="Les mer her"
                         lukkLabel="Lukk"
                         className="kalkulator__lesmer-kostnad-dagsverk"
                     >
                         <Normaltekst>
-                            En catchy ingress dersom det er behov for det. En catchy ingress dersom
-                            det er behov for det. Den bør helst ikke være så lang.
+                            Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
+                            beregnet SINTEF og NHO at hver uke med sykefravær koster en arbeidsgiver
+                            i snitt 13 000 kr. Det vil si 2600 kr per dag. Les mer om hva som
+                            påvirker kostnader ved sykefravær i denne rapporten.
                         </Normaltekst>
                     </LesMerPanel>
                     <Input
@@ -55,15 +55,18 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         maxLength={15}
                         type="number"
                     />
-                    <Normaltekst>Gjennomsnittlig kostnad per dagsverk: 2600&nbsp;kr</Normaltekst>
+                    <Normaltekst>
+                        Deres tapte dagsverk siste 12 mnd: {props.defaultTapteDagsverk}
+                    </Normaltekst>
                     <LesMerPanel
                         åpneLabel="Les mer her"
                         lukkLabel="Lukk"
                         className="kalkulator__lesmer-tapte-dagsverk"
                     >
                         <Normaltekst>
-                            En catchy ingress dersom det er behov for det. En catchy ingress dersom
-                            det er behov for det. Den bør helst ikke være så lang.
+                            Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk
+                            bergenes ut fra det legemeldte sykefraværet de siste 12 månedene og er
+                            tilgjengelig i NAVs datagrunnlag.
                         </Normaltekst>
                     </LesMerPanel>
                 </div>
