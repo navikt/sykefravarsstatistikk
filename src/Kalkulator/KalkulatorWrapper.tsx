@@ -4,7 +4,6 @@ import { hentRestTapteDagsverk } from '../api/api';
 import { useOrgnr } from '../utils/orgnr-hook';
 import { RestTapteDagsverk } from '../api/tapteDagsverk';
 import { RestStatus } from '../api/api-utils';
-import { summerTapteDagsverk } from './kalkulator-util';
 import Kalkulator from './Kalkulator';
 
 const KalkulatorWrapper: FunctionComponent = () => {
@@ -21,15 +20,8 @@ const KalkulatorWrapper: FunctionComponent = () => {
             }
         };
         hentTapteDagsverkOgSettState();
-
     }, [orgnr, restTapteDagsverk]);
 
-    if (restTapteDagsverk.status !== RestStatus.Suksess) {
-        return null;
-    }
-
-    return (
-        <Kalkulator defaultTapteDagsverk={summerTapteDagsverk(restTapteDagsverk.data)}/>
-    );
+    return <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />;
 };
 export default KalkulatorWrapper;
