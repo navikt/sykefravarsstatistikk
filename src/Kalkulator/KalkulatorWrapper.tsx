@@ -4,7 +4,6 @@ import { hentRestTapteDagsverk } from '../api/api';
 import { useOrgnr } from '../utils/orgnr-hook';
 import { RestTapteDagsverk } from '../api/tapteDagsverk';
 import { RestStatus } from '../api/api-utils';
-import { summerTapteDagsverk } from './kalkulator-util';
 import Kalkulator from './Kalkulator';
 
 const KalkulatorWrapper: FunctionComponent = () => {
