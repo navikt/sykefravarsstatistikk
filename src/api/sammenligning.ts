@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import {hentRestSammenligning} from "./api";
+import { useEffect, useState } from 'react';
+import { hentRestSammenligning } from './api';
 
 export enum RestSammenligningStatus {
     'Suksess',

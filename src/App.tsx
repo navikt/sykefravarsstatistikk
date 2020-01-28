@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import Banner from './Banner/Banner';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { OrganisasjonstreProvider } from './OrganisasjonstreProvider/OrganisasjonstreProvider';
 import { BASE_PATH } from './server/konstanter';
 import { useRestTapteDagsverk } from './api/tapteDagsverk';
 import { useOrgnr } from './utils/orgnr-hook';
@@ -11,6 +10,10 @@ import Forside from './Forside/Forside';
 import Infopanel from './Forside/Infopanel/Infopanel';
 import LegemeldtSykefraværPanel from './Forside/Legemeldtsykefraværpanel/LegemeldtSykefraværPanel';
 import IAwebpanel from './Forside/IAwebpanel/IAwebpanel';
+import { useRestOrganisasjonstre } from './api/organisasjonstre/organisasjonstre-api';
+import { RestStatus } from './api/api-utils';
+import Lasteside from './Lasteside/Lasteside';
+import IkkeInnloggetSide from './FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -26,12 +29,19 @@ const App: FunctionComponent = () => {
 const AppContent: FunctionComponent = () => {
     const orgnr = useOrgnr();
 
+    const restOrganisasjonstre = useRestOrganisasjonstre();
     const restTapteDagsverk = useRestTapteDagsverk(orgnr);
     const restSammenligning = useRestSammenligning(orgnr);
 
+    if (restOrganisasjonstre.status === RestStatus.LasterInn) {
+        return <Lasteside />;
+    } else if (restOrganisasjonstre.status === RestStatus.IkkeInnlogget) {
+        return <IkkeInnloggetSide />;
+    }
+
     return (
-        <OrganisasjonstreProvider>
-            <Banner tekst="Sykefraværsstatistikk" />
+        <>
+            <Banner tittel="Sykefraværsstatistikk" restOrganisasjonstre={restOrganisasjonstre} />
             <Route path={PATH_FORSIDE} exact={true}>
                 <Forside restSammenligning={restSammenligning}>
                     <Infopanel />
@@ -42,7 +52,7 @@ const AppContent: FunctionComponent = () => {
             <Route path={PATH_KALKULATOR} exact={true}>
                 <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />
             </Route>
-        </OrganisasjonstreProvider>
+        </>
     );
 };
 

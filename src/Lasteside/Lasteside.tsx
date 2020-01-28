@@ -1,4 +1,4 @@
-import { FunctionComponent, default as React } from 'react';
+import { default as React, FunctionComponent } from 'react';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import './Lasteside.less';
 

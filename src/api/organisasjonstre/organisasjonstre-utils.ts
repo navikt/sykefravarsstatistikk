@@ -1,8 +1,8 @@
 import {
     hentAltinnOrganisasjonerBrukerHarTilgangTil,
     hentJuridiskeEnheter,
-} from '../api/organisasjonstre-api';
-import { RestRessurs, RestStatus } from '../api/api-utils';
+} from './organisasjonstre-api';
+import { RestRessurs, RestStatus } from '../api-utils';
 
 export interface AltinnOrganisasjon {
     Name: string;

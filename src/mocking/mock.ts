@@ -9,7 +9,7 @@ const MOCK_TAPTEDAGSVERK = true;
 
 if (MOCK_MIN_SIDE_ARBEIDSGIVER) {
     fetchMock.get('/min-side-arbeidsgiver/api/organisasjoner', organisasjoner, {
-        delay: 1000
+        delay: 1000,
     });
 }
 
@@ -18,7 +18,7 @@ if (MOCK_SYKEFRAVÆRSSTATISTIKK) {
         delay: 2000,
     });
 }
-if(MOCK_TAPTEDAGSVERK){
+if (MOCK_TAPTEDAGSVERK) {
     fetchMock.get('express:/sykefravarsstatistikk/api/:orgnr/tapteDagsverk', tapteDagsverk, {
         delay: 2000,
     });
