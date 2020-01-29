@@ -75,8 +75,6 @@ workflows:
                 - master
       - godkjenn-til-dev:
           type: approval
-          requires:
-            - bygg
           filters:
             branches:
               ignore:
@@ -85,10 +83,9 @@ workflows:
           context: tag-ci
           requires:
             - godkjenn-til-dev
+            - bygg
       - godkjenn-til-prod:
           type: approval
-          requires:
-            - bygg
           filters:
             branches:
               only:
@@ -97,6 +94,7 @@ workflows:
           context: tag-ci
           requires:
             - godkjenn-til-prod
+            - bygg
           filters:
             branches:
               only:
