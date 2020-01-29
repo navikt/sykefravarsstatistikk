@@ -9,6 +9,7 @@ import { RestStatus } from '../api/api-utils';
 import { RestTapteDagsverk } from '../api/tapteDagsverk';
 import { summerTapteDagsverk } from './kalkulator-util';
 import NavFrontendSpinner from 'nav-frontend-spinner';
+import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
 
 interface Props {
     defaultTapteDagsverk: RestTapteDagsverk;
@@ -50,25 +51,32 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     <Systemtittel tag={'h2'} className="kalkulator__tittel">
                         Så mye koster sykefraværet
                     </Systemtittel>
+                    <Normaltekst className="kalkulator__ingress">
+                        Se hva sykefraværet koster, og hvor mye virksomheten deres kan spare.
+                    </Normaltekst>
                     <Input
-                        label={<Element>Kostnad per dagsverk</Element>}
+                        label={<Element>Kostnad per dagsverk (kr)</Element>}
                         onChange={event => setKostnadDagsverk(parseInt(event.target.value))}
                         value={kostnadDagsverk || ''}
                         bredde={'XS'}
                         maxLength={15}
                         type="number"
+                        className="kalkulator__input"
+                        placeholder="kr"
                     />
                     <Normaltekst>Gjennomsnittlig kostnad per dagsverk: 2600&nbsp;kr</Normaltekst>
                     <LesMerPanel
-                        åpneLabel="Les mer her"
+                        åpneLabel="Hvor kommer dette tallet fra?"
                         lukkLabel="Lukk"
                         className="kalkulator__lesmer-kostnad-dagsverk"
                     >
                         <Normaltekst>
                             Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
                             beregnet SINTEF og NHO at hver uke med sykefravær koster en arbeidsgiver
-                            i snitt 13 000 kr. Det vil si 2600 kr per dag. Les mer om hva som
-                            påvirker kostnader ved sykefravær i denne rapporten.
+                            i snitt 13 000 kr. Det vil si 2600 kr per dag.{' '}
+                            <EksternLenke href="https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/">
+                                Les mer om hva som påvirker kostnader ved sykefravær.
+                            </EksternLenke>
                         </Normaltekst>
                     </LesMerPanel>
                     <Input
@@ -78,12 +86,13 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         bredde={'XS'}
                         maxLength={15}
                         type="number"
+                        className="kalkulator__input"
                     />
                     <Normaltekst>
                         Deres tapte dagsverk siste 12 mnd: {tapteDagsverkSiste12Mnd}
                     </Normaltekst>
                     <LesMerPanel
-                        åpneLabel="Les mer her"
+                        åpneLabel="Hvor kommer dette tallet fra?"
                         lukkLabel="Lukk"
                         className="kalkulator__lesmer-tapte-dagsverk"
                     >

@@ -2,13 +2,12 @@ import React, { FunctionComponent } from 'react';
 import './Brødsmulesti.less';
 import { Link, useLocation } from 'react-router-dom';
 import { PATH_FORSIDE } from '../App';
-import { Normaltekst } from 'nav-frontend-typografi';
 
 const Brødsmulesti: FunctionComponent = () => {
     const location = useLocation();
 
     return (
-        <Normaltekst tag="nav" className="brødsmulesti">
+        <nav className="brødsmulesti">
             <ol className="brødsmulesti__liste">
                 <li>
                     <Link
@@ -23,7 +22,7 @@ const Brødsmulesti: FunctionComponent = () => {
                 </li>{' '}
                 / <li>Kostnadskalkulator</li>
             </ol>
-        </Normaltekst>
+        </nav>
     );
 };
 
