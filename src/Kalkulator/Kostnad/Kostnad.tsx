@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Element, Sidetittel, Systemtittel } from 'nav-frontend-typografi';
 import { ReactComponent as SedlerIkon } from '../sedlerIkon.svg';
-import "./Kostnad.less";
+import './Kostnad.less';
 
 interface Props {
     kostnad: number;

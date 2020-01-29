@@ -15,13 +15,19 @@ interface Props {
 }
 
 const Kalkulator: FunctionComponent<Props> = props => {
-    const defaultTapteDagsverk = props.defaultTapteDagsverk;
+    const { defaultTapteDagsverk } = props;
     const [tapteDagsverk, setTapteDagsverk] = useState<number | undefined>();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
     const totalKostnad = tapteDagsverk && kostnadDagsverk ? tapteDagsverk * kostnadDagsverk : 0;
 
     const harEndretTapteDagsverk = tapteDagsverk !== undefined;
+
+    useEffect(() => {
+        if (defaultTapteDagsverk.status === RestStatus.IkkeLastet) {
+            setTapteDagsverk(undefined);
+        }
+    }, [defaultTapteDagsverk]);
 
     useEffect(() => {
         if (defaultTapteDagsverk.status === RestStatus.Suksess && !harEndretTapteDagsverk) {
@@ -33,7 +39,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
         defaultTapteDagsverk.status === RestStatus.Suksess ? (
             summerTapteDagsverk(defaultTapteDagsverk.data)
         ) : (
-            <NavFrontendSpinner className="kalkulator__spinner" />
+            <NavFrontendSpinner className="kalkulator__spinner" transparent={true} />
         );
 
     return (

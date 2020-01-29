@@ -1,9 +1,8 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, { FunctionComponent } from 'react';
 import PanelBase from 'nav-frontend-paneler';
 import './LegemeldtSykefraværPanel.less';
 import { Systemtittel } from 'nav-frontend-typografi';
 import Sykefraværsprosentpanel from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
-import { RestSammenligningContext } from '../../SammenligningProvider';
 import { RestSammenligning, RestSammenligningStatus } from '../../api/sammenligning';
 import { HvordanBeregnesTallene } from './HvordanBeregnesTallene/HvordanBeregnesTallene';
 import MaskertSykefraværprosentpanel from './MaskertSykefraværprosentpanel/MaskertSykefraværprosentpanel';
@@ -11,8 +10,12 @@ import Skeleton from 'react-loading-skeleton';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 
-const LegemeldtSykefraværPanel: FunctionComponent = () => {
-    const restSammenligning: RestSammenligning = useContext(RestSammenligningContext);
+interface Props {
+    restSammenligning: RestSammenligning;
+}
+
+const LegemeldtSykefraværPanel: FunctionComponent<Props> = props => {
+    const restSammenligning = props.restSammenligning;
     const sammenligning = restSammenligning.sammenligning;
     const laster = restSammenligning.status === RestSammenligningStatus.LasterInn;
 

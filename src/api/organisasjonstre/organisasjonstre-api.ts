@@ -1,9 +1,11 @@
 import {
     AltinnOrganisasjon,
+    hentOrganisasjonerOgGenererOrganisasjonstre,
     Organisasjon,
     Organisasjonstre,
-} from '../OrganisasjonstreProvider/organisasjonstre-utils';
-import { getRestStatus, RestRessurs, RestStatus } from './api-utils';
+} from './organisasjonstre-utils';
+import { getRestStatus, RestRessurs, RestStatus } from '../api-utils';
+import { useEffect, useState } from 'react';
 
 export type RestOrganisasjonstre = RestRessurs<Organisasjonstre>;
 
@@ -49,4 +51,18 @@ export const hentJuridiskeEnheter = async (orgnumre: string[]): Promise<Organisa
         };
         return organisasjon;
     });
+};
+
+export const useRestOrganisasjonstre = (): RestOrganisasjonstre => {
+    const [restOrganisasjonstre, setRestOrganisasjonstre] = useState<RestOrganisasjonstre>({
+        status: RestStatus.LasterInn,
+    });
+
+    useEffect(() => {
+        hentOrganisasjonerOgGenererOrganisasjonstre().then(organisasjonstre =>
+            setRestOrganisasjonstre(organisasjonstre)
+        );
+    }, []);
+
+    return restOrganisasjonstre;
 };

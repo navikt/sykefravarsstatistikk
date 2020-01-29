@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import { hentRestSammenligning } from './api';
+
 export enum RestSammenligningStatus {
     'Suksess',
     'LasterInn',
@@ -58,4 +61,28 @@ export const getRestSammenligningStatus = (responseStatus: number): RestSammenli
             return RestSammenligningStatus.Error;
         }
     }
+};
+
+export const useRestSammenligning = (orgnr: string | undefined): RestSammenligning => {
+    const [restSammenligning, setRestSammenligning] = useState<RestSammenligning>({
+        status: RestSammenligningStatus.LasterInn,
+        sammenligning: defaultSammenligning,
+    });
+
+    useEffect(() => {
+        if (orgnr) {
+            setRestSammenligning({
+                status: RestSammenligningStatus.LasterInn,
+                sammenligning: defaultSammenligning,
+            });
+
+            const getSammenligningOgSettState = async () => {
+                let restSammenligningResponse = await hentRestSammenligning(orgnr);
+                setRestSammenligning(restSammenligningResponse);
+            };
+            getSammenligningOgSettState();
+        }
+    }, [orgnr]);
+
+    return restSammenligning;
 };
