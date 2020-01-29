@@ -11,47 +11,45 @@ interface Props {
 const Brødsmulesti: FunctionComponent<Props> = props => {
     const location = useLocation();
 
-    const minSideArbeidsgiver = (
-        <li>
-            <Lenke href={'/min-side-arbeidsgiver/' + location.search}>
-                Min side – arbeidsgiver
-            </Lenke>
-        </li>
-    );
-    const lenketekstSykefraværsstatistikk = 'Sykefraværsstatistikk';
-    const divider = <div className="brødsmulesti__divider">/</div>;
+    const minSideArbeidsgiverLenketekst = 'Min side – arbeidsgiver';
+    const sykefraværsstatistikkLenketekst = 'Sykefraværsstatistikk';
+    const kalkulatorLenketekst = 'Kostnadskalkulator';
 
-    let lenker;
+    const minSideArbeidsgiverLenke = (
+        <Lenke href={'/min-side-arbeidsgiver/' + location.search}>{minSideArbeidsgiverLenketekst}</Lenke>
+    );
+
+    let listeMedLenker;
     if (props.gjeldendeSide === 'sykefraværsstatistikk') {
-        lenker = (
+        listeMedLenker = (
             <>
-                {minSideArbeidsgiver}
-                {divider}
-                {lenketekstSykefraværsstatistikk}
+                <li>{minSideArbeidsgiverLenke}</li>
+                <li>{sykefraværsstatistikkLenketekst}</li>
             </>
         );
     } else if (props.gjeldendeSide === 'kalkulator') {
-        lenker = (
+        listeMedLenker = (
             <>
-                {minSideArbeidsgiver}
-                {divider}
-                <Link
-                    to={{
-                        pathname: PATH_FORSIDE,
-                        search: location.search,
-                    }}
-                    className="brødsmulesti__lenke"
-                >
-                    {lenketekstSykefraværsstatistikk}
-                </Link>
-                {divider} Kostnadskalkulator
+                <li>{minSideArbeidsgiverLenke}</li>
+                <li>
+                    <Link
+                        to={{
+                            pathname: PATH_FORSIDE,
+                            search: location.search,
+                        }}
+                        className="brødsmulesti__lenke"
+                    >
+                        {sykefraværsstatistikkLenketekst}
+                    </Link>
+                </li>
+                <li>{kalkulatorLenketekst}</li>
             </>
         );
     }
 
     return (
         <nav className="brødsmulesti">
-            <ol className="brødsmulesti__liste">{lenker}</ol>
+            <ol className="brødsmulesti__liste">{listeMedLenker}</ol>
         </nav>
     );
 };
