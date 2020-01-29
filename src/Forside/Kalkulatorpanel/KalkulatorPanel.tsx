@@ -11,8 +11,8 @@ const KalkulatorPanel: FunctionComponent = () => (
     <PanelBase className="kalkulatorpanel">
         <div className="kalkulatorpanel__tekst-wrapper">
             <div className="kalkulatorpanel__overskrift">
-                <img src={KalkisIkon} alt="" className="kalkulatorpanel__illustrasjon" />
-                <Systemtittel className="kalkulatorpanel__overskrift" tag="h2">
+                <Systemtittel className="kalkulatorpanel__overskrift kalkulatorpanel__ikon-tittel" tag="h2">
+                    <img src={KalkisIkon} alt="" className="kalkulatorpanel__illustrasjon" />
                     Så mye koster sykefraværet
                 </Systemtittel>
                 <Normaltekst>
