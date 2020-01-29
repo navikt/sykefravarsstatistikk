@@ -11,7 +11,7 @@ const VideoerPanel: FunctionComponent = () => (
     <PanelBase className="videoerpanel">
         <div className="videoerpanel__tekst-wrapper">
             <div className="videoerpanel__overskrift">
-                <Systemtittel className="videoerpanel__overskrift" tag="h2">
+                <Systemtittel className="videoerpanel__overskrift videoerpanel__tittel-ikon" tag="h2">
                     <img src={kalkulatorikon} alt="" className="videoerpanel__illustrasjon" />
                     Informasjonsvideoer
                 </Systemtittel>
