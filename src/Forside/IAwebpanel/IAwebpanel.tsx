@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import PanelBase from 'nav-frontend-paneler';
 import './IAwebpanel.less';
 import illustrasjon from './sort.svg';

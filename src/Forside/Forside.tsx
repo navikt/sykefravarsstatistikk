@@ -1,19 +1,29 @@
 import * as React from 'react';
-import Infopanel from './Infopanel/Infopanel';
 import './Forside.less';
-import IAwebpanel from './IAwebpanel/IAwebpanel';
-import LegemeldtSykefraværPanel from './Legemeldtsykefraværpanel/LegemeldtSykefraværPanel';
+import { RestSammenligning, RestSammenligningStatus } from '../api/sammenligning';
+import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
+import IkkeInnloggetSide from '../FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
 
-const Forside: React.FunctionComponent = () => {
-    return (
-        <div className="forside__wrapper">
-            <div className="forside">
-                <Infopanel />
-                <LegemeldtSykefraværPanel />
-                <IAwebpanel />
-            </div>
-        </div>
-    );
+interface Props {
+    restSammenligning: RestSammenligning;
+}
+
+const Forside: React.FunctionComponent<Props> = props => {
+    switch (props.restSammenligning.status) {
+        case RestSammenligningStatus.HarIkkeRettigheterIAltinn: {
+            return <ManglerRettigheterIAltinnSide />;
+        }
+        case RestSammenligningStatus.IkkeInnlogget: {
+            return <IkkeInnloggetSide />;
+        }
+        default: {
+            return (
+                <div className="forside__wrapper">
+                    <div className="forside">{props.children}</div>
+                </div>
+            );
+        }
+    }
 };
 
 export default Forside;

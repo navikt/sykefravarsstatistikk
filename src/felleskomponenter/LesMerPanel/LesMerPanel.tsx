@@ -12,7 +12,12 @@ interface Props {
     className?: string;
 }
 
-const LesMerPanel: React.FunctionComponent<Props> = ({ åpneLabel, lukkLabel, children , className}) => {
+const LesMerPanel: React.FunctionComponent<Props> = ({
+    åpneLabel,
+    lukkLabel,
+    children,
+    className,
+}) => {
     const [åpen, setÅpen] = useState<boolean>(false);
 
     return (

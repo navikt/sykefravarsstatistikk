@@ -1,19 +1,20 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './Banner.less';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Bedriftsmeny from '@navikt/bedriftsmeny';
 import '@navikt/bedriftsmeny/lib/bedriftsmeny.css';
-import { OrganisasjonstreContext } from '../OrganisasjonstreProvider/OrganisasjonstreProvider';
 import { JuridiskEnhetMedUnderEnheterArray } from '@navikt/bedriftsmeny/lib/Organisasjon';
 import {
     AltinnOrganisasjon,
     Organisasjon,
     Organisasjonstre,
-} from '../OrganisasjonstreProvider/organisasjonstre-utils';
+} from '../api/organisasjonstre/organisasjonstre-utils';
 import { RestStatus } from '../api/api-utils';
+import { RestOrganisasjonstre } from '../api/organisasjonstre/organisasjonstre-api';
 
 interface Props {
-    tekst: string;
+    tittel: string;
+    restOrganisasjonstre: RestOrganisasjonstre;
 }
 
 const mapTilAltinnOrganisasjon = (organisasjon: Organisasjon): AltinnOrganisasjon => {
@@ -41,13 +42,13 @@ const mapTilJuridiskEnhetMedUnderEnheterArray = (
 };
 
 const Banner: React.FunctionComponent<Props & RouteComponentProps> = props => {
-    const restOrganisasjonstre = useContext(OrganisasjonstreContext);
+    const { history, restOrganisasjonstre, tittel } = props;
     let organisasjonstre: Organisasjonstre =
         restOrganisasjonstre.status === RestStatus.Suksess ? restOrganisasjonstre.data : [];
     return (
         <Bedriftsmeny
-            sidetittel="Sykefraværsstatistikk"
-            history={props.history}
+            sidetittel={tittel}
+            history={history}
             onOrganisasjonChange={() => {}}
             organisasjonstre={mapTilJuridiskEnhetMedUnderEnheterArray(organisasjonstre)}
         />
