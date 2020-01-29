@@ -1,0 +1,25 @@
+@import '../../variables';
+
+.videoerpanel {
+    margin-top: 1.5rem;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+
+    &__overskrift {
+        margin-bottom: 1rem;
+    }
+
+    &__illustrasjon {
+        margin-bottom: 1rem;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        flex-direction: row;
+        padding: 2rem;
+        width: 50%;
+        &__tekst-wrapper {
+            margin-left: 2rem;
+        }
+    }
+}
