@@ -3,7 +3,6 @@ import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './Kalkulator.less';
 import LesMerPanel from '../felleskomponenter/LesMerPanel/LesMerPanel';
 import { Input } from 'nav-frontend-skjema';
-import Brødsmulesti from '../Brødsmulesti/Brødsmulesti';
 import Kostnad from './Kostnad/Kostnad';
 import { RestStatus } from '../api/api-utils';
 import { RestTapteDagsverk } from '../api/tapteDagsverk';
@@ -45,7 +44,6 @@ const Kalkulator: FunctionComponent<Props> = props => {
 
     return (
         <div className="kalkulator__wrapper">
-            <Brødsmulesti />
             <div className="kalkulator">
                 <div>
                     <Systemtittel tag={'h2'} className="kalkulator__tittel">
