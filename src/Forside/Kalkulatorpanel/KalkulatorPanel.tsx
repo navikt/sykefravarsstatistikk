@@ -5,24 +5,32 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { sendEvent } from '../../utils/metrikk-api';
 import PanelBase from 'nav-frontend-paneler';
 import './KalkulatorPanel.less';
-import Lenke from 'nav-frontend-lenker';
+import { PATH_KALKULATOR } from '../../App';
+import { Link, useLocation } from 'react-router-dom';
 
-const KalkulatorPanel: FunctionComponent = () => (
-    <PanelBase className="kalkulatorpanel">
-        <Systemtittel className="kalkulatorpanel__overskrift" tag="h2">
-            <KalkisIkon className="kalkulatorpanel__illustrasjon" />
-            Så mye koster sykefraværet
-        </Systemtittel>
-        <Normaltekst className="kalkulatorpanel__ingress">
-            Se hva sykefraværet koster, og hvor mye virksomheten deres kan spare.
-        </Normaltekst>
-        <Lenke
-            className="kalkulatorpanel__lenke"
-            href="/Kalkulator"
-            onClick={() => sendEvent('sykefravarsstatistikk.klikk-til-kalkulator')}
-        >
-            Gå til kostnadskalkulatoren
-        </Lenke>
-    </PanelBase>
-);
+
+const KalkulatorPanel: FunctionComponent = () => {
+    const location = useLocation();
+
+    return (<PanelBase className="kalkulatorpanel">
+            <Systemtittel className="kalkulatorpanel__overskrift" tag="h2">
+                <KalkisIkon className="kalkulatorpanel__illustrasjon"/>
+                Så mye koster sykefraværet
+            </Systemtittel>
+            <Normaltekst className="kalkulatorpanel__ingress">
+                Se hva sykefraværet koster, og hvor mye virksomheten deres kan spare.
+            </Normaltekst>
+            <Link
+                to={{
+                    pathname: PATH_KALKULATOR,
+                    search: location.search,
+                }}
+                className="kalkulatorpanel__lenke"
+                onClick={() => sendEvent('sykefravarsstatistikk.klikk-til-kalkulator')}
+            >
+                Gå til kostnadskalkulatoren
+            </Link>
+        </PanelBase>
+    );
+}
 export default KalkulatorPanel;
