@@ -8,13 +8,13 @@ import './KalkulatorPanel.less';
 import { PATH_KALKULATOR } from '../../App';
 import { Link, useLocation } from 'react-router-dom';
 
-
 const KalkulatorPanel: FunctionComponent = () => {
     const location = useLocation();
 
-    return (<PanelBase className="kalkulatorpanel">
+    return (
+        <PanelBase className="kalkulatorpanel">
             <Systemtittel className="kalkulatorpanel__overskrift" tag="h2">
-                <KalkisIkon className="kalkulatorpanel__illustrasjon"/>
+                <KalkisIkon className="kalkulatorpanel__illustrasjon" />
                 Så mye koster sykefraværet
             </Systemtittel>
             <Normaltekst className="kalkulatorpanel__ingress">
@@ -32,5 +32,5 @@ const KalkulatorPanel: FunctionComponent = () => {
             </Link>
         </PanelBase>
     );
-}
+};
 export default KalkulatorPanel;
