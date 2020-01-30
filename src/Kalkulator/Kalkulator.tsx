@@ -10,6 +10,7 @@ import { RestTapteDagsverk } from '../api/tapteDagsverk';
 import { summerTapteDagsverk } from './kalkulator-util';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
+import { scrollToBanner } from '../utils/scrollUtils';
 
 interface Props {
     defaultTapteDagsverk: RestTapteDagsverk;
@@ -35,6 +36,10 @@ const Kalkulator: FunctionComponent<Props> = props => {
             setTapteDagsverk(summerTapteDagsverk(defaultTapteDagsverk.data));
         }
     }, [defaultTapteDagsverk, harEndretTapteDagsverk]);
+
+    useEffect(() => {
+        scrollToBanner();
+    }, []);
 
     const tapteDagsverkSiste12Mnd =
         defaultTapteDagsverk.status === RestStatus.Suksess ? (
