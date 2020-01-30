@@ -4,7 +4,7 @@ import { ReactComponent as EksternLenkeIkon } from './EksternLenkeIkon.svg';
 import "./EksternLenke.less";
 
 const EksternLenke: FunctionComponent<Props> = props => (
-    <Lenke {...props}>
+    <Lenke {...props} className="ekstern-lenke">
         {props.children}
         <EksternLenkeIkon className="ekstern-lenke__ikon"/>
     </Lenke>
