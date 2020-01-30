@@ -3,18 +3,18 @@
 .kalkulatorpanel {
     margin-top: 1.5rem;
     padding: 2rem 1.5rem;
-    display: flex;
-    flex-direction: column;
     &__overskrift {
-        margin-bottom: 1rem;
-    }
-    &__ikon-tittel{
         display: flex;
-        align-items: flex-start;
+        padding-bottom: 1rem;
+        align-items: center;
     }
-
+    &__ingress {
+        padding-bottom: 1rem;
+    }
+    &__lenke {
+        .typo-normal-mixin();
+    }
     &__illustrasjon {
-        margin-bottom: 1rem;
         margin-right: 1rem;
     }
 
@@ -23,10 +23,5 @@
         padding: 2rem;
         max-width: calc(50% - 0.75rem);
         margin-right: 1.5rem;
-
-        &__tekst-wrapper {
-            margin-left: 2rem;
-        }
-
     }
 }

@@ -3,19 +3,23 @@
 .videoerpanel {
     margin-top: 1.5rem;
     padding: 2rem 1.5rem;
-    display: flex;
-    flex-direction: column;
 
     &__overskrift {
-        margin-bottom: 1rem;
-    }
-    &__tittel-ikon{
         display: flex;
-        align-items: flex-start;
+        margin-bottom: 1rem;
+        align-items: center;
     }
 
+    &__ingress {
+        padding-bottom: 1rem;
+    }
+    &__lenke {
+        display: block;
+         + .videoerpanel__lenke {
+            padding-top: 0.25rem;
+        }
+    }
     &__illustrasjon {
-        margin-bottom: 1rem;
         margin-right: 1rem;
     }
 
@@ -23,9 +27,5 @@
         flex-direction: row;
         padding: 2rem;
         max-width: calc(50% - 0.75rem);
-
-        &__tekst-wrapper {
-            margin-left: 2rem;
-        }
     }
 }
