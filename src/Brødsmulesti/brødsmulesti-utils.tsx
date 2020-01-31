@@ -4,8 +4,11 @@ import Lenke from 'nav-frontend-lenker';
 import InternLenke from '../felleskomponenter/InternLenke/InternLenke';
 import { PATH_FORSIDE, PATH_KALKULATOR } from '../App';
 
+export type Side = 'minSideArbeidsgiver' | 'sykefraværsstatistikk' | 'kalkulator';
+
 export interface Brødsmule {
-    side: string;
+    side: Side;
+    overordnetSide: Side | undefined;
     lenketekst: string;
     lenke: (innhold: string | ReactElement) => ReactElement;
 }
@@ -21,6 +24,7 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
     {
         side: 'minSideArbeidsgiver',
         lenketekst: 'Min side – arbeidsgiver',
+        overordnetSide: undefined,
         lenke: (innhold: string | ReactElement) => (
             <LenkeTilSomBeholderQuery href={'/min-side-arbeidsgiver/'}>
                 {innhold}
@@ -29,6 +33,7 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
     },
     {
         side: 'sykefraværsstatistikk',
+        overordnetSide: 'minSideArbeidsgiver',
         lenketekst: 'Sykefraværsstatistikk',
         lenke: (innhold: string | ReactElement) => (
             <InternLenke pathname={PATH_FORSIDE}>{innhold}</InternLenke>
@@ -36,9 +41,14 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
     },
     {
         side: 'kalkulator',
+        overordnetSide: 'sykefraværsstatistikk',
         lenketekst: 'Kostnadskalkulator',
         lenke: (innhold: string | ReactElement) => (
             <InternLenke pathname={PATH_KALKULATOR}>{innhold}</InternLenke>
         ),
     },
 ];
+
+export const finnBrødsmule = (side: Side, config: BrødsmulestiConfig): Brødsmule => {
+    return config.filter(smule => smule.side === side)[0];
+};

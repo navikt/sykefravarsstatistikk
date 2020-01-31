@@ -1,53 +1,28 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import React, { FunctionComponent } from 'react';
 import './Brødsmulesti.less';
-import { VenstreChevron } from 'nav-frontend-chevron';
-import { BrødsmulestiConfig, defaultBrødsmulestiConfig } from './brødsmulesti-utils';
+import { BrødsmulestiConfig, defaultBrødsmulestiConfig, finnBrødsmule } from './brødsmulesti-utils';
+import TilbakeTilForrigeBrødsmule from './TilbakeTilForrigeBrødsmule/TilbakeTilForrigeBrødsmule';
+import ListeMedLenker from './ListeMedLenker/ListeMedLenker';
 
 interface Props {
     gjeldendeSide: 'sykefraværsstatistikk' | 'kalkulator';
     config?: BrødsmulestiConfig;
 }
 
-const lagListeMedLenker = (
-    indexOfGjeldendeSmule: number,
-    config: BrødsmulestiConfig
-): (ReactElement | null)[] => {
-    return config.map((brødsmule, index) => {
-        if (index < indexOfGjeldendeSmule) {
-            return <li key={brødsmule.side}>{brødsmule.lenke(brødsmule.lenketekst)}</li>;
-        } else if (index === indexOfGjeldendeSmule) {
-            return <li key={brødsmule.side}>{brødsmule.lenketekst}</li>;
-        }
-        return null;
-    });
-};
-
 const Brødsmulesti: FunctionComponent<Props> = props => {
+    const { gjeldendeSide } = props;
     const config = props.config
         ? { ...defaultBrødsmulestiConfig, ...props.config }
         : defaultBrødsmulestiConfig;
 
-    const gjeldendeSmule = config.find(brødsmule => brødsmule.side === props.gjeldendeSide);
-    if (!gjeldendeSmule) {
-        return null;
-    }
-
-    const indexOfGjeldendeSmule = config.indexOf(gjeldendeSmule);
-    const forrigeSmule = config[indexOfGjeldendeSmule - 1];
-
-    const listeMedLenker = lagListeMedLenker(indexOfGjeldendeSmule, config);
+    const gjeldendeSmule = finnBrødsmule(gjeldendeSide, config);
+    const forrigeSmule =
+        gjeldendeSmule.overordnetSide && finnBrødsmule(gjeldendeSmule.overordnetSide, config);
 
     return (
         <nav className="brødsmulesti">
-            <ol className="brødsmulesti__liste">{listeMedLenker}</ol>
-            <div className="brødsmulesti__tilbakeknapp">
-                {forrigeSmule.lenke(
-                    <>
-                        <VenstreChevron />
-                        {forrigeSmule.lenketekst}
-                    </>
-                )}
-            </div>
+            <ListeMedLenker gjeldendeBrødsmule={gjeldendeSmule} config={config} />
+            <TilbakeTilForrigeBrødsmule brødsmule={forrigeSmule} />
         </nav>
     );
 };
