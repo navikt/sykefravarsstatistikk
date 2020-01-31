@@ -1,55 +1,53 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactElement } from 'react';
 import './Brødsmulesti.less';
-import { Link, useLocation } from 'react-router-dom';
-import { PATH_FORSIDE } from '../App';
-import Lenke from 'nav-frontend-lenker';
+import { VenstreChevron } from 'nav-frontend-chevron';
+import { BrødsmulestiConfig, defaultBrødsmulestiConfig } from './brødsmulesti-utils';
 
 interface Props {
     gjeldendeSide: 'sykefraværsstatistikk' | 'kalkulator';
+    config?: BrødsmulestiConfig;
 }
 
+const lagListeMedLenker = (
+    indexOfGjeldendeSmule: number,
+    config: BrødsmulestiConfig
+): (ReactElement | null)[] => {
+    return config.map((brødsmule, index) => {
+        if (index < indexOfGjeldendeSmule) {
+            return <li key={brødsmule.side}>{brødsmule.lenke(brødsmule.lenketekst)}</li>;
+        } else if (index === indexOfGjeldendeSmule) {
+            return <li key={brødsmule.side}>{brødsmule.lenketekst}</li>;
+        }
+        return null;
+    });
+};
+
 const Brødsmulesti: FunctionComponent<Props> = props => {
-    const location = useLocation();
+    const config = props.config
+        ? { ...defaultBrødsmulestiConfig, ...props.config }
+        : defaultBrødsmulestiConfig;
 
-    const minSideArbeidsgiverLenketekst = 'Min side – arbeidsgiver';
-    const sykefraværsstatistikkLenketekst = 'Sykefraværsstatistikk';
-    const kalkulatorLenketekst = 'Kostnadskalkulator';
-
-    const minSideArbeidsgiverLenke = (
-        <Lenke href={'/min-side-arbeidsgiver/' + location.search}>{minSideArbeidsgiverLenketekst}</Lenke>
-    );
-
-    let listeMedLenker;
-    if (props.gjeldendeSide === 'sykefraværsstatistikk') {
-        listeMedLenker = (
-            <>
-                <li>{minSideArbeidsgiverLenke}</li>
-                <li>{sykefraværsstatistikkLenketekst}</li>
-            </>
-        );
-    } else if (props.gjeldendeSide === 'kalkulator') {
-        listeMedLenker = (
-            <>
-                <li>{minSideArbeidsgiverLenke}</li>
-                <li>
-                    <Link
-                        to={{
-                            pathname: PATH_FORSIDE,
-                            search: location.search,
-                        }}
-                        className="brødsmulesti__lenke"
-                    >
-                        {sykefraværsstatistikkLenketekst}
-                    </Link>
-                </li>
-                <li>{kalkulatorLenketekst}</li>
-            </>
-        );
+    const gjeldendeSmule = config.find(brødsmule => brødsmule.side === props.gjeldendeSide);
+    if (!gjeldendeSmule) {
+        return null;
     }
+
+    const indexOfGjeldendeSmule = config.indexOf(gjeldendeSmule);
+    const forrigeSmule = config[indexOfGjeldendeSmule - 1];
+
+    const listeMedLenker = lagListeMedLenker(indexOfGjeldendeSmule, config);
 
     return (
         <nav className="brødsmulesti">
             <ol className="brødsmulesti__liste">{listeMedLenker}</ol>
+            <div className="brødsmulesti__tilbakeknapp">
+                {forrigeSmule.lenke(
+                    <>
+                        <VenstreChevron />
+                        {forrigeSmule.lenketekst}
+                    </>
+                )}
+            </div>
         </nav>
     );
 };
