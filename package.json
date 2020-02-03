@@ -73,6 +73,8 @@
     "mock": "REACT_APP_MOCK=true npm start",
     "wock": "set REACT_APP_MOCK=true && npm start",
     "serve": "node src/server/server.js",
+    "heroku": "node src/server/herokuServer.js",
+    "heroku-postbuild": "REACT_APP_MOCK=true npm run build",
     "build": "craco build",
     "test": "craco test ./",
     "eject": "craco eject"
