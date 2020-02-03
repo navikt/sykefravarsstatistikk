@@ -7,7 +7,7 @@ const buildPath = path.join(__dirname, '../../build');
 
 const PORT = process.env.PORT || 3000;
 
-process.env.REACT_APP_MOCK = true;
+app.get('/', (req, res) => res.redirect(BASE_PATH));
 
 app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
