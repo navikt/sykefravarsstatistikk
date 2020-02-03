@@ -1,12 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import Lenke, { Props } from 'nav-frontend-lenker';
 import { ReactComponent as EksternLenkeIkon } from './EksternLenkeIkon.svg';
-import "./EksternLenke.less";
+import './EksternLenke.less';
+import classNames from 'classnames';
 
 const EksternLenke: FunctionComponent<Props> = props => (
-    <Lenke {...props}>
+    <Lenke {...props} className={classNames('ekstern-lenke', props.className)}>
         {props.children}
-        <EksternLenkeIkon className="ekstern-lenke__ikon"/>
+        <EksternLenkeIkon className="ekstern-lenke__ikon" />
     </Lenke>
 );
 

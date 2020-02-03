@@ -21,7 +21,7 @@ const IAwebpanel: React.FunctionComponent = () => {
                 </div>
                 <a
                     href="https://www.altinn.no/Pages/ServiceEngine/Start/StartService.aspx?ServiceEditionCode=2&ServiceCode=3403&Oselect=true&M=SP"
-                    className="lenke"
+                    className="iawebpanel__lenke"
                     onClick={() => sendEvent('sykefravarsstatistikk.klikk-til-iaweb')}
                 >
                     Gå til IA-web

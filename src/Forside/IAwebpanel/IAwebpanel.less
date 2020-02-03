@@ -7,11 +7,16 @@
     flex-direction: column;
 
     &__overskrift {
-        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
     }
 
     &__illustrasjon {
         margin-bottom: 1rem;
+    }
+
+    &__lenke {
+        .lenke-mixin();
+        .typo-normal-mixin();
     }
 
     @media (min-width: @screen-sm-min) {

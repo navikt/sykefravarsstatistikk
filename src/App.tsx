@@ -15,6 +15,8 @@ import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
 import IkkeInnloggetSide from './FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
+import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
+import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -48,6 +50,8 @@ const AppContent: FunctionComponent = () => {
                 <Forside restSammenligning={restSammenligning}>
                     <Infopanel />
                     <LegemeldtSykefraværPanel restSammenligning={restSammenligning} />
+                    <KalkulatorPanel/>
+                    <VideoerPanel/>
                     <IAwebpanel />
                 </Forside>
             </Route>
