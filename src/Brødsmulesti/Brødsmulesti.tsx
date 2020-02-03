@@ -16,13 +16,11 @@ const Brødsmulesti: FunctionComponent<Props> = props => {
         : defaultBrødsmulestiConfig;
 
     const gjeldendeSmule = finnBrødsmule(gjeldendeSide, config);
-    const forrigeSmule =
-        gjeldendeSmule.overordnetSide && finnBrødsmule(gjeldendeSmule.overordnetSide, config);
 
     return (
         <nav className="brødsmulesti">
             <ListeMedBrødsmuler gjeldendeBrødsmule={gjeldendeSmule} config={config} />
-            <TilbakeTilForrigeBrødsmule brødsmule={forrigeSmule} />
+            <TilbakeTilForrigeBrødsmule gjeldendeBrødsmule={gjeldendeSmule} config={config} />
         </nav>
     );
 };

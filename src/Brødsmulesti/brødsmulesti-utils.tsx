@@ -4,7 +4,7 @@ import Lenke from 'nav-frontend-lenker';
 import InternLenke from '../felleskomponenter/InternLenke/InternLenke';
 import { PATH_FORSIDE, PATH_KALKULATOR } from '../App';
 
-export type Side = 'minSideArbeidsgiver' | 'sykefraværsstatistikk' | 'kalkulator';
+export type Side = string;
 
 export interface Brødsmule {
     side: Side;

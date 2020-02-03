@@ -1,23 +1,28 @@
 import React, { FunctionComponent } from 'react';
 import { VenstreChevron } from 'nav-frontend-chevron';
-import { Brødsmule } from '../brødsmulesti-utils';
+import { Brødsmule, BrødsmulestiConfig, finnBrødsmule } from '../brødsmulesti-utils';
 import './TilbakeTilForrigeBrødsmule.less';
 
 interface Props {
-    brødsmule?: Brødsmule;
+    gjeldendeBrødsmule: Brødsmule;
+    config: BrødsmulestiConfig;
 }
 
 const TilbakeTilForrigeBrødsmule: FunctionComponent<Props> = props => {
-    const { brødsmule } = props;
-    if (!brødsmule) {
+    const { gjeldendeBrødsmule, config } = props;
+    const forrigeSmule =
+        gjeldendeBrødsmule.overordnetSide &&
+        finnBrødsmule(gjeldendeBrødsmule.overordnetSide, config);
+
+    if (!forrigeSmule) {
         return null;
     }
     return (
         <div className="tilbakeknapp">
-            {brødsmule.lenke(
+            {forrigeSmule.lenke(
                 <>
                     <VenstreChevron />
-                    {brødsmule.lenketekst}
+                    {forrigeSmule.lenketekst}
                 </>
             )}
         </div>

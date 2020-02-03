@@ -50,8 +50,8 @@ const AppContent: FunctionComponent = () => {
                 <Forside restSammenligning={restSammenligning}>
                     <Infopanel />
                     <LegemeldtSykefraværPanel restSammenligning={restSammenligning} />
-                    <KalkulatorPanel/>
-                    <VideoerPanel/>
+                    <KalkulatorPanel />
+                    <VideoerPanel />
                     <IAwebpanel />
                 </Forside>
             </Route>
