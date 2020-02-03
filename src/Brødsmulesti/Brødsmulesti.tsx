@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import './Brødsmulesti.less';
 import { BrødsmulestiConfig, defaultBrødsmulestiConfig, finnBrødsmule } from './brødsmulesti-utils';
 import TilbakeTilForrigeBrødsmule from './TilbakeTilForrigeBrødsmule/TilbakeTilForrigeBrødsmule';
-import ListeMedLenker from './ListeMedLenker/ListeMedLenker';
+import ListeMedBrødsmuler from './ListeMedBrødsmuler/ListeMedBrødsmuler';
 
 interface Props {
     gjeldendeSide: 'sykefraværsstatistikk' | 'kalkulator';
@@ -21,7 +21,7 @@ const Brødsmulesti: FunctionComponent<Props> = props => {
 
     return (
         <nav className="brødsmulesti">
-            <ListeMedLenker gjeldendeBrødsmule={gjeldendeSmule} config={config} />
+            <ListeMedBrødsmuler gjeldendeBrødsmule={gjeldendeSmule} config={config} />
             <TilbakeTilForrigeBrødsmule brødsmule={forrigeSmule} />
         </nav>
     );

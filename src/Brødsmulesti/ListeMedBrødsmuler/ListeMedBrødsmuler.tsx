@@ -1,12 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import { Brødsmule, BrødsmulestiConfig, finnBrødsmule } from '../brødsmulesti-utils';
+import './ListeMedBrødsmuler.less';
 
 interface Props {
     gjeldendeBrødsmule: Brødsmule;
     config: BrødsmulestiConfig;
 }
 
-const ListeMedLenker: FunctionComponent<Props> = props => {
+const ListeMedBrødsmuler: FunctionComponent<Props> = props => {
     const { gjeldendeBrødsmule, config } = props;
     let liste = [<li key={gjeldendeBrødsmule.side}>{gjeldendeBrødsmule.lenketekst}</li>];
 
@@ -14,10 +15,11 @@ const ListeMedLenker: FunctionComponent<Props> = props => {
     while (overordnetSide) {
         const brødsmule = finnBrødsmule(overordnetSide, config);
         liste.push(<li key={brødsmule.side}>{brødsmule.lenke(brødsmule.lenketekst)}</li>);
+        overordnetSide = brødsmule.overordnetSide;
     }
 
     liste.reverse();
-    return <ol className="brødsmulesti__liste">{liste}</ol>;
+    return <ol className="liste-med-brødsmuler">{liste}</ol>;
 };
 
-export default ListeMedLenker;
+export default ListeMedBrødsmuler;

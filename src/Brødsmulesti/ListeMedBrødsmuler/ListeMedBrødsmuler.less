@@ -1,0 +1,23 @@
+@import '../../variables';
+
+.liste-med-brødsmuler {
+    display: none;
+
+    @media (min-width: @screen-sm-min) {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        max-width: 60rem;
+        margin: 0 auto;
+
+        // overrinding av defaultstyling for lister
+        padding-left: 0;
+        list-style: none;
+
+        li + li::before {
+            content: '/';
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
+        }
+    }
+}
