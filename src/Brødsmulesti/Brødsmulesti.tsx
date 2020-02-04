@@ -1,27 +1,31 @@
 import React, { FunctionComponent } from 'react';
 import './Brødsmulesti.less';
-import { Link, useLocation } from 'react-router-dom';
-import { PATH_FORSIDE } from '../App';
+import { BrødsmulestiConfig, defaultBrødsmulestiConfig, finnBrødsmule } from './brødsmulesti-utils';
+import TilbakeTilForrigeBrødsmule from './TilbakeTilForrigeBrødsmule/TilbakeTilForrigeBrødsmule';
+import ListeMedBrødsmuler from './ListeMedBrødsmuler/ListeMedBrødsmuler';
+import MediaQuery from 'react-responsive';
 
-const Brødsmulesti: FunctionComponent = () => {
-    const location = useLocation();
+interface Props {
+    gjeldendeSide: 'sykefraværsstatistikk' | 'kalkulator';
+    config?: BrødsmulestiConfig;
+}
+
+const Brødsmulesti: FunctionComponent<Props> = props => {
+    const { gjeldendeSide } = props;
+    const config = props.config
+        ? { ...defaultBrødsmulestiConfig, ...props.config }
+        : defaultBrødsmulestiConfig;
+
+    const gjeldendeSmule = finnBrødsmule(gjeldendeSide, config);
 
     return (
         <nav className="brødsmulesti">
-            <ol className="brødsmulesti__liste">
-                <li>
-                    <Link
-                        to={{
-                            pathname: PATH_FORSIDE,
-                            search: location.search,
-                        }}
-                        className="brødsmulesti__lenke"
-                    >
-                        Sykefraværsstatistikk
-                    </Link>
-                </li>{' '}
-                / <li>Kostnadskalkulator</li>
-            </ol>
+            <MediaQuery minWidth={768}>
+                <ListeMedBrødsmuler gjeldendeBrødsmule={gjeldendeSmule} config={config} />
+            </MediaQuery>
+            <MediaQuery maxWidth={767}>
+                <TilbakeTilForrigeBrødsmule gjeldendeBrødsmule={gjeldendeSmule} config={config} />
+            </MediaQuery>
         </nav>
     );
 };

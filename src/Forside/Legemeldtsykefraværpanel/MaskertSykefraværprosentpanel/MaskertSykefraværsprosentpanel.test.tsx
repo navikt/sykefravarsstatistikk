@@ -5,6 +5,7 @@ import MaskertSykefraværprosentpanel, {
 } from './MaskertSykefraværprosentpanel';
 import Sykefraværsprosentpanel from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { DataKanIkkeVisesPanel } from './DataKanIkkeVisesPanel/DataKanIkkeVisesPanel';
+import { Sykefraværprosent } from '../../../api/sammenligning';
 
 describe('Tester for MaskertSykefraværprosentpanel', () => {
     it('Skal rendre at data ikke kan vises, med maskert label, hvis sykefraværsprosenten er maskert', () => {
@@ -57,12 +58,14 @@ describe('Tester for MaskertSykefraværprosentpanel', () => {
     });
 });
 
-const tommeProps: MaskertSykefraværprosentpanelProps = {
+const tomtSykefraværsprosent: Sykefraværprosent = {
     label: '',
+    prosent: 0,
+};
+
+const tommeProps: MaskertSykefraværprosentpanelProps = {
     labelHvisMaskert: '',
     labelHvisNull: '',
-    sykefraværprosent: {
-        label: '',
-        prosent: 0,
-    },
+    sykefraværprosent: tomtSykefraværsprosent,
+    laster: false,
 };

@@ -14,6 +14,7 @@ import { useRestOrganisasjonstre } from './api/organisasjonstre/organisasjonstre
 import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
 import IkkeInnloggetSide from './FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
+import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
 
@@ -45,15 +46,17 @@ const AppContent: FunctionComponent = () => {
         <>
             <Banner tittel="Sykefraværsstatistikk" restOrganisasjonstre={restOrganisasjonstre} />
             <Route path={PATH_FORSIDE} exact={true}>
+                <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                 <Forside restSammenligning={restSammenligning}>
                     <Infopanel />
                     <LegemeldtSykefraværPanel restSammenligning={restSammenligning} />
-                    <KalkulatorPanel/>
-                    <VideoerPanel/>
+                    <KalkulatorPanel />
+                    <VideoerPanel />
                     <IAwebpanel />
                 </Forside>
             </Route>
             <Route path={PATH_KALKULATOR} exact={true}>
+                <Brødsmulesti gjeldendeSide="kalkulator" />
                 <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />
             </Route>
         </>
