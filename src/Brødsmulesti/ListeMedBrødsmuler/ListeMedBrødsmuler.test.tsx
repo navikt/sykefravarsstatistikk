@@ -19,7 +19,7 @@ describe('Tester for ListeMedBrødsmuler', () => {
         );
         expect(wrapper.findWhere(element => element.props().href === '/a').exists()).toEqual(true);
         expect(wrapper.findWhere(element => element.props().href === '/b').exists()).toEqual(true);
-        expect(wrapper.findWhere(element => element.props().href === '/b').exists()).toEqual(true);
+        expect(wrapper.findWhere(element => element.props().href === '/c').exists()).toEqual(true);
     });
 
     it('Skal ikke vise andre brødsmuler enn de foregående', () => {
