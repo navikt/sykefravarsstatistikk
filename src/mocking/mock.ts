@@ -1,8 +1,8 @@
 import fetchMock from 'fetch-mock';
-import tapteDagsverk from './tapteDagsverk.json';
 import { enhetsregisteretMockRespons } from './enhetsregisteret';
 import { getOrganisasjonerMock } from './organisasjoner';
 import { getSammenligningMock } from './sammenligning';
+import { getTapteDagsverkMock } from './tapteDagsverk';
 
 const MOCK_MIN_SIDE_ARBEIDSGIVER = true;
 const MOCK_SYKEFRAVÆRSSTATISTIKK = true;
@@ -28,7 +28,13 @@ if (MOCK_SYKEFRAVÆRSSTATISTIKK) {
 }
 
 if (MOCK_TAPTEDAGSVERK) {
-    fetchMock.get('express:/sykefravarsstatistikk/api/:orgnr/tapteDagsverk', tapteDagsverk, {
+    fetchMock.get('express:/sykefravarsstatistikk/api/:orgnr/tapteDagsverk', url => {
+        const orgnr = url.match(/[0-9]{9}/)![0];
+        if (orgnr === '101010101') {
+            return 500;
+        }
+        return getTapteDagsverkMock(orgnr);
+    }, {
         delay: 1000,
     });
 }
