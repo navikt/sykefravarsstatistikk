@@ -1,27 +1,18 @@
 import { organisasjonstreMock } from './organisasjonstre';
 import { AltinnOrganisasjon, Organisasjon } from '../api/organisasjonstre/organisasjonstre-utils';
 
-const mapTilEnterprise = (organisasjon: Organisasjon): AltinnOrganisasjon => {
-    return {
-        Name: organisasjon.navn,
-        Type: 'Enterprise',
-        OrganizationNumber: organisasjon.orgnr,
-        ParentOrganizationNumber: null,
-        OrganizationForm: 'AS',
-        Status: 'Active',
-    };
-};
-
-const mapTilBusiness = (
+const mapTilAltinnOrganisasjon = (
     organisasjon: Organisasjon,
-    overordnetEnhetOrgnr: string
+    overordnetEnhetOrgnr: string | null,
+    type: string,
+    organizationForm: string
 ): AltinnOrganisasjon => {
     return {
         Name: organisasjon.navn,
-        Type: 'Business',
+        Type: type,
         OrganizationNumber: organisasjon.orgnr,
         ParentOrganizationNumber: overordnetEnhetOrgnr,
-        OrganizationForm: 'BEDR',
+        OrganizationForm: organizationForm,
         Status: 'Active',
     };
 };
@@ -31,9 +22,11 @@ export const getOrganisasjonerMock = (): AltinnOrganisasjon[] => {
 
     organisasjonstreMock.forEach(juridiskEnhetMedUnderenheter => {
         const { juridiskEnhet, underenheter } = juridiskEnhetMedUnderenheter;
-        organisasjoner.push(mapTilEnterprise(juridiskEnhet));
+        organisasjoner.push(mapTilAltinnOrganisasjon(juridiskEnhet, null, 'Enterprise', 'AS'));
         underenheter.forEach(underenhet =>
-            organisasjoner.push(mapTilBusiness(underenhet, juridiskEnhet.orgnr))
+            organisasjoner.push(
+                mapTilAltinnOrganisasjon(underenhet, juridiskEnhet.orgnr, 'Business', 'BEDR')
+            )
         );
     });
     return organisasjoner;

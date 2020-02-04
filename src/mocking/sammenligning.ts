@@ -12,13 +12,16 @@ const defaultSammenlingning = {
         prosent: 4.1,
     },
     virksomhet: {
-        label: 'Fisk og fugl AS',
-        prosent: null,
-        erMaskert: true,
+        label: 'defaultbedrift (hvis du vil endre denne, kan du legge til ditt orgnr i mockingen)',
+        prosent: 1.1,
     },
 };
 
-const lagSammenligningVirksomhet = (orgNavn: string, orgProsent: number | null, erMaskert?: boolean) => {
+const lagSammenligningVirksomhet = (
+    orgNavn: string,
+    orgProsent: number | null,
+    erMaskert?: boolean
+) => {
     return {
         ...defaultSammenlingning,
         virksomhet: {
@@ -62,14 +65,35 @@ const lagSammenligningBransje = (
 
 export const getSammenligningMock = (orgnr: String): Sammenligning => {
     switch (orgnr) {
-        case '222222222':
-            return lagSammenligningNæring('FLESK OG FISK OSLO', 4.4, 'Jordbruk og tjenester tilknyttet jordbruk, jakt og viltstell', 6.3);
+        case '910969439':
+            return lagSammenligningNæring(
+                'FLESK OG FISK OSLO',
+                4.4,
+                'Jordbruk og tjenester tilknyttet jordbruk, jakt og viltstell',
+                6.3
+            );
         case '333333333':
-            return lagSammenligningNæring('FLESK OG FISK HAMAR', 3.6, 'Jordbruk og tjenester tilknyttet jordbruk, jakt og viltstell', 6.3);
+            return lagSammenligningNæring(
+                'FLESK OG FISK HAMAR',
+                3.6,
+                'Jordbruk og tjenester tilknyttet jordbruk, jakt og viltstell',
+                6.3
+            );
         case '444444444':
-            return lagSammenligningNæring('FLESK OG FISK GULEN', 36.5, 'Jordbruk og tjenester tilknyttet jordbruk, jakt og viltstell', 6.3);
+            return lagSammenligningNæring(
+                'FLESK OG FISK GULEN',
+                36.5,
+                'Jordbruk og tjenester tilknyttet jordbruk, jakt og viltstell',
+                6.3
+            );
         case '666666666':
-            return lagSammenligningNæring('OLA NORDMANN ENK', null, 'Annen personlig tjenesteyting', 2.3, true);
+            return lagSammenligningNæring(
+                'OLA NORDMANN ENK',
+                null,
+                'Annen personlig tjenesteyting',
+                2.3,
+                true
+            );
         case '888888888':
             return lagSammenligningBransje('HEI OG HÅ BARNEHAGE', 18.2, 'Barnehager', 15.4);
         default:

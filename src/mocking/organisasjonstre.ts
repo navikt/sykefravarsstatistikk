@@ -9,7 +9,7 @@ const fleskOgFisk: JuridiskEnhetMedUnderenheter = {
     underenheter: [
         {
             navn: 'FLESK OG FISK OSLO',
-            orgnr: '222222222',
+            orgnr: '910969439',
             harTilgang: true,
         },
         {

@@ -48,30 +48,4 @@ if (MOCK_ENHETSREGISTERET) {
     );
 }
 
-/*
-FLESK OG FISK AS
- - FLESK OG FISK OSLO
- - FLESK OG FISK HAMAR
- - FLESK OG FISK GULEN
-
-OLA NORDMANN ENK
- - OLA NORDMANN ENK (for få folk)
-
- HEI OG HÅ BARNEHAGE
-  - HEI OG HÅ BARNEHAGE (høyt sykefravær)
-
- FEIL AS
-  - FEIL AS (skal feile)
- */
-
-/*
-
-export interface Organisasjon {
-    navn: string;
-    orgnr: string;
-    harTilgang?: boolean;
-}
- */
-
-
 fetchMock.spy();
