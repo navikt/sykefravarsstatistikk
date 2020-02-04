@@ -19,7 +19,7 @@ export interface Organisasjon {
     harTilgang?: boolean;
 }
 
-interface JuridiskEnhetMedUnderenheter {
+export interface JuridiskEnhetMedUnderenheter {
     juridiskEnhet: Organisasjon;
     underenheter: Organisasjon[];
 }
