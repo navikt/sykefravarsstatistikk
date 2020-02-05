@@ -24,6 +24,7 @@ export const PATH_KALKULATOR = '/kalkulator';
 const App: FunctionComponent = () => {
     return (
         <BrowserRouter basename={BASE_PATH}>
+            <button onClick={() => {throw new Error("detta var en kasta feil gitt")}}>ødelegg</button>
             <AppContent />
         </BrowserRouter>
     );
