@@ -1,7 +1,7 @@
-export const erProd = (): boolean => {
+export const getMiljø = (): string => {
     const settings = (window as any).appSettings;
     if (!settings) {
-        return false;
+        return 'local';
     }
-    return (settings.MILJO === 'prod-sbs');
+    return settings.MILJO || 'local';
 };
