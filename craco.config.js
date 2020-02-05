@@ -14,10 +14,6 @@ module.exports = {
                     pathRewrite: (path, req) => path.replace(apiProxyPath, ''),
                 })
             );
-
-            app.get(BASE_PATH + '/static/js/settings.js', (req, res) => {
-                res.send("window.appSettings = {MILJO: 'local'};");
-            });
         },
     },
     eslint: {

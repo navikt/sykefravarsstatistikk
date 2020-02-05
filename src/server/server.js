@@ -5,12 +5,9 @@ const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
 const proxy = require('./proxy');
 const { BASE_PATH } = require('./konstanter');
-const lagSettingsfilTilFrontend = require('./settingsTilFrontend');
 const buildPath = path.join(__dirname, '../../build');
 
 const PORT = process.env.PORT || 3000;
-
-lagSettingsfilTilFrontend(path.resolve(`${buildPath}/static/js/settings.js`));
 
 app.engine('html', mustacheExpress());
 app.set('view engine', 'mustache');
