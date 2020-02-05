@@ -1,8 +1,7 @@
 const fsExtra = require('fs-extra');
 
-function lagSettingsfilTilFrontend(settingsPath) {
-    console.log('nå lager jeg den filen');
-    fsExtra.ensureFile(settingsPath).then(f => {
+const lagSettingsfilTilFrontend = settingsPath => {
+    fsExtra.ensureFile(settingsPath).then(() => {
         fsExtra.writeFileSync(
             settingsPath,
             `window.appSettings = {
@@ -10,6 +9,6 @@ function lagSettingsfilTilFrontend(settingsPath) {
             };`
         );
     });
-}
+};
 
 module.exports = lagSettingsfilTilFrontend;
