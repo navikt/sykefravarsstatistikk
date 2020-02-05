@@ -6,6 +6,7 @@
   "dependencies": {
     "@craco/craco": "^5.6.3",
     "@navikt/bedriftsmeny": "^1.0.15",
+    "@types/recharts": "^1.8.5",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",
     "core-js": "^3.6.4",
@@ -45,6 +46,7 @@
     "react-responsive": "^8.0.3",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.3.0",
+    "recharts": "^2.0.0-beta.1",
     "typescript": "^3.7.4"
   },
   "devDependencies": {

@@ -17,6 +17,7 @@ import IkkeInnloggetSide from './FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
+import Graf from './Graf/Graf';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -59,6 +60,9 @@ const AppContent: FunctionComponent = () => {
                 <Brødsmulesti gjeldendeSide="kalkulator" />
                 <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />
             </Route>
+            <Route path="/graf" exact={true}>
+            <Graf />
+        </Route>
         </>
     );
 };
