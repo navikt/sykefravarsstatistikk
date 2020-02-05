@@ -1,6 +1,6 @@
 const CracoLessPlugin = require('craco-less');
 const proxy = require('http-proxy-middleware');
-
+const { BASE_PATH } = require('./src/server/konstanter');
 const apiProxyPath = '/sykefravarsstatistikk/api';
 
 module.exports = {
@@ -14,6 +14,10 @@ module.exports = {
                     pathRewrite: (path, req) => path.replace(apiProxyPath, ''),
                 })
             );
+
+            app.get(BASE_PATH + '/static/js/settings.js', (req, res) => {
+                res.send("window.appSettings = {MILJO: 'local'};");
+            });
         },
     },
     eslint: {
