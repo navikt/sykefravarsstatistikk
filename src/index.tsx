@@ -5,6 +5,7 @@ import App from './App';
 import * as Sentry from '@sentry/browser'
 
 import './index.less';
+import { erProd } from './utils/miljø-utils';
 
 if (process.env.REACT_APP_MOCK) {
     console.log('========================================');
@@ -14,6 +15,8 @@ if (process.env.REACT_APP_MOCK) {
     require('./mocking/mock');
 }
 
-Sentry.init({dsn: 'https://c4ef091d1fb54f01a7f808e621b28948@sentry.gc.nav.no/13'});
+if (erProd()) {
+    Sentry.init({ dsn: 'https://c4ef091d1fb54f01a7f808e621b28948@sentry.gc.nav.no/13' });
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
