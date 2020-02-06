@@ -12,177 +12,31 @@ import {
 } from 'recharts';
 
 import './Graf.less';
-import Diamant from './Diamant';
-import Firkant from './Firkant';
 
-const rnd = (min: number, max: number) => Math.random() * (max - min) + min;
+const rnd = (min: number, max: number) => Number.parseFloat((Math.random() * (max - min) + min).toFixed(2));
 
-const sykefraværData = [
-    {
-        name: '2015, 1. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2015, 2. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2015, 3. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(3, 6),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2015, 4. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
+let testdata: {
+    name: string;
+    virksomhet: number;
+    næring: number;
+    land: number;
+    sektor: number;
+}[] = [];
 
-    {
-        name: '2016, 1. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2016, 2. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2016, 3. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(3, 6),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2016, 4. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
-
-    {
-        name: '2017, 1. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2017, 2. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2017, 3. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(3, 6),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2017, 4. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
-
-    {
-        name: '2018, 1. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2018, 2. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2018, 3. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(3, 6),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2018, 4. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
-
-    {
-        name: '2019, 1. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2019, 2. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2019, 3. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(3, 6),
-        sektor: rnd(4, 7),
-    },
-    {
-        name: '2019, 4. kvartal',
-        virksomhet: rnd(5, 10),
-        næring: rnd(4, 6),
-        land: rnd(4, 5),
-        sektor: rnd(4, 7),
-    },
-];
-
-let maks = 0;
-
-sykefraværData.forEach(data => {
-    if (data.virksomhet > maks) {
-        maks = data.virksomhet;
-    }
-    if (data.næring > maks) {
-        maks = data.næring;
-    }
-    if (data.sektor > maks) {
-        maks = data.sektor;
-    }
-    if (data.land > maks) {
-        maks = data.land;
-    }
+let forrigevirksomhet = rnd(0, 10);
+['2015', '2016', '2017', '2018', '2019'].forEach(årstall => {
+    [1, 2, 3, 4].forEach(kvartal => {
+        const virksomhet = Math.max(forrigevirksomhet + rnd(-2, 2), 0);
+        forrigevirksomhet = virksomhet;
+        testdata.push({
+            name: årstall + ', ' + kvartal + '. kvartal',
+            virksomhet: virksomhet,
+            næring: rnd(2, 4.5),
+            sektor: rnd(4, 6.5),
+            land: rnd(6, 7.5)
+        });
+    })
 });
-
-maks = Math.ceil(maks);
-
 
 const margin = 50;
 const lineWidth = 2;
@@ -194,7 +48,7 @@ const Graf: FunctionComponent = () => {
             <div className="graf">
                 <ResponsiveContainer height={500}>
                     <LineChart
-                        data={sykefraværData}
+                        data={testdata}
                         margin={{ top: margin, right: margin, left: margin, bottom: margin }}
                     >
                         <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
@@ -215,11 +69,36 @@ const Graf: FunctionComponent = () => {
                             tickMargin={20}
                             tickFormatter={value => value + ' %'}
                             width={40}
-                            //domain={[0, maks]}
                         />
                         <Tooltip />
-                        <Legend wrapperStyle={{ paddingTop: 30 }}
-                                //formatter={(value, entry, index) => {console.log({value, entry, index})}}
+                        <Legend
+                            wrapperStyle={{ paddingTop: 30 }}
+                            payload={[
+                                {
+                                    value: 'virksomhet',
+                                    type: 'circle',
+                                    id: 'virksomhet',
+                                    color: '#38A161',
+                                },
+                                {
+                                    value: 'næring',
+                                    type: 'diamond',
+                                    id: 'næring',
+                                    color: '#FF9100',
+                                },
+                                {
+                                    value: 'land',
+                                    type: 'square',
+                                    id: 'land',
+                                    color: '#C30000',
+                                },
+                                {
+                                    value: 'sektor',
+                                    type: 'triangle',
+                                    id: 'sektor',
+                                    color: '#3385D1',
+                                },
+                            ]}
                         />
                         <Line
                             type="monotone"
@@ -229,18 +108,21 @@ const Graf: FunctionComponent = () => {
                             dot={<Symbols type="circle" size={dotSize} fill="#38A161" />}
                         />
                         <Line
+                            type="monotone"
                             dataKey="næring"
                             stroke="#FF9100" // oransje
                             strokeWidth={lineWidth}
                             dot={<Symbols type="diamond" size={dotSize} fill="#FF9100" />}
                         />
                         <Line
+                            type="monotone"
                             dataKey="land"
                             stroke="#C30000" // rød
                             strokeWidth={lineWidth}
                             dot={<Symbols type="square" size={dotSize} fill="#C30000" />}
                         />
                         <Line
+                            type="monotone"
                             dataKey="sektor"
                             stroke="#3385D1" // blå
                             strokeWidth={lineWidth}
@@ -250,7 +132,7 @@ const Graf: FunctionComponent = () => {
                 </ResponsiveContainer>
             </div>
         </div>
-    ); // 'circle' | 'cross' | 'diamond' | 'square' | 'star' | 'triangle' | 'wye';
+    );
 };
 
 export default Graf;
