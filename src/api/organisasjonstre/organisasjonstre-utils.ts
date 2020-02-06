@@ -3,6 +3,7 @@ import {
     hentJuridiskeEnheter,
 } from './organisasjonstre-api';
 import { RestRessurs, RestStatus } from '../api-utils';
+import * as Sentry from '@sentry/browser';
 
 export interface AltinnOrganisasjon {
     Name: string;
@@ -124,6 +125,7 @@ export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<Res
             data: mapTilOrganisasjonstre(altinnOrganisasjoner, manglendeJuridiskeEnheter),
         };
     } catch (error) {
+        Sentry.captureException(error);
         return {
             status: error.status || RestStatus.Feil,
         };
