@@ -14,6 +14,10 @@
     min-height: 50rem;
     padding: 2rem 1rem 5rem;
   }
+
+  &__virksomhet-label {
+    margin-left: 0.5rem;
+  }
 }
 
 .recharts-cartesian-axis-tick-value {
@@ -26,7 +30,11 @@
   stroke-width: 2px;
 }
 
+
+// legend
 .recharts-default-legend {
   .typo-element-mixin();
   fill: @navMorkGra;
+  display: flex;
+  justify-content: space-around;
 }

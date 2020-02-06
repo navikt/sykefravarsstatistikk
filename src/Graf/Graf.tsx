@@ -13,7 +13,9 @@ import {
 
 import './Graf.less';
 
-const rnd = (min: number, max: number) => Number.parseFloat((Math.random() * (max - min) + min).toFixed(2));
+const toDesimaler = (n: number): number => Number.parseFloat(n.toFixed(2));
+
+const rnd = (min: number, max: number) => toDesimaler(Math.random() * (max - min) + min);
 
 let testdata: {
     name: string;
@@ -23,20 +25,36 @@ let testdata: {
     sektor: number;
 }[] = [];
 
-let forrigevirksomhet = rnd(0, 10);
+let forrigevirksomhet = rnd(0, 2);
 ['2015', '2016', '2017', '2018', '2019'].forEach(årstall => {
     [1, 2, 3, 4].forEach(kvartal => {
-        const virksomhet = Math.max(forrigevirksomhet + rnd(-2, 2), 0);
+        const virksomhet = Math.max(toDesimaler(forrigevirksomhet + rnd(-0.5, 2)), 0);
         forrigevirksomhet = virksomhet;
         testdata.push({
             name: årstall + ', ' + kvartal + '. kvartal',
             virksomhet: virksomhet,
             næring: rnd(2, 4.5),
             sektor: rnd(4, 6.5),
-            land: rnd(6, 7.5)
+            land: rnd(6, 7.5),
         });
-    })
+    });
 });
+
+const labels = {
+    virksomhet: <span className="graf__virksomhet-label">Hoppetitten barnehage</span>,
+    næring: (
+        <span className="graf__næring-label">
+            <span className="graf__næring-label-tittel">Bransje:</span>
+            <br /> <span>Barnehager</span>
+        </span>
+    ),
+    sektor: (
+        <>
+            <span>Sektor:</span> <div>Privat og offentlig næringsvirksomhet</div>
+        </>
+    ),
+    land: <span>Norge</span>,
+};
 
 const margin = 50;
 const lineWidth = 2;
@@ -65,14 +83,12 @@ const Graf: FunctionComponent = () => {
                             ]}
                             tickFormatter={text => text.substring(0, 4)}
                         />
-                        <YAxis
-                            tickMargin={20}
-                            tickFormatter={value => value + ' %'}
-                            width={40}
-                        />
+                        <YAxis tickMargin={20} tickFormatter={value => value + ' %'} width={40} />
                         <Tooltip />
                         <Legend
-                            wrapperStyle={{ paddingTop: 30 }}
+                            wrapperStyle={{ paddingTop: 50 }}
+                            iconSize={20}
+                            formatter={(value, entry, index) => (labels as any)[value]}
                             payload={[
                                 {
                                     value: 'virksomhet',
@@ -87,16 +103,16 @@ const Graf: FunctionComponent = () => {
                                     color: '#FF9100',
                                 },
                                 {
-                                    value: 'land',
-                                    type: 'square',
-                                    id: 'land',
-                                    color: '#C30000',
-                                },
-                                {
                                     value: 'sektor',
                                     type: 'triangle',
                                     id: 'sektor',
                                     color: '#3385D1',
+                                },
+                                {
+                                    value: 'land',
+                                    type: 'square',
+                                    id: 'land',
+                                    color: '#C30000',
                                 },
                             ]}
                         />
@@ -116,17 +132,17 @@ const Graf: FunctionComponent = () => {
                         />
                         <Line
                             type="monotone"
-                            dataKey="land"
-                            stroke="#C30000" // rød
-                            strokeWidth={lineWidth}
-                            dot={<Symbols type="square" size={dotSize} fill="#C30000" />}
-                        />
-                        <Line
-                            type="monotone"
                             dataKey="sektor"
                             stroke="#3385D1" // blå
                             strokeWidth={lineWidth}
                             dot={<Symbols type="triangle" size={dotSize} fill="#3385D1" />}
+                        />
+                        <Line
+                            type="monotone"
+                            dataKey="land"
+                            stroke="#C30000" // rød
+                            strokeWidth={lineWidth}
+                            dot={<Symbols type="square" size={dotSize} fill="#C30000" />}
                         />
                     </LineChart>
                 </ResponsiveContainer>
