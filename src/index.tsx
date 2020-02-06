@@ -3,8 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as Sentry from '@sentry/browser';
-import { getMiljø } from './server/miljøUtils';
 import './index.less';
+import { getMiljø } from './utils/miljøUtils';
 
 
 if (process.env.REACT_APP_MOCK) {

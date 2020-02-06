@@ -1,7 +1,7 @@
 FROM navikt/node-express:12.2.0-alpine as builder
 WORKDIR /usr/src/app
 
-RUN yarn add http-proxy-middleware jsdom mustache-express request fs-extra
+RUN yarn add http-proxy-middleware jsdom mustache-express request
 
 FROM navikt/node-express:12.2.0-alpine
 WORKDIR /app

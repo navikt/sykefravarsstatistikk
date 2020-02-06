@@ -1,6 +1,5 @@
 const CracoLessPlugin = require('craco-less');
 const proxy = require('http-proxy-middleware');
-const { BASE_PATH } = require('./src/server/konstanter');
 const apiProxyPath = '/sykefravarsstatistikk/api';
 
 module.exports = {
