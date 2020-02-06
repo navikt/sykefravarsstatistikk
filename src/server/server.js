@@ -53,8 +53,6 @@ const startServer = html => {
     });
 };
 
-console.log('react app cluster: ', process.env.REACT_APP_NAIS_CLUSTER_NAME);
-
 getDecorator()
     .then(renderAppMedDecorator, error => {
         console.error('Kunne ikke hente dekoratør ', error);
