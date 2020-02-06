@@ -20,6 +20,5 @@ Sentry.init({
     environment: getMiljø(),
     enabled: getMiljø() !== 'local',
 });
-console.log('cluster', getMiljø());
 
 ReactDOM.render(<App />, document.getElementById('root'));
