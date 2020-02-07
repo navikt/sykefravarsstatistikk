@@ -4,7 +4,7 @@ import SymbolSvg from '../SymbolSvg';
 import { getFarge, getSymbol } from '../Graf';
 import './grafTooltip.less';
 
-export const grafTooltip = () => (
+const grafTooltip = () => (
     <Tooltip
         formatter={(value, name, props) => [
             <span className="tooltip__item-wrapper">
@@ -22,4 +22,5 @@ export const grafTooltip = () => (
         contentStyle={{ border: '2px solid #3E3832', borderRadius: '0.25rem' }}
     />
 );
+
 export default grafTooltip;

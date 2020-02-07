@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { CartesianGrid, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
 import './Graf.less';
-import { grafTooltip } from './grafTooltip/grafTooltip';
+import grafTooltip from './grafTooltip/grafTooltip';
 import grafLegend from './grafLegend/grafLegend';
 import grafLinjer from './grafLinjer';
 import { genererTestdata } from './graf-utils';

@@ -24,32 +24,14 @@ const grafLegend = () => (
         wrapperStyle={{ paddingTop: 50 }}
         iconSize={20}
         formatter={(value, entry, index) => (labels as any)[value]}
-        payload={[
-            {
-                value: 'virksomhet',
-                type: getSymbol('virksomhet'),
-                id: 'virksomhet',
-                color: getFarge('virksomhet'),
-            },
-            {
-                value: 'næring',
-                type: getSymbol('næring'),
-                id: 'næring',
-                color: getFarge('næring'),
-            },
-            {
-                value: 'sektor',
-                type: getSymbol('sektor'),
-                id: 'sektor',
-                color: getFarge('sektor'),
-            },
-            {
-                value: 'land',
-                type: getSymbol('land'),
-                id: 'land',
-                color: getFarge('land'),
-            },
-        ]}
+        payload={['virksomhet', 'næring', 'sektor', 'land'].map(name => {
+            return {
+                value: name,
+                type: getSymbol(name),
+                id: name,
+                color: getFarge(name),
+            };
+        })}
     />
 );
 
