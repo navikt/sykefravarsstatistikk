@@ -8,6 +8,7 @@ const dotSize = 40;
 const grafLinjer = () =>
     ['virksomhet', 'næring', 'sektor', 'land'].map(name => (
         <Line
+            key={name}
             type="monotone"
             dataKey={name}
             stroke={getFarge(name)}
