@@ -1,40 +1,70 @@
 @import '../variables';
 
 .graf {
-  background-color: white;
-  padding: 2rem 2rem 3rem;
-  margin: 0 auto 0;
-  border-radius: 0.25rem;
-  max-width: 60rem;
-  display: flex;
-  align-items: flex-start;
+    background-color: white;
+    padding: 2rem 2rem 3rem;
+    margin: 0 auto 0;
+    border-radius: 0.25rem;
+    max-width: 60rem;
+    display: flex;
+    align-items: flex-start;
+    .typo-normal-mixin();
 
-  &__wrapper {
-    background-color: @navLysGra;
-    min-height: 50rem;
-    padding: 2rem 1rem 5rem;
-  }
+    &__wrapper {
+        background-color: @navLysGra;
+        min-height: 50rem;
+        padding: 2rem 1rem 5rem;
+    }
 
-  &__virksomhet-label {
-    margin-left: 0.5rem;
-  }
+    &__virksomhet-label {
+        margin-left: 0.5rem;
+    }
 }
 
+.tooltip {
+    min-width: 5rem;
+    min-height: 5rem;
+    background: white;
+    border: 2px solid black;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+}
+
+// recharts tooltip
+.recharts-tooltip-label {
+    .typo-element-mixin();
+}
+
+// axes
 .recharts-cartesian-axis-tick-value {
-  .typo-element-mixin();
-  fill: @navMorkGra;
+    .typo-element-mixin();
+    fill: @navMorkGra;
 }
 
-.recharts-yAxis, .recharts-xAxis {
-  stroke: @navMorkGra;
-  stroke-width: 2px;
+.recharts-yAxis,
+.recharts-xAxis {
+    stroke: @navMorkGra;
+    stroke-width: 2px;
 }
-
 
 // legend
 .recharts-default-legend {
-  .typo-element-mixin();
-  fill: @navMorkGra;
-  display: flex;
-  justify-content: space-around;
+    .typo-element-mixin();
+    fill: @navMorkGra;
+    display: flex;
+    justify-content: space-around;
+}
+
+.tooltip {
+    &__item-wrapper {
+        display: flex;
+    }
+
+    &__item-value {
+        color: @navMorkGra;
+    }
+
+    &__ikon {
+        margin-right: 0.75rem;
+    }
 }

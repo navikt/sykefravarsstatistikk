@@ -1,0 +1,100 @@
+{
+    "active": true,
+    "allowEscapeViewBox": { "x": false, "y": false },
+    "offset": 10,
+    "viewBox": {
+        "brushBottom": 80,
+        "top": 50,
+        "bottom": 174.078125,
+        "left": 90,
+        "right": 50,
+        "width": 756,
+        "height": 275.921875,
+        "x": 90,
+        "y": 50
+    },
+    "coordinate": { "x": 726.6315789473684, "y": 248 },
+    "cursorStyle": {},
+    "separator": " : ",
+    "wrapperStyle": {},
+    "contentStyle": {},
+    "itemStyle": {},
+    "labelStyle": {},
+    "cursor": true,
+    "isAnimationActive": true,
+    "animationEasing": "ease",
+    "animationDuration": 400,
+    "filterNull": true,
+    "useTranslate3d": false,
+    "label": "2019, 1. kvartal",
+    "payload": [
+        {
+            "stroke": "#38A161",
+            "strokeWidth": 2,
+            "fill": "#fff",
+            "points": [],
+            "dataKey": "virksomhet",
+            "name": "virksomhet",
+            "color": "#38A161",
+            "value": 12.24,
+            "payload": {
+                "name": "2019, 1. kvartal",
+                "virksomhet": 12.24,
+                "næring": 2.11,
+                "sektor": 4.4,
+                "land": 6.11
+            }
+        },
+        {
+            "stroke": "#FF9100",
+            "strokeWidth": 2,
+            "fill": "#fff",
+            "points": [],
+            "dataKey": "næring",
+            "name": "næring",
+            "color": "#FF9100",
+            "value": 2.11,
+            "payload": {
+                "name": "2019, 1. kvartal",
+                "virksomhet": 12.24,
+                "næring": 2.11,
+                "sektor": 4.4,
+                "land": 6.11
+            }
+        },
+        {
+            "stroke": "#3385D1",
+            "strokeWidth": 2,
+            "fill": "#fff",
+            "points": [],
+            "dataKey": "sektor",
+            "name": "sektor",
+            "color": "#3385D1",
+            "value": 4.4,
+            "payload": {
+                "name": "2019, 1. kvartal",
+                "virksomhet": 12.24,
+                "næring": 2.11,
+                "sektor": 4.4,
+                "land": 6.11
+            }
+        },
+        {
+            "stroke": "#C30000",
+            "strokeWidth": 2,
+            "fill": "#fff",
+            "points": [],
+            "dataKey": "land",
+            "name": "land",
+            "color": "#C30000",
+            "value": 6.11,
+            "payload": {
+                "name": "2019, 1. kvartal",
+                "virksomhet": 12.24,
+                "næring": 2.11,
+                "sektor": 4.4,
+                "land": 6.11
+            }
+        }
+    ]
+}

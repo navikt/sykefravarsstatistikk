@@ -7,11 +7,18 @@ import {
     ResponsiveContainer,
     Symbols,
     Tooltip,
+    TooltipPayload,
+    TooltipProps,
     XAxis,
     YAxis,
 } from 'recharts';
 
+import classNames from 'classnames';
+
+import { ReactComponent as Sirkel } from './Sirkel.svg';
+
 import './Graf.less';
+import { Element } from 'nav-frontend-typografi';
 
 const toDesimaler = (n: number): number => Number.parseFloat(n.toFixed(2));
 
@@ -60,6 +67,117 @@ const margin = 50;
 const lineWidth = 2;
 const dotSize = 40;
 
+type SymbolType = 'circle' | 'cross' | 'diamond' | 'square' | 'star' | 'triangle' | 'wye';
+
+interface SymbolSvgProps {
+    size: number;
+    symbolType: SymbolType;
+    fill: string;
+    className?: string;
+}
+
+const calculateAreaSize = (size: number, type: SymbolType) => {
+    switch (type) {
+        case 'cross':
+            return (5 * size * size) / 9;
+        case 'diamond':
+            return (0.5 * size * size) / Math.sqrt(3);
+        case 'square':
+            return size * size;
+        case 'star': {
+            const angle = (18 * Math.PI) / 180;
+
+            return (
+                1.25 * size * size * (Math.tan(angle) - Math.tan(angle * 2) * Math.tan(angle) ** 2)
+            );
+        }
+        case 'triangle':
+            return (Math.sqrt(3) * size * size) / 4;
+        case 'wye':
+            return ((21 - 10 * Math.sqrt(3)) * size * size) / 8;
+        default:
+            return (Math.PI * size * size) / 4;
+    }
+};
+
+const SymbolSvg: FunctionComponent<SymbolSvgProps> = props => {
+    const { size, symbolType, fill, className } = props;
+    const halfSize = size / 2;
+    return (
+        <svg width={size} height={size} viewBox={'0 0 ' + size + ' ' + size} className={classNames(className)}>
+            <Symbols
+                fill={fill}
+                cx={halfSize}
+                cy={halfSize}
+                size={size * 5.75}
+                sizeType="area"
+                type={symbolType}
+            />
+        </svg>
+    );
+};
+
+const MinTooltip: FunctionComponent<TooltipProps> = props => {
+    const { payload } = props;
+
+    const finnPayload = (name: string): any => {
+        if (!payload) {
+            return null;
+        }
+        return payload.filter(load => load.name === name)[0];
+    };
+
+    const virksomhetPayload = finnPayload('virksomhet');
+    const virksomhetColor = virksomhetPayload ? virksomhetPayload.color : 'black';
+    /*
+                             {
+                                    value: 'virksomhet',
+                                    type: 'circle',
+                                    id: 'virksomhet',
+                                    color: '#38A161',
+                                },
+                                                "name": "2019, 1. kvartal",
+                "virksomhet": 12.24,
+                "næring": 2.11,
+                "sektor": 4.4,
+                "land": 6.11
+     */
+
+    return (
+        <div className="tooltip">
+            <SymbolSvg size={20} symbolType="diamond" fill="red" />
+            <SymbolSvg size={20} symbolType="triangle" fill="blue" />
+            <SymbolSvg size={20} symbolType="square" fill="green" />
+            <SymbolSvg size={20} symbolType="circle" fill="yellow" />
+            <Element>{props.label}</Element>
+            <ul>
+                <li>
+                    <SymbolSvg size={20} symbolType="circle" fill="#38A161" />
+                </li>
+            </ul>
+        </div>
+    );
+};
+
+type Name = 'virksomhet' | 'næring' | 'sektor' | 'land' | string;
+
+const symboler: any = {
+    virksomhet: 'circle',
+    næring: 'diamond',
+    sektor: 'triangle',
+    land: 'square',
+};
+
+const farger: any = {
+    virksomhet: '#38A161', // grønn
+    næring: '#FF9100', // oransje
+    sektor: '#3385D1', // blå
+    land: '#C30000', // rød
+};
+
+const getSymbol = (name: Name): SymbolType => (name in symboler ? symboler[name] : 'circle');
+const getFarge = (name: Name): SymbolType => (name in farger ? farger[name] : 'black');
+
 const Graf: FunctionComponent = () => {
     return (
         <div className="graf__wrapper">
@@ -84,7 +202,25 @@ const Graf: FunctionComponent = () => {
                             tickFormatter={text => text.substring(0, 4)}
                         />
                         <YAxis tickMargin={20} tickFormatter={value => value + ' %'} width={40} />
-                        <Tooltip />
+                        <Tooltip
+                            formatter={(value, name, props) => [
+                                <span className="tooltip__item-wrapper">
+                                    <SymbolSvg
+                                        size={20}
+                                        symbolType={getSymbol(name)}
+                                        fill={getFarge(name)}
+                                        className="tooltip__ikon"
+                                    />
+                                    <span className="tooltip__item-value">
+                                    {value + ' %'}
+                                    </span>
+                                </span>,
+                            ]}
+                            separator={': '}
+                            active={true}
+                            contentStyle={{ border: '2px solid #3E3832', borderRadius: '0.25rem' }}
+                            //content={MinTooltip}
+                        />
                         <Legend
                             wrapperStyle={{ paddingTop: 50 }}
                             iconSize={20}
@@ -92,57 +228,81 @@ const Graf: FunctionComponent = () => {
                             payload={[
                                 {
                                     value: 'virksomhet',
-                                    type: 'circle',
+                                    type: getSymbol('virksomhet'),
                                     id: 'virksomhet',
-                                    color: '#38A161',
+                                    color: getFarge('virksomhet'),
                                 },
                                 {
                                     value: 'næring',
-                                    type: 'diamond',
+                                    type: getSymbol('næring'),
                                     id: 'næring',
-                                    color: '#FF9100',
+                                    color: getFarge('næring'),
                                 },
                                 {
                                     value: 'sektor',
-                                    type: 'triangle',
+                                    type: getSymbol('sektor'),
                                     id: 'sektor',
-                                    color: '#3385D1',
+                                    color: getFarge('sektor'),
                                 },
                                 {
                                     value: 'land',
-                                    type: 'square',
+                                    type: getSymbol('land'),
                                     id: 'land',
-                                    color: '#C30000',
+                                    color: getFarge('land'),
                                 },
                             ]}
                         />
                         <Line
                             type="monotone"
                             dataKey="virksomhet"
-                            stroke="#38A161" // grønn
+                            stroke={getFarge('virksomhet')}
                             strokeWidth={lineWidth}
-                            dot={<Symbols type="circle" size={dotSize} fill="#38A161" />}
+                            dot={
+                                <Symbols
+                                    type={getSymbol('virksomhet')}
+                                    size={dotSize}
+                                    fill={getFarge('virksomhet')}
+                                />
+                            }
                         />
                         <Line
                             type="monotone"
                             dataKey="næring"
-                            stroke="#FF9100" // oransje
+                            stroke={getFarge('næring')}
                             strokeWidth={lineWidth}
-                            dot={<Symbols type="diamond" size={dotSize} fill="#FF9100" />}
+                            dot={
+                                <Symbols
+                                    type={getSymbol('næring')}
+                                    size={dotSize}
+                                    fill={getFarge('næring')}
+                                />
+                            }
                         />
                         <Line
                             type="monotone"
                             dataKey="sektor"
-                            stroke="#3385D1" // blå
+                            stroke={getFarge('sektor')}
                             strokeWidth={lineWidth}
-                            dot={<Symbols type="triangle" size={dotSize} fill="#3385D1" />}
+                            dot={
+                                <Symbols
+                                    type={getSymbol('sektor')}
+                                    size={dotSize}
+                                    fill={getFarge('sektor')}
+                                />
+                            }
                         />
                         <Line
                             type="monotone"
                             dataKey="land"
-                            stroke="#C30000" // rød
+                            stroke={getFarge('land')}
                             strokeWidth={lineWidth}
-                            dot={<Symbols type="square" size={dotSize} fill="#C30000" />}
+                            dot={
+                                <Symbols
+                                    type={getSymbol('land')}
+                                    size={dotSize}
+                                    fill={getFarge('land')}
+                                />
+                            }
                         />
                     </LineChart>
                 </ResponsiveContainer>
