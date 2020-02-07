@@ -1,6 +1,13 @@
 @import '../../variables';
 
 .tooltip {
+    min-width: 5rem;
+    min-height: 5rem;
+    background: white;
+    border: 2px solid black;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+
     &__item-wrapper {
         display: flex;
     }
@@ -12,4 +19,8 @@
     &__ikon {
         margin-right: 0.75rem;
     }
+}
+
+.recharts-tooltip-label {
+    .typo-element-mixin();
 }

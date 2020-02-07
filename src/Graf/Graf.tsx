@@ -6,6 +6,7 @@ import grafTooltip from './grafTooltip/grafTooltip';
 import grafLegend from './grafLegend/grafLegend';
 import grafLinjer from './grafLinjer';
 import { genererTestdata } from './graf-utils';
+import SymbolSvg from './SymbolSvg';
 
 const margin = 50;
 
@@ -27,6 +28,7 @@ const farger: any = {
     land: '#C30000', // rød
 };
 
+
 export const getSymbol = (name: Name): SymbolType => (name in symboler ? symboler[name] : 'circle');
 export const getFarge = (name: Name): SymbolType => (name in farger ? farger[name] : 'black');
 
@@ -39,7 +41,7 @@ const Graf: FunctionComponent = () => {
                 <ResponsiveContainer height={500}>
                     <LineChart
                         data={testdata}
-                        margin={{ top: margin, right: margin, left: margin, bottom: margin }}
+                        margin={{ top: margin, right: margin, left: margin, bottom: 0 }}
                     >
                         <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
                         <XAxis
