@@ -61,8 +61,8 @@ const AppContent: FunctionComponent = () => {
                 <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />
             </Route>
             <Route path="/graf" exact={true}>
-            <Graf />
-        </Route>
+                <Graf />
+            </Route>
         </>
     );
 };

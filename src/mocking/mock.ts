@@ -16,27 +16,35 @@ if (MOCK_MIN_SIDE_ARBEIDSGIVER) {
 }
 
 if (MOCK_SYKEFRAVÆRSSTATISTIKK) {
-    fetchMock.get('express:/sykefravarsstatistikk/api/:orgnr/sammenligning', (url => {
-        const orgnr = url.match(/[0-9]{9}/)![0];
-        if (orgnr === '101010101') {
-            return 500;
+    fetchMock.get(
+        'express:/sykefravarsstatistikk/api/:orgnr/sammenligning',
+        url => {
+            const orgnr = url.match(/[0-9]{9}/)![0];
+            if (orgnr === '101010101') {
+                return 500;
+            }
+            return getSammenligningMock(orgnr);
+        },
+        {
+            delay: 2000,
         }
-        return getSammenligningMock(orgnr);
-    }), {
-        delay: 2000,
-    });
+    );
 }
 
 if (MOCK_TAPTEDAGSVERK) {
-    fetchMock.get('express:/sykefravarsstatistikk/api/:orgnr/tapteDagsverk', url => {
-        const orgnr = url.match(/[0-9]{9}/)![0];
-        if (orgnr === '101010101') {
-            return 500;
+    fetchMock.get(
+        'express:/sykefravarsstatistikk/api/:orgnr/tapteDagsverk',
+        url => {
+            const orgnr = url.match(/[0-9]{9}/)![0];
+            if (orgnr === '101010101') {
+                return 500;
+            }
+            return getTapteDagsverkMock(orgnr);
+        },
+        {
+            delay: 1000,
         }
-        return getTapteDagsverkMock(orgnr);
-    }, {
-        delay: 1000,
-    });
+    );
 }
 
 if (MOCK_ENHETSREGISTERET) {

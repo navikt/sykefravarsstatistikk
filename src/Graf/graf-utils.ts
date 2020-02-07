@@ -1,10 +1,8 @@
-
 const toDesimaler = (n: number): number => Number.parseFloat(n.toFixed(2));
 
 const rnd = (min: number, max: number) => toDesimaler(Math.random() * (max - min) + min);
 
 export const genererTestdata = () => {
-
     let testdata: {
         name: string;
         virksomhet: number;

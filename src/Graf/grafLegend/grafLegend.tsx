@@ -19,36 +19,38 @@ const labels = {
     land: <span>Norge</span>,
 };
 
-const grafLegend = () => <Legend
-    wrapperStyle={{ paddingTop: 50 }}
-    iconSize={20}
-    formatter={(value, entry, index) => (labels as any)[value]}
-    payload={[
-        {
-            value: 'virksomhet',
-            type: getSymbol('virksomhet'),
-            id: 'virksomhet',
-            color: getFarge('virksomhet'),
-        },
-        {
-            value: 'næring',
-            type: getSymbol('næring'),
-            id: 'næring',
-            color: getFarge('næring'),
-        },
-        {
-            value: 'sektor',
-            type: getSymbol('sektor'),
-            id: 'sektor',
-            color: getFarge('sektor'),
-        },
-        {
-            value: 'land',
-            type: getSymbol('land'),
-            id: 'land',
-            color: getFarge('land'),
-        },
-    ]}
-/>;
+const grafLegend = () => (
+    <Legend
+        wrapperStyle={{ paddingTop: 50 }}
+        iconSize={20}
+        formatter={(value, entry, index) => (labels as any)[value]}
+        payload={[
+            {
+                value: 'virksomhet',
+                type: getSymbol('virksomhet'),
+                id: 'virksomhet',
+                color: getFarge('virksomhet'),
+            },
+            {
+                value: 'næring',
+                type: getSymbol('næring'),
+                id: 'næring',
+                color: getFarge('næring'),
+            },
+            {
+                value: 'sektor',
+                type: getSymbol('sektor'),
+                id: 'sektor',
+                color: getFarge('sektor'),
+            },
+            {
+                value: 'land',
+                type: getSymbol('land'),
+                id: 'land',
+                color: getFarge('land'),
+            },
+        ]}
+    />
+);
 
 export default grafLegend;

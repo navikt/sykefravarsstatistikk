@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { Symbols } from 'recharts';
 import { SymbolType } from './Graf';
 
-
 interface Props {
     size: number;
     symbolType: SymbolType;
@@ -14,7 +13,12 @@ const SymbolSvg: FunctionComponent<Props> = props => {
     const { size, symbolType, fill, className } = props;
     const halfSize = size / 2;
     return (
-        <svg width={size} height={size} viewBox={'0 0 ' + size + ' ' + size} className={classNames(className)}>
+        <svg
+            width={size}
+            height={size}
+            viewBox={'0 0 ' + size + ' ' + size}
+            className={classNames(className)}
+        >
             <Symbols
                 fill={fill}
                 cx={halfSize}
