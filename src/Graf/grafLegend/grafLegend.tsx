@@ -33,7 +33,7 @@ const grafLegend = () => {
 
     return (
         <Legend
-            wrapperStyle={{ paddingTop: 64 }}
+            wrapperStyle={{ paddingTop: 40 }}
             payload={['virksomhet', 'næring', 'sektor', 'land'].map(name => {
                 return {
                     value: name,
