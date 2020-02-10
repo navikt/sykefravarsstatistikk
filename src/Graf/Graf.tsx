@@ -6,6 +6,7 @@ import grafTooltip from './grafTooltip/grafTooltip';
 import grafLegend from './grafLegend/grafLegend';
 import grafLinjer from './grafLinjer';
 import { genererTestdata } from './graf-utils';
+import { Innholdstittel, Normaltekst, Sidetittel, Systemtittel } from 'nav-frontend-typografi';
 
 const margin = 50;
 
@@ -27,7 +28,6 @@ const farger: any = {
     land: '#C30000', // rød
 };
 
-
 export const getSymbol = (name: Name): SymbolType => (name in symboler ? symboler[name] : 'circle');
 export const getFarge = (name: Name): SymbolType => (name in farger ? farger[name] : 'black');
 
@@ -37,7 +37,14 @@ const Graf: FunctionComponent = () => {
     return (
         <div className="graf__wrapper">
             <div className="graf">
-                <ResponsiveContainer height={500}>
+                <Systemtittel tag="h1" className="graf__tittel">
+                    Se sykefraværet over tid
+                </Systemtittel>
+                <Normaltekst className="graf__ingress">
+                    Se hvordan det legemeldte sykefraværet utvikler seg over tid. Du kan sammenligne
+                    sykefravær deres med næringen og sektoren dere tilhører.
+                </Normaltekst>
+                <ResponsiveContainer minHeight={700}>
                     <LineChart
                         data={testdata}
                         margin={{ top: margin, right: margin, left: margin, bottom: 0 }}
@@ -45,7 +52,6 @@ const Graf: FunctionComponent = () => {
                         <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
                         <XAxis
                             dataKey="name"
-                            height={30}
                             tickMargin={20}
                             ticks={[
                                 '2015, 1. kvartal',

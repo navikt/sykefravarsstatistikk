@@ -3,11 +3,12 @@ import React from 'react';
 import { getFarge, getSymbol } from '../Graf';
 import './grafLegend.less';
 import SymbolSvg from '../SymbolSvg';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 const labels = {
-    virksomhet: 'Hoppetitten barnehage',
-    næring: 'Næring: Barnehager',
-    sektor: 'Sektor: Privat og offentlig næringsvirksomhet',
+    virksomhet: 'STOREBRAND INTERNATIONAL PRIVATE EQUITY XI LIMITED',
+    næring: <div className="eivind_wrapper"><Element>Næring:</Element><Normaltekst>Innsamling, behandling, disponering og gjenvinning av avfall</Normaltekst></div>,
+    sektor: <div className="eivind_wrapper"><Element>Sektor:</Element><Normaltekst>Privat og offentlig næringsvirksomhet</Normaltekst></div>,
     land: 'Norge',
 };
 
@@ -32,7 +33,7 @@ const grafLegend = () => {
 
     return (
         <Legend
-            wrapperStyle={{ paddingTop: 25 }}
+            wrapperStyle={{ paddingTop: 64 }}
             payload={['virksomhet', 'næring', 'sektor', 'land'].map(name => {
                 return {
                     value: name,
