@@ -7,6 +7,7 @@
     "@craco/craco": "^5.6.3",
     "@navikt/bedriftsmeny": "^1.0.15",
     "@types/recharts": "^1.8.5",
+    "@sentry/browser": "^5.12.1",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.6",
     "core-js": "^3.6.4",
