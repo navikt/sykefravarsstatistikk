@@ -39,7 +39,6 @@ const AppContent: FunctionComponent = () => {
     const restSammenligning = useRestSammenligning(orgnr);
 
     const restFeatureToggles = useRestFeatureToggles();
-
     if (
         restOrganisasjonstre.status === RestStatus.LasterInn ||
         restFeatureToggles.status === RestStatus.LasterInn
@@ -62,15 +61,15 @@ const AppContent: FunctionComponent = () => {
                     <IAwebpanel />
                 </Forside>
             </Route>
+            <Route path={PATH_KALKULATOR} exact={true}>
+                <Brødsmulesti gjeldendeSide="kalkulator" />
+                <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />
+            </Route>
             {restFeatureToggles.data['arbeidsgiver.lanser-graf'] && (
-                <Route path={PATH_KALKULATOR} exact={true}>
-                    <Brødsmulesti gjeldendeSide="kalkulator" />
-                    <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />
+                <Route path="/graf" exact={true}>
+                    <Graf />
                 </Route>
             )}
-            <Route path="/graf" exact={true}>
-                <Graf />
-            </Route>
         </>
     );
 };
