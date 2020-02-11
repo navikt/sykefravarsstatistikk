@@ -12,7 +12,7 @@ const Historikkpanel: FunctionComponent = () => {
         <PanelBase className="historikkpanel">
             <Systemtittel className="historikkpanel__overskrift" tag="h2">
                 <KalkisIkon className="historikkpanel__illustrasjon" />
-                Sykefraværshistorikk
+                Sykefraværsstatistikk
             </Systemtittel>
             <Normaltekst className="historikkpanel__ingress">
                 Se hvordan det legemeldte sykefraværet har endret seg de siste årene.
