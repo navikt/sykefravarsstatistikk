@@ -12,7 +12,8 @@ const margin = 50;
 
 export type SymbolType = 'circle' | 'cross' | 'diamond' | 'square' | 'star' | 'triangle' | 'wye';
 
-type Name = 'virksomhet' | 'næring' | 'sektor' | 'land' | string;
+export type Linje = 'virksomhet' | 'næring' | 'sektor' | 'land' | string;
+export const linjer: Linje[] = ['virksomhet', 'næring', 'sektor', 'land'];
 
 const symboler: any = {
     virksomhet: 'circle',
@@ -28,8 +29,9 @@ const farger: any = {
     land: '#C30000', // rød
 };
 
-export const getSymbol = (name: Name): SymbolType => (name in symboler ? symboler[name] : 'circle');
-export const getFarge = (name: Name): SymbolType => (name in farger ? farger[name] : 'black');
+export const getSymbol = (name: string): SymbolType =>
+    name in symboler ? symboler[name] : 'circle';
+export const getFarge = (name: Linje): SymbolType => (name in farger ? farger[name] : 'black');
 
 const testdata = genererTestdata();
 

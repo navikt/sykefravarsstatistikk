@@ -1,6 +1,6 @@
 import { Legend, LegendProps } from 'recharts';
 import React from 'react';
-import { getFarge, getSymbol } from '../Graf';
+import { getFarge, getSymbol, linjer } from '../Graf';
 import './grafLegend.less';
 import SymbolSvg from '../SymbolSvg';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -44,7 +44,7 @@ const grafLegend = () => {
     return (
         <Legend
             wrapperStyle={{ paddingTop: 40 }}
-            payload={['virksomhet', 'næring', 'sektor', 'land'].map(name => {
+            payload={linjer.map(name => {
                 return {
                     value: name,
                     type: getSymbol(name),

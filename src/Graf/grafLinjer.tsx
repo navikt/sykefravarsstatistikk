@@ -1,12 +1,12 @@
 import { Line, Symbols } from 'recharts';
 import React from 'react';
-import { getFarge, getSymbol } from './Graf';
+import { getFarge, getSymbol, linjer } from './Graf';
 
 const lineWidth = 2;
 const dotSize = 40;
 
 const grafLinjer = () =>
-    ['virksomhet', 'næring', 'sektor', 'land'].map(name => (
+    linjer.map(name => (
         <Line
             key={name}
             type="monotone"
