@@ -54,7 +54,9 @@ export const hentRestTapteDagsverk = async (orgnr: string): Promise<RestTapteDag
     };
 };
 
-export const hentRestFeatureToggles = async (...features: string[]): Promise<RestFeatureToggles> => {
+export const hentRestFeatureToggles = async (
+    ...features: string[]
+): Promise<RestFeatureToggles> => {
     const response = await fetch(featureTogglesPath(features), {
         method: 'GET',
         credentials: 'include',

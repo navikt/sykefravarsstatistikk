@@ -1,4 +1,7 @@
-import { JuridiskEnhetMedUnderenheter, Organisasjonstre } from '../api/organisasjonstre/organisasjonstre-utils';
+import {
+    JuridiskEnhetMedUnderenheter,
+    Organisasjonstre,
+} from '../api/organisasjonstre/organisasjonstre-utils';
 
 const fleskOgFisk: JuridiskEnhetMedUnderenheter = {
     juridiskEnhet: {
@@ -74,5 +77,5 @@ export const organisasjonstreMock: Organisasjonstre = [
     fleskOgFisk,
     olaNordmann,
     heiOgHåBarnehage,
-    feil
+    feil,
 ];
