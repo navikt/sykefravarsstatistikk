@@ -7,28 +7,28 @@ export enum RestStatus {
     Feil = 'Feil',
 }
 
-interface IkkeLastet {
+export interface IkkeLastet {
     status: RestStatus.IkkeLastet;
 }
 
-interface LasterInn {
+export interface LasterInn {
     status: RestStatus.LasterInn;
 }
 
-interface IkkeInnlogget {
+export interface IkkeInnlogget {
     status: RestStatus.IkkeInnlogget;
 }
 
-interface IngenTilgang {
+export interface IngenTilgang {
     status: RestStatus.IngenTilgang;
 }
 
-interface Suksess<T> {
+export interface Suksess<T> {
     status: RestStatus.Suksess;
     data: T;
 }
 
-interface Feil {
+export interface Feil {
     status: RestStatus.Feil;
 }
 

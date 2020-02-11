@@ -71,6 +71,7 @@ export const hentRestFeatureToggles = async (
         };
     }
     return {
-        status: restStatus,
+        status: RestStatus.Suksess,
+        data: {}
     };
 };
