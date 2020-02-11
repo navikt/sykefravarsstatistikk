@@ -1,6 +1,7 @@
 @import '../../variables';
 
-.videoerpanel {
+.videoerpanel2 {
+    width: 100%;
     margin-top: 1.5rem;
     padding: 2rem 1.5rem;
 
@@ -13,19 +14,32 @@
     &__ingress {
         padding-bottom: 1rem;
     }
+
     &__lenke {
         display: block;
-        + .videoerpanel__lenke {
-            padding-top: 0.25rem;
+        + .videoerpanel2__lenke {
+            padding-top: 0.5rem;
         }
     }
+
     &__illustrasjon {
         margin-right: 1rem;
     }
 
     @media (min-width: @screen-sm-min) {
-        flex-direction: row;
         padding: 2rem;
-        max-width: calc(50% - 0.75rem);
+        display: flex;
+
+        &__lenke-wrapper {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 2.75rem;
+        }
+
+        &__tekst-wrapper {
+            width: 50%;
+        }
     }
 }

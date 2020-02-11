@@ -48,6 +48,8 @@ const AppContent: FunctionComponent = () => {
         return <IkkeInnloggetSide />;
     }
 
+    const lanserGraf = restFeatureToggles.data['arbeidsgiver.lanser-graf'];
+
     return (
         <>
             <Banner tittel="Sykefraværsstatistikk" restOrganisasjonstre={restOrganisasjonstre} />
@@ -57,7 +59,7 @@ const AppContent: FunctionComponent = () => {
                     <Infopanel />
                     <LegemeldtSykefraværPanel restSammenligning={restSammenligning} />
                     <KalkulatorPanel />
-                    <VideoerPanel />
+                    <VideoerPanel visNyttDesign={lanserGraf}/>
                     <IAwebpanel />
                 </Forside>
             </Route>
@@ -65,7 +67,7 @@ const AppContent: FunctionComponent = () => {
                 <Brødsmulesti gjeldendeSide="kalkulator" />
                 <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />
             </Route>
-            {restFeatureToggles.data['arbeidsgiver.lanser-graf'] && (
+            {lanserGraf && (
                 <Route path="/graf" exact={true}>
                     <Graf />
                 </Route>
