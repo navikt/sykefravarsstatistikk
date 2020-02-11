@@ -17,6 +17,7 @@ import IkkeInnloggetSide from './FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
+import { useRestFeatureToggles } from './api/featureToggles';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -35,6 +36,9 @@ const AppContent: FunctionComponent = () => {
     const restOrganisasjonstre = useRestOrganisasjonstre();
     const restTapteDagsverk = useRestTapteDagsverk(orgnr);
     const restSammenligning = useRestSammenligning(orgnr);
+
+    const featureToggles = useRestFeatureToggles();
+    console.log('toggles', featureToggles);
 
     if (restOrganisasjonstre.status === RestStatus.LasterInn) {
         return <Lasteside />;
