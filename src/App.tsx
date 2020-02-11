@@ -57,7 +57,7 @@ const AppContent: FunctionComponent = () => {
             </Route>
             <Route path={PATH_KALKULATOR} exact={true}>
                 <Brødsmulesti gjeldendeSide="kalkulator" />
-                <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />
+                <Kalkulator defaultTapteDagsverk={restTapteDagsverk} erMaskert={restSammenligning.sammenligning.virksomhet.erMaskert} />
             </Route>
         </>
     );

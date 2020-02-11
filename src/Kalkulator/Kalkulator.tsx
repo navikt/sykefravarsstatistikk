@@ -13,6 +13,7 @@ import { scrollToBanner } from '../utils/scrollUtils';
 
 interface Props {
     defaultTapteDagsverk: RestTapteDagsverk;
+    erMaskert?: boolean;
 }
 
 const Kalkulator: FunctionComponent<Props> = props => {
@@ -44,7 +45,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
         defaultTapteDagsverk.status === RestStatus.Suksess ? (
             summerTapteDagsverk(defaultTapteDagsverk.data)
         ) : (
-            <NavFrontendSpinner className="kalkulator__spinner" transparent={true} />
+            <NavFrontendSpinner className="kalkulator__spinner" transparent={true}/>
         );
 
     return (
@@ -106,7 +107,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         </Normaltekst>
                     </LesMerPanel>
                 </div>
-                <Kostnad kostnad={totalKostnad} />
+                <Kostnad kostnad={totalKostnad}/>
             </div>
         </div>
     );
