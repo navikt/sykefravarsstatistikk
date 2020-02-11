@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react';
-import { Brush, CartesianGrid, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { CartesianGrid, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
 import './Graf.less';
 import grafTooltip from './grafTooltip/grafTooltip';
 import grafLegend from './grafLegend/grafLegend';
 import grafLinjer from './grafLinjer';
 import { genererTestdata } from './graf-utils';
-import { Innholdstittel, Normaltekst, Sidetittel, Systemtittel } from 'nav-frontend-typografi';
+import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 
 const margin = 50;
 

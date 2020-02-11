@@ -7,8 +7,18 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 const labels = {
     virksomhet: 'FLESK OG FISK INTERNATIONAL PRIVATE EQUITY LIMITED',
-    næring: <div className="eivind_wrapper"><Element>Næring:</Element><Normaltekst>Innsamling, behandling, disponering og gjenvinning av avfall</Normaltekst></div>,
-    sektor: <div className="eivind_wrapper"><Element>Sektor:</Element><Normaltekst>Privat og offentlig næringsvirksomhet</Normaltekst></div>,
+    næring: (
+        <div className="eivind_wrapper">
+            <Element>Næring:</Element>
+            <Normaltekst>Innsamling, behandling, disponering og gjenvinning av avfall</Normaltekst>
+        </div>
+    ),
+    sektor: (
+        <div className="eivind_wrapper">
+            <Element>Sektor:</Element>
+            <Normaltekst>Privat og offentlig næringsvirksomhet</Normaltekst>
+        </div>
+    ),
     land: 'Norge',
 };
 
