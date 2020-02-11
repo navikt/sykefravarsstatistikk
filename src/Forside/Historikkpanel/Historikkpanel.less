@@ -1,0 +1,29 @@
+@import '../../variables';
+
+.historikkpanel {
+    margin-top: 1.5rem;
+    padding: 2rem 1.5rem;
+    width: 100%;
+
+    &__overskrift {
+        display: flex;
+        padding-bottom: 1rem;
+        align-items: center;
+    }
+    &__ingress {
+        padding-bottom: 1rem;
+    }
+    &__lenke {
+        .typo-normal-mixin();
+        .lenke-mixin();
+    }
+    &__illustrasjon {
+        margin-right: 1rem;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        flex-direction: row;
+        padding: 2rem;
+        width: calc(50% - 0.75rem);
+    }
+}

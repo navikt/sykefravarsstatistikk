@@ -4,6 +4,7 @@ import './InternLenke.less';
 
 interface Props {
     pathname: string;
+    onClick?: (e: any) => any;
 }
 
 const InternLenke: FunctionComponent<Props> = props => {
@@ -15,6 +16,7 @@ const InternLenke: FunctionComponent<Props> = props => {
                 pathname: props.pathname,
                 search: location.search,
             }}
+            onClick={props.onClick}
             className="intern-lenke"
         >
             {props.children}

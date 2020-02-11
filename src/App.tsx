@@ -19,9 +19,11 @@ import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
 import Graf from './Graf/Graf';
 import { useRestFeatureToggles } from './api/featureToggles';
+import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
+export const PATH_HISTORIKK = '/historikk';
 
 const App: FunctionComponent = () => {
     return (
@@ -48,7 +50,7 @@ const AppContent: FunctionComponent = () => {
         return <IkkeInnloggetSide />;
     }
 
-    const lanserGraf = restFeatureToggles.data['arbeidsgiver.lanser-graf'];
+    const skalViseGraf = restFeatureToggles.data['arbeidsgiver.lanser-graf'];
 
     return (
         <>
@@ -59,7 +61,8 @@ const AppContent: FunctionComponent = () => {
                     <Infopanel />
                     <LegemeldtSykefraværPanel restSammenligning={restSammenligning} />
                     <KalkulatorPanel />
-                    <VideoerPanel visNyttDesign={lanserGraf}/>
+                    {skalViseGraf && <Historikkpanel />}
+                    <VideoerPanel visNyttDesign={skalViseGraf} />
                     <IAwebpanel />
                 </Forside>
             </Route>
@@ -67,8 +70,8 @@ const AppContent: FunctionComponent = () => {
                 <Brødsmulesti gjeldendeSide="kalkulator" />
                 <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />
             </Route>
-            {lanserGraf && (
-                <Route path="/graf" exact={true}>
+            {skalViseGraf && (
+                <Route path={PATH_HISTORIKK} exact={true}>
                     <Graf />
                 </Route>
             )}
