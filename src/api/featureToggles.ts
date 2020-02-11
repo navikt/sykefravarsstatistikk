@@ -15,7 +15,7 @@ export const useRestFeatureToggles = (): RestFeatureToggles => {
 
     useEffect(() => {
         const hentFeatureTogglesOgSettState = async () => {
-            setFeatureToggles(await hentRestFeatureToggles('feature1', 'feature2'));
+            setFeatureToggles(await hentRestFeatureToggles('feature1', 'arbeidsgiver.test'));
         };
         hentFeatureTogglesOgSettState();
     }, []);
