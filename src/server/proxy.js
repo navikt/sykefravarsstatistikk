@@ -13,6 +13,7 @@ const listeAvTillatteUrler = [
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sammenligning$'),
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/tapteDagsverk'),
     new RegExp('^/sykefravarsstatistikk/api/metrikker/[a-zA-Z0-9._-]+$'),
+    new RegExp('^' + FRONTEND_API_PATH + '/feature'),
 ];
 
 const proxyConfig = {
