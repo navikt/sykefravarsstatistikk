@@ -6,7 +6,6 @@ import * as Sentry from '@sentry/browser';
 import './index.less';
 import { getMiljø } from './utils/miljøUtils';
 
-
 if (process.env.REACT_APP_MOCK) {
     console.log('========================================');
     console.log('=============== MED MOCK ===============');

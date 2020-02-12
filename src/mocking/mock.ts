@@ -8,6 +8,7 @@ const MOCK_MIN_SIDE_ARBEIDSGIVER = true;
 const MOCK_SYKEFRAVÆRSSTATISTIKK = true;
 const MOCK_TAPTEDAGSVERK = true;
 const MOCK_ENHETSREGISTERET = true;
+const MOCK_FEATURE_TOGGLES = true;
 
 if (MOCK_MIN_SIDE_ARBEIDSGIVER) {
     fetchMock.get('/min-side-arbeidsgiver/api/organisasjoner', getOrganisasjonerMock(), {
@@ -16,27 +17,35 @@ if (MOCK_MIN_SIDE_ARBEIDSGIVER) {
 }
 
 if (MOCK_SYKEFRAVÆRSSTATISTIKK) {
-    fetchMock.get('express:/sykefravarsstatistikk/api/:orgnr/sammenligning', (url => {
-        const orgnr = url.match(/[0-9]{9}/)![0];
-        if (orgnr === '101010101') {
-            return 500;
+    fetchMock.get(
+        'express:/sykefravarsstatistikk/api/:orgnr/sammenligning',
+        url => {
+            const orgnr = url.match(/[0-9]{9}/)![0];
+            if (orgnr === '101010101') {
+                return 500;
+            }
+            return getSammenligningMock(orgnr);
+        },
+        {
+            delay: 2000,
         }
-        return getSammenligningMock(orgnr);
-    }), {
-        delay: 2000,
-    });
+    );
 }
 
 if (MOCK_TAPTEDAGSVERK) {
-    fetchMock.get('express:/sykefravarsstatistikk/api/:orgnr/tapteDagsverk', url => {
-        const orgnr = url.match(/[0-9]{9}/)![0];
-        if (orgnr === '101010101') {
-            return 500;
+    fetchMock.get(
+        'express:/sykefravarsstatistikk/api/:orgnr/tapteDagsverk',
+        url => {
+            const orgnr = url.match(/[0-9]{9}/)![0];
+            if (orgnr === '101010101') {
+                return 500;
+            }
+            return getTapteDagsverkMock(orgnr);
+        },
+        {
+            delay: 1000,
         }
-        return getTapteDagsverkMock(orgnr);
-    }, {
-        delay: 1000,
-    });
+    );
 }
 
 if (MOCK_ENHETSREGISTERET) {
@@ -50,6 +59,18 @@ if (MOCK_ENHETSREGISTERET) {
                 'test AS',
                 '999999999'
             );
+        }
+    );
+}
+
+if (MOCK_FEATURE_TOGGLES) {
+    fetchMock.get(
+        'begin:/sykefravarsstatistikk/api/feature',
+        {
+            'arbeidsgiver.lanser-graf': true,
+        },
+        {
+            delay: 1000,
         }
     );
 }
