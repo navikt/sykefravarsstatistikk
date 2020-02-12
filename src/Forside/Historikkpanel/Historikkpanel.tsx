@@ -12,7 +12,7 @@ const Historikkpanel: FunctionComponent = () => {
         <PanelBase className="historikkpanel">
             <Systemtittel className="historikkpanel__overskrift" tag="h2">
                 <GrafIkon className="historikkpanel__illustrasjon" />
-                Sykefraværsstatistikk
+                Sykefraværshistorikk
             </Systemtittel>
             <Normaltekst className="historikkpanel__ingress">
                 Se hvordan det legemeldte sykefraværet har endret seg de siste årene.
@@ -21,7 +21,7 @@ const Historikkpanel: FunctionComponent = () => {
                 pathname={PATH_HISTORIKK}
                 onClick={() => sendEvent('sykefravarsstatistikk.klikk-til-historikk')}
             >
-                Gå til sykefraværsstatistikken
+                Gå til sykefraværshistorikken
             </InternLenke>
         </PanelBase>
     );

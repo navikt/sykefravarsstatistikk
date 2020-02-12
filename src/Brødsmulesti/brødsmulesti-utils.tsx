@@ -50,7 +50,7 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
     {
         side: 'historikk',
         overordnetSide: 'sykefraværsstatistikk',
-        lenketekst: 'Sykefraværsstatistikk',
+        lenketekst: 'Sykefraværshistorikk',
         lenke: (innhold: string | ReactElement) => (
             <InternLenke pathname={PATH_HISTORIKK}>{innhold}</InternLenke>
         ),
