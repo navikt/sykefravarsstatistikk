@@ -5,7 +5,7 @@ import './Graf.less';
 import grafTooltip from './grafTooltip/grafTooltip';
 import grafLegend from './grafLegend/grafLegend';
 import grafLinjer from './grafLinjer';
-import { genererTestdata } from './graf-utils';
+import { getTestdata } from './graf-utils';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 
 const margin = 50;
@@ -33,7 +33,7 @@ export const getSymbol = (name: string): SymbolType =>
     name in symboler ? symboler[name] : 'circle';
 export const getFarge = (name: Linje): SymbolType => (name in farger ? farger[name] : 'black');
 
-const testdata = genererTestdata();
+const testdata = getTestdata();
 
 const Graf: FunctionComponent = () => {
     return (
@@ -44,7 +44,7 @@ const Graf: FunctionComponent = () => {
                 </Systemtittel>
                 <Normaltekst className="graf__ingress">
                     Se hvordan det legemeldte sykefraværet utvikler seg over tid. Du kan sammenligne
-                    sykefravær deres med næringen og sektoren dere tilhører.
+                    sykefraværet deres med næringen og sektoren dere tilhører.
                 </Normaltekst>
                 <ResponsiveContainer minHeight={700}>
                     <LineChart
@@ -62,9 +62,13 @@ const Graf: FunctionComponent = () => {
                                 '2018, 1. kvartal',
                                 '2019, 1. kvartal',
                             ]}
-                            tickFormatter={text => text.substring(0, 4)}
+                            tickFormatter={tickValue => tickValue.substring(0, 4)}
                         />
-                        <YAxis tickMargin={20} tickFormatter={value => value + ' %'} width={40} />
+                        <YAxis
+                            tickMargin={20}
+                            tickFormatter={tickValue => tickValue + ' %'}
+                            width={40}
+                        />
                         {grafTooltip()}
                         {grafLegend()}
                         {grafLinjer()}

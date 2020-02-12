@@ -1,6 +1,6 @@
 @import '../../variables';
 
-.videoerpanel {
+.historikkpanel {
     margin-top: 1.5rem;
     padding: 2rem 1.5rem;
     width: 100%;
@@ -10,18 +10,13 @@
         padding-bottom: 1rem;
         align-items: center;
     }
-
     &__ingress {
         padding-bottom: 1rem;
     }
-
     &__lenke {
-        display: block;
-        + .videoerpanel__lenke {
-            padding-top: 0.25rem;
-        }
+        .typo-normal-mixin();
+        .lenke-mixin();
     }
-
     &__illustrasjon {
         margin-right: 1rem;
     }

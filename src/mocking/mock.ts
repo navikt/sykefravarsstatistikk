@@ -67,7 +67,7 @@ if (MOCK_FEATURE_TOGGLES) {
     fetchMock.get(
         'begin:/sykefravarsstatistikk/api/feature',
         {
-            'arbeidsgiver.lanser-graf': true,
+            'arbeidsgiver.lanser-graf': false,
         },
         {
             delay: 1000,
