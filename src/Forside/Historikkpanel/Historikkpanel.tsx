@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import PanelBase from 'nav-frontend-paneler';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { ReactComponent as KalkisIkon } from '../Kalkulatorpanel/kalkis.svg';
+import { ReactComponent as GrafIkon } from './graf.svg';
 import { PATH_HISTORIKK } from '../../App';
 import { sendEvent } from '../../utils/metrikk-api';
 import InternLenke from '../../felleskomponenter/InternLenke/InternLenke';
@@ -11,7 +11,7 @@ const Historikkpanel: FunctionComponent = () => {
     return (
         <PanelBase className="historikkpanel">
             <Systemtittel className="historikkpanel__overskrift" tag="h2">
-                <KalkisIkon className="historikkpanel__illustrasjon" />
+                <GrafIkon className="historikkpanel__illustrasjon" />
                 Sykefraværsstatistikk
             </Systemtittel>
             <Normaltekst className="historikkpanel__ingress">
