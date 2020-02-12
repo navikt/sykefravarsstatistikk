@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import './Brødsmulesti.less';
-import { BrødsmulestiConfig, defaultBrødsmulestiConfig, finnBrødsmule } from './brødsmulesti-utils';
+import { BrødsmulestiConfig, defaultBrødsmulestiConfig, finnBrødsmule, Side } from './brødsmulesti-utils';
 import TilbakeTilForrigeBrødsmule from './TilbakeTilForrigeBrødsmule/TilbakeTilForrigeBrødsmule';
 import ListeMedBrødsmuler from './ListeMedBrødsmuler/ListeMedBrødsmuler';
 import MediaQuery from 'react-responsive';
 
 interface Props {
-    gjeldendeSide: 'sykefraværsstatistikk' | 'kalkulator';
+    gjeldendeSide: Side;
     config?: BrødsmulestiConfig;
 }
 

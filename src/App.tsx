@@ -72,6 +72,7 @@ const AppContent: FunctionComponent = () => {
             </Route>
             {skalViseGraf && (
                 <Route path={PATH_HISTORIKK} exact={true}>
+                    <Brødsmulesti gjeldendeSide="historikk" />
                     <Graf />
                 </Route>
             )}
