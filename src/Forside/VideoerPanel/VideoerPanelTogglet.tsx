@@ -4,25 +4,25 @@ import { ReactComponent as Kalkulatorikon } from './video.svg';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { sendEvent } from '../../utils/metrikk-api';
 import PanelBase from 'nav-frontend-paneler';
-import './VideoerPanel2.less';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
+import './VideoerPanelTogglet.less'
 
-const VideoerPanel2: FunctionComponent = () => (
-    <PanelBase className="videoerpanel2">
-        <div className="videoerpanel2__tekst-wrapper">
-            <Systemtittel className="videoerpanel2__overskrift" tag="h2">
-                <Kalkulatorikon className="videoerpanel2__illustrasjon" />
+const VideoerPanelTogglet: FunctionComponent = () => (
+    <PanelBase className="videoerpaneltogglet">
+        <div className="videoerpaneltogglet__tekst-wrapper">
+            <Systemtittel className="videoerpaneltogglet__overskrift" tag="h2">
+                <Kalkulatorikon className="videoerpaneltogglet__illustrasjon" />
                 Informasjonsvideoer
             </Systemtittel>
 
-            <Normaltekst className="videoerpanel2__ingress">
+            <Normaltekst className="videoerpaneltogglet__ingress">
                 Se NAVs informasjonsvideoer om hvordan du kan jobbe med sykefravær og arbeidsmiljø.
             </Normaltekst>
         </div>
 
-        <div className="videoerpanel2__lenke-wrapper">
+        <div className="videoerpaneltogglet__lenke-wrapper">
             <EksternLenke
-                className="videoerpanel2__lenke"
+                className="videoerpaneltogglet__lenke"
                 href="https://vimeo.com/showcase/6728595"
                 onClick={() =>
                     sendEvent('sykefravarsstatistikk.klikk-til-redusering-av-sykefravær')
@@ -32,7 +32,7 @@ const VideoerPanel2: FunctionComponent = () => (
             </EksternLenke>
 
             <EksternLenke
-                className="videoerpanel2__lenke"
+                className="videoerpaneltogglet__lenke"
                 href="https://vimeo.com/showcase/6728594"
                 onClick={() =>
                     sendEvent('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljøet')
@@ -43,4 +43,4 @@ const VideoerPanel2: FunctionComponent = () => (
         </div>
     </PanelBase>
 );
-export default VideoerPanel2;
+export default VideoerPanelTogglet;

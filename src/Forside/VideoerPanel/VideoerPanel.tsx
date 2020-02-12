@@ -6,11 +6,11 @@ import { sendEvent } from '../../utils/metrikk-api';
 import PanelBase from 'nav-frontend-paneler';
 import './VideoerPanel.less';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
-import VideoerPanel2 from './VideoerPanel2';
+import VideoerPanelTogglet from './VideoerPanelTogglet';
 
 const VideoerPanel: FunctionComponent<{ visNyttDesign: boolean }> = props => {
     if (props.visNyttDesign) {
-        return <VideoerPanel2 />;
+        return <VideoerPanelTogglet />;
     }
     return (
         <PanelBase className="videoerpanel">
