@@ -17,6 +17,8 @@ import IkkeInnloggetSide from './FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
+import Graf from './Graf/Graf';
+import { useRestFeatureToggles } from './api/featureToggles';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -36,7 +38,11 @@ const AppContent: FunctionComponent = () => {
     const restTapteDagsverk = useRestTapteDagsverk(orgnr);
     const restSammenligning = useRestSammenligning(orgnr);
 
-    if (restOrganisasjonstre.status === RestStatus.LasterInn) {
+    const restFeatureToggles = useRestFeatureToggles();
+    if (
+        restOrganisasjonstre.status === RestStatus.LasterInn ||
+        restFeatureToggles.status === RestStatus.LasterInn
+    ) {
         return <Lasteside />;
     } else if (restOrganisasjonstre.status === RestStatus.IkkeInnlogget) {
         return <IkkeInnloggetSide />;
@@ -59,6 +65,11 @@ const AppContent: FunctionComponent = () => {
                 <Brødsmulesti gjeldendeSide="kalkulator" />
                 <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />
             </Route>
+            {restFeatureToggles.data['arbeidsgiver.lanser-graf'] && (
+                <Route path="/graf" exact={true}>
+                    <Graf />
+                </Route>
+            )}
         </>
     );
 };

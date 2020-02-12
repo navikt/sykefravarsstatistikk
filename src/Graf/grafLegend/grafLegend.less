@@ -1,0 +1,26 @@
+@import '../../variables';
+
+.graf-legend {
+    // overrinding av defaultstyling for lister
+    list-style: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: -1rem;
+    border: 2px solid #99c2e8;
+    border-radius: 0.25rem;
+    padding: 1rem;
+
+    &__listeelement {
+        fill: @navMorkGra;
+        display: flex;
+        align-items: center;
+
+        + .graf-legend__listeelement {
+            margin-top: 0.5rem;
+        }
+    }
+
+    &__ikon {
+        margin-right: 1rem;
+    }
+}
