@@ -4,11 +4,9 @@ import Lenke from 'nav-frontend-lenker';
 import InternLenke from '../felleskomponenter/InternLenke/InternLenke';
 import { PATH_FORSIDE, PATH_HISTORIKK, PATH_KALKULATOR } from '../App';
 
-export type Side = string;
-
 export interface Brødsmule {
-    side: Side;
-    overordnetSide: Side | undefined;
+    side: string;
+    overordnetSide: string | undefined;
     lenketekst: string;
     lenke: (innhold: string | ReactElement) => ReactElement;
 }
@@ -57,6 +55,6 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
     },
 ];
 
-export const finnBrødsmule = (side: Side, config: BrødsmulestiConfig): Brødsmule => {
+export const finnBrødsmule = (side: string, config: BrødsmulestiConfig): Brødsmule => {
     return config.filter(smule => smule.side === side)[0];
 };
