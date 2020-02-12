@@ -10,14 +10,14 @@ import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 const VideoerPanel2: FunctionComponent = () => (
     <PanelBase className="videoerpanel2">
         <div className="videoerpanel2__tekst-wrapper">
-        <Systemtittel className="videoerpanel2__overskrift" tag="h2">
-            <Kalkulatorikon className="videoerpanel2__illustrasjon" />
-            Informasjonsvideoer
-        </Systemtittel>
+            <Systemtittel className="videoerpanel2__overskrift" tag="h2">
+                <Kalkulatorikon className="videoerpanel2__illustrasjon" />
+                Informasjonsvideoer
+            </Systemtittel>
 
-        <Normaltekst className="videoerpanel2__ingress">
-            Se NAVs informasjonsvideoer om hvordan du kan jobbe med sykefravær og arbeidsmiljø.
-        </Normaltekst>
+            <Normaltekst className="videoerpanel2__ingress">
+                Se NAVs informasjonsvideoer om hvordan du kan jobbe med sykefravær og arbeidsmiljø.
+            </Normaltekst>
         </div>
 
         <div className="videoerpanel2__lenke-wrapper">
