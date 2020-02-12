@@ -5,7 +5,7 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { sendEvent } from '../../utils/metrikk-api';
 import PanelBase from 'nav-frontend-paneler';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
-import './VideoerPanelTogglet.less'
+import './VideoerPanelTogglet.less';
 
 const VideoerPanelTogglet: FunctionComponent = () => (
     <PanelBase className="videoerpaneltogglet">
