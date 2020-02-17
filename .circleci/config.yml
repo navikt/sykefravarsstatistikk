@@ -10,20 +10,20 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - npm-packages-{{ checksum "package-lock.json" }}
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Installer avhengigheter
-          command: npm ci
+          command: yarn install --frozen-lockfile
       - save_cache:
-          key: npm-packages-{{ checksum "package-lock.json" }}
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/npm
+            - ~/.cache/yarn
       - run:
           name: Kjør enhetstester
-          command: npm run test
+          command: yarn test
       - run:
           name: Bygg produksjonsversjon av React app
-          command: npm run build
+          command: yarn build
       - nais/docker:
           image: navikt/sykefravarsstatistikk
 
