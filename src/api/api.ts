@@ -57,6 +57,13 @@ export const hentRestTapteDagsverk = async (orgnr: string): Promise<RestTapteDag
 export const hentRestFeatureToggles = async (
     ...features: string[]
 ): Promise<RestFeatureToggles> => {
+    if (features.length === 0) {
+        return {
+            status: RestStatus.Suksess,
+            data: {},
+        };
+    }
+
     const response = await fetch(featureTogglesPath(features), {
         method: 'GET',
         credentials: 'include',
