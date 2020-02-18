@@ -6,12 +6,10 @@ Denne appen gir arbeidsgivere muligheten til å sammenligne sykefraværet i egen
 
 # Komme i gang
 
-- Installere avhengigheter: `npm install`
-- Kjøre applikasjon med mock: `npm run mock` (for Windows: `npm run wock`)
-   * ved behov kan funksjonen `mockSammenligningForbidden()` aktiveres i `mock.ts` for å fremprovosere en 403 response fra API-et  
-- Kjøre applikasjonen mot egen backend, alt annet mocket: `npm run mock-msa` (NB! Krever at `sykefravarsstatistikk-api` kjører på port 8080)
-    * For å få et gyldig token lokalt, besøk `http://localhost:8080/sykefravarsstatistikk-api/local/cookie?subject=<test-fnr>&cookiename=selvbetjening-idtoken&redirect=http://localhost:3000/sykefravarsstatistikk`
-- Kjøre applikasjonen normalt: `npm start` (NB! Krever integrasjon med `sykefravarsstatistikk-api` og `ditt-nav-arbeidsgiver-api`)
+- Installere avhengigheter: `yarn`
+- Kjøre applikasjon med mock: `yarn run mock` (for Windows: `yarn run wock`)
+- Hvis du vil kjøre mot egen backend lokalt, kan du sette `MOCK_SYKEFRAVÆRSSTATISTIKK = false` i `mock.ts` før du kjører `yarn mock`. (NB! Krever at `sykefravarsstatistikk-api` kjører på port 8080.)
+- Kjøre applikasjonen normalt: `yarn start` (NB! Krever integrasjon med `sykefravarsstatistikk-api` og `ditt-nav-arbeidsgiver-api`)
 
 ---
 
@@ -21,7 +19,8 @@ Spørsmål knyttet til koden eller prosjektet kan rettes mot:
 
 * Lars Andreas Tveiten, lars.andreas.van.woensel.kooy.tveiten@nav.no
 * Thomas Dufourd, thomas.dufourd@nav.no
+* Malaz Alkoj, Malaz.Alkoj@nav.no
 
 ## For NAV-ansatte
 
-Interne henvendelser kan sendes via Slack i kanalen #tag-teamia.
+Interne henvendelser kan sendes via Slack i kanalen #arbeidsgiver-teamia.

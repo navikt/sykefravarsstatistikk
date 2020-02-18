@@ -2,13 +2,11 @@ import React, { FunctionComponent, ReactElement } from 'react';
 import { useLocation } from 'react-router-dom';
 import Lenke from 'nav-frontend-lenker';
 import InternLenke from '../felleskomponenter/InternLenke/InternLenke';
-import { PATH_FORSIDE, PATH_KALKULATOR } from '../App';
-
-export type Side = string;
+import { PATH_FORSIDE, PATH_HISTORIKK, PATH_KALKULATOR } from '../App';
 
 export interface Brødsmule {
-    side: Side;
-    overordnetSide: Side | undefined;
+    side: string;
+    overordnetSide: string | undefined;
     lenketekst: string;
     lenke: (innhold: string | ReactElement) => ReactElement;
 }
@@ -47,8 +45,16 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
             <InternLenke pathname={PATH_KALKULATOR}>{innhold}</InternLenke>
         ),
     },
+    {
+        side: 'historikk',
+        overordnetSide: 'sykefraværsstatistikk',
+        lenketekst: 'Sykefraværshistorikk',
+        lenke: (innhold: string | ReactElement) => (
+            <InternLenke pathname={PATH_HISTORIKK}>{innhold}</InternLenke>
+        ),
+    },
 ];
 
-export const finnBrødsmule = (side: Side, config: BrødsmulestiConfig): Brødsmule => {
+export const finnBrødsmule = (side: string, config: BrødsmulestiConfig): Brødsmule => {
     return config.filter(smule => smule.side === side)[0];
 };

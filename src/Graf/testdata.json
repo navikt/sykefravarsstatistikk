@@ -1,0 +1,350 @@
+[
+    {
+        "sykefraværsstatistikkType": "LAND",
+        "label": "Norge",
+        "kvartalsvisSykefraværProsent": [
+            {
+                "prosent": 5.2,
+                "årstall": 2014,
+                "kvartal": 2,
+                "erMaskert": false
+            },
+            {
+                "prosent": 5.5,
+                "årstall": 2014,
+                "kvartal": 3,
+                "erMaskert": false
+            },
+            {
+                "prosent": 5.4,
+                "årstall": 2014,
+                "kvartal": 4,
+                "erMaskert": false
+            },
+            {
+                "prosent": 5.4,
+                "årstall": 2015,
+                "kvartal": 1,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.9,
+                "årstall": 2015,
+                "kvartal": 2,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.3,
+                "årstall": 2015,
+                "kvartal": 3,
+                "erMaskert": false
+            },
+            {
+                "prosent": 5.1,
+                "årstall": 2015,
+                "kvartal": 4,
+                "erMaskert": false
+            },
+            {
+                "prosent": 5.2,
+                "årstall": 2016,
+                "kvartal": 1,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.9,
+                "årstall": 2016,
+                "kvartal": 2,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.2,
+                "årstall": 2016,
+                "kvartal": 3,
+                "erMaskert": false
+            },
+            {
+                "prosent": 5.1,
+                "årstall": 2016,
+                "kvartal": 4,
+                "erMaskert": false
+            },
+            {
+                "prosent": 5.5,
+                "årstall": 2017,
+                "kvartal": 1,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.9,
+                "årstall": 2017,
+                "kvartal": 2,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.3,
+                "årstall": 2017,
+                "kvartal": 3,
+                "erMaskert": false
+            },
+            {
+                "prosent": 5.2,
+                "årstall": 2017,
+                "kvartal": 4,
+                "erMaskert": false
+            },
+            {
+                "prosent": 5.6,
+                "årstall": 2018,
+                "kvartal": 1,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.8,
+                "årstall": 2018,
+                "kvartal": 2,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.2,
+                "årstall": 2018,
+                "kvartal": 3,
+                "erMaskert": false
+            },
+            {
+                "prosent": 5.1,
+                "årstall": 2018,
+                "kvartal": 4,
+                "erMaskert": false
+            },
+            {
+                "prosent": 5.5,
+                "årstall": 2019,
+                "kvartal": 1,
+                "erMaskert": false
+            }
+        ]
+    },
+    {
+        "sykefraværsstatistikkType": "SEKTOR",
+        "label": "Privat og offentlig næringsvirksomhet",
+        "kvartalsvisSykefraværProsent": [
+            {
+                "prosent": 4.8,
+                "årstall": 2014,
+                "kvartal": 2,
+                "erMaskert": false
+            },
+            {
+                "prosent": 5.1,
+                "årstall": 2014,
+                "kvartal": 3,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.9,
+                "årstall": 2014,
+                "kvartal": 4,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.8,
+                "årstall": 2015,
+                "kvartal": 1,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.4,
+                "årstall": 2015,
+                "kvartal": 2,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4,
+                "årstall": 2015,
+                "kvartal": 3,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.6,
+                "årstall": 2015,
+                "kvartal": 4,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.7,
+                "årstall": 2016,
+                "kvartal": 1,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.4,
+                "årstall": 2016,
+                "kvartal": 2,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4,
+                "årstall": 2016,
+                "kvartal": 3,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.7,
+                "årstall": 2016,
+                "kvartal": 4,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.9,
+                "årstall": 2017,
+                "kvartal": 1,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.4,
+                "årstall": 2017,
+                "kvartal": 2,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4,
+                "årstall": 2017,
+                "kvartal": 3,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.7,
+                "årstall": 2017,
+                "kvartal": 4,
+                "erMaskert": false
+            },
+            {
+                "prosent": 5,
+                "årstall": 2018,
+                "kvartal": 1,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.3,
+                "årstall": 2018,
+                "kvartal": 2,
+                "erMaskert": false
+            },
+            {
+                "prosent": 3.9,
+                "årstall": 2018,
+                "kvartal": 3,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.6,
+                "årstall": 2018,
+                "kvartal": 4,
+                "erMaskert": false
+            },
+            {
+                "prosent": 4.9,
+                "årstall": 2019,
+                "kvartal": 1,
+                "erMaskert": false
+            }
+        ]
+    },
+    {
+        "sykefraværsstatistikkType": "BRANSJE",
+        "label": "Barnehager",
+        "kvartalsvisSykefraværProsent": [
+            {
+                "prosent": 9.2,
+                "årstall": 2019,
+                "kvartal": 1,
+                "erMaskert": false
+            }
+        ]
+    },
+    {
+        "sykefraværsstatistikkType": "VIRKSOMHET",
+        "label": "(devmock) Orkanger og Bremnes barnehage",
+        "kvartalsvisSykefraværProsent": [
+            {
+                "prosent": 2.1,
+                "årstall": 2016,
+                "kvartal": 1,
+                "erMaskert": false
+            },
+            {
+                "prosent": 2.3,
+                "årstall": 2016,
+                "kvartal": 2,
+                "erMaskert": false
+            },
+            {
+                "prosent": 2.9,
+                "årstall": 2016,
+                "kvartal": 3,
+                "erMaskert": false
+            },
+            {
+                "prosent": 8.5,
+                "årstall": 2016,
+                "kvartal": 4,
+                "erMaskert": false
+            },
+            {
+                "prosent": 9.5,
+                "årstall": 2017,
+                "kvartal": 1,
+                "erMaskert": false
+            },
+            {
+                "prosent": 7.1,
+                "årstall": 2017,
+                "kvartal": 2,
+                "erMaskert": false
+            },
+            {
+                "prosent": 5.6,
+                "årstall": 2017,
+                "kvartal": 3,
+                "erMaskert": false
+            },
+            {
+                "prosent": 2.2,
+                "årstall": 2017,
+                "kvartal": 4,
+                "erMaskert": false
+            },
+            {
+                "prosent": 12,
+                "årstall": 2018,
+                "kvartal": 1,
+                "erMaskert": false
+            },
+            {
+                "prosent": 14.7,
+                "årstall": 2018,
+                "kvartal": 2,
+                "erMaskert": false
+            },
+            {
+                "prosent": 10,
+                "årstall": 2018,
+                "kvartal": 3,
+                "erMaskert": false
+            },
+            {
+                "prosent": 16.9,
+                "årstall": 2018,
+                "kvartal": 4,
+                "erMaskert": false
+            },
+            {
+                "prosent": 12.2,
+                "årstall": 2019,
+                "kvartal": 1,
+                "erMaskert": false
+            }
+        ]
+    }
+]

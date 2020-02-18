@@ -6,7 +6,7 @@ import ListeMedBrødsmuler from './ListeMedBrødsmuler/ListeMedBrødsmuler';
 import MediaQuery from 'react-responsive';
 
 interface Props {
-    gjeldendeSide: 'sykefraværsstatistikk' | 'kalkulator';
+    gjeldendeSide: string;
     config?: BrødsmulestiConfig;
 }
 
