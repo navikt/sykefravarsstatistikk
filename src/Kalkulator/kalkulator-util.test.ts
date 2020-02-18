@@ -21,6 +21,6 @@ const lagTapteDagsverk = (tapteDagsverk: number): TapteDagsverk => {
     return {
         årstall: 2019,
         kvartal: 4,
-        tapteDagsverk,
+        tapteDagsverk: tapteDagsverk,
     };
 };

@@ -6,19 +6,18 @@ import { Input } from 'nav-frontend-skjema';
 import Kostnad from './Kostnad/Kostnad';
 import { RestStatus } from '../api/api-utils';
 import { RestTapteDagsverk } from '../api/tapteDagsverk';
-import { summerTapteDagsverk } from './kalkulator-util';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
 import { scrollToBanner } from '../utils/scrollUtils';
 
 interface Props {
     defaultTapteDagsverk: RestTapteDagsverk;
-    erMaskert?: boolean;
 }
 
 const Kalkulator: FunctionComponent<Props> = props => {
     const { defaultTapteDagsverk } = props;
     const [tapteDagsverk, setTapteDagsverk] = useState<number | undefined>();
+    const [erMaskert, setErMaskert] = useState<boolean | undefined>();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
     const totalKostnad = tapteDagsverk && kostnadDagsverk ? tapteDagsverk * kostnadDagsverk : 0;
@@ -33,7 +32,11 @@ const Kalkulator: FunctionComponent<Props> = props => {
 
     useEffect(() => {
         if (defaultTapteDagsverk.status === RestStatus.Suksess && !harEndretTapteDagsverk) {
-            setTapteDagsverk(summerTapteDagsverk(defaultTapteDagsverk.data));
+            setTapteDagsverk(defaultTapteDagsverk.data.tapteDagsverk);
+            setErMaskert(defaultTapteDagsverk.data.erMaskert);
+            console.log(defaultTapteDagsverk.data.tapteDagsverk);
+            console.log(defaultTapteDagsverk.data.erMaskert);
+            console.log(tapteDagsverk);
         }
     }, [defaultTapteDagsverk, harEndretTapteDagsverk]);
 
@@ -43,9 +46,11 @@ const Kalkulator: FunctionComponent<Props> = props => {
 
     const tapteDagsverkSiste12Mnd =
         defaultTapteDagsverk.status === RestStatus.Suksess ? (
-            summerTapteDagsverk(defaultTapteDagsverk.data)
+            <Normaltekst>
+                Deres tapte dagsverk siste 12 mnd: {defaultTapteDagsverk.data.tapteDagsverk}
+            </Normaltekst>
         ) : (
-            <NavFrontendSpinner className="kalkulator__spinner" transparent={true}/>
+            <NavFrontendSpinner className="kalkulator__spinner" transparent={true} />
         );
 
     return (
@@ -92,9 +97,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         type="number"
                         className="kalkulator__input"
                     />
-                    <Normaltekst>
-                        Deres tapte dagsverk siste 12 mnd: {tapteDagsverkSiste12Mnd}
-                    </Normaltekst>
+                    {!erMaskert ? tapteDagsverkSiste12Mnd : ''}
                     <LesMerPanel
                         åpneLabel="Hvor kommer dette tallet fra?"
                         lukkLabel="Lukk"
@@ -107,7 +110,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         </Normaltekst>
                     </LesMerPanel>
                 </div>
-                <Kostnad kostnad={totalKostnad}/>
+                <Kostnad kostnad={totalKostnad} />
             </div>
         </div>
     );

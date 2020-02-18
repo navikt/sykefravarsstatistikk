@@ -5,8 +5,7 @@ import { getSammenligningMock } from './sammenligning';
 import { getTapteDagsverkMock } from './tapteDagsverk';
 
 const MOCK_MIN_SIDE_ARBEIDSGIVER = true;
-const MOCK_SYKEFRAVÆRSSTATISTIKK = false;
-const MOCK_TAPTEDAGSVERK = true;
+const MOCK_SYKEFRAVÆRSSTATISTIKK_API = false;
 const MOCK_ENHETSREGISTERET = true;
 const MOCK_FEATURE_TOGGLES = true;
 
@@ -16,7 +15,7 @@ if (MOCK_MIN_SIDE_ARBEIDSGIVER) {
     });
 }
 
-if (MOCK_SYKEFRAVÆRSSTATISTIKK) {
+if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
     fetchMock.get(
         'express:/sykefravarsstatistikk/api/:orgnr/sammenligning',
         url => {
@@ -30,9 +29,7 @@ if (MOCK_SYKEFRAVÆRSSTATISTIKK) {
             delay: 2000,
         }
     );
-}
 
-if (MOCK_TAPTEDAGSVERK) {
     fetchMock.get(
         'express:/sykefravarsstatistikk/api/:orgnr/tapteDagsverk',
         url => {

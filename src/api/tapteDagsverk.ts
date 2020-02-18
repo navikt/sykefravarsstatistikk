@@ -3,11 +3,10 @@ import { useEffect, useState } from 'react';
 import { hentRestTapteDagsverk } from './api';
 
 export interface TapteDagsverk {
-    årstall: number;
-    kvartal: number;
     tapteDagsverk: number;
+    erMaskert: boolean;
 }
-export type RestTapteDagsverk = RestRessurs<TapteDagsverk[]>;
+export type RestTapteDagsverk = RestRessurs<TapteDagsverk>;
 
 export const useRestTapteDagsverk = (orgnr: string | undefined): RestTapteDagsverk => {
     const [restTapteDagsverk, setRestTapteDagsverk] = useState<RestTapteDagsverk>({

@@ -28,7 +28,7 @@ export const PATH_HISTORIKK = '/historikk';
 const App: FunctionComponent = () => {
     return (
         <BrowserRouter basename={BASE_PATH}>
-            <AppContent />
+            <AppContent/>
         </BrowserRouter>
     );
 };
@@ -45,35 +45,35 @@ const AppContent: FunctionComponent = () => {
         restOrganisasjonstre.status === RestStatus.LasterInn ||
         restFeatureToggles.status === RestStatus.LasterInn
     ) {
-        return <Lasteside />;
+        return <Lasteside/>;
     } else if (restOrganisasjonstre.status === RestStatus.IkkeInnlogget) {
-        return <IkkeInnloggetSide />;
+        return <IkkeInnloggetSide/>;
     }
 
     const skalViseGraf = restFeatureToggles.data['arbeidsgiver.lanser-graf'];
 
     return (
         <>
-            <Banner tittel="Sykefraværsstatistikk" restOrganisasjonstre={restOrganisasjonstre} />
+            <Banner tittel="Sykefraværsstatistikk" restOrganisasjonstre={restOrganisasjonstre}/>
             <Route path={PATH_FORSIDE} exact={true}>
-                <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
+                <Brødsmulesti gjeldendeSide="sykefraværsstatistikk"/>
                 <Forside restSammenligning={restSammenligning}>
-                    <Infopanel />
-                    <LegemeldtSykefraværPanel restSammenligning={restSammenligning} />
-                    <KalkulatorPanel />
-                    {skalViseGraf && <Historikkpanel />}
-                    <VideoerPanel visNyttDesign={skalViseGraf} />
-                    <IAwebpanel />
+                    <Infopanel/>
+                    <LegemeldtSykefraværPanel restSammenligning={restSammenligning}/>
+                    <KalkulatorPanel/>
+                    {skalViseGraf && <Historikkpanel/>}
+                    <VideoerPanel visNyttDesign={skalViseGraf}/>
+                    <IAwebpanel/>
                 </Forside>
             </Route>
             <Route path={PATH_KALKULATOR} exact={true}>
-                <Brødsmulesti gjeldendeSide="kalkulator" />
-                <Kalkulator defaultTapteDagsverk={restTapteDagsverk} erMaskert={restSammenligning.sammenligning.virksomhet.erMaskert} />
+                <Brødsmulesti gjeldendeSide="kalkulator"/>
+                <Kalkulator defaultTapteDagsverk={restTapteDagsverk}/>
             </Route>
             {skalViseGraf && (
                 <Route path={PATH_HISTORIKK} exact={true}>
-                    <Brødsmulesti gjeldendeSide="historikk" />
-                    <Graf />
+                    <Brødsmulesti gjeldendeSide="historikk"/>
+                    <Graf/>
                 </Route>
             )}
         </>
