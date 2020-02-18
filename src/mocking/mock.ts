@@ -31,7 +31,7 @@ if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
     );
 
     fetchMock.get(
-        'express:/sykefravarsstatistikk/api/:orgnr/tapteDagsverk',
+        'express:/sykefravarsstatistikk/api/:orgnr/summerTapteDagsverk',
         url => {
             const orgnr = url.match(/[0-9]{9}/)![0];
             if (orgnr === '101010101') {
