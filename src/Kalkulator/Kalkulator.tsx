@@ -32,11 +32,8 @@ const Kalkulator: FunctionComponent<Props> = props => {
 
     useEffect(() => {
         if (defaultTapteDagsverk.status === RestStatus.Suksess && !harEndretTapteDagsverk) {
-            setTapteDagsverk(defaultTapteDagsverk.data.tapteDagsverk);
+            setTapteDagsverk(Math.round( defaultTapteDagsverk.data.tapteDagsverk));
             setErMaskert(defaultTapteDagsverk.data.erMaskert);
-            console.log(defaultTapteDagsverk.data.tapteDagsverk);
-            console.log(defaultTapteDagsverk.data.erMaskert);
-            console.log(tapteDagsverk);
         }
     }, [defaultTapteDagsverk, harEndretTapteDagsverk]);
 
@@ -47,7 +44,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
     const tapteDagsverkSiste12Mnd =
         defaultTapteDagsverk.status === RestStatus.Suksess ? (
             <Normaltekst>
-                Deres tapte dagsverk siste 12 mnd: {defaultTapteDagsverk.data.tapteDagsverk}
+                Deres tapte dagsverk siste 12 mnd: {Math.round( defaultTapteDagsverk.data.tapteDagsverk)}
             </Normaltekst>
         ) : (
             <NavFrontendSpinner className="kalkulator__spinner" transparent={true} />

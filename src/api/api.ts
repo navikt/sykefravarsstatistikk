@@ -10,7 +10,7 @@ import { getRestStatus, RestStatus } from './api-utils';
 import { RestFeatureToggles } from './featureToggles';
 
 const sammenligningPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sammenligning`;
-const tapteDagsverkPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/tapteDagsverk`;
+const tapteDagsverkPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/summerTapteDagsverk`;
 const featureTogglesPath = (features: string[]) =>
     `${BASE_PATH}/api/feature?` + features.map(featureNavn => `feature=${featureNavn}`).join('&');
 
