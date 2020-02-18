@@ -5,7 +5,7 @@ import { getSammenligningMock } from './sammenligning';
 import { getTapteDagsverkMock } from './tapteDagsverk';
 
 const MOCK_MIN_SIDE_ARBEIDSGIVER = true;
-const MOCK_SYKEFRAVÆRSSTATISTIKK = true;
+const MOCK_SYKEFRAVÆRSSTATISTIKK = false;
 const MOCK_TAPTEDAGSVERK = true;
 const MOCK_ENHETSREGISTERET = true;
 const MOCK_FEATURE_TOGGLES = true;
