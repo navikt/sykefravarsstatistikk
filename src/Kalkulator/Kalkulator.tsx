@@ -17,7 +17,9 @@ interface Props {
 const Kalkulator: FunctionComponent<Props> = props => {
     const { defaultTapteDagsverk } = props;
     const [tapteDagsverk, setTapteDagsverk] = useState<number | undefined>();
-    const [erMaskert, setErMaskert] = useState<boolean | undefined>();
+    const [skalViseDefaultTapteDagsverk, setSkalViseDefaultTapteDagsverk] = useState<
+        boolean | undefined
+    >();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
     const totalKostnad = tapteDagsverk && kostnadDagsverk ? tapteDagsverk * kostnadDagsverk : 0;
@@ -32,8 +34,8 @@ const Kalkulator: FunctionComponent<Props> = props => {
 
     useEffect(() => {
         if (defaultTapteDagsverk.status === RestStatus.Suksess && !harEndretTapteDagsverk) {
-            setTapteDagsverk(Math.round( defaultTapteDagsverk.data.tapteDagsverk));
-            setErMaskert(defaultTapteDagsverk.data.erMaskert);
+            setTapteDagsverk(Math.round(defaultTapteDagsverk.data.tapteDagsverk));
+            setSkalViseDefaultTapteDagsverk(!defaultTapteDagsverk.data.erMaskert);
         }
     }, [defaultTapteDagsverk, harEndretTapteDagsverk]);
 
@@ -41,14 +43,30 @@ const Kalkulator: FunctionComponent<Props> = props => {
         scrollToBanner();
     }, []);
 
-    const tapteDagsverkSiste12Mnd =
-        defaultTapteDagsverk.status === RestStatus.Suksess ? (
-            <Normaltekst>
-                Deres tapte dagsverk siste 12 mnd: {Math.round( defaultTapteDagsverk.data.tapteDagsverk)}
-            </Normaltekst>
-        ) : (
-            <NavFrontendSpinner className="kalkulator__spinner" transparent={true} />
+    const tapteDagsverkSiste12Mnd = defaultTapteDagsverk.status === RestStatus.Suksess &&
+        skalViseDefaultTapteDagsverk && (
+            <>
+                <Normaltekst>
+                    Deres tapte dagsverk siste 12 mnd:{' '}
+                    {Math.round(defaultTapteDagsverk.data.tapteDagsverk)}
+                </Normaltekst>
+                <LesMerPanel
+                    åpneLabel="Hvor kommer dette tallet fra?"
+                    lukkLabel="Lukk"
+                    className="kalkulator__lesmer-tapte-dagsverk"
+                >
+                    <Normaltekst>
+                        Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes
+                        ut fra det legemeldte sykefraværet de siste 12 månedene og er tilgjengelig i
+                        NAVs datagrunnlag.
+                    </Normaltekst>
+                </LesMerPanel>
+            </>
         );
+
+    const tapteDagsverkSpinner = defaultTapteDagsverk.status === RestStatus.IkkeLastet && (
+        <NavFrontendSpinner className="kalkulator__spinner" transparent={true} />
+    );
 
     return (
         <div className="kalkulator__wrapper">
@@ -94,18 +112,8 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         type="number"
                         className="kalkulator__input"
                     />
-                    {!erMaskert ? tapteDagsverkSiste12Mnd : ''}
-                    <LesMerPanel
-                        åpneLabel="Hvor kommer dette tallet fra?"
-                        lukkLabel="Lukk"
-                        className="kalkulator__lesmer-tapte-dagsverk"
-                    >
-                        <Normaltekst>
-                            Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk
-                            bergenes ut fra det legemeldte sykefraværet de siste 12 månedene og er
-                            tilgjengelig i NAVs datagrunnlag.
-                        </Normaltekst>
-                    </LesMerPanel>
+                    {tapteDagsverkSpinner}
+                    {tapteDagsverkSiste12Mnd}
                 </div>
                 <Kostnad kostnad={totalKostnad} />
             </div>
