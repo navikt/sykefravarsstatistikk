@@ -21,6 +21,7 @@ import Graf from './Graf/Graf';
 import { useRestFeatureToggles } from './api/featureToggles';
 import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import { useRestSykefraværshistorikk } from './api/sykefraværshistorikk';
+import Tabell from './Graf/Tabell/Tabell';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -42,7 +43,7 @@ const AppContent: FunctionComponent = () => {
     const restSammenligning = useRestSammenligning(orgnr);
     const restSykefraværshistorikk = useRestSykefraværshistorikk(orgnr);
 
-    const restFeatureToggles = useRestFeatureToggles();
+    const restFeatureToggles = useRestFeatureToggles('arbeidsgiver.lanser-graf');
     if (
         restOrganisasjonstre.status === RestStatus.LasterInn ||
         restFeatureToggles.status === RestStatus.LasterInn
@@ -56,7 +57,6 @@ const AppContent: FunctionComponent = () => {
 
     return (
         <>
-            {JSON.stringify(restSykefraværshistorikk)}
             <Banner tittel="Sykefraværsstatistikk" restOrganisasjonstre={restOrganisasjonstre} />
             <Route path={PATH_FORSIDE} exact={true}>
                 <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
@@ -76,6 +76,7 @@ const AppContent: FunctionComponent = () => {
             {skalViseGraf && (
                 <Route path={PATH_HISTORIKK} exact={true}>
                     <Brødsmulesti gjeldendeSide="historikk" />
+                    <Tabell restSykefraværsstatistikk={restSykefraværshistorikk}/>
                     <Graf />
                 </Route>
             )}

@@ -75,7 +75,7 @@ export const hentRestSykefraværshistorikk = async (orgnr: string): Promise<Rest
 };
 
 export const hentRestFeatureToggles = async (
-    ...features: string[]
+    features: string[]
 ): Promise<RestFeatureToggles> => {
     if (features.length === 0) {
         return {
