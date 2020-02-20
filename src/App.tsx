@@ -17,11 +17,10 @@ import IkkeInnloggetSide from './FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
-import Graf from './GrafOgTabell/Graf/Graf';
 import { useRestFeatureToggles } from './api/featureToggles';
 import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import { useRestSykefraværshistorikk } from './api/sykefraværshistorikk';
-import Tabell from './GrafOgTabell/Tabell/Tabell';
+import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -76,8 +75,7 @@ const AppContent: FunctionComponent = () => {
             {skalViseGraf && (
                 <Route path={PATH_HISTORIKK} exact={true}>
                     <Brødsmulesti gjeldendeSide="historikk" />
-                    <Tabell restSykefraværsstatistikk={restSykefraværshistorikk}/>
-                    <Graf />
+                    <GrafOgTabell restSykefraværsstatistikk={restSykefraværshistorikk} />
                 </Route>
             )}
         </>
