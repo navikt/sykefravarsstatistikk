@@ -8,10 +8,11 @@ import {
 import { RestTapteDagsverk } from './tapteDagsverk';
 import { getRestStatus, RestStatus } from './api-utils';
 import { RestFeatureToggles } from './featureToggles';
+import { RestSykefraværshistorikk } from './sykefraværshistorikk';
 
 const sammenligningPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sammenligning`;
 const tapteDagsverkPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/summerTapteDagsverk`;
-const sykefraværshistorikkPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sykefravarprosenthistorikk`;
+const sykefraværshistorikkPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk`;
 const featureTogglesPath = (features: string[]) =>
     `${BASE_PATH}/api/feature?` + features.map(featureNavn => `feature=${featureNavn}`).join('&');
 
@@ -55,7 +56,7 @@ export const hentRestTapteDagsverk = async (orgnr: string): Promise<RestTapteDag
     };
 };
 
-export const hentRestSykefraværshistorikk = async (orgnr: string): Promise<RestTapteDagsverk> => {
+export const hentRestSykefraværshistorikk = async (orgnr: string): Promise<RestSykefraværshistorikk> => {
     const response = await fetch(sykefraværshistorikkPath(orgnr), {
         method: 'GET',
         credentials: 'include',

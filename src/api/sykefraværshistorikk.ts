@@ -1,39 +1,58 @@
 import { RestRessurs, RestStatus } from './api-utils';
 import { useEffect, useState } from 'react';
-import { hentRestTapteDagsverk } from './api';
+import { hentRestSykefraværshistorikk } from './api';
 
 enum SykefraværshistorikkType {
     LAND = 'LAND',
     SEKTOR = 'SEKTOR',
     NÆRING = 'NÆRING',
     BRANSJE = 'BRANSJE',
-    VIRKSOMHET = 'VIRKSOMHET'
+    VIRKSOMHET = 'VIRKSOMHET',
 }
 
-export interface Sykefraværshistorikk {
-    sykefraværsstatistikkType: SykefraværshistorikkType;
+export type KvartalsvisSykefraværsprosent = {
     label: string;
+    kvartal: number;
+    årstall: number;
+} & (
+    | {
+          erMaskert: true;
+          prosent: null;
+      }
+    | {
+          erMaskert: false;
+          prosent: number;
+      }
+);
 
-}[];
+export interface Sykefraværshistorikk {
+    type: SykefraværshistorikkType;
+    label: string;
+    kvartalsvisSykefraværsprosent: KvartalsvisSykefraværsprosent[];
+}
 
-export type RestTapteDagsverk = RestRessurs<TapteDagsverk>;
+export type RestSykefraværshistorikk = RestRessurs<Sykefraværshistorikk[]>;
 
-export const useRestTapteDagsverk = (orgnr: string | undefined): RestTapteDagsverk => {
-    const [restTapteDagsverk, setRestTapteDagsverk] = useState<RestTapteDagsverk>({
+export const useRestSykefraværshistorikk = (
+    orgnr: string | undefined
+): RestSykefraværshistorikk => {
+    const [restSykefraværshistorikk, setRestSykefraværshistorikk] = useState<
+        RestSykefraværshistorikk
+    >({
         status: RestStatus.IkkeLastet,
     });
 
     useEffect(() => {
         if (orgnr) {
-            setRestTapteDagsverk({
+            setRestSykefraværshistorikk({
                 status: RestStatus.IkkeLastet,
             });
-            const hentTapteDagsverkOgSettState = async () => {
-                setRestTapteDagsverk(await hentRestTapteDagsverk(orgnr));
+            const hentRestSykefraværshistorikkOgSettState = async () => {
+                setRestSykefraværshistorikk(await hentRestSykefraværshistorikk(orgnr));
             };
-            hentTapteDagsverkOgSettState();
+            hentRestSykefraværshistorikkOgSettState();
         }
     }, [orgnr]);
 
-    return restTapteDagsverk;
+    return restSykefraværshistorikk;
 };
