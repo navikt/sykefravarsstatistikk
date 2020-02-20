@@ -7440,6 +7440,11 @@ nav-frontend-spinner@^1.0.20:
   resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-1.0.21.tgz#bd47723499b385cd2a491f91e329ac8f8f7c238a"
   integrity sha512-H/UV+MHw5Q/GLeRbxRq/xO5E2z7qyJzx5ambsM4OF/jiK5MaBBkmE/yvKJ/xUsgQwwQPaOOgst2gGk+imiP3QQ==
 
+nav-frontend-tabell-style@^0.2.19:
+  version "0.2.19"
+  resolved "https://registry.yarnpkg.com/nav-frontend-tabell-style/-/nav-frontend-tabell-style-0.2.19.tgz#475e52989cb317a63b866743179d8c6a15fcef1a"
+  integrity sha512-eXUqIGbUvSNugwrTAqRTenxplF33XxjC/eai+XBAIqGL2HtEyaAt3nDxDqLdeV+aYIzFZIoNW+NssU36+6m8qw==
+
 nav-frontend-toggle-style@^0.0.30:
   version "0.0.30"
   resolved "https://registry.yarnpkg.com/nav-frontend-toggle-style/-/nav-frontend-toggle-style-0.0.30.tgz#d37e8186d35f610dc2dfc9ee1b216a3f9f32e756"

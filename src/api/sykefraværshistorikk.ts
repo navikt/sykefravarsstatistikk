@@ -2,7 +2,7 @@ import { RestRessurs, RestStatus } from './api-utils';
 import { useEffect, useState } from 'react';
 import { hentRestSykefraværshistorikk } from './api';
 
-enum SykefraværshistorikkType {
+export enum SykefraværshistorikkType {
     LAND = 'LAND',
     SEKTOR = 'SEKTOR',
     NÆRING = 'NÆRING',
