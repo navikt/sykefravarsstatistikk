@@ -3,6 +3,7 @@ import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { ToggleGruppePure } from 'nav-frontend-toggle';
 import Graf from './Graf/Graf';
 import Tabell from './Tabell/Tabell';
+import './GrafOgTabell.less';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -19,7 +20,7 @@ const GrafOgTabell: FunctionComponent<Props> = props => {
         );
 
     return (
-        <>
+        <div className="graf-og-tabell">
             <ToggleGruppePure
                 toggles={[
                     {
@@ -35,7 +36,7 @@ const GrafOgTabell: FunctionComponent<Props> = props => {
                 ]}
             />
             {innhold}
-        </>
+        </div>
     );
 };
 
