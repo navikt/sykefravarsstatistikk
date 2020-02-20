@@ -17,11 +17,11 @@ import IkkeInnloggetSide from './FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
-import Graf from './Graf/Graf';
+import Graf from './GrafOgTabell/Graf/Graf';
 import { useRestFeatureToggles } from './api/featureToggles';
 import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import { useRestSykefraværshistorikk } from './api/sykefraværshistorikk';
-import Tabell from './Graf/Tabell/Tabell';
+import Tabell from './GrafOgTabell/Tabell/Tabell';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
