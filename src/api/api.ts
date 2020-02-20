@@ -11,6 +11,7 @@ import { RestFeatureToggles } from './featureToggles';
 
 const sammenligningPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sammenligning`;
 const tapteDagsverkPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/summerTapteDagsverk`;
+const sykefraværshistorikkPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sykefravarprosenthistorikk`;
 const featureTogglesPath = (features: string[]) =>
     `${BASE_PATH}/api/feature?` + features.map(featureNavn => `feature=${featureNavn}`).join('&');
 
@@ -38,6 +39,24 @@ export const hentRestSammenligning = async (orgnr: string): Promise<RestSammenli
 
 export const hentRestTapteDagsverk = async (orgnr: string): Promise<RestTapteDagsverk> => {
     const response = await fetch(tapteDagsverkPath(orgnr), {
+        method: 'GET',
+        credentials: 'include',
+    });
+
+    const restStatus = getRestStatus(response.status);
+    if (restStatus === RestStatus.Suksess) {
+        return {
+            status: RestStatus.Suksess,
+            data: await response.json(),
+        };
+    }
+    return {
+        status: restStatus,
+    };
+};
+
+export const hentRestSykefraværshistorikk = async (orgnr: string): Promise<RestTapteDagsverk> => {
+    const response = await fetch(sykefraværshistorikkPath(orgnr), {
         method: 'GET',
         credentials: 'include',
     });
