@@ -26,7 +26,7 @@ const VideoerPanel: FunctionComponent<{ visNyttDesign: boolean }> = props => {
                 className="videoerpanel__lenke"
                 href="https://vimeo.com/showcase/6728595"
                 onClick={() =>
-                    sendEvent('sykefravarsstatistikk.klikk-til-redusering-av-sykefravær')
+                    sendEvent('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar')
                 }
             >
                 Redusering av sykefravær
@@ -36,7 +36,7 @@ const VideoerPanel: FunctionComponent<{ visNyttDesign: boolean }> = props => {
                 className="videoerpanel__lenke"
                 href="https://vimeo.com/showcase/6728594"
                 onClick={() =>
-                    sendEvent('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljøet')
+                    sendEvent('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet')
                 }
             >
                 Forebygge arbeidsmiljøet
