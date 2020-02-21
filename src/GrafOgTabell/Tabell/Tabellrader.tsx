@@ -15,7 +15,7 @@ const Tabellrader: FunctionComponent<Props> = props => {
     const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
         props.restSykefraværsstatistikk.data
     );
-
+    kvartalsvisSammenligning.reverse();
     return (
         <>
             {kvartalsvisSammenligning.map(rad => {

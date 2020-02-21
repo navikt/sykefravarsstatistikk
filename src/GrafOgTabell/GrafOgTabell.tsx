@@ -10,11 +10,11 @@ interface Props {
 }
 
 const GrafOgTabell: FunctionComponent<Props> = props => {
-    const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('tabell');
+    const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
 
     const innhold =
         grafEllerTabell === 'graf' ? (
-            <Graf />
+            <Graf restSykefraværsstatistikk={props.restSykefraværsstatistikk} />
         ) : (
             <Tabell restSykefraværsstatistikk={props.restSykefraværsstatistikk} />
         );

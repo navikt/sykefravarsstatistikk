@@ -7,7 +7,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 const labels = {
     virksomhet: 'FLESK OG FISK OSLO',
-    næring: (
+    næringEllerBransje: (
         <div>
             <Element>Næring:</Element>
             <Normaltekst>Jordbruk og tjenester tilknyttet jordbruk, jakt og viltstell</Normaltekst>

@@ -116,6 +116,5 @@ export const konverterTilKvartalsvisSammenligning = (historikkListe: Sykefravær
         }
     );
 
-    kvartalsvisSammenligning.reverse();
     return kvartalsvisSammenligning;
 };
