@@ -5,8 +5,10 @@ context('VideoPanel', () => {
 
     it("cy.go() - åpne eksterne lenke i nye faner", () => {
         cy.get('.videoerpanel__lenke')
+            .contains('Redusering')
             .click();
         cy.get('.videoerpanel__lenke')
+            .contains('Forebygge')
             .click();
     });
 });
