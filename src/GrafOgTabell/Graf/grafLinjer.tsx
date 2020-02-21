@@ -13,6 +13,8 @@ const grafLinjer = () =>
             dataKey={name}
             stroke={getFarge(name)}
             strokeWidth={lineWidth}
+            animationBegin={name === 'virksomhet' ? 0 : 5000}
+            animationDuration={name === 'virksomhet' ? 5000 : 1500}
             dot={<Symbols type={getSymbol(name)} size={dotSize} fill={getFarge(name)} />}
         />
     ));
