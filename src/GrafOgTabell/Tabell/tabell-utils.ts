@@ -63,3 +63,59 @@ export const lagHistorikkListePaddedMedUndefined = (
 export const harBransje = (historikkListe: Sykefraværshistorikk[]) => {
     return historikkListe.find(historikk => historikk.type === SykefraværshistorikkType.BRANSJE);
 };
+
+interface ProsentMedType {
+    type: SykefraværshistorikkType;
+    prosent: KvartalsvisSykefraværsprosent;
+}
+type Tabellrad = ProsentMedType[];
+
+interface KvartalsvisSammenligning {
+    årstall: number;
+    kvartal: number;
+    virksomhet: KvartalsvisSykefraværsprosent;
+    næringEllerBransje: KvartalsvisSykefraværsprosent;
+    sektor: KvartalsvisSykefraværsprosent;
+    land: KvartalsvisSykefraværsprosent;
+}
+
+export const konverterTilKvartalsvisSammenligning = (historikkListe: Sykefraværshistorikk[]) => {
+    const paddedHistorikk = lagHistorikkListePaddedMedUndefined(historikkListe);
+
+    const getTabellrad = (
+        tabellrad: Tabellrad,
+        type: SykefraværshistorikkType
+    ): ProsentMedType | undefined => {
+        return tabellrad.find(prosentMedType => prosentMedType.type === type);
+    };
+
+    const kvartalsvisHistorikk: Tabellrad[] = paddedHistorikk[0].kvartalsvisSykefraværsprosent.map(
+        (kvartalsvisProsent, i) =>
+            paddedHistorikk.map(historikk => {
+                return {
+                    type: historikk.type,
+                    prosent: historikk.kvartalsvisSykefraværsprosent[i],
+                };
+            })
+    );
+
+    const kvartalsvisSammenligning: KvartalsvisSammenligning[] = kvartalsvisHistorikk.map(
+        tabellrad => {
+            const prosentLand = getTabellrad(tabellrad, SykefraværshistorikkType.LAND)!;
+            return {
+                årstall: prosentLand.prosent.årstall,
+                kvartal: prosentLand.prosent.kvartal,
+                virksomhet: getTabellrad(tabellrad, SykefraværshistorikkType.VIRKSOMHET)!.prosent,
+                næringEllerBransje: (
+                    getTabellrad(tabellrad, SykefraværshistorikkType.BRANSJE) ||
+                    getTabellrad(tabellrad, SykefraværshistorikkType.NÆRING)!
+                ).prosent,
+                sektor: getTabellrad(tabellrad, SykefraværshistorikkType.SEKTOR)!.prosent,
+                land: prosentLand.prosent,
+            };
+        }
+    );
+
+    kvartalsvisSammenligning.reverse();
+    return kvartalsvisSammenligning;
+};
