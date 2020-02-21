@@ -4,9 +4,9 @@ context('VideoPanel', () => {
     });
 
     it("cy.go() - åpne eksterne lenke i nye faner", () => {
-        cy.get('#reduseringAvSykefravar')
+        cy.get('.videoerpanel__lenke')
             .click();
-        cy.get('#forebyggeArbeidsmiljoet')
+        cy.get('.videoerpanel__lenke')
             .click();
     });
 });

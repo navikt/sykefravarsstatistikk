@@ -23,7 +23,6 @@ const VideoerPanel: FunctionComponent<{ visNyttDesign: boolean }> = props => {
             </Normaltekst>
 
             <EksternLenke
-                id="reduseringAvSykefravar"
                 className="videoerpanel__lenke"
                 href="https://vimeo.com/showcase/6728595"
                 onClick={() =>
@@ -34,7 +33,6 @@ const VideoerPanel: FunctionComponent<{ visNyttDesign: boolean }> = props => {
             </EksternLenke>
 
             <EksternLenke
-                id="forebyggeArbeidsmiljoet"
                 className="videoerpanel__lenke"
                 href="https://vimeo.com/showcase/6728594"
                 onClick={() =>
