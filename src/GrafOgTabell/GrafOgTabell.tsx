@@ -11,7 +11,6 @@ interface Props {
 
 const GrafOgTabell: FunctionComponent<Props> = props => {
     const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('tabell');
-    console.log('render');
 
     const innhold =
         grafEllerTabell === 'graf' ? (
