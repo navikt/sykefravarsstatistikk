@@ -3,7 +3,6 @@ import { CartesianGrid, LineChart, ResponsiveContainer, XAxis, YAxis } from 'rec
 import grafTooltip from './grafTooltip/grafTooltip';
 import grafLegend from './grafLegend/grafLegend';
 import grafLinjer from './grafLinjer';
-import { getTestdata } from './graf-utils';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 
 import './Graf.less';
@@ -37,8 +36,6 @@ export const getSymbol = (name: string): SymbolType =>
     name in symboler ? symboler[name] : 'circle';
 export const getFarge = (name: Linje): SymbolType => (name in farger ? farger[name] : 'black');
 
-const testdata = getTestdata();
-
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
 }
@@ -60,8 +57,7 @@ const Graf: FunctionComponent<Props> = props => {
             land: land.prosent
         };
     });
-    console.log(kvartalsvisSammenligning);
-    console.log(testdata);
+
     return (
         <div className="graf">
             <Systemtittel tag="h1" className="graf__tittel">
