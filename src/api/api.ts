@@ -12,7 +12,8 @@ import { RestSykefraværshistorikk } from './sykefraværshistorikk';
 
 const sammenligningPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sammenligning`;
 const tapteDagsverkPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/summerTapteDagsverk`;
-const sykefraværshistorikkPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk`;
+const sykefraværshistorikkPath = (orgnr: string) =>
+    `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk`;
 const featureTogglesPath = (features: string[]) =>
     `${BASE_PATH}/api/feature?` + features.map(featureNavn => `feature=${featureNavn}`).join('&');
 
@@ -56,7 +57,9 @@ export const hentRestTapteDagsverk = async (orgnr: string): Promise<RestTapteDag
     };
 };
 
-export const hentRestSykefraværshistorikk = async (orgnr: string): Promise<RestSykefraværshistorikk> => {
+export const hentRestSykefraværshistorikk = async (
+    orgnr: string
+): Promise<RestSykefraværshistorikk> => {
     const response = await fetch(sykefraværshistorikkPath(orgnr), {
         method: 'GET',
         credentials: 'include',
@@ -75,7 +78,7 @@ export const hentRestSykefraværshistorikk = async (orgnr: string): Promise<Rest
 };
 
 export const hentRestFeatureToggles = async (
-    features: string[]
+    ...features: string[]
 ): Promise<RestFeatureToggles> => {
     if (features.length === 0) {
         return {

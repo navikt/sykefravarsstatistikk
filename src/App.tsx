@@ -42,7 +42,7 @@ const AppContent: FunctionComponent = () => {
     const restSammenligning = useRestSammenligning(orgnr);
     const restSykefraværshistorikk = useRestSykefraværshistorikk(orgnr);
 
-    const restFeatureToggles = useRestFeatureToggles('arbeidsgiver.lanser-graf');
+    const restFeatureToggles = useRestFeatureToggles();
     if (
         restOrganisasjonstre.status === RestStatus.LasterInn ||
         restFeatureToggles.status === RestStatus.LasterInn
@@ -53,7 +53,6 @@ const AppContent: FunctionComponent = () => {
     }
 
     const skalViseGraf = restFeatureToggles.data['arbeidsgiver.lanser-graf'];
-
     return (
         <>
             <Banner tittel="Sykefraværsstatistikk" restOrganisasjonstre={restOrganisasjonstre} />
