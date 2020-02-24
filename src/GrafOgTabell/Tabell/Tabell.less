@@ -8,8 +8,21 @@
     max-width: 60rem;
     .typo-normal-mixin();
 
+    table {
+    }
+
     th {
         vertical-align: text-top;
-        max-width: 16%;
     }
+
+    &__årstall, &__kvartal {
+        max-width: 1rem;
+    }
+}
+// Forsikringsvirksomhet og pensjonskasser, unntatt trygdeordninger underlagt offentlig forvaltning
+
+.ten {
+    color: red;
+    background: red;
+    width: 4rem;
 }
