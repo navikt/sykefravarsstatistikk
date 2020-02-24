@@ -7,6 +7,7 @@ import PanelBase from 'nav-frontend-paneler';
 import './VideoerPanel.less';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import VideoerPanelTogglet from './VideoerPanelTogglet';
+import amplitude from "../../utils/amplitude";
 
 const VideoerPanel: FunctionComponent<{ visNyttDesign: boolean }> = props => {
     if (props.visNyttDesign) {
@@ -25,9 +26,10 @@ const VideoerPanel: FunctionComponent<{ visNyttDesign: boolean }> = props => {
             <EksternLenke
                 className="videoerpanel__lenke"
                 href="https://vimeo.com/showcase/6728595"
-                onClick={() =>
-                    sendEvent('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar')
-                }
+                onClick={() => {
+                    sendEvent('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar');
+                    amplitude.logEvent("#sykefravarsstatistikk-forside videoer redusering-klikk");      
+                }}
             >
                 Redusering av sykefravær
             </EksternLenke>
@@ -35,9 +37,11 @@ const VideoerPanel: FunctionComponent<{ visNyttDesign: boolean }> = props => {
             <EksternLenke
                 className="videoerpanel__lenke"
                 href="https://vimeo.com/showcase/6728594"
-                onClick={() =>
-                    sendEvent('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet')
-                }
+                onClick={() => {
+                    sendEvent('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet');
+                    amplitude.logEvent("#sykefravarsstatistikk-forside videoer forebygge-klikk");      
+                }}
+                
             >
                 Forebygge arbeidsmiljøet
             </EksternLenke>
