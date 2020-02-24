@@ -5,9 +5,7 @@
     .typo-normal-mixin();
 
     &__wrapper {
-        background-color: @navLysGra;
-        min-height: 50rem;
-        padding: 0 1rem 5rem;
+        .sidewrapper-mixin();
     }
 
     &__tittel {
@@ -24,6 +22,10 @@
 
     &__knapper {
         margin-top: 2rem;
+    }
+
+    &__feilside {
+        background-color: @navLysGra;
     }
 
     @media (min-width: @screen-sm-min) {

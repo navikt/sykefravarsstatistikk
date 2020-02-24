@@ -1,28 +1,18 @@
 import React, { FunctionComponent } from 'react';
-import {
-    RestSykefraværshistorikk,
-    Sykefraværshistorikk,
-    SykefraværshistorikkType,
-} from '../../api/sykefraværshistorikk';
+import { Sykefraværshistorikk, SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
 import './Tabell.less';
-import { RestStatus } from '../../api/api-utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Tabellrader from './Tabellrader';
 
 interface Props {
-    restSykefraværsstatistikk: RestSykefraværshistorikk;
+    sykefraværshistorikk: Sykefraværshistorikk[];
 }
 
 const Tabell: FunctionComponent<Props> = props => {
-    if (props.restSykefraværsstatistikk.status !== RestStatus.Suksess) {
-        return <>nei dette går nok ikke</>;
-    }
-    const historikkListe = props.restSykefraværsstatistikk.data;
-
     const hentHistorikk = (type: SykefraværshistorikkType): Sykefraværshistorikk | undefined =>
-        historikkListe.find(historikk => historikk.type === type);
+        props.sykefraværshistorikk.find(historikk => historikk.type === type);
 
-    const harBransje = historikkListe.find(
+    const harBransje = props.sykefraværshistorikk.find(
         historikk => historikk.type === SykefraværshistorikkType.BRANSJE
     );
 
@@ -57,7 +47,7 @@ const Tabell: FunctionComponent<Props> = props => {
                 </tr>
             </thead>
             <tbody>
-                <Tabellrader restSykefraværsstatistikk={props.restSykefraværsstatistikk} />
+                <Tabellrader sykefraværshistorikk={props.sykefraværshistorikk} />
             </tbody>
         </table>
     );

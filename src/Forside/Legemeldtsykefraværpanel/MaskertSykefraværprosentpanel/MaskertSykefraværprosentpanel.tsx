@@ -1,7 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import Sykefraværsprosentpanel, {
-    SykefraværprosentpanelProps,
-} from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
+import Sykefraværsprosentpanel, { SykefraværprosentpanelProps } from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { DataKanIkkeVisesPanel } from './DataKanIkkeVisesPanel/DataKanIkkeVisesPanel';
 import { Sykefraværprosent } from '../../../api/sammenligning';
 

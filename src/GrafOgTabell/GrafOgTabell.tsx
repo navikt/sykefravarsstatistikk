@@ -5,6 +5,9 @@ import Graf from './Graf/Graf';
 import Tabell from './Tabell/Tabell';
 import './GrafOgTabell.less';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { RestStatus } from '../api/api-utils';
+import Feilside from '../FeilSider/Feilside/Feilside';
+import Lasteside from '../Lasteside/Lasteside';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -13,11 +16,24 @@ interface Props {
 const GrafOgTabell: FunctionComponent<Props> = props => {
     const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('tabell');
 
+    const { restSykefraværsstatistikk } = props;
+
+    if (restSykefraværsstatistikk.status === RestStatus.LasterInn) {
+        return <Lasteside />;
+    } else if (restSykefraværsstatistikk.status !== RestStatus.Suksess) {
+        return (
+            <Feilside className="graf-og-tabell__feilside">
+                En feil skjedde da vi prøvde å hente statistikken deres. Vennligst prøv igjen
+                senere.
+            </Feilside>
+        );
+    }
+
     const innhold =
         grafEllerTabell === 'graf' ? (
-            <Graf restSykefraværsstatistikk={props.restSykefraværsstatistikk} />
+            <Graf sykefraværshistorikk={restSykefraværsstatistikk.data} />
         ) : (
-            <Tabell restSykefraværsstatistikk={props.restSykefraværsstatistikk} />
+            <Tabell sykefraværshistorikk={restSykefraværsstatistikk.data} />
         );
 
     return (

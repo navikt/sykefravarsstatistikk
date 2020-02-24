@@ -6,9 +6,8 @@ import grafLinjer from './grafLinjer';
 
 import './Graf.less';
 import 'nav-frontend-tabell-style';
-import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
+import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import { konverterTilKvartalsvisSammenligning } from '../tabell-utils';
-import { RestStatus } from '../../api/api-utils';
 
 const margin = 50;
 
@@ -36,15 +35,11 @@ export const getSymbol = (name: string): SymbolType =>
 export const getFarge = (name: Linje): SymbolType => (name in farger ? farger[name] : 'black');
 
 interface Props {
-    restSykefraværsstatistikk: RestSykefraværshistorikk;
+    sykefraværshistorikk: Sykefraværshistorikk[];
 }
 const Graf: FunctionComponent<Props> = props => {
-    if (props.restSykefraværsstatistikk.status !== RestStatus.Suksess) {
-        return <>nei dette går nok ikke</>;
-    }
-
     const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
-        props.restSykefraværsstatistikk.data
+        props.sykefraværshistorikk
     ).map(sammenligning => {
         const { årstall, kvartal, virksomhet, næringEllerBransje, sektor, land } = sammenligning;
         return {

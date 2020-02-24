@@ -1,13 +1,9 @@
-import {
-    KvartalsvisSykefraværsprosent,
-    RestSykefraværshistorikk,
-} from '../../api/sykefraværshistorikk';
+import { KvartalsvisSykefraværsprosent, Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import React, { FunctionComponent } from 'react';
-import { RestStatus } from '../../api/api-utils';
 import { konverterTilKvartalsvisSammenligning } from '../tabell-utils';
 
 interface Props {
-    restSykefraværsstatistikk: RestSykefraværshistorikk;
+    sykefraværshistorikk: Sykefraværshistorikk[];
 }
 
 const formaterProsent = (prosent: KvartalsvisSykefraværsprosent): string => {
@@ -21,12 +17,8 @@ const formaterProsent = (prosent: KvartalsvisSykefraværsprosent): string => {
 };
 
 const Tabellrader: FunctionComponent<Props> = props => {
-    if (props.restSykefraværsstatistikk.status !== RestStatus.Suksess) {
-        return <>nei dette går nok ikke</>;
-    }
-
     const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
-        props.restSykefraværsstatistikk.data
+        props.sykefraværshistorikk
     );
     kvartalsvisSammenligning.reverse();
     return (
