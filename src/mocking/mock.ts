@@ -5,7 +5,7 @@ import { getSammenligningMock } from './sammenligning';
 import { getTapteDagsverkMock } from './tapteDagsverk';
 
 const MOCK_MIN_SIDE_ARBEIDSGIVER = true;
-const MOCK_SYKEFRAVÆRSSTATISTIKK_API = false;
+const MOCK_SYKEFRAVÆRSSTATISTIKK_API = true;
 const MOCK_ENHETSREGISTERET = true;
 const MOCK_FEATURE_TOGGLES = true;
 
@@ -64,7 +64,7 @@ if (MOCK_FEATURE_TOGGLES) {
     fetchMock.get(
         'begin:/sykefravarsstatistikk/api/feature',
         {
-            'arbeidsgiver.lanser-graf': true,
+            'arbeidsgiver.lanser-graf': false,
         },
         {
             delay: 1000,

@@ -35,14 +35,6 @@ const Tabell: FunctionComponent<Props> = props => {
 
     return (
         <table className="graf-tabell tabell tabell--stripet">
-            <colgroup>
-                <col className="graf-tabell__årstall" />
-                <col className="graf-tabell__kvartal" />
-                <col className="graf-tabell__virksomhet" />
-                <col className="graf-tabell__næring" />
-                <col className="graf-tabell__sektor" />
-                <col className="graf-tabell__land" />
-            </colgroup>
             <thead>
                 <tr>
                     <th>År</th>
