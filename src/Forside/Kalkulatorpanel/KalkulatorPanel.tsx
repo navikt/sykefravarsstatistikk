@@ -7,6 +7,7 @@ import PanelBase from 'nav-frontend-paneler';
 import './KalkulatorPanel.less';
 import { PATH_KALKULATOR } from '../../App';
 import { Link, useLocation } from 'react-router-dom';
+import amplitude from "../../utils/amplitude";
 
 const KalkulatorPanel: FunctionComponent = () => {
     const location = useLocation();
@@ -26,7 +27,10 @@ const KalkulatorPanel: FunctionComponent = () => {
                     search: location.search,
                 }}
                 className="kalkulatorpanel__lenke"
-                onClick={() => sendEvent('sykefravarsstatistikk.klikk-til-kalkulator')}
+                onClick={() => {
+                    sendEvent('sykefravarsstatistikk.klikk-til-kalkulator');
+                    amplitude.logEvent("#sykefravarsstatistikk-inngang-klikk-pa-kalkulator");
+                }}
             >
                 Gå til kostnadskalkulatoren
             </Link>
