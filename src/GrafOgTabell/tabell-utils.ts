@@ -75,9 +75,22 @@ interface KvartalsvisSammenligning {
     land: KvartalsvisSykefraværsprosent;
 }
 
-export const konverterTilKvartalsvisSammenligning = (historikkListe: Sykefraværshistorikk[]) => {
-    const paddedHistorikk = lagHistorikkListePaddedMedUndefined(historikkListe);
+const delInnHistorikkPåKvartalIStedetForType = (
+    paddedHistorikk: Sykefraværshistorikk[]
+): KvartalsvisHistorikk[] => {
+    return paddedHistorikk[0].kvartalsvisSykefraværsprosent.map((kvartalsvisHistorikk, i) =>
+        paddedHistorikk.map(historikk => {
+            return {
+                type: historikk.type,
+                prosent: historikk.kvartalsvisSykefraværsprosent[i],
+            };
+        })
+    );
+};
 
+const mapTilKvartalsvisSammenligning = (
+    kvartalsvisHistorikkListe: KvartalsvisHistorikk[]
+): KvartalsvisSammenligning[] => {
     const getProsent = (
         tabellrad: KvartalsvisHistorikk,
         type: SykefraværshistorikkType
@@ -85,32 +98,26 @@ export const konverterTilKvartalsvisSammenligning = (historikkListe: Sykefravær
         return tabellrad.find(prosentMedType => prosentMedType.type === type);
     };
 
-    const kvartalsvisHistorikkListe: KvartalsvisHistorikk[] = paddedHistorikk[0].kvartalsvisSykefraværsprosent.map(
-        (kvartalsvisHistorikk, i) =>
-            paddedHistorikk.map(historikk => {
-                return {
-                    type: historikk.type,
-                    prosent: historikk.kvartalsvisSykefraværsprosent[i],
-                };
-            })
-    );
+    return kvartalsvisHistorikkListe.map(tabellrad => {
+        const prosentLand = getProsent(tabellrad, SykefraværshistorikkType.LAND)!;
+        return {
+            årstall: prosentLand.prosent.årstall,
+            kvartal: prosentLand.prosent.kvartal,
+            virksomhet: getProsent(tabellrad, SykefraværshistorikkType.VIRKSOMHET)!.prosent,
+            næringEllerBransje: (
+                getProsent(tabellrad, SykefraværshistorikkType.BRANSJE) ||
+                getProsent(tabellrad, SykefraværshistorikkType.NÆRING)!
+            ).prosent,
+            sektor: getProsent(tabellrad, SykefraværshistorikkType.SEKTOR)!.prosent,
+            land: prosentLand.prosent,
+        };
+    });
+};
 
-    const kvartalsvisSammenligning: KvartalsvisSammenligning[] = kvartalsvisHistorikkListe.map(
-        tabellrad => {
-            const prosentLand = getProsent(tabellrad, SykefraværshistorikkType.LAND)!;
-            return {
-                årstall: prosentLand.prosent.årstall,
-                kvartal: prosentLand.prosent.kvartal,
-                virksomhet: getProsent(tabellrad, SykefraværshistorikkType.VIRKSOMHET)!.prosent,
-                næringEllerBransje: (
-                    getProsent(tabellrad, SykefraværshistorikkType.BRANSJE) ||
-                    getProsent(tabellrad, SykefraværshistorikkType.NÆRING)!
-                ).prosent,
-                sektor: getProsent(tabellrad, SykefraværshistorikkType.SEKTOR)!.prosent,
-                land: prosentLand.prosent,
-            };
-        }
+export const konverterTilKvartalsvisSammenligning = (historikkListe: Sykefraværshistorikk[]) => {
+    const paddedHistorikk = lagHistorikkListePaddedMedUndefined(historikkListe);
+    const kvartalsvisHistorikkListe: KvartalsvisHistorikk[] = delInnHistorikkPåKvartalIStedetForType(
+        paddedHistorikk
     );
-
-    return kvartalsvisSammenligning;
+    return mapTilKvartalsvisSammenligning(kvartalsvisHistorikkListe);
 };
