@@ -34,39 +34,37 @@ const Tabell: FunctionComponent<Props> = props => {
     const labelSektor = hentHistorikk(SykefraværshistorikkType.SEKTOR)!.label;
 
     return (
-        <div className="graf-tabell">
-            <table className="tabell tabell--stripet">
-                <colgroup>
-                    <col className="graf-tabell__årstall"/>
-                    <col className="graf-tabell__kvartal"/>
-                    <col className="graf-tabell__virksomhet"/>
-                    <col className="graf-tabell__næring"/>
-                    <col className="graf-tabell__sektor"/>
-                    <col className="graf-tabell__land"/>
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>År</th>
-                        <th>Kvartal</th>
-                        <th>
-                            <Element>Din virksomhet</Element>{' '}
-                            <Normaltekst>{labelVirksomhet}</Normaltekst>
-                        </th>
-                        <th>
-                            <Element>{næringEllerBransjeTabellLabel}</Element>{' '}
-                            <Normaltekst>{labelNæringEllerBransje}</Normaltekst>
-                        </th>
-                        <th>
-                            <Element>Sektor</Element> <Normaltekst>{labelSektor}</Normaltekst>
-                        </th>
-                        <th>Norge</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <Tabellrader restSykefraværsstatistikk={props.restSykefraværsstatistikk} />
-                </tbody>
-            </table>
-        </div>
+        <table className="graf-tabell tabell tabell--stripet">
+            <colgroup>
+                <col className="graf-tabell__årstall" />
+                <col className="graf-tabell__kvartal" />
+                <col className="graf-tabell__virksomhet" />
+                <col className="graf-tabell__næring" />
+                <col className="graf-tabell__sektor" />
+                <col className="graf-tabell__land" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>År</th>
+                    <th>Kvartal</th>
+                    <th>
+                        <Element>Din virksomhet</Element>{' '}
+                        <Normaltekst>{labelVirksomhet}</Normaltekst>
+                    </th>
+                    <th>
+                        <Element>{næringEllerBransjeTabellLabel}</Element>{' '}
+                        <Normaltekst>{labelNæringEllerBransje}</Normaltekst>
+                    </th>
+                    <th>
+                        <Element>Sektor</Element> <Normaltekst>{labelSektor}</Normaltekst>
+                    </th>
+                    <th>Norge</th>
+                </tr>
+            </thead>
+            <tbody>
+                <Tabellrader restSykefraværsstatistikk={props.restSykefraværsstatistikk} />
+            </tbody>
+        </table>
     );
 };
 

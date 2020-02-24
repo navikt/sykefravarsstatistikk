@@ -54,48 +54,35 @@ const Graf: FunctionComponent<Props> = props => {
             virksomhet: virksomhet.prosent,
             næringEllerBransje: næringEllerBransje.prosent,
             sektor: sektor.prosent,
-            land: land.prosent
+            land: land.prosent,
         };
     });
 
     return (
-        <div className="graf">
-            <Systemtittel tag="h1" className="graf__tittel">
-                Se sykefraværet over tid
-            </Systemtittel>
-            <Normaltekst className="graf__ingress">
-                Se hvordan det legemeldte sykefraværet utvikler seg over tid. Du kan sammenligne
-                sykefraværet deres med næringen og sektoren dere tilhører.
-            </Normaltekst>
-            <ResponsiveContainer minHeight={700}>
-                <LineChart
-                    data={kvartalsvisSammenligning}
-                    margin={{ top: margin, right: margin, left: margin, bottom: 0 }}
-                >
-                    <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
-                    <XAxis
-                        dataKey="name"
-                        tickMargin={20}
-                        ticks={[
-                            '2015, 1. kvartal',
-                            '2016, 1. kvartal',
-                            '2017, 1. kvartal',
-                            '2018, 1. kvartal',
-                            '2019, 1. kvartal',
-                        ]}
-                        tickFormatter={tickValue => tickValue.substring(0, 4)}
-                    />
-                    <YAxis
-                        tickMargin={20}
-                        tickFormatter={tickValue => tickValue + ' %'}
-                        width={40}
-                    />
-                    {grafTooltip()}
-                    {grafLegend()}
-                    {grafLinjer()}
-                </LineChart>
-            </ResponsiveContainer>
-        </div>
+        <ResponsiveContainer minHeight={700}>
+            <LineChart
+                data={kvartalsvisSammenligning}
+                margin={{ top: margin, right: margin, left: margin, bottom: 0 }}
+            >
+                <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
+                <XAxis
+                    dataKey="name"
+                    tickMargin={20}
+                    ticks={[
+                        '2015, 1. kvartal',
+                        '2016, 1. kvartal',
+                        '2017, 1. kvartal',
+                        '2018, 1. kvartal',
+                        '2019, 1. kvartal',
+                    ]}
+                    tickFormatter={tickValue => tickValue.substring(0, 4)}
+                />
+                <YAxis tickMargin={20} tickFormatter={tickValue => tickValue + ' %'} width={40} />
+                {grafTooltip()}
+                {grafLegend()}
+                {grafLinjer()}
+            </LineChart>
+        </ResponsiveContainer>
     );
 };
 
