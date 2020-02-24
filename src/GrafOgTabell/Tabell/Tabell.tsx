@@ -8,7 +8,6 @@ import './Tabell.less';
 import { RestStatus } from '../../api/api-utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Tabellrader from './Tabellrader';
-import { harBransje } from './tabell-utils';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -23,11 +22,15 @@ const Tabell: FunctionComponent<Props> = props => {
     const hentHistorikk = (type: SykefraværshistorikkType): Sykefraværshistorikk | undefined =>
         historikkListe.find(historikk => historikk.type === type);
 
-    const historikkNæringEllerBransje = harBransje(historikkListe)
+    const harBransje = historikkListe.find(
+        historikk => historikk.type === SykefraværshistorikkType.BRANSJE
+    );
+
+    const historikkNæringEllerBransje = harBransje
         ? hentHistorikk(SykefraværshistorikkType.BRANSJE)!
         : hentHistorikk(SykefraværshistorikkType.NÆRING)!;
 
-    const næringEllerBransjeTabellLabel = harBransje(historikkListe) ? 'Bransje' : 'Næring';
+    const næringEllerBransjeTabellLabel = harBransje ? 'Bransje' : 'Næring';
 
     const labelNæringEllerBransje = historikkNæringEllerBransje.label;
     const labelVirksomhet = hentHistorikk(SykefraværshistorikkType.VIRKSOMHET)!.label;

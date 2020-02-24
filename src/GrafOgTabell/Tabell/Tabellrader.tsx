@@ -4,7 +4,7 @@ import {
 } from '../../api/sykefraværshistorikk';
 import React, { FunctionComponent } from 'react';
 import { RestStatus } from '../../api/api-utils';
-import { konverterTilKvartalsvisSammenligning } from './tabell-utils';
+import { konverterTilKvartalsvisSammenligning } from '../tabell-utils';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;

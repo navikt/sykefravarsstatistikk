@@ -2,7 +2,7 @@ import {
     KvartalsvisSykefraværsprosent,
     Sykefraværshistorikk,
     SykefraværshistorikkType,
-} from '../../api/sykefraværshistorikk';
+} from '../api/sykefraværshistorikk';
 
 const padHistorikk = (
     historikk: Sykefraværshistorikk,
@@ -30,7 +30,7 @@ const padHistorikk = (
     };
 };
 
-export const lagHistorikkListePaddedMedUndefined = (
+const lagHistorikkListePaddedMedUndefined = (
     historikkListe: Sykefraværshistorikk[]
 ): Sykefraværshistorikk[] => {
     const historikkVirksomhet = historikkListe.find(
@@ -60,15 +60,11 @@ export const lagHistorikkListePaddedMedUndefined = (
     ];
 };
 
-export const harBransje = (historikkListe: Sykefraværshistorikk[]) => {
-    return historikkListe.find(historikk => historikk.type === SykefraværshistorikkType.BRANSJE);
-};
-
 interface ProsentMedType {
     type: SykefraværshistorikkType;
     prosent: KvartalsvisSykefraværsprosent;
 }
-type Tabellrad = ProsentMedType[];
+type KvartalsvisHistorikk = ProsentMedType[];
 
 interface KvartalsvisSammenligning {
     årstall: number;
@@ -82,15 +78,15 @@ interface KvartalsvisSammenligning {
 export const konverterTilKvartalsvisSammenligning = (historikkListe: Sykefraværshistorikk[]) => {
     const paddedHistorikk = lagHistorikkListePaddedMedUndefined(historikkListe);
 
-    const getTabellrad = (
-        tabellrad: Tabellrad,
+    const getProsent = (
+        tabellrad: KvartalsvisHistorikk,
         type: SykefraværshistorikkType
     ): ProsentMedType | undefined => {
         return tabellrad.find(prosentMedType => prosentMedType.type === type);
     };
 
-    const kvartalsvisHistorikk: Tabellrad[] = paddedHistorikk[0].kvartalsvisSykefraværsprosent.map(
-        (kvartalsvisProsent, i) =>
+    const kvartalsvisHistorikkListe: KvartalsvisHistorikk[] = paddedHistorikk[0].kvartalsvisSykefraværsprosent.map(
+        (kvartalsvisHistorikk, i) =>
             paddedHistorikk.map(historikk => {
                 return {
                     type: historikk.type,
@@ -99,18 +95,18 @@ export const konverterTilKvartalsvisSammenligning = (historikkListe: Sykefravær
             })
     );
 
-    const kvartalsvisSammenligning: KvartalsvisSammenligning[] = kvartalsvisHistorikk.map(
+    const kvartalsvisSammenligning: KvartalsvisSammenligning[] = kvartalsvisHistorikkListe.map(
         tabellrad => {
-            const prosentLand = getTabellrad(tabellrad, SykefraværshistorikkType.LAND)!;
+            const prosentLand = getProsent(tabellrad, SykefraværshistorikkType.LAND)!;
             return {
                 årstall: prosentLand.prosent.årstall,
                 kvartal: prosentLand.prosent.kvartal,
-                virksomhet: getTabellrad(tabellrad, SykefraværshistorikkType.VIRKSOMHET)!.prosent,
+                virksomhet: getProsent(tabellrad, SykefraværshistorikkType.VIRKSOMHET)!.prosent,
                 næringEllerBransje: (
-                    getTabellrad(tabellrad, SykefraværshistorikkType.BRANSJE) ||
-                    getTabellrad(tabellrad, SykefraværshistorikkType.NÆRING)!
+                    getProsent(tabellrad, SykefraværshistorikkType.BRANSJE) ||
+                    getProsent(tabellrad, SykefraværshistorikkType.NÆRING)!
                 ).prosent,
-                sektor: getTabellrad(tabellrad, SykefraværshistorikkType.SEKTOR)!.prosent,
+                sektor: getProsent(tabellrad, SykefraværshistorikkType.SEKTOR)!.prosent,
                 land: prosentLand.prosent,
             };
         }
