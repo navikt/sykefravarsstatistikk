@@ -3,7 +3,6 @@ import { CartesianGrid, LineChart, ResponsiveContainer, XAxis, YAxis } from 'rec
 import grafTooltip from './grafTooltip/grafTooltip';
 import grafLegend from './grafLegend/grafLegend';
 import grafLinjer from './grafLinjer';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 
 import './Graf.less';
 import 'nav-frontend-tabell-style';

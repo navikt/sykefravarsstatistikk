@@ -47,9 +47,7 @@ const GrafOgTabell: FunctionComponent<Props> = props => {
                         },
                     ]}
                 />
-                <div className="graf-og-tabell__innhold">
-                    {innhold}
-                </div>
+                <div className="graf-og-tabell__innhold">{innhold}</div>
             </div>
         </div>
     );
