@@ -1,4 +1,8 @@
-import { KvartalsvisSykefraværsprosent, Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
+import {
+    KvartalsvisSykefraværsprosent,
+    Sykefraværshistorikk,
+    Sykefraværsprosent,
+} from '../../api/sykefraværshistorikk';
 import React, { FunctionComponent } from 'react';
 import { konverterTilKvartalsvisSammenligning } from '../tabell-utils';
 
@@ -6,7 +10,7 @@ interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
 }
 
-const formaterProsent = (prosent: KvartalsvisSykefraværsprosent): string => {
+const formaterProsent = (prosent: Sykefraværsprosent): string => {
     if (prosent.erMaskert) {
         return '***';
     } else if (prosent.prosent === undefined) {

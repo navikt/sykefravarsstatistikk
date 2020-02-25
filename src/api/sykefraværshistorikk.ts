@@ -13,7 +13,9 @@ export enum SykefraværshistorikkType {
 export type KvartalsvisSykefraværsprosent = {
     kvartal: number;
     årstall: number;
-} & (
+} & Sykefraværsprosent;
+
+export type Sykefraværsprosent =
     | {
           erMaskert: true;
           prosent: null;
@@ -21,8 +23,7 @@ export type KvartalsvisSykefraværsprosent = {
     | {
           erMaskert: false;
           prosent: number | undefined;
-      }
-);
+      };
 
 export interface Sykefraværshistorikk {
     type: SykefraværshistorikkType;
