@@ -13,7 +13,7 @@ interface KvartalsvisSammenligning {
     land: Sykefraværsprosent;
 }
 
-interface ÅrstallOgKvartal {
+export interface ÅrstallOgKvartal {
     årstall: number;
     kvartal: number;
 }
