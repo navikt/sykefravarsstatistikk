@@ -4,7 +4,7 @@ import {
     Sykefraværsprosent,
 } from '../api/sykefraværshistorikk';
 
-interface KvartalsvisSammenligning {
+export interface KvartalsvisSammenligning {
     årstall: number;
     kvartal: number;
     virksomhet: Sykefraværsprosent;

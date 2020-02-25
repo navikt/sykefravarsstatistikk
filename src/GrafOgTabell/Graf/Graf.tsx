@@ -7,7 +7,11 @@ import grafLinjer from './grafLinjer';
 import './Graf.less';
 import 'nav-frontend-tabell-style';
 import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
-import { konverterTilKvartalsvisSammenligning } from '../graf-og-tabell-utils';
+import {
+    konverterTilKvartalsvisSammenligning,
+    KvartalsvisSammenligning,
+    ÅrstallOgKvartal,
+} from '../graf-og-tabell-utils';
 
 const margin = 50;
 
@@ -32,19 +36,32 @@ const farger: any = {
 
 export const getSymbol = (name: string): SymbolType =>
     name in symboler ? symboler[name] : 'circle';
+
 export const getFarge = (name: Linje): SymbolType => (name in farger ? farger[name] : 'black');
+
+const hentFørsteKvartalFraAlleÅreneIDatagrunnlaget = (
+    kvartalsvisSammenligning: KvartalsvisSammenligning[]
+): ÅrstallOgKvartal[] => {
+    return kvartalsvisSammenligning.filter(sammenligning => sammenligning.kvartal === 1)
+        .map(sammenligning => {return {årstall: sammenligning.årstall, kvartal: sammenligning.kvartal}});
+};
+
+const lagTickString = (årstall: number, kvartal: number) => årstall + ', ' + kvartal + '. kvartal';
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
 }
+
 const Graf: FunctionComponent<Props> = props => {
     const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
         props.sykefraværshistorikk
-    ).map(sammenligning => {
+    );
+
+    const kvartalsvisSammenligningData = kvartalsvisSammenligning.map(sammenligning => {
         const { årstall, kvartal, virksomhet, næringEllerBransje, sektor, land } = sammenligning;
         return {
             ...sammenligning,
-            name: årstall + ', ' + kvartal + '. kvartal',
+            name: lagTickString(årstall, kvartal),
             virksomhet: virksomhet.prosent,
             næringEllerBransje: næringEllerBransje.prosent,
             sektor: sektor.prosent,
@@ -52,24 +69,21 @@ const Graf: FunctionComponent<Props> = props => {
         };
     });
 
+    const punkterPåXAksenSomSkalMarkeres: string[] = hentFørsteKvartalFraAlleÅreneIDatagrunnlaget(kvartalsvisSammenligning)
+        .map(årstallOgKvartal => lagTickString(årstallOgKvartal.årstall, årstallOgKvartal.kvartal));
+
     return (
         <ResponsiveContainer minHeight={700}>
             <LineChart
-                data={kvartalsvisSammenligning}
+                data={kvartalsvisSammenligningData}
                 margin={{ top: margin, right: margin, left: margin, bottom: 0 }}
             >
                 <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
                 <XAxis
                     dataKey="name"
                     tickMargin={20}
-                    ticks={[
-                        '2015, 1. kvartal',
-                        '2016, 1. kvartal',
-                        '2017, 1. kvartal',
-                        '2018, 1. kvartal',
-                        '2019, 1. kvartal',
-                    ]}
                     tickFormatter={tickValue => tickValue.substring(0, 4)}
+                    ticks={punkterPåXAksenSomSkalMarkeres}
                 />
                 <YAxis tickMargin={20} tickFormatter={tickValue => tickValue + ' %'} width={40} />
                 {grafTooltip()}
