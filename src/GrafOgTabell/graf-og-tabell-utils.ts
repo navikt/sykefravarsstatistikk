@@ -74,7 +74,9 @@ const beregnHvilkeÅrstallOgKvartalerSomSkalVises = (
         });
 };
 
-export const konverterTilKvartalsvisSammenligning = (historikkListe: Sykefraværshistorikk[]) => {
+export const konverterTilKvartalsvisSammenligning = (
+    historikkListe: Sykefraværshistorikk[]
+): KvartalsvisSammenligning[] => {
     const årstallOgKvartalerSomSkalVises = beregnHvilkeÅrstallOgKvartalerSomSkalVises(
         historikkListe
     );

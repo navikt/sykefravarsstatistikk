@@ -7,7 +7,7 @@ import grafLinjer from './grafLinjer';
 import './Graf.less';
 import 'nav-frontend-tabell-style';
 import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
-import { konverterTilKvartalsvisSammenligning } from '../tabell-utils';
+import { konverterTilKvartalsvisSammenligning } from '../graf-og-tabell-utils';
 
 const margin = 50;
 

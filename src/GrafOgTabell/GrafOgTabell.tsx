@@ -14,7 +14,7 @@ interface Props {
 }
 
 const GrafOgTabell: FunctionComponent<Props> = props => {
-    const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('tabell');
+    const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
 
     const { restSykefraværsstatistikk } = props;
 

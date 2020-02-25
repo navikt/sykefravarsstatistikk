@@ -1,10 +1,6 @@
-import {
-    KvartalsvisSykefraværsprosent,
-    Sykefraværshistorikk,
-    Sykefraværsprosent,
-} from '../../api/sykefraværshistorikk';
+import { Sykefraværshistorikk, Sykefraværsprosent } from '../../api/sykefraværshistorikk';
 import React, { FunctionComponent } from 'react';
-import { konverterTilKvartalsvisSammenligning } from '../tabell-utils';
+import { konverterTilKvartalsvisSammenligning } from '../graf-og-tabell-utils';
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];

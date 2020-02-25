@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Tabell: FunctionComponent<Props> = props => {
-    const hentHistorikk = (type: SykefraværshistorikkType): Sykefraværshistorikk | undefined =>
+    const getHistorikk = (type: SykefraværshistorikkType): Sykefraværshistorikk | undefined =>
         props.sykefraværshistorikk.find(historikk => historikk.type === type);
 
     const harBransje = props.sykefraværshistorikk.find(
@@ -17,14 +17,14 @@ const Tabell: FunctionComponent<Props> = props => {
     );
 
     const historikkNæringEllerBransje = harBransje
-        ? hentHistorikk(SykefraværshistorikkType.BRANSJE)!
-        : hentHistorikk(SykefraværshistorikkType.NÆRING)!;
+        ? getHistorikk(SykefraværshistorikkType.BRANSJE)!
+        : getHistorikk(SykefraværshistorikkType.NÆRING)!;
 
     const næringEllerBransjeTabellLabel = harBransje ? 'Bransje' : 'Næring';
 
     const labelNæringEllerBransje = historikkNæringEllerBransje.label;
-    const labelVirksomhet = hentHistorikk(SykefraværshistorikkType.VIRKSOMHET)!.label;
-    const labelSektor = hentHistorikk(SykefraværshistorikkType.SEKTOR)!.label;
+    const labelVirksomhet = getHistorikk(SykefraværshistorikkType.VIRKSOMHET)!.label;
+    const labelSektor = getHistorikk(SykefraværshistorikkType.SEKTOR)!.label;
 
     return (
         <table className="graf-tabell tabell tabell--stripet">
