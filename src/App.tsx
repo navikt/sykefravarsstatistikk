@@ -20,6 +20,7 @@ import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
 import Graf from './Graf/Graf';
 import { useRestFeatureToggles } from './api/featureToggles';
 import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
+import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -39,43 +40,52 @@ const AppContent: FunctionComponent = () => {
     const restOrganisasjonstre = useRestOrganisasjonstre();
     const restTapteDagsverk = useRestTapteDagsverk(orgnr);
     const restSammenligning = useRestSammenligning(orgnr);
-
     const restFeatureToggles = useRestFeatureToggles();
+
+    let innhold;
+
     if (
         restOrganisasjonstre.status === RestStatus.LasterInn ||
         restFeatureToggles.status === RestStatus.LasterInn
     ) {
-        return <Lasteside />;
+        innhold = <Lasteside />;
     } else if (restOrganisasjonstre.status === RestStatus.IkkeInnlogget) {
-        return <IkkeInnloggetSide />;
+        innhold = <IkkeInnloggetSide />;
+    } else if (restOrganisasjonstre.status !== RestStatus.Suksess) {
+        innhold = <FeilFraAltinnSide />;
+    } else {
+        const skalViseGraf = restFeatureToggles.data['arbeidsgiver.lanser-graf'];
+        innhold = (
+            <>
+                <Route path={PATH_FORSIDE} exact={true}>
+                    <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
+                    <Forside restSammenligning={restSammenligning}>
+                        <Infopanel />
+                        <LegemeldtSykefraværPanel restSammenligning={restSammenligning} />
+                        <KalkulatorPanel />
+                        {skalViseGraf && <Historikkpanel />}
+                        <VideoerPanel visNyttDesign={skalViseGraf} />
+                        <IAwebpanel />
+                    </Forside>
+                </Route>
+                <Route path={PATH_KALKULATOR} exact={true}>
+                    <Brødsmulesti gjeldendeSide="kalkulator" />
+                    <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />
+                </Route>
+                {skalViseGraf && (
+                    <Route path={PATH_HISTORIKK} exact={true}>
+                        <Brødsmulesti gjeldendeSide="historikk" />
+                        <Graf />
+                    </Route>
+                )}
+            </>
+        );
     }
-
-    const skalViseGraf = restFeatureToggles.data['arbeidsgiver.lanser-graf'];
 
     return (
         <>
             <Banner tittel="Sykefraværsstatistikk" restOrganisasjonstre={restOrganisasjonstre} />
-            <Route path={PATH_FORSIDE} exact={true}>
-                <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                <Forside restSammenligning={restSammenligning}>
-                    <Infopanel />
-                    <LegemeldtSykefraværPanel restSammenligning={restSammenligning} />
-                    <KalkulatorPanel />
-                    {skalViseGraf && <Historikkpanel />}
-                    <VideoerPanel visNyttDesign={skalViseGraf} />
-                    <IAwebpanel />
-                </Forside>
-            </Route>
-            <Route path={PATH_KALKULATOR} exact={true}>
-                <Brødsmulesti gjeldendeSide="kalkulator" />
-                <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />
-            </Route>
-            {skalViseGraf && (
-                <Route path={PATH_HISTORIKK} exact={true}>
-                    <Brødsmulesti gjeldendeSide="historikk" />
-                    <Graf />
-                </Route>
-            )}
+            {innhold}
         </>
     );
 };
