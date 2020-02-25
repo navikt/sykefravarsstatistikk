@@ -6,8 +6,8 @@ import Tabell from './Tabell/Tabell';
 import './GrafOgTabell.less';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestStatus } from '../api/api-utils';
-import Feilside from '../FeilSider/Feilside/Feilside';
-import Lasteside from '../Lasteside/Lasteside';
+import NavFrontendSpinner from 'nav-frontend-spinner';
+import AlertStripe from 'nav-frontend-alertstriper';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -18,23 +18,32 @@ const GrafOgTabell: FunctionComponent<Props> = props => {
 
     const { restSykefraværsstatistikk } = props;
 
-    if (restSykefraværsstatistikk.status === RestStatus.LasterInn) {
-        return <Lasteside />;
+    let innhold;
+
+    if (
+        restSykefraværsstatistikk.status === RestStatus.LasterInn ||
+        restSykefraværsstatistikk.status === RestStatus.IkkeLastet
+    ) {
+        innhold = (
+            <div className="graf-og-tabell__spinner">
+                <NavFrontendSpinner type={'XXL'} />
+            </div>
+        );
     } else if (restSykefraværsstatistikk.status !== RestStatus.Suksess) {
-        return (
-            <Feilside className="graf-og-tabell__feilside">
+        innhold = (
+            <AlertStripe type="feil" className="graf-og-tabell__feilside">
                 En feil skjedde da vi prøvde å hente statistikken deres. Vennligst prøv igjen
                 senere.
-            </Feilside>
+            </AlertStripe>
         );
+    } else {
+        innhold =
+            grafEllerTabell === 'graf' ? (
+                <Graf sykefraværshistorikk={restSykefraværsstatistikk.data} />
+            ) : (
+                <Tabell sykefraværshistorikk={restSykefraværsstatistikk.data} />
+            );
     }
-
-    const innhold =
-        grafEllerTabell === 'graf' ? (
-            <Graf sykefraværshistorikk={restSykefraværsstatistikk.data} />
-        ) : (
-            <Tabell sykefraværshistorikk={restSykefraværsstatistikk.data} />
-        );
 
     return (
         <div className="graf-og-tabell__wrapper">

@@ -3,6 +3,7 @@ import { enhetsregisteretMockRespons } from './enhetsregisteret';
 import { getOrganisasjonerMock } from './organisasjoner';
 import { getSammenligningMock } from './sammenligning';
 import { getTapteDagsverkMock } from './tapteDagsverk';
+import { historikkMock } from './sykefraværshistorikk';
 
 const MOCK_MIN_SIDE_ARBEIDSGIVER = true;
 const MOCK_SYKEFRAVÆRSSTATISTIKK_API = true;
@@ -38,6 +39,20 @@ if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
                 return 500;
             }
             return getTapteDagsverkMock(orgnr);
+        },
+        {
+            delay: 1000,
+        }
+    );
+
+    fetchMock.get(
+        'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk',
+        url => {
+            const orgnr = url.match(/[0-9]{9}/)![0];
+            if (orgnr === '101010101') {
+                return 500;
+            }
+            return historikkMock;
         },
         {
             delay: 1000,
