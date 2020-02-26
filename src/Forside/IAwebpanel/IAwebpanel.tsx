@@ -4,7 +4,7 @@ import PanelBase from 'nav-frontend-paneler';
 import './IAwebpanel.less';
 import illustrasjon from './sort.svg';
 import { sendEvent } from '../../utils/metrikk-api';
-import amplitude from "../../utils/amplitude";
+import amplitude from '../../utils/amplitude';
 
 const IAwebpanel: React.FunctionComponent = () => {
     return (
@@ -25,8 +25,8 @@ const IAwebpanel: React.FunctionComponent = () => {
                     className="iawebpanel__lenke"
                     onClick={() => {
                         sendEvent('sykefravarsstatistikk.klikk-til-iaweb');
-                        amplitude.logEvent("#sykefravarsstatistikk-forside iaweb-klikk");      
-                }}
+                        amplitude.logEvent('#sykefravarsstatistikk-forside iaweb-klikk');
+                    }}
                 >
                     Gå til IA-web
                 </a>

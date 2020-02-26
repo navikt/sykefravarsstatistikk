@@ -29,7 +29,7 @@ const KalkulatorPanel: FunctionComponent = () => {
                 className="kalkulatorpanel__lenke"
                 onClick={() => {
                     sendEvent('sykefravarsstatistikk.klikk-til-kalkulator');
-                    amplitude.logEvent("#sykefravarsstatistikk-forside kalkulator-klikk");
+                    amplitude.logEvent('#sykefravarsstatistikk-forside kalkulator-klikk');
                 }}
             >
                 Gå til kostnadskalkulatoren

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Tooltip } from 'recharts';
 import SymbolSvg from '../SymbolSvg';
-import { getFarge, getSymbol } from '../Graf';
 import './grafTooltip.less';
+import { getFarge, getSymbol } from '../graf-utils';
 
 const grafTooltip = () => (
     <Tooltip

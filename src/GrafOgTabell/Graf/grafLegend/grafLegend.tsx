@@ -1,9 +1,9 @@
 import { Legend, LegendProps } from 'recharts';
 import React from 'react';
-import { getFarge, getSymbol, linjer } from '../Graf';
 import './grafLegend.less';
 import SymbolSvg from '../SymbolSvg';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { getFarge, getSymbol, grafConfig } from '../graf-utils';
 
 const labels = {
     virksomhet: 'FLESK OG FISK OSLO',
@@ -44,7 +44,7 @@ const grafLegend = () => {
     return (
         <Legend
             wrapperStyle={{ paddingTop: 40 }}
-            payload={linjer.map(name => {
+            payload={grafConfig.linjer.map(name => {
                 return {
                     value: name,
                     type: getSymbol(name),
