@@ -6,7 +6,7 @@ import grafLinjer from './grafLinjer';
 
 import './Graf.less';
 import 'nav-frontend-tabell-style';
-import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
+import { Sykefraværshistorikk, SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
 import { konverterTilKvartalsvisSammenligning } from '../graf-og-tabell-utils';
 import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString } from './graf-utils';
 
@@ -31,6 +31,13 @@ const Graf: FunctionComponent<Props> = props => {
         };
     });
 
+    const labelForType = (type: SykefraværshistorikkType): string => {
+        return props.sykefraværshistorikk.find(historikk => historikk.type === type)!.label;
+    };
+    const harBransje = !!props.sykefraværshistorikk.find(
+        historikk => historikk.type === SykefraværshistorikkType.BRANSJE
+    );
+
     const punkterPåXAksenSomSkalMarkeres: string[] = hentFørsteKvartalFraAlleÅreneIDatagrunnlaget(
         kvartalsvisSammenligning
     ).map(årstallOgKvartal => lagTickString(årstallOgKvartal.årstall, årstallOgKvartal.kvartal));
@@ -50,7 +57,17 @@ const Graf: FunctionComponent<Props> = props => {
                 />
                 <YAxis tickMargin={20} tickFormatter={tickValue => tickValue + ' %'} width={40} />
                 {grafTooltip()}
-                {grafLegend()}
+                {grafLegend(
+                    labelForType(SykefraværshistorikkType.VIRKSOMHET),
+                    labelForType(
+                        harBransje
+                            ? SykefraværshistorikkType.BRANSJE
+                            : SykefraværshistorikkType.NÆRING
+                    ),
+                    labelForType(SykefraværshistorikkType.SEKTOR),
+                    labelForType(SykefraværshistorikkType.LAND),
+                    harBransje
+                )}
                 {grafLinjer()}
             </LineChart>
         </ResponsiveContainer>
