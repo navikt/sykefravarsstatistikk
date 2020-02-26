@@ -5,24 +5,30 @@ import SymbolSvg from '../SymbolSvg';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { getFarge, getSymbol, grafConfig } from '../graf-utils';
 
-const labels = {
-    virksomhet: 'FLESK OG FISK OSLO',
-    næringEllerBransje: (
-        <div>
-            <Element>Næring:</Element>
-            <Normaltekst>Jordbruk og tjenester tilknyttet jordbruk, jakt og viltstell</Normaltekst>
-        </div>
-    ),
-    sektor: (
-        <div>
-            <Element>Sektor:</Element>
-            <Normaltekst>Privat og offentlig næringsvirksomhet</Normaltekst>
-        </div>
-    ),
-    land: 'Norge',
-};
+const grafLegend = (
+    labelVirksomhet: string,
+    labelNæringEllerBransje: string,
+    labelSektor: string,
+    labelLand: string,
+    harBransje: boolean
+) => {
+    const labels = {
+        virksomhet: labelVirksomhet,
+        næringEllerBransje: (
+            <div>
+                <Element>{harBransje ? 'Bransje:' : 'Næring:'}</Element>
+                <Normaltekst>{labelNæringEllerBransje}</Normaltekst>
+            </div>
+        ),
+        sektor: (
+            <div>
+                <Element>Sektor:</Element>
+                <Normaltekst>Privat og offentlig næringsvirksomhet</Normaltekst>
+            </div>
+        ),
+        land: labelLand,
+    };
 
-const grafLegend = () => {
     const innhold = (props: LegendProps) => (
         <ul className="graf-legend">
             {props.payload!.map(load => (
