@@ -1,12 +1,12 @@
 import { Line, Symbols } from 'recharts';
 import React from 'react';
-import { getFarge, getSymbol, linjer } from './Graf';
+import { getFarge, getSymbol, grafConfig } from './graf-utils';
 
 const lineWidth = 2;
 const dotSize = 40;
 
 const grafLinjer = () =>
-    linjer.map(name => (
+    grafConfig.linjer.map(name => (
         <Line
             key={name}
             type="monotone"

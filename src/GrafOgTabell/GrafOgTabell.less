@@ -1,0 +1,51 @@
+@import '../variables';
+
+.graf-og-tabell {
+    .sideinnhold-mixin();
+    .typo-normal-mixin();
+    min-height: 30rem;
+
+    &__wrapper {
+        .sidewrapper-mixin();
+    }
+
+    &__tittel {
+        padding-bottom: 1.5rem;
+    }
+
+    &__ingress {
+        max-width: 40rem;
+    }
+
+    &__innhold {
+        margin-top: 2rem;
+    }
+
+    &__knapper {
+        margin-top: 2rem;
+    }
+
+    &__spinner {
+        display: flex;
+        justify-content: center;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        display: flex;
+        flex-wrap: wrap;
+
+        &__tekst-wrapper {
+            max-width: 60%;
+        }
+
+        &__knapper {
+            max-width: calc(40% - 2rem);
+            margin-top: 0;
+            margin-left: 2rem;
+        }
+
+        &__innhold {
+            width: 100%;
+        }
+    }
+}

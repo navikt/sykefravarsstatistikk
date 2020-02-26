@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import classNames from 'classnames';
 import { Symbols } from 'recharts';
-import { SymbolType } from './Graf';
+import { SymbolType } from './graf-utils';
 
 interface Props {
     size: number;

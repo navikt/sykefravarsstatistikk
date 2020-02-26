@@ -17,10 +17,11 @@ import IkkeInnloggetSide from './FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
-import Graf from './Graf/Graf';
 import { useRestFeatureToggles } from './api/featureToggles';
 import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
+import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
+import { useRestSykefraværshistorikk } from './api/sykefraværshistorikk';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -40,6 +41,7 @@ const AppContent: FunctionComponent = () => {
     const restOrganisasjonstre = useRestOrganisasjonstre();
     const restTapteDagsverk = useRestTapteDagsverk(orgnr);
     const restSammenligning = useRestSammenligning(orgnr);
+    const restSykefraværshistorikk = useRestSykefraværshistorikk(orgnr);
     const restFeatureToggles = useRestFeatureToggles();
 
     let innhold;
@@ -75,7 +77,7 @@ const AppContent: FunctionComponent = () => {
                 {skalViseGraf && (
                     <Route path={PATH_HISTORIKK} exact={true}>
                         <Brødsmulesti gjeldendeSide="historikk" />
-                        <Graf />
+                        <GrafOgTabell restSykefraværsstatistikk={restSykefraværshistorikk} />
                     </Route>
                 )}
             </>
