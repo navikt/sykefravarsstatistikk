@@ -13,6 +13,7 @@ const grafLinjer = () =>
             dataKey={name}
             stroke={getFarge(name)}
             strokeWidth={lineWidth}
+            isAnimationActive={false}
             dot={<Symbols type={getSymbol(name)} size={dotSize} fill={getFarge(name)} />}
         />
     ));

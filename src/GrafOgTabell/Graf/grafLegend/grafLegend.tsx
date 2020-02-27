@@ -49,7 +49,8 @@ const grafLegend = (
 
     return (
         <Legend
-            wrapperStyle={{ paddingTop: 40 }}
+            wrapperStyle={{ paddingBottom: 40 }}
+            verticalAlign="top"
             payload={grafConfig.linjer.map(name => {
                 return {
                     value: name,
