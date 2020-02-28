@@ -5,7 +5,13 @@ const XAkseTick: FunctionComponent<any> = props => {
 
     return (
         <g transform={`translate(${x},${y})`}>
-            <text dy={16} textAnchor="middle" fill="#666" className="test-tick" stroke="none">
+            <text
+                dy={16}
+                textAnchor="middle"
+                fill="#666"
+                className="recharts-cartesian-axis-tick-value"
+                stroke="none"
+            >
                 {payload.value.substring(0, 4)}
             </text>
         </g>

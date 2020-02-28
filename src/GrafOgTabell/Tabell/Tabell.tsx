@@ -27,29 +27,31 @@ const Tabell: FunctionComponent<Props> = props => {
     const labelSektor = getHistorikk(SykefraværshistorikkType.SEKTOR)!.label;
 
     return (
-        <table className="graf-tabell tabell tabell--stripet">
-            <thead>
-                <tr>
-                    <th scope="col">År</th>
-                    <th scope="col">Kvartal</th>
-                    <th scope="col">
-                        <Element>Din virksomhet</Element>{' '}
-                        <Normaltekst>{labelVirksomhet}</Normaltekst>
-                    </th>
-                    <th scope="col">
-                        <Element>{næringEllerBransjeTabellLabel}</Element>{' '}
-                        <Normaltekst>{labelNæringEllerBransje}</Normaltekst>
-                    </th>
-                    <th scope="col">
-                        <Element>Sektor</Element> <Normaltekst>{labelSektor}</Normaltekst>
-                    </th>
-                    <th scope="col">Norge</th>
-                </tr>
-            </thead>
-            <tbody>
-                <Tabellrader sykefraværshistorikk={props.sykefraværshistorikk} />
-            </tbody>
-        </table>
+        <div className="graf-tabell__wrapper">
+            <table className="graf-tabell tabell tabell--stripet">
+                <thead>
+                    <tr>
+                        <th scope="col">År</th>
+                        <th scope="col">Kvartal</th>
+                        <th scope="col">
+                            <Element>Din virksomhet</Element>{' '}
+                            <Normaltekst>{labelVirksomhet}</Normaltekst>
+                        </th>
+                        <th scope="col">
+                            <Element>{næringEllerBransjeTabellLabel}</Element>{' '}
+                            <Normaltekst>{labelNæringEllerBransje}</Normaltekst>
+                        </th>
+                        <th scope="col">
+                            <Element>Sektor</Element> <Normaltekst>{labelSektor}</Normaltekst>
+                        </th>
+                        <th scope="col">Norge</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <Tabellrader sykefraværshistorikk={props.sykefraværshistorikk} />
+                </tbody>
+            </table>
+        </div>
     );
 };
 

@@ -9,7 +9,7 @@ import 'nav-frontend-tabell-style';
 import { Sykefraværshistorikk, SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
 import { konverterTilKvartalsvisSammenligning } from '../graf-og-tabell-utils';
 import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString } from './graf-utils';
-import XAkseTick from './XAkseTick/XAkseTick';
+import XAkseTick from './XAkseTick';
 import { useInnerWidth } from '../../utils/innerWidth-hook';
 
 interface Props {
