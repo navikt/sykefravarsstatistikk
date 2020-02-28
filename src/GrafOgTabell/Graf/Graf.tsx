@@ -61,7 +61,7 @@ const Graf: FunctionComponent<Props> = props => {
                     tickMargin={tickMargin}
                     tickFormatter={tickValue => tickValue.substring(0, 4)}
                     ticks={punkterPåXAksenSomSkalMarkeres}
-                    tick={<XAkseTick />}
+                    tick={XAkseTick}
                 />
                 <YAxis
                     tickMargin={tickMargin}
