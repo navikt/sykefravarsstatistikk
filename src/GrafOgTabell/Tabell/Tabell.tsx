@@ -30,20 +30,20 @@ const Tabell: FunctionComponent<Props> = props => {
         <table className="graf-tabell tabell tabell--stripet">
             <thead>
                 <tr>
-                    <th>År</th>
-                    <th>Kvartal</th>
-                    <th>
+                    <th scope="col">År</th>
+                    <th scope="col">Kvartal</th>
+                    <th scope="col">
                         <Element>Din virksomhet</Element>{' '}
                         <Normaltekst>{labelVirksomhet}</Normaltekst>
                     </th>
-                    <th>
+                    <th scope="col">
                         <Element>{næringEllerBransjeTabellLabel}</Element>{' '}
                         <Normaltekst>{labelNæringEllerBransje}</Normaltekst>
                     </th>
-                    <th>
+                    <th scope="col">
                         <Element>Sektor</Element> <Normaltekst>{labelSektor}</Normaltekst>
                     </th>
-                    <th>Norge</th>
+                    <th scope="col">Norge</th>
                 </tr>
             </thead>
             <tbody>
