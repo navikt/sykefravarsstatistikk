@@ -71,7 +71,7 @@ export const historikkMock = [
     },
     {
         type: 'VIRKSOMHET',
-        label: 'NAV ARBEID OG YTELSER AVD OSLO',
+        label: 'FLESK OG FISK AS',
         kvartalsvisSykefraværsprosent: [
             { prosent: 25.3, årstall: 2014, kvartal: 2, erMaskert: false },
             { prosent: 21.3, årstall: 2014, kvartal: 3, erMaskert: false },
