@@ -1,12 +1,19 @@
 @import '../variables';
 
 .graf-og-tabell {
-    .sideinnhold-mixin();
     .typo-normal-mixin();
+    background-color: white;
+    margin: 0 auto 0;
+    border-radius: 0.25rem;
+    max-width: 60rem;
     min-height: 30rem;
 
     &__wrapper {
         .sidewrapper-mixin();
+    }
+
+    &__overdel-wrapper {
+        padding: 2rem 2rem 0;
     }
 
     &__tittel {
@@ -31,9 +38,11 @@
     }
 
     @media (min-width: @screen-sm-min) {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        &__overdel-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
 
         &__tekst-wrapper {
             max-width: 60%;

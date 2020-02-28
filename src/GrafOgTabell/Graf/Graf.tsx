@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useLayoutEffect, useState } from 'react';
 import { CartesianGrid, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import grafTooltip from './grafTooltip/grafTooltip';
 import grafLegend from './grafLegend/grafLegend';
@@ -14,7 +14,22 @@ interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
 }
 
+const useInnerWidth = (): number => {
+    const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+    useLayoutEffect(() => {
+        const updateSize = () => {
+            setInnerWidth(window.innerWidth);
+        };
+        window.addEventListener('resize', updateSize);
+        updateSize();
+        return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return innerWidth;
+};
+
 const Graf: FunctionComponent<Props> = props => {
+    const innerWidth = useInnerWidth();
+
     const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
         props.sykefraværshistorikk
     );
@@ -42,20 +57,27 @@ const Graf: FunctionComponent<Props> = props => {
         kvartalsvisSammenligning
     ).map(årstallOgKvartal => lagTickString(årstallOgKvartal.årstall, årstallOgKvartal.kvartal));
 
+    const margin =
+        innerWidth < 500
+            ? { top: 0, right: 20, left: 10, bottom: 20 }
+            : { top: 0, right: 50, left: 50, bottom: 50 };
+    const tickMargin = innerWidth < 500 ? 5 : 20;
+
     return (
         <ResponsiveContainer minHeight={700}>
-            <LineChart
-                data={kvartalsvisSammenligningData}
-                margin={{ top: 0, right: 50, left: 50, bottom: 50 }}
-            >
+            <LineChart data={kvartalsvisSammenligningData} margin={margin}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
                 <XAxis
                     dataKey="name"
-                    tickMargin={20}
+                    tickMargin={tickMargin}
                     tickFormatter={tickValue => tickValue.substring(0, 4)}
                     ticks={punkterPåXAksenSomSkalMarkeres}
                 />
-                <YAxis tickMargin={20} tickFormatter={tickValue => tickValue + ' %'} width={40} />
+                <YAxis
+                    tickMargin={tickMargin}
+                    tickFormatter={tickValue => tickValue + ' %'}
+                    width={40}
+                />
                 {grafTooltip()}
                 {grafLegend(
                     labelForType(SykefraværshistorikkType.VIRKSOMHET),
