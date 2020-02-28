@@ -46,7 +46,7 @@ const Graf: FunctionComponent<Props> = props => {
         <ResponsiveContainer minHeight={700}>
             <LineChart
                 data={kvartalsvisSammenligningData}
-                margin={{ top: 50, right: 50, left: 50, bottom: 0 }}
+                margin={{ top: 0, right: 50, left: 50, bottom: 50 }}
             >
                 <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
                 <XAxis
