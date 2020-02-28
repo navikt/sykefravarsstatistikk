@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useLayoutEffect, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { CartesianGrid, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import grafTooltip from './grafTooltip/grafTooltip';
 import grafLegend from './grafLegend/grafLegend';
@@ -9,23 +9,12 @@ import 'nav-frontend-tabell-style';
 import { Sykefraværshistorikk, SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
 import { konverterTilKvartalsvisSammenligning } from '../graf-og-tabell-utils';
 import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString } from './graf-utils';
+import XAkseTick from './XAkseTick/XAkseTick';
+import { useInnerWidth } from '../../utils/innerWidth-hook';
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
 }
-
-const useInnerWidth = (): number => {
-    const [innerWidth, setInnerWidth] = useState(window.innerWidth);
-    useLayoutEffect(() => {
-        const updateSize = () => {
-            setInnerWidth(window.innerWidth);
-        };
-        window.addEventListener('resize', updateSize);
-        updateSize();
-        return () => window.removeEventListener('resize', updateSize);
-    }, []);
-    return innerWidth;
-};
 
 const Graf: FunctionComponent<Props> = props => {
     const innerWidth = useInnerWidth();
@@ -72,6 +61,7 @@ const Graf: FunctionComponent<Props> = props => {
                     tickMargin={tickMargin}
                     tickFormatter={tickValue => tickValue.substring(0, 4)}
                     ticks={punkterPåXAksenSomSkalMarkeres}
+                    tick={<XAkseTick />}
                 />
                 <YAxis
                     tickMargin={tickMargin}
