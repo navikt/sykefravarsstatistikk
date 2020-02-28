@@ -1,8 +1,12 @@
 @import '../../variables';
 
 .recharts-cartesian-axis-tick-value {
-    .typo-element-mixin();
+    .typo-etikett-liten-mixin();
     fill: @navMorkGra;
+
+    @media (min-width: 500px) {
+        .typo-element-mixin();
+    }
 }
 
 .recharts-yAxis,

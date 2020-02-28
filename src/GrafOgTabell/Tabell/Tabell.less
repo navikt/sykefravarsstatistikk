@@ -1,8 +1,9 @@
 @import '../../variables';
 
 .graf-tabell {
-    min-width: 40rem;
     background: white;
+    border-top: 1px solid @navMorkGra;
+
     th {
         vertical-align: text-top;
     }
@@ -10,5 +11,9 @@
     &__årstall,
     &__kvartal {
         max-width: 1rem;
+    }
+
+    &__wrapper {
+        padding: 2rem;
     }
 }
