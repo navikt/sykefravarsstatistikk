@@ -41,7 +41,7 @@ jobs:
           github-app-id: 43789
           nais-template: dev-nais.yaml
           environment: dev-sbs
-          team: teamtag
+          team: arbeidsgiver
 
   deploy-til-prod:
     docker:
@@ -57,7 +57,7 @@ jobs:
           github-app-id: 43789
           nais-template: prod-nais.yaml
           environment: prod-sbs
-          team: teamtag
+          team: arbeidsgiver
 
 workflows:
   version: 2.1
@@ -80,7 +80,7 @@ workflows:
               ignore:
                 - master
       - deploy-til-dev:
-          context: tag-ci
+          context: arbeidsgiver-ci
           requires:
             - godkjenn-til-dev
             - bygg
@@ -95,7 +95,7 @@ workflows:
               only:
                 - master
       - deploy-til-prod:
-          context: tag-ci
+          context: arbeidsgiver-ci
           requires:
             - godkjenn-til-prod
             - bygg
