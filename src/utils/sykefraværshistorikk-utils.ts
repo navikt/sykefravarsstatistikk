@@ -1,8 +1,4 @@
-import {
-    Sykefraværshistorikk,
-    SykefraværshistorikkType,
-    Sykefraværsprosent,
-} from '../api/sykefraværshistorikk';
+import { Sykefraværshistorikk, SykefraværshistorikkType, Sykefraværsprosent } from '../api/sykefraværshistorikk';
 
 export interface KvartalsvisSammenligning {
     årstall: number;
@@ -22,11 +18,10 @@ const TOM_PROSENT: Sykefraværsprosent = {
     prosent: undefined,
     erMaskert: false,
 };
-
 const finnProsent = (
     historikkListe: Sykefraværshistorikk[],
     årstallOgKvartal: ÅrstallOgKvartal,
-    type: SykefraværshistorikkType
+    type: SykefraværshistorikkType,
 ): Sykefraværsprosent => {
     const historikk = historikkListe.find(historikk => historikk.type === type);
     if (!historikk) {
@@ -35,17 +30,16 @@ const finnProsent = (
     const prosent = historikk.kvartalsvisSykefraværsprosent.find(
         prosent =>
             prosent.årstall === årstallOgKvartal.årstall &&
-            prosent.kvartal === årstallOgKvartal.kvartal
+            prosent.kvartal === årstallOgKvartal.kvartal,
     );
     return prosent || TOM_PROSENT;
 };
-
 const mapTilKvartalsvisSammenligning = (
     historikkListe: Sykefraværshistorikk[],
-    årstallOgKvartalerSomSkalVises: ÅrstallOgKvartal[]
+    årstallOgKvartalerSomSkalVises: ÅrstallOgKvartal[],
 ): KvartalsvisSammenligning[] => {
     const harBransje = !!historikkListe.find(
-        historikk => historikk.type === SykefraværshistorikkType.BRANSJE
+        historikk => historikk.type === SykefraværshistorikkType.BRANSJE,
     );
 
     return årstallOgKvartalerSomSkalVises.map(årstallOgKvartal => {
@@ -56,16 +50,15 @@ const mapTilKvartalsvisSammenligning = (
             ...årstallOgKvartal,
             virksomhet: getProsent(SykefraværshistorikkType.VIRKSOMHET),
             næringEllerBransje: getProsent(
-                harBransje ? SykefraværshistorikkType.BRANSJE : SykefraværshistorikkType.NÆRING
+                harBransje ? SykefraværshistorikkType.BRANSJE : SykefraværshistorikkType.NÆRING,
             ),
             sektor: getProsent(SykefraværshistorikkType.SEKTOR),
             land: getProsent(SykefraværshistorikkType.LAND),
         };
     });
 };
-
 const beregnHvilkeÅrstallOgKvartalerSomSkalVises = (
-    historikkListe: Sykefraværshistorikk[]
+    historikkListe: Sykefraværshistorikk[],
 ): ÅrstallOgKvartal[] => {
     return historikkListe
         .find(historikk => historikk.type === SykefraværshistorikkType.LAND)!
@@ -73,12 +66,11 @@ const beregnHvilkeÅrstallOgKvartalerSomSkalVises = (
             return { årstall: prosent.årstall, kvartal: prosent.kvartal };
         });
 };
-
 export const konverterTilKvartalsvisSammenligning = (
-    historikkListe: Sykefraværshistorikk[]
+    historikkListe: Sykefraværshistorikk[],
 ): KvartalsvisSammenligning[] => {
     const årstallOgKvartalerSomSkalVises = beregnHvilkeÅrstallOgKvartalerSomSkalVises(
-        historikkListe
+        historikkListe,
     );
     return mapTilKvartalsvisSammenligning(historikkListe, årstallOgKvartalerSomSkalVises);
 };

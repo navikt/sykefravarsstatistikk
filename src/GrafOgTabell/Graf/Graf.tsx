@@ -7,10 +7,10 @@ import grafLinjer from './grafLinjer';
 import './Graf.less';
 import 'nav-frontend-tabell-style';
 import { Sykefraværshistorikk, SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
-import { konverterTilKvartalsvisSammenligning } from '../graf-og-tabell-utils';
 import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString } from './graf-utils';
 import XAkseTick from './XAkseTick';
 import { useInnerWidth } from '../../utils/innerWidth-hook';
+import { konverterTilKvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
