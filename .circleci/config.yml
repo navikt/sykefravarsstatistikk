@@ -66,7 +66,7 @@ workflows:
       - bygg:
           context: NAIS deployment
       - deploy-til-dev:
-          context: tag-ci
+          context: arbeidsgiver-ci
           requires:
             - bygg
           filters:
