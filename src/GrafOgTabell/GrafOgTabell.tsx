@@ -15,7 +15,6 @@ interface Props {
 }
 
 const GrafOgTabell: FunctionComponent<Props> = props => {
-
     useEffect(() => {
         scrollToBanner();
     }, []);

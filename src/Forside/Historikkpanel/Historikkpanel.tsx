@@ -22,7 +22,7 @@ const Historikkpanel: FunctionComponent = () => {
                 pathname={PATH_HISTORIKK}
                 onClick={() => {
                     sendEvent('sykefravarsstatistikk.klikk-til-historikk');
-                    amplitude.logEvent('#sykefravarsstatistikk-forside historikk-klikk')
+                    amplitude.logEvent('#sykefravarsstatistikk-forside historikk-klikk');
                 }}
             >
                 Gå til sykefraværshistorikken
