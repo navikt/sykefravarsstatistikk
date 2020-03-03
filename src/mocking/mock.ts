@@ -1,9 +1,8 @@
 import fetchMock from 'fetch-mock';
 import { enhetsregisteretMockRespons } from './enhetsregisteret';
 import { getOrganisasjonerMock } from './organisasjoner';
-import { getSammenligningMock } from './sammenligning';
 import { getTapteDagsverkMock } from './tapteDagsverk';
-import { historikkMock } from './sykefraværshistorikk';
+import { getSykefraværshistorikkMock } from './sykefraværshistorikk';
 
 const MOCK_MIN_SIDE_ARBEIDSGIVER = true;
 const MOCK_SYKEFRAVÆRSSTATISTIKK_API = true;
@@ -17,20 +16,6 @@ if (MOCK_MIN_SIDE_ARBEIDSGIVER) {
 }
 
 if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
-    fetchMock.get(
-        'express:/sykefravarsstatistikk/api/:orgnr/sammenligning',
-        url => {
-            const orgnr = url.match(/[0-9]{9}/)![0];
-            if (orgnr === '101010101') {
-                return 500;
-            }
-            return getSammenligningMock(orgnr);
-        },
-        {
-            delay: 2000,
-        }
-    );
-
     fetchMock.get(
         'express:/sykefravarsstatistikk/api/:orgnr/summerTapteDagsverk',
         url => {
@@ -52,7 +37,7 @@ if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
             if (orgnr === '101010101') {
                 return 500;
             }
-            return historikkMock;
+            return getSykefraværshistorikkMock(orgnr);
         },
         {
             delay: 1000,
