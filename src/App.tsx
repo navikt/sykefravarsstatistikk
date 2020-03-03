@@ -5,7 +5,6 @@ import { BASE_PATH } from './server/konstanter';
 import { useRestTapteDagsverk } from './api/tapteDagsverk';
 import { useOrgnr } from './utils/orgnr-hook';
 import Kalkulator from './Kalkulator/Kalkulator';
-import { useRestSammenligning } from './api/sammenligning';
 import Forside from './Forside/Forside';
 import Infopanel from './Forside/Infopanel/Infopanel';
 import LegemeldtSykefraværPanel from './Forside/Legemeldtsykefraværpanel/LegemeldtSykefraværPanel';
@@ -40,7 +39,6 @@ const AppContent: FunctionComponent = () => {
 
     const restOrganisasjonstre = useRestOrganisasjonstre();
     const restTapteDagsverk = useRestTapteDagsverk(orgnr);
-    const restSammenligning = useRestSammenligning(orgnr);
     const restSykefraværshistorikk = useRestSykefraværshistorikk(orgnr);
     const restFeatureToggles = useRestFeatureToggles();
 
@@ -61,7 +59,7 @@ const AppContent: FunctionComponent = () => {
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                    <Forside restSammenligning={restSammenligning}>
+                    <Forside restSykefraværshistorikk={restSykefraværshistorikk}>
                         <Infopanel />
                         <LegemeldtSykefraværPanel
                             restSykefraværshistorikk={restSykefraværshistorikk}
