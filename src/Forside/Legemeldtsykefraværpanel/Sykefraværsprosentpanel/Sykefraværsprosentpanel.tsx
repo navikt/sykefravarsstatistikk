@@ -10,8 +10,8 @@ export interface SykefraværprosentpanelProps {
     laster: boolean;
 }
 
-export const formaterProsent = (prosent: number | undefined): string => {
-    if (prosent === undefined) {
+export const formaterProsent = (prosent: number | null | undefined): string => {
+    if (prosent === undefined || prosent === null) {
         return '';
     }
     return Number(prosent)
@@ -23,7 +23,7 @@ export const formaterProsent = (prosent: number | undefined): string => {
 const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelProps> = props => {
     const { sykefraværsprosent, laster, sykefraværprosentLabel, children } = props;
 
-    if (!sykefraværsprosent || sykefraværsprosent.erMaskert) {
+    if (!sykefraværsprosent && !laster) {
         return null;
     }
 
@@ -34,7 +34,7 @@ const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelP
         </div>
     );
 
-    const prosent = (
+    const prosent = !!sykefraværsprosent && (
         <Undertittel className="sykefravarsprosentpanel__prosent">
             {formaterProsent(sykefraværsprosent.prosent)}&nbsp;%
         </Undertittel>

@@ -37,7 +37,7 @@ const hentSammenligningForSisteKvartal = (
 const LegemeldtSykefraværPanel: FunctionComponent<Props> = props => {
     const restSykefraværshistorikk = props.restSykefraværshistorikk;
     const restStatus = restSykefraværshistorikk.status;
-    const laster = restStatus === RestStatus.LasterInn;
+    const laster = restStatus === RestStatus.LasterInn || restStatus === RestStatus.IkkeLastet;
 
     let overskrift;
     let feilmelding;
