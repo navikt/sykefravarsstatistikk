@@ -63,7 +63,9 @@ const AppContent: FunctionComponent = () => {
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <Forside restSammenligning={restSammenligning}>
                         <Infopanel />
-                        <LegemeldtSykefraværPanel restSammenligning={restSammenligning} />
+                        <LegemeldtSykefraværPanel
+                            restSykefraværshistorikk={restSykefraværshistorikk}
+                        />
                         <KalkulatorPanel />
                         {skalViseGraf && <Historikkpanel />}
                         <VideoerPanel visNyttDesign={skalViseGraf} />

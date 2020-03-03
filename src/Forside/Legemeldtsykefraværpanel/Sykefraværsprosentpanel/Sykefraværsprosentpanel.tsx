@@ -2,14 +2,18 @@ import * as React from 'react';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import './Sykefraværsprosentpanel.less';
 import Skeleton from 'react-loading-skeleton';
-import { Sykefraværprosent } from '../../../api/sammenligning';
+import { Sykefraværsprosent } from '../../../api/sykefraværshistorikk';
 
 export interface SykefraværprosentpanelProps {
-    sykefraværprosent?: Sykefraværprosent;
+    sykefraværsprosent?: Sykefraværsprosent;
+    sykefraværprosentLabel?: string;
     laster: boolean;
 }
 
-export const formaterProsent = (prosent: number): string => {
+export const formaterProsent = (prosent: number | undefined): string => {
+    if (prosent === undefined) {
+        return '';
+    }
     return Number(prosent)
         .toFixed(1)
         .toString()
@@ -17,22 +21,22 @@ export const formaterProsent = (prosent: number): string => {
 };
 
 const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelProps> = props => {
-    const { sykefraværprosent, laster, children } = props;
+    const { sykefraværsprosent, laster, sykefraværprosentLabel, children } = props;
 
-    if (!sykefraværprosent) {
+    if (!sykefraværsprosent || sykefraværsprosent.erMaskert) {
         return null;
     }
 
     const tekst = (
         <div className="sykefravarsprosentpanel__innhold">
             {children && <Element tag="div">{children}</Element>}
-            <Normaltekst>{sykefraværprosent.label}</Normaltekst>
+            <Normaltekst>{sykefraværprosentLabel}</Normaltekst>
         </div>
     );
 
     const prosent = (
         <Undertittel className="sykefravarsprosentpanel__prosent">
-            {formaterProsent(sykefraværprosent.prosent!)}&nbsp;%
+            {formaterProsent(sykefraværsprosent.prosent)}&nbsp;%
         </Undertittel>
     );
 

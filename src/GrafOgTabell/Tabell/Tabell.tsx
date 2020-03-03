@@ -1,30 +1,18 @@
 import React, { FunctionComponent } from 'react';
-import { Sykefraværshistorikk, SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
+import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import './Tabell.less';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Tabellrader from './Tabellrader';
+import { getHistorikkLabels, historikkHarBransje } from '../../utils/sykefraværshistorikk-utils';
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
 }
 
 const Tabell: FunctionComponent<Props> = props => {
-    const getHistorikk = (type: SykefraværshistorikkType): Sykefraværshistorikk | undefined =>
-        props.sykefraværshistorikk.find(historikk => historikk.type === type);
-
-    const harBransje = props.sykefraværshistorikk.find(
-        historikk => historikk.type === SykefraværshistorikkType.BRANSJE
-    );
-
-    const historikkNæringEllerBransje = harBransje
-        ? getHistorikk(SykefraværshistorikkType.BRANSJE)!
-        : getHistorikk(SykefraværshistorikkType.NÆRING)!;
-
+    const harBransje = historikkHarBransje(props.sykefraværshistorikk);
     const næringEllerBransjeTabellLabel = harBransje ? 'Bransje' : 'Næring';
-
-    const labelNæringEllerBransje = historikkNæringEllerBransje.label;
-    const labelVirksomhet = getHistorikk(SykefraværshistorikkType.VIRKSOMHET)!.label;
-    const labelSektor = getHistorikk(SykefraværshistorikkType.SEKTOR)!.label;
+    const labels = getHistorikkLabels(props.sykefraværshistorikk);
 
     return (
         <div className="graf-tabell__wrapper">
@@ -35,16 +23,16 @@ const Tabell: FunctionComponent<Props> = props => {
                         <th scope="col">Kvartal</th>
                         <th scope="col">
                             <Element>Din virksomhet</Element>{' '}
-                            <Normaltekst>{labelVirksomhet}</Normaltekst>
+                            <Normaltekst>{labels.virksomhet}</Normaltekst>
                         </th>
                         <th scope="col">
                             <Element>{næringEllerBransjeTabellLabel}</Element>{' '}
-                            <Normaltekst>{labelNæringEllerBransje}</Normaltekst>
+                            <Normaltekst>{labels.næringEllerBransje}</Normaltekst>
                         </th>
                         <th scope="col">
-                            <Element>Sektor</Element> <Normaltekst>{labelSektor}</Normaltekst>
+                            <Element>Sektor</Element> <Normaltekst>{labels.sektor}</Normaltekst>
                         </th>
-                        <th scope="col">Norge</th>
+                        <th scope="col">{labels.land}</th>
                     </tr>
                 </thead>
                 <tbody>

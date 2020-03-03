@@ -65,7 +65,7 @@ const tomtSykefraværsprosent: Sykefraværprosent = {
 
 const tommeProps: MaskertSykefraværprosentpanelProps = {
     labelHvisMaskert: '',
-    labelHvisNull: '',
-    sykefraværprosent: tomtSykefraværsprosent,
+    labelHvisUndefined: '',
+    sykefraværsprosent: tomtSykefraværsprosent,
     laster: false,
 };
