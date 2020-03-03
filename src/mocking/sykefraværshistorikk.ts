@@ -47,6 +47,7 @@ export const genererHistorikk = (
             variasjon * Math.sin(0.5 + (Math.PI * i) / 2) +
             randomNumber(vekst - randomness, vekst + randomness);
         prosent = Math.max(0, prosent);
+        prosent = parseFloat(prosent.toFixed(1));
     }
 
     return historikk;

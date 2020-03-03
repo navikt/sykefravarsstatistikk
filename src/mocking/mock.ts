@@ -1,7 +1,6 @@
 import fetchMock from 'fetch-mock';
 import { enhetsregisteretMockRespons } from './enhetsregisteret';
 import { getOrganisasjonerMock } from './organisasjoner';
-import { getSammenligningMock } from './sammenligning';
 import { getTapteDagsverkMock } from './tapteDagsverk';
 import { getSykefraværshistorikkMock } from './sykefraværshistorikk';
 
