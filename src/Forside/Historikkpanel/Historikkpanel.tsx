@@ -6,6 +6,7 @@ import { PATH_HISTORIKK } from '../../App';
 import { sendEvent } from '../../utils/metrikk-api';
 import InternLenke from '../../felleskomponenter/InternLenke/InternLenke';
 import './Historikkpanel.less';
+import amplitude from '../../utils/amplitude';
 
 const Historikkpanel: FunctionComponent = () => {
     return (
@@ -19,7 +20,10 @@ const Historikkpanel: FunctionComponent = () => {
             </Normaltekst>
             <InternLenke
                 pathname={PATH_HISTORIKK}
-                onClick={() => sendEvent('sykefravarsstatistikk.klikk-til-historikk')}
+                onClick={() => {
+                    sendEvent('sykefravarsstatistikk.klikk-til-historikk');
+                    amplitude.logEvent('#sykefravarsstatistikk-forside historikk-klikk')
+                }}
             >
                 Gå til sykefraværshistorikken
             </InternLenke>
