@@ -22,12 +22,14 @@ import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { useRestSykefraværshistorikk } from './api/sykefraværshistorikk';
+import amplitude from './utils/amplitude';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
 export const PATH_HISTORIKK = '/historikk';
 
 const App: FunctionComponent = () => {
+    amplitude.logEvent('#sykefravarsstatistikk-forside-sidelastet');
     return (
         <BrowserRouter basename={BASE_PATH}>
             <AppContent />
