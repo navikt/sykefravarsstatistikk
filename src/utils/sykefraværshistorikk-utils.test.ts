@@ -1,5 +1,8 @@
-import { konverterTilKvartalsvisSammenligning, ÅrstallOgKvartal } from './graf-og-tabell-utils';
 import { Sykefraværshistorikk, SykefraværshistorikkType } from '../api/sykefraværshistorikk';
+import {
+    konverterTilKvartalsvisSammenligning,
+    ÅrstallOgKvartal,
+} from './sykefraværshistorikk-utils';
 
 describe('Tester for graf-og-tabell-utils', () => {
     test('konverterTilKvartalsvisSammenligning skal sette riktig type historikk på riktig key i returobjekt', () => {

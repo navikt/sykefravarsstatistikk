@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { ToggleGruppePure } from 'nav-frontend-toggle';
 import Graf from './Graf/Graf';
@@ -8,12 +8,17 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import AlertStripe from 'nav-frontend-alertstriper';
+import { scrollToBanner } from '../utils/scrollUtils';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
 }
 
 const GrafOgTabell: FunctionComponent<Props> = props => {
+    useEffect(() => {
+        scrollToBanner();
+    }, []);
+
     const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
 
     const { restSykefraværsstatistikk } = props;

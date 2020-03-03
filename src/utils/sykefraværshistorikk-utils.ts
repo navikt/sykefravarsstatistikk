@@ -22,7 +22,6 @@ const TOM_PROSENT: Sykefraværsprosent = {
     prosent: undefined,
     erMaskert: false,
 };
-
 const finnProsent = (
     historikkListe: Sykefraværshistorikk[],
     årstallOgKvartal: ÅrstallOgKvartal,
@@ -39,7 +38,6 @@ const finnProsent = (
     );
     return prosent || TOM_PROSENT;
 };
-
 const mapTilKvartalsvisSammenligning = (
     historikkListe: Sykefraværshistorikk[],
     årstallOgKvartalerSomSkalVises: ÅrstallOgKvartal[]
@@ -63,7 +61,6 @@ const mapTilKvartalsvisSammenligning = (
         };
     });
 };
-
 const beregnHvilkeÅrstallOgKvartalerSomSkalVises = (
     historikkListe: Sykefraværshistorikk[]
 ): ÅrstallOgKvartal[] => {
@@ -73,7 +70,6 @@ const beregnHvilkeÅrstallOgKvartalerSomSkalVises = (
             return { årstall: prosent.årstall, kvartal: prosent.kvartal };
         });
 };
-
 export const konverterTilKvartalsvisSammenligning = (
     historikkListe: Sykefraværshistorikk[]
 ): KvartalsvisSammenligning[] => {
