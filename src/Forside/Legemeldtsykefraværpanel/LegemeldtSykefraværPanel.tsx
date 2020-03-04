@@ -21,7 +21,7 @@ interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
 }
 
-const hentSammenligningForSisteKvartal = (
+const getSammenligningForSisteKvartal = (
     restSykefraværshistorikk: RestSykefraværshistorikk
 ): KvartalsvisSammenligning | undefined => {
     if (restSykefraværshistorikk.status !== RestStatus.Suksess) {
@@ -44,7 +44,7 @@ const LegemeldtSykefraværPanel: FunctionComponent<Props> = props => {
     let harBransje = undefined;
     let labels: HistorikkLabels | any = {};
     const { virksomhet, næringEllerBransje, sektor, land, årstall, kvartal } =
-        hentSammenligningForSisteKvartal(restSykefraværshistorikk) || {};
+        getSammenligningForSisteKvartal(restSykefraværshistorikk) || {};
 
     if (restSykefraværshistorikk.status === RestStatus.Suksess) {
         harBransje = !!restSykefraværshistorikk.data.find(
