@@ -1,14 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import PanelBase from 'nav-frontend-paneler';
 import './LegemeldtSykefraværPanel.less';
-import { Systemtittel } from 'nav-frontend-typografi';
 import Sykefraværsprosentpanel from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { HvordanBeregnesTallene } from './HvordanBeregnesTallene/HvordanBeregnesTallene';
-import MaskertSykefraværprosentpanel from './MaskertSykefraværprosentpanel/MaskertSykefraværprosentpanel';
-import Skeleton from 'react-loading-skeleton';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { RestSykefraværshistorikk, SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
+import {
+    RestSykefraværshistorikk,
+    Sykefraværshistorikk,
+    SykefraværshistorikkType,
+} from '../../api/sykefraværshistorikk';
 import {
     getHistorikkLabels,
     HistorikkLabels,
@@ -16,20 +15,19 @@ import {
     KvartalsvisSammenligning,
 } from '../../utils/sykefraværshistorikk-utils';
 import { RestStatus } from '../../api/api-utils';
+import SykefraværpanelOverskrift from './SykefraværpanelOverskrift';
+import SykefraværpanelFeilmelding from './SykefraværpanelFeilmelding';
+import NæringEllerBransjePanel from './NæringEllerBransjePanel';
+import Virksomhetspanel from './Virksomhetspanel';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
 }
 
 const getSammenligningForSisteKvartal = (
-    restSykefraværshistorikk: RestSykefraværshistorikk
-): KvartalsvisSammenligning | undefined => {
-    if (restSykefraværshistorikk.status !== RestStatus.Suksess) {
-        return undefined;
-    }
-    const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
-        restSykefraværshistorikk.data
-    );
+    historikkListe: Sykefraværshistorikk[]
+): KvartalsvisSammenligning => {
+    const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(historikkListe);
     kvartalsvisSammenligning.reverse();
     return kvartalsvisSammenligning[0];
 };
@@ -39,80 +37,56 @@ const LegemeldtSykefraværPanel: FunctionComponent<Props> = props => {
     const restStatus = restSykefraværshistorikk.status;
     const laster = restStatus === RestStatus.LasterInn || restStatus === RestStatus.IkkeLastet;
 
-    let overskrift;
-    let feilmelding;
-    let harBransje = undefined;
     let labels: HistorikkLabels | any = {};
-    const { virksomhet, næringEllerBransje, sektor, land, årstall, kvartal } =
-        getSammenligningForSisteKvartal(restSykefraværshistorikk) || {};
+    let sammenligningSisteKvartal: KvartalsvisSammenligning | any = {};
+    let harBransje = undefined;
 
     if (restSykefraværshistorikk.status === RestStatus.Suksess) {
+        const historikkListe = restSykefraværshistorikk.data;
+        labels = getHistorikkLabels(historikkListe);
+        sammenligningSisteKvartal = getSammenligningForSisteKvartal(historikkListe);
         harBransje = !!restSykefraværshistorikk.data.find(
             historikk => historikk.type === SykefraværshistorikkType.BRANSJE
         );
-        labels = getHistorikkLabels(restSykefraværshistorikk.data);
-        overskrift = (
-            <Systemtittel className="legemeldtsykefravarpanel__overskrift">
-                Legemeldt sykefravær i {kvartal}. kvartal {årstall}
-            </Systemtittel>
-        );
-    } else if (restStatus === RestStatus.IkkeLastet || restStatus === RestStatus.LasterInn) {
-        overskrift = <Skeleton height={28} />;
-    } else {
-        feilmelding = (
-            <AlertStripeFeil className="legemeldtsykefravarpanel__feilmelding">
-                Kunne ikke vise sykefraværet.
-            </AlertStripeFeil>
-        );
     }
 
-    const tekstForNæringEllerBransje = harBransje ? (
-        <div className="legemeldtsykefravarpanel__bransje-label">
-            Bransjen virksomheten tilhører:
-            <Hjelpetekst className="legemeldtsykefravarpanel__bransje-hjelpetekst">
-                Bransjen er definert i samsvar med bransjeprogrammene under IA-avtalen 2019–2022.
-            </Hjelpetekst>
-        </div>
-    ) : (
-        'Næringen virksomheten tilhører:'
-    );
-
-    let feilmeldingHvisTallForVirksomhetErUndefined =
-        'Vi kan ikke vise informasjon om sykefraværet til virksomheten din.';
-    if (kvartal !== undefined && årstall !== undefined) {
-        feilmeldingHvisTallForVirksomhetErUndefined += ` Det kan være fordi det ikke er registrert sykefravær for virksomheten i ${kvartal}. kvartal ${årstall}.`;
-    }
+    const { årstall, kvartal } = sammenligningSisteKvartal;
 
     return (
         <PanelBase className="legemeldtsykefravarpanel">
             <div className="legemeldtsykefravarpanel__tekst-wrapper">
-                {overskrift}
-                {feilmelding}
-                <MaskertSykefraværprosentpanel
-                    sykefraværsprosent={virksomhet}
+                <SykefraværpanelOverskrift
+                    laster={laster}
+                    className="legemeldtsykefravarpanel__overskrift"
+                >
+                    Legemeldt sykefravær i {kvartal}. kvartal {årstall}
+                </SykefraværpanelOverskrift>
+                <SykefraværpanelFeilmelding
+                    status={restStatus}
+                    className="legemeldtsykefravarpanel__feilmelding"
+                >
+                    Kunne ikke vise sykefraværet.
+                </SykefraværpanelFeilmelding>
+                <Virksomhetspanel
+                    sykefraværsprosent={sammenligningSisteKvartal.virksomhet}
                     sykefraværprosentLabel={labels.virksomhet}
-                    labelHvisMaskert="Det er for få personer i datagrunnlaget til at vi kan vise sykefraværet."
-                    labelHvisUndefined={feilmeldingHvisTallForVirksomhetErUndefined}
                     laster={laster}
-                >
-                    Din virksomhet:
-                </MaskertSykefraværprosentpanel>
-                <Sykefraværsprosentpanel
-                    sykefraværsprosent={næringEllerBransje}
+                />
+                <NæringEllerBransjePanel
+                    laster={laster}
+                    sykefraværsprosent={sammenligningSisteKvartal.næringEllerBransje}
                     sykefraværprosentLabel={labels.næringEllerBransje}
-                    laster={laster}
-                >
-                    {tekstForNæringEllerBransje}
-                </Sykefraværsprosentpanel>
+                    harBransje={harBransje}
+                />
                 <Sykefraværsprosentpanel
-                    sykefraværsprosent={sektor}
+                    sykefraværsprosent={sammenligningSisteKvartal.sektor}
                     sykefraværprosentLabel={labels.sektor}
                     laster={laster}
                 >
                     Sektoren virksomheten tilhører:
                 </Sykefraværsprosentpanel>
                 <Sykefraværsprosentpanel
-                    sykefraværsprosent={land}
+                    sykefraværsprosent={sammenligningSisteKvartal.land}
                     sykefraværprosentLabel={labels.land}
                     laster={laster}
                 />
