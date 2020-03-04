@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import PanelBase from 'nav-frontend-paneler';
-import './LegemeldtSykefraværPanel.less';
+import './Sammenligningspanel.less';
 import Sykefraværsprosentpanel from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { HvordanBeregnesTallene } from './HvordanBeregnesTallene/HvordanBeregnesTallene';
 import {
@@ -15,8 +15,8 @@ import {
     KvartalsvisSammenligning,
 } from '../../utils/sykefraværshistorikk-utils';
 import { RestStatus } from '../../api/api-utils';
-import SykefraværpanelOverskrift from './SykefraværpanelOverskrift';
-import SykefraværpanelFeilmelding from './SykefraværpanelFeilmelding';
+import SykefraværpanelOverskrift from './SammenligningspanelOverskrift';
+import SammenligningspanelFeilmelding from './SammenligningspanelFeilmelding';
 import NæringEllerBransjePanel from './NæringEllerBransjePanel';
 import Virksomhetspanel from './Virksomhetspanel';
 
@@ -32,7 +32,7 @@ const getSammenligningForSisteKvartal = (
     return kvartalsvisSammenligning[0];
 };
 
-const LegemeldtSykefraværPanel: FunctionComponent<Props> = props => {
+const Sammenligningspanel: FunctionComponent<Props> = props => {
     const restSykefraværshistorikk = props.restSykefraværshistorikk;
     const restStatus = restSykefraværshistorikk.status;
     const laster = restStatus === RestStatus.LasterInn || restStatus === RestStatus.IkkeLastet;
@@ -53,20 +53,20 @@ const LegemeldtSykefraværPanel: FunctionComponent<Props> = props => {
     const { årstall, kvartal } = sammenligningSisteKvartal;
 
     return (
-        <PanelBase className="legemeldtsykefravarpanel">
-            <div className="legemeldtsykefravarpanel__tekst-wrapper">
+        <PanelBase className="sammenligningspanel">
+            <div className="sammenligningspanel__tekst-wrapper">
                 <SykefraværpanelOverskrift
                     laster={laster}
-                    className="legemeldtsykefravarpanel__overskrift"
+                    className="sammenligningspanel__overskrift"
                 >
                     Legemeldt sykefravær i {kvartal}. kvartal {årstall}
                 </SykefraværpanelOverskrift>
-                <SykefraværpanelFeilmelding
+                <SammenligningspanelFeilmelding
                     status={restStatus}
-                    className="legemeldtsykefravarpanel__feilmelding"
+                    className="sammenligningspanel__feilmelding"
                 >
                     Kunne ikke vise sykefraværet.
-                </SykefraværpanelFeilmelding>
+                </SammenligningspanelFeilmelding>
                 <Virksomhetspanel
                     sykefraværsprosent={sammenligningSisteKvartal.virksomhet}
                     sykefraværprosentLabel={labels.virksomhet}
@@ -96,4 +96,4 @@ const LegemeldtSykefraværPanel: FunctionComponent<Props> = props => {
     );
 };
 
-export default LegemeldtSykefraværPanel;
+export default Sammenligningspanel;

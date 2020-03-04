@@ -7,7 +7,7 @@ import { useOrgnr } from './utils/orgnr-hook';
 import Kalkulator from './Kalkulator/Kalkulator';
 import Forside from './Forside/Forside';
 import Infopanel from './Forside/Infopanel/Infopanel';
-import LegemeldtSykefraværPanel from './Forside/Legemeldtsykefraværpanel/LegemeldtSykefraværPanel';
+import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
 import IAwebpanel from './Forside/IAwebpanel/IAwebpanel';
 import { useRestOrganisasjonstre } from './api/organisasjonstre/organisasjonstre-api';
 import { RestStatus } from './api/api-utils';
@@ -61,7 +61,7 @@ const AppContent: FunctionComponent = () => {
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <Forside restSykefraværshistorikk={restSykefraværshistorikk}>
                         <Infopanel />
-                        <LegemeldtSykefraværPanel
+                        <Sammenligningspanel
                             restSykefraværshistorikk={restSykefraværshistorikk}
                         />
                         <KalkulatorPanel />

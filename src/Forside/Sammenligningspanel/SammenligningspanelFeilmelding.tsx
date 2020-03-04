@@ -8,7 +8,7 @@ interface Props {
     className?: string;
 }
 
-const SykefraværpanelFeilmelding: FunctionComponent<Props> = props => {
+const SammenligningspanelFeilmelding: FunctionComponent<Props> = props => {
     const { status, children, className } = props;
     if (
         status === RestStatus.Suksess ||
@@ -21,4 +21,4 @@ const SykefraværpanelFeilmelding: FunctionComponent<Props> = props => {
     }
 };
 
-export default SykefraværpanelFeilmelding;
+export default SammenligningspanelFeilmelding;
