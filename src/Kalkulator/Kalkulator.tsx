@@ -5,17 +5,10 @@ import LesMerPanel from '../felleskomponenter/LesMerPanel/LesMerPanel';
 import { Input } from 'nav-frontend-skjema';
 import Kostnad from './Kostnad/Kostnad';
 import { RestStatus } from '../api/api-utils';
-import { RestTapteDagsverk } from '../api/tapteDagsverk';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
 import { scrollToBanner } from '../utils/scrollUtils';
-import {
-    RestSykefraværshistorikk,
-    Sykefraværshistorikk,
-    SykefraværshistorikkType,
-    Sykefraværsprosent,
-} from '../api/sykefraværshistorikk';
-import { konverterTilKvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
+import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { getAntallTapteDagsverkSiste4Kvartaler } from './kalkulator-utils';
 
 interface Props {

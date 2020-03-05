@@ -5,9 +5,10 @@ const summer = (tall: number[]) => tall.reduce((a, b) => a + b);
 export const getAntallTapteDagsverkSiste4Kvartaler = (
     historikkListe: Sykefraværshistorikk[]
 ): number | 'erMaskert' => {
-    const alleProsenter = [... historikkListe
-        .find(historikk => historikk.type === SykefraværshistorikkType.VIRKSOMHET)!
-        .kvartalsvisSykefraværsprosent];
+    const alleProsenter = [
+        ...historikkListe.find(historikk => historikk.type === SykefraværshistorikkType.VIRKSOMHET)!
+            .kvartalsvisSykefraværsprosent,
+    ];
     alleProsenter.reverse();
 
     const prosenterForSiste4Kvartaler = alleProsenter
