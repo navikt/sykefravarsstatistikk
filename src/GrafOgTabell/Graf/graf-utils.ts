@@ -1,8 +1,8 @@
-import { KvartalsvisSammenligning, ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
+import {KvartalsvisSammenligning, ÅrstallOgKvartal} from '../../utils/sykefraværshistorikk-utils';
 
 export type SymbolType = 'circle' | 'cross' | 'diamond' | 'square' | 'star' | 'triangle' | 'wye';
 
-export type Linje = 'virksomhet' | 'næringEllerBransje' | 'sektor' | 'land' | string;
+export type Linje = 'virksomhet' | 'overordnetEnhet' | 'næringEllerBransje' | 'sektor' | 'land' | string;
 
 interface GrafConfig {
     farger: any;
@@ -11,15 +11,17 @@ interface GrafConfig {
 }
 
 export const grafConfig: GrafConfig = {
-    linjer: ['virksomhet', 'næringEllerBransje', 'sektor', 'land'],
+    linjer: ['virksomhet', 'overordnetEnhet', 'næringEllerBransje', 'sektor', 'land'],
     farger: {
         virksomhet: '#38A161', // grønn
+        overordnetEnhet: '#826BA1', // lila
         næringEllerBransje: '#FF9100', // oransje
         sektor: '#3385D1', // blå
         land: '#C30000', // rød
     },
     symboler: {
         virksomhet: 'circle',
+        overordnetEnhet: 'cross',
         næringEllerBransje: 'diamond',
         sektor: 'triangle',
         land: 'square',

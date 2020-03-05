@@ -1,13 +1,10 @@
-import {
-    Sykefraværshistorikk,
-    SykefraværshistorikkType,
-    Sykefraværsprosent,
-} from '../api/sykefraværshistorikk';
+import {Sykefraværshistorikk, SykefraværshistorikkType, Sykefraværsprosent,} from '../api/sykefraværshistorikk';
 
 export interface KvartalsvisSammenligning {
     årstall: number;
     kvartal: number;
     virksomhet: Sykefraværsprosent;
+    overordnetEnhet: Sykefraværsprosent;
     næringEllerBransje: Sykefraværsprosent;
     sektor: Sykefraværsprosent;
     land: Sykefraværsprosent;
@@ -53,6 +50,7 @@ const mapTilKvartalsvisSammenligning = (
         return {
             ...årstallOgKvartal,
             virksomhet: getProsent(SykefraværshistorikkType.VIRKSOMHET),
+            overordnetEnhet: getProsent(SykefraværshistorikkType.OVERORDNET_ENHET),
             næringEllerBransje: getProsent(
                 harBransje ? SykefraværshistorikkType.BRANSJE : SykefraværshistorikkType.NÆRING
             ),

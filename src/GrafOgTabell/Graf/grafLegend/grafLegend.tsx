@@ -1,19 +1,22 @@
-import { Legend, LegendProps } from 'recharts';
+import {Legend, LegendProps} from 'recharts';
 import React from 'react';
 import './grafLegend.less';
 import SymbolSvg from '../SymbolSvg';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { getFarge, getSymbol, grafConfig } from '../graf-utils';
+import {Element, Normaltekst} from 'nav-frontend-typografi';
+import {getFarge, getSymbol, grafConfig} from '../graf-utils';
 
 const grafLegend = (
     labelVirksomhet: string,
+    labelOverordnetEnhet: string,
     labelNæringEllerBransje: string,
     labelSektor: string,
     labelLand: string,
-    harBransje: boolean
+    harBransje: boolean,
+    harOverordnetEnhet: boolean
 ) => {
     const labels = {
         virksomhet: labelVirksomhet,
+        overordnetEnhet: labelOverordnetEnhet,
         næringEllerBransje: (
             <div>
                 <Element>{harBransje ? 'Bransje:' : 'Næring:'}</Element>
@@ -47,11 +50,15 @@ const grafLegend = (
         </ul>
     );
 
+    const linjer = harOverordnetEnhet ?
+        grafConfig.linjer
+        : grafConfig.linjer.filter( name => name !== 'overordnetEnhet');
+
     return (
         <Legend
             wrapperStyle={{ paddingBottom: 30 }}
             verticalAlign="top"
-            payload={grafConfig.linjer.map(name => {
+            payload={linjer.map(name => {
                 return {
                     value: name,
                     type: getSymbol(name),

@@ -3,7 +3,7 @@ import {
     Sykefraværshistorikk,
     SykefraværshistorikkType,
 } from '../api/sykefraværshistorikk';
-import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
+import {ÅrstallOgKvartal} from '../utils/sykefraværshistorikk-utils';
 
 const neste = (årstallOgKvartal: ÅrstallOgKvartal): ÅrstallOgKvartal => {
     const { årstall, kvartal } = årstallOgKvartal;
@@ -90,6 +90,18 @@ const lagHistorikkUtenBransjeOgNæring = (): Sykefraværshistorikk[] => {
                 3,
                 0.1
             ),
+        },
+        {
+            type: SykefraværshistorikkType.OVERORDNET_ENHET,
+            label: 'THE FISHING GROUP',
+            kvartalsvisSykefraværsprosent: genererHistorikk(
+                { årstall: 2015, kvartal: 2 },
+                20,
+                7.1,
+                3,
+                0.5,
+                0.1
+            )
         },
     ];
 };
