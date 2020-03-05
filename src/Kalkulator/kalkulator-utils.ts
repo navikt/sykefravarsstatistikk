@@ -1,11 +1,10 @@
 import { Sykefraværshistorikk, SykefraværshistorikkType } from '../api/sykefraværshistorikk';
 
-const summer = (tall: number[]) => tall.reduce((a, b) => a + b);
+const summerTall = (tall: number[]) => tall.reduce((a, b) => a + b);
 
 export const getAntallTapteDagsverkSiste4Kvartaler = (
     historikkListe: Sykefraværshistorikk[]
 ): number | 'erMaskertEllerHarIkkeNokData' => {
-    console.log(historikkListe);
     const alleProsenter = [
         ...historikkListe.find(historikk => historikk.type === SykefraværshistorikkType.VIRKSOMHET)!
             .kvartalsvisSykefraværsprosent,
@@ -15,8 +14,12 @@ export const getAntallTapteDagsverkSiste4Kvartaler = (
     const prosenterForSiste4Kvartaler = alleProsenter
         .filter((sammenligning, index) => index < 4)
         .filter(prosent => !prosent.erMaskert);
+
     if (prosenterForSiste4Kvartaler.length !== 4) {
         return 'erMaskertEllerHarIkkeNokData';
     }
-    return Math.round(summer(prosenterForSiste4Kvartaler.map(prosent => prosent.tapteDagsverk!)));
+    const tapteDagsverkForSiste4Kvartaler = prosenterForSiste4Kvartaler.map(
+        prosent => prosent.tapteDagsverk!
+    );
+    return Math.round(summerTall(tapteDagsverkForSiste4Kvartaler));
 };
