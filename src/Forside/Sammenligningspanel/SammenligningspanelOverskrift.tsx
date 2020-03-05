@@ -8,7 +8,7 @@ interface Props {
     className?: string;
 }
 
-const SykefravRpanelOverskrift: FunctionComponent<Props> = props => {
+const SammenligningspanelOverskrift: FunctionComponent<Props> = props => {
     const classname = classNames(props.className);
     if (props.laster) {
         return (
@@ -21,4 +21,4 @@ const SykefravRpanelOverskrift: FunctionComponent<Props> = props => {
     }
 };
 
-export default SykefravRpanelOverskrift;
+export default SammenligningspanelOverskrift;

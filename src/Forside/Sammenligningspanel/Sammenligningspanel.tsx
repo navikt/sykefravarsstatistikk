@@ -3,19 +3,16 @@ import PanelBase from 'nav-frontend-paneler';
 import './Sammenligningspanel.less';
 import Sykefraværsprosentpanel from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { HvordanBeregnesTallene } from './HvordanBeregnesTallene/HvordanBeregnesTallene';
-import {
-    RestSykefraværshistorikk,
-    Sykefraværshistorikk,
-    SykefraværshistorikkType,
-} from '../../api/sykefraværshistorikk';
+import { RestSykefraværshistorikk, Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
     getHistorikkLabels,
+    historikkHarBransje,
     HistorikkLabels,
     konverterTilKvartalsvisSammenligning,
     KvartalsvisSammenligning,
 } from '../../utils/sykefraværshistorikk-utils';
 import { RestStatus } from '../../api/api-utils';
-import SykefraværpanelOverskrift from './SammenligningspanelOverskrift';
+import SammenligningspanelOverskrift from './SammenligningspanelOverskrift';
 import SammenligningspanelFeilmelding from './SammenligningspanelFeilmelding';
 import NæringEllerBransjePanel from './NæringEllerBransjePanel';
 import Virksomhetspanel from './Virksomhetspanel';
@@ -45,9 +42,7 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
         const historikkListe = restSykefraværshistorikk.data;
         labels = getHistorikkLabels(historikkListe);
         sammenligningSisteKvartal = getSammenligningForSisteKvartal(historikkListe);
-        harBransje = !!restSykefraværshistorikk.data.find(
-            historikk => historikk.type === SykefraværshistorikkType.BRANSJE
-        );
+        harBransje = historikkHarBransje(restSykefraværshistorikk.data);
     }
 
     const { årstall, kvartal } = sammenligningSisteKvartal;
@@ -55,12 +50,12 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
     return (
         <PanelBase className="sammenligningspanel">
             <div className="sammenligningspanel__tekst-wrapper">
-                <SykefraværpanelOverskrift
+                <SammenligningspanelOverskrift
                     laster={laster}
                     className="sammenligningspanel__overskrift"
                 >
                     Legemeldt sykefravær i {kvartal}. kvartal {årstall}
-                </SykefraværpanelOverskrift>
+                </SammenligningspanelOverskrift>
                 <SammenligningspanelFeilmelding
                     status={restStatus}
                     className="sammenligningspanel__feilmelding"

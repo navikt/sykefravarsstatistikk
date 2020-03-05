@@ -23,7 +23,7 @@ export const formaterProsent = (prosent: number | null | undefined): string => {
 const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelProps> = props => {
     const { sykefraværsprosent, laster, sykefraværprosentLabel, children } = props;
 
-    if (!sykefraværsprosent && !laster) {
+    if (!laster && (!sykefraværsprosent || !sykefraværsprosent.prosent)) {
         return null;
     }
 
