@@ -10,6 +10,7 @@ interface Props {
     åpneLabel: string;
     lukkLabel: string;
     className?: string;
+    onÅpne?: () => void;
 }
 
 const LesMerPanel: React.FunctionComponent<Props> = ({
@@ -17,8 +18,16 @@ const LesMerPanel: React.FunctionComponent<Props> = ({
     lukkLabel,
     children,
     className,
+    onÅpne,
 }) => {
-    const [åpen, setÅpen] = useState<boolean>(false);
+    const [åpen, setÅpenState] = useState<boolean>(false);
+
+    const setÅpen = (skalÅpnes: boolean) => {
+        setÅpenState(skalÅpnes);
+        if (skalÅpnes && onÅpne) {
+            onÅpne();
+        }
+    }
 
     return (
         <div className="les-mer-panel">
