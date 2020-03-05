@@ -4,7 +4,7 @@ const summer = (tall: number[]) => tall.reduce((a, b) => a + b);
 
 export const getAntallTapteDagsverkSiste4Kvartaler = (
     historikkListe: Sykefraværshistorikk[]
-): number | 'erMaskert' => {
+): number | 'erMaskertEllerHarIkkeNokData' => {
     const alleProsenter = [
         ...historikkListe.find(historikk => historikk.type === SykefraværshistorikkType.VIRKSOMHET)!
             .kvartalsvisSykefraværsprosent,
@@ -15,7 +15,7 @@ export const getAntallTapteDagsverkSiste4Kvartaler = (
         .filter((sammenligning, index) => index < 4)
         .filter(prosent => !prosent.erMaskert);
     if (prosenterForSiste4Kvartaler.length !== 4) {
-        return 'erMaskert';
+        return 'erMaskertEllerHarIkkeNokData';
     }
     return Math.round(summer(prosenterForSiste4Kvartaler.map(prosent => prosent.prosent!)));
 };
