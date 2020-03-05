@@ -3,7 +3,12 @@ import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import './Tabell.less';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Tabellrader from './Tabellrader';
-import { getHistorikkLabels, historikkHarBransje } from '../../utils/sykefraværshistorikk-utils';
+import {
+    getHistorikkLabels,
+    historikkHarBransje,
+    historikkHarOverordnetEnhet,
+    HistorikkLabels,
+} from '../../utils/sykefraværshistorikk-utils';
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
@@ -12,7 +17,18 @@ interface Props {
 const Tabell: FunctionComponent<Props> = props => {
     const harBransje = historikkHarBransje(props.sykefraværshistorikk);
     const næringEllerBransjeTabellLabel = harBransje ? 'Bransje' : 'Næring';
-    const labels = getHistorikkLabels(props.sykefraværshistorikk);
+    const labels: HistorikkLabels = getHistorikkLabels(props.sykefraværshistorikk);
+
+    const headerOverordnetEnhet = () => {
+        if (historikkHarOverordnetEnhet(props.sykefraværshistorikk)) {
+            return (
+                <th scope="col">
+                    <Element>Overordnet enhet</Element>
+                    <Normaltekst>{labels.overordnetEnhet}</Normaltekst>
+                </th>
+            );
+        }
+    };
 
     return (
         <div className="graf-tabell__wrapper">
@@ -25,6 +41,7 @@ const Tabell: FunctionComponent<Props> = props => {
                             <Element>Din virksomhet</Element>{' '}
                             <Normaltekst>{labels.virksomhet}</Normaltekst>
                         </th>
+                        {headerOverordnetEnhet()}
                         <th scope="col">
                             <Element>{næringEllerBransjeTabellLabel}</Element>{' '}
                             <Normaltekst>{labels.næringEllerBransje}</Normaltekst>

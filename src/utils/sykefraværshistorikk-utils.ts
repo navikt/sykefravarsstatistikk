@@ -1,4 +1,8 @@
-import {Sykefraværshistorikk, SykefraværshistorikkType, Sykefraværsprosent,} from '../api/sykefraværshistorikk';
+import {
+    Sykefraværshistorikk,
+    SykefraværshistorikkType,
+    Sykefraværsprosent,
+} from '../api/sykefraværshistorikk';
 
 export interface KvartalsvisSammenligning {
     årstall: number;
@@ -80,8 +84,16 @@ export const konverterTilKvartalsvisSammenligning = (
 export const historikkHarBransje = (historikkListe: Sykefraværshistorikk[]): boolean =>
     !!historikkListe.find(historikk => historikk.type === SykefraværshistorikkType.BRANSJE);
 
+export const historikkHarOverordnetEnhet = (historikkListe: Sykefraværshistorikk[]): boolean =>
+    !!historikkListe.find(
+        historikk =>
+            historikk.type === SykefraværshistorikkType.OVERORDNET_ENHET &&
+            historikk.kvartalsvisSykefraværsprosent.length > 0
+    );
+
 export interface HistorikkLabels {
     virksomhet: string;
+    overordnetEnhet?: string;
     næringEllerBransje: string;
     sektor: string;
     land: string;
@@ -92,6 +104,7 @@ export const getHistorikkLabels = (historikkListe: Sykefraværshistorikk[]): His
         historikkListe.find(historikk => historikk.type === type);
     return {
         virksomhet: getHistorikk(SykefraværshistorikkType.VIRKSOMHET)!.label,
+        overordnetEnhet: getHistorikk(SykefraværshistorikkType.OVERORDNET_ENHET)!.label,
         næringEllerBransje: historikkHarBransje(historikkListe)
             ? getHistorikk(SykefraværshistorikkType.BRANSJE)!.label
             : getHistorikk(SykefraværshistorikkType.NÆRING)!.label,

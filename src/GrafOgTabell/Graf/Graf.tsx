@@ -1,16 +1,19 @@
-import React, {FunctionComponent} from 'react';
-import {CartesianGrid, LineChart, ResponsiveContainer, XAxis, YAxis} from 'recharts';
+import React, { FunctionComponent } from 'react';
+import { CartesianGrid, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import grafTooltip from './grafTooltip/grafTooltip';
 import grafLegend from './grafLegend/grafLegend';
 import grafLinjer from './grafLinjer';
 
 import './Graf.less';
 import 'nav-frontend-tabell-style';
-import {Sykefraværshistorikk, SykefraværshistorikkType} from '../../api/sykefraværshistorikk';
-import {hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString} from './graf-utils';
+import { Sykefraværshistorikk, SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
+import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString } from './graf-utils';
 import XAkseTick from './XAkseTick';
-import {useInnerWidth} from '../../utils/innerWidth-hook';
-import {konverterTilKvartalsvisSammenligning} from '../../utils/sykefraværshistorikk-utils';
+import { useInnerWidth } from '../../utils/innerWidth-hook';
+import {
+    historikkHarOverordnetEnhet,
+    konverterTilKvartalsvisSammenligning,
+} from '../../utils/sykefraværshistorikk-utils';
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
@@ -24,7 +27,15 @@ const Graf: FunctionComponent<Props> = props => {
     );
 
     const kvartalsvisSammenligningData = kvartalsvisSammenligning.map(sammenligning => {
-        const { årstall, kvartal, virksomhet, overordnetEnhet, næringEllerBransje, sektor, land } = sammenligning;
+        const {
+            årstall,
+            kvartal,
+            virksomhet,
+            overordnetEnhet,
+            næringEllerBransje,
+            sektor,
+            land,
+        } = sammenligning;
         return {
             ...sammenligning,
             name: lagTickString(årstall, kvartal),
@@ -39,15 +50,12 @@ const Graf: FunctionComponent<Props> = props => {
     const labelForType = (type: SykefraværshistorikkType): string => {
         return props.sykefraværshistorikk.find(historikk => historikk.type === type)!.label;
     };
+
     const harBransje = !!props.sykefraværshistorikk.find(
         historikk => historikk.type === SykefraværshistorikkType.BRANSJE
     );
 
-    const harOverordnetEnhet = !!props.sykefraværshistorikk.find(
-        historikk =>
-            historikk.type === SykefraværshistorikkType.OVERORDNET_ENHET
-            && historikk.kvartalsvisSykefraværsprosent.length > 0
-    );
+    const harOverordnetEnhet = historikkHarOverordnetEnhet(props.sykefraværshistorikk);
 
     const punkterPåXAksenSomSkalMarkeres: string[] = hentFørsteKvartalFraAlleÅreneIDatagrunnlaget(
         kvartalsvisSammenligning
