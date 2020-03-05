@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './Forside.less';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
-import IkkeInnloggetSide from '../FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
+import Innloggingsside from '../Innloggingsside/Innloggingsside';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { RestStatus } from '../api/api-utils';
 
@@ -15,7 +15,7 @@ const Forside: React.FunctionComponent<Props> = props => {
             return <ManglerRettigheterIAltinnSide />;
         }
         case RestStatus.IkkeInnlogget: {
-            return <IkkeInnloggetSide />;
+            return <Innloggingsside />;
         }
         default: {
             return (

@@ -10,6 +10,7 @@ import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
 import { scrollToBanner } from '../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { getAntallTapteDagsverkSiste4Kvartaler } from './kalkulator-utils';
+import amplitude from '../utils/amplitude';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -63,6 +64,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     åpneLabel="Hvor kommer dette tallet fra?"
                     lukkLabel="Lukk"
                     className="kalkulator__lesmer-tapte-dagsverk"
+                    onÅpne={() => {
+                        amplitude.logEvent('#sykefravarsstatistikk-kalkulator dagsverk lesmer-klikk');
+                    }}
                 >
                     <Normaltekst>
                         Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes
@@ -90,6 +94,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     <Input
                         label={<Element>Kostnad per dagsverk (kr)</Element>}
                         onChange={event => setKostnadDagsverk(parseInt(event.target.value))}
+                        onClick={() => {
+                            amplitude.logEvent('#sykefravarsstatistikk-kalkulator kostnad input-klikk');
+                        }}
                         value={kostnadDagsverk || ''}
                         bredde={'XS'}
                         maxLength={15}
@@ -102,6 +109,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         åpneLabel="Hvor kommer dette tallet fra?"
                         lukkLabel="Lukk"
                         className="kalkulator__lesmer-kostnad-dagsverk"
+                        onÅpne={() => {
+                            amplitude.logEvent('#sykefravarsstatistikk-kalkulator kostnad lesmer-klikk');
+                        }}
                     >
                         <Normaltekst>
                             Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
@@ -115,6 +125,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     <Input
                         label={<Element>Antall tapte dagsverk</Element>}
                         onChange={event => setTapteDagsverk(parseInt(event.target.value))}
+                        onClick={() => {
+                            amplitude.logEvent('#sykefravarsstatistikk-kalkulator dagsverk input-klikk');
+                        }}
                         value={tapteDagsverk || ''}
                         bredde={'XS'}
                         maxLength={15}
