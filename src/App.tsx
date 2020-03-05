@@ -72,7 +72,7 @@ const AppContent: FunctionComponent = () => {
                 </Route>
                 <Route path={PATH_KALKULATOR} exact={true}>
                     <Brødsmulesti gjeldendeSide="kalkulator" />
-                    <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />
+                    <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk} />
                 </Route>
                 {skalViseGraf && (
                     <Route path={PATH_HISTORIKK} exact={true}>
