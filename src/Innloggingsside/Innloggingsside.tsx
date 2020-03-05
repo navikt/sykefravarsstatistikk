@@ -3,31 +3,31 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import illustrasjonSvg from './statistikk-ikon.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
-import './IkkeInnloggetSide.less';
+import './Innloggingsside.less';
 import Sidetittel from 'nav-frontend-typografi/lib/sidetittel';
 
-export const IkkeInnloggetSide: React.FunctionComponent = () => {
+export const Innloggingsside: React.FunctionComponent = () => {
     const redirectTilLogin = () => {
         window.location.href = '/sykefravarsstatistikk/redirect-til-login';
     };
 
     return (
-        <div className="ikke-innlogget-side__wrapper">
-            <div className="ikke-innlogget-side">
-                <img src={illustrasjonSvg} className="ikke-innlogget-side__illustrasjon" alt="" />
+        <div className="innloggingsside__wrapper">
+            <div className="innloggingsside">
+                <img src={illustrasjonSvg} className="innloggingsside__illustrasjon" alt="" />
 
-                <Sidetittel className="ikke-innlogget-side__sidetittel">
+                <Sidetittel className="innloggingsside__sidetittel">
                     Sykefraværsstatistikk
                 </Sidetittel>
 
-                <Normaltekst className="ikke-innlogget-side__overskrift">
+                <Normaltekst className="innloggingsside__overskrift">
                     Se statistikk om sykefraværet i din virksomhet og sammenligne dere med andre
                     virksomheter. For å se statistikken må du logge inn. Tilgangstyringen skjer
                     gjennom Altinn.
                 </Normaltekst>
 
                 <Lenke
-                    className="ikke-innlogget-side__lenke"
+                    className="innloggingsside__lenke"
                     href={
                         'https://arbeidsgiver.nav.no/min-side-arbeidsgiver/informasjon-om-tilgangsstyring'
                     }
@@ -37,7 +37,7 @@ export const IkkeInnloggetSide: React.FunctionComponent = () => {
 
                 <Hovedknapp
                     onClick={redirectTilLogin}
-                    className="ikke-innlogget-side__loginKnapp-wrapper"
+                    className="innloggingsside__loginKnapp-wrapper"
                 >
                     Logg inn
                 </Hovedknapp>
@@ -46,4 +46,4 @@ export const IkkeInnloggetSide: React.FunctionComponent = () => {
     );
 };
 
-export default IkkeInnloggetSide;
+export default Innloggingsside;

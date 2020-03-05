@@ -12,7 +12,7 @@ import IAwebpanel from './Forside/IAwebpanel/IAwebpanel';
 import { useRestOrganisasjonstre } from './api/organisasjonstre/organisasjonstre-api';
 import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
-import IkkeInnloggetSide from './FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
+import Innloggingsside from './Innloggingsside/Innloggingsside';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
@@ -52,7 +52,7 @@ const AppContent: FunctionComponent = () => {
     ) {
         innhold = <Lasteside />;
     } else if (restOrganisasjonstre.status === RestStatus.IkkeInnlogget) {
-        innhold = <IkkeInnloggetSide />;
+        return <Innloggingsside />;
     } else if (restOrganisasjonstre.status !== RestStatus.Suksess) {
         innhold = <FeilFraAltinnSide />;
     } else {
