@@ -5,15 +5,14 @@ import MaskertSykefraværprosentpanel, {
 } from './MaskertSykefraværprosentpanel';
 import Sykefraværsprosentpanel from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { DataKanIkkeVisesPanel } from './DataKanIkkeVisesPanel/DataKanIkkeVisesPanel';
-import { Sykefraværprosent } from '../../../api/sammenligning';
+import { Sykefraværsprosent } from '../../../api/sykefraværshistorikk';
 
 describe('Tester for MaskertSykefraværprosentpanel', () => {
     it('Skal rendre at data ikke kan vises, med maskert label, hvis sykefraværsprosenten er maskert', () => {
-        const props = {
+        const props: MaskertSykefraværprosentpanelProps = {
             ...tommeProps,
             labelHvisMaskert: 'maskert',
-            sykefraværprosent: {
-                label: 'Fisk og fugl AS',
+            sykefraværsprosent: {
                 prosent: null,
                 erMaskert: true,
             },
@@ -25,20 +24,19 @@ describe('Tester for MaskertSykefraværprosentpanel', () => {
         expect(wrapper.exists(Sykefraværsprosentpanel)).toEqual(false);
     });
 
-    it('Skal rendre at data ikke kan vises, med riktig label, hvis sykefraværsprosenten null uten å være maskert', () => {
-        const props = {
+    it('Skal rendre at data ikke kan vises, med riktig label, hvis sykefraværsprosenten undefined', () => {
+        const props: MaskertSykefraværprosentpanelProps = {
             ...tommeProps,
-            labelHvisNull: 'prosent er null',
-            sykefraværprosent: {
-                label: 'Fisk og fugl AS',
-                prosent: null,
+            labelHvisUndefined: 'prosent er undefined',
+            sykefraværsprosent: {
+                prosent: undefined,
                 erMaskert: false,
             },
         };
 
         const wrapper = shallow(<MaskertSykefraværprosentpanel {...props} />);
         expect(wrapper.exists(DataKanIkkeVisesPanel)).toEqual(true);
-        expect(wrapper.find(DataKanIkkeVisesPanel).props().label).toEqual('prosent er null');
+        expect(wrapper.find(DataKanIkkeVisesPanel).props().label).toEqual('prosent er undefined');
         expect(wrapper.exists(Sykefraværsprosentpanel)).toEqual(false);
     });
 
@@ -58,14 +56,14 @@ describe('Tester for MaskertSykefraværprosentpanel', () => {
     });
 });
 
-const tomtSykefraværsprosent: Sykefraværprosent = {
-    label: '',
+const tomtSykefraværsprosent: Sykefraværsprosent = {
+    erMaskert: false,
     prosent: 0,
 };
 
 const tommeProps: MaskertSykefraværprosentpanelProps = {
     labelHvisMaskert: '',
-    labelHvisNull: '',
-    sykefraværprosent: tomtSykefraværsprosent,
+    labelHvisUndefined: '',
+    sykefraværsprosent: tomtSykefraværsprosent,
     laster: false,
 };

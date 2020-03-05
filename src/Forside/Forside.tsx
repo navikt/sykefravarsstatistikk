@@ -1,19 +1,20 @@
 import * as React from 'react';
 import './Forside.less';
-import { RestSammenligning, RestSammenligningStatus } from '../api/sammenligning';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import IkkeInnloggetSide from '../FeilSider/IkkeInnloggetSide/IkkeInnloggetSide';
+import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
+import { RestStatus } from '../api/api-utils';
 
 interface Props {
-    restSammenligning: RestSammenligning;
+    restSykefraværshistorikk: RestSykefraværshistorikk;
 }
 
 const Forside: React.FunctionComponent<Props> = props => {
-    switch (props.restSammenligning.status) {
-        case RestSammenligningStatus.HarIkkeRettigheterIAltinn: {
+    switch (props.restSykefraværshistorikk.status) {
+        case RestStatus.IngenTilgang: {
             return <ManglerRettigheterIAltinnSide />;
         }
-        case RestSammenligningStatus.IkkeInnlogget: {
+        case RestStatus.IkkeInnlogget: {
             return <IkkeInnloggetSide />;
         }
         default: {

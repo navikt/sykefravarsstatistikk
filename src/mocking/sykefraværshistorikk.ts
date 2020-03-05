@@ -1,99 +1,135 @@
-export const historikkMock = [
+import {
+    KvartalsvisSykefraværsprosent,
+    Sykefraværshistorikk,
+    SykefraværshistorikkType,
+} from '../api/sykefraværshistorikk';
+import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
+
+const neste = (årstallOgKvartal: ÅrstallOgKvartal): ÅrstallOgKvartal => {
+    const { årstall, kvartal } = årstallOgKvartal;
+    if (kvartal === 4) {
+        return {
+            årstall: årstall + 1,
+            kvartal: 1,
+        };
+    } else {
+        return {
+            årstall,
+            kvartal: kvartal + 1,
+        };
+    }
+};
+
+const randomNumber = (min: number, max: number): number => Math.random() * (max - min) + min;
+
+export const genererHistorikk = (
+    startÅrstallOgKvartal: ÅrstallOgKvartal,
+    antallKvartaler: number,
+    startprosent: number,
+    variasjon: number,
+    randomness: number,
+    vekst: number
+): KvartalsvisSykefraværsprosent[] => {
+    let historikk: KvartalsvisSykefraværsprosent[] = [];
+
+    let årstallOgKvartal = { ...startÅrstallOgKvartal };
+    let prosent = startprosent;
+
+    for (let i = 0; i < antallKvartaler; i += 1) {
+        historikk.push({
+            ...årstallOgKvartal,
+            erMaskert: false,
+            prosent: prosent,
+        });
+        årstallOgKvartal = neste(årstallOgKvartal);
+        prosent =
+            prosent +
+            variasjon * Math.sin(0.5 + (Math.PI * i) / 2) +
+            randomNumber(vekst - randomness, vekst + randomness);
+        prosent = Math.max(0, prosent);
+        prosent = parseFloat(prosent.toFixed(1));
+    }
+
+    return historikk;
+};
+
+const lagHistorikkUtenBransjeOgNæring = (): Sykefraværshistorikk[] => {
+    return [
+        {
+            type: SykefraværshistorikkType.LAND,
+            label: 'Norge',
+            kvartalsvisSykefraværsprosent: genererHistorikk(
+                { årstall: 2014, kvartal: 2 },
+                20,
+                5.5,
+                1,
+                0.1,
+                0
+            ),
+        },
+        {
+            type: SykefraværshistorikkType.SEKTOR,
+            label: 'Statlig forvaltning',
+            kvartalsvisSykefraværsprosent: genererHistorikk(
+                { årstall: 2014, kvartal: 2 },
+                20,
+                4,
+                2,
+                0.2,
+                0
+            ),
+        },
+        {
+            type: SykefraværshistorikkType.VIRKSOMHET,
+            label: 'FLESK OG FISK AS',
+            kvartalsvisSykefraværsprosent: genererHistorikk(
+                { årstall: 2016, kvartal: 2 },
+                20,
+                8.3,
+                5,
+                3,
+                0.1
+            ),
+        },
+    ];
+};
+
+const lagHistorikkNæring = () => [
+    ...lagHistorikkUtenBransjeOgNæring(),
     {
-        type: 'LAND',
-        label: 'Norge',
-        kvartalsvisSykefraværsprosent: [
-            { prosent: 5.2, årstall: 2014, kvartal: 2, erMaskert: false },
-            { prosent: 5.5, årstall: 2014, kvartal: 3, erMaskert: false },
-            { prosent: 5.4, årstall: 2014, kvartal: 4, erMaskert: false },
-            { prosent: 5.4, årstall: 2015, kvartal: 1, erMaskert: false },
-            { prosent: 4.9, årstall: 2015, kvartal: 2, erMaskert: false },
-            { prosent: 4.3, årstall: 2015, kvartal: 3, erMaskert: false },
-            { prosent: 5.1, årstall: 2015, kvartal: 4, erMaskert: false },
-            { prosent: 5.2, årstall: 2016, kvartal: 1, erMaskert: false },
-            { prosent: 4.9, årstall: 2016, kvartal: 2, erMaskert: false },
-            { prosent: 4.2, årstall: 2016, kvartal: 3, erMaskert: false },
-            { prosent: 5.1, årstall: 2016, kvartal: 4, erMaskert: false },
-            { prosent: 5.5, årstall: 2017, kvartal: 1, erMaskert: false },
-            { prosent: 4.9, årstall: 2017, kvartal: 2, erMaskert: false },
-            { prosent: 4.3, årstall: 2017, kvartal: 3, erMaskert: false },
-            { prosent: 5.2, årstall: 2017, kvartal: 4, erMaskert: false },
-            { prosent: 5.6, årstall: 2018, kvartal: 1, erMaskert: false },
-            { prosent: 4.8, årstall: 2018, kvartal: 2, erMaskert: false },
-            { prosent: 4.2, årstall: 2018, kvartal: 3, erMaskert: false },
-            { prosent: 5.1, årstall: 2018, kvartal: 4, erMaskert: false },
-            { prosent: 5.5, årstall: 2019, kvartal: 1, erMaskert: false },
-            { prosent: 4.5, årstall: 2019, kvartal: 2, erMaskert: false },
-        ],
-    },
-    {
-        type: 'SEKTOR',
-        label: 'Statlig forvaltning',
-        kvartalsvisSykefraværsprosent: [
-            { prosent: 4.9, årstall: 2014, kvartal: 2, erMaskert: false },
-            { prosent: 5.2, årstall: 2014, kvartal: 3, erMaskert: false },
-            { prosent: 5.0, årstall: 2014, kvartal: 4, erMaskert: false },
-            { prosent: 5.1, årstall: 2015, kvartal: 1, erMaskert: false },
-            { prosent: 4.6, årstall: 2015, kvartal: 2, erMaskert: false },
-            { prosent: 4.0, årstall: 2015, kvartal: 3, erMaskert: false },
-            { prosent: 4.8, årstall: 2015, kvartal: 4, erMaskert: false },
-            { prosent: 5.0, årstall: 2016, kvartal: 1, erMaskert: false },
-            { prosent: 4.6, årstall: 2016, kvartal: 2, erMaskert: false },
-            { prosent: 4.0, årstall: 2016, kvartal: 3, erMaskert: false },
-            { prosent: 4.8, årstall: 2016, kvartal: 4, erMaskert: false },
-            { prosent: 5.1, årstall: 2017, kvartal: 1, erMaskert: false },
-            { prosent: 4.6, årstall: 2017, kvartal: 2, erMaskert: false },
-            { prosent: 4.1, årstall: 2017, kvartal: 3, erMaskert: false },
-            { prosent: 5.0, årstall: 2017, kvartal: 4, erMaskert: false },
-            { prosent: 5.3, årstall: 2018, kvartal: 1, erMaskert: false },
-            { prosent: 4.5, årstall: 2018, kvartal: 2, erMaskert: false },
-            { prosent: 4.0, årstall: 2018, kvartal: 3, erMaskert: false },
-            { prosent: 4.9, årstall: 2018, kvartal: 4, erMaskert: false },
-            { prosent: 5.2, årstall: 2019, kvartal: 1, erMaskert: false },
-            { prosent: 5.2, årstall: 2019, kvartal: 2, erMaskert: false },
-        ],
-    },
-    {
-        type: 'NÆRING',
+        type: SykefraværshistorikkType.NÆRING,
         label: 'Produksjon av nærings- og nytelsesmidler',
-        kvartalsvisSykefraværsprosent: [
-            { prosent: 5.6, årstall: 2017, kvartal: 1, erMaskert: false },
-            { prosent: 5.1, årstall: 2017, kvartal: 2, erMaskert: false },
-            { prosent: 4.4, årstall: 2017, kvartal: 3, erMaskert: false },
-            { prosent: 5.4, årstall: 2017, kvartal: 4, erMaskert: false },
-            { prosent: 5.7, årstall: 2018, kvartal: 1, erMaskert: false },
-            { prosent: 5.0, årstall: 2018, kvartal: 2, erMaskert: false },
-            { prosent: 4.4, årstall: 2018, kvartal: 3, erMaskert: false },
-            { prosent: 5.4, årstall: 2018, kvartal: 4, erMaskert: false },
-            { prosent: 5.6, årstall: 2019, kvartal: 1, erMaskert: false },
-            { prosent: 5.1, årstall: 2019, kvartal: 2, erMaskert: false },
-        ],
-    },
-    {
-        type: 'VIRKSOMHET',
-        label: 'FLESK OG FISK AS',
-        kvartalsvisSykefraværsprosent: [
-            { prosent: 25.3, årstall: 2014, kvartal: 2, erMaskert: false },
-            { prosent: 21.3, årstall: 2014, kvartal: 3, erMaskert: false },
-            { prosent: 14.4, årstall: 2014, kvartal: 4, erMaskert: false },
-            { prosent: 9.4, årstall: 2015, kvartal: 1, erMaskert: false },
-            { prosent: 12.4, årstall: 2015, kvartal: 2, erMaskert: false },
-            { prosent: 1.3, årstall: 2015, kvartal: 3, erMaskert: false },
-            { prosent: 3.8, årstall: 2015, kvartal: 4, erMaskert: false },
-            { prosent: 12.9, årstall: 2016, kvartal: 1, erMaskert: false },
-            { prosent: 10.4, årstall: 2016, kvartal: 2, erMaskert: false },
-            { prosent: 5.0, årstall: 2016, kvartal: 3, erMaskert: false },
-            { prosent: 7.7, årstall: 2016, kvartal: 4, erMaskert: false },
-            { prosent: 14.5, årstall: 2017, kvartal: 1, erMaskert: false },
-            { prosent: 9.8, årstall: 2017, kvartal: 2, erMaskert: false },
-            { prosent: 11.5, årstall: 2017, kvartal: 3, erMaskert: false },
-            { prosent: 15.1, årstall: 2017, kvartal: 4, erMaskert: false },
-            { prosent: 20.9, årstall: 2018, kvartal: 1, erMaskert: false },
-            { prosent: 7.3, årstall: 2018, kvartal: 2, erMaskert: false },
-            { prosent: 7.1, årstall: 2018, kvartal: 3, erMaskert: false },
-            { prosent: 9.0, årstall: 2018, kvartal: 4, erMaskert: false },
-            { prosent: 12.8, årstall: 2019, kvartal: 1, erMaskert: false },
-            { prosent: 12.0, årstall: 2019, kvartal: 2, erMaskert: false },
-        ],
+        kvartalsvisSykefraværsprosent: genererHistorikk(
+            { årstall: 2014, kvartal: 2 },
+            20,
+            6.7,
+            2,
+            0.4,
+            0
+        ),
     },
 ];
+
+const lagHistorikkBransje = () => [
+    ...lagHistorikkUtenBransjeOgNæring(),
+    {
+        type: SykefraværshistorikkType.BRANSJE,
+        label: 'Barnehager',
+        kvartalsvisSykefraværsprosent: genererHistorikk(
+            { årstall: 2014, kvartal: 2 },
+            20,
+            6.7,
+            2,
+            0.4,
+            0
+        ),
+    },
+];
+
+export const getSykefraværshistorikkMock = (orgnr: String): Sykefraværshistorikk[] => {
+    if (orgnr === '888888888') {
+        return lagHistorikkBransje();
+    } else {
+        return lagHistorikkNæring();
+    }
+};

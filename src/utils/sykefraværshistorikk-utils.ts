@@ -78,3 +78,26 @@ export const konverterTilKvartalsvisSammenligning = (
     );
     return mapTilKvartalsvisSammenligning(historikkListe, årstallOgKvartalerSomSkalVises);
 };
+
+export const historikkHarBransje = (historikkListe: Sykefraværshistorikk[]): boolean =>
+    !!historikkListe.find(historikk => historikk.type === SykefraværshistorikkType.BRANSJE);
+
+export interface HistorikkLabels {
+    virksomhet: string;
+    næringEllerBransje: string;
+    sektor: string;
+    land: string;
+}
+
+export const getHistorikkLabels = (historikkListe: Sykefraværshistorikk[]): HistorikkLabels => {
+    const getHistorikk = (type: SykefraværshistorikkType): Sykefraværshistorikk | undefined =>
+        historikkListe.find(historikk => historikk.type === type);
+    return {
+        virksomhet: getHistorikk(SykefraværshistorikkType.VIRKSOMHET)!.label,
+        næringEllerBransje: historikkHarBransje(historikkListe)
+            ? getHistorikk(SykefraværshistorikkType.BRANSJE)!.label
+            : getHistorikk(SykefraværshistorikkType.NÆRING)!.label,
+        sektor: getHistorikk(SykefraværshistorikkType.SEKTOR)!.label,
+        land: getHistorikk(SykefraværshistorikkType.LAND)!.label,
+    };
+};

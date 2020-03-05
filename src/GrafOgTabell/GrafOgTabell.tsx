@@ -37,8 +37,7 @@ const GrafOgTabell: FunctionComponent<Props> = props => {
     } else if (restSykefraværsstatistikk.status !== RestStatus.Suksess) {
         innhold = (
             <AlertStripe type="feil" className="graf-og-tabell__feilside">
-                En feil skjedde da vi prøvde å hente statistikken deres. Vennligst prøv igjen
-                senere.
+                Det skjedde en feil da vi prøvde å hente statistikken.
             </AlertStripe>
         );
     } else {
