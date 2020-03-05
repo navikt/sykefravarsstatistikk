@@ -19,8 +19,10 @@ export interface ÅrstallOgKvartal {
 }
 
 const TOM_PROSENT: Sykefraværsprosent = {
-    prosent: undefined,
     erMaskert: false,
+    prosent: undefined,
+    tapteDagsverk: undefined,
+    muligeDagsverk: undefined,
 };
 const finnProsent = (
     historikkListe: Sykefraværshistorikk[],

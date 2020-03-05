@@ -1,5 +1,9 @@
 import { getAntallTapteDagsverkSiste4Kvartaler } from './kalkulator-utils';
-import { Sykefraværshistorikk, SykefraværshistorikkType } from '../api/sykefraværshistorikk';
+import {
+    KvartalsvisSykefraværsprosent,
+    Sykefraværshistorikk,
+    SykefraværshistorikkType,
+} from '../api/sykefraværshistorikk';
 
 describe('Tester for kalkulator-utils', () => {
     test('getAntallTapteDagsverkSiste4Kvartaler skal returnere antall tapte dagsverk for virksomhet de siste 4 kvartaler', () => {
@@ -8,12 +12,12 @@ describe('Tester for kalkulator-utils', () => {
                 type: SykefraværshistorikkType.VIRKSOMHET,
                 label: '',
                 kvartalsvisSykefraværsprosent: [
-                    { årstall: 2018, kvartal: 3, prosent: 1, erMaskert: false },
-                    { årstall: 2018, kvartal: 4, prosent: 2, erMaskert: false },
-                    { årstall: 2019, kvartal: 1, prosent: 10, erMaskert: false },
-                    { årstall: 2019, kvartal: 2, prosent: 20, erMaskert: false },
-                    { årstall: 2019, kvartal: 3, prosent: 30, erMaskert: false },
-                    { årstall: 2019, kvartal: 4, prosent: 40, erMaskert: false },
+                    tapteDagsverk(2018, 3, 1),
+                    tapteDagsverk(2018, 4, 2),
+                    tapteDagsverk(2019, 1, 10),
+                    tapteDagsverk(2019, 2, 20),
+                    tapteDagsverk(2019, 3, 30),
+                    tapteDagsverk(2019, 4, 40),
                 ],
             },
         ]);
@@ -26,10 +30,10 @@ describe('Tester for kalkulator-utils', () => {
                 type: SykefraværshistorikkType.VIRKSOMHET,
                 label: '',
                 kvartalsvisSykefraværsprosent: [
-                    { årstall: 2019, kvartal: 1, prosent: 10.1, erMaskert: false },
-                    { årstall: 2019, kvartal: 2, prosent: 20.1, erMaskert: false },
-                    { årstall: 2019, kvartal: 3, prosent: 30.1, erMaskert: false },
-                    { årstall: 2019, kvartal: 4, prosent: 40.1, erMaskert: false },
+                    tapteDagsverk(2019, 1, 10.1),
+                    tapteDagsverk(2019, 2, 20.1),
+                    tapteDagsverk(2019, 3, 30.1),
+                    tapteDagsverk(2019, 4, 40.1),
                 ],
             },
         ]);
@@ -42,10 +46,10 @@ describe('Tester for kalkulator-utils', () => {
                 type: SykefraværshistorikkType.VIRKSOMHET,
                 label: '',
                 kvartalsvisSykefraværsprosent: [
-                    { årstall: 2019, kvartal: 1, prosent: null, erMaskert: true },
-                    { årstall: 2019, kvartal: 2, prosent: 20, erMaskert: false },
-                    { årstall: 2019, kvartal: 3, prosent: 30, erMaskert: false },
-                    { årstall: 2019, kvartal: 4, prosent: 40, erMaskert: false },
+                    maskertTapteDagsverk(2019, 1),
+                    tapteDagsverk(2019, 2, 20),
+                    tapteDagsverk(2019, 3, 30),
+                    tapteDagsverk(2019, 4, 40),
                 ],
             },
         ]);
@@ -58,9 +62,9 @@ describe('Tester for kalkulator-utils', () => {
                 type: SykefraværshistorikkType.VIRKSOMHET,
                 label: '',
                 kvartalsvisSykefraværsprosent: [
-                    { årstall: 2019, kvartal: 2, prosent: 20, erMaskert: false },
-                    { årstall: 2019, kvartal: 3, prosent: 30, erMaskert: false },
-                    { årstall: 2019, kvartal: 4, prosent: 40, erMaskert: false },
+                    tapteDagsverk(2019, 2, 20),
+                    tapteDagsverk(2019, 3, 30),
+                    tapteDagsverk(2019, 4, 40),
                 ],
             },
         ]);
@@ -72,13 +76,39 @@ describe('Tester for kalkulator-utils', () => {
             type: SykefraværshistorikkType.VIRKSOMHET,
             label: '',
             kvartalsvisSykefraværsprosent: [
-                { årstall: 2019, kvartal: 1, prosent: 10, erMaskert: false },
-                { årstall: 2019, kvartal: 2, prosent: 20, erMaskert: false },
-                { årstall: 2019, kvartal: 3, prosent: 30, erMaskert: false },
-                { årstall: 2019, kvartal: 4, prosent: 40, erMaskert: false },
+                tapteDagsverk(2019, 1, 10),
+                tapteDagsverk(2019, 2, 20),
+                tapteDagsverk(2019, 3, 30),
+                tapteDagsverk(2019, 4, 40),
             ],
         };
-        const antall = getAntallTapteDagsverkSiste4Kvartaler([historikkVirksomhet]);
+        getAntallTapteDagsverkSiste4Kvartaler([historikkVirksomhet]);
         expect(historikkVirksomhet.kvartalsvisSykefraværsprosent[0].kvartal).toEqual(1);
     });
 });
+
+const maskertTapteDagsverk = (årstall: number, kvartal: number): KvartalsvisSykefraværsprosent => {
+    return {
+        erMaskert: true,
+        årstall,
+        kvartal,
+        tapteDagsverk: null,
+        prosent: null,
+        muligeDagsverk: null,
+    };
+};
+
+const tapteDagsverk = (
+    årstall: number,
+    kvartal: number,
+    antallTapteDagsverk: number
+): KvartalsvisSykefraværsprosent => {
+    return {
+        årstall,
+        kvartal,
+        tapteDagsverk: antallTapteDagsverk,
+        erMaskert: false,
+        prosent: 10,
+        muligeDagsverk: 1000,
+    };
+};
