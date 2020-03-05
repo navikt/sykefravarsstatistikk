@@ -14,7 +14,7 @@ import {
 import { RestStatus } from '../../api/api-utils';
 import SammenligningspanelOverskrift from './SammenligningspanelOverskrift';
 import SammenligningspanelFeilmelding from './SammenligningspanelFeilmelding';
-import NæringEllerBransjePanel from './NæringEllerBransjePanel';
+import NæringEllerBransjePanel from './NæringEllerBransjePanel/NæringEllerBransjePanel';
 import Virksomhetspanel from './Virksomhetspanel';
 
 interface Props {

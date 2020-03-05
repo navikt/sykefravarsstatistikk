@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import Sykefraværsprosentpanel, {
     SykefraværprosentpanelProps,
-} from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
+} from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import './NæringEllerBransjePanel.less';
 
 type Props = SykefraværprosentpanelProps & {
     harBransje?: boolean;
@@ -10,9 +11,9 @@ type Props = SykefraværprosentpanelProps & {
 
 const NæringEllerBransjePanel: FunctionComponent<Props> = props => {
     const tekstForNæringEllerBransje = props.harBransje ? (
-        <div className="legemeldtsykefravarpanel__bransje-label">
+        <div className="næring-eller-bransje-panel__label">
             Bransjen virksomheten tilhører:
-            <Hjelpetekst className="legemeldtsykefravarpanel__bransje-hjelpetekst">
+            <Hjelpetekst className="næring-eller-bransje-panel__hjelpetekst">
                 Bransjen er definert i samsvar med bransjeprogrammene under IA-avtalen 2019–2022.
             </Hjelpetekst>
         </div>
