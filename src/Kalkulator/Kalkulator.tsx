@@ -26,7 +26,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
     const totalKostnad = tapteDagsverk && kostnadDagsverk ? tapteDagsverk * kostnadDagsverk : 0;
 
     const harEndretTapteDagsverk = tapteDagsverk !== undefined;
-    console.log(props.restSykefraværshistorikk);
+
     useEffect(() => {
         if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
             setTapteDagsverk(undefined);
