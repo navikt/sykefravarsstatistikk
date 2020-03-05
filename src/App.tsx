@@ -52,7 +52,7 @@ const AppContent: FunctionComponent = () => {
     ) {
         innhold = <Lasteside />;
     } else if (restOrganisasjonstre.status === RestStatus.IkkeInnlogget) {
-        innhold = <IkkeInnloggetSide />;
+        return <IkkeInnloggetSide />;
     } else if (restOrganisasjonstre.status !== RestStatus.Suksess) {
         innhold = <FeilFraAltinnSide />;
     } else {
