@@ -116,6 +116,7 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
                         <div className="typo-element">Din virksomhet:</div>
                         Flesk og fisk Oslo
                     </div>
+
                     <div className="test1">
                         <NæringSvg />
                         <Innholdstittel className="tittel1">6.2&nbsp;%</Innholdstittel>
