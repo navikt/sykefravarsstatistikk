@@ -83,7 +83,7 @@ const Graf: FunctionComponent<Props> = props => {
                     tickFormatter={tickValue => tickValue + ' %'}
                     width={40}
                 />
-                {grafTooltip()}
+                {grafTooltip(harBransje)}
                 {grafLegend(
                     labelForType(SykefraværshistorikkType.VIRKSOMHET),
                     labelForType(SykefraværshistorikkType.OVERORDNET_ENHET),
