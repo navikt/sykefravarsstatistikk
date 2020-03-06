@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import Banner from './Banner/Banner';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { BASE_PATH } from './server/konstanter';
-import { useRestTapteDagsverk } from './api/tapteDagsverk';
 import { useOrgnr } from './utils/orgnr-hook';
 import Kalkulator from './Kalkulator/Kalkulator';
 import Forside from './Forside/Forside';
@@ -40,7 +39,6 @@ const AppContent: FunctionComponent = () => {
     const orgnr = useOrgnr();
 
     const restOrganisasjonstre = useRestOrganisasjonstre();
-    const restTapteDagsverk = useRestTapteDagsverk(orgnr);
     const restSykefraværshistorikk = useRestSykefraværshistorikk(orgnr);
     const restFeatureToggles = useRestFeatureToggles();
 
@@ -72,7 +70,7 @@ const AppContent: FunctionComponent = () => {
                 </Route>
                 <Route path={PATH_KALKULATOR} exact={true}>
                     <Brødsmulesti gjeldendeSide="kalkulator" />
-                    <Kalkulator defaultTapteDagsverk={restTapteDagsverk} />
+                    <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk} />
                 </Route>
                 {skalViseGraf && (
                     <Route path={PATH_HISTORIKK} exact={true}>
