@@ -40,6 +40,8 @@ export const genererHistorikk = (
             ...årstallOgKvartal,
             erMaskert: false,
             prosent: prosent,
+            tapteDagsverk: prosent * 10,
+            muligeDagsverk: prosent * 1000,
         });
         årstallOgKvartal = neste(årstallOgKvartal);
         prosent =
@@ -84,7 +86,7 @@ const lagHistorikkUtenBransjeOgNæring = (): Sykefraværshistorikk[] => {
             label: 'FLESK OG FISK AS',
             kvartalsvisSykefraværsprosent: genererHistorikk(
                 { årstall: 2016, kvartal: 2 },
-                20,
+                12,
                 8.3,
                 5,
                 3,
