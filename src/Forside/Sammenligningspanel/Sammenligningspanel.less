@@ -1,5 +1,73 @@
 @import '../../variables';
 
+.infopanel {
+    border: 2px solid @navBlaLighten60;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .infopanel {
+        &__overskrift {
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    &__illustrasjon {
+        margin-bottom: 1rem;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        flex-direction: row-reverse;
+        position: relative;
+        padding: 2rem;
+
+        &__tekst-wrapper {
+            margin-right: 2rem;
+        }
+
+        &__illustrasjon {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.test1 {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
+}
+
+.tittel1 {
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+.test0 {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.infopanel__overskrift {
+    padding-bottom: 1rem;
+}
+
+.div-test {
+    width: 100%;
+    padding-top: 1rem;
+}
+
+.test-panel {
+    padding: 2rem !important;
+    padding-bottom: 1rem !important;
+    border: 2px solid #99c2e8;
+}
+/*
+@import '../../variables';
+
 .sammenligningspanel {
     margin-top: 1.5rem;
     padding: 2rem 1.5rem;
@@ -19,3 +87,4 @@
         padding: 2rem;
     }
 }
+*/
