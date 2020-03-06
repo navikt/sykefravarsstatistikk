@@ -24,7 +24,7 @@ describe('Tester for kalkulator-utils', () => {
         expect(antall).toEqual(100);
     });
 
-    test('getAntallTapteDagsverkSiste4Kvartaler skal runde', () => {
+    test('getAntallTapteDagsverkSiste4Kvartaler skal avrunde resultat', () => {
         const antall = getAntallTapteDagsverkSiste4Kvartaler([
             {
                 type: SykefraværshistorikkType.VIRKSOMHET,
