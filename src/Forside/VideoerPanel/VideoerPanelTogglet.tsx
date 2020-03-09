@@ -25,9 +25,10 @@ const VideoerPanelTogglet: FunctionComponent = () => (
             <EksternLenke
                 className="videoerpaneltogglet__lenke"
                 href="https://vimeo.com/showcase/6728595"
-                onClick={() =>
-                    sendEvent('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar')
-                }
+                onClick={() => {
+                    sendEvent('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar');
+                    amplitude.logEvent('#sykefravarsstatistikk-forside videoer redusering-klikk');
+                }}
             >
                 Redusere sykefraværet
             </EksternLenke>

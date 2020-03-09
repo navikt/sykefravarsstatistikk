@@ -76,7 +76,7 @@ const GrafOgTabell: FunctionComponent<Props> = props => {
                                 pressed: grafEllerTabell === 'tabell',
                                 onClick: () => {
                                     setGrafEllerTabell('tabell');
-                                    amplitude.logEvent('#sykefravarsstatistikk-forside kalkulator-klikk');
+                                    amplitude.logEvent('#sykefravarsstatistikk-historikk toggle tabell-klikk');
                                 },
                             },
                         ]}
