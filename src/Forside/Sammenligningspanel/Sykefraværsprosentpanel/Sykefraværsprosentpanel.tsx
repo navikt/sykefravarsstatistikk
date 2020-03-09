@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Element, Innholdstittel, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import './Sykefraværsprosentpanel.less';
 import Skeleton from 'react-loading-skeleton';
 import { Sykefraværsprosent } from '../../../api/sykefraværshistorikk';
+import { ReactComponent as BedriftSvg } from '../Bedrift.svg';
+import SammenligningsIkon from '../SammenligningsIkon';
 
 export interface SykefraværprosentpanelProps {
     sykefraværsprosent?: Sykefraværsprosent;
@@ -26,7 +28,7 @@ const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelP
     if (!laster && (!sykefraværsprosent || !sykefraværsprosent.prosent)) {
         return null;
     }
-
+    console.log(props.sykefraværsprosent);
     const tekst = (
         <div className="sykefravarsprosentpanel__innhold">
             {children && <Element tag="div">{children}</Element>}
@@ -45,6 +47,14 @@ const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelP
             {prosent}
             {tekst}
         </>
+        /*
+        <div className="test1">
+
+            <Innholdstittel className="tittel1">13,1&nbsp;%</Innholdstittel>
+            <div className="typo-element">Din virksomhet:</div>
+            Flesk og fisk Oslo
+        </div>
+*/
     );
 
     const innholdLaster = (
@@ -53,7 +63,9 @@ const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelP
         </div>
     );
 
-    return <div className="sykefravarsprosentpanel">{laster ? innholdLaster : innhold}</div>;
+    return (
+        <div className="sykefravarsprosentpanel__med__logo">{laster ? innholdLaster : innhold}</div>
+    );
 };
 
 export default Sykefraværsprosentpanel;

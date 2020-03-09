@@ -22,6 +22,8 @@ import { ReactComponent as NorgeSvg } from './Norge.svg';
 import { ReactComponent as NæringSvg } from './Næring.svg';
 import { ReactComponent as SektorSvg } from './Sektor.svg';
 import { Innholdstittel, Systemtittel } from 'nav-frontend-typografi';
+import SektorPanel from './SektorPanel/SektorPanel';
+import LandsPanel from './LandsPanel/LandsPanel';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -54,7 +56,7 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
     const { årstall, kvartal } = sammenligningSisteKvartal;
 
     return (
-        /*<PanelBase className="sammenligningspanel">
+        <PanelBase className="sammenligningspanel">
             <div className="sammenligningspanel__tekst-wrapper">
                 <SammenligningspanelOverskrift
                     laster={laster}
@@ -79,7 +81,7 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
                     sykefraværprosentLabel={labels.næringEllerBransje}
                     harBransje={harBransje}
                 />
-                <Sykefraværsprosentpanel
+                {/*<Sykefraværsprosentpanel
                     sykefraværsprosent={sammenligningSisteKvartal.sektor}
                     sykefraværprosentLabel={labels.sektor}
                     laster={laster}
@@ -90,11 +92,13 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
                     sykefraværsprosent={sammenligningSisteKvartal.land}
                     sykefraværprosentLabel={labels.land}
                     laster={laster}
-                />
+                />*/}
+                <SektorPanel laster={laster} sykefraværsprosent={sammenligningSisteKvartal.sektor} sykefraværprosentLabel={labels.sektor} />
+                <LandsPanel laster={laster} sykefraværsprosent={sammenligningSisteKvartal.land} sykefraværprosentLabel={labels.land} />
                 <HvordanBeregnesTallene />
             </div>
-        </PanelBase>*/
-        <div className="div-test typo-normal">
+        </PanelBase>
+        /*<div className="div-test typo-normal">
             <PanelBase className="test-panel">
                 <Systemtittel className="infopanel__overskrift" tag="h2">
                     <SammenligningspanelOverskrift
@@ -135,7 +139,7 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
                     </div>
                 </div>
             </PanelBase>
-        </div>
+        </div>*/
     );
 };
 

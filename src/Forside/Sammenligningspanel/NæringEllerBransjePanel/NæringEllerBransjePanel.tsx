@@ -4,6 +4,9 @@ import Sykefraværsprosentpanel, {
 } from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import './NæringEllerBransjePanel.less';
+import { ReactComponent as NæringSvg } from '../Næring.svg';
+import SammenligningsIkon from '../SammenligningsIkon';
+import { SykefraværshistorikkType } from '../../../api/sykefraværshistorikk';
 
 type Props = SykefraværprosentpanelProps & {
     harBransje?: boolean;
@@ -22,13 +25,16 @@ const NæringEllerBransjePanel: FunctionComponent<Props> = props => {
     );
 
     return (
-        <Sykefraværsprosentpanel
-            sykefraværsprosent={props.sykefraværsprosent}
-            sykefraværprosentLabel={props.sykefraværprosentLabel}
-            laster={props.laster}
-        >
-            {tekstForNæringEllerBransje}
-        </Sykefraværsprosentpanel>
+        <>
+            <SammenligningsIkon label={SykefraværshistorikkType.NÆRING} />
+            <Sykefraværsprosentpanel
+                sykefraværsprosent={props.sykefraværsprosent}
+                sykefraværprosentLabel={props.sykefraværprosentLabel}
+                laster={props.laster}
+            >
+                {tekstForNæringEllerBransje}
+            </Sykefraværsprosentpanel>
+        </>
     );
 };
 

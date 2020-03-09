@@ -1,6 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import MaskertSykefraværprosentpanel from './MaskertSykefraværprosentpanel/MaskertSykefraværprosentpanel';
 import { SykefraværprosentpanelProps } from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
+import { ReactComponent as BedriftSvg } from './Bedrift.svg';
+import SammenligningsIkon from './SammenligningsIkon';
+import { SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
 
 type Props = SykefraværprosentpanelProps & {
     kvartal?: number;
@@ -17,15 +20,18 @@ const Virksomhetspanel: FunctionComponent<Props> = props => {
     }
 
     return (
-        <MaskertSykefraværprosentpanel
-            sykefraværsprosent={sykefraværsprosent}
-            sykefraværprosentLabel={sykefraværprosentLabel}
-            labelHvisMaskert="Det er for få personer i datagrunnlaget til at vi kan vise sykefraværet."
-            labelHvisUndefined={feilmeldingHvisProsentErUndefined}
-            laster={laster}
-        >
-            Din virksomhet:
-        </MaskertSykefraværprosentpanel>
+        <>
+            <SammenligningsIkon label={SykefraværshistorikkType.VIRKSOMHET} />
+            <MaskertSykefraværprosentpanel
+                sykefraværsprosent={sykefraværsprosent}
+                sykefraværprosentLabel={sykefraværprosentLabel}
+                labelHvisMaskert="Det er for få personer i datagrunnlaget til at vi kan vise sykefraværet."
+                labelHvisUndefined={feilmeldingHvisProsentErUndefined}
+                laster={laster}
+            >
+                Din virksomhet:
+            </MaskertSykefraværprosentpanel>
+        </>
     );
 };
 
