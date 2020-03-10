@@ -8,7 +8,12 @@ import {
 import { RestTapteDagsverk } from './tapteDagsverk';
 import { getRestStatus, RestStatus } from './api-utils';
 import { RestFeatureToggles } from './featureToggles';
-import { RestSykefraværshistorikk } from './sykefraværshistorikk';
+import {
+    KvartalsvisSykefraværsprosent,
+    RestSykefraværshistorikk,
+    Sykefraværshistorikk,
+    SykefraværshistorikkType,
+} from './sykefraværshistorikk';
 
 const sammenligningPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/sammenligning`;
 const tapteDagsverkPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/summerTapteDagsverk`;
@@ -69,7 +74,9 @@ export const hentRestSykefraværshistorikk = async (
     if (restStatus === RestStatus.Suksess) {
         return {
             status: RestStatus.Suksess,
-            data: await response.json(),
+            data: await response.json().then(data => {
+                return filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(data);
+            }),
         };
     }
     return {
@@ -104,4 +111,80 @@ export const hentRestFeatureToggles = async (
         status: RestStatus.Suksess,
         data: {},
     };
+};
+
+export const filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet = (
+    data: Sykefraværshistorikk[]
+): Sykefraværshistorikk[] => {
+    const sykefraværshistorikkForOverordnetEnhet: KvartalsvisSykefraværsprosent[] = getSykefraværshistorikk(
+        data,
+        SykefraværshistorikkType.OVERORDNET_ENHET
+    );
+    const sykefraværshistorikkForUnderenhet: KvartalsvisSykefraværsprosent[] = getSykefraværshistorikk(
+        data,
+        SykefraværshistorikkType.VIRKSOMHET
+    );
+
+    if (
+        erSykefraværshistorikkLike(
+            sykefraværshistorikkForOverordnetEnhet,
+            sykefraværshistorikkForUnderenhet
+        )
+    ) {
+        console.log('OverordnetEnhet og underenhet har like sykefraværshistorikk');
+        nullstillOverordnetEnhetshistorikk(data);
+    } else {
+        console.log('OverordnetEnhet og underenhet har forskjellige sykefraværshistorikk');
+    }
+
+    return data;
+};
+
+const getSykefraværshistorikk = (
+    listeAvSykefraværshistorikk: Sykefraværshistorikk[],
+    sykefraværshistorikkType: SykefraværshistorikkType
+): KvartalsvisSykefraværsprosent[] => {
+    const sykefraværshistorikkForTypen = listeAvSykefraværshistorikk.find(
+        sykefraværshistorikk => sykefraværshistorikk.type === sykefraværshistorikkType
+    );
+    return sykefraværshistorikkForTypen
+        ? sykefraværshistorikkForTypen.kvartalsvisSykefraværsprosent
+        : [];
+};
+
+const erSykefraværshistorikkLike = (
+    sfProsentVenstreListe: KvartalsvisSykefraværsprosent[],
+    sfProsentHøyreListe: KvartalsvisSykefraværsprosent[]
+): boolean => {
+    if (sfProsentVenstreListe.length !== sfProsentHøyreListe.length) {
+        return false;
+    }
+
+    let harMinsEnUlikSykefraværprosent: boolean = false;
+    sfProsentVenstreListe.forEach(sfProsentVenstre => {
+        if (
+            !sfProsentHøyreListe.some(
+                sfProsentHøyre =>
+                    sfProsentHøyre.kvartal === sfProsentVenstre.kvartal &&
+                    sfProsentHøyre.årstall === sfProsentVenstre.årstall &&
+                    sfProsentHøyre.erMaskert === sfProsentVenstre.erMaskert &&
+                    sfProsentHøyre.prosent === sfProsentVenstre.prosent
+            )
+        ) {
+            harMinsEnUlikSykefraværprosent = true;
+            return;
+        }
+    });
+
+    return !harMinsEnUlikSykefraværprosent;
+};
+
+const nullstillOverordnetEnhetshistorikk = (data: Sykefraværshistorikk[]): void => {
+    const sykefraværshistorikkTilOverordnetEnhet = data.find(
+        sf => sf.type === SykefraværshistorikkType.OVERORDNET_ENHET
+    );
+
+    if (sykefraværshistorikkTilOverordnetEnhet !== undefined) {
+        sykefraværshistorikkTilOverordnetEnhet.kvartalsvisSykefraværsprosent = [];
+    }
 };

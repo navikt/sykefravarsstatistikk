@@ -1,7 +1,8 @@
-import { hentRestSammenligning } from './api';
-import { RestSammenligningStatus } from './sammenligning';
+import {filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet, hentRestSammenligning} from './api';
+import {RestSammenligningStatus} from './sammenligning';
 
 import fetchMock from 'fetch-mock';
+import {Sykefraværshistorikk, SykefraværshistorikkType} from "./sykefraværshistorikk";
 
 describe('Tester for hentRestSammenligning', () => {
     afterEach(fetchMock.restore);
@@ -49,4 +50,86 @@ describe('Tester for hentRestSammenligning', () => {
             expect(result.sammenligning.virksomhet.prosent).toBe(31.12);
         });
     });
+});
+
+describe('Tester for utils funksjoner', () => {
+    const historikkUnderenhet: Sykefraværshistorikk = {
+        type: SykefraværshistorikkType.VIRKSOMHET,
+        label: 'Underenhet AS',
+        kvartalsvisSykefraværsprosent: [
+            {
+                "årstall": 2019,
+                "kvartal": 4,
+                "erMaskert": false,
+                "prosent": 5.5
+            },
+            {
+                "årstall": 2020,
+                "kvartal": 1,
+                "erMaskert": false,
+                "prosent": 6
+            },
+        ],
+    };
+    const historikkOverordnetEnhet: Sykefraværshistorikk = {
+        type: SykefraværshistorikkType.OVERORDNET_ENHET,
+        label: 'Underenhet AS',
+        kvartalsvisSykefraværsprosent: [
+            {
+                "årstall": 2019,
+                "kvartal": 4,
+                "erMaskert": false,
+                "prosent": 5.5
+            },
+            {
+                "årstall": 2020,
+                "kvartal": 1,
+                "erMaskert": false,
+                "prosent": 6
+            },
+        ],
+    };
+
+    test('filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet håndterer tom historikk for overordnet enhet', () => {
+        const result: Sykefraværshistorikk[] = filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(
+            [historikkUnderenhet]
+        );
+        expect(result.length).toBe(1);
+    });
+
+    test('filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet håndterer tom historikk for underenhet', () => {
+        const result: Sykefraværshistorikk[] = filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(
+            [historikkOverordnetEnhet]
+        );
+        expect(result.length).toBe(1);
+        expect(
+            // @ts-ignore
+            result.find(
+                sykefraværshistorikk =>
+                    sykefraværshistorikk.type === SykefraværshistorikkType.OVERORDNET_ENHET
+            ).kvartalsvisSykefraværsprosent.length
+        ).toBe(2);
+    });
+
+    test('filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet filtrerer bort historikk for overordnet enhet', () => {
+        const result: Sykefraværshistorikk[] = filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(
+            [historikkUnderenhet, historikkOverordnetEnhet]
+        );
+        expect(result.length).toBe(2);
+        expect(
+            // @ts-ignore
+            result.find(
+                sykefraværshistorikk =>
+                    sykefraværshistorikk.type === SykefraværshistorikkType.VIRKSOMHET
+            ).kvartalsvisSykefraværsprosent.length
+        ).toBe(2);
+        expect(
+            // @ts-ignore
+            result.find(
+                sykefraværshistorikk =>
+                    sykefraværshistorikk.type === SykefraværshistorikkType.OVERORDNET_ENHET
+            ).kvartalsvisSykefraværsprosent.length
+        ).toBe(0);
+    });
+
 });
