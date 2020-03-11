@@ -7,6 +7,7 @@ import {
     Sykefraværshistorikk,
     SykefraværshistorikkType,
 } from './sykefraværshistorikk';
+import amplitude from "../utils/amplitude";
 
 const sykefraværshistorikkPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk`;
@@ -82,10 +83,10 @@ export const filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet = (
             sykefraværshistorikkForUnderenhet
         )
     ) {
-        console.log('OverordnetEnhet og underenhet har like sykefraværshistorikk');
+        amplitude.logEvent('#sykefravarsstatistikk-segmentering valgt underenhet er lik overordnet enhet');
         nullstillOverordnetEnhetshistorikk(data);
     } else {
-        console.log('OverordnetEnhet og underenhet har forskjellige sykefraværshistorikk');
+        amplitude.logEvent('#sykefravarsstatistikk-segmentering valgt underenhet er ulik overordnet enhet');
     }
 
     return data;
