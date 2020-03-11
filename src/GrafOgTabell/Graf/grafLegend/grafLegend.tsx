@@ -1,9 +1,9 @@
-import {Legend, LegendProps} from 'recharts';
+import { Legend, LegendProps } from 'recharts';
 import React from 'react';
 import './grafLegend.less';
 import SymbolSvg from '../SymbolSvg';
-import {Element, Normaltekst} from 'nav-frontend-typografi';
-import {getFarge, getSymbol, grafConfig} from '../graf-utils';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { getFarge, getSymbol, grafConfig } from '../graf-utils';
 
 const grafLegend = (
     labelVirksomhet: string,
@@ -16,31 +16,33 @@ const grafLegend = (
 ) => {
     const labels = {
         virksomhet: (
-            <div className="graf-legend__tekst" >
+            <div className="graf-legend__tekst">
                 <Element className="graf-legend__tekst-element">Virksomhet:</Element>
                 <Normaltekst>{labelVirksomhet}</Normaltekst>
             </div>
         ),
         overordnetEnhet: (
-            <div className="graf-legend__tekst" >
+            <div className="graf-legend__tekst">
                 <Element className="graf-legend__tekst-element">Overordnet enhet:</Element>
                 <Normaltekst>{labelOverordnetEnhet}</Normaltekst>
             </div>
         ),
         næringEllerBransje: (
-            <div className="graf-legend__tekst" >
-                <Element className="graf-legend__tekst-element">{harBransje ? 'Bransje:' : 'Næring:'}</Element>
+            <div className="graf-legend__tekst">
+                <Element className="graf-legend__tekst-element">
+                    {harBransje ? 'Bransje:' : 'Næring:'}
+                </Element>
                 <Normaltekst>{labelNæringEllerBransje}</Normaltekst>
             </div>
         ),
         sektor: (
-            <div className="graf-legend__tekst" >
+            <div className="graf-legend__tekst">
                 <Element className="graf-legend__tekst-element">Sektor:</Element>
                 <Normaltekst>Privat og offentlig næringsvirksomhet</Normaltekst>
             </div>
         ),
         land: (
-            <div className="graf-legend__tekst" >
+            <div className="graf-legend__tekst">
                 <Element>Norge</Element>
             </div>
         ),
@@ -64,9 +66,9 @@ const grafLegend = (
         </ul>
     );
 
-    const linjer = harOverordnetEnhet ?
-        grafConfig.linjer
-        : grafConfig.linjer.filter( name => name !== 'overordnetEnhet');
+    const linjer = harOverordnetEnhet
+        ? grafConfig.linjer
+        : grafConfig.linjer.filter(name => name !== 'overordnetEnhet');
 
     return (
         <Legend
