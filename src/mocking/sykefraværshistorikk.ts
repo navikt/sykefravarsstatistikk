@@ -84,6 +84,34 @@ const lagHistorikkMedLandSektor = (): Sykefraværshistorikk[] => {
     ];
 };
 
+const lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet = (): Sykefraværshistorikk[] => {
+    return [
+        ...lagHistorikkMedLandSektor(),
+        {
+            type: SykefraværshistorikkType.NÆRING,
+            label: 'Produksjon av nærings- og nytelsesmidler',
+            kvartalsvisSykefraværsprosent: genererHistorikk(
+                { årstall: 2014, kvartal: 2 },
+                20,
+                6.7,
+                2,
+                0.4,
+                0
+            ),
+        },
+        {
+            type: SykefraværshistorikkType.VIRKSOMHET,
+            label: 'FLESK OG FISK AS',
+            kvartalsvisSykefraværsprosent: [],
+        },
+        {
+            type: SykefraværshistorikkType.OVERORDNET_ENHET,
+            label: 'THE FISHING GROUP',
+            kvartalsvisSykefraværsprosent: [],
+        },
+    ];
+};
+
 const lagHistorikkUtenBransjeOgNæring = (): Sykefraværshistorikk[] => [
     ...lagHistorikkMedLandSektor(),
     {
@@ -182,8 +210,9 @@ const lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet = () => {
 
 export const getSykefraværshistorikkMock = (orgnr: String): Sykefraværshistorikk[] => {
     switch (orgnr) {
+        case '333333333':
+            return lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet();
         case '666666666':
-            console.log('Lage historikk for: 666666666')
             return lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet();
         case '888888888':
             return lagHistorikkBransje();

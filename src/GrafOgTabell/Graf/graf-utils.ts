@@ -1,8 +1,15 @@
-import {KvartalsvisSammenligning, ÅrstallOgKvartal} from '../../utils/sykefraværshistorikk-utils';
+import { KvartalsvisSammenligning, ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
+import { Sykefraværshistorikk, SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
 
 export type SymbolType = 'circle' | 'cross' | 'diamond' | 'square' | 'star' | 'triangle' | 'wye';
 
-export type Linje = 'virksomhet' | 'overordnetEnhet' | 'næringEllerBransje' | 'sektor' | 'land' | string;
+export type Linje =
+    | 'virksomhet'
+    | 'overordnetEnhet'
+    | 'næringEllerBransje'
+    | 'sektor'
+    | 'land'
+    | string;
 
 interface GrafConfig {
     tooltipsnavn: any;
@@ -43,10 +50,10 @@ export const getFarge = (name: Linje): SymbolType =>
 
 export const getTooltipsnavn = (name: Linje, harBransje: boolean): string => {
     if (name === 'næringEllerBransje') {
-        return harBransje? 'Bransje' : 'Næring';
+        return harBransje ? 'Bransje' : 'Næring';
     }
     return name in grafConfig.tooltipsnavn ? grafConfig.tooltipsnavn[name] : 'Prosent';
-}
+};
 
 export const hentFørsteKvartalFraAlleÅreneIDatagrunnlaget = (
     kvartalsvisSammenligning: KvartalsvisSammenligning[]
@@ -60,3 +67,37 @@ export const hentFørsteKvartalFraAlleÅreneIDatagrunnlaget = (
 
 export const lagTickString = (årstall: number, kvartal: number) =>
     årstall + ', ' + kvartal + '. kvartal';
+
+export const getLinjerSomMatcherHistorikk = (
+    sykefraværshistorikk: Sykefraværshistorikk[]
+): Linje[] => {
+    let linjer: Linje[] = [...grafConfig.linjer];
+    console.log(" ----> the lines STEP0: " + JSON.stringify(linjer));
+
+    if (
+        !sykefraværshistorikk.find(
+            historikk =>
+                historikk.type === SykefraværshistorikkType.OVERORDNET_ENHET &&
+                historikk.kvartalsvisSykefraværsprosent.length > 0
+        )
+    ) {
+        console.log("Har funnet OVERORDNET_ENHET uten data");
+        linjer = linjer.filter(name => name !== 'overordnetEnhet');
+        console.log(" ----> the lines STEP1: " + JSON.stringify(linjer));
+    }
+
+    if (
+        !sykefraværshistorikk.find(
+            historikk =>
+                historikk.type === SykefraværshistorikkType.VIRKSOMHET &&
+                historikk.kvartalsvisSykefraværsprosent.length > 0
+        )
+    ) {
+        console.log("Har funnet VIRKSOMHET uten data");
+        linjer = linjer.filter(name => name !== 'virksomhet');
+        console.log(" ----> the lines STEP2: " + JSON.stringify(linjer));
+    }
+
+    console.log(" ----> the lines FINAL: " + JSON.stringify(linjer));
+    return linjer;
+};
