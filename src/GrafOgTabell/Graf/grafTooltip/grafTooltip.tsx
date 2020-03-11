@@ -2,9 +2,9 @@ import React from 'react';
 import { Tooltip } from 'recharts';
 import SymbolSvg from '../SymbolSvg';
 import './grafTooltip.less';
-import { getFarge, getSymbol } from '../graf-utils';
+import { getFarge, getSymbol, getTooltipsnavn } from '../graf-utils';
 
-const grafTooltip = () => (
+const grafTooltip = (harBransje: boolean) => (
     <Tooltip
         formatter={(value, name, props) => [
             <span className="tooltip__item-wrapper">
@@ -14,7 +14,10 @@ const grafTooltip = () => (
                     fill={getFarge(name)}
                     className="tooltip__ikon"
                 />
-                <span className="tooltip__item-value">{value + ' %'}</span>
+                <div className="tooltip__item-navn-og-verdi">
+                    <span className="tooltip__item-navn">{getTooltipsnavn(name, harBransje)}</span>
+                    <span className="tooltip__item-verdi">{value + ' %'}</span>
+                </div>
             </span>,
         ]}
         separator={': '}

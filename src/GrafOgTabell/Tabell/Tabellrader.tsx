@@ -1,6 +1,9 @@
 import { Sykefraværshistorikk, Sykefraværsprosent } from '../../api/sykefraværshistorikk';
 import React, { FunctionComponent } from 'react';
-import { konverterTilKvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
+import {
+    historikkHarOverordnetEnhet,
+    konverterTilKvartalsvisSammenligning,
+} from '../../utils/sykefraværshistorikk-utils';
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
@@ -16,6 +19,15 @@ const formaterProsent = (prosent: Sykefraværsprosent): string => {
     }
 };
 
+const kolonneOverordnetEnhet = (
+    overordnetEnhet: Sykefraværsprosent,
+    harOverordnetEnhet: boolean
+) => {
+    if (harOverordnetEnhet) {
+        return <td>{formaterProsent(overordnetEnhet)}</td>;
+    }
+};
+
 const Tabellrader: FunctionComponent<Props> = props => {
     const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
         props.sykefraværshistorikk
@@ -24,12 +36,24 @@ const Tabellrader: FunctionComponent<Props> = props => {
     return (
         <>
             {kvartalsvisSammenligning.map(rad => {
-                const { årstall, kvartal, virksomhet, næringEllerBransje, sektor, land } = rad;
+                const {
+                    årstall,
+                    kvartal,
+                    virksomhet,
+                    overordnetEnhet,
+                    næringEllerBransje,
+                    sektor,
+                    land,
+                } = rad;
                 return (
                     <tr key={årstall + '-' + kvartal}>
                         <td>{årstall}</td>
                         <td>{kvartal}</td>
                         <td>{formaterProsent(virksomhet)}</td>
+                        {kolonneOverordnetEnhet(
+                            overordnetEnhet,
+                            historikkHarOverordnetEnhet(props.sykefraværshistorikk)
+                        )}
                         <td>{formaterProsent(næringEllerBransje)}</td>
                         <td>{formaterProsent(sektor)}</td>
                         <td>{formaterProsent(land)}</td>

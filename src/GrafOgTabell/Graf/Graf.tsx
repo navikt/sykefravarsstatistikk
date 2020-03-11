@@ -10,7 +10,10 @@ import { Sykefraværshistorikk, SykefraværshistorikkType } from '../../api/syke
 import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString } from './graf-utils';
 import XAkseTick from './XAkseTick';
 import { useInnerWidth } from '../../utils/innerWidth-hook';
-import { konverterTilKvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
+import {
+    historikkHarOverordnetEnhet,
+    konverterTilKvartalsvisSammenligning,
+} from '../../utils/sykefraværshistorikk-utils';
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
@@ -24,11 +27,20 @@ const Graf: FunctionComponent<Props> = props => {
     );
 
     const kvartalsvisSammenligningData = kvartalsvisSammenligning.map(sammenligning => {
-        const { årstall, kvartal, virksomhet, næringEllerBransje, sektor, land } = sammenligning;
+        const {
+            årstall,
+            kvartal,
+            virksomhet,
+            overordnetEnhet,
+            næringEllerBransje,
+            sektor,
+            land,
+        } = sammenligning;
         return {
             ...sammenligning,
             name: lagTickString(årstall, kvartal),
             virksomhet: virksomhet.prosent,
+            overordnetEnhet: overordnetEnhet.prosent,
             næringEllerBransje: næringEllerBransje.prosent,
             sektor: sektor.prosent,
             land: land.prosent,
@@ -38,9 +50,12 @@ const Graf: FunctionComponent<Props> = props => {
     const labelForType = (type: SykefraværshistorikkType): string => {
         return props.sykefraværshistorikk.find(historikk => historikk.type === type)!.label;
     };
+
     const harBransje = !!props.sykefraværshistorikk.find(
         historikk => historikk.type === SykefraværshistorikkType.BRANSJE
     );
+
+    const harOverordnetEnhet = historikkHarOverordnetEnhet(props.sykefraværshistorikk);
 
     const punkterPåXAksenSomSkalMarkeres: string[] = hentFørsteKvartalFraAlleÅreneIDatagrunnlaget(
         kvartalsvisSammenligning
@@ -68,9 +83,10 @@ const Graf: FunctionComponent<Props> = props => {
                     tickFormatter={tickValue => tickValue + ' %'}
                     width={40}
                 />
-                {grafTooltip()}
+                {grafTooltip(harBransje)}
                 {grafLegend(
                     labelForType(SykefraværshistorikkType.VIRKSOMHET),
+                    labelForType(SykefraværshistorikkType.OVERORDNET_ENHET),
                     labelForType(
                         harBransje
                             ? SykefraværshistorikkType.BRANSJE
@@ -78,7 +94,8 @@ const Graf: FunctionComponent<Props> = props => {
                     ),
                     labelForType(SykefraværshistorikkType.SEKTOR),
                     labelForType(SykefraværshistorikkType.LAND),
-                    harBransje
+                    harBransje,
+                    harOverordnetEnhet
                 )}
                 {grafLinjer()}
             </LineChart>
