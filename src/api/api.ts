@@ -78,7 +78,7 @@ export const filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet = (
     );
 
     if (
-        erSykefraværshistorikkLike(
+        harSammeSykefraværshistorikk(
             sykefraværshistorikkForOverordnetEnhet,
             sykefraværshistorikkForUnderenhet
         )
@@ -104,31 +104,31 @@ const getSykefraværshistorikk = (
         : [];
 };
 
-const erSykefraværshistorikkLike = (
-    sfProsentVenstreListe: KvartalsvisSykefraværsprosent[],
-    sfProsentHøyreListe: KvartalsvisSykefraværsprosent[]
+const harSammeSykefraværshistorikk = (
+    sykefraværProsentListe1: KvartalsvisSykefraværsprosent[],
+    sykefraværProsentListe2: KvartalsvisSykefraværsprosent[]
 ): boolean => {
-    if (sfProsentVenstreListe.length !== sfProsentHøyreListe.length) {
+    if (sykefraværProsentListe1.length !== sykefraværProsentListe2.length) {
         return false;
     }
 
-    let harMinsEnUlikSykefraværprosent: boolean = false;
-    sfProsentVenstreListe.forEach(sfProsentVenstre => {
+    let harFunnetMinstEnUlikSykefraværprosent: boolean = false;
+    sykefraværProsentListe1.forEach(sykefraværProsent1 => {
         if (
-            !sfProsentHøyreListe.some(
-                sfProsentHøyre =>
-                    sfProsentHøyre.kvartal === sfProsentVenstre.kvartal &&
-                    sfProsentHøyre.årstall === sfProsentVenstre.årstall &&
-                    sfProsentHøyre.erMaskert === sfProsentVenstre.erMaskert &&
-                    sfProsentHøyre.prosent === sfProsentVenstre.prosent
+            !sykefraværProsentListe2.some(
+                sykefraværProsent2 =>
+                    sykefraværProsent2.kvartal === sykefraværProsent1.kvartal &&
+                    sykefraværProsent2.årstall === sykefraværProsent1.årstall &&
+                    sykefraværProsent2.erMaskert === sykefraværProsent1.erMaskert &&
+                    sykefraværProsent2.prosent === sykefraværProsent1.prosent
             )
         ) {
-            harMinsEnUlikSykefraværprosent = true;
+            harFunnetMinstEnUlikSykefraværprosent = true;
             return;
         }
     });
 
-    return !harMinsEnUlikSykefraværprosent;
+    return !harFunnetMinstEnUlikSykefraværprosent;
 };
 
 const nullstillOverordnetEnhetshistorikk = (data: Sykefraværshistorikk[]): void => {
