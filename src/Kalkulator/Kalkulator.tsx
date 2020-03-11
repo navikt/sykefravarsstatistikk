@@ -5,17 +5,19 @@ import LesMerPanel from '../felleskomponenter/LesMerPanel/LesMerPanel';
 import { Input } from 'nav-frontend-skjema';
 import Kostnad from './Kostnad/Kostnad';
 import { RestStatus } from '../api/api-utils';
-import { RestTapteDagsverk } from '../api/tapteDagsverk';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
 import { scrollToBanner } from '../utils/scrollUtils';
+import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
+import { getAntallTapteDagsverkSiste4Kvartaler } from './kalkulator-utils';
+import amplitude from '../utils/amplitude';
 
 interface Props {
-    defaultTapteDagsverk: RestTapteDagsverk;
+    restSykefraværshistorikk: RestSykefraværshistorikk;
 }
 
 const Kalkulator: FunctionComponent<Props> = props => {
-    const { defaultTapteDagsverk } = props;
+    const { restSykefraværshistorikk } = props;
     const [tapteDagsverk, setTapteDagsverk] = useState<number | undefined>();
     const [skalViseDefaultTapteDagsverk, setSkalViseDefaultTapteDagsverk] = useState<
         boolean | undefined
@@ -27,33 +29,44 @@ const Kalkulator: FunctionComponent<Props> = props => {
     const harEndretTapteDagsverk = tapteDagsverk !== undefined;
 
     useEffect(() => {
-        if (defaultTapteDagsverk.status === RestStatus.IkkeLastet) {
+        if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
             setTapteDagsverk(undefined);
         }
-    }, [defaultTapteDagsverk]);
+    }, [restSykefraværshistorikk]);
 
     useEffect(() => {
-        if (defaultTapteDagsverk.status === RestStatus.Suksess && !harEndretTapteDagsverk) {
-            setTapteDagsverk(Math.round(defaultTapteDagsverk.data.tapteDagsverk));
-            setSkalViseDefaultTapteDagsverk(!defaultTapteDagsverk.data.erMaskert);
+        if (restSykefraværshistorikk.status === RestStatus.Suksess && !harEndretTapteDagsverk) {
+            const tapteDagsverkSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(
+                restSykefraværshistorikk.data
+            );
+            if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
+                setTapteDagsverk(undefined);
+                setSkalViseDefaultTapteDagsverk(false);
+            } else {
+                setTapteDagsverk(tapteDagsverkSiste4Kvartaler);
+                setSkalViseDefaultTapteDagsverk(true);
+            }
         }
-    }, [defaultTapteDagsverk, harEndretTapteDagsverk]);
+    }, [restSykefraværshistorikk, harEndretTapteDagsverk]);
 
     useEffect(() => {
         scrollToBanner();
     }, []);
 
-    const tapteDagsverkSiste12Mnd = defaultTapteDagsverk.status === RestStatus.Suksess &&
+    const tapteDagsverkSiste12Mnd = restSykefraværshistorikk.status === RestStatus.Suksess &&
         skalViseDefaultTapteDagsverk && (
             <>
                 <Normaltekst>
                     Deres tapte dagsverk siste 12 mnd:{' '}
-                    {Math.round(defaultTapteDagsverk.data.tapteDagsverk)}
+                    {getAntallTapteDagsverkSiste4Kvartaler(restSykefraværshistorikk.data)}
                 </Normaltekst>
                 <LesMerPanel
                     åpneLabel="Hvor kommer dette tallet fra?"
                     lukkLabel="Lukk"
                     className="kalkulator__lesmer-tapte-dagsverk"
+                    onÅpne={() => {
+                        amplitude.logEvent('#sykefravarsstatistikk-kalkulator dagsverk lesmer-klikk');
+                    }}
                 >
                     <Normaltekst>
                         Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes
@@ -64,7 +77,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
             </>
         );
 
-    const tapteDagsverkSpinner = defaultTapteDagsverk.status === RestStatus.IkkeLastet && (
+    const tapteDagsverkSpinner = restSykefraværshistorikk.status === RestStatus.IkkeLastet && (
         <NavFrontendSpinner className="kalkulator__spinner" transparent={true} />
     );
 
@@ -81,6 +94,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     <Input
                         label={<Element>Kostnad per dagsverk (kr)</Element>}
                         onChange={event => setKostnadDagsverk(parseInt(event.target.value))}
+                        onClick={() => {
+                            amplitude.logEvent('#sykefravarsstatistikk-kalkulator kostnad input-klikk');
+                        }}
                         value={kostnadDagsverk || ''}
                         bredde={'XS'}
                         maxLength={15}
@@ -93,6 +109,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         åpneLabel="Hvor kommer dette tallet fra?"
                         lukkLabel="Lukk"
                         className="kalkulator__lesmer-kostnad-dagsverk"
+                        onÅpne={() => {
+                            amplitude.logEvent('#sykefravarsstatistikk-kalkulator kostnad lesmer-klikk');
+                        }}
                     >
                         <Normaltekst>
                             Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
@@ -106,6 +125,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     <Input
                         label={<Element>Antall tapte dagsverk</Element>}
                         onChange={event => setTapteDagsverk(parseInt(event.target.value))}
+                        onClick={() => {
+                            amplitude.logEvent('#sykefravarsstatistikk-kalkulator dagsverk input-klikk');
+                        }}
                         value={tapteDagsverk || ''}
                         bredde={'XS'}
                         maxLength={15}

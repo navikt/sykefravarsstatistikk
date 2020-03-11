@@ -6,6 +6,7 @@ import { sendEvent } from '../../utils/metrikk-api';
 import PanelBase from 'nav-frontend-paneler';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import './VideoerPanelTogglet.less';
+import amplitude from '../../utils/amplitude';
 
 const VideoerPanelTogglet: FunctionComponent = () => (
     <PanelBase className="videoerpaneltogglet">
@@ -24,9 +25,10 @@ const VideoerPanelTogglet: FunctionComponent = () => (
             <EksternLenke
                 className="videoerpaneltogglet__lenke"
                 href="https://vimeo.com/showcase/6728595"
-                onClick={() =>
-                    sendEvent('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar')
-                }
+                onClick={() => {
+                    sendEvent('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar');
+                    amplitude.logEvent('#sykefravarsstatistikk-forside videoer redusering-klikk');
+                }}
             >
                 Redusere sykefraværet
             </EksternLenke>
@@ -34,9 +36,10 @@ const VideoerPanelTogglet: FunctionComponent = () => (
             <EksternLenke
                 className="videoerpaneltogglet__lenke"
                 href="https://vimeo.com/showcase/6728594"
-                onClick={() =>
-                    sendEvent('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet')
-                }
+                onClick={() => {
+                    sendEvent('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet');
+                    amplitude.logEvent('#sykefravarsstatistikk-forside videoer forebygge-klikk');
+                }}
             >
                 Forebygge arbeidsmiljøet
             </EksternLenke>

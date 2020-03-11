@@ -40,6 +40,8 @@ export const genererHistorikk = (
             ...årstallOgKvartal,
             erMaskert: false,
             prosent: prosent,
+            tapteDagsverk: prosent * 10,
+            muligeDagsverk: prosent * 1000,
         });
         årstallOgKvartal = neste(årstallOgKvartal);
         prosent =
@@ -181,6 +183,7 @@ const lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet = () => {
 export const getSykefraværshistorikkMock = (orgnr: String): Sykefraværshistorikk[] => {
     switch (orgnr) {
         case '666666666':
+            console.log('Lage historikk for: 666666666')
             return lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet();
         case '888888888':
             return lagHistorikkBransje();
