@@ -3,7 +3,7 @@ import React from 'react';
 import './grafLegend.less';
 import SymbolSvg from '../SymbolSvg';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { getFarge, getSymbol, grafConfig } from '../graf-utils';
+import { getFarge, getSymbol, Linje } from '../graf-utils';
 
 const grafLegend = (
     labelVirksomhet: string,
@@ -12,7 +12,7 @@ const grafLegend = (
     labelSektor: string,
     labelLand: string,
     harBransje: boolean,
-    harOverordnetEnhet: boolean
+    linjer: Linje[]
 ) => {
     const labels = {
         virksomhet: (
@@ -65,10 +65,6 @@ const grafLegend = (
             ))}
         </ul>
     );
-
-    const linjer = harOverordnetEnhet
-        ? grafConfig.linjer
-        : grafConfig.linjer.filter(name => name !== 'overordnetEnhet');
 
     return (
         <Legend

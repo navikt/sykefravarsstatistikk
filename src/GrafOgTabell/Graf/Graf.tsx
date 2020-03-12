@@ -7,13 +7,14 @@ import grafLinjer from './grafLinjer';
 import './Graf.less';
 import 'nav-frontend-tabell-style';
 import { Sykefraværshistorikk, SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
-import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString } from './graf-utils';
+import {
+    getLinjerSomMatcherHistorikk,
+    hentFørsteKvartalFraAlleÅreneIDatagrunnlaget,
+    lagTickString,
+} from './graf-utils';
 import XAkseTick from './XAkseTick';
 import { useInnerWidth } from '../../utils/innerWidth-hook';
-import {
-    historikkHarOverordnetEnhet,
-    konverterTilKvartalsvisSammenligning,
-} from '../../utils/sykefraværshistorikk-utils';
+import { konverterTilKvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
@@ -55,8 +56,6 @@ const Graf: FunctionComponent<Props> = props => {
         historikk => historikk.type === SykefraværshistorikkType.BRANSJE
     );
 
-    const harOverordnetEnhet = historikkHarOverordnetEnhet(props.sykefraværshistorikk);
-
     const punkterPåXAksenSomSkalMarkeres: string[] = hentFørsteKvartalFraAlleÅreneIDatagrunnlaget(
         kvartalsvisSammenligning
     ).map(årstallOgKvartal => lagTickString(årstallOgKvartal.årstall, årstallOgKvartal.kvartal));
@@ -95,7 +94,7 @@ const Graf: FunctionComponent<Props> = props => {
                     labelForType(SykefraværshistorikkType.SEKTOR),
                     labelForType(SykefraværshistorikkType.LAND),
                     harBransje,
-                    harOverordnetEnhet
+                    getLinjerSomMatcherHistorikk(props.sykefraværshistorikk)
                 )}
                 {grafLinjer()}
             </LineChart>
