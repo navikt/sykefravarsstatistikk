@@ -13,7 +13,7 @@ const VideoerPanelTogglet: FunctionComponent = () => (
         <div className="videoerpaneltogglet__tekst-wrapper">
             <Systemtittel className="videoerpaneltogglet__overskrift" tag="h2">
                 <Kalkulatorikon className="videoerpaneltogglet__illustrasjon" />
-                Informasjonsvideoer
+                Hva kan du gjøre med sykefraværet?
             </Systemtittel>
 
             <Normaltekst className="videoerpaneltogglet__ingress">
@@ -27,10 +27,10 @@ const VideoerPanelTogglet: FunctionComponent = () => (
                 href="https://vimeo.com/showcase/6728595"
                 onClick={() => {
                     sendEvent('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar');
-                    amplitude.logEvent('#sykefravarsstatistikk-forside videoer redusering-klikk');
+                    amplitude.logEvent('#sykefravarsstatistikk-forside videoer folgeopp-klikk');
                 }}
             >
-                Redusere sykefraværet
+                Følge opp sykefravær
             </EksternLenke>
 
             <EksternLenke
@@ -41,7 +41,7 @@ const VideoerPanelTogglet: FunctionComponent = () => (
                     amplitude.logEvent('#sykefravarsstatistikk-forside videoer forebygge-klikk');
                 }}
             >
-                Forebygge arbeidsmiljøet
+                Forebygge sykefravær
             </EksternLenke>
         </div>
     </PanelBase>
