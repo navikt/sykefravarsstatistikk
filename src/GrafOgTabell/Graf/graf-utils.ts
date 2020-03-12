@@ -72,7 +72,6 @@ export const getLinjerSomMatcherHistorikk = (
     sykefraværshistorikk: Sykefraværshistorikk[]
 ): Linje[] => {
     let linjer: Linje[] = [...grafConfig.linjer];
-    console.log(" ----> the lines STEP0: " + JSON.stringify(linjer));
 
     if (
         !sykefraværshistorikk.find(
@@ -81,9 +80,7 @@ export const getLinjerSomMatcherHistorikk = (
                 historikk.kvartalsvisSykefraværsprosent.length > 0
         )
     ) {
-        console.log("Har funnet OVERORDNET_ENHET uten data");
         linjer = linjer.filter(name => name !== 'overordnetEnhet');
-        console.log(" ----> the lines STEP1: " + JSON.stringify(linjer));
     }
 
     if (
@@ -93,11 +90,8 @@ export const getLinjerSomMatcherHistorikk = (
                 historikk.kvartalsvisSykefraværsprosent.length > 0
         )
     ) {
-        console.log("Har funnet VIRKSOMHET uten data");
         linjer = linjer.filter(name => name !== 'virksomhet');
-        console.log(" ----> the lines STEP2: " + JSON.stringify(linjer));
     }
 
-    console.log(" ----> the lines FINAL: " + JSON.stringify(linjer));
     return linjer;
 };
