@@ -21,6 +21,7 @@ import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { useRestSykefraværshistorikk } from './api/sykefraværshistorikk';
 import amplitude from './utils/amplitude';
+import { trackBedriftsmetrikker, useRestBedriftsmetrikker } from './api/bedriftsmetrikker';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -41,12 +42,14 @@ const AppContent: FunctionComponent = () => {
     const restOrganisasjonstre = useRestOrganisasjonstre();
     const restSykefraværshistorikk = useRestSykefraværshistorikk(orgnr);
     const restFeatureToggles = useRestFeatureToggles();
+    const restBedriftsmetrikker = useRestBedriftsmetrikker(orgnr);
 
     let innhold;
 
     if (
         restOrganisasjonstre.status === RestStatus.LasterInn ||
-        restFeatureToggles.status === RestStatus.LasterInn
+        restFeatureToggles.status === RestStatus.LasterInn ||
+        restBedriftsmetrikker.status === RestStatus.LasterInn
     ) {
         innhold = <Lasteside />;
     } else if (restOrganisasjonstre.status === RestStatus.IkkeInnlogget) {
@@ -54,6 +57,9 @@ const AppContent: FunctionComponent = () => {
     } else if (restOrganisasjonstre.status !== RestStatus.Suksess) {
         innhold = <FeilFraAltinnSide />;
     } else {
+        if (restBedriftsmetrikker.status === RestStatus.Suksess) {
+            trackBedriftsmetrikker(restBedriftsmetrikker.data);
+        }
         const skalViseGraf = restFeatureToggles.data['arbeidsgiver.lanser-graf'];
         innhold = (
             <>

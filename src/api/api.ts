@@ -7,12 +7,16 @@ import {
     Sykefraværshistorikk,
     SykefraværshistorikkType,
 } from './sykefraværshistorikk';
-import amplitude from "../utils/amplitude";
+import amplitude from '../utils/amplitude';
+import { RestBedriftsmetrikker } from './bedriftsmetrikker';
 
 const sykefraværshistorikkPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk`;
+
 const featureTogglesPath = (features: string[]) =>
     `${BASE_PATH}/api/feature?` + features.map(featureNavn => `feature=${featureNavn}`).join('&');
+
+const bedriftsmetrikkerPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/bedriftsmetrikker`;
 
 export const hentRestSykefraværshistorikk = async (
     orgnr: string
@@ -65,6 +69,24 @@ export const hentRestFeatureToggles = async (
     };
 };
 
+export const hentRestBedriftsmetrikker = async (orgnr: string): Promise<RestBedriftsmetrikker> => {
+    const response = await fetch(bedriftsmetrikkerPath(orgnr), {
+        method: 'GET',
+        credentials: 'include',
+    });
+
+    const restStatus = getRestStatus(response.status);
+    if (restStatus === RestStatus.Suksess) {
+        return {
+            status: RestStatus.Suksess,
+            data: await response.json(),
+        };
+    }
+    return {
+        status: restStatus,
+    };
+};
+
 export const filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet = (
     data: Sykefraværshistorikk[]
 ): Sykefraværshistorikk[] => {
@@ -83,10 +105,14 @@ export const filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet = (
             sykefraværshistorikkForUnderenhet
         )
     ) {
-        amplitude.logEvent('#sykefravarsstatistikk-segmentering valgt underenhet er lik overordnet enhet');
+        amplitude.logEvent(
+            '#sykefravarsstatistikk-segmentering valgt underenhet er lik overordnet enhet'
+        );
         nullstillOverordnetEnhetshistorikk(data);
     } else {
-        amplitude.logEvent('#sykefravarsstatistikk-segmentering valgt underenhet er ulik overordnet enhet');
+        amplitude.logEvent(
+            '#sykefravarsstatistikk-segmentering valgt underenhet er ulik overordnet enhet'
+        );
     }
 
     return data;

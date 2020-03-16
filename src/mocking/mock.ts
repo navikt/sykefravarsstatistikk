@@ -28,6 +28,25 @@ if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
             delay: 1000,
         }
     );
+    fetchMock.get(
+        'express:/sykefravarsstatistikk/api/:orgnr/bedriftsmetrikker',
+        url => {
+            const orgnr = url.match(/[0-9]{9}/)![0];
+            if (orgnr === '101010101') {
+                return 500;
+            }
+            return {
+                antallAnsatte: 99,
+                næringskode5Siffer: {
+                    kode: '10300',
+                    beskrivelse: 'Trygdeordninger underlagt offentlig forvaltning',
+                },
+            };
+        },
+        {
+            delay: 500,
+        }
+    );
 }
 
 if (MOCK_ENHETSREGISTERET) {
