@@ -6,13 +6,14 @@ import { sendEvent } from '../../utils/metrikk-api';
 import PanelBase from 'nav-frontend-paneler';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import './VideoerPanelTogglet.less';
+import amplitude from '../../utils/amplitude';
 
 const VideoerPanelTogglet: FunctionComponent = () => (
     <PanelBase className="videoerpaneltogglet">
         <div className="videoerpaneltogglet__tekst-wrapper">
             <Systemtittel className="videoerpaneltogglet__overskrift" tag="h2">
                 <Kalkulatorikon className="videoerpaneltogglet__illustrasjon" />
-                Informasjonsvideoer
+                Hva kan du gjøre med sykefraværet?
             </Systemtittel>
 
             <Normaltekst className="videoerpaneltogglet__ingress">
@@ -24,21 +25,23 @@ const VideoerPanelTogglet: FunctionComponent = () => (
             <EksternLenke
                 className="videoerpaneltogglet__lenke"
                 href="https://vimeo.com/showcase/6728595"
-                onClick={() =>
-                    sendEvent('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar')
-                }
+                onClick={() => {
+                    sendEvent('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar');
+                    amplitude.logEvent('#sykefravarsstatistikk-forside videoer folgeopp-klikk');
+                }}
             >
-                Redusere sykefraværet
+                Følge opp sykefravær
             </EksternLenke>
 
             <EksternLenke
                 className="videoerpaneltogglet__lenke"
                 href="https://vimeo.com/showcase/6728594"
-                onClick={() =>
-                    sendEvent('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet')
-                }
+                onClick={() => {
+                    sendEvent('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet');
+                    amplitude.logEvent('#sykefravarsstatistikk-forside videoer forebygge-klikk');
+                }}
             >
-                Forebygge arbeidsmiljøet
+                Forebygge sykefravær
             </EksternLenke>
         </div>
     </PanelBase>

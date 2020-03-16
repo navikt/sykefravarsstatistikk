@@ -55,7 +55,7 @@ export const genererHistorikk = (
     return historikk;
 };
 
-const lagHistorikkUtenBransjeOgNæring = (): Sykefraværshistorikk[] => {
+const lagHistorikkMedLandSektor = (): Sykefraværshistorikk[] => {
     return [
         {
             type: SykefraværshistorikkType.LAND,
@@ -81,20 +81,64 @@ const lagHistorikkUtenBransjeOgNæring = (): Sykefraværshistorikk[] => {
                 0
             ),
         },
+    ];
+};
+
+const lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet = (): Sykefraværshistorikk[] => {
+    return [
+        ...lagHistorikkMedLandSektor(),
+        {
+            type: SykefraværshistorikkType.NÆRING,
+            label: 'Produksjon av nærings- og nytelsesmidler',
+            kvartalsvisSykefraværsprosent: genererHistorikk(
+                { årstall: 2014, kvartal: 2 },
+                20,
+                6.7,
+                2,
+                0.4,
+                0
+            ),
+        },
         {
             type: SykefraværshistorikkType.VIRKSOMHET,
             label: 'FLESK OG FISK AS',
-            kvartalsvisSykefraværsprosent: genererHistorikk(
-                { årstall: 2016, kvartal: 2 },
-                12,
-                8.3,
-                5,
-                3,
-                0.1
-            ),
+            kvartalsvisSykefraværsprosent: [],
+        },
+        {
+            type: SykefraværshistorikkType.OVERORDNET_ENHET,
+            label: 'THE FISHING GROUP',
+            kvartalsvisSykefraværsprosent: [],
         },
     ];
 };
+
+const lagHistorikkUtenBransjeOgNæring = (): Sykefraværshistorikk[] => [
+    ...lagHistorikkMedLandSektor(),
+    {
+        type: SykefraværshistorikkType.VIRKSOMHET,
+        label: 'FLESK OG FISK AS',
+        kvartalsvisSykefraværsprosent: genererHistorikk(
+            { årstall: 2016, kvartal: 2 },
+            20,
+            8.3,
+            5,
+            3,
+            0.1
+        ),
+    },
+    {
+        type: SykefraværshistorikkType.OVERORDNET_ENHET,
+        label: 'THE FISHING GROUP',
+        kvartalsvisSykefraværsprosent: genererHistorikk(
+            { årstall: 2015, kvartal: 2 },
+            20,
+            7.1,
+            3,
+            0.5,
+            0.1
+        ),
+    },
+];
 
 const lagHistorikkNæring = () => [
     ...lagHistorikkUtenBransjeOgNæring(),
@@ -128,10 +172,51 @@ const lagHistorikkBransje = () => [
     },
 ];
 
+const lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet = () => {
+    const kvartalsvisSykefraværsprosentForBådeVirksomhetOgOverordnetEnhet = genererHistorikk(
+        { årstall: 2016, kvartal: 2 },
+        20,
+        8.3,
+        5,
+        3,
+        0.1
+    );
+    return [
+        ...lagHistorikkMedLandSektor(),
+        {
+            type: SykefraværshistorikkType.NÆRING,
+            label: 'Produksjon av nærings- og nytelsesmidler',
+            kvartalsvisSykefraværsprosent: genererHistorikk(
+                { årstall: 2014, kvartal: 2 },
+                20,
+                6.7,
+                2,
+                0.4,
+                0
+            ),
+        },
+        {
+            type: SykefraværshistorikkType.VIRKSOMHET,
+            label: 'FLESK OG FISK AS',
+            kvartalsvisSykefraværsprosent: kvartalsvisSykefraværsprosentForBådeVirksomhetOgOverordnetEnhet,
+        },
+        {
+            type: SykefraværshistorikkType.OVERORDNET_ENHET,
+            label: 'THE FISHING GROUP',
+            kvartalsvisSykefraværsprosent: kvartalsvisSykefraværsprosentForBådeVirksomhetOgOverordnetEnhet,
+        },
+    ];
+};
+
 export const getSykefraværshistorikkMock = (orgnr: String): Sykefraværshistorikk[] => {
-    if (orgnr === '888888888') {
-        return lagHistorikkBransje();
-    } else {
-        return lagHistorikkNæring();
+    switch (orgnr) {
+        case '333333333':
+            return lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet();
+        case '666666666':
+            return lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet();
+        case '888888888':
+            return lagHistorikkBransje();
+        default:
+            return lagHistorikkNæring();
     }
 };

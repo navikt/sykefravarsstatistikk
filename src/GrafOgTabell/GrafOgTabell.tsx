@@ -9,6 +9,7 @@ import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
+import amplitude from '../utils/amplitude';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -73,7 +74,10 @@ const GrafOgTabell: FunctionComponent<Props> = props => {
                             {
                                 children: 'Tabell',
                                 pressed: grafEllerTabell === 'tabell',
-                                onClick: () => setGrafEllerTabell('tabell'),
+                                onClick: () => {
+                                    setGrafEllerTabell('tabell');
+                                    amplitude.logEvent('#sykefravarsstatistikk-historikk toggle tabell-klikk');
+                                },
                             },
                         ]}
                     />

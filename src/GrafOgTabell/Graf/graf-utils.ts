@@ -1,28 +1,44 @@
 import { KvartalsvisSammenligning, ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
+import { Sykefraværshistorikk, SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
 
 export type SymbolType = 'circle' | 'cross' | 'diamond' | 'square' | 'star' | 'triangle' | 'wye';
 
-export type Linje = 'virksomhet' | 'næringEllerBransje' | 'sektor' | 'land' | string;
+export type Linje =
+    | 'virksomhet'
+    | 'overordnetEnhet'
+    | 'næringEllerBransje'
+    | 'sektor'
+    | 'land'
+    | string;
 
 interface GrafConfig {
+    tooltipsnavn: any;
     farger: any;
     symboler: any;
     linjer: Linje[];
 }
 
 export const grafConfig: GrafConfig = {
-    linjer: ['virksomhet', 'næringEllerBransje', 'sektor', 'land'],
+    linjer: ['virksomhet', 'overordnetEnhet', 'næringEllerBransje', 'sektor', 'land'],
     farger: {
-        virksomhet: '#38A161', // grønn
+        virksomhet: '#C30000', // rød
+        overordnetEnhet: '#826BA1', // lilla
         næringEllerBransje: '#FF9100', // oransje
         sektor: '#3385D1', // blå
-        land: '#C30000', // rød
+        land: '#38A161', // grønn
     },
     symboler: {
         virksomhet: 'circle',
+        overordnetEnhet: 'cross',
         næringEllerBransje: 'diamond',
         sektor: 'triangle',
         land: 'square',
+    },
+    tooltipsnavn: {
+        virksomhet: 'Virksomhet',
+        overordnetEnhet: 'Overordnet enhet',
+        sektor: 'Sektor',
+        land: 'Norge',
     },
 };
 
@@ -31,6 +47,13 @@ export const getSymbol = (name: string): SymbolType =>
 
 export const getFarge = (name: Linje): SymbolType =>
     name in grafConfig.farger ? grafConfig.farger[name] : 'black';
+
+export const getTooltipsnavn = (name: Linje, harBransje: boolean): string => {
+    if (name === 'næringEllerBransje') {
+        return harBransje ? 'Bransje' : 'Næring';
+    }
+    return name in grafConfig.tooltipsnavn ? grafConfig.tooltipsnavn[name] : 'Prosent';
+};
 
 export const hentFørsteKvartalFraAlleÅreneIDatagrunnlaget = (
     kvartalsvisSammenligning: KvartalsvisSammenligning[]
@@ -44,3 +67,31 @@ export const hentFørsteKvartalFraAlleÅreneIDatagrunnlaget = (
 
 export const lagTickString = (årstall: number, kvartal: number) =>
     årstall + ', ' + kvartal + '. kvartal';
+
+export const getLinjerSomMatcherHistorikk = (
+    sykefraværshistorikk: Sykefraværshistorikk[]
+): Linje[] => {
+    let linjer: Linje[] = [...grafConfig.linjer];
+
+    if (
+        !sykefraværshistorikk.find(
+            historikk =>
+                historikk.type === SykefraværshistorikkType.OVERORDNET_ENHET &&
+                historikk.kvartalsvisSykefraværsprosent.length > 0
+        )
+    ) {
+        linjer = linjer.filter(name => name !== 'overordnetEnhet');
+    }
+
+    if (
+        !sykefraværshistorikk.find(
+            historikk =>
+                historikk.type === SykefraværshistorikkType.VIRKSOMHET &&
+                historikk.kvartalsvisSykefraværsprosent.length > 0
+        )
+    ) {
+        linjer = linjer.filter(name => name !== 'virksomhet');
+    }
+
+    return linjer;
+};

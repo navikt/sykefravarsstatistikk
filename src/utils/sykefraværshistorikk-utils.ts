@@ -8,6 +8,7 @@ export interface KvartalsvisSammenligning {
     årstall: number;
     kvartal: number;
     virksomhet: Sykefraværsprosent;
+    overordnetEnhet: Sykefraværsprosent;
     næringEllerBransje: Sykefraværsprosent;
     sektor: Sykefraværsprosent;
     land: Sykefraværsprosent;
@@ -55,6 +56,7 @@ const mapTilKvartalsvisSammenligning = (
         return {
             ...årstallOgKvartal,
             virksomhet: getProsent(SykefraværshistorikkType.VIRKSOMHET),
+            overordnetEnhet: getProsent(SykefraværshistorikkType.OVERORDNET_ENHET),
             næringEllerBransje: getProsent(
                 harBransje ? SykefraværshistorikkType.BRANSJE : SykefraværshistorikkType.NÆRING
             ),
@@ -84,8 +86,16 @@ export const konverterTilKvartalsvisSammenligning = (
 export const historikkHarBransje = (historikkListe: Sykefraværshistorikk[]): boolean =>
     !!historikkListe.find(historikk => historikk.type === SykefraværshistorikkType.BRANSJE);
 
+export const historikkHarOverordnetEnhet = (historikkListe: Sykefraværshistorikk[]): boolean =>
+    !!historikkListe.find(
+        historikk =>
+            historikk.type === SykefraværshistorikkType.OVERORDNET_ENHET &&
+            historikk.kvartalsvisSykefraværsprosent.length > 0
+    );
+
 export interface HistorikkLabels {
     virksomhet: string;
+    overordnetEnhet?: string;
     næringEllerBransje: string;
     sektor: string;
     land: string;
@@ -96,6 +106,7 @@ export const getHistorikkLabels = (historikkListe: Sykefraværshistorikk[]): His
         historikkListe.find(historikk => historikk.type === type);
     return {
         virksomhet: getHistorikk(SykefraværshistorikkType.VIRKSOMHET)!.label,
+        overordnetEnhet: getHistorikk(SykefraværshistorikkType.OVERORDNET_ENHET)!.label,
         næringEllerBransje: historikkHarBransje(historikkListe)
             ? getHistorikk(SykefraværshistorikkType.BRANSJE)!.label
             : getHistorikk(SykefraværshistorikkType.NÆRING)!.label,
