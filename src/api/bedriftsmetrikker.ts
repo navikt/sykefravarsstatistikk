@@ -2,6 +2,32 @@ import { RestRessurs, RestStatus } from './api-utils';
 import { useEffect, useState } from 'react';
 import { hentRestBedriftsmetrikker } from './api';
 import amplitude from '../utils/amplitude';
+import {
+    Sykefraværshistorikk,
+    SykefraværshistorikkType,
+    Sykefraværsprosent,
+} from './sykefraværshistorikk';
+import {
+    beregnHvilkeÅrstallOgKvartalerSomSkalVises,
+    finnProsent,
+    ÅrstallOgKvartal,
+} from '../utils/sykefraværshistorikk-utils';
+
+enum SegmenteringSykefraværprosent {
+    NULL = '0',
+    LAVERE_ENN_TO_OG_IKKE_NULL = '<2',
+    TO_TIL_FIRE = '2-4',
+    FIRE_TIL_SEKS = '4-6',
+    SEKS_TIL_ÅTTE = '6-8',
+    ÅTTE_TIL_TI = '8-10',
+    TI_TIL_TOLV = '10-12',
+    TOLV_TIL_FJORTEN = '12-14',
+    FJORTEN_TIL_SEKSTEN = '14-16',
+    OVER_SEKSTEN = '>16',
+    BRANSJE = 'BRANSJE',
+    VIRKSOMHET = 'VIRKSOMHET',
+    OVERORDNET_ENHET = 'OVERORDNET_ENHET',
+}
 
 export type Næringskode5Siffer = {
     kode: number;
@@ -35,9 +61,12 @@ export const useRestBedriftsmetrikker = (orgnr: string | undefined): RestBedrift
     return restBedriftsmetrikker;
 };
 
-export const trackBedriftsmetrikker = (målinger: Bedriftsmetrikker) => {
+export const trackBedriftsmetrikker = (
+    bedriftsmetrikker: Bedriftsmetrikker,
+    historikkListe: Sykefraværshistorikk[]
+) => {
     let størrelse: string;
-    const antallAnsatte = målinger.antallAnsatte;
+    const antallAnsatte = bedriftsmetrikker.antallAnsatte;
     if (antallAnsatte === 0) {
         størrelse = 'ingen';
     } else if (antallAnsatte >= 1 && antallAnsatte <= 4) {
@@ -52,4 +81,53 @@ export const trackBedriftsmetrikker = (målinger: Bedriftsmetrikker) => {
         størrelse = '-store-100+';
     }
     amplitude.logEvent(`#sykefravarsstatistikk-segmentering-storrelse-${størrelse}`);
+
+    const årstallOgKvartalListe: ÅrstallOgKvartal[] = beregnHvilkeÅrstallOgKvartalerSomSkalVises(
+        historikkListe
+    );
+    const sisteÅrstallOgKvartal = årstallOgKvartalListe.pop();
+
+    if (sisteÅrstallOgKvartal) {
+        const sykefraværprosent: Sykefraværsprosent = finnProsent(
+            historikkListe,
+            sisteÅrstallOgKvartal,
+            SykefraværshistorikkType.VIRKSOMHET
+        );
+
+        if (sykefraværprosent && !sykefraværprosent.erMaskert && sykefraværprosent.prosent) {
+            const event = `#sykefravarsstatistikk-segmentering-fravarsprosent-${tilSegmenteringSykefraværprosent(
+                sykefraværprosent.prosent
+            ).toString()}`;
+            amplitude.logEvent(event);
+        }
+    }
+};
+
+const tilSegmenteringSykefraværprosent = (prosent: number): SegmenteringSykefraværprosent => {
+    let segmenteringSykefraværprosent: SegmenteringSykefraværprosent;
+
+    if (prosent === 0) {
+        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.NULL;
+    } else if (prosent > 0 && prosent < 2) {
+        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.LAVERE_ENN_TO_OG_IKKE_NULL;
+    } else if (prosent >= 2 && prosent < 4) {
+        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.TO_TIL_FIRE;
+    } else if (prosent >= 4 && prosent < 6) {
+        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.FIRE_TIL_SEKS;
+    } else if (prosent >= 6 && prosent < 8) {
+        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.SEKS_TIL_ÅTTE;
+    } else if (prosent >= 8 && prosent < 10) {
+        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.ÅTTE_TIL_TI;
+    } else if (prosent >= 10 && prosent < 12) {
+        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.TI_TIL_TOLV;
+    } else if (prosent >= 12 && prosent < 14) {
+        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.TOLV_TIL_FJORTEN;
+    } else if (prosent >= 14 && prosent < 16) {
+        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.FJORTEN_TIL_SEKSTEN;
+    } else if (prosent >= 16) {
+        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.OVER_SEKSTEN;
+    } else {
+        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.NULL;
+    }
+    return segmenteringSykefraværprosent;
 };

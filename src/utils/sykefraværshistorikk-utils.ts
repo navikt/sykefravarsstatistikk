@@ -25,7 +25,7 @@ const TOM_PROSENT: Sykefraværsprosent = {
     tapteDagsverk: undefined,
     muligeDagsverk: undefined,
 };
-const finnProsent = (
+export const finnProsent = (
     historikkListe: Sykefraværshistorikk[],
     årstallOgKvartal: ÅrstallOgKvartal,
     type: SykefraværshistorikkType
@@ -65,7 +65,7 @@ const mapTilKvartalsvisSammenligning = (
         };
     });
 };
-const beregnHvilkeÅrstallOgKvartalerSomSkalVises = (
+export const beregnHvilkeÅrstallOgKvartalerSomSkalVises = (
     historikkListe: Sykefraværshistorikk[]
 ): ÅrstallOgKvartal[] => {
     return historikkListe
