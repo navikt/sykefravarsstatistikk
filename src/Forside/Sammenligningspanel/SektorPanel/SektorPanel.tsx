@@ -8,14 +8,15 @@ import { SykefraværshistorikkType } from '../../../api/sykefraværshistorikk';
 
 const SektorPanel: FunctionComponent<SykefraværprosentpanelProps> = props => {
     return (
-        <>
-            <SammenligningsIkon label={SykefraværshistorikkType.SEKTOR} />
+
             <Sykefraværsprosentpanel
                 laster={props.laster}
                 sykefraværprosentLabel={props.sykefraværprosentLabel}
                 sykefraværsprosent={props.sykefraværsprosent}
+                ikon={<SammenligningsIkon label={SykefraværshistorikkType.SEKTOR} />}
+                className={props.className}
             />
-        </>
+
     );
 };
 export default SektorPanel;

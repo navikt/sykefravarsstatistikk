@@ -17,6 +17,7 @@ const MaskertSykefraværprosentpanel: FunctionComponent<MaskertSykefraværprosen
         labelHvisMaskert,
         labelHvisUndefined,
         laster,
+        ikon,
     } = props;
 
     if (!sykefraværsprosent) {
@@ -33,6 +34,7 @@ const MaskertSykefraværprosentpanel: FunctionComponent<MaskertSykefraværprosen
                 sykefraværsprosent={sykefraværsprosent}
                 sykefraværprosentLabel={sykefraværprosentLabel}
                 laster={laster}
+                ikon={ikon}
             >
                 {children}
             </Sykefraværsprosentpanel>

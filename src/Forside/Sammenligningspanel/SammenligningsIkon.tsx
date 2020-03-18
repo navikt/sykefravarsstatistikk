@@ -6,7 +6,7 @@ import { ReactComponent as SektorSvg } from './Sektor.svg';
 import { ReactComponent as LandSvg } from './Norge.svg';
 import LandsPanel from './LandsPanel/LandsPanel';
 import { SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
-import './sammenligningsikon.less';
+
 
 const SammenligningsIkon: FunctionComponent<{
     label: string;
@@ -19,7 +19,7 @@ const SammenligningsIkon: FunctionComponent<{
         case SykefraværshistorikkType.SEKTOR:
             return <SektorSvg className="sammenligningsikon" />;
         case SykefraværshistorikkType.LAND:
-            return <LandSvg className="sammenligningsikon" />;
+            return <LandSvg style={{width:24,height:24}} className="sammenligningsikon" />;
         default:
             return <BedriftSvg className="sammenligningsikon" />;
     }

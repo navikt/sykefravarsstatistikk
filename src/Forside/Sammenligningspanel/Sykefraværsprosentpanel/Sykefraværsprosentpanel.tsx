@@ -1,13 +1,23 @@
 import * as React from 'react';
-import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import {
+    Element,
+    Innholdstittel,
+    Normaltekst,
+    Sidetittel,
+    Undertittel,
+} from 'nav-frontend-typografi';
 import './Sykefraværsprosentpanel.less';
 import Skeleton from 'react-loading-skeleton';
 import { Sykefraværsprosent } from '../../../api/sykefraværshistorikk';
+import { ReactComponentElement, ReactElement } from 'react';
+import classNames from 'classnames';
 
 export interface SykefraværprosentpanelProps {
     sykefraværsprosent?: Sykefraværsprosent;
     sykefraværprosentLabel?: string;
     laster: boolean;
+    ikon?: ReactElement;
+    className?:string;
 }
 
 export const formaterProsent = (prosent: number | null | undefined): string => {
@@ -21,7 +31,7 @@ export const formaterProsent = (prosent: number | null | undefined): string => {
 };
 
 const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelProps> = props => {
-    const { sykefraværsprosent, laster, sykefraværprosentLabel, children } = props;
+    const { sykefraværsprosent, laster, sykefraværprosentLabel, children,ikon,className } = props;
 
     if (!laster && (!sykefraværsprosent || !sykefraværsprosent.prosent)) {
         return null;
@@ -35,17 +45,18 @@ const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelP
     );
 
     const prosent = !!sykefraværsprosent && (
-        <Undertittel className="sykefravarsprosentpanel__prosent">
+        <Sidetittel className="sykefravarsprosentpanel__prosent">
             {formaterProsent(sykefraværsprosent.prosent)}&nbsp;%
-        </Undertittel>
+        </Sidetittel>
     );
 
     const innhold = (
         <div className="sykefravarsprosentpanel">
+            {ikon}
             {prosent}
+
             {tekst}
         </div>
-
     );
 
     const innholdLaster = (
@@ -54,9 +65,7 @@ const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelP
         </div>
     );
 
-    return (
-        <div className="sykefravarsprosentpanel__med__logo">{laster ? innholdLaster : innhold}</div>
-    );
+    return <div className={classNames(className)}>{laster ? innholdLaster : innhold}</div>;
 };
 
 export default Sykefraværsprosentpanel;

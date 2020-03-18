@@ -63,23 +63,36 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
                 >
                     Kunne ikke vise sykefraværet.
                 </SammenligningspanelFeilmelding>
-                <Virksomhetspanel
-                    sykefraværsprosent={sammenligningSisteKvartal.virksomhet}
-                    sykefraværprosentLabel={labels.virksomhet}
-                    laster={laster}
-                />
-                <NæringEllerBransjePanel
-                    laster={laster}
-                    sykefraværsprosent={sammenligningSisteKvartal.næringEllerBransje}
-                    sykefraværprosentLabel={labels.næringEllerBransje}
-                    harBransje={harBransje}
-                />
-                <SektorPanel laster={laster} sykefraværsprosent={sammenligningSisteKvartal.sektor} sykefraværprosentLabel={labels.sektor} />
-                <LandsPanel laster={laster} sykefraværsprosent={sammenligningSisteKvartal.land} sykefraværprosentLabel={labels.land} />
+                <div className="sammenligningspanel__innhold">
+                    <Virksomhetspanel
+                        sykefraværsprosent={sammenligningSisteKvartal.virksomhet}
+                        sykefraværprosentLabel={labels.virksomhet}
+                        laster={laster}
+                        className="sammenligningspanel__syfopanel"
+                    />
+                    <NæringEllerBransjePanel
+                        laster={laster}
+                        sykefraværsprosent={sammenligningSisteKvartal.næringEllerBransje}
+                        sykefraværprosentLabel={labels.næringEllerBransje}
+                        harBransje={harBransje}
+                        className="sammenligningspanel__syfopanel"
+                    />
+                    <SektorPanel
+                        laster={laster}
+                        sykefraværsprosent={sammenligningSisteKvartal.sektor}
+                        sykefraværprosentLabel={labels.sektor}
+                        className="sammenligningspanel__syfopanel"
+                    />
+                    <LandsPanel
+                        laster={laster}
+                        sykefraværsprosent={sammenligningSisteKvartal.land}
+                        sykefraværprosentLabel={labels.land}
+                        className="sammenligningspanel__syfopanel"
+                    />
+                </div>
                 <HvordanBeregnesTallene />
             </div>
         </PanelBase>
-
     );
 };
 
