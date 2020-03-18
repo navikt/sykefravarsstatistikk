@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import PanelBase from 'nav-frontend-paneler';
 import './Sammenligningspanel.less';
-import { HvordanBeregnesTallene } from './HvordanBeregnesTallene/HvordanBeregnesTallene';
 import { RestSykefraværshistorikk, Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
     getHistorikkLabels,
@@ -90,7 +89,6 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
                         className="sammenligningspanel__syfopanel"
                     />
                 </div>
-                <HvordanBeregnesTallene />
             </div>
         </PanelBase>
     );
