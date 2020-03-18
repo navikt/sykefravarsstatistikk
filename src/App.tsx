@@ -57,8 +57,11 @@ const AppContent: FunctionComponent = () => {
     } else if (restOrganisasjonstre.status !== RestStatus.Suksess) {
         innhold = <FeilFraAltinnSide />;
     } else {
-        if (restBedriftsmetrikker.status === RestStatus.Suksess) {
-            trackBedriftsmetrikker(restBedriftsmetrikker.data);
+        if (
+            restBedriftsmetrikker.status === RestStatus.Suksess &&
+            restSykefraværshistorikk.status === RestStatus.Suksess
+        ) {
+            trackBedriftsmetrikker(restBedriftsmetrikker.data, restSykefraværshistorikk.data);
         }
         const skalViseGraf = restFeatureToggles.data['arbeidsgiver.lanser-graf'];
         innhold = (
