@@ -21,7 +21,7 @@ const Virksomhetspanel: FunctionComponent<Props> = props => {
 
     return (
         <>
-            <SammenligningsIkon label={SykefraværshistorikkType.VIRKSOMHET} />
+            <SammenligningsIkon label={SykefraværshistorikkType.VIRKSOMHET}/>
             <MaskertSykefraværprosentpanel
                 sykefraværsprosent={sykefraværsprosent}
                 sykefraværprosentLabel={sykefraværprosentLabel}
