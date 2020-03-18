@@ -14,6 +14,7 @@ import {
 } from '../utils/sykefraværshistorikk-utils';
 
 enum SegmenteringSykefraværprosent {
+    IKKE_SATT = 'IKKE_SATT',
     NULL = '0',
     LAVERE_ENN_TO_OG_IKKE_NULL = '<2',
     TO_TIL_FIRE = '2-4',
@@ -23,10 +24,7 @@ enum SegmenteringSykefraværprosent {
     TI_TIL_TOLV = '10-12',
     TOLV_TIL_FJORTEN = '12-14',
     FJORTEN_TIL_SEKSTEN = '14-16',
-    OVER_SEKSTEN = '>16',
-    BRANSJE = 'BRANSJE',
-    VIRKSOMHET = 'VIRKSOMHET',
-    OVERORDNET_ENHET = 'OVERORDNET_ENHET',
+    OVER_SEKSTEN = '>16'
 }
 
 export type Næringskode5Siffer = {
@@ -127,7 +125,7 @@ const tilSegmenteringSykefraværprosent = (prosent: number): SegmenteringSykefra
     } else if (prosent >= 16) {
         segmenteringSykefraværprosent = SegmenteringSykefraværprosent.OVER_SEKSTEN;
     } else {
-        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.NULL;
+        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.IKKE_SATT;
     }
     return segmenteringSykefraværprosent;
 };
