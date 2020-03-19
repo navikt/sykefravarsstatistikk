@@ -25,7 +25,7 @@ if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
             return getSykefraværshistorikkMock(orgnr);
         },
         {
-            delay: 1000,
+            delay: 10000,
         }
     );
 }

@@ -61,7 +61,7 @@ const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelP
 
     const innholdLaster = (
         <div className="sykefravarsprosentpanel__lasting">
-            <Skeleton height={40} />
+            <Skeleton height={140} />
         </div>
     );
 

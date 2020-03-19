@@ -16,6 +16,7 @@ import NæringEllerBransjePanel from './NæringEllerBransjePanel/NæringEllerBra
 import Virksomhetspanel from './Virksomhetspanel';
 import SektorPanel from './SektorPanel/SektorPanel';
 import LandsPanel from './LandsPanel/LandsPanel';
+import Skeleton from 'react-loading-skeleton';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -47,6 +48,42 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
 
     const { årstall, kvartal } = sammenligningSisteKvartal;
 
+    const lasterinnhold = (
+        <div>
+            <Skeleton height={228} />
+        </div>
+    );
+
+    const innhold = (
+        <div className="sammenligningspanel__innhold">
+            <Virksomhetspanel
+                sykefraværsprosent={sammenligningSisteKvartal.virksomhet}
+                sykefraværprosentLabel={labels.virksomhet}
+                laster={laster}
+                className="sammenligningspanel__syfopanel"
+            />
+            <NæringEllerBransjePanel
+                laster={laster}
+                sykefraværsprosent={sammenligningSisteKvartal.næringEllerBransje}
+                sykefraværprosentLabel={labels.næringEllerBransje}
+                harBransje={harBransje}
+                className="sammenligningspanel__syfopanel"
+            />
+            <SektorPanel
+                laster={laster}
+                sykefraværsprosent={sammenligningSisteKvartal.sektor}
+                sykefraværprosentLabel={labels.sektor}
+                className="sammenligningspanel__syfopanel"
+            />
+            <LandsPanel
+                laster={laster}
+                sykefraværsprosent={sammenligningSisteKvartal.land}
+                sykefraværprosentLabel={labels.land}
+                className="sammenligningspanel__syfopanel"
+            />
+        </div>
+    );
+
     return (
         <PanelBase className="sammenligningspanel">
             <div className="sammenligningspanel__tekst-wrapper">
@@ -62,7 +99,8 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
                 >
                     Kunne ikke vise sykefraværet.
                 </SammenligningspanelFeilmelding>
-                <div className="sammenligningspanel__innhold">
+                {laster?lasterinnhold:innhold}
+                {/*<div className="sammenligningspanel__innhold">
                     <Virksomhetspanel
                         sykefraværsprosent={sammenligningSisteKvartal.virksomhet}
                         sykefraværprosentLabel={labels.virksomhet}
@@ -88,7 +126,7 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
                         sykefraværprosentLabel={labels.land}
                         className="sammenligningspanel__syfopanel"
                     />
-                </div>
+                </div>*/}
             </div>
         </PanelBase>
     );
