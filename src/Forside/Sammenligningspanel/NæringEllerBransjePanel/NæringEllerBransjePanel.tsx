@@ -1,10 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import Sykefraværsprosentpanel, {
-    SykefraværprosentpanelProps,
-} from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
+import Sykefraværsprosentpanel, { SykefraværprosentpanelProps } from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import './NæringEllerBransjePanel.less';
-import { ReactComponent as NæringSvg } from '../Næring.svg';
 import SammenligningsIkon from '../SammenligningsIkon';
 import { SykefraværshistorikkType } from '../../../api/sykefraværshistorikk';
 

@@ -4,7 +4,6 @@ import { ReactComponent as BedriftSvg } from './Bedrift.svg';
 import { ReactComponent as NæringSvg } from './Næring.svg';
 import { ReactComponent as SektorSvg } from './Sektor.svg';
 import { ReactComponent as LandSvg } from './Norge.svg';
-import LandsPanel from './LandsPanel/LandsPanel';
 import { SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
 
 const SammenligningsIkon: FunctionComponent<{

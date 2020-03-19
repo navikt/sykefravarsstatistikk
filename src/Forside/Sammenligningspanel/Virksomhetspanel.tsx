@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import MaskertSykefraværprosentpanel from './MaskertSykefraværprosentpanel/MaskertSykefraværprosentpanel';
 import { SykefraværprosentpanelProps } from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
-import { ReactComponent as BedriftSvg } from './Bedrift.svg';
 import SammenligningsIkon from './SammenligningsIkon';
 import { SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
 

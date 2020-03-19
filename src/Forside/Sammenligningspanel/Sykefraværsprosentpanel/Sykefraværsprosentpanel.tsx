@@ -1,15 +1,9 @@
 import * as React from 'react';
-import {
-    Element,
-    Innholdstittel,
-    Normaltekst,
-    Sidetittel,
-    Undertittel,
-} from 'nav-frontend-typografi';
+import { ReactElement } from 'react';
+import { Element, Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import './Sykefraværsprosentpanel.less';
 import Skeleton from 'react-loading-skeleton';
 import { Sykefraværsprosent } from '../../../api/sykefraværshistorikk';
-import { ReactComponentElement, ReactElement } from 'react';
 import classNames from 'classnames';
 
 export interface SykefraværprosentpanelProps {

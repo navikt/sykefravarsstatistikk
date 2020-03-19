@@ -1,8 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { ReactComponent as SektorSvg } from '../Sektor.svg';
-import Sykefraværsprosentpanel, {
-    SykefraværprosentpanelProps,
-} from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
+import Sykefraværsprosentpanel, { SykefraværprosentpanelProps } from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import SammenligningsIkon from '../SammenligningsIkon';
 import { SykefraværshistorikkType } from '../../../api/sykefraværshistorikk';
 
