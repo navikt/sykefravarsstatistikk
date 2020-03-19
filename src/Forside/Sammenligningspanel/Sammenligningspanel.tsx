@@ -49,7 +49,7 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
     const { årstall, kvartal } = sammenligningSisteKvartal;
 
     const lasterinnhold = (
-        <div>
+        <div className="sammenligningspanel__skeleton">
             <Skeleton height={228} />
         </div>
     );
