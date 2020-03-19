@@ -30,7 +30,6 @@ const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelP
     if (!laster && (!sykefraværsprosent || !sykefraværsprosent.prosent)) {
         return null;
     }
-    console.log(props.sykefraværsprosent);
     const tekst = (
         <div className="sykefravarsprosentpanel__innhold">
             {children && <Element tag="div">{children}</Element>}

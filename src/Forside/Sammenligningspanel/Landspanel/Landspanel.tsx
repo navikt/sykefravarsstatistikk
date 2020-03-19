@@ -3,15 +3,15 @@ import Sykefraværsprosentpanel, { SykefraværprosentpanelProps } from '../Sykef
 import SammenligningsIkon from '../SammenligningsIkon';
 import { SykefraværshistorikkType } from '../../../api/sykefraværshistorikk';
 
-const SektorPanel: FunctionComponent<SykefraværprosentpanelProps> = props => {
+const Landspanel: FunctionComponent<SykefraværprosentpanelProps> = props => {
     return (
         <Sykefraværsprosentpanel
             laster={props.laster}
             sykefraværprosentLabel={props.sykefraværprosentLabel}
             sykefraværsprosent={props.sykefraværsprosent}
-            ikon={<SammenligningsIkon label={SykefraværshistorikkType.SEKTOR} />}
+            ikon={<SammenligningsIkon label={SykefraværshistorikkType.LAND} />}
             className={props.className}
         />
     );
 };
-export default SektorPanel;
+export default Landspanel;

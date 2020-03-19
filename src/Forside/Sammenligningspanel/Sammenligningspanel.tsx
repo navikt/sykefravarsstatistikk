@@ -14,8 +14,8 @@ import SammenligningspanelOverskrift from './SammenligningspanelOverskrift';
 import SammenligningspanelFeilmelding from './SammenligningspanelFeilmelding';
 import NæringEllerBransjePanel from './NæringEllerBransjePanel/NæringEllerBransjePanel';
 import Virksomhetspanel from './Virksomhetspanel';
-import SektorPanel from './SektorPanel/SektorPanel';
-import LandsPanel from './LandsPanel/LandsPanel';
+import Sektorpanel from './Sektorpanel/Sektorpanel';
+import Landspanel from './Landspanel/Landspanel';
 import Skeleton from 'react-loading-skeleton';
 
 interface Props {
@@ -69,13 +69,13 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
                 harBransje={harBransje}
                 className="sammenligningspanel__syfopanel"
             />
-            <SektorPanel
+            <Sektorpanel
                 laster={laster}
                 sykefraværsprosent={sammenligningSisteKvartal.sektor}
                 sykefraværprosentLabel={labels.sektor}
                 className="sammenligningspanel__syfopanel"
             />
-            <LandsPanel
+            <Landspanel
                 laster={laster}
                 sykefraværsprosent={sammenligningSisteKvartal.land}
                 sykefraværprosentLabel={labels.land}
