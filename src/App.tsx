@@ -5,7 +5,6 @@ import { BASE_PATH } from './server/konstanter';
 import { useOrgnr } from './utils/orgnr-hook';
 import Kalkulator from './Kalkulator/Kalkulator';
 import Forside from './Forside/Forside';
-import Infopanel from './Forside/Infopanel/Infopanel';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
 import IAwebpanel from './Forside/IAwebpanel/IAwebpanel';
 import { useRestOrganisasjonstre } from './api/organisasjonstre/organisasjonstre-api';
@@ -69,7 +68,6 @@ const AppContent: FunctionComponent = () => {
                 <Route path={PATH_FORSIDE} exact={true}>
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <Forside restSykefraværshistorikk={restSykefraværshistorikk}>
-                        <Infopanel />
                         <Sammenligningspanel restSykefraværshistorikk={restSykefraværshistorikk} />
                         <KalkulatorPanel />
                         {skalViseGraf && <Historikkpanel />}
