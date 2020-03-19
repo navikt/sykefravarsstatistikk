@@ -11,7 +11,14 @@ type Props = SykefraværprosentpanelProps & {
 };
 
 const Virksomhetspanel: FunctionComponent<Props> = props => {
-    const { sykefraværsprosent, sykefraværprosentLabel, årstall, kvartal, laster,className } = props;
+    const {
+        sykefraværsprosent,
+        sykefraværprosentLabel,
+        årstall,
+        kvartal,
+        laster,
+        className,
+    } = props;
 
     let feilmeldingHvisProsentErUndefined =
         'Vi kan ikke vise informasjon om sykefraværet til virksomheten din.';
@@ -20,19 +27,17 @@ const Virksomhetspanel: FunctionComponent<Props> = props => {
     }
 
     return (
-
-            <MaskertSykefraværprosentpanel
-                sykefraværsprosent={sykefraværsprosent}
-                sykefraværprosentLabel={sykefraværprosentLabel}
-                labelHvisMaskert="Det er for få personer i datagrunnlaget til at vi kan vise sykefraværet."
-                labelHvisUndefined={feilmeldingHvisProsentErUndefined}
-                laster={laster}
-                ikon={<SammenligningsIkon label={SykefraværshistorikkType.VIRKSOMHET} />}
-                className={className}
-            >
-                Din virksomhet:
-            </MaskertSykefraværprosentpanel>
-
+        <MaskertSykefraværprosentpanel
+            sykefraværsprosent={sykefraværsprosent}
+            sykefraværprosentLabel={sykefraværprosentLabel}
+            labelHvisMaskert="Det er for få personer i datagrunnlaget til at vi kan vise sykefraværet."
+            labelHvisUndefined={feilmeldingHvisProsentErUndefined}
+            laster={laster}
+            ikon={<SammenligningsIkon label={SykefraværshistorikkType.VIRKSOMHET} />}
+            className={className}
+        >
+            Din virksomhet:
+        </MaskertSykefraværprosentpanel>
     );
 };
 

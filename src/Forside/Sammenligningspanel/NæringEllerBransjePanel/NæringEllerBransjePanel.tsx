@@ -25,17 +25,15 @@ const NæringEllerBransjePanel: FunctionComponent<Props> = props => {
     );
 
     return (
-
-            <Sykefraværsprosentpanel
-                sykefraværsprosent={props.sykefraværsprosent}
-                sykefraværprosentLabel={props.sykefraværprosentLabel}
-                laster={props.laster}
-                ikon={<SammenligningsIkon label={SykefraværshistorikkType.NÆRING} />}
-                className={props.className}
-            >
-                {tekstForNæringEllerBransje}
-            </Sykefraværsprosentpanel>
-
+        <Sykefraværsprosentpanel
+            sykefraværsprosent={props.sykefraværsprosent}
+            sykefraværprosentLabel={props.sykefraværprosentLabel}
+            laster={props.laster}
+            ikon={<SammenligningsIkon label={SykefraværshistorikkType.NÆRING} />}
+            className={props.className}
+        >
+            {tekstForNæringEllerBransje}
+        </Sykefraværsprosentpanel>
     );
 };
 

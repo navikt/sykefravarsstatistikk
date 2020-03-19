@@ -17,7 +17,7 @@ export interface SykefraværprosentpanelProps {
     sykefraværprosentLabel?: string;
     laster: boolean;
     ikon?: ReactElement;
-    className?:string;
+    className?: string;
 }
 
 export const formaterProsent = (prosent: number | null | undefined): string => {
@@ -31,7 +31,7 @@ export const formaterProsent = (prosent: number | null | undefined): string => {
 };
 
 const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelProps> = props => {
-    const { sykefraværsprosent, laster, sykefraværprosentLabel, children,ikon,className } = props;
+    const { sykefraværsprosent, laster, sykefraværprosentLabel, children, ikon, className } = props;
 
     if (!laster && (!sykefraværsprosent || !sykefraværsprosent.prosent)) {
         return null;
