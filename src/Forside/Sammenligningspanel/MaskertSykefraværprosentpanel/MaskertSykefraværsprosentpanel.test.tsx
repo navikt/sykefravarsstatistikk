@@ -1,6 +1,8 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import MaskertSykefraværprosentpanel, { MaskertSykefraværprosentpanelProps } from './MaskertSykefraværprosentpanel';
+import MaskertSykefraværprosentpanel, {
+    MaskertSykefraværprosentpanelProps,
+} from './MaskertSykefraværprosentpanel';
 import Sykefraværsprosentpanel from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { DataKanIkkeVisesPanel } from './DataKanIkkeVisesPanel/DataKanIkkeVisesPanel';
 import { Sykefraværsprosent } from '../../../api/sykefraværshistorikk';
@@ -13,6 +15,8 @@ describe('Tester for MaskertSykefraværprosentpanel', () => {
             sykefraværsprosent: {
                 prosent: null,
                 erMaskert: true,
+                tapteDagsverk: null,
+                muligeDagsverk: null,
             },
         };
 
@@ -29,6 +33,8 @@ describe('Tester for MaskertSykefraværprosentpanel', () => {
             sykefraværsprosent: {
                 prosent: undefined,
                 erMaskert: false,
+                tapteDagsverk: undefined,
+                muligeDagsverk: undefined,
             },
         };
 
@@ -57,6 +63,8 @@ describe('Tester for MaskertSykefraværprosentpanel', () => {
 const tomtSykefraværsprosent: Sykefraværsprosent = {
     erMaskert: false,
     prosent: 0,
+    tapteDagsverk: undefined,
+    muligeDagsverk: undefined,
 };
 
 const tommeProps: MaskertSykefraværprosentpanelProps = {
