@@ -5,13 +5,24 @@
     flex-direction: column;
     align-items: center;
     padding: 1rem 0;
-    max-width: 25%;
+    border-bottom: 0.05rem solid @navBlaLighten60;
+
+    max-width: 100%;
+    text-align: center;
+    width: 300%;
     &.typo-normal {
         margin-top: 1rem;
     }
 
     &__ikon {
-        padding-bottom: 4.5rem;
+        padding-bottom: 1rem;
         margin-right: 1rem;
+    }
+    @media (min-width: @screen-sm-min) {
+        border-bottom: none;
+        max-width: 25%;
+        &__ikon{
+            padding-bottom: 4.5rem;
+        }
     }
 }
