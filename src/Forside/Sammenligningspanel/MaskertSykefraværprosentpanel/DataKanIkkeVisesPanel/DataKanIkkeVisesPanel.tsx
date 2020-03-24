@@ -8,8 +8,9 @@ interface Props {
 }
 
 export const DataKanIkkeVisesPanel: FunctionComponent<Props> = props => (
-    <Normaltekst className="data-kan-ikke-vises-panel">
+    <div  className="data-kan-ikke-vises-panel">
         <img src={informasjonsirkelSvg} className="data-kan-ikke-vises-panel__ikon" alt="" />
-        {props.label}
-    </Normaltekst>
+
+        <Normaltekst>{props.label}</Normaltekst>
+    </div>
 );
