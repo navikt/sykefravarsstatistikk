@@ -106,7 +106,9 @@ export const getHistorikkLabels = (historikkListe: Sykefraværshistorikk[]): His
         historikkListe.find(historikk => historikk.type === type);
     return {
         virksomhet: getHistorikk(SykefraværshistorikkType.VIRKSOMHET)!.label,
-        overordnetEnhet: getHistorikk(SykefraværshistorikkType.OVERORDNET_ENHET)!.label,
+        overordnetEnhet:  getHistorikk(SykefraværshistorikkType.OVERORDNET_ENHET)!==undefined
+            ? getHistorikk(SykefraværshistorikkType.OVERORDNET_ENHET)!.label
+            :"ikke tilgang til overornetenhet",
         næringEllerBransje: historikkHarBransje(historikkListe)
             ? getHistorikk(SykefraværshistorikkType.BRANSJE)!.label
             : getHistorikk(SykefraværshistorikkType.NÆRING)!.label,
