@@ -1,5 +1,6 @@
 import { Sykefraværshistorikk, SykefraværshistorikkType } from '../api/sykefraværshistorikk';
 import {
+    getHistorikkLabels,
     konverterTilKvartalsvisSammenligning,
     ÅrstallOgKvartal,
 } from './sykefraværshistorikk-utils';
@@ -83,6 +84,42 @@ describe('Tester for graf-og-tabell-utils', () => {
 
         expect(kvartalsvisSammenligning[0].næringEllerBransje.prosent).toEqual(30);
     });
+
+    test('historikkUtenVirksomhetVilIkkeKrasje', () => {
+        expect(
+            getHistorikkLabels([
+                lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.OVERORDNET_ENHET, [
+                    { årstall: 2000, kvartal: 1 },
+                ]),lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.LAND, [
+                    { årstall: 2000, kvartal: 1 },
+                ]),
+                lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.SEKTOR, [
+                    { årstall: 2000, kvartal: 1 },
+                ]),
+                lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.NÆRING, [
+                    { årstall: 2000, kvartal: 1 },
+                ]),
+            ]).virksomhet
+        ).toEqual('ikke tilgang til virksomhet');
+    });
+
+ test('historikkUtenOverOrdnetEnhetVilIkkeKrasje', () => {
+        expect(
+            getHistorikkLabels([
+                lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.VIRKSOMHET, [
+                    { årstall: 2000, kvartal: 1 },
+                ]),lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.LAND, [
+                    { årstall: 2000, kvartal: 1 },
+                ]),
+                lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.SEKTOR, [
+                    { årstall: 2000, kvartal: 1 },
+                ]),
+                lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.NÆRING, [
+                    { årstall: 2000, kvartal: 1 },
+                ]),
+            ]).overordnetEnhet
+        ).toEqual('ikke tilgang til overornetenhet');
+    });
 });
 
 const lagHistorikkMedEttInnslag = (
@@ -96,8 +133,10 @@ const lagHistorikkMedEttInnslag = (
             {
                 kvartal: 1,
                 årstall: 2000,
-                prosent: prosent,
                 erMaskert: false,
+                prosent: prosent,
+                tapteDagsverk: 0,
+                muligeDagsverk: 0,
             },
         ],
     };
@@ -115,6 +154,8 @@ const lagHistorikkMedÅrstallOgKvartal = (
                 ...årstallOgKvartal,
                 prosent: 5,
                 erMaskert: false,
+                tapteDagsverk: 0,
+                muligeDagsverk: 0,
             };
         }),
     };
