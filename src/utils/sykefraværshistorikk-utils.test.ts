@@ -133,10 +133,10 @@ const lagHistorikkMedEttInnslag = (
             {
                 kvartal: 1,
                 årstall: 2000,
-                erMaskert: false,
                 prosent: prosent,
-                tapteDagsverk: 0,
-                muligeDagsverk: 0,
+                erMaskert: false,
+                tapteDagsverk: 5,
+                muligeDagsverk: 100
             },
         ],
     };
@@ -154,8 +154,8 @@ const lagHistorikkMedÅrstallOgKvartal = (
                 ...årstallOgKvartal,
                 prosent: 5,
                 erMaskert: false,
-                tapteDagsverk: 0,
-                muligeDagsverk: 0,
+                tapteDagsverk: 5,
+                muligeDagsverk: 100
             };
         }),
     };
