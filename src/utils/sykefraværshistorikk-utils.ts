@@ -1,8 +1,4 @@
-import {
-    Sykefraværshistorikk,
-    SykefraværshistorikkType,
-    Sykefraværsprosent,
-} from '../api/sykefraværshistorikk';
+import { Sykefraværshistorikk, SykefraværshistorikkType, Sykefraværsprosent } from '../api/sykefraværshistorikk';
 
 export interface KvartalsvisSammenligning {
     årstall: number;

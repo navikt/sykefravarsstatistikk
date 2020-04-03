@@ -1,6 +1,4 @@
 import { filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet } from './api';
-
-import fetchMock from 'fetch-mock';
 import { Sykefraværshistorikk, SykefraværshistorikkType } from './sykefraværshistorikk';
 
 describe('Tester for utils funksjoner', () => {
