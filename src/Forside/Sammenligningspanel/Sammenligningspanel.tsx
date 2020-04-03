@@ -41,8 +41,6 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
 
     if (restSykefraværshistorikk.status === RestStatus.Suksess) {
         const historikkListe = restSykefraværshistorikk.data;
-
-
         labels = getHistorikkLabels(historikkListe);
         sammenligningSisteKvartal = getSammenligningForSisteKvartal(historikkListe);
         harBransje = historikkHarBransje(restSykefraværshistorikk.data);

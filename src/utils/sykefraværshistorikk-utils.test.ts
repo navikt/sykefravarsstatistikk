@@ -90,7 +90,8 @@ describe('Tester for graf-og-tabell-utils', () => {
             getHistorikkLabels([
                 lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.OVERORDNET_ENHET, [
                     { årstall: 2000, kvartal: 1 },
-                ]),lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.LAND, [
+                ]),
+                lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.LAND, [
                     { årstall: 2000, kvartal: 1 },
                 ]),
                 lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.SEKTOR, [
@@ -103,12 +104,13 @@ describe('Tester for graf-og-tabell-utils', () => {
         ).toEqual('ikke tilgang til virksomhet');
     });
 
- test('historikkUtenOverOrdnetEnhetVilIkkeKrasje', () => {
+    test('historikkUtenOverOrdnetEnhetVilIkkeKrasje', () => {
         expect(
             getHistorikkLabels([
                 lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.VIRKSOMHET, [
                     { årstall: 2000, kvartal: 1 },
-                ]),lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.LAND, [
+                ]),
+                lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.LAND, [
                     { årstall: 2000, kvartal: 1 },
                 ]),
                 lagHistorikkMedÅrstallOgKvartal(SykefraværshistorikkType.SEKTOR, [
@@ -136,7 +138,7 @@ const lagHistorikkMedEttInnslag = (
                 prosent: prosent,
                 erMaskert: false,
                 tapteDagsverk: 5,
-                muligeDagsverk: 100
+                muligeDagsverk: 100,
             },
         ],
     };
@@ -155,7 +157,7 @@ const lagHistorikkMedÅrstallOgKvartal = (
                 prosent: 5,
                 erMaskert: false,
                 tapteDagsverk: 5,
-                muligeDagsverk: 100
+                muligeDagsverk: 100,
             };
         }),
     };

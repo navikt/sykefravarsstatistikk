@@ -24,7 +24,7 @@ enum SegmenteringSykefraværprosent {
     TI_TIL_TOLV = '10-12',
     TOLV_TIL_FJORTEN = '12-14',
     FJORTEN_TIL_SEKSTEN = '14-16',
-    OVER_SEKSTEN = '>16'
+    OVER_SEKSTEN = '>16',
 }
 
 export type Næringskode5Siffer = {
