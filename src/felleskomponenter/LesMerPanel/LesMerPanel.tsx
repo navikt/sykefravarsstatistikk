@@ -27,7 +27,7 @@ const LesMerPanel: React.FunctionComponent<Props> = ({
         if (skalÅpnes && onÅpne) {
             onÅpne();
         }
-    }
+    };
 
     return (
         <div className="les-mer-panel">

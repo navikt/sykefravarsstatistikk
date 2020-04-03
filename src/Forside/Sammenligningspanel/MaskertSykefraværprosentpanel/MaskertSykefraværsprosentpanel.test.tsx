@@ -1,8 +1,6 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import MaskertSykefraværprosentpanel, {
-    MaskertSykefraværprosentpanelProps,
-} from './MaskertSykefraværprosentpanel';
+import MaskertSykefraværprosentpanel, { MaskertSykefraværprosentpanelProps } from './MaskertSykefraværprosentpanel';
 import Sykefraværsprosentpanel from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { DataKanIkkeVisesPanel } from './DataKanIkkeVisesPanel/DataKanIkkeVisesPanel';
 import { Sykefraværsprosent } from '../../../api/sykefraværshistorikk';

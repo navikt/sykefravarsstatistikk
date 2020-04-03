@@ -65,7 +65,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     lukkLabel="Lukk"
                     className="kalkulator__lesmer-tapte-dagsverk"
                     onÅpne={() => {
-                        amplitude.logEvent('#sykefravarsstatistikk-kalkulator dagsverk lesmer-klikk');
+                        amplitude.logEvent(
+                            '#sykefravarsstatistikk-kalkulator dagsverk lesmer-klikk'
+                        );
                     }}
                 >
                     <Normaltekst>
@@ -95,7 +97,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         label={<Element>Kostnad per dagsverk (kr)</Element>}
                         onChange={event => setKostnadDagsverk(parseInt(event.target.value))}
                         onClick={() => {
-                            amplitude.logEvent('#sykefravarsstatistikk-kalkulator kostnad input-klikk');
+                            amplitude.logEvent(
+                                '#sykefravarsstatistikk-kalkulator kostnad input-klikk'
+                            );
                         }}
                         value={kostnadDagsverk || ''}
                         bredde={'XS'}
@@ -110,7 +114,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         lukkLabel="Lukk"
                         className="kalkulator__lesmer-kostnad-dagsverk"
                         onÅpne={() => {
-                            amplitude.logEvent('#sykefravarsstatistikk-kalkulator kostnad lesmer-klikk');
+                            amplitude.logEvent(
+                                '#sykefravarsstatistikk-kalkulator kostnad lesmer-klikk'
+                            );
                         }}
                     >
                         <Normaltekst>
@@ -126,7 +132,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         label={<Element>Antall tapte dagsverk</Element>}
                         onChange={event => setTapteDagsverk(parseInt(event.target.value))}
                         onClick={() => {
-                            amplitude.logEvent('#sykefravarsstatistikk-kalkulator dagsverk input-klikk');
+                            amplitude.logEvent(
+                                '#sykefravarsstatistikk-kalkulator dagsverk input-klikk'
+                            );
                         }}
                         value={tapteDagsverk || ''}
                         bredde={'XS'}

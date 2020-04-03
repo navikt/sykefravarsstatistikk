@@ -1,6 +1,6 @@
-import {RestRessurs, RestStatus} from './api-utils';
-import {useEffect, useState} from 'react';
-import {hentRestSykefraværshistorikk} from './api';
+import { RestRessurs, RestStatus } from './api-utils';
+import { useEffect, useState } from 'react';
+import { hentRestSykefraværshistorikk } from './api';
 
 export enum SykefraværshistorikkType {
     LAND = 'LAND',
@@ -8,7 +8,7 @@ export enum SykefraværshistorikkType {
     NÆRING = 'NÆRING',
     BRANSJE = 'BRANSJE',
     VIRKSOMHET = 'VIRKSOMHET',
-    OVERORDNET_ENHET = 'OVERORDNET_ENHET'
+    OVERORDNET_ENHET = 'OVERORDNET_ENHET',
 }
 
 export type KvartalsvisSykefraværsprosent = {

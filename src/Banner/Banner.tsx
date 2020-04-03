@@ -4,11 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Bedriftsmeny from '@navikt/bedriftsmeny';
 import '@navikt/bedriftsmeny/lib/bedriftsmeny.css';
 import { JuridiskEnhetMedUnderEnheterArray } from '@navikt/bedriftsmeny/lib/Organisasjon';
-import {
-    AltinnOrganisasjon,
-    Organisasjon,
-    Organisasjonstre,
-} from '../api/organisasjonstre/organisasjonstre-utils';
+import { AltinnOrganisasjon, Organisasjon, Organisasjonstre } from '../api/organisasjonstre/organisasjonstre-utils';
 import { RestStatus } from '../api/api-utils';
 import { RestOrganisasjonstre } from '../api/organisasjonstre/organisasjonstre-api';
 

@@ -1,8 +1,5 @@
-import {filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet} from './api';
-
-import fetchMock from 'fetch-mock';
-import {Sykefraværshistorikk, SykefraværshistorikkType} from "./sykefraværshistorikk";
-
+import { filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet } from './api';
+import { Sykefraværshistorikk, SykefraværshistorikkType } from './sykefraværshistorikk';
 
 describe('Tester for utils funksjoner', () => {
     const historikkUnderenhet: Sykefraværshistorikk = {
@@ -10,20 +7,20 @@ describe('Tester for utils funksjoner', () => {
         label: 'Underenhet AS',
         kvartalsvisSykefraværsprosent: [
             {
-                "årstall": 2019,
-                "kvartal": 4,
-                "erMaskert": false,
-                "prosent": 5.5,
-                "muligeDagsverk": 200,
-                "tapteDagsverk": 11
+                årstall: 2019,
+                kvartal: 4,
+                erMaskert: false,
+                prosent: 5.5,
+                muligeDagsverk: 200,
+                tapteDagsverk: 11,
             },
             {
-                "årstall": 2020,
-                "kvartal": 1,
-                "erMaskert": false,
-                "prosent": 6,
-                "muligeDagsverk": 200,
-                "tapteDagsverk": 12
+                årstall: 2020,
+                kvartal: 1,
+                erMaskert: false,
+                prosent: 6,
+                muligeDagsverk: 200,
+                tapteDagsverk: 12,
             },
         ],
     };
@@ -32,20 +29,20 @@ describe('Tester for utils funksjoner', () => {
         label: 'Underenhet AS',
         kvartalsvisSykefraværsprosent: [
             {
-                "årstall": 2019,
-                "kvartal": 4,
-                "erMaskert": false,
-                "prosent": 5.5,
-                "muligeDagsverk": 200,
-                "tapteDagsverk": 10
+                årstall: 2019,
+                kvartal: 4,
+                erMaskert: false,
+                prosent: 5.5,
+                muligeDagsverk: 200,
+                tapteDagsverk: 10,
             },
             {
-                "årstall": 2020,
-                "kvartal": 1,
-                "erMaskert": false,
-                "prosent": 6,
-                "muligeDagsverk": 200,
-                "tapteDagsverk": 12
+                årstall: 2020,
+                kvartal: 1,
+                erMaskert: false,
+                prosent: 6,
+                muligeDagsverk: 200,
+                tapteDagsverk: 12,
             },
         ],
     };
@@ -91,5 +88,4 @@ describe('Tester for utils funksjoner', () => {
             ).kvartalsvisSykefraværsprosent.length
         ).toBe(0);
     });
-
 });
