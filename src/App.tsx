@@ -7,7 +7,10 @@ import Kalkulator from './Kalkulator/Kalkulator';
 import Forside from './Forside/Forside';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
 import IAwebpanel from './Forside/IAwebpanel/IAwebpanel';
-import { useRestOrganisasjonstre } from './api/organisasjonstre/organisasjonstre-api';
+import {
+    useRestOrganisasjoner,
+    useRestOrganisasjonstre,
+} from './api/organisasjonstre/organisasjonstre-api';
 import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
@@ -38,6 +41,7 @@ const App: FunctionComponent = () => {
 const AppContent: FunctionComponent = () => {
     const orgnr = useOrgnr();
 
+    const restOrganisasjoner = useRestOrganisasjoner();
     const restOrganisasjonstre = useRestOrganisasjonstre();
     const restSykefraværshistorikk = useRestSykefraværshistorikk(orgnr);
     const restFeatureToggles = useRestFeatureToggles();
@@ -91,7 +95,11 @@ const AppContent: FunctionComponent = () => {
 
     return (
         <>
-            <Banner tittel="Sykefraværsstatistikk" restOrganisasjonstre={restOrganisasjonstre} />
+            <Banner
+                tittel="Sykefraværsstatistikk"
+                restOrganisasjonstre={restOrganisasjonstre}
+                restOrganisasjoner={restOrganisasjoner}
+            />
             {innhold}
         </>
     );

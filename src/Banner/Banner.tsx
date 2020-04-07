@@ -4,13 +4,22 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Bedriftsmeny from '@navikt/bedriftsmeny';
 import '@navikt/bedriftsmeny/lib/bedriftsmeny.css';
 import { JuridiskEnhetMedUnderEnheterArray } from '@navikt/bedriftsmeny/lib/Organisasjon';
-import { AltinnOrganisasjon, Organisasjon, Organisasjonstre } from '../api/organisasjonstre/organisasjonstre-utils';
+import {
+    AltinnOrganisasjon,
+    hentAltinnOrganisasjoner,
+    Organisasjon,
+    Organisasjonstre,
+} from '../api/organisasjonstre/organisasjonstre-utils';
 import { RestStatus } from '../api/api-utils';
-import { RestOrganisasjonstre } from '../api/organisasjonstre/organisasjonstre-api';
+import {
+    RestAltinnOrganisasjoner,
+    RestOrganisasjonstre,
+} from '../api/organisasjonstre/organisasjonstre-api';
 
 interface Props {
     tittel: string;
     restOrganisasjonstre: RestOrganisasjonstre;
+    restOrganisasjoner: RestAltinnOrganisasjoner;
 }
 
 const mapTilAltinnOrganisasjon = (organisasjon: Organisasjon): AltinnOrganisasjon => {
@@ -38,15 +47,18 @@ const mapTilJuridiskEnhetMedUnderEnheterArray = (
 };
 
 const Banner: React.FunctionComponent<Props & RouteComponentProps> = props => {
-    const { history, restOrganisasjonstre, tittel } = props;
+    const { history, restOrganisasjonstre, tittel, restOrganisasjoner } = props;
     let organisasjonstre: Organisasjonstre =
         restOrganisasjonstre.status === RestStatus.Suksess ? restOrganisasjonstre.data : [];
+    let altinnOrganisasjoner: AltinnOrganisasjon[] =
+        restOrganisasjoner.status === RestStatus.Suksess ? restOrganisasjoner.data : [];
     return (
         <Bedriftsmeny
+            organisasjoner={altinnOrganisasjoner}
             sidetittel={tittel}
             history={history}
             onOrganisasjonChange={() => {}}
-            organisasjonstre={mapTilJuridiskEnhetMedUnderEnheterArray(organisasjonstre)}
+            //organisasjonstre={mapTilJuridiskEnhetMedUnderEnheterArray(organisasjonstre)}
         />
     );
 };

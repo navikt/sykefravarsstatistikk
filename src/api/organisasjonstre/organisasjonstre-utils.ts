@@ -1,4 +1,7 @@
-import { hentAltinnOrganisasjonerBrukerHarTilgangTil, hentJuridiskeEnheter } from './organisasjonstre-api';
+import {
+    hentAltinnOrganisasjonerBrukerHarTilgangTil,
+    hentJuridiskeEnheter,
+} from './organisasjonstre-api';
 import { RestRessurs, RestStatus } from '../api-utils';
 import * as Sentry from '@sentry/browser';
 
@@ -8,7 +11,7 @@ export interface AltinnOrganisasjon {
     OrganizationNumber: string;
     OrganizationForm: string;
     Status: string;
-    ParentOrganizationNumber: string | null;
+    ParentOrganizationNumber: string;
 }
 
 export interface Organisasjon {
@@ -16,7 +19,6 @@ export interface Organisasjon {
     orgnr: string;
     harTilgang?: boolean;
 }
-
 export interface JuridiskEnhetMedUnderenheter {
     juridiskEnhet: Organisasjon;
     underenheter: Organisasjon[];
@@ -126,5 +128,18 @@ export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<Res
         return {
             status: error.status || RestStatus.Feil,
         };
+    }
+};
+
+export const hentAltinnOrganisasjoner = async (): Promise<RestRessurs<AltinnOrganisasjon[]>> => {
+    try {
+        const altinnOrganisasjoner = await hentAltinnOrganisasjonerBrukerHarTilgangTil();
+        return {
+            status: RestStatus.Suksess,
+            data: altinnOrganisasjoner,
+        };
+    } catch (error) {
+        Sentry.captureException(error);
+        return { status: error.status || RestStatus.Feil };
     }
 };

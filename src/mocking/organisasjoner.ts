@@ -11,7 +11,7 @@ const mapTilAltinnOrganisasjon = (
         Name: organisasjon.navn,
         Type: type,
         OrganizationNumber: organisasjon.orgnr,
-        ParentOrganizationNumber: overordnetEnhetOrgnr,
+        ParentOrganizationNumber: overordnetEnhetOrgnr !== null ? overordnetEnhetOrgnr : '',
         OrganizationForm: organizationForm,
         Status: 'Active',
     };
