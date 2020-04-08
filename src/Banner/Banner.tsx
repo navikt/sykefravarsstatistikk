@@ -3,13 +3,7 @@ import './Banner.less';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Bedriftsmeny from '@navikt/bedriftsmeny';
 import '@navikt/bedriftsmeny/lib/bedriftsmeny.css';
-import { JuridiskEnhetMedUnderEnheterArray } from '@navikt/bedriftsmeny/lib/Organisasjon';
-import {
-    AltinnOrganisasjon,
-    hentAltinnOrganisasjoner,
-    Organisasjon,
-    Organisasjonstre,
-} from '../api/organisasjonstre/organisasjonstre-utils';
+import { AltinnOrganisasjon } from '../api/organisasjonstre/organisasjonstre-utils';
 import { RestStatus } from '../api/api-utils';
 import {
     RestAltinnOrganisasjoner,
@@ -18,38 +12,12 @@ import {
 
 interface Props {
     tittel: string;
-    restOrganisasjonstre: RestOrganisasjonstre;
+    // restOrganisasjonstre: RestOrganisasjonstre;
     restOrganisasjoner: RestAltinnOrganisasjoner;
 }
 
-const mapTilAltinnOrganisasjon = (organisasjon: Organisasjon): AltinnOrganisasjon => {
-    return {
-        Name: organisasjon.navn,
-        Type: 'UNKNOWN_TYPE',
-        OrganizationNumber: organisasjon.orgnr,
-        OrganizationForm: 'UNKNOWN_FORM',
-        Status: 'UNKNOWN_STATUS',
-        ParentOrganizationNumber: 'UNKNOWN NUMBER',
-    };
-};
-
-const mapTilJuridiskEnhetMedUnderEnheterArray = (
-    organisasjonstre: Organisasjonstre
-): JuridiskEnhetMedUnderEnheterArray[] => {
-    return organisasjonstre.map(juridiskEnhetMedUnderenheter => {
-        return {
-            JuridiskEnhet: mapTilAltinnOrganisasjon(juridiskEnhetMedUnderenheter.juridiskEnhet),
-            Underenheter: juridiskEnhetMedUnderenheter.underenheter.map(org =>
-                mapTilAltinnOrganisasjon(org)
-            ),
-        } as JuridiskEnhetMedUnderEnheterArray;
-    });
-};
-
 const Banner: React.FunctionComponent<Props & RouteComponentProps> = props => {
-    const { history, restOrganisasjonstre, tittel, restOrganisasjoner } = props;
-    let organisasjonstre: Organisasjonstre =
-        restOrganisasjonstre.status === RestStatus.Suksess ? restOrganisasjonstre.data : [];
+    const { history, tittel, restOrganisasjoner } = props;
     let altinnOrganisasjoner: AltinnOrganisasjon[] =
         restOrganisasjoner.status === RestStatus.Suksess ? restOrganisasjoner.data : [];
     return (
@@ -58,7 +26,6 @@ const Banner: React.FunctionComponent<Props & RouteComponentProps> = props => {
             sidetittel={tittel}
             history={history}
             onOrganisasjonChange={() => {}}
-            //organisasjonstre={mapTilJuridiskEnhetMedUnderEnheterArray(organisasjonstre)}
         />
     );
 };

@@ -50,14 +50,15 @@ const AppContent: FunctionComponent = () => {
     let innhold;
 
     if (
-        restOrganisasjonstre.status === RestStatus.LasterInn ||
+        restOrganisasjoner.status === RestStatus.LasterInn ||
+        //        restOrganisasjonstre.status === RestStatus.LasterInn ||
         restFeatureToggles.status === RestStatus.LasterInn ||
         restBedriftsmetrikker.status === RestStatus.LasterInn
     ) {
         innhold = <Lasteside />;
-    } else if (restOrganisasjonstre.status === RestStatus.IkkeInnlogget) {
+    } else if (restOrganisasjoner.status === RestStatus.IkkeInnlogget) {
         return <Innloggingsside />;
-    } else if (restOrganisasjonstre.status !== RestStatus.Suksess) {
+    } else if (restOrganisasjoner.status !== RestStatus.Suksess) {
         innhold = <FeilFraAltinnSide />;
     } else {
         if (
@@ -97,7 +98,7 @@ const AppContent: FunctionComponent = () => {
         <>
             <Banner
                 tittel="Sykefraværsstatistikk"
-                restOrganisasjonstre={restOrganisasjonstre}
+                //restOrganisasjonstre={restOrganisasjonstre}
                 restOrganisasjoner={restOrganisasjoner}
             />
             {innhold}
