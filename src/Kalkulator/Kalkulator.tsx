@@ -2,17 +2,14 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './Kalkulator.less';
 import LesMerPanel from '../felleskomponenter/LesMerPanel/LesMerPanel';
-import { Input, Radio } from 'nav-frontend-skjema';
+import { Input } from 'nav-frontend-skjema';
 import Kostnad from './Kostnad/Kostnad';
 import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
 import { scrollToBanner } from '../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
-import {
-    getAntallTapteDagsverkSiste4Kvartaler,
-    getNåværendeSykefraværsprosent,
-} from './kalkulator-utils';
+import { getAntallTapteDagsverkSiste4Kvartaler } from './kalkulator-utils';
 import amplitude from '../utils/amplitude';
 
 interface Props {
@@ -22,9 +19,6 @@ interface Props {
 const Kalkulator: FunctionComponent<Props> = props => {
     const { restSykefraværshistorikk } = props;
     const [tapteDagsverk, setTapteDagsverk] = useState<number | undefined>();
-    const [antallTapteDagsverkEllerProsent, setAntalltapteDagsverkEllerProsent] = useState<
-        string
-    >();
     const [skalViseDefaultTapteDagsverk, setSkalViseDefaultTapteDagsverk] = useState<
         boolean | undefined
     >();
@@ -52,9 +46,8 @@ const Kalkulator: FunctionComponent<Props> = props => {
                 setTapteDagsverk(tapteDagsverkSiste4Kvartaler);
                 setSkalViseDefaultTapteDagsverk(true);
             }
-            console.log(getNåværendeSykefraværsprosent(restSykefraværshistorikk.data));
         }
-    }, [restSykefraværshistorikk, harEndretTapteDagsverk, antallTapteDagsverkEllerProsent]);
+    }, [restSykefraværshistorikk, harEndretTapteDagsverk]);
 
     useEffect(() => {
         scrollToBanner();
@@ -86,28 +79,6 @@ const Kalkulator: FunctionComponent<Props> = props => {
             </>
         );
 
-    const radioProsentEllerAntall = (
-        <>
-            <div>
-                <div>Beregn kostnad basert på</div>
-                <Radio
-                    label="Tapte dagsverk"
-                    name="antallTapteDagsverk"
-                    defaultChecked={true}
-                    onChange={() => {
-                        setAntalltapteDagsverkEllerProsent('antallTapteDagsverk');
-                    }}
-                />
-                <Radio
-                    label="Sykefraværsprosent"
-                    name="antallTapteDagsverk"
-                    onChange={() => {
-                        setAntalltapteDagsverkEllerProsent('sykefraværsprosent');
-                    }}
-                />
-            </div>
-        </>
-    );
     const tapteDagsverkSpinner = restSykefraværshistorikk.status === RestStatus.IkkeLastet && (
         <NavFrontendSpinner className="kalkulator__spinner" transparent={true} />
     );
@@ -122,7 +93,6 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     <Normaltekst className="kalkulator__ingress">
                         Se hva sykefraværet koster, og hvor mye virksomheten deres kan spare.
                     </Normaltekst>
-                    {radioProsentEllerAntall}
                     <Input
                         label={<Element>Kostnad per dagsverk (kr)</Element>}
                         onChange={event => setKostnadDagsverk(parseInt(event.target.value))}

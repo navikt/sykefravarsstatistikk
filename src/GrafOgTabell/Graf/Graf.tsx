@@ -49,7 +49,6 @@ const Graf: FunctionComponent<Props> = props => {
     });
 
     const labelForType = (type: SykefraværshistorikkType): string => {
-        console.log(type);
         return props.sykefraværshistorikk.find(historikk => historikk.type === type)!
             ? props.sykefraværshistorikk.find(historikk => historikk.type === type)!.label
             : 'Ingen tilgjengelig data';
