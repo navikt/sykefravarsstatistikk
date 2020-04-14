@@ -73,6 +73,7 @@ const hentManglendeJuridiskeEnheter = async (
     return await hentJuridiskeEnheter(manglendeOrgnumre);
 };
 
+/*
 export const mapTilOrganisasjonstre = (
     altinnOrganisasjoner: AltinnOrganisasjon[],
     manglendeJuridiskeEnheter: Organisasjon[]
@@ -112,8 +113,9 @@ export const mapTilOrganisasjonstre = (
 
     return organisasjonstre;
 };
+*/
 
-export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<RestRessurs<
+/*export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<RestRessurs<
     Organisasjonstre
 >> => {
     try {
@@ -129,7 +131,7 @@ export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<Res
             status: error.status || RestStatus.Feil,
         };
     }
-};
+};*/
 
 export const hentAltinnOrganisasjoner = async (): Promise<RestRessurs<AltinnOrganisasjon[]>> => {
     try {
