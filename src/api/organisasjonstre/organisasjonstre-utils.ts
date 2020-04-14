@@ -24,7 +24,7 @@ export interface JuridiskEnhetMedUnderenheter {
     underenheter: Organisasjon[];
 }
 
-export type goOrganisasjonstre = JuridiskEnhetMedUnderenheter[];
+export type Organisasjonstre = JuridiskEnhetMedUnderenheter[];
 
 const plukkUtJuridiskeEnheter = (
     altinnOrganisasjoner: AltinnOrganisasjon[]
@@ -73,7 +73,6 @@ const hentManglendeJuridiskeEnheter = async (
     return await hentJuridiskeEnheter(manglendeOrgnumre);
 };
 
-/*
 export const mapTilOrganisasjonstre = (
     altinnOrganisasjoner: AltinnOrganisasjon[],
     manglendeJuridiskeEnheter: Organisasjon[]
@@ -113,9 +112,8 @@ export const mapTilOrganisasjonstre = (
 
     return organisasjonstre;
 };
-*/
 
-/*export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<RestRessurs<
+export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<RestRessurs<
     Organisasjonstre
 >> => {
     try {
@@ -131,7 +129,7 @@ export const mapTilOrganisasjonstre = (
             status: error.status || RestStatus.Feil,
         };
     }
-};*/
+};
 
 export const hentAltinnOrganisasjoner = async (): Promise<RestRessurs<AltinnOrganisasjon[]>> => {
     try {
