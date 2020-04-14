@@ -24,7 +24,7 @@ export interface JuridiskEnhetMedUnderenheter {
     underenheter: Organisasjon[];
 }
 
-export type Organisasjonstre = JuridiskEnhetMedUnderenheter[];
+export type goOrganisasjonstre = JuridiskEnhetMedUnderenheter[];
 
 const plukkUtJuridiskeEnheter = (
     altinnOrganisasjoner: AltinnOrganisasjon[]

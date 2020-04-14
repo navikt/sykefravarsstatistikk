@@ -7,10 +7,7 @@ import Kalkulator from './Kalkulator/Kalkulator';
 import Forside from './Forside/Forside';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
 import IAwebpanel from './Forside/IAwebpanel/IAwebpanel';
-import {
-    useRestOrganisasjoner,
-    useRestOrganisasjonstre,
-} from './api/organisasjonstre/organisasjonstre-api';
+import { useRestOrganisasjoner } from './api/organisasjonstre/organisasjonstre-api';
 import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
@@ -42,7 +39,6 @@ const AppContent: FunctionComponent = () => {
     const orgnr = useOrgnr();
 
     const restOrganisasjoner = useRestOrganisasjoner();
-    const restOrganisasjonstre = useRestOrganisasjonstre();
     const restSykefraværshistorikk = useRestSykefraværshistorikk(orgnr);
     const restFeatureToggles = useRestFeatureToggles();
     const restBedriftsmetrikker = useRestBedriftsmetrikker(orgnr);
@@ -51,7 +47,6 @@ const AppContent: FunctionComponent = () => {
 
     if (
         restOrganisasjoner.status === RestStatus.LasterInn ||
-        //        restOrganisasjonstre.status === RestStatus.LasterInn ||
         restFeatureToggles.status === RestStatus.LasterInn ||
         restBedriftsmetrikker.status === RestStatus.LasterInn
     ) {

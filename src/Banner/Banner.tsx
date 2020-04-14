@@ -5,14 +5,10 @@ import Bedriftsmeny from '@navikt/bedriftsmeny';
 import '@navikt/bedriftsmeny/lib/bedriftsmeny.css';
 import { AltinnOrganisasjon } from '../api/organisasjonstre/organisasjonstre-utils';
 import { RestStatus } from '../api/api-utils';
-import {
-    RestAltinnOrganisasjoner,
-    RestOrganisasjonstre,
-} from '../api/organisasjonstre/organisasjonstre-api';
+import { RestAltinnOrganisasjoner } from '../api/organisasjonstre/organisasjonstre-api';
 
 interface Props {
     tittel: string;
-    // restOrganisasjonstre: RestOrganisasjonstre;
     restOrganisasjoner: RestAltinnOrganisasjoner;
 }
 
