@@ -20,7 +20,7 @@ const mapTilAltinnOrganisasjon = (
 export const getOrganisasjonerMock = (): AltinnOrganisasjon[] => {
     let organisasjoner: AltinnOrganisasjon[] = [];
 
-    organisasjonstreMock.forEach(juridiskEnhetMedUnderenheter => {
+    /*organisasjonstreMock.forEach(juridiskEnhetMedUnderenheter => {
         const { juridiskEnhet, underenheter } = juridiskEnhetMedUnderenheter;
         organisasjoner.push(mapTilAltinnOrganisasjon(juridiskEnhet, null, 'Enterprise', 'AS'));
         underenheter.forEach(underenhet =>
@@ -28,6 +28,6 @@ export const getOrganisasjonerMock = (): AltinnOrganisasjon[] => {
                 mapTilAltinnOrganisasjon(underenhet, juridiskEnhet.orgnr, 'Business', 'BEDR')
             )
         );
-    });
-    return organisasjoner;
+    });*/
+    return organisasjonstreMock;
 };
