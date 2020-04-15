@@ -16,7 +16,6 @@ const Banner: React.FunctionComponent<Props & RouteComponentProps> = props => {
     const { history, tittel, restOrganisasjoner } = props;
     let altinnOrganisasjoner: AltinnOrganisasjon[] =
         restOrganisasjoner.status === RestStatus.Suksess ? restOrganisasjoner.data : [];
-    console.log(altinnOrganisasjoner);
     return (
         <Bedriftsmeny
             organisasjoner={altinnOrganisasjoner}

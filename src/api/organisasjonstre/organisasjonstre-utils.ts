@@ -26,23 +26,6 @@ export interface JuridiskEnhetMedUnderenheter {
 
 export type Organisasjonstre = JuridiskEnhetMedUnderenheter[];
 
-const plukkUtJuridiskeEnheter = (
-    altinnOrganisasjoner: AltinnOrganisasjon[]
-): AltinnOrganisasjon[] => {
-    return altinnOrganisasjoner.filter(org => org.Type === 'Enterprise');
-};
-
-const mapTilOrganisasjon = (
-    altinnOrganisasjon: AltinnOrganisasjon,
-    harTilgang: boolean
-): Organisasjon => {
-    return {
-        navn: altinnOrganisasjon.Name,
-        orgnr: altinnOrganisasjon.OrganizationNumber,
-        harTilgang: harTilgang,
-    };
-};
-
 export const finnOrgnumreTilManglendeJuridiskeEnheter = (
     altinnOrganisasjoner: AltinnOrganisasjon[]
 ): string[] => {
@@ -63,73 +46,6 @@ export const finnOrgnumreTilManglendeJuridiskeEnheter = (
 
     return fjernDupliserteOrgnumre(juridiskeEnheterBrukerIkkeHarTilgangTil);
 };
-
-const hentManglendeJuridiskeEnheter = async (
-    altinnOrganisasjoner: AltinnOrganisasjon[]
-): Promise<Organisasjon[]> => {
-    const manglendeOrgnumre: string[] = finnOrgnumreTilManglendeJuridiskeEnheter(
-        altinnOrganisasjoner
-    );
-    return await hentJuridiskeEnheter(manglendeOrgnumre);
-};
-
-export const mapTilOrganisasjonstre = (
-    altinnOrganisasjoner: AltinnOrganisasjon[],
-    manglendeJuridiskeEnheter: Organisasjon[]
-): Organisasjonstre => {
-    const juridiskeEnheterMedTilgang = plukkUtJuridiskeEnheter(
-        altinnOrganisasjoner
-    ).map(altinnOrganisasjon => mapTilOrganisasjon(altinnOrganisasjon, true));
-
-    const juridiskeEnheterUtenTilgang = manglendeJuridiskeEnheter.map(org => {
-        return { ...org, harTilgang: false };
-    });
-
-    const hentUnderenheterTilhørendeJuridiskEnhet = (
-        juridiskEnhet: Organisasjon
-    ): Organisasjon[] => {
-        return altinnOrganisasjoner
-            .filter(
-                altinnOrganisasjon =>
-                    altinnOrganisasjon.ParentOrganizationNumber === juridiskEnhet.orgnr
-            )
-            .map(altinnOrganisasjon => mapTilOrganisasjon(altinnOrganisasjon, true));
-    };
-
-    const organisasjonstre: Organisasjonstre = [
-        ...juridiskeEnheterUtenTilgang,
-        ...juridiskeEnheterMedTilgang,
-    ]
-        .map(juridiskEnhet => {
-            return {
-                juridiskEnhet: juridiskEnhet,
-                underenheter: hentUnderenheterTilhørendeJuridiskEnhet(juridiskEnhet),
-            };
-        })
-        .filter(
-            juridiskEnhetMedUnderenheter => juridiskEnhetMedUnderenheter.underenheter.length > 0
-        );
-
-    return organisasjonstre;
-};
-
-/*export const hentOrganisasjonerOgGenererOrganisasjonstre = async (): Promise<RestRessurs<
-    Organisasjonstre
->> => {
-    try {
-        const altinnOrganisasjoner = await hentAltinnOrganisasjonerBrukerHarTilgangTil();
-        const manglendeJuridiskeEnheter = await hentManglendeJuridiskeEnheter(altinnOrganisasjoner);
-        return {
-            status: RestStatus.Suksess,
-            data: mapTilOrganisasjonstre(altinnOrganisasjoner, manglendeJuridiskeEnheter),
-        };
-    } catch (error) {
-        Sentry.captureException(error);
-        return {
-            status: error.status || RestStatus.Feil,
-        };
-    }
-};*/
 
 export const hentAltinnOrganisasjoner = async (): Promise<RestRessurs<AltinnOrganisasjon[]>> => {
     try {

@@ -53,8 +53,8 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
     },
     {
         Name: 'HEI OG HÅ BARNEHAGE',
-        OrganizationNumber: '777777777',
         Type: 'Enterprise',
+        OrganizationNumber: '777777777',
         OrganizationForm: 'AS',
         Status: 'Active',
         ParentOrganizationNumber: '',
@@ -86,90 +86,5 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
         ParentOrganizationNumber: '999999999',
     },
 ];
-/*
-const fleskOgFisk: JuridiskEnhetMedUnderenheter = {
-    juridiskEnhet: {
-        navn: 'FLESK OG FISK AS',
-        orgnr: '111111111',
-        harTilgang: true,
-    },
-    underenheter: [
-        {
-            navn: 'FLESK OG FISK OSLO',
-            orgnr: '910969439',
-            harTilgang: true,
-        },
-        {
-            navn: 'FLESK OG FISK HAMAR',
-            orgnr: '333333333',
-            harTilgang: true,
-        },
-        {
-            navn: 'FLESK OG FISK GULEN',
-            orgnr: '444444444',
-            harTilgang: true,
-        },
-    ],
-};
-*/
-
-const olaNordmann: AltinnOrganisasjon[] = [
-    /* {
-        Name: 'OLA NORDMANN ENK',
-        Type: 'Enterprise',
-        OrganizationNumber: '555555555',
-        OrganizationForm: 'AS',
-        Status: 'Active',
-        ParentOrganizationNumber: '',
-    },
-
-    {
-        Name: 'OLA NORDMANN ENK',
-        Type: 'Business',
-        OrganizationNumber: '666666666',
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-        ParentOrganizationNumber: '555555555',
-    },*/
-];
-
-/*const heiOgHåBarnehage: JuridiskEnhetMedUnderenheter = {
-    juridiskEnhet: {
-        navn: 'HEI OG HÅ BARNEHAGE',
-        orgnr: '777777777',
-        harTilgang: true,
-    },
-    underenheter: [
-        {
-            navn: 'HEI OG HÅ BARNEHAGE',
-            orgnr: '888888888',
-            harTilgang: true,
-        },
-    ],
-};*/
-/*
-const feil: JuridiskEnhetMedUnderenheter = {
-    juridiskEnhet: {
-        navn: 'FEIL AS',
-        orgnr: '999999999',
-        harTilgang: true,
-    },
-    underenheter: [
-        {
-            navn: 'FEIL',
-            orgnr: '101010101',
-            harTilgang: true,
-        },
-    ],
-};*/
-/*
-export const organisasjonstreMock: Organisasjonstre = [
-    fleskOgFisk,
-    olaNordmann,
-    heiOgHåBarnehage,
-    feil,
-];*/
 
 export const organisasjonstreMock: AltinnOrganisasjon[] = fleskOgFisk;
-/*heiOgHåBarnehage,
-    feil,*/
