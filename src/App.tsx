@@ -7,7 +7,7 @@ import Kalkulator from './Kalkulator/Kalkulator';
 import Forside from './Forside/Forside';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
 import IAwebpanel from './Forside/IAwebpanel/IAwebpanel';
-import { useRestOrganisasjonstre } from './api/organisasjonstre/organisasjonstre-api';
+import { useRestOrganisasjoner } from './api/altinnorganisasjon/altinnorganisasjon-api';
 import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
@@ -38,7 +38,7 @@ const App: FunctionComponent = () => {
 const AppContent: FunctionComponent = () => {
     const orgnr = useOrgnr();
 
-    const restOrganisasjonstre = useRestOrganisasjonstre();
+    const restOrganisasjoner = useRestOrganisasjoner();
     const restSykefraværshistorikk = useRestSykefraværshistorikk(orgnr);
     const restFeatureToggles = useRestFeatureToggles();
     const restBedriftsmetrikker = useRestBedriftsmetrikker(orgnr);
@@ -46,14 +46,14 @@ const AppContent: FunctionComponent = () => {
     let innhold;
 
     if (
-        restOrganisasjonstre.status === RestStatus.LasterInn ||
+        restOrganisasjoner.status === RestStatus.LasterInn ||
         restFeatureToggles.status === RestStatus.LasterInn ||
         restBedriftsmetrikker.status === RestStatus.LasterInn
     ) {
         innhold = <Lasteside />;
-    } else if (restOrganisasjonstre.status === RestStatus.IkkeInnlogget) {
+    } else if (restOrganisasjoner.status === RestStatus.IkkeInnlogget) {
         return <Innloggingsside />;
-    } else if (restOrganisasjonstre.status !== RestStatus.Suksess) {
+    } else if (restOrganisasjoner.status !== RestStatus.Suksess) {
         innhold = <FeilFraAltinnSide />;
     } else {
         if (
@@ -91,7 +91,10 @@ const AppContent: FunctionComponent = () => {
 
     return (
         <>
-            <Banner tittel="Sykefraværsstatistikk" restOrganisasjonstre={restOrganisasjonstre} />
+            <Banner
+                tittel="Sykefraværsstatistikk"
+                restOrganisasjoner={restOrganisasjoner}
+            />
             {innhold}
         </>
     );

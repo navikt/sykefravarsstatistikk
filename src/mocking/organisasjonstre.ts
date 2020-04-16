@@ -1,78 +1,90 @@
-import { JuridiskEnhetMedUnderenheter, Organisasjonstre } from '../api/organisasjonstre/organisasjonstre-utils';
+import { AltinnOrganisasjon } from '../api/altinnorganisasjon/altinnorganisasjon-api';
 
-const fleskOgFisk: JuridiskEnhetMedUnderenheter = {
-    juridiskEnhet: {
-        navn: 'FLESK OG FISK AS',
-        orgnr: '111111111',
-        harTilgang: true,
+const fleskOgFisk: AltinnOrganisasjon[] = [
+    {
+        Name: 'FLESK OG FISK AS',
+        Type: 'Enterprise',
+        OrganizationNumber: '111111111',
+        OrganizationForm: 'AS',
+        Status: 'Active',
+        ParentOrganizationNumber: '',
     },
-    underenheter: [
-        {
-            navn: 'FLESK OG FISK OSLO',
-            orgnr: '910969439',
-            harTilgang: true,
-        },
-        {
-            navn: 'FLESK OG FISK HAMAR',
-            orgnr: '333333333',
-            harTilgang: true,
-        },
-        {
-            navn: 'FLESK OG FISK GULEN',
-            orgnr: '444444444',
-            harTilgang: true,
-        },
-    ],
-};
 
-const olaNordmann: JuridiskEnhetMedUnderenheter = {
-    juridiskEnhet: {
-        navn: 'OLA NORDMANN ENK',
-        orgnr: '555555555',
-        harTilgang: true,
+    {
+        Name: 'FLESK OG FISK OSLO',
+        Type: 'Business',
+        OrganizationNumber: '910969439',
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '111111111',
     },
-    underenheter: [
-        {
-            navn: 'OLA NORDMANN ENK',
-            orgnr: '666666666',
-            harTilgang: true,
-        },
-    ],
-};
-
-const heiOgHåBarnehage: JuridiskEnhetMedUnderenheter = {
-    juridiskEnhet: {
-        navn: 'HEI OG HÅ BARNEHAGE',
-        orgnr: '777777777',
-        harTilgang: true,
+    {
+        Name: 'FLESK OG FISK HAMAR',
+        Type: 'Business',
+        OrganizationNumber: '333333333',
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '111111111',
     },
-    underenheter: [
-        {
-            navn: 'HEI OG HÅ BARNEHAGE',
-            orgnr: '888888888',
-            harTilgang: true,
-        },
-    ],
-};
-
-const feil: JuridiskEnhetMedUnderenheter = {
-    juridiskEnhet: {
-        navn: 'FEIL AS',
-        orgnr: '999999999',
-        harTilgang: true,
+    {
+        Name: 'FLESK OG FISK GULEN',
+        Type: 'Business',
+        OrganizationNumber: '444444444',
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '111111111',
     },
-    underenheter: [
-        {
-            navn: 'FEIL',
-            orgnr: '101010101',
-            harTilgang: true,
-        },
-    ],
-};
+    {
+        Name: 'OLA NORDMANN ENK',
+        Type: 'Enterprise',
+        OrganizationNumber: '555555555',
+        OrganizationForm: 'AS',
+        Status: 'Active',
+        ParentOrganizationNumber: '',
+    },
 
-export const organisasjonstreMock: Organisasjonstre = [
-    fleskOgFisk,
-    olaNordmann,
-    heiOgHåBarnehage,
-    feil,
+    {
+        Name: 'OLA NORDMANN ENK',
+        Type: 'Business',
+        OrganizationNumber: '666666666',
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '555555555',
+    },
+    {
+        Name: 'HEI OG HÅ BARNEHAGE',
+        Type: 'Enterprise',
+        OrganizationNumber: '777777777',
+        OrganizationForm: 'AS',
+        Status: 'Active',
+        ParentOrganizationNumber: '',
+    },
+
+    {
+        Name: 'HEI OG HÅ BARNEHAGE',
+        Type: 'Business',
+        OrganizationNumber: '888888888',
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '777777777',
+    },
+    {
+        Name: 'FEIL AS',
+        Type: 'Enterprise',
+        OrganizationNumber: '999999999',
+        OrganizationForm: 'AS',
+        Status: 'Active',
+        ParentOrganizationNumber: '',
+    },
+
+    {
+        Name: 'FEIL',
+        Type: 'Business',
+        OrganizationNumber: '101010101',
+        OrganizationForm: 'AS',
+        Status: 'Active',
+        ParentOrganizationNumber: '999999999',
+    },
 ];
+
+export const organisasjonstreMock: AltinnOrganisasjon[] = fleskOgFisk;

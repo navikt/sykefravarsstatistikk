@@ -1185,10 +1185,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@navikt/bedriftsmeny@^1.0.15":
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/@navikt/bedriftsmeny/-/bedriftsmeny-1.0.15.tgz#0297f47dc462b3ddf3738db9f64117363d8ddc7f"
-  integrity sha512-KGE7AJIspJDfy2RMrcDVhZB7SmGkQNSWgIlAlUjxZqzZSyw8QJWx/XNnbs7vsyEVyaivKUulFaR/ER6YF8JrvQ==
+"@navikt/bedriftsmeny@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@navikt/bedriftsmeny/-/bedriftsmeny-2.0.5.tgz#56f06c566647effb46119d8367379ae10987fc33"
+  integrity sha512-uRw7NZJJByVmJ5460FF4tQB33WyWkZiCzElxfGzCohMrdK784oSrnfWQBA/ZpdYHQDmrPnaajI4Nwas9VkWIkA==
   dependencies:
     classnames "^2.2.6"
     fuzzysort "^1.1.4"

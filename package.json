@@ -5,7 +5,7 @@
     "homepage": "/sykefravarsstatistikk",
     "dependencies": {
         "@craco/craco": "^5.6.3",
-        "@navikt/bedriftsmeny": "^1.0.15",
+        "@navikt/bedriftsmeny": "^2.0.5",
         "@sentry/browser": "^5.12.1",
         "@types/amplitude-js": "^5.8.0",
         "amplitude-js": "^5.9.0",
