@@ -1,7 +1,4 @@
-import {
-    hentAltinnOrganisasjonerBrukerHarTilgangTil,
-    hentJuridiskeEnheter,
-} from './organisasjonstre-api';
+import { hentAltinnOrganisasjonerBrukerHarTilgangTil } from './organisasjonstre-api';
 import { RestRessurs, RestStatus } from '../api-utils';
 import * as Sentry from '@sentry/browser';
 
@@ -24,8 +21,9 @@ export interface JuridiskEnhetMedUnderenheter {
     underenheter: Organisasjon[];
 }
 
-export type Organisasjonstre = JuridiskEnhetMedUnderenheter[];
+//export type Organisasjonstre = JuridiskEnhetMedUnderenheter[];
 
+/*
 export const finnOrgnumreTilManglendeJuridiskeEnheter = (
     altinnOrganisasjoner: AltinnOrganisasjon[]
 ): string[] => {
@@ -46,6 +44,7 @@ export const finnOrgnumreTilManglendeJuridiskeEnheter = (
 
     return fjernDupliserteOrgnumre(juridiskeEnheterBrukerIkkeHarTilgangTil);
 };
+*/
 
 export const hentAltinnOrganisasjoner = async (): Promise<RestRessurs<AltinnOrganisasjon[]>> => {
     try {

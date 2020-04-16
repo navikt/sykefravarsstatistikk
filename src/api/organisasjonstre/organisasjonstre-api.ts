@@ -22,6 +22,7 @@ export const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (): Promise<Alt
     return await respons.json();
 };
 
+/*
 export const hentJuridiskeEnheter = async (orgnumre: string[]): Promise<Organisasjon[]> => {
     if (!orgnumre || orgnumre.length === 0) {
         return [];
@@ -51,6 +52,7 @@ export const hentJuridiskeEnheter = async (orgnumre: string[]): Promise<Organisa
         return organisasjon;
     });
 };
+*/
 
 export const useRestOrganisasjoner = (): RestAltinnOrganisasjoner => {
     const [restAltinnOrganisasjoner, setRestAltinnOrganisasjoner] = useState<
