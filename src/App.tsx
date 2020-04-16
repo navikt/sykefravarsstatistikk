@@ -93,7 +93,6 @@ const AppContent: FunctionComponent = () => {
         <>
             <Banner
                 tittel="Sykefraværsstatistikk"
-                //restOrganisasjonstre={restOrganisasjonstre}
                 restOrganisasjoner={restOrganisasjoner}
             />
             {innhold}
