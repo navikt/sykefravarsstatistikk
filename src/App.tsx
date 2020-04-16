@@ -7,7 +7,7 @@ import Kalkulator from './Kalkulator/Kalkulator';
 import Forside from './Forside/Forside';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
 import IAwebpanel from './Forside/IAwebpanel/IAwebpanel';
-import { useRestOrganisasjoner } from './api/organisasjonstre/organisasjonstre-api';
+import { useRestOrganisasjoner } from './api/altinnorganisasjon/altinnorganisasjon-api';
 import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';

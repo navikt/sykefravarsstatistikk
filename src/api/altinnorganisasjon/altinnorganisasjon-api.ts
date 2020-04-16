@@ -1,12 +1,17 @@
-import {
-    AltinnOrganisasjon,
-    hentAltinnOrganisasjoner,
-    Organisasjon,
-} from './organisasjonstre-utils';
 import { getRestStatus, RestRessurs, RestStatus } from '../api-utils';
 import { useEffect, useState } from 'react';
+import * as Sentry from '@sentry/browser';
 
 export type RestAltinnOrganisasjoner = RestRessurs<AltinnOrganisasjon[]>;
+
+export interface AltinnOrganisasjon {
+    Name: string;
+    Type: string;
+    OrganizationNumber: string;
+    OrganizationForm: string;
+    Status: string;
+    ParentOrganizationNumber: string;
+}
 
 export const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (): Promise<AltinnOrganisasjon[]> => {
     const respons = await fetch('/min-side-arbeidsgiver/api/organisasjoner');
@@ -22,38 +27,6 @@ export const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (): Promise<Alt
     return await respons.json();
 };
 
-/*
-export const hentJuridiskeEnheter = async (orgnumre: string[]): Promise<Organisasjon[]> => {
-    if (!orgnumre || orgnumre.length === 0) {
-        return [];
-    }
-
-    const urlTilBrreg =
-        'https://data.brreg.no/enhetsregisteret/api/enheter/?organisasjonsnummer=' +
-        orgnumre.join(',');
-
-    const respons = await fetch(urlTilBrreg);
-
-    if (!respons.ok) {
-        throw new Error('Feil ved henting av organisasjoner fra Brønnøysundregistrene');
-    }
-
-    const responsJson = await respons.json();
-
-    if (!responsJson._embedded) {
-        return [];
-    }
-
-    return responsJson._embedded.enheter.map((juridiskEnhetFraBrreg: any) => {
-        const organisasjon: Organisasjon = {
-            navn: juridiskEnhetFraBrreg.navn,
-            orgnr: juridiskEnhetFraBrreg.organisasjonsnummer,
-        };
-        return organisasjon;
-    });
-};
-*/
-
 export const useRestOrganisasjoner = (): RestAltinnOrganisasjoner => {
     const [restAltinnOrganisasjoner, setRestAltinnOrganisasjoner] = useState<
         RestAltinnOrganisasjoner
@@ -68,4 +41,17 @@ export const useRestOrganisasjoner = (): RestAltinnOrganisasjoner => {
     }, []);
 
     return restAltinnOrganisasjoner;
+};
+
+const hentAltinnOrganisasjoner = async (): Promise<RestRessurs<AltinnOrganisasjon[]>> => {
+    try {
+        const altinnOrganisasjoner = await hentAltinnOrganisasjonerBrukerHarTilgangTil();
+        return {
+            status: RestStatus.Suksess,
+            data: altinnOrganisasjoner,
+        };
+    } catch (error) {
+        Sentry.captureException(error);
+        return { status: error.status || RestStatus.Feil };
+    }
 };

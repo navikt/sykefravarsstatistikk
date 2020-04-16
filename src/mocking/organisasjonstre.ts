@@ -1,4 +1,4 @@
-import { AltinnOrganisasjon } from '../api/organisasjonstre/organisasjonstre-utils';
+import { AltinnOrganisasjon } from '../api/altinnorganisasjon/altinnorganisasjon-api';
 
 const fleskOgFisk: AltinnOrganisasjon[] = [
     {
