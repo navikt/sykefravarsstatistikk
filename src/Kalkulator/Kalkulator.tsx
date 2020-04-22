@@ -11,7 +11,9 @@ import { scrollToBanner } from '../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import {
     getAntallTapteDagsverkSiste4Kvartaler,
-    getNåværendeSykefraværsprosent,
+    getSykefraværsprosentSiste4Kvartaler,
+    AntallTapteDagsverkEllerProsent,
+    getAntallMuligeDagsverSiste4Kvartaler,
 } from './kalkulator-utils';
 import amplitude from '../utils/amplitude';
 
@@ -22,6 +24,7 @@ interface Props {
 const Kalkulator: FunctionComponent<Props> = props => {
     const { restSykefraværshistorikk } = props;
     const [tapteDagsverk, setTapteDagsverk] = useState<number | undefined>();
+    const [sykefraværsprosent, setSykefraværsprosent] = useState<number | undefined>();
     const [antallTapteDagsverkEllerProsent, setAntalltapteDagsverkEllerProsent] = useState<
         string
     >();
@@ -32,8 +35,24 @@ const Kalkulator: FunctionComponent<Props> = props => {
 
     const totalKostnad = tapteDagsverk && kostnadDagsverk ? tapteDagsverk * kostnadDagsverk : 0;
 
+    const getTotalKoistnad = () => {
+        if (!tapteDagsverk || !kostnadDagsverk || !sykefraværsprosent) {
+            return 0;
+        } else if (
+            antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+        ) {
+            return sykefraværsprosent * 1 * kostnadDagsverk;
+        } else {
+            return tapteDagsverk * kostnadDagsverk;
+        }
+    };
     const harEndretTapteDagsverk = tapteDagsverk !== undefined;
 
+    const labelsTapteDagsverkEllerProsent =
+        antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+            ? AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+            : AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK;
+    const setAntallTapteDagsverkEllerProsent = (value: number) => {};
     useEffect(() => {
         if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
             setTapteDagsverk(undefined);
@@ -52,7 +71,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                 setTapteDagsverk(tapteDagsverkSiste4Kvartaler);
                 setSkalViseDefaultTapteDagsverk(true);
             }
-            console.log(getNåværendeSykefraværsprosent(restSykefraværshistorikk.data));
+            console.log(getSykefraværsprosentSiste4Kvartaler(restSykefraværshistorikk.data));
         }
     }, [restSykefraværshistorikk, harEndretTapteDagsverk, antallTapteDagsverkEllerProsent]);
 
@@ -95,14 +114,18 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     name="antallTapteDagsverk"
                     defaultChecked={true}
                     onChange={() => {
-                        setAntalltapteDagsverkEllerProsent('antallTapteDagsverk');
+                        setAntalltapteDagsverkEllerProsent(
+                            AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
+                        );
                     }}
                 />
                 <Radio
                     label="Sykefraværsprosent"
                     name="antallTapteDagsverk"
                     onChange={() => {
-                        setAntalltapteDagsverkEllerProsent('sykefraværsprosent');
+                        setAntalltapteDagsverkEllerProsent(
+                            AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                        );
                     }}
                 />
             </div>
@@ -159,7 +182,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         </Normaltekst>
                     </LesMerPanel>
                     <Input
-                        label={<Element>Antall tapte dagsverk</Element>}
+                        label={<Element>{labelsTapteDagsverkEllerProsent}</Element>}
                         onChange={event => setTapteDagsverk(parseInt(event.target.value))}
                         onClick={() => {
                             amplitude.logEvent(

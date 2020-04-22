@@ -1,8 +1,10 @@
 import { Sykefraværshistorikk, SykefraværshistorikkType } from '../api/sykefraværshistorikk';
-import { number } from 'prop-types';
 
 const summerTall = (tall: number[]) => tall.reduce((a, b) => a + b);
-
+export enum AntallTapteDagsverkEllerProsent {
+    ANTALLTAPTEDAGSVERK = 'antallTapteDagsverk',
+    SYKEFRAVÆRSPROSENT = 'sykefraværsprosent',
+}
 export const getAntallTapteDagsverkSiste4Kvartaler = (
     historikkListe: Sykefraværshistorikk[]
 ): number | 'erMaskertEllerHarIkkeNokData' => {
@@ -24,7 +26,7 @@ export const getAntallTapteDagsverkSiste4Kvartaler = (
     );
     return Math.round(summerTall(tapteDagsverkForSiste4Kvartaler));
 };
-export const getNåværendeSykefraværsprosent = (
+export const getSykefraværsprosentSiste4Kvartaler = (
     historikkListe: Sykefraværshistorikk[]
 ): number | 'erMaskertEllerHarIkkeNokData' => {
     const alleProsenter = [
@@ -32,9 +34,41 @@ export const getNåværendeSykefraværsprosent = (
             .kvartalsvisSykefraværsprosent,
     ];
     alleProsenter.reverse();
-    if (alleProsenter[0].erMaskert) {
+    if (
+        alleProsenter[0].erMaskert ||
+        alleProsenter[1].erMaskert ||
+        alleProsenter[2].erMaskert ||
+        alleProsenter[3].erMaskert
+    ) {
         return 'erMaskertEllerHarIkkeNokData';
     } else {
-        return alleProsenter[0].prosent as number;
+        return (((alleProsenter[0].prosent as number) +
+            (alleProsenter[1].prosent as number) +
+            (alleProsenter[2].prosent as number) +
+            (alleProsenter[3].prosent as number)) /
+            4) as number;
+    }
+};
+export const getAntallMuligeDagsverSiste4Kvartaler = (
+    historikkListe: Sykefraværshistorikk[]
+): number | 'erMaskertEllerHarIkkeNokData' => {
+    const alleProsenter = [
+        ...historikkListe.find(historikk => historikk.type === SykefraværshistorikkType.VIRKSOMHET)!
+            .kvartalsvisSykefraværsprosent,
+    ];
+    alleProsenter.reverse();
+    if (
+        alleProsenter[0].erMaskert ||
+        alleProsenter[1].erMaskert ||
+        alleProsenter[2].erMaskert ||
+        alleProsenter[3].erMaskert
+    ) {
+        return 'erMaskertEllerHarIkkeNokData';
+    } else {
+        return (((alleProsenter[0].muligeDagsverk as number) +
+            (alleProsenter[1].muligeDagsverk as number) +
+            (alleProsenter[0].muligeDagsverk as number) +
+            (alleProsenter[1].muligeDagsverk as number)) /
+            4) as number;
     }
 };
