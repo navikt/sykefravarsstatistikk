@@ -25,7 +25,7 @@ export const getAntallTapteDagsverkSiste4Kvartaler = (
         prosent => prosent.tapteDagsverk!
     );
     return Math.round(summerTall(tapteDagsverkForSiste4Kvartaler));
-};
+}; /*
 export const getSykefraværsprosentSiste4Kvartaler = (
     historikkListe: Sykefraværshistorikk[]
 ): number | 'erMaskertEllerHarIkkeNokData' => {
@@ -72,3 +72,4 @@ export const getAntallMuligeDagsverSiste4Kvartaler = (
             4) as number;
     }
 };
+*/

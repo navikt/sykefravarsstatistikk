@@ -11,9 +11,9 @@ import { scrollToBanner } from '../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import {
     getAntallTapteDagsverkSiste4Kvartaler,
-    getSykefraværsprosentSiste4Kvartaler,
+    //  getSykefraværsprosentSiste4Kvartaler,
     AntallTapteDagsverkEllerProsent,
-    getAntallMuligeDagsverSiste4Kvartaler,
+    //getAntallMuligeDagsverSiste4Kvartaler,
 } from './kalkulator-utils';
 import amplitude from '../utils/amplitude';
 
@@ -71,7 +71,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                 setTapteDagsverk(tapteDagsverkSiste4Kvartaler);
                 setSkalViseDefaultTapteDagsverk(true);
             }
-            console.log(getSykefraværsprosentSiste4Kvartaler(restSykefraværshistorikk.data));
+            //console.log(getSykefraværsprosentSiste4Kvartaler(restSykefraværshistorikk.data));
         }
     }, [restSykefraværshistorikk, harEndretTapteDagsverk, antallTapteDagsverkEllerProsent]);
 
