@@ -28,7 +28,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
     const [muligeDagsverk, setMuligeDagsverk] = useState<number | undefined>();
     const [sykefraværsprosent, setSykefraværsprosent] = useState<number | undefined>();
     const [antallTapteDagsverkEllerProsent, setAntalltapteDagsverkEllerProsent] = useState<
-        string
+        AntallTapteDagsverkEllerProsent
     >();
     const [skalViseDefaultTapteDagsverk, setSkalViseDefaultTapteDagsverk] = useState<
         boolean | undefined
@@ -67,7 +67,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
             ? AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
             : AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK;
 
-    const setVerdiAntallTapteDagsverkEllerProsent = (verdi: number | undefined) => {
+    const setVerdiAntallTapteDagsverkEllerProsent = (verdi: number) => {
         if (
             antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
         ) {
@@ -167,7 +167,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
     const radioProsentEllerAntall = (
         <>
             <div>
-                <div>Beregn kostnad basert på</div>
+                <div className="kalkulator__radiogrouplabel">Beregn kostnad basert på</div>
                 <Radio
                     label="Tapte dagsverk"
                     name="antallTapteDagsverk"
