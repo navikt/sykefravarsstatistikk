@@ -10,10 +10,11 @@ import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
 import { scrollToBanner } from '../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import {
-    getAntallTapteDagsverkSiste4Kvartaler,
-    //  getSykefraværsprosentSiste4Kvartaler,
     AntallTapteDagsverkEllerProsent,
-    //getAntallMuligeDagsverSiste4Kvartaler,
+    getAntallMuligeDagsverkSiste4Kvartaler,
+    getAntallTapteDagsverkSiste4Kvartaler,
+    getSykefraværsprosentSiste4Kvartaler,
+    Maskering,
 } from './kalkulator-utils';
 import amplitude from '../utils/amplitude';
 
@@ -24,6 +25,7 @@ interface Props {
 const Kalkulator: FunctionComponent<Props> = props => {
     const { restSykefraværshistorikk } = props;
     const [tapteDagsverk, setTapteDagsverk] = useState<number | undefined>();
+    const [muligeDagsverk, setMuligeDagsverk] = useState<number | undefined>();
     const [sykefraværsprosent, setSykefraværsprosent] = useState<number | undefined>();
     const [antallTapteDagsverkEllerProsent, setAntalltapteDagsverkEllerProsent] = useState<
         string
@@ -35,13 +37,13 @@ const Kalkulator: FunctionComponent<Props> = props => {
 
     const totalKostnad = tapteDagsverk && kostnadDagsverk ? tapteDagsverk * kostnadDagsverk : 0;
 
-    const getTotalKoistnad = () => {
-        if (!tapteDagsverk || !kostnadDagsverk || !sykefraværsprosent) {
+    const getTotalKostnad = () => {
+        if (!tapteDagsverk || !kostnadDagsverk || !sykefraværsprosent || !muligeDagsverk) {
             return 0;
         } else if (
             antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
         ) {
-            return sykefraværsprosent * 1 * kostnadDagsverk;
+            return ((sykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
         } else {
             return tapteDagsverk * kostnadDagsverk;
         }
@@ -52,24 +54,62 @@ const Kalkulator: FunctionComponent<Props> = props => {
         antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
             ? AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
             : AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK;
-    const setAntallTapteDagsverkEllerProsent = (value: number) => {};
+    const setVerdiAntallTapteDagsverkEllerProsent = (verdi: number | undefined) => {
+        switch (antallTapteDagsverkEllerProsent) {
+            case (AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK, undefined): {
+                //const tapteDagsverkSiste4Kvartaler = value;
+                setTapteDagsverk(verdi);
+            }
+            case AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT: {
+                setSykefraværsprosent(verdi);
+            }
+        }
+        //console.log(getSykefraværsprosentSiste4Kvartaler(restSykefraværshistorikk.data));
+    };
     useEffect(() => {
         if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
             setTapteDagsverk(undefined);
+            setMuligeDagsverk(undefined);
+            setSykefraværsprosent(undefined);
         }
     }, [restSykefraværshistorikk]);
 
     useEffect(() => {
         if (restSykefraværshistorikk.status === RestStatus.Suksess && !harEndretTapteDagsverk) {
-            const tapteDagsverkSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(
-                restSykefraværshistorikk.data
-            );
-            if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
-                setTapteDagsverk(undefined);
-                setSkalViseDefaultTapteDagsverk(false);
-            } else {
-                setTapteDagsverk(tapteDagsverkSiste4Kvartaler);
-                setSkalViseDefaultTapteDagsverk(true);
+            switch (antallTapteDagsverkEllerProsent) {
+                case (AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK, undefined): {
+                    const tapteDagsverkSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(
+                        restSykefraværshistorikk.data
+                    );
+                    if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
+                        setTapteDagsverk(undefined);
+                        setSkalViseDefaultTapteDagsverk(false);
+                    } else {
+                        setTapteDagsverk(tapteDagsverkSiste4Kvartaler);
+                        setSkalViseDefaultTapteDagsverk(true);
+                    }
+                }
+                case AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT: {
+                    const muligeDagsverkSiste4Kvartaler = getAntallMuligeDagsverkSiste4Kvartaler(
+                        restSykefraværshistorikk.data
+                    );
+                    const prosentTapteDagsverkSiste4Kvartaler = getSykefraværsprosentSiste4Kvartaler(
+                        restSykefraværshistorikk.data
+                    );
+                    if (
+                        prosentTapteDagsverkSiste4Kvartaler ===
+                            Maskering.ERMASKERTELLERHARIKKENOEDATA ||
+                        muligeDagsverkSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA
+                    ) {
+                        setSykefraværsprosent(undefined);
+                        setSkalViseDefaultTapteDagsverk(false);
+                    } else {
+                        setSykefraværsprosent(prosentTapteDagsverkSiste4Kvartaler);
+                        console.log('syfoprosent: ' + sykefraværsprosent);
+                        setMuligeDagsverk(muligeDagsverkSiste4Kvartaler);
+                        setSkalViseDefaultTapteDagsverk(true);
+                    }
+                }
             }
             //console.log(getSykefraværsprosentSiste4Kvartaler(restSykefraværshistorikk.data));
         }
@@ -183,13 +223,20 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     </LesMerPanel>
                     <Input
                         label={<Element>{labelsTapteDagsverkEllerProsent}</Element>}
-                        onChange={event => setTapteDagsverk(parseInt(event.target.value))}
+                        onChange={event =>
+                            setVerdiAntallTapteDagsverkEllerProsent(parseInt(event.target.value))
+                        }
                         onClick={() => {
                             amplitude.logEvent(
                                 '#sykefravarsstatistikk-kalkulator dagsverk input-klikk'
                             );
                         }}
-                        value={tapteDagsverk || ''}
+                        value={
+                            antallTapteDagsverkEllerProsent ===
+                            AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                                ? sykefraværsprosent
+                                : tapteDagsverk || ''
+                        }
                         bredde={'XS'}
                         maxLength={15}
                         type="number"
@@ -198,7 +245,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     {tapteDagsverkSpinner}
                     {tapteDagsverkSiste12Mnd}
                 </div>
-                <Kostnad kostnad={totalKostnad} />
+                <Kostnad kostnad={getTotalKostnad()} />
             </div>
         </div>
     );

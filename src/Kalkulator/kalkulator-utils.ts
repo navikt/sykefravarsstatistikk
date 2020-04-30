@@ -1,23 +1,36 @@
-import { Sykefraværshistorikk, SykefraværshistorikkType } from '../api/sykefraværshistorikk';
+import {
+    KvartalsvisSykefraværsprosent,
+    Sykefraværshistorikk,
+    SykefraværshistorikkType,
+} from '../api/sykefraværshistorikk';
 
 const summerTall = (tall: number[]) => tall.reduce((a, b) => a + b);
 export enum AntallTapteDagsverkEllerProsent {
     ANTALLTAPTEDAGSVERK = 'antallTapteDagsverk',
     SYKEFRAVÆRSPROSENT = 'sykefraværsprosent',
 }
-export const getAntallTapteDagsverkSiste4Kvartaler = (
+export enum Maskering {
+    ERMASKERTELLERHARIKKENOEDATA = 'erMaskertEllerHarIkkeNokData',
+}
+export const getSiste4KvartalsvisSykefraværshistorikk = (
     historikkListe: Sykefraværshistorikk[]
-): number | 'erMaskertEllerHarIkkeNokData' => {
+): KvartalsvisSykefraværsprosent[] => {
     const alleProsenter = [
         ...historikkListe.find(historikk => historikk.type === SykefraværshistorikkType.VIRKSOMHET)!
             .kvartalsvisSykefraværsprosent,
     ];
     alleProsenter.reverse();
 
-    const prosenterForSiste4Kvartaler = alleProsenter
+    return alleProsenter
         .filter((sammenligning, index) => index < 4)
         .filter(prosent => !prosent.erMaskert);
+};
 
+export const getAntallTapteDagsverkSiste4Kvartaler = (
+    historikkListe: Sykefraværshistorikk[]
+): number | 'erMaskertEllerHarIkkeNokData' => {
+    const prosenterForSiste4Kvartaler = getSiste4KvartalsvisSykefraværshistorikk(historikkListe);
+    console.log(historikkListe);
     if (prosenterForSiste4Kvartaler.length !== 4) {
         return 'erMaskertEllerHarIkkeNokData';
     }
@@ -25,51 +38,40 @@ export const getAntallTapteDagsverkSiste4Kvartaler = (
         prosent => prosent.tapteDagsverk!
     );
     return Math.round(summerTall(tapteDagsverkForSiste4Kvartaler));
-}; /*
+};
+
+export const getAntallMuligeDagsverkSiste4Kvartaler = (
+    historikkListe: Sykefraværshistorikk[]
+): number | Maskering.ERMASKERTELLERHARIKKENOEDATA => {
+    const prosenterForSiste4Kvartaler = getSiste4KvartalsvisSykefraværshistorikk(historikkListe);
+    //console.log(historikkListe);
+    if (prosenterForSiste4Kvartaler.length !== 4) {
+        return Maskering.ERMASKERTELLERHARIKKENOEDATA;
+    }
+    const tapteDagsverkForSiste4Kvartaler = prosenterForSiste4Kvartaler.map(
+        prosent => prosent.muligeDagsverk!
+    );
+    return Math.round(summerTall(tapteDagsverkForSiste4Kvartaler));
+};
+
 export const getSykefraværsprosentSiste4Kvartaler = (
     historikkListe: Sykefraværshistorikk[]
-): number | 'erMaskertEllerHarIkkeNokData' => {
-    const alleProsenter = [
-        ...historikkListe.find(historikk => historikk.type === SykefraværshistorikkType.VIRKSOMHET)!
-            .kvartalsvisSykefraværsprosent,
-    ];
-    alleProsenter.reverse();
+): number | Maskering.ERMASKERTELLERHARIKKENOEDATA => {
+    const antallTapteDagsverSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(historikkListe);
+    const antallMuligeDagsverkSiste4Kvartaler = getAntallMuligeDagsverkSiste4Kvartaler(
+        historikkListe
+    );
     if (
-        alleProsenter[0].erMaskert ||
-        alleProsenter[1].erMaskert ||
-        alleProsenter[2].erMaskert ||
-        alleProsenter[3].erMaskert
+        antallTapteDagsverSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA ||
+        antallMuligeDagsverkSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA
     ) {
-        return 'erMaskertEllerHarIkkeNokData';
+        return Maskering.ERMASKERTELLERHARIKKENOEDATA;
     } else {
-        return (((alleProsenter[0].prosent as number) +
-            (alleProsenter[1].prosent as number) +
-            (alleProsenter[2].prosent as number) +
-            (alleProsenter[3].prosent as number)) /
-            4) as number;
+        console.log('antalltaptedagsverk: ' + antallTapteDagsverSiste4Kvartaler);
+        console.log('antalmuligedagsverk:' + antallMuligeDagsverkSiste4Kvartaler);
+        return (
+            ((antallTapteDagsverSiste4Kvartaler as number) * 100) /
+            (antallMuligeDagsverkSiste4Kvartaler as number)
+        );
     }
 };
-export const getAntallMuligeDagsverSiste4Kvartaler = (
-    historikkListe: Sykefraværshistorikk[]
-): number | 'erMaskertEllerHarIkkeNokData' => {
-    const alleProsenter = [
-        ...historikkListe.find(historikk => historikk.type === SykefraværshistorikkType.VIRKSOMHET)!
-            .kvartalsvisSykefraværsprosent,
-    ];
-    alleProsenter.reverse();
-    if (
-        alleProsenter[0].erMaskert ||
-        alleProsenter[1].erMaskert ||
-        alleProsenter[2].erMaskert ||
-        alleProsenter[3].erMaskert
-    ) {
-        return 'erMaskertEllerHarIkkeNokData';
-    } else {
-        return (((alleProsenter[0].muligeDagsverk as number) +
-            (alleProsenter[1].muligeDagsverk as number) +
-            (alleProsenter[0].muligeDagsverk as number) +
-            (alleProsenter[1].muligeDagsverk as number)) /
-            4) as number;
-    }
-};
-*/
