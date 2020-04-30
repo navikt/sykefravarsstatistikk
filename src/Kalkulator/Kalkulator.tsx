@@ -35,10 +35,21 @@ const Kalkulator: FunctionComponent<Props> = props => {
     >();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
-    const totalKostnad = tapteDagsverk && kostnadDagsverk ? tapteDagsverk * kostnadDagsverk : 0;
+    //const totalKostnad = tapteDagsverk && kostnadDagsverk ? tapteDagsverk * kostnadDagsverk : 0;
 
     const getTotalKostnad = () => {
-        if (!tapteDagsverk || !kostnadDagsverk || !sykefraværsprosent || !muligeDagsverk) {
+        if (
+            kostnadDagsverk &&
+            sykefraværsprosent &&
+            muligeDagsverk &&
+            antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+        ) {
+            return ((sykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
+        } else if (tapteDagsverk && kostnadDagsverk) {
+            return tapteDagsverk * kostnadDagsverk;
+        } else {
+            return 0;
+        } /*if (!tapteDagsverk || !kostnadDagsverk || !sykefraværsprosent || !muligeDagsverk) {
             return 0;
         } else if (
             antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
@@ -46,7 +57,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
             return ((sykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
         } else {
             return tapteDagsverk * kostnadDagsverk;
-        }
+        }*/
     };
     const harEndretTapteDagsverk = tapteDagsverk !== undefined;
 
@@ -54,10 +65,10 @@ const Kalkulator: FunctionComponent<Props> = props => {
         antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
             ? AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
             : AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK;
+
     const setVerdiAntallTapteDagsverkEllerProsent = (verdi: number | undefined) => {
         switch (antallTapteDagsverkEllerProsent) {
             case (AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK, undefined): {
-                //const tapteDagsverkSiste4Kvartaler = value;
                 setTapteDagsverk(verdi);
             }
             case AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT: {
