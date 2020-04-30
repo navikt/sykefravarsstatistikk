@@ -60,6 +60,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
         }*/
     };
     const harEndretTapteDagsverk = tapteDagsverk !== undefined;
+    const harEndretSykefraværsprosent = sykefraværsprosent !== undefined;
 
     const labelsTapteDagsverkEllerProsent =
         antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
@@ -67,17 +68,12 @@ const Kalkulator: FunctionComponent<Props> = props => {
             : AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK;
 
     const setVerdiAntallTapteDagsverkEllerProsent = (verdi: number | undefined) => {
-        switch (antallTapteDagsverkEllerProsent) {
-            case AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK || undefined: {
-                console.log(
-                    'antallTapteDagsverk' + antallTapteDagsverkEllerProsent + ' verdi' + verdi
-                );
-                setTapteDagsverk(verdi);
-            }
-            case AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT: {
-                console.log('sykeoprosent' + antallTapteDagsverkEllerProsent + ' verdi' + verdi);
-                setSykefraværsprosent(verdi);
-            }
+        if (
+            antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+        ) {
+            setSykefraværsprosent(verdi);
+        } else {
+            setTapteDagsverk(verdi);
         }
         //console.log(getSykefraværsprosentSiste4Kvartaler(restSykefraværshistorikk.data));
     };
@@ -90,8 +86,12 @@ const Kalkulator: FunctionComponent<Props> = props => {
     }, [restSykefraværshistorikk]);
 
     useEffect(() => {
-        console.log('harendret ' + harEndretTapteDagsverk);
-        if (restSykefraværshistorikk.status === RestStatus.Suksess && !harEndretTapteDagsverk) {
+        console.log('harendrettapte ' + harEndretTapteDagsverk);
+        console.log('harendretsyfoprosent ' + harEndretSykefraværsprosent);
+        if (
+            restSykefraværshistorikk.status === RestStatus.Suksess &&
+            (!harEndretTapteDagsverk || !harEndretSykefraværsprosent)
+        ) {
             switch (antallTapteDagsverkEllerProsent) {
                 case (AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK, undefined): {
                     console.log(
