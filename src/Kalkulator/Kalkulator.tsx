@@ -45,7 +45,11 @@ const Kalkulator: FunctionComponent<Props> = props => {
             antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
         ) {
             return ((sykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
-        } else if (tapteDagsverk && kostnadDagsverk) {
+        } else if (
+            tapteDagsverk &&
+            kostnadDagsverk &&
+            antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
+        ) {
             return tapteDagsverk * kostnadDagsverk;
         } else {
             return 0;
