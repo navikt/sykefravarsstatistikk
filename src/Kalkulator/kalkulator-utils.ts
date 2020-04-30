@@ -30,7 +30,6 @@ export const getAntallTapteDagsverkSiste4Kvartaler = (
     historikkListe: Sykefraværshistorikk[]
 ): number | 'erMaskertEllerHarIkkeNokData' => {
     const prosenterForSiste4Kvartaler = getSiste4KvartalsvisSykefraværshistorikk(historikkListe);
-    console.log(historikkListe);
     if (prosenterForSiste4Kvartaler.length !== 4) {
         return 'erMaskertEllerHarIkkeNokData';
     }
@@ -67,8 +66,6 @@ export const getSykefraværsprosentSiste4Kvartaler = (
     ) {
         return Maskering.ERMASKERTELLERHARIKKENOEDATA;
     } else {
-        console.log('antalltaptedagsverk: ' + antallTapteDagsverSiste4Kvartaler);
-        console.log('antalmuligedagsverk:' + antallMuligeDagsverkSiste4Kvartaler);
         return (
             ((antallTapteDagsverSiste4Kvartaler as number) * 100) /
             (antallMuligeDagsverkSiste4Kvartaler as number)

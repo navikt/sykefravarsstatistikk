@@ -68,10 +68,14 @@ const Kalkulator: FunctionComponent<Props> = props => {
 
     const setVerdiAntallTapteDagsverkEllerProsent = (verdi: number | undefined) => {
         switch (antallTapteDagsverkEllerProsent) {
-            case (AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK, undefined): {
+            case AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK || undefined: {
+                console.log(
+                    'antallTapteDagsverk' + antallTapteDagsverkEllerProsent + ' verdi' + verdi
+                );
                 setTapteDagsverk(verdi);
             }
             case AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT: {
+                console.log('sykeoprosent' + antallTapteDagsverkEllerProsent + ' verdi' + verdi);
                 setSykefraværsprosent(verdi);
             }
         }
@@ -86,9 +90,13 @@ const Kalkulator: FunctionComponent<Props> = props => {
     }, [restSykefraværshistorikk]);
 
     useEffect(() => {
+        console.log('harendret ' + harEndretTapteDagsverk);
         if (restSykefraværshistorikk.status === RestStatus.Suksess && !harEndretTapteDagsverk) {
             switch (antallTapteDagsverkEllerProsent) {
                 case (AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK, undefined): {
+                    console.log(
+                        'inne antalltapte i useEffect , harEndret=' + harEndretTapteDagsverk
+                    );
                     const tapteDagsverkSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(
                         restSykefraværshistorikk.data
                     );
@@ -168,6 +176,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         setAntalltapteDagsverkEllerProsent(
                             AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
                         );
+                        console.log(antallTapteDagsverkEllerProsent);
                     }}
                 />
                 <Radio
@@ -177,6 +186,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         setAntalltapteDagsverkEllerProsent(
                             AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
                         );
+                        console.log(antallTapteDagsverkEllerProsent);
                     }}
                 />
             </div>
