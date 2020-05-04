@@ -221,7 +221,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     </Normaltekst>
                     {radioProsentEllerAntall}
                     <div className="kalkulator__rad">
-                        <Element>Kostnad pr. dags pr. ansatt (kr)</Element>
+                        <Element className="kalkulator__label_fast_størrelse">
+                            Kostnad pr. dags pr. ansatt (kr)
+                        </Element>
                         <Input
                             label={''}
                             onChange={event => setKostnadDagsverk(parseInt(event.target.value))}
@@ -251,7 +253,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
 */}
 
                     <div className="kalkulator__rad">
-                        <Element>{labelsNåværendeTapteDagsverkEllerProsent}</Element>
+                        <Element className="kalkulator__label_fast_størrelse">
+                            {labelsNåværendeTapteDagsverkEllerProsent}
+                        </Element>
                         <Input
                             label={''}
                             onChange={event =>
@@ -279,8 +283,11 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         {nåværendeTapteDagsverkSiste12Mnd}
                     </div>
                     <div className="kalkulator__rad">
+                        <Element className="kalkulator__label_fast_størrelse">
+                            {labelsØnsketTapteDagsverkEllerProsent}
+                        </Element>
                         <Input
-                            label={<Element>{labelsØnsketTapteDagsverkEllerProsent}</Element>}
+                            label={''}
                             onChange={event =>
                                 setØnsketVerdiAntallTapteDagsverkEllerProsent(
                                     parseFloat(event.target.value)
