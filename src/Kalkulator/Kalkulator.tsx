@@ -39,10 +39,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
     >();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
-    //const totalKostnad = nåværendeTapteDagsverk && kostnadDagsverk ? nåværendeTapteDagsverk * kostnadDagsverk : 0;
-
     const getTotalKostnad = () => {
-        console.log(nåværendeTapteDagsverk);
         if (
             kostnadDagsverk &&
             nåværendeSykefraværsprosent &&
@@ -54,15 +51,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
             return nåværendeTapteDagsverk * kostnadDagsverk;
         } else {
             return 0;
-        } /*if (!nåværendeTapteDagsverk || !kostnadDagsverk || !nåværendeSykefraværsprosent || !muligeDagsverk) {
-            return 0;
-        } else if (
-            antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-        ) {
-            return ((nåværendeSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
-        } else {
-            return nåværendeTapteDagsverk * kostnadDagsverk;
-        }*/
+        }
     };
     const getØnsketKostnad = () => {
         if (
@@ -98,7 +87,6 @@ const Kalkulator: FunctionComponent<Props> = props => {
         } else {
             setNåværendeTapteDagsverk(verdi);
         }
-        //console.log(getSykefraværsprosentSiste4Kvartaler(restSykefraværshistorikk.data));
     };
     const setØnsketVerdiAntallTapteDagsverkEllerProsent = (verdi: number) => {
         if (
@@ -108,7 +96,6 @@ const Kalkulator: FunctionComponent<Props> = props => {
         } else {
             setØnsketTapteDagsverk(verdi);
         }
-        //console.log(getSykefraværsprosentSiste4Kvartaler(restSykefraværshistorikk.data));
     };
     useEffect(() => {
         if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
@@ -120,17 +107,12 @@ const Kalkulator: FunctionComponent<Props> = props => {
     }, [restSykefraværshistorikk]);
 
     useEffect(() => {
-        console.log('harendrettapte ' + harEndretTapteDagsverk);
-        console.log('harendretsyfoprosent ' + harEndretSykefraværsprosent);
         if (
             restSykefraværshistorikk.status === RestStatus.Suksess &&
             (!harEndretTapteDagsverk || !harEndretSykefraværsprosent)
         ) {
             switch (antallTapteDagsverkEllerProsent) {
                 case (AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK, undefined): {
-                    console.log(
-                        'inne antalltapte i useEffect , harEndret=' + harEndretTapteDagsverk
-                    );
                     const tapteDagsverkSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(
                         restSykefraværshistorikk.data
                     );
@@ -160,13 +142,11 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     } else {
                         setNåværendeSykefraværsprosent(prosentTapteDagsverkSiste4Kvartaler);
                         setØnsketSykefraværsprosent(prosentTapteDagsverkSiste4Kvartaler * 0.5);
-                        console.log('syfoprosent: ' + nåværendeSykefraværsprosent);
                         setMuligeDagsverk(muligeDagsverkSiste4Kvartaler);
                         setSkalViseDefaultTapteDagsverk(true);
                     }
                 }
             }
-            //console.log(getSykefraværsprosentSiste4Kvartaler(restSykefraværshistorikk.data));
         }
     }, [restSykefraværshistorikk, harEndretTapteDagsverk, antallTapteDagsverkEllerProsent]);
 
@@ -179,26 +159,6 @@ const Kalkulator: FunctionComponent<Props> = props => {
         skalViseDefaultTapteDagsverk &&
         antallTapteDagsverkEllerProsent !== AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT && (
             <>
-                {/* <Normaltekst>
-                    Deres tapte dagsverk siste 12 mnd:{' '}
-                    {getAntallTapteDagsverkSiste4Kvartaler(restSykefraværshistorikk.data)}
-                </Normaltekst>
-                <LesMerPanel
-                    åpneLabel="Hvor kommer dette tallet fra?"
-                    lukkLabel="Lukk"
-                    className="kalkulator__lesmer-tapte-dagsverk"
-                    onÅpne={() => {
-                        amplitude.logEvent(
-                            '#sykefravarsstatistikk-kalkulator dagsverk lesmer-klikk'
-                        );
-                    }}
-                >
-                    <Normaltekst>
-                        Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes
-                        ut fra det legemeldte sykefraværet de siste 12 månedene og er tilgjengelig i
-                        NAVs datagrunnlag.
-                    </Normaltekst>
-                </LesMerPanel>*/}
                 <Hjelpetekst>
                     Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes ut
                     fra det legemeldte sykefraværet de siste 12 månedene og er tilgjengelig i NAVs
@@ -230,7 +190,6 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         setAntalltapteDagsverkEllerProsent(
                             AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
                         );
-                        console.log(antallTapteDagsverkEllerProsent);
                     }}
                 />
                 <Radio
@@ -240,7 +199,6 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         setAntalltapteDagsverkEllerProsent(
                             AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
                         );
-                        console.log(antallTapteDagsverkEllerProsent);
                     }}
                 />
             </div>
