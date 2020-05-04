@@ -41,6 +41,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
     //const totalKostnad = nåværendeTapteDagsverk && kostnadDagsverk ? nåværendeTapteDagsverk * kostnadDagsverk : 0;
 
     const getTotalKostnad = () => {
+        console.log(nåværendeTapteDagsverk);
         if (
             kostnadDagsverk &&
             sykefraværsprosent &&
@@ -48,11 +49,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
             antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
         ) {
             return ((sykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
-        } else if (
-            nåværendeTapteDagsverk &&
-            kostnadDagsverk &&
-            antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
-        ) {
+        } else if (nåværendeTapteDagsverk && kostnadDagsverk) {
             return nåværendeTapteDagsverk * kostnadDagsverk;
         } else {
             return 0;
