@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Element, Ingress, Sidetittel, Systemtittel, Undertittel } from 'nav-frontend-typografi';
+import { Element, Systemtittel } from 'nav-frontend-typografi';
 import { ReactComponent as SedlerIkon } from '../sedlerIkon.svg';
 import './Kostnad.less';
 import classNames from 'classnames';

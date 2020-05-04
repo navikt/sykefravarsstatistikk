@@ -124,6 +124,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         setØnsketTapteDagsverk(tapteDagsverkSiste4Kvartaler * 0.5);
                         setSkalViseDefaultTapteDagsverk(true);
                     }
+                    break;
                 }
                 case AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT: {
                     const muligeDagsverkSiste4Kvartaler = getAntallMuligeDagsverkSiste4Kvartaler(
@@ -219,95 +220,89 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         Se hva sykefraværet koster, og hvor mye virksomheten deres kan spare.
                     </Normaltekst>
                     {radioProsentEllerAntall}
-                    <Input
-                        label={<Element>Kostnad pr. dags pr. ansatt (kr)</Element>}
-                        onChange={event => setKostnadDagsverk(parseInt(event.target.value))}
-                        onClick={() => {
-                            amplitude.logEvent(
-                                '#sykefravarsstatistikk-kalkulator kostnad input-klikk'
-                            );
-                        }}
-                        value={kostnadDagsverk || ''}
-                        bredde={'XS'}
-                        maxLength={15}
-                        type="number"
-                        className="kalkulator__input"
-                        placeholder="kr"
-                    />
-                    <Hjelpetekst>
-                        Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011 beregnet
-                        SINTEF og NHO at hver uke med sykefravær koster en arbeidsgiver i snitt 13
-                        000 kr. Det vil si 2600 kr per dag.{' '}
-                        <EksternLenke href="https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/">
-                            Les mer om hva som påvirker kostnader ved sykefravær.
-                        </EksternLenke>
-                    </Hjelpetekst>
-                    <Normaltekst>Gjennomsnittlig kostnad per dagsverk: 2600&nbsp;kr</Normaltekst>
-                    {/*<LesMerPanel
-                        åpneLabel="Hvor kommer dette tallet fra?"
-                        lukkLabel="Lukk"
-                        className="kalkulator__lesmer-kostnad-dagsverk"
-                        onÅpne={() => {
-                            amplitude.logEvent(
-                                '#sykefravarsstatistikk-kalkulator kostnad lesmer-klikk'
-                            );
-                        }}
-                    >
-                        <Normaltekst>
+                    <div className="kalkulator__rad">
+                        <Element>Kostnad pr. dags pr. ansatt (kr)</Element>
+                        <Input
+                            label={''}
+                            onChange={event => setKostnadDagsverk(parseInt(event.target.value))}
+                            onClick={() => {
+                                amplitude.logEvent(
+                                    '#sykefravarsstatistikk-kalkulator kostnad input-klikk'
+                                );
+                            }}
+                            value={kostnadDagsverk || ''}
+                            bredde={'XS'}
+                            maxLength={15}
+                            type="number"
+                            className="kalkulator__input"
+                            placeholder="kr"
+                        />
+                        <Hjelpetekst>
                             Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
                             beregnet SINTEF og NHO at hver uke med sykefravær koster en arbeidsgiver
                             i snitt 13 000 kr. Det vil si 2600 kr per dag.{' '}
                             <EksternLenke href="https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/">
                                 Les mer om hva som påvirker kostnader ved sykefravær.
                             </EksternLenke>
-                        </Normaltekst>
-                    </LesMerPanel>*/}
-                    <Input
-                        label={<Element>{labelsNåværendeTapteDagsverkEllerProsent}</Element>}
-                        onChange={event =>
-                            setVerdiAntallTapteDagsverkEllerProsent(parseFloat(event.target.value))
-                        }
-                        onClick={() => {
-                            amplitude.logEvent(
-                                '#sykefravarsstatistikk-kalkulator dagsverk input-klikk'
-                            );
-                        }}
-                        value={
-                            antallTapteDagsverkEllerProsent ===
-                            AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                                ? nåværendeSykefraværsprosent
-                                : nåværendeTapteDagsverk || ''
-                        }
-                        bredde={'XS'}
-                        maxLength={15}
-                        type="number"
-                        className="kalkulator__input"
-                    />{' '}
+                        </Hjelpetekst>
+                    </div>
+                    {/*
+                    <Normaltekst>Gjennomsnittlig kostnad per dagsverk: 2600&nbsp;kr</Normaltekst>
+*/}
+
+                    <div className="kalkulator__rad">
+                        <Element>{labelsNåværendeTapteDagsverkEllerProsent}</Element>
+                        <Input
+                            label={''}
+                            onChange={event =>
+                                setVerdiAntallTapteDagsverkEllerProsent(
+                                    parseFloat(event.target.value)
+                                )
+                            }
+                            onClick={() => {
+                                amplitude.logEvent(
+                                    '#sykefravarsstatistikk-kalkulator dagsverk input-klikk'
+                                );
+                            }}
+                            value={
+                                antallTapteDagsverkEllerProsent ===
+                                AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                                    ? nåværendeSykefraværsprosent
+                                    : nåværendeTapteDagsverk || ''
+                            }
+                            bredde={'XS'}
+                            maxLength={15}
+                            type="number"
+                            className="kalkulator__input"
+                        />{' '}
+                    </div>
                     {tapteDagsverkSpinner}
                     {nåværendeTapteDagsverkSiste12Mnd}
-                    <Input
-                        label={<Element>{labelsØnsketTapteDagsverkEllerProsent}</Element>}
-                        onChange={event =>
-                            setØnsketVerdiAntallTapteDagsverkEllerProsent(
-                                parseFloat(event.target.value)
-                            )
-                        }
-                        onClick={() => {
-                            amplitude.logEvent(
-                                '#sykefravarsstatistikk-kalkulator dagsverk input-klikk'
-                            );
-                        }}
-                        value={
-                            antallTapteDagsverkEllerProsent ===
-                            AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                                ? ønsketSykefraværsprosent
-                                : ønsketTapteDagsverk || ''
-                        }
-                        bredde={'XS'}
-                        maxLength={15}
-                        type="number"
-                        className="kalkulator__input"
-                    />
+                    <div className="kalkulator__rad">
+                        <Input
+                            label={<Element>{labelsØnsketTapteDagsverkEllerProsent}</Element>}
+                            onChange={event =>
+                                setØnsketVerdiAntallTapteDagsverkEllerProsent(
+                                    parseFloat(event.target.value)
+                                )
+                            }
+                            onClick={() => {
+                                amplitude.logEvent(
+                                    '#sykefravarsstatistikk-kalkulator dagsverk input-klikk'
+                                );
+                            }}
+                            value={
+                                antallTapteDagsverkEllerProsent ===
+                                AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                                    ? ønsketSykefraværsprosent
+                                    : ønsketTapteDagsverk || ''
+                            }
+                            bredde={'XS'}
+                            maxLength={15}
+                            type="number"
+                            className="kalkulator__input"
+                        />
+                    </div>
                     {ønsketTapteDagsverkSiste12Mnd}
                 </div>
                 <Kostnad
