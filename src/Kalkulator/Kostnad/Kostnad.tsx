@@ -6,9 +6,10 @@ import './Kostnad.less';
 interface Props {
     nåværendeKostnad: number;
     ønsketKostnad: number;
+    ønsketRedusert: number;
 }
 
-const Kostnad: FunctionComponent<Props> = ({ nåværendeKostnad, ønsketKostnad }) => (
+const Kostnad: FunctionComponent<Props> = ({ nåværendeKostnad, ønsketKostnad, ønsketRedusert }) => (
     <div className="kostnad">
         <Systemtittel tag="h2" className="kostnad__tittel">
             Kostnad <SedlerIkon className="kostnad__ikon" />
@@ -20,7 +21,9 @@ const Kostnad: FunctionComponent<Props> = ({ nåværendeKostnad, ønsketKostnad 
         <Element className="kostnad__tekst">Totale kosnader per år med ønsket sykefravær </Element>
         <Sidetittel>{formaterTall(ønsketKostnad)}&nbsp;kr</Sidetittel>
         <Element className="kostnad__tekst">
-            Reduserers sykefraværet til 35 dagsverk øker bunnlinjen årlig med
+            {'Reduserers sykefraværet til ' +
+                ønsketRedusert +
+                ' dagsverk øker bunnlinjen årlig med'}
         </Element>
         <Sidetittel>{formaterTall(nåværendeKostnad - ønsketKostnad)}&nbsp;kr</Sidetittel>
     </div>
