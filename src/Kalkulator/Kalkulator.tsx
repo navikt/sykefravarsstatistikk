@@ -17,6 +17,7 @@ import {
     Maskering,
 } from './kalkulator-utils';
 import amplitude from '../utils/amplitude';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -66,10 +67,14 @@ const Kalkulator: FunctionComponent<Props> = props => {
     const harEndretTapteDagsverk = tapteDagsverk !== undefined;
     const harEndretSykefraværsprosent = sykefraværsprosent !== undefined;
 
-    const labelsTapteDagsverkEllerProsent =
+    const labelsNåværendeTapteDagsverkEllerProsent =
         antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-            ? AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-            : AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK;
+            ? 'Nåværende sykefravær (%)'
+            : 'Nåværende antall tapte dagsverk siste 12 mnd';
+    const labelsØnsketTapteDagsverkEllerProsent =
+        antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+            ? 'Ønsket sykefravær (%)'
+            : 'Ønsket antall tapte dagsverk siste 12 mnd';
 
     const setVerdiAntallTapteDagsverkEllerProsent = (verdi: number) => {
         if (
@@ -143,7 +148,8 @@ const Kalkulator: FunctionComponent<Props> = props => {
     }, []);
 
     const tapteDagsverkSiste12Mnd = restSykefraværshistorikk.status === RestStatus.Suksess &&
-        skalViseDefaultTapteDagsverk && (
+        skalViseDefaultTapteDagsverk &&
+        antallTapteDagsverkEllerProsent !== AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT && (
             <>
                 <Normaltekst>
                     Deres tapte dagsverk siste 12 mnd:{' '}
@@ -212,7 +218,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     </Normaltekst>
                     {radioProsentEllerAntall}
                     <Input
-                        label={<Element>Kostnad per dagsverk (kr)</Element>}
+                        label={<Element>Kostnad pr. dags pr. ansatt (kr)</Element>}
                         onChange={event => setKostnadDagsverk(parseInt(event.target.value))}
                         onClick={() => {
                             amplitude.logEvent(
@@ -226,8 +232,16 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         className="kalkulator__input"
                         placeholder="kr"
                     />
+                    <Hjelpetekst>
+                        Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011 beregnet
+                        SINTEF og NHO at hver uke med sykefravær koster en arbeidsgiver i snitt 13
+                        000 kr. Det vil si 2600 kr per dag.{' '}
+                        <EksternLenke href="https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/">
+                            Les mer om hva som påvirker kostnader ved sykefravær.
+                        </EksternLenke>
+                    </Hjelpetekst>
                     <Normaltekst>Gjennomsnittlig kostnad per dagsverk: 2600&nbsp;kr</Normaltekst>
-                    <LesMerPanel
+                    {/*<LesMerPanel
                         åpneLabel="Hvor kommer dette tallet fra?"
                         lukkLabel="Lukk"
                         className="kalkulator__lesmer-kostnad-dagsverk"
@@ -245,9 +259,31 @@ const Kalkulator: FunctionComponent<Props> = props => {
                                 Les mer om hva som påvirker kostnader ved sykefravær.
                             </EksternLenke>
                         </Normaltekst>
-                    </LesMerPanel>
+                    </LesMerPanel>*/}
+
                     <Input
-                        label={<Element>{labelsTapteDagsverkEllerProsent}</Element>}
+                        label={<Element>{labelsNåværendeTapteDagsverkEllerProsent}</Element>}
+                        onChange={event =>
+                            setVerdiAntallTapteDagsverkEllerProsent(parseInt(event.target.value))
+                        }
+                        onClick={() => {
+                            amplitude.logEvent(
+                                '#sykefravarsstatistikk-kalkulator dagsverk input-klikk'
+                            );
+                        }}
+                        value={
+                            antallTapteDagsverkEllerProsent ===
+                            AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                                ? sykefraværsprosent
+                                : tapteDagsverk || ''
+                        }
+                        bredde={'XS'}
+                        maxLength={15}
+                        type="number"
+                        className="kalkulator__input"
+                    />
+                    <Input
+                        label={<Element>{labelsNåværendeTapteDagsverkEllerProsent}</Element>}
                         onChange={event =>
                             setVerdiAntallTapteDagsverkEllerProsent(parseInt(event.target.value))
                         }
