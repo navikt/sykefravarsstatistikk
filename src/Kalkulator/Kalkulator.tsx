@@ -149,7 +149,12 @@ const Kalkulator: FunctionComponent<Props> = props => {
                 }
             }
         }
-    }, [restSykefraværshistorikk, harEndretTapteDagsverk, antallTapteDagsverkEllerProsent]);
+    }, [
+        restSykefraværshistorikk,
+        harEndretTapteDagsverk,
+        antallTapteDagsverkEllerProsent,
+        harEndretSykefraværsprosent,
+    ]);
 
     useEffect(() => {
         scrollToBanner();
