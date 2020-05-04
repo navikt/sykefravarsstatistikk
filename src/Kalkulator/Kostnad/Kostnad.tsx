@@ -4,16 +4,25 @@ import { ReactComponent as SedlerIkon } from '../sedlerIkon.svg';
 import './Kostnad.less';
 
 interface Props {
-    kostnad: number;
+    nåværendeKostnad: number;
+    ønsketKostnad: number;
 }
 
-const Kostnad: FunctionComponent<Props> = ({ kostnad }) => (
+const Kostnad: FunctionComponent<Props> = ({ nåværendeKostnad, ønsketKostnad }) => (
     <div className="kostnad">
         <Systemtittel tag="h2" className="kostnad__tittel">
             Kostnad <SedlerIkon className="kostnad__ikon" />
         </Systemtittel>
-        <Element className="kostnad__tekst">Kostnad siste 12 mnd</Element>
-        <Sidetittel>{formaterTall(kostnad)}&nbsp;kr</Sidetittel>
+        <Element className="kostnad__tekst">
+            Totale kosnader per år med nåværende sykefravær
+        </Element>
+        <Sidetittel>{formaterTall(nåværendeKostnad)}&nbsp;kr</Sidetittel>
+        <Element className="kostnad__tekst">Totale kosnader per år med ønsket sykefravær </Element>
+        <Sidetittel>{formaterTall(ønsketKostnad)}&nbsp;kr</Sidetittel>
+        <Element className="kostnad__tekst">
+            Reduserers sykefraværet til 35 dagsverk øker bunnlinjen årlig med
+        </Element>
+        <Sidetittel>{formaterTall(nåværendeKostnad - ønsketKostnad)}&nbsp;kr</Sidetittel>
     </div>
 );
 

@@ -25,9 +25,11 @@ interface Props {
 
 const Kalkulator: FunctionComponent<Props> = props => {
     const { restSykefraværshistorikk } = props;
-    const [tapteDagsverk, setTapteDagsverk] = useState<number | undefined>();
+    const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<number | undefined>();
+    const [ønsketTapteDagsverk, setØnsketTapteDagsverk] = useState<number | undefined>();
     const [muligeDagsverk, setMuligeDagsverk] = useState<number | undefined>();
     const [sykefraværsprosent, setSykefraværsprosent] = useState<number | undefined>();
+    const [ønsketSykefraværsprosent, setØnsketSykefraværsprosent] = useState<number | undefined>();
     const [antallTapteDagsverkEllerProsent, setAntalltapteDagsverkEllerProsent] = useState<
         AntallTapteDagsverkEllerProsent
     >();
@@ -36,7 +38,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
     >();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
-    //const totalKostnad = tapteDagsverk && kostnadDagsverk ? tapteDagsverk * kostnadDagsverk : 0;
+    //const totalKostnad = nåværendeTapteDagsverk && kostnadDagsverk ? nåværendeTapteDagsverk * kostnadDagsverk : 0;
 
     const getTotalKostnad = () => {
         if (
@@ -47,24 +49,42 @@ const Kalkulator: FunctionComponent<Props> = props => {
         ) {
             return ((sykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
         } else if (
-            tapteDagsverk &&
+            nåværendeTapteDagsverk &&
             kostnadDagsverk &&
             antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
         ) {
-            return tapteDagsverk * kostnadDagsverk;
+            return nåværendeTapteDagsverk * kostnadDagsverk;
         } else {
             return 0;
-        } /*if (!tapteDagsverk || !kostnadDagsverk || !sykefraværsprosent || !muligeDagsverk) {
+        } /*if (!nåværendeTapteDagsverk || !kostnadDagsverk || !sykefraværsprosent || !muligeDagsverk) {
             return 0;
         } else if (
             antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
         ) {
             return ((sykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
         } else {
-            return tapteDagsverk * kostnadDagsverk;
+            return nåværendeTapteDagsverk * kostnadDagsverk;
         }*/
     };
-    const harEndretTapteDagsverk = tapteDagsverk !== undefined;
+    const getØnsketKostnad = () => {
+        if (
+            kostnadDagsverk &&
+            ønsketSykefraværsprosent &&
+            muligeDagsverk &&
+            antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+        ) {
+            return ((ønsketSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
+        } else if (
+            ønsketTapteDagsverk &&
+            kostnadDagsverk &&
+            antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
+        ) {
+            return ønsketTapteDagsverk * kostnadDagsverk;
+        } else {
+            return 0;
+        }
+    };
+    const harEndretTapteDagsverk = nåværendeTapteDagsverk !== undefined;
     const harEndretSykefraværsprosent = sykefraværsprosent !== undefined;
 
     const labelsNåværendeTapteDagsverkEllerProsent =
@@ -82,13 +102,13 @@ const Kalkulator: FunctionComponent<Props> = props => {
         ) {
             setSykefraværsprosent(verdi);
         } else {
-            setTapteDagsverk(verdi);
+            setNåværendeTapteDagsverk(verdi);
         }
         //console.log(getSykefraværsprosentSiste4Kvartaler(restSykefraværshistorikk.data));
     };
     useEffect(() => {
         if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
-            setTapteDagsverk(undefined);
+            setNåværendeTapteDagsverk(undefined);
             setMuligeDagsverk(undefined);
             setSykefraværsprosent(undefined);
         }
@@ -110,10 +130,10 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         restSykefraværshistorikk.data
                     );
                     if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
-                        setTapteDagsverk(undefined);
+                        setNåværendeTapteDagsverk(undefined);
                         setSkalViseDefaultTapteDagsverk(false);
                     } else {
-                        setTapteDagsverk(tapteDagsverkSiste4Kvartaler);
+                        setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler);
                         setSkalViseDefaultTapteDagsverk(true);
                     }
                 }
@@ -275,7 +295,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             antallTapteDagsverkEllerProsent ===
                             AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
                                 ? sykefraværsprosent
-                                : tapteDagsverk || ''
+                                : nåværendeTapteDagsverk || ''
                         }
                         bredde={'XS'}
                         maxLength={15}
@@ -283,7 +303,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         className="kalkulator__input"
                     />
                     <Input
-                        label={<Element>{labelsNåværendeTapteDagsverkEllerProsent}</Element>}
+                        label={<Element>{labelsØnsketTapteDagsverkEllerProsent}</Element>}
                         onChange={event =>
                             setVerdiAntallTapteDagsverkEllerProsent(parseInt(event.target.value))
                         }
@@ -296,7 +316,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             antallTapteDagsverkEllerProsent ===
                             AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
                                 ? sykefraværsprosent
-                                : tapteDagsverk || ''
+                                : nåværendeTapteDagsverk || ''
                         }
                         bredde={'XS'}
                         maxLength={15}
@@ -306,7 +326,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     {tapteDagsverkSpinner}
                     {tapteDagsverkSiste12Mnd}
                 </div>
-                <Kostnad kostnad={getTotalKostnad()} />
+                <Kostnad nåværendeKostnad={getTotalKostnad()} ønsketKostnad={getØnsketKostnad()} />
             </div>
         </div>
     );
