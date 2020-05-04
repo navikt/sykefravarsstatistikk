@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Element, Ingress, Sidetittel, Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { ReactComponent as SedlerIkon } from '../sedlerIkon.svg';
 import './Kostnad.less';
+import classNames from 'classnames';
 
 interface Props {
     nåværendeKostnad: number;
@@ -18,18 +19,21 @@ const Kostnad: FunctionComponent<Props> = ({ nåværendeKostnad, ønsketKostnad,
             <Element>Totale kosnader per år med nåværende sykefravær</Element>
             <Element>{formaterTall(nåværendeKostnad)}&nbsp;kr</Element>
         </div>
-        <div className="kostnad__tekst">
+        <div className={classNames('kostnad__tekst', 'kostnad__sisterad')}>
             <Element>Totale kosnader per år med ønsket sykefravær </Element>
             <Element>{formaterTall(ønsketKostnad)}&nbsp;kr</Element>
         </div>
 
-        <div className="kostnad__tekst">
+        <div className={classNames('kostnad__tekst', 'kostnad__resultatrad')}>
             <Element>
                 {'Reduserers sykefraværet til ' +
                     ønsketRedusert +
                     ' dagsverk øker bunnlinjen årlig med'}
             </Element>
-            <Element>{formaterTall(nåværendeKostnad - ønsketKostnad)}&nbsp;kr</Element>
+
+            <Element className="kostnad__sisteresultat">
+                {formaterTall(nåværendeKostnad - ønsketKostnad)}&nbsp;kr
+            </Element>
         </div>
     </div>
 );
