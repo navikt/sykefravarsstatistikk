@@ -275,9 +275,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             type="number"
                             className="kalkulator__input"
                         />{' '}
+                        {tapteDagsverkSpinner}
+                        {nåværendeTapteDagsverkSiste12Mnd}
                     </div>
-                    {tapteDagsverkSpinner}
-                    {nåværendeTapteDagsverkSiste12Mnd}
                     <div className="kalkulator__rad">
                         <Input
                             label={<Element>{labelsØnsketTapteDagsverkEllerProsent}</Element>}
@@ -302,8 +302,8 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             type="number"
                             className="kalkulator__input"
                         />
+                        {ønsketTapteDagsverkSiste12Mnd}
                     </div>
-                    {ønsketTapteDagsverkSiste12Mnd}
                 </div>
                 <Kostnad
                     nåværendeKostnad={getTotalKostnad()}
