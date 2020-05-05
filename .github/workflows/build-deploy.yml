@@ -23,10 +23,10 @@ jobs:
                       ${{ runner.os }}-node-cache-
             - name: Install dependencies
               run: |
-                  npm ci
+                  yarn install --frozen-lockfile
             - name: Build application
               run: |
-                  npm run build
+                  yarn run build
             - name: Build tag and push Docker container
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
