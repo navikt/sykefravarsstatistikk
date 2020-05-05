@@ -17,7 +17,7 @@ jobs:
                   node-version: '12.x'
             - uses: actions/cache@v1
               with:
-                  path: ./src/frontend/node_modules
+                  path: ./node_modules
                   key: ${{ runner.os }}-node-cache-${{ hashFiles('yarn.lock') }}
                   restore-keys: |
                       ${{ runner.os }}-node-cache-
