@@ -72,3 +72,43 @@ export const getSykefraværsprosentSiste4Kvartaler = (
         );
     }
 };
+export const getTotalKostnad = (
+    kostnadDagsverk: number | undefined,
+    nåværendeSykefraværsprosent: number | undefined,
+    muligeDagsverk: number | undefined,
+    nåværendeTapteDagsverk: number | undefined,
+    antallTapteDagsverkEllerProsent: AntallTapteDagsverkEllerProsent | undefined
+) => {
+    if (
+        kostnadDagsverk &&
+        nåværendeSykefraværsprosent &&
+        muligeDagsverk &&
+        antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+    ) {
+        return ((nåværendeSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
+    } else if (nåværendeTapteDagsverk && kostnadDagsverk) {
+        return nåværendeTapteDagsverk * kostnadDagsverk;
+    } else {
+        return 0;
+    }
+};
+export const getØnsketKostnad = (
+    kostnadDagsverk: number | undefined,
+    ønsketSykefraværsprosent: number | undefined,
+    muligeDagsverk: number | undefined,
+    ønsketTapteDagsverk: number | undefined,
+    antallTapteDagsverkEllerProsent: AntallTapteDagsverkEllerProsent | undefined
+) => {
+    if (
+        kostnadDagsverk &&
+        ønsketSykefraværsprosent &&
+        muligeDagsverk &&
+        antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+    ) {
+        return ((ønsketSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
+    } else if (ønsketTapteDagsverk && kostnadDagsverk) {
+        return ønsketTapteDagsverk * kostnadDagsverk;
+    } else {
+        return 0;
+    }
+};

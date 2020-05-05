@@ -13,6 +13,8 @@ import {
     getAntallMuligeDagsverkSiste4Kvartaler,
     getAntallTapteDagsverkSiste4Kvartaler,
     getSykefraværsprosentSiste4Kvartaler,
+    getTotalKostnad,
+    getØnsketKostnad,
     Maskering,
 } from './kalkulator-utils';
 import amplitude from '../utils/amplitude';
@@ -39,34 +41,6 @@ const Kalkulator: FunctionComponent<Props> = props => {
     >();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
-    const getTotalKostnad = () => {
-        if (
-            kostnadDagsverk &&
-            nåværendeSykefraværsprosent &&
-            muligeDagsverk &&
-            antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-        ) {
-            return ((nåværendeSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
-        } else if (nåværendeTapteDagsverk && kostnadDagsverk) {
-            return nåværendeTapteDagsverk * kostnadDagsverk;
-        } else {
-            return 0;
-        }
-    };
-    const getØnsketKostnad = () => {
-        if (
-            kostnadDagsverk &&
-            ønsketSykefraværsprosent &&
-            muligeDagsverk &&
-            antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-        ) {
-            return ((ønsketSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
-        } else if (ønsketTapteDagsverk && kostnadDagsverk) {
-            return ønsketTapteDagsverk * kostnadDagsverk;
-        } else {
-            return 0;
-        }
-    };
     const harEndretTapteDagsverk = nåværendeTapteDagsverk !== undefined;
     const harEndretSykefraværsprosent = nåværendeSykefraværsprosent !== undefined;
 
@@ -318,8 +292,20 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     </div>
                 </div>
                 <Kostnad
-                    nåværendeKostnad={getTotalKostnad()}
-                    ønsketKostnad={getØnsketKostnad()}
+                    nåværendeKostnad={getTotalKostnad(
+                        kostnadDagsverk,
+                        nåværendeSykefraværsprosent,
+                        muligeDagsverk,
+                        nåværendeTapteDagsverk,
+                        antallTapteDagsverkEllerProsent
+                    )}
+                    ønsketKostnad={getØnsketKostnad(
+                        kostnadDagsverk,
+                        ønsketSykefraværsprosent,
+                        muligeDagsverk,
+                        ønsketTapteDagsverk,
+                        antallTapteDagsverkEllerProsent
+                    )}
                     ønsketRedusert={
                         antallTapteDagsverkEllerProsent ===
                         AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
