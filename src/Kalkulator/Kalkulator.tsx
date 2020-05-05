@@ -113,7 +113,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     restSykefraværshistorikk.data
                 );
                 if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
-                    setNåværendeTapteDagsverk(undefined);
+                    setNåværendeTapteDagsverk(0);
                     setSkalViseDefaultTapteDagsverk(false);
                 } else {
                     setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler);
