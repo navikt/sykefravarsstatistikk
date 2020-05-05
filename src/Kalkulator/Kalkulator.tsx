@@ -85,41 +85,40 @@ const Kalkulator: FunctionComponent<Props> = props => {
             restSykefraværshistorikk.status === RestStatus.Suksess &&
             (!harEndretTapteDagsverk || !harEndretSykefraværsprosent)
         ) {
-            switch (antallTapteDagsverkEllerProsent) {
-                case (AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK, undefined): {
-                    const tapteDagsverkSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(
-                        restSykefraværshistorikk.data
-                    );
-                    if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
-                        setNåværendeTapteDagsverk(undefined);
-                        setSkalViseDefaultTapteDagsverk(false);
-                    } else {
-                        setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler);
-                        setØnsketTapteDagsverk(tapteDagsverkSiste4Kvartaler * 0.5);
-                        setSkalViseDefaultTapteDagsverk(true);
-                    }
-                    break;
+            if (
+                antallTapteDagsverkEllerProsent ===
+                AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+            ) {
+                const muligeDagsverkSiste4Kvartaler = getAntallMuligeDagsverkSiste4Kvartaler(
+                    restSykefraværshistorikk.data
+                );
+                const prosentTapteDagsverkSiste4Kvartaler = getSykefraværsprosentSiste4Kvartaler(
+                    restSykefraværshistorikk.data
+                );
+                if (
+                    prosentTapteDagsverkSiste4Kvartaler ===
+                        Maskering.ERMASKERTELLERHARIKKENOEDATA ||
+                    muligeDagsverkSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA
+                ) {
+                    setNåværendeSykefraværsprosent(undefined);
+                    setSkalViseDefaultTapteDagsverk(false);
+                } else {
+                    setNåværendeSykefraværsprosent(prosentTapteDagsverkSiste4Kvartaler);
+                    setØnsketSykefraværsprosent(prosentTapteDagsverkSiste4Kvartaler * 0.5);
+                    setMuligeDagsverk(muligeDagsverkSiste4Kvartaler);
+                    setSkalViseDefaultTapteDagsverk(true);
                 }
-                case AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT: {
-                    const muligeDagsverkSiste4Kvartaler = getAntallMuligeDagsverkSiste4Kvartaler(
-                        restSykefraværshistorikk.data
-                    );
-                    const prosentTapteDagsverkSiste4Kvartaler = getSykefraværsprosentSiste4Kvartaler(
-                        restSykefraværshistorikk.data
-                    );
-                    if (
-                        prosentTapteDagsverkSiste4Kvartaler ===
-                            Maskering.ERMASKERTELLERHARIKKENOEDATA ||
-                        muligeDagsverkSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA
-                    ) {
-                        setNåværendeSykefraværsprosent(undefined);
-                        setSkalViseDefaultTapteDagsverk(false);
-                    } else {
-                        setNåværendeSykefraværsprosent(prosentTapteDagsverkSiste4Kvartaler);
-                        setØnsketSykefraværsprosent(prosentTapteDagsverkSiste4Kvartaler * 0.5);
-                        setMuligeDagsverk(muligeDagsverkSiste4Kvartaler);
-                        setSkalViseDefaultTapteDagsverk(true);
-                    }
+            } else {
+                const tapteDagsverkSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(
+                    restSykefraværshistorikk.data
+                );
+                if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
+                    setNåværendeTapteDagsverk(undefined);
+                    setSkalViseDefaultTapteDagsverk(false);
+                } else {
+                    setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler);
+                    setØnsketTapteDagsverk(tapteDagsverkSiste4Kvartaler * 0.5);
+                    setSkalViseDefaultTapteDagsverk(true);
                 }
             }
         }

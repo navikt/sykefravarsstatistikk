@@ -26,7 +26,7 @@ const Kostnad: FunctionComponent<Props> = ({ nåværendeKostnad, ønsketKostnad,
 
         <div className={classNames('kostnad__tekst', 'kostnad__resultatrad')}>
             <Element>
-                {'Reduserers sykefraværet til ' +
+                {'Reduserer sykefraværet til ' +
                     ønsketRedusert +
                     ' dagsverk øker bunnlinjen årlig med'}
             </Element>
