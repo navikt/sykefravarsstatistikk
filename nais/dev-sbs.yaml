@@ -1,13 +1,13 @@
-apiVersion: "nais.io/v1alpha1"
-kind: "Application"
+apiVersion: nais.io/v1alpha1
+kind: Application
 metadata:
     name: sykefravarsstatistikk
     namespace: default
     labels:
-        team: {{team}}
+        team: arbeidsgiver
 spec:
-    image: {{version}}
-    team: {{team}}
+    image: { { version } }
+    team: arbeidsgiver
     port: 3000
     vault:
         enabled: true
