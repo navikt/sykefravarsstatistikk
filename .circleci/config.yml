@@ -1,105 +1,105 @@
 version: 2.1
 orbs:
-  nais: navikt/nais-deployment@3.2.1
+    nais: navikt/nais-deployment@3.2.1
 
 jobs:
-  bygg:
-    docker:
-      - image: circleci/node:12.4.0-browsers
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: Installer avhengigheter
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-      - run:
-          name: Kjør enhetstester
-          command: yarn test
-      - run:
-          name: Bygg produksjonsversjon av React app
-          command: yarn build
-      - nais/docker:
-          image: navikt/sykefravarsstatistikk
+    bygg:
+        docker:
+            - image: circleci/node:12.4.0-browsers
+        steps:
+            - checkout
+            - restore_cache:
+                  keys:
+                      - yarn-packages-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Installer avhengigheter
+                  command: yarn install --frozen-lockfile
+            - save_cache:
+                  key: yarn-packages-{{ checksum "yarn.lock" }}
+                  paths:
+                      - ~/.cache/yarn
+            - run:
+                  name: Kjør enhetstester
+                  command: yarn test
+            - run:
+                  name: Bygg produksjonsversjon av React app
+                  command: yarn build
+            - nais/docker:
+                  image: navikt/sykefravarsstatistikk
 
-  deploy-til-dev:
-    docker:
-      - image: navikt/deployment-cli:0.4.2
-    steps:
-      - checkout
-      - run:
-          name: Unpack Private Key
-          command: echo $GITHUB_PRIVATE_KEY | base64 -d > .circleci/github.key.pem
-      - nais/deploy-with-gh-app:
-          repo: navikt/sykefravarsstatistikk
-          image: navikt/sykefravarsstatistikk
-          github-app-id: 43789
-          nais-template: dev-nais.yaml
-          environment: dev-sbs
-          team: arbeidsgiver
+    deploy-til-dev:
+        docker:
+            - image: navikt/deployment-cli:0.4.2
+        steps:
+            - checkout
+            - run:
+                  name: Unpack Private Key
+                  command: echo $GITHUB_PRIVATE_KEY | base64 -d > .circleci/github.key.pem
+            - nais/deploy-with-gh-app:
+                  repo: navikt/sykefravarsstatistikk
+                  image: navikt/sykefravarsstatistikk
+                  github-app-id: 43789
+                  nais-template: dev-sbs.yaml
+                  environment: dev-sbs
+                  team: arbeidsgiver
 
-  deploy-til-prod:
-    docker:
-      - image: navikt/deployment-cli:0.4.2
-    steps:
-      - checkout
-      - run:
-          name: Unpack Private Key
-          command: echo $GITHUB_PRIVATE_KEY | base64 -d > .circleci/github.key.pem
-      - nais/deploy-with-gh-app:
-          repo: navikt/sykefravarsstatistikk
-          image: navikt/sykefravarsstatistikk
-          github-app-id: 43789
-          nais-template: prod-nais.yaml
-          environment: prod-sbs
-          team: arbeidsgiver
+    deploy-til-prod:
+        docker:
+            - image: navikt/deployment-cli:0.4.2
+        steps:
+            - checkout
+            - run:
+                  name: Unpack Private Key
+                  command: echo $GITHUB_PRIVATE_KEY | base64 -d > .circleci/github.key.pem
+            - nais/deploy-with-gh-app:
+                  repo: navikt/sykefravarsstatistikk
+                  image: navikt/sykefravarsstatistikk
+                  github-app-id: 43789
+                  nais-template: prod-nais.yaml
+                  environment: prod-sbs
+                  team: arbeidsgiver
 
 workflows:
-  version: 2.1
-  bygg_og_deploy:
-    jobs:
-      - bygg:
-          context: NAIS deployment
-      - deploy-til-dev:
-          context: tag-ci
-          requires:
-            - bygg
-          filters:
-            branches:
-              only:
-                - master
-      - godkjenn-til-dev:
-          type: approval
-          filters:
-            branches:
-              ignore:
-                - master
-      - deploy-til-dev:
-          context: tag-ci
-          requires:
-            - godkjenn-til-dev
-            - bygg
-          filters:
-            branches:
-              ignore:
-                - master
-      - godkjenn-til-prod:
-          type: approval
-          filters:
-            branches:
-              only:
-                - master
-      - deploy-til-prod:
-          context: tag-ci
-          requires:
-            - godkjenn-til-prod
-            - bygg
-          filters:
-            branches:
-              only:
-                - master
+    version: 2.1
+    bygg_og_deploy:
+        jobs:
+            - bygg:
+                  context: NAIS deployment
+            - deploy-til-dev:
+                  context: tag-ci
+                  requires:
+                      - bygg
+                  filters:
+                      branches:
+                          only:
+                              - master
+            - godkjenn-til-dev:
+                  type: approval
+                  filters:
+                      branches:
+                          ignore:
+                              - master
+            - deploy-til-dev:
+                  context: tag-ci
+                  requires:
+                      - godkjenn-til-dev
+                      - bygg
+                  filters:
+                      branches:
+                          ignore:
+                              - master
+            - godkjenn-til-prod:
+                  type: approval
+                  filters:
+                      branches:
+                          only:
+                              - master
+            - deploy-til-prod:
+                  context: tag-ci
+                  requires:
+                      - godkjenn-til-prod
+                      - bygg
+                  filters:
+                      branches:
+                          only:
+                              - master
