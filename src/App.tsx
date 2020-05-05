@@ -91,10 +91,7 @@ const AppContent: FunctionComponent = () => {
 
     return (
         <>
-            <Banner
-                tittel="Sykefraværsstatistikk"
-                restOrganisasjoner={restOrganisasjoner}
-            />
+            <Banner tittel="Sykefraværsstatistikk" restOrganisasjoner={restOrganisasjoner} />
             {innhold}
         </>
     );

@@ -16,7 +16,11 @@
     &__ingress {
         padding-bottom: 2rem;
     }
-
+    &__rad {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
     &__lesmer-kostnad-dagsverk {
         margin-bottom: 2rem;
     }
@@ -32,20 +36,29 @@
             height: 1rem;
             margin-bottom: -0.2rem;
         }
+        &__radiogrouplabel {
+            margin-bottom: 1rem;
+        }
     }
 
     &__input {
         &.skjemaelement {
             margin-bottom: 0.5rem;
+            margin-left: 2rem;
+            margin-right: 1rem;
         }
     }
 
     @media (min-width: @screen-sm-min) {
-        display: flex;
-        align-items: flex-start;
+        //  display: flex;
+        // align-items: flex-start;
 
         &__lesmer-tapte-dagsverk {
             margin-bottom: 0;
+        }
+
+        &__label_fast_størrelse {
+            width: 13rem;
         }
     }
 }

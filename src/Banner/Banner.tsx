@@ -4,7 +4,10 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Bedriftsmeny from '@navikt/bedriftsmeny';
 import '@navikt/bedriftsmeny/lib/bedriftsmeny.css';
 import { RestStatus } from '../api/api-utils';
-import { AltinnOrganisasjon, RestAltinnOrganisasjoner } from '../api/altinnorganisasjon/altinnorganisasjon-api';
+import {
+    AltinnOrganisasjon,
+    RestAltinnOrganisasjoner,
+} from '../api/altinnorganisasjon/altinnorganisasjon-api';
 
 interface Props {
     tittel: string;

@@ -1,19 +1,40 @@
 import React, { FunctionComponent } from 'react';
-import { Element, Sidetittel, Systemtittel } from 'nav-frontend-typografi';
+import { Element, Systemtittel } from 'nav-frontend-typografi';
 import { ReactComponent as SedlerIkon } from '../sedlerIkon.svg';
 import './Kostnad.less';
+import classNames from 'classnames';
 
 interface Props {
-    kostnad: number;
+    nåværendeKostnad: number;
+    ønsketKostnad: number;
+    ønsketRedusert: number;
 }
 
-const Kostnad: FunctionComponent<Props> = ({ kostnad }) => (
+const Kostnad: FunctionComponent<Props> = ({ nåværendeKostnad, ønsketKostnad, ønsketRedusert }) => (
     <div className="kostnad">
         <Systemtittel tag="h2" className="kostnad__tittel">
-            Kostnad <SedlerIkon className="kostnad__ikon" />
+            Resultat <SedlerIkon className="kostnad__ikon" />
         </Systemtittel>
-        <Element className="kostnad__tekst">Kostnad siste 12 mnd</Element>
-        <Sidetittel>{formaterTall(kostnad)}&nbsp;kr</Sidetittel>
+        <div className="kostnad__tekst">
+            <Element>Totale kosnader per år med nåværende sykefravær</Element>
+            <Element>{formaterTall(nåværendeKostnad)}&nbsp;kr</Element>
+        </div>
+        <div className={classNames('kostnad__tekst', 'kostnad__sisterad')}>
+            <Element>Totale kosnader per år med ønsket sykefravær </Element>
+            <Element>{formaterTall(ønsketKostnad)}&nbsp;kr</Element>
+        </div>
+
+        <div className={classNames('kostnad__tekst', 'kostnad__resultatrad')}>
+            <Element>
+                {'Reduserer sykefraværet til ' +
+                    ønsketRedusert +
+                    ' dagsverk øker bunnlinjen årlig med'}
+            </Element>
+
+            <Element className="kostnad__sisteresultat">
+                {formaterTall(nåværendeKostnad - ønsketKostnad)}&nbsp;kr
+            </Element>
+        </div>
     </div>
 );
 
