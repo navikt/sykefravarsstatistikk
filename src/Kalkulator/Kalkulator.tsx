@@ -226,9 +226,6 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             </EksternLenke>
                         </Hjelpetekst>
                     </div>
-                    {/*
-                    <Normaltekst>Gjennomsnittlig kostnad per dagsverk: 2600&nbsp;kr</Normaltekst>
-*/}
 
                     <div className="kalkulator__rad">
                         <Element className="kalkulator__label_fast_størrelse">
