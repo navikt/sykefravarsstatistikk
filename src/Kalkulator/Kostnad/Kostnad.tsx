@@ -39,7 +39,7 @@ const Kostnad: FunctionComponent<Props> = ({ nåværendeKostnad, ønsketKostnad,
 );
 
 const formaterTall = (tall: number): string => {
-    return tall.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
+    return tall.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
 };
 
 export default Kostnad;
