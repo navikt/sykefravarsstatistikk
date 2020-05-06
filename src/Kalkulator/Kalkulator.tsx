@@ -253,7 +253,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             maxLength={15}
                             type="number"
                             className="kalkulator__input"
-                        />{' '}
+                        />
                         {tapteDagsverkSpinner}
                         {nåværendeTapteDagsverkSiste12Mnd}
                     </div>
