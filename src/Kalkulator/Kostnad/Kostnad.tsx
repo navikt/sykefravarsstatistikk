@@ -13,26 +13,33 @@ interface Props {
 }
 
 const Kostnad: FunctionComponent<Props> = props => {
-    const redusertKostnad =
-        'Reduserer sykefraværet til ' +
-        (props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
-            ? props.ønsketRedusert.toFixed(2)
-            : 0) +
-        (props.antallTapteDagsverkEllerProsent ===
-        AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-            ? ' %'
-            : ' dagsverk') +
-        ' øker bunnlinjen årlig med';
-    const øktKostnad =
-        'Økes sykefraværet til ' +
-        (props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
-            ? props.ønsketRedusert.toFixed(2)
-            : 0) +
-        (props.antallTapteDagsverkEllerProsent ===
-        AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-            ? ' %'
-            : ' dagsverk') +
-        ' taper dere ytterligere';
+    const redusertKostnadTekst = `Reduserer sykefraværet til  
+        ${
+            props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
+                ? props.ønsketRedusert.toFixed(2)
+                : 0
+        } 
+        ${
+            props.antallTapteDagsverkEllerProsent ===
+            AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                ? ' %'
+                : ' dagsverk'
+        } 
+         øker bunnlinjen årlig med`;
+    const øktKostnadTekst = `Økes sykefraværet til 
+        ${
+            props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
+                ? props.ønsketRedusert.toFixed(2)
+                : 0
+        } 
+        ${
+            props.antallTapteDagsverkEllerProsent ===
+            AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                ? ' %'
+                : ' dagsverk'
+        } 
+         taper dere ytterligere`;
+    //const test = `Her starter jeg med tekst og da kommer en ${variable} og jeg fortsetter med tekst etterpå`;
     return (
         <div className="kostnad">
             <Systemtittel tag="h2" className="kostnad__tittel">
@@ -50,10 +57,9 @@ const Kostnad: FunctionComponent<Props> = props => {
             <div className={classNames('kostnad__tekst', 'kostnad__resultatrad')}>
                 <Element>
                     {props.nåværendeKostnad - props.ønsketKostnad >= 0
-                        ? redusertKostnad
-                        : øktKostnad}
+                        ? redusertKostnadTekst
+                        : øktKostnadTekst}
                 </Element>
-
                 <Element
                     className={
                         props.nåværendeKostnad - props.ønsketKostnad >= 0
