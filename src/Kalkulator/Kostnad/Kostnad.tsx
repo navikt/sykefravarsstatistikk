@@ -35,14 +35,14 @@ const Kostnad: FunctionComponent<Props> = ({
             <Element>
                 {nåværendeKostnad - ønsketKostnad >= 0
                     ? 'Reduserer sykefraværet til ' +
-                      ønsketRedusert +
+                      (ønsketRedusert !== undefined ? ønsketRedusert.toFixed(2) : 0) +
                       (antallTapteDagsverkEllerProsent ===
                       AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
                           ? ' %'
                           : ' dagsverk') +
                       ' øker bunnlinjen årlig med'
                     : 'Økes sykefraværet til ' +
-                      ønsketRedusert +
+                      (ønsketRedusert !== undefined ? ønsketRedusert.toFixed(2) : 0) +
                       (antallTapteDagsverkEllerProsent ===
                       AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
                           ? ' %'
