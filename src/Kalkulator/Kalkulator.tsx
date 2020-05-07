@@ -19,6 +19,7 @@ import {
 } from './kalkulator-utils';
 import amplitude from '../utils/amplitude';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import { PopoverOrientering } from 'nav-frontend-popover';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -308,6 +309,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             ? (ønsketSykefraværsprosent as number)
                             : (ønsketTapteDagsverk as number)
                     }
+                    antallTapteDagsverkEllerProsent={antallTapteDagsverkEllerProsent}
                 />
             </div>
         </div>

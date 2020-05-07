@@ -2,7 +2,7 @@
 
 .kostnad {
     margin-top: 2rem;
-    padding: 2rem 1rem 4rem;
+    padding: 2rem 1rem 3rem;
     border-radius: 0.25rem;
     border: 0.125rem solid @navBlaLighten60;
 
@@ -22,16 +22,20 @@
     }
     &__sisteresultat {
         color: @navGronn;
+        &_minus{
+            color: @navRod;
+        }
     }
     &__sisterad {
         border-bottom: 0.125rem solid @navLysGra;
+        padding-bottom: 1rem;
     }
     &__resultatrad {
         border-bottom: 0.125rem double @navMorkGra;
+        padding-bottom: 1rem;
     }
     @media (min-width: @screen-sm-min) {
         min-width: 21rem;
-        //margin-left: 4.5rem;
         padding-left: 1.5rem;
         padding-right: 1.5rem;
     }
