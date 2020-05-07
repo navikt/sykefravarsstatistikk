@@ -19,7 +19,6 @@ import {
 } from './kalkulator-utils';
 import amplitude from '../utils/amplitude';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import { PopoverOrientering } from 'nav-frontend-popover';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
