@@ -39,7 +39,6 @@ const Kostnad: FunctionComponent<Props> = props => {
                 : ' dagsverk'
         } 
          taper dere ytterligere`;
-    //const test = `Her starter jeg med tekst og da kommer en ${variable} og jeg fortsetter med tekst etterpå`;
     return (
         <div className="kostnad">
             <Systemtittel tag="h2" className="kostnad__tittel">
