@@ -62,14 +62,26 @@ const Kalkulator: FunctionComponent<Props> = props => {
             if (!erVerdiAkseptabeltProsent(verdi)) {
                 return;
             }
-            setNåværendeSykefraværsprosent(Number(verdi.toFixed(1)));
+            if (isNaN(verdi)) {
+                setNåværendeSykefraværsprosent(0);
+                return;
+            }
+            try {
+                setNåværendeSykefraværsprosent(Number(verdi.toFixed(1)));
+            } catch (e) {
+                setNåværendeSykefraværsprosent(0);
+            }
             console.log('nåværendeSyfoprosent ' + nåværendeSykefraværsprosent);
         } else {
             /*if (erVerdiTomt(verdi)) {
                 return;
             }*/
 
-            setNåværendeTapteDagsverk(Number(verdi.toFixed(1)));
+            try {
+                setNåværendeTapteDagsverk(Number(verdi.toFixed(1)));
+            } catch (e) {
+                setNåværendeSykefraværsprosent(0);
+            }
         }
     };
     const setØnsketVerdiAntallTapteDagsverkEllerProsent = (verdi: number) => {
@@ -136,7 +148,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         Maskering.ERMASKERTELLERHARIKKENOEDATA ||
                     muligeDagsverkSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA
                 ) {
-                    setNåværendeSykefraværsprosent(undefined);
+                    setNåværendeSykefraværsprosent(0);
                     setSkalViseDefaultTapteDagsverk(false);
                 } else {
                     setNåværendeSykefraværsprosent(prosentTapteDagsverkSiste4Kvartaler);
@@ -299,12 +311,15 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             value={
                                 antallTapteDagsverkEllerProsent ===
                                 AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                                    ? nåværendeSykefraværsprosent || ''
-                                    : nåværendeTapteDagsverk || ''
+                                    ? nåværendeSykefraværsprosent
+                                    : nåværendeTapteDagsverk
                             }
                             bredde={'XS'}
                             maxLength={15}
                             type="number"
+                            /*  inputMode="numeric"
+                            pattern="[0-9]*"*/
+                            step="0.01"
                             className="kalkulator__input"
                         />
                         {tapteDagsverkSpinner}
