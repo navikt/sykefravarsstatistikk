@@ -16,7 +16,7 @@ const Kostnad: FunctionComponent<Props> = props => {
     const redusertKostnadTekst = `Reduserer sykefraværet til  
         ${
             props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
-                ? props.ønsketRedusert.toFixed(2)
+                ? props.ønsketRedusert.toFixed(1)
                 : 0
         } 
         ${
@@ -25,11 +25,11 @@ const Kostnad: FunctionComponent<Props> = props => {
                 ? ' %'
                 : ' dagsverk'
         } 
-         øker bunnlinjen årlig med`;
+         sparer dere årlig`;
     const øktKostnadTekst = `Økes sykefraværet til 
         ${
             props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
-                ? props.ønsketRedusert.toFixed(2)
+                ? props.ønsketRedusert.toFixed(1)
                 : 0
         } 
         ${
@@ -38,7 +38,7 @@ const Kostnad: FunctionComponent<Props> = props => {
                 ? ' %'
                 : ' dagsverk'
         } 
-         taper dere ytterligere`;
+         taper dere ytterligere årlig`;
     return (
         <div className="kostnad">
             <Systemtittel tag="h2" className="kostnad__tittel">
