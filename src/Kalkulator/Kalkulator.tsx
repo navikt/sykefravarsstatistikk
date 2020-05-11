@@ -344,8 +344,8 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             value={
                                 antallTapteDagsverkEllerProsent ===
                                 AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                                    ? ønsketSykefraværsprosent || ''
-                                    : ønsketTapteDagsverk || ''
+                                    ? ønsketSykefraværsprosent
+                                    : ønsketTapteDagsverk
                             }
                             bredde={'XS'}
                             maxLength={15}
