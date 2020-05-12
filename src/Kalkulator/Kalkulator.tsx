@@ -89,15 +89,13 @@ const Kalkulator: FunctionComponent<Props> = props => {
         if (!erVerdiAkseptabelt(verdi)) {
             return;
         }
+
         if (
             antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
         ) {
             if (!erVerdiAkseptabeltProsent(verdi)) {
                 return;
             }
-            /*   if (erVerdiTomt(verdi)) {
-                return;
-            }*/
             setØnsketSykefraværsprosent(Number(verdi.toFixed(1)));
         } else {
             /*if (erVerdiTomt(verdi) || !erVerdiAkseptabelt(verdi)) {
@@ -311,11 +309,12 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             value={
                                 antallTapteDagsverkEllerProsent ===
                                 AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                                    ? nåværendeSykefraværsprosent
-                                    : nåværendeTapteDagsverk
+                                    ? nåværendeSykefraværsprosent || undefined
+                                    : nåværendeTapteDagsverk || undefined
                             }
                             bredde={'XS'}
                             maxLength={15}
+                            placeholder={'0'}
                             type="number"
                             /*  inputMode="numeric"
                             pattern="[0-9]*"*/
@@ -344,11 +343,12 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             value={
                                 antallTapteDagsverkEllerProsent ===
                                 AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                                    ? ønsketSykefraværsprosent
-                                    : ønsketTapteDagsverk
+                                    ? ønsketSykefraværsprosent || undefined
+                                    : ønsketTapteDagsverk || undefined
                             }
                             bredde={'XS'}
                             maxLength={15}
+                            placeholder={'0'}
                             type="number"
                             className="kalkulator__input"
                         />
