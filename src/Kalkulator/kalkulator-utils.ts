@@ -43,7 +43,7 @@ export const getAntallMuligeDagsverkSiste4Kvartaler = (
     historikkListe: Sykefraværshistorikk[]
 ): number | Maskering.ERMASKERTELLERHARIKKENOEDATA => {
     const prosenterForSiste4Kvartaler = getSiste4KvartalsvisSykefraværshistorikk(historikkListe);
-    //console.log(historikkListe);
+    console.log(historikkListe);
     if (prosenterForSiste4Kvartaler.length !== 4) {
         return Maskering.ERMASKERTELLERHARIKKENOEDATA;
     }
@@ -79,17 +79,15 @@ export const getTotalKostnad = (
     nåværendeTapteDagsverk: number | undefined,
     antallTapteDagsverkEllerProsent: AntallTapteDagsverkEllerProsent | undefined
 ) => {
-    console.log('nåværendeSykefraværsprosent:' + nåværendeSykefraværsprosent);
-    console.log('nåværendeSykefraværsprosent as number' + (nåværendeSykefraværsprosent as number));
     if (antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT) {
         if (
             kostnadDagsverk &&
             nåværendeSykefraværsprosent &&
             !isNaN(nåværendeSykefraværsprosent) &&
             muligeDagsverk
-        )
+        ) {
             return ((nåværendeSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
-        else return 0;
+        } else return 0;
     } else if (nåværendeTapteDagsverk && !isNaN(nåværendeTapteDagsverk) && kostnadDagsverk) {
         return nåværendeTapteDagsverk * kostnadDagsverk;
     } else {

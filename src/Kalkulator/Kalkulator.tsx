@@ -54,29 +54,19 @@ const Kalkulator: FunctionComponent<Props> = props => {
             : 'Ønsket antall tapte dagsverk siste 12 mnd';
 
     const setVerdiAntallTapteDagsverkEllerProsent = (verdi: number) => {
-        console.log(verdi);
-
         if (
             antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
         ) {
             if (!erVerdiAkseptabeltProsent(verdi)) {
                 return;
             }
-            /* if (isNaN(verdi)) {
-                setNåværendeSykefraværsprosent(0);
-                return;
-            }*/
+
             try {
                 setNåværendeSykefraværsprosent(Number(verdi.toFixed(1)));
             } catch (e) {
                 setNåværendeSykefraværsprosent(0);
             }
-            console.log('nåværendeSyfoprosent ' + nåværendeSykefraværsprosent);
         } else {
-            /*if (erVerdiTomt(verdi)) {
-                return;
-            }*/
-
             try {
                 setNåværendeTapteDagsverk(Number(verdi.toFixed(1)));
             } catch (e) {
@@ -85,7 +75,6 @@ const Kalkulator: FunctionComponent<Props> = props => {
         }
     };
     const setØnsketVerdiAntallTapteDagsverkEllerProsent = (verdi: number) => {
-        console.log(verdi);
         if (!erVerdiAkseptabelt(verdi)) {
             return;
         }
@@ -96,11 +85,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
             if (!erVerdiAkseptabeltProsent(verdi)) {
                 return;
             }
+
             setØnsketSykefraværsprosent(Number(verdi.toFixed(1)));
         } else {
-            /*if (erVerdiTomt(verdi) || !erVerdiAkseptabelt(verdi)) {
-                return;
-            }*/
             setØnsketTapteDagsverk(Number(verdi.toFixed(1)));
         }
     };
@@ -110,13 +97,34 @@ const Kalkulator: FunctionComponent<Props> = props => {
     const erVerdiAkseptabelt = (verdi: number): boolean => {
         return !(verdi < 0);
     };
-    const erVerdiTomt = (verdi: number): boolean => {
-        if (verdi === undefined || isNaN(verdi)) {
-            return true;
-        } else {
-            return false;
+
+    function setVerdiMuligeDagsverk(verdi: number) {
+        if (!skalViseDefaultTapteDagsverk && erVerdiAkseptabelt(verdi)) {
+            setMuligeDagsverk(verdi);
         }
-    };
+    }
+
+    const antallMuligeDagsverkForMaskerteBedrifeter = (
+        <div className="kalkulator__rad">
+            <Element className="kalkulator__label_fast_størrelse">
+                {'Antall mulige dagsverk'}
+            </Element>
+            <Input
+                label={''}
+                onChange={event => setVerdiMuligeDagsverk(parseFloat(event.target.value))}
+                onClick={() => {
+                    amplitude.logEvent('#sykefravarsstatistikk-kalkulator dagsverk input-klikk');
+                }}
+                value={muligeDagsverk}
+                bredde={'XS'}
+                maxLength={15}
+                type="number"
+                placeholder={'0'}
+                step="1"
+                className="kalkulator__input"
+            />
+        </div>
+    );
     useEffect(() => {
         if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
             setNåværendeTapteDagsverk(undefined);
@@ -147,6 +155,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     muligeDagsverkSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA
                 ) {
                     setNåværendeSykefraværsprosent(0);
+                    setØnsketSykefraværsprosent(0);
                     setSkalViseDefaultTapteDagsverk(false);
                 } else {
                     setNåværendeSykefraværsprosent(prosentTapteDagsverkSiste4Kvartaler);
@@ -160,6 +169,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                 );
                 if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
                     setNåværendeTapteDagsverk(0);
+                    setØnsketTapteDagsverk(0);
                     setSkalViseDefaultTapteDagsverk(false);
                 } else {
                     setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler);
@@ -173,6 +183,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
         harEndretTapteDagsverk,
         antallTapteDagsverkEllerProsent,
         harEndretSykefraværsprosent,
+        skalViseDefaultTapteDagsverk,
     ]);
 
     useEffect(() => {
@@ -289,7 +300,10 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             </EksternLenke>
                         </Hjelpetekst>
                     </div>
-
+                    {!skalViseDefaultTapteDagsverk &&
+                        antallTapteDagsverkEllerProsent ===
+                            AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT &&
+                        antallMuligeDagsverkForMaskerteBedrifeter}
                     <div className="kalkulator__rad">
                         <Element className="kalkulator__label_fast_størrelse">
                             {labelsNåværendeTapteDagsverkEllerProsent}
@@ -307,18 +321,18 @@ const Kalkulator: FunctionComponent<Props> = props => {
                                 );
                             }}
                             value={
-                                antallTapteDagsverkEllerProsent ===
-                                AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                                    ? nåværendeSykefraværsprosent || undefined
-                                    : nåværendeTapteDagsverk || undefined
+                                skalViseDefaultTapteDagsverk
+                                    ? antallTapteDagsverkEllerProsent ===
+                                      AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                                        ? nåværendeSykefraværsprosent || undefined
+                                        : nåværendeTapteDagsverk || undefined
+                                    : undefined
                             }
                             bredde={'XS'}
                             maxLength={15}
-                            placeholder={'0'}
                             type="number"
-                            /*  inputMode="numeric"
-                            pattern="[0-9]*"*/
-                            step="0.01"
+                            placeholder={'0'}
+                            step="0.1"
                             className="kalkulator__input"
                         />
                         {tapteDagsverkSpinner}
@@ -341,14 +355,16 @@ const Kalkulator: FunctionComponent<Props> = props => {
                                 );
                             }}
                             value={
-                                antallTapteDagsverkEllerProsent ===
-                                AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                                    ? ønsketSykefraværsprosent || undefined
-                                    : ønsketTapteDagsverk || undefined
+                                skalViseDefaultTapteDagsverk
+                                    ? antallTapteDagsverkEllerProsent ===
+                                      AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                                        ? ønsketSykefraværsprosent || undefined
+                                        : ønsketTapteDagsverk || undefined
+                                    : undefined
                             }
+                            placeholder={'0'}
                             bredde={'XS'}
                             maxLength={15}
-                            placeholder={'0'}
                             type="number"
                             className="kalkulator__input"
                         />
