@@ -81,14 +81,16 @@ export const getTotalKostnad = (
 ) => {
     console.log('nåværendeSykefraværsprosent:' + nåværendeSykefraværsprosent);
     console.log('nåværendeSykefraværsprosent as number' + (nåværendeSykefraværsprosent as number));
-    if (
-        kostnadDagsverk &&
-        nåværendeSykefraværsprosent &&
-        muligeDagsverk &&
-        antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-    ) {
-        return ((nåværendeSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
-    } else if (nåværendeTapteDagsverk && kostnadDagsverk) {
+    if (antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT) {
+        if (
+            kostnadDagsverk &&
+            nåværendeSykefraværsprosent &&
+            !isNaN(nåværendeSykefraværsprosent) &&
+            muligeDagsverk
+        )
+            return ((nåværendeSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
+        else return 0;
+    } else if (nåværendeTapteDagsverk && !isNaN(nåværendeTapteDagsverk) && kostnadDagsverk) {
         return nåværendeTapteDagsverk * kostnadDagsverk;
     } else {
         return 0;
@@ -101,13 +103,10 @@ export const getØnsketKostnad = (
     ønsketTapteDagsverk: number | undefined,
     antallTapteDagsverkEllerProsent: AntallTapteDagsverkEllerProsent | undefined
 ) => {
-    if (
-        kostnadDagsverk &&
-        ønsketSykefraværsprosent &&
-        muligeDagsverk &&
-        antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-    ) {
-        return ((ønsketSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
+    if (antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT) {
+        if (kostnadDagsverk && ønsketSykefraværsprosent && muligeDagsverk)
+            return ((ønsketSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
+        else return 0;
     } else if (ønsketTapteDagsverk && kostnadDagsverk) {
         return ønsketTapteDagsverk * kostnadDagsverk;
     } else {
