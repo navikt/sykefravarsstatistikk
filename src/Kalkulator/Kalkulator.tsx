@@ -26,8 +26,8 @@ interface Props {
 
 const Kalkulator: FunctionComponent<Props> = props => {
     const { restSykefraværshistorikk } = props;
-    const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<number | undefined>();
-    const [ønsketTapteDagsverk, setØnsketTapteDagsverk] = useState<number | undefined>();
+    const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<string>();
+    const [ønsketTapteDagsverk, setØnsketTapteDagsverk] = useState<string>();
     const [muligeDagsverk, setMuligeDagsverk] = useState<number | undefined>();
     const [nåværendeSykefraværsprosent, setNåværendeSykefraværsprosent] = useState<
         number | undefined
@@ -78,7 +78,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
             }*/
 
             try {
-                setNåværendeTapteDagsverk(Number(verdi.toFixed(1)));
+                setNåværendeTapteDagsverk(verdi.toString());
             } catch (e) {
                 setNåværendeSykefraværsprosent(0);
             }
@@ -103,7 +103,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
             /*if (erVerdiTomt(verdi) || !erVerdiAkseptabelt(verdi)) {
                 return;
             }*/
-            setØnsketTapteDagsverk(Number(verdi.toFixed(1)));
+            setØnsketTapteDagsverk(verdi.toString());
         }
     };
     const erVerdiAkseptabeltProsent = (verdi: number): boolean => {
@@ -161,11 +161,11 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     restSykefraværshistorikk.data
                 );
                 if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
-                    setNåværendeTapteDagsverk(0);
+                    setNåværendeTapteDagsverk('0');
                     setSkalViseDefaultTapteDagsverk(false);
                 } else {
-                    setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler);
-                    setØnsketTapteDagsverk(tapteDagsverkSiste4Kvartaler * 0.5);
+                    setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler.toString());
+                    setØnsketTapteDagsverk((tapteDagsverkSiste4Kvartaler * 0.5).toString());
                     setSkalViseDefaultTapteDagsverk(true);
                 }
             }
@@ -360,21 +360,21 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         kostnadDagsverk,
                         nåværendeSykefraværsprosent,
                         muligeDagsverk,
-                        nåværendeTapteDagsverk,
+                        Number(nåværendeTapteDagsverk),
                         antallTapteDagsverkEllerProsent
                     )}
                     ønsketKostnad={getØnsketKostnad(
                         kostnadDagsverk,
                         ønsketSykefraværsprosent,
                         muligeDagsverk,
-                        ønsketTapteDagsverk,
+                        Number(ønsketTapteDagsverk),
                         antallTapteDagsverkEllerProsent
                     )}
                     ønsketRedusert={
                         antallTapteDagsverkEllerProsent ===
                         AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
                             ? (ønsketSykefraværsprosent as number)
-                            : (ønsketTapteDagsverk as number)
+                            : Number(ønsketTapteDagsverk)
                     }
                     antallTapteDagsverkEllerProsent={antallTapteDagsverkEllerProsent}
                 />
