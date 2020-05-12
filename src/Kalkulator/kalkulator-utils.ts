@@ -43,7 +43,6 @@ export const getAntallMuligeDagsverkSiste4Kvartaler = (
     historikkListe: Sykefraværshistorikk[]
 ): number | Maskering.ERMASKERTELLERHARIKKENOEDATA => {
     const prosenterForSiste4Kvartaler = getSiste4KvartalsvisSykefraværshistorikk(historikkListe);
-    console.log(historikkListe);
     if (prosenterForSiste4Kvartaler.length !== 4) {
         return Maskering.ERMASKERTELLERHARIKKENOEDATA;
     }

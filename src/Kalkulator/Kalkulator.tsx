@@ -321,12 +321,10 @@ const Kalkulator: FunctionComponent<Props> = props => {
                                 );
                             }}
                             value={
-                                skalViseDefaultTapteDagsverk
-                                    ? antallTapteDagsverkEllerProsent ===
-                                      AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                                        ? nåværendeSykefraværsprosent || undefined
-                                        : nåværendeTapteDagsverk || undefined
-                                    : undefined
+                                antallTapteDagsverkEllerProsent ===
+                                AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                                    ? nåværendeSykefraværsprosent
+                                    : nåværendeTapteDagsverk
                             }
                             bredde={'XS'}
                             maxLength={15}
@@ -355,12 +353,10 @@ const Kalkulator: FunctionComponent<Props> = props => {
                                 );
                             }}
                             value={
-                                skalViseDefaultTapteDagsverk
-                                    ? antallTapteDagsverkEllerProsent ===
-                                      AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                                        ? ønsketSykefraværsprosent || undefined
-                                        : ønsketTapteDagsverk || undefined
-                                    : undefined
+                                antallTapteDagsverkEllerProsent ===
+                                AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                                    ? ønsketSykefraværsprosent
+                                    : ønsketTapteDagsverk
                             }
                             placeholder={'0'}
                             bredde={'XS'}
