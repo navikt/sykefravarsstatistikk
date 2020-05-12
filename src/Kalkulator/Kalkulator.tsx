@@ -62,10 +62,10 @@ const Kalkulator: FunctionComponent<Props> = props => {
             if (!erVerdiAkseptabeltProsent(verdi)) {
                 return;
             }
-            if (isNaN(verdi)) {
+            /* if (isNaN(verdi)) {
                 setNåværendeSykefraværsprosent(0);
                 return;
-            }
+            }*/
             try {
                 setNåværendeSykefraværsprosent(Number(verdi.toFixed(1)));
             } catch (e) {

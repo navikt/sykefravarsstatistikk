@@ -79,6 +79,8 @@ export const getTotalKostnad = (
     nåværendeTapteDagsverk: number | undefined,
     antallTapteDagsverkEllerProsent: AntallTapteDagsverkEllerProsent | undefined
 ) => {
+    console.log('nåværendeSykefraværsprosent:' + nåværendeSykefraværsprosent);
+    console.log('nåværendeSykefraværsprosent as number' + (nåværendeSykefraværsprosent as number));
     if (
         kostnadDagsverk &&
         nåværendeSykefraværsprosent &&
