@@ -80,7 +80,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
             try {
                 setNåværendeTapteDagsverk(Number(verdi.toFixed(1)));
             } catch (e) {
-                setNåværendeSykefraværsprosent(0);
+                setNåværendeTapteDagsverk(0);
             }
         }
     };
