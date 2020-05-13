@@ -57,20 +57,74 @@ const Kalkulator: FunctionComponent<Props> = props => {
         if (
             antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
         ) {
-            setNåværendeSykefraværsprosent(verdi);
+            if (!erVerdiAkseptabeltProsent(verdi)) {
+                return;
+            }
+
+            try {
+                setNåværendeSykefraværsprosent(Number(verdi.toFixed(1)));
+            } catch (e) {
+                setNåværendeSykefraværsprosent(0);
+            }
         } else {
-            setNåværendeTapteDagsverk(verdi);
+            try {
+                setNåværendeTapteDagsverk(Number(verdi.toFixed(1)));
+            } catch (e) {
+                setNåværendeTapteDagsverk(0);
+            }
         }
     };
     const setØnsketVerdiAntallTapteDagsverkEllerProsent = (verdi: number) => {
+        if (!erVerdiAkseptabelt(verdi)) {
+            return;
+        }
+
         if (
             antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
         ) {
-            setØnsketSykefraværsprosent(verdi);
+            if (!erVerdiAkseptabeltProsent(verdi)) {
+                return;
+            }
+
+            setØnsketSykefraværsprosent(Number(verdi.toFixed(1)));
         } else {
-            setØnsketTapteDagsverk(verdi);
+            setØnsketTapteDagsverk(Number(verdi.toFixed(1)));
         }
     };
+    const erVerdiAkseptabeltProsent = (verdi: number): boolean => {
+        return !(verdi < 0 || verdi > 100);
+    };
+    const erVerdiAkseptabelt = (verdi: number): boolean => {
+        return !(verdi < 0);
+    };
+
+    function setVerdiMuligeDagsverk(verdi: number) {
+        if (!skalViseDefaultTapteDagsverk && erVerdiAkseptabelt(verdi)) {
+            setMuligeDagsverk(verdi);
+        }
+    }
+
+    const antallMuligeDagsverkForMaskerteBedrifeter = (
+        <div className="kalkulator__rad">
+            <Element className="kalkulator__label_fast_størrelse">
+                {'Antall mulige dagsverk'}
+            </Element>
+            <Input
+                label={''}
+                onChange={event => setVerdiMuligeDagsverk(parseFloat(event.target.value))}
+                onClick={() => {
+                    amplitude.logEvent('#sykefravarsstatistikk-kalkulator dagsverk input-klikk');
+                }}
+                value={muligeDagsverk}
+                bredde={'XS'}
+                maxLength={15}
+                type="number"
+                placeholder={'0'}
+                step="1"
+                className="kalkulator__input"
+            />
+        </div>
+    );
     useEffect(() => {
         if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
             setNåværendeTapteDagsverk(undefined);
@@ -100,7 +154,8 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         Maskering.ERMASKERTELLERHARIKKENOEDATA ||
                     muligeDagsverkSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA
                 ) {
-                    setNåværendeSykefraværsprosent(undefined);
+                    setNåværendeSykefraværsprosent(0);
+                    setØnsketSykefraværsprosent(0);
                     setSkalViseDefaultTapteDagsverk(false);
                 } else {
                     setNåværendeSykefraværsprosent(prosentTapteDagsverkSiste4Kvartaler);
@@ -113,7 +168,8 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     restSykefraværshistorikk.data
                 );
                 if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
-                    setNåværendeTapteDagsverk(undefined);
+                    setNåværendeTapteDagsverk(0);
+                    setØnsketTapteDagsverk(0);
                     setSkalViseDefaultTapteDagsverk(false);
                 } else {
                     setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler);
@@ -127,16 +183,17 @@ const Kalkulator: FunctionComponent<Props> = props => {
         harEndretTapteDagsverk,
         antallTapteDagsverkEllerProsent,
         harEndretSykefraværsprosent,
+        skalViseDefaultTapteDagsverk,
     ]);
 
     useEffect(() => {
         scrollToBanner();
     }, []);
 
-    const nåværendeTapteDagsverkSiste12Mnd = restSykefraværshistorikk.status ===
-        RestStatus.Suksess &&
+    const nåværendeTapteDagsverkSiste12Mnd =
+        restSykefraværshistorikk.status === RestStatus.Suksess &&
         skalViseDefaultTapteDagsverk &&
-        antallTapteDagsverkEllerProsent !== AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT && (
+        antallTapteDagsverkEllerProsent !== AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT ? (
             <>
                 <Hjelpetekst>
                     Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes ut
@@ -144,15 +201,32 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     datagrunnlag.
                 </Hjelpetekst>
             </>
+        ) : (
+            <>
+                <Hjelpetekst>
+                    Sykefraværsprosenten regnes ut fra antall tapte dagsverk delt på antall mulige
+                    dagsverk. Mulige dagsverk de siste 12 månedene er hentet fra det dere har meldt
+                    inn i A-ordningen.
+                </Hjelpetekst>
+            </>
         );
-    const ønsketTapteDagsverkSiste12Mnd = restSykefraværshistorikk.status === RestStatus.Suksess &&
+    const ønsketTapteDagsverkSiste12Mnd =
+        restSykefraværshistorikk.status === RestStatus.Suksess &&
         skalViseDefaultTapteDagsverk &&
-        antallTapteDagsverkEllerProsent !== AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT && (
+        antallTapteDagsverkEllerProsent !== AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT ? (
             <>
                 <Hjelpetekst>
                     Et dagsverk er arbeid som utføres på en dag. Antall ønsket tapte dagsverk selv
                     velge for det ønskede legemeldte sykefraværet de siste 12 månedene for å beregne
                     hvor mye du kan spare.
+                </Hjelpetekst>
+            </>
+        ) : (
+            <>
+                <Hjelpetekst>
+                    Ønsket sykefraværsprosent regnes ut fra ønsket antall tapte dagsverk delt på
+                    antall mulige dagsverk dere har hatt de siste 12 månedene. Denne informasjonen
+                    hentes fra det dere har meldt inn i A-ordningen.
                 </Hjelpetekst>
             </>
         );
@@ -226,7 +300,10 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             </EksternLenke>
                         </Hjelpetekst>
                     </div>
-
+                    {!skalViseDefaultTapteDagsverk &&
+                        antallTapteDagsverkEllerProsent ===
+                            AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT &&
+                        antallMuligeDagsverkForMaskerteBedrifeter}
                     <div className="kalkulator__rad">
                         <Element className="kalkulator__label_fast_størrelse">
                             {labelsNåværendeTapteDagsverkEllerProsent}
@@ -247,13 +324,15 @@ const Kalkulator: FunctionComponent<Props> = props => {
                                 antallTapteDagsverkEllerProsent ===
                                 AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
                                     ? nåværendeSykefraværsprosent
-                                    : nåværendeTapteDagsverk || ''
+                                    : nåværendeTapteDagsverk
                             }
                             bredde={'XS'}
                             maxLength={15}
                             type="number"
+                            placeholder={'0'}
+                            step="0.1"
                             className="kalkulator__input"
-                        />{' '}
+                        />
                         {tapteDagsverkSpinner}
                         {nåværendeTapteDagsverkSiste12Mnd}
                     </div>
@@ -277,8 +356,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                                 antallTapteDagsverkEllerProsent ===
                                 AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
                                     ? ønsketSykefraværsprosent
-                                    : ønsketTapteDagsverk || ''
+                                    : ønsketTapteDagsverk
                             }
+                            placeholder={'0'}
                             bredde={'XS'}
                             maxLength={15}
                             type="number"
@@ -308,6 +388,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             ? (ønsketSykefraværsprosent as number)
                             : (ønsketTapteDagsverk as number)
                     }
+                    antallTapteDagsverkEllerProsent={antallTapteDagsverkEllerProsent}
                 />
             </div>
         </div>
