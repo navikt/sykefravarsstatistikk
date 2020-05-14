@@ -38,7 +38,7 @@ jobs:
 
     deploy-to-dev:
         name: Deploy to dev-sbs
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/forbedring-kalkis-v2'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/endre-tekster-og-bruke-GithubActions-for-prod'
         needs: compile-test-and-build
         runs-on: ubuntu-latest
         steps:
