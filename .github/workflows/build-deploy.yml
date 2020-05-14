@@ -8,7 +8,7 @@ env:
 jobs:
     compile-test-and-build:
         name: Build and run tests
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/forbedring-kalkis-v2'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/endre-tekster-og-bruke-GithubActions-for-prod'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
@@ -51,17 +51,17 @@ jobs:
                   RESOURCE: nais/dev-sbs.yaml
                   PRINT_PAYLOAD: true
 
-deploy-to-prod:
-   name: Deploy to prod-sbs
-  if: github.ref == 'refs/heads/master'
- needs: deploy-to-dev
-runs-on: ubuntu-latest
-     steps:
-        - uses: actions/checkout@v1
-       - uses: nais/deploy/actions/deploy@v1
-        env:
-           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: prod-sbs
-         VAR: version=${{ env.IMAGE }}
-        RESOURCE: nais/prod-sbs.yaml
-       PRINT_PAYLOAD: true
+    deploy-to-prod:
+        name: Deploy to prod-sbs
+        if: github.ref == 'refs/heads/master'
+        needs: deploy-to-dev
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - uses: nais/deploy/actions/deploy@v1
+              env:
+                  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+                  CLUSTER: prod-sbs
+                  VAR: version=${{ env.IMAGE }}
+                  RESOURCE: nais/prod-sbs.yaml
+                  PRINT_PAYLOAD: true
