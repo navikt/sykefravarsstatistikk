@@ -46,11 +46,11 @@ const Kalkulator: FunctionComponent<Props> = props => {
 
     const labelsNåværendeTapteDagsverkEllerProsent =
         antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-            ? 'Nåværende sykefravær (%)'
+            ? 'Nåværende sykefravær i prosent'
             : 'Nåværende antall tapte dagsverk siste 12 mnd';
     const labelsØnsketTapteDagsverkEllerProsent =
         antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-            ? 'Ønsket sykefravær (%)'
+            ? 'Ønsket sykefravær i prosent'
             : 'Ønsket antall tapte dagsverk siste 12 mnd';
 
     const setVerdiAntallTapteDagsverkEllerProsent = (verdi: number) => {
@@ -107,7 +107,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
     const antallMuligeDagsverkForMaskerteBedrifeter = (
         <div className="kalkulator__rad">
             <Element className="kalkulator__label_fast_størrelse">
-                {'Antall mulige dagsverk'}
+                {'Antall mulige dagsverk per år'}
             </Element>
             <Input
                 label={''}
@@ -274,7 +274,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     {radioProsentEllerAntall}
                     <div className="kalkulator__rad">
                         <Element className="kalkulator__label_fast_størrelse">
-                            Kostnad pr. dags pr. ansatt (kr)
+                            Kostnad per dag per ansatt i kroner
                         </Element>
                         <Input
                             label={''}
