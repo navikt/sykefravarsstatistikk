@@ -113,7 +113,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                 label={''}
                 onChange={event => setVerdiMuligeDagsverk(parseFloat(event.target.value))}
                 onClick={() => {
-                    amplitude.logEvent('#sykefravarsstatistikk-kalkulator dagsverk input-klikk');
+                    amplitude.logEvent('#sykefravarsstatistikk-kalkulator antall-mulige-dagsverk input-klikk');
                 }}
                 value={muligeDagsverk}
                 bredde={'XS'}
@@ -331,7 +331,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             }
                             onClick={() => {
                                 amplitude.logEvent(
-                                    '#sykefravarsstatistikk-kalkulator dagsverk input-klikk'
+                                    '#sykefravarsstatistikk-kalkulator nåværende-tapte-dagsverk-eller-prosent input-klikk'
                                 );
                             }}
                             value={
@@ -366,7 +366,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             }
                             onClick={() => {
                                 amplitude.logEvent(
-                                    '#sykefravarsstatistikk-kalkulator dagsverk input-klikk'
+                                    '#sykefravarsstatistikk-kalkulator ønsket-tapte-dagsverk-eller-prosent input-klikk'
                                 );
                             }}
                             value={
