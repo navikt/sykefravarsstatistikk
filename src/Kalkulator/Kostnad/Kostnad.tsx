@@ -13,10 +13,13 @@ interface Props {
 }
 
 const Kostnad: FunctionComponent<Props> = props => {
-    const redusertKostnadTekst = `Reduserer sykefraværet til  
+    const redusertKostnadTekst = `Reduserer dere sykefraværet til  
         ${
             props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
-                ? props.ønsketRedusert.toFixed(1)
+                ? ( props.antallTapteDagsverkEllerProsent ===
+                AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                ? props.ønsketRedusert.toFixed(1).replace('.',',')
+                :  props.ønsketRedusert.toFixed(0))
                 : 0
         } 
         ${
@@ -26,10 +29,13 @@ const Kostnad: FunctionComponent<Props> = props => {
                 : ' dagsverk'
         } 
          sparer dere årlig`;
-    const øktKostnadTekst = `Økes sykefraværet til 
+    const øktKostnadTekst = `Øker dere sykefraværet til 
         ${
             props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
-                ? props.ønsketRedusert.toFixed(1)
+                ? ( props.antallTapteDagsverkEllerProsent ===
+                AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                ? props.ønsketRedusert.toFixed(1).replace('.',',')
+                :  props.ønsketRedusert.toFixed(0))
                 : 0
         } 
         ${
