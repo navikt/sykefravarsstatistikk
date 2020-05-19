@@ -167,8 +167,12 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     setØnsketSykefraværsprosent(0);
                     setSkalViseDefaultTapteDagsverk(false);
                 } else {
-                    setNåværendeSykefraværsprosent(prosentTapteDagsverkSiste4Kvartaler);
-                    setØnsketSykefraværsprosent(prosentTapteDagsverkSiste4Kvartaler * 0.5);
+                    setNåværendeSykefraværsprosent(
+                        Math.round(prosentTapteDagsverkSiste4Kvartaler * 10) / 10
+                    );
+                    setØnsketSykefraværsprosent(
+                        Math.round(prosentTapteDagsverkSiste4Kvartaler * 5) / 10
+                    );
                     setMuligeDagsverk(muligeDagsverkSiste4Kvartaler);
                     setSkalViseDefaultTapteDagsverk(true);
                 }
