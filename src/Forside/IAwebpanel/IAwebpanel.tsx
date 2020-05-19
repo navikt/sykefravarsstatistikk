@@ -6,6 +6,7 @@ import illustrasjon from './sort.svg';
 import { sendEvent } from '../../utils/metrikk-api';
 import amplitude from '../../utils/amplitude';
 import { ReactComponent as VarselIkon } from './varselIkon.svg';
+import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 
 const IAwebpanel: React.FunctionComponent = () => {
     return (
@@ -24,7 +25,7 @@ const IAwebpanel: React.FunctionComponent = () => {
                         og tjenester som er mottatt fra NAV Arbeidslivssenter.
                     </Normaltekst>
                 </div>
-                <a
+                <EksternLenke
                     href="https://www.altinn.no/Pages/ServiceEngine/Start/StartService.aspx?ServiceEditionCode=2&ServiceCode=3403&Oselect=true&M=SP"
                     className="iawebpanel__lenke"
                     onClick={() => {
@@ -33,7 +34,7 @@ const IAwebpanel: React.FunctionComponent = () => {
                     }}
                 >
                     Gå til IA-web
-                </a>
+                </EksternLenke>
             </div>
         </PanelBase>
     );
