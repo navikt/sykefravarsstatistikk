@@ -2,7 +2,11 @@ import { RestRessurs, RestStatus } from './api-utils';
 import { useEffect, useState } from 'react';
 import { hentRestBedriftsmetrikker } from './api';
 import amplitude from '../utils/amplitude';
-import { Sykefraværshistorikk, SykefraværshistorikkType, Sykefraværsprosent } from './sykefraværshistorikk';
+import {
+    Sykefraværshistorikk,
+    SykefraværshistorikkType,
+    Sykefraværsprosent,
+} from './sykefraværshistorikk';
 import {
     beregnHvilkeÅrstallOgKvartalerSomSkalVises,
     finnProsent,
