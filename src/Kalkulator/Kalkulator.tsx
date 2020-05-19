@@ -176,7 +176,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     setSkalViseDefaultTapteDagsverk(false);
                 } else {
                     setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler);
-                    setØnsketTapteDagsverk(tapteDagsverkSiste4Kvartaler * 0.5);
+                    setØnsketTapteDagsverk(Math.round(tapteDagsverkSiste4Kvartaler * 0.5));
                     setSkalViseDefaultTapteDagsverk(true);
                 }
             }
@@ -366,7 +366,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             }
                             onClick={() => {
                                 amplitude.logEvent(
-                                    '#sykefravarsstatistikk-kalkulator ønsket-tapte-dagsverk-eller-prosent input-klikk'
+                                    '#sykefravarsstatistikk-kalkulator ønsket-tapte-dagsverk-eller-prosentr input-klikk'
                                 );
                             }}
                             value={
