@@ -47,11 +47,15 @@ const Kalkulator: FunctionComponent<Props> = props => {
     const labelsNåværendeTapteDagsverkEllerProsent =
         antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
             ? 'Nåværende sykefravær i prosent'
-            : 'Nåværende antall tapte dagsverk siste 12 mnd';
+            : skalViseDefaultTapteDagsverk
+            ? 'Nåværende antall tapte dagsverk siste 12 måneder'
+            : 'Antall tapte dagsverk i løpet av 12 måneder';
     const labelsØnsketTapteDagsverkEllerProsent =
         antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
             ? 'Ønsket sykefravær i prosent'
-            : 'Ønsket antall tapte dagsverk siste 12 mnd';
+            : skalViseDefaultTapteDagsverk
+            ? 'Ønsket antall tapte dagsverk i en 12 måneders periode'
+            : 'Ønsket antall tapte dagsverk i løpet av 12 måneder';
 
     const setVerdiAntallTapteDagsverkEllerProsent = (verdi: number) => {
         if (
@@ -68,7 +72,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
             }
         } else {
             try {
-                setNåværendeTapteDagsverk(Number(verdi.toFixed(1)));
+                setNåværendeTapteDagsverk(Number(verdi.toFixed(0)));
             } catch (e) {
                 setNåværendeTapteDagsverk(0);
             }
@@ -88,7 +92,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
 
             setØnsketSykefraværsprosent(Number(verdi.toFixed(1)));
         } else {
-            setØnsketTapteDagsverk(Number(verdi.toFixed(1)));
+            setØnsketTapteDagsverk(Number(verdi.toFixed(0)));
         }
     };
     const erVerdiAkseptabeltProsent = (verdi: number): boolean => {
@@ -113,7 +117,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                 label={''}
                 onChange={event => setVerdiMuligeDagsverk(parseFloat(event.target.value))}
                 onClick={() => {
-                    amplitude.logEvent('#sykefravarsstatistikk-kalkulator dagsverk input-klikk');
+                    amplitude.logEvent(
+                        '#sykefravarsstatistikk-kalkulator antall-mulige-dagsverk input-klikk'
+                    );
                 }}
                 value={muligeDagsverk}
                 bredde={'XS'}
@@ -123,6 +129,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                 step="1"
                 className="kalkulator__input"
             />
+            <Hjelpetekst>
+                Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år
+            </Hjelpetekst>
         </div>
     );
     useEffect(() => {
@@ -158,8 +167,12 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     setØnsketSykefraværsprosent(0);
                     setSkalViseDefaultTapteDagsverk(false);
                 } else {
-                    setNåværendeSykefraværsprosent(prosentTapteDagsverkSiste4Kvartaler);
-                    setØnsketSykefraværsprosent(prosentTapteDagsverkSiste4Kvartaler * 0.5);
+                    setNåværendeSykefraværsprosent(
+                        Math.round(prosentTapteDagsverkSiste4Kvartaler * 10) / 10
+                    );
+                    setØnsketSykefraværsprosent(
+                        Math.round(prosentTapteDagsverkSiste4Kvartaler * 5) / 10
+                    );
                     setMuligeDagsverk(muligeDagsverkSiste4Kvartaler);
                     setSkalViseDefaultTapteDagsverk(true);
                 }
@@ -173,7 +186,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     setSkalViseDefaultTapteDagsverk(false);
                 } else {
                     setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler);
-                    setØnsketTapteDagsverk(tapteDagsverkSiste4Kvartaler * 0.5);
+                    setØnsketTapteDagsverk(Math.round(tapteDagsverkSiste4Kvartaler * 0.5));
                     setSkalViseDefaultTapteDagsverk(true);
                 }
             }
@@ -201,7 +214,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     datagrunnlag.
                 </Hjelpetekst>
             </>
-        ) : (
+        ) : skalViseDefaultTapteDagsverk ? (
             <>
                 <Hjelpetekst>
                     Sykefraværsprosenten regnes ut fra antall tapte dagsverk delt på antall mulige
@@ -209,6 +222,15 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     inn i A-ordningen.
                 </Hjelpetekst>
             </>
+        ) : (
+            antallTapteDagsverkEllerProsent !==
+                AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT && (
+                <>
+                    <Hjelpetekst>
+                        Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år
+                    </Hjelpetekst>
+                </>
+            )
         );
     const ønsketTapteDagsverkSiste12Mnd =
         restSykefraværshistorikk.status === RestStatus.Suksess &&
@@ -221,7 +243,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     hvor mye du kan spare.
                 </Hjelpetekst>
             </>
-        ) : (
+        ) : skalViseDefaultTapteDagsverk ? (
             <>
                 <Hjelpetekst>
                     Ønsket sykefraværsprosent regnes ut fra ønsket antall tapte dagsverk delt på
@@ -229,6 +251,15 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     hentes fra det dere har meldt inn i A-ordningen.
                 </Hjelpetekst>
             </>
+        ) : (
+            antallTapteDagsverkEllerProsent !==
+                AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT && (
+                <>
+                    <Hjelpetekst>
+                        Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år
+                    </Hjelpetekst>
+                </>
+            )
         );
 
     const radioProsentEllerAntall = (
@@ -317,7 +348,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             }
                             onClick={() => {
                                 amplitude.logEvent(
-                                    '#sykefravarsstatistikk-kalkulator dagsverk input-klikk'
+                                    '#sykefravarsstatistikk-kalkulator nåværende-tapte-dagsverk-eller-prosent input-klikk'
                                 );
                             }}
                             value={
@@ -330,7 +361,12 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             maxLength={15}
                             type="number"
                             placeholder={'0'}
-                            step="0.1"
+                            step={
+                                antallTapteDagsverkEllerProsent ===
+                                AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                                    ? 0.1
+                                    : 1
+                            }
                             className="kalkulator__input"
                         />
                         {tapteDagsverkSpinner}
@@ -349,7 +385,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             }
                             onClick={() => {
                                 amplitude.logEvent(
-                                    '#sykefravarsstatistikk-kalkulator dagsverk input-klikk'
+                                    '#sykefravarsstatistikk-kalkulator ønsket-tapte-dagsverk-eller-prosentr input-klikk'
                                 );
                             }}
                             value={
@@ -359,6 +395,12 @@ const Kalkulator: FunctionComponent<Props> = props => {
                                     : ønsketTapteDagsverk
                             }
                             placeholder={'0'}
+                            step={
+                                antallTapteDagsverkEllerProsent ===
+                                AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                                    ? 0.1
+                                    : 1
+                            }
                             bredde={'XS'}
                             maxLength={15}
                             type="number"
