@@ -31,6 +31,7 @@ const IAwebpanel: React.FunctionComponent = () => {
                     onClick={() => {
                         sendEvent('sykefravarsstatistikk.klikk-til-iaweb');
                         amplitude.logEvent('#sykefravarsstatistikk-forside iaweb-klikk');
+                        amplitude.logEvent('#sykefravarsstatistikk-forside noe-klikket-pa');
                     }}
                 >
                     Gå til IA-web

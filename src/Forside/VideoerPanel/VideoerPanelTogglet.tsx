@@ -28,6 +28,7 @@ const VideoerPanelTogglet: FunctionComponent = () => (
                 onClick={() => {
                     sendEvent('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar');
                     amplitude.logEvent('#sykefravarsstatistikk-forside videoer folgeopp-klikk');
+                    amplitude.logEvent('#sykefravarsstatistikk-forside noe-klikket-pa');
                 }}
             >
                 Følge opp sykefravær
@@ -39,6 +40,7 @@ const VideoerPanelTogglet: FunctionComponent = () => (
                 onClick={() => {
                     sendEvent('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet');
                     amplitude.logEvent('#sykefravarsstatistikk-forside videoer forebygge-klikk');
+                    amplitude.logEvent('#sykefravarsstatistikk-forside noe-klikket-pa');
                 }}
             >
                 Forebygge sykefravær
