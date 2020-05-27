@@ -280,7 +280,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
                         );
                         amplitude.logEvent(
-                            'sykefravarsstatistikk_kalkulator-radio-basertpadagsverk_klikk'
+                            '#sykefravarsstatistikk_kalkulator-radio-basertpadagsverk_klikk'
                         );
                     }}
                 />
@@ -292,7 +292,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
                         );
                         amplitude.logEvent(
-                            'sykefravarsstatistikk_kalkulator-radio-basertpaprosent_klikk'
+                            '#sykefravarsstatistikk_kalkulator-radio-basertpaprosent_klikk'
                         );
                     }}
                 />
