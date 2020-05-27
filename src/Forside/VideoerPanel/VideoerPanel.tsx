@@ -17,10 +17,10 @@ const VideoerPanel: FunctionComponent<{ visNyttDesign: boolean }> = props => {
         <PanelBase className="videoerpanel">
             <Systemtittel className="videoerpanel__overskrift" tag="h2">
                 <Kalkulatorikon className="videoerpanel__illustrasjon" />
-                Informasjonsvideoer
+                Videoer
             </Systemtittel>
             <Normaltekst className="videoerpanel__ingress">
-                Se NAVs informasjonsvideoer om hvordan du kan jobbe med sykefravær og arbeidsmiljø.
+                Se NAVs videoer om hvordan du kan jobbe med sykefravær og arbeidsmiljø.
             </Normaltekst>
 
             <EksternLenke

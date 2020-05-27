@@ -102,6 +102,11 @@ const Kalkulator: FunctionComponent<Props> = props => {
         return !(verdi < 0);
     };
 
+    const amplitudeloggeventtekst =
+    antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+        ? '#sykefravarsstatistikk_kalkulator-input-prosent_endret'
+        : '#sykefravarsstatistikk_kalkulator-input-dagsverk_endret'
+
     function setVerdiMuligeDagsverk(verdi: number) {
         if (!skalViseDefaultTapteDagsverk && erVerdiAkseptabelt(verdi)) {
             setMuligeDagsverk(verdi);
@@ -118,7 +123,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                 onChange={event => setVerdiMuligeDagsverk(parseFloat(event.target.value))}
                 onClick={() => {
                     amplitude.logEvent(
-                        '#sykefravarsstatistikk-kalkulator antall-mulige-dagsverk input-klikk'
+                        amplitudeloggeventtekst
                     );
                 }}
                 value={muligeDagsverk}
@@ -274,6 +279,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         setAntalltapteDagsverkEllerProsent(
                             AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
                         );
+                        amplitude.logEvent(
+                            '#sykefravarsstatistikk_kalkulator-radio-basertpadagsverk_klikk'
+                        );
                     }}
                 />
                 <Radio
@@ -282,6 +290,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                     onChange={() => {
                         setAntalltapteDagsverkEllerProsent(
                             AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                        );
+                        amplitude.logEvent(
+                            '#sykefravarsstatistikk_kalkulator-radio-basertpaprosent_klikk'
                         );
                     }}
                 />
@@ -312,7 +323,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             onChange={event => setKostnadDagsverk(parseInt(event.target.value))}
                             onClick={() => {
                                 amplitude.logEvent(
-                                    '#sykefravarsstatistikk-kalkulator kostnad input-klikk'
+                                    amplitudeloggeventtekst
                                 );
                             }}
                             value={kostnadDagsverk || ''}
@@ -348,7 +359,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             }
                             onClick={() => {
                                 amplitude.logEvent(
-                                    '#sykefravarsstatistikk-kalkulator nåværende-tapte-dagsverk-eller-prosent input-klikk'
+                                    amplitudeloggeventtekst
                                 );
                             }}
                             value={
@@ -385,7 +396,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             }
                             onClick={() => {
                                 amplitude.logEvent(
-                                    '#sykefravarsstatistikk-kalkulator ønsket-tapte-dagsverk-eller-prosentr input-klikk'
+                                    amplitudeloggeventtekst
                                 );
                             }}
                             value={
