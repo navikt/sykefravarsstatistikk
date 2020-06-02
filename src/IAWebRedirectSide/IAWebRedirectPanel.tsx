@@ -9,41 +9,37 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { PATH_FORSIDE } from '../App';
 
 const IAWebRedirectPanel: FunctionComponent = () => {
-    const innhold = (
-        <div className="iawebredirectpanel__innhold">
-            <RedirectIkon className="iawebredirectpanel__ikon" />
-            <Systemtittel className="iawebredirectpanel__tittel">
-                IA-web er ikke lenger tilgjengelig
-            </Systemtittel>
-            <Normaltekst className="iawebredirectpanel__tekst">
-                NAV har fjernet IA-web fordi tjenesten ble lite brukt. Vi tilbyr tjenesten
-                Sykefraværsstatistikk på Min side – arbeidsgiver.
-            </Normaltekst>
-            <Lenkepanel
-                className="iawebredirectpanel__lenkepanel"
-                href={PATH_FORSIDE}
-                tittelProps="normaltekst"
-                border
-            >
-                Gå til sykefraværsstatistikk
-            </Lenkepanel>
-            <div className="iawebredirectpanel__hotjar_lenke">
-                <TilbakemeldingIkon />
-                <Lenke
-                    className="iawebredirectpanel__tilbakemelding_lenke"
-                    href={'https://surveys.hotjar.com/s?siteId=118350&surveyId=157037'}
-                >
-                    <Normaltekst>
-                        Gi oss en tilbakemelding på hvordan dette påvirker deg
-                    </Normaltekst>
-                </Lenke>
-            </div>
-        </div>
-    );
-
     return (
         <PanelBase className="iawebredirectpanel">
-            <div className="iawebredirectpanel__tekst-wrapper">{innhold}</div>
+            <div className="iawebredirectpanel__innhold">
+                <RedirectIkon className="iawebredirectpanel__ikon" />
+                <Systemtittel className="iawebredirectpanel__tittel">
+                    IA-web er ikke lenger tilgjengelig
+                </Systemtittel>
+                <Normaltekst className="iawebredirectpanel__tekst">
+                    NAV har fjernet IA-web fordi tjenesten ble lite brukt. Vi tilbyr tjenesten
+                    Sykefraværsstatistikk på Min side – arbeidsgiver.
+                </Normaltekst>
+                <Lenkepanel
+                    className="iawebredirectpanel__lenkepanel"
+                    href={PATH_FORSIDE}
+                    tittelProps="normaltekst"
+                    border
+                >
+                    Gå til sykefraværsstatistikk
+                </Lenkepanel>
+                <div className="iawebredirectpanel__hotjar_lenke">
+                    <TilbakemeldingIkon />
+                    <Lenke
+                        className="iawebredirectpanel__tilbakemelding_lenke"
+                        href={'https://surveys.hotjar.com/s?siteId=118350&surveyId=157037'}
+                    >
+                        <Normaltekst>
+                            Gi oss en tilbakemelding på hvordan dette påvirker deg
+                        </Normaltekst>
+                    </Lenke>
+                </div>
+            </div>
         </PanelBase>
     );
 };
