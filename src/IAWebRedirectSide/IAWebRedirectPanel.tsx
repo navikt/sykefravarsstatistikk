@@ -17,6 +17,7 @@ import { ReactComponent as TilbakemeldingIkon } from './tilbakemeldingIkon.svg';
 import Lenkepanel from 'nav-frontend-lenkepanel';
 import Lenke from 'nav-frontend-lenker';
 import { Innholdstittel, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { PATH_FORSIDE } from '../App';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -69,7 +70,7 @@ const IAWebRedirectPanel: FunctionComponent<Props> = props => {
                 </Normaltekst>
             </div>
             <div className="iawebredirectpanel__lenkepanel">
-                <Lenkepanel href="#" tittelProps="normaltekst" border>
+                <Lenkepanel href={PATH_FORSIDE} tittelProps="normaltekst" border>
                     Gå til sykefraværsstatistikk
                 </Lenkepanel>
             </div>
