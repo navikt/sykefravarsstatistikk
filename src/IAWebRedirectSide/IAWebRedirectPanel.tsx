@@ -10,28 +10,28 @@ import { PATH_FORSIDE } from '../App';
 
 const IAWebRedirectPanel: FunctionComponent = () => {
     return (
-        <PanelBase className="iawebredirectpanel">
-            <div className="iawebredirectpanel__innhold">
-                <RedirectIkon className="iawebredirectpanel__ikon" />
-                <Systemtittel className="iawebredirectpanel__tittel">
+        <PanelBase className="iaweb-redirectpanel">
+            <div className="iaweb-redirectpanel__innhold">
+                <RedirectIkon className="iaweb-redirectpanel__ikon" />
+                <Systemtittel className="iaweb-redirectpanel__tittel">
                     IA-web er ikke lenger tilgjengelig
                 </Systemtittel>
-                <Normaltekst className="iawebredirectpanel__tekst">
+                <Normaltekst className="iaweb-redirectpanel__tekst">
                     NAV har fjernet IA-web fordi tjenesten ble lite brukt. Vi tilbyr tjenesten
                     Sykefraværsstatistikk på Min side – arbeidsgiver.
                 </Normaltekst>
                 <Lenkepanel
-                    className="iawebredirectpanel__lenkepanel"
+                    className="iaweb-redirectpanel__lenkepanel"
                     href={PATH_FORSIDE}
                     tittelProps="normaltekst"
                     border
                 >
                     Gå til sykefraværsstatistikk
                 </Lenkepanel>
-                <div className="iawebredirectpanel__hotjar_lenke">
+                <div className="iaweb-redirectpanel__hotjar_lenke">
                     <TilbakemeldingIkon />
                     <Lenke
-                        className="iawebredirectpanel__tilbakemelding_lenke"
+                        className="iaweb-redirectpanel__tilbakemelding_lenke"
                         href={'https://surveys.hotjar.com/s?siteId=118350&surveyId=157037'}
                     >
                         <Normaltekst>

@@ -7,13 +7,11 @@ interface Props {
 }
 
 const IAWebRedirectSide: React.FunctionComponent<Props> = props => {
-    {
-        return (
-            <div className="forside__wrapper">
-                <div className="forside">{props.children}</div>
-            </div>
-        );
-    }
+    return (
+        <div className="forside__wrapper">
+            <div className="forside">{props.children}</div>
+        </div>
+    );
 };
 
 export default IAWebRedirectSide;
