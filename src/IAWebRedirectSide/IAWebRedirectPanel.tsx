@@ -12,11 +12,9 @@ const IAWebRedirectPanel: FunctionComponent = () => {
     const innhold = (
         <div className="iawebredirectpanel__innhold">
             <RedirectIkon className="iawebredirectpanel__ikon" />
-
             <Systemtittel className="iawebredirectpanel__tittel">
                 IA-web er ikke lenger tilgjengelig
             </Systemtittel>
-
             <Normaltekst className="iawebredirectpanel__tekst">
                 NAV har fjernet IA-web fordi tjenesten ble lite brukt. Vi tilbyr tjenesten
                 Sykefraværsstatistikk på Min side – arbeidsgiver.
@@ -29,7 +27,6 @@ const IAWebRedirectPanel: FunctionComponent = () => {
             >
                 Gå til sykefraværsstatistikk
             </Lenkepanel>
-
             <div className="iawebredirectpanel__hotjar_lenke">
                 <TilbakemeldingIkon />
                 <Lenke
