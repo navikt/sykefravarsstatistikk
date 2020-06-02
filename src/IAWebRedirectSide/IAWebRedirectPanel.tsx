@@ -16,6 +16,7 @@ import { ReactComponent as RedirectIkon } from './redirectIkon.svg';
 import { ReactComponent as TilbakemeldingIkon } from './tilbakemeldingIkon.svg';
 import Lenkepanel from 'nav-frontend-lenkepanel';
 import Lenke from 'nav-frontend-lenker';
+import { Innholdstittel, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -58,10 +59,14 @@ const IAWebRedirectPanel: FunctionComponent<Props> = props => {
             <div className="iawebredirectpanel__ikon">
                 <RedirectIkon />
             </div>
-            <div className="iawebredirectpanel__tittel">IA-web er ikke lenger tilgjengelig</div>
+            <div className="iawebredirectpanel__tittel">
+                <Systemtittel> IA-web er ikke lenger tilgjengelig</Systemtittel>
+            </div>
             <div className="iawebredirectpanel__tekst">
-                NAV har fjernet IA-web fordi tjenesten ble lite brukt. Vi tilbyr tjenesten
-                Sykefraværsstatistikk på Min side – arbeidsgiver.
+                <Normaltekst>
+                    NAV har fjernet IA-web fordi tjenesten ble lite brukt. Vi tilbyr tjenesten
+                    Sykefraværsstatistikk på Min side – arbeidsgiver.
+                </Normaltekst>
             </div>
             <div className="iawebredirectpanel__lenkepanel">
                 <Lenkepanel href="#" tittelProps="normaltekst" border>
@@ -70,7 +75,10 @@ const IAWebRedirectPanel: FunctionComponent<Props> = props => {
             </div>
             <div className="iawebredirectpanel__hotjar_lenke">
                 <TilbakemeldingIkon />
-                <Lenke className="iawebredirectpanel__tilbakemelding_ikon" href={'#'}>
+                <Lenke
+                    className="iawebredirectpanel__tilbakemelding_ikon"
+                    href={'https://surveys.hotjar.com/s?siteId=118350&surveyId=157037'}
+                >
                     Gi oss en tilbakemelding på hvordan dette påvirker deg
                 </Lenke>
             </div>
