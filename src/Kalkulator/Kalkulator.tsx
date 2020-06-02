@@ -103,9 +103,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
     };
 
     const amplitudeloggeventtekst =
-    antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-        ? '#sykefravarsstatistikk_kalkulator-input-prosent_endret'
-        : '#sykefravarsstatistikk_kalkulator-input-dagsverk_endret'
+        antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+            ? '#sykefravarsstatistikk_kalkulator-input-prosent_endret'
+            : '#sykefravarsstatistikk_kalkulator-input-dagsverk_endret';
 
     function setVerdiMuligeDagsverk(verdi: number) {
         if (!skalViseDefaultTapteDagsverk && erVerdiAkseptabelt(verdi)) {
@@ -122,9 +122,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                 label={''}
                 onChange={event => setVerdiMuligeDagsverk(parseFloat(event.target.value))}
                 onClick={() => {
-                    amplitude.logEvent(
-                        amplitudeloggeventtekst
-                    );
+                    amplitude.logEvent(amplitudeloggeventtekst);
                 }}
                 value={muligeDagsverk}
                 bredde={'XS'}
@@ -135,7 +133,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
                 className="kalkulator__input"
             />
             <Hjelpetekst>
-                Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år
+                <Normaltekst className="kalkulator__hjelpetekst-innhold">
+                    Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år
+                </Normaltekst>
             </Hjelpetekst>
         </div>
     );
@@ -212,58 +212,58 @@ const Kalkulator: FunctionComponent<Props> = props => {
         restSykefraværshistorikk.status === RestStatus.Suksess &&
         skalViseDefaultTapteDagsverk &&
         antallTapteDagsverkEllerProsent !== AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT ? (
-            <>
-                <Hjelpetekst>
+            <Hjelpetekst>
+                <Normaltekst className="kalkulator__hjelpetekst-innhold">
                     Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes ut
                     fra det legemeldte sykefraværet de siste 12 månedene og er tilgjengelig i NAVs
                     datagrunnlag.
-                </Hjelpetekst>
-            </>
+                </Normaltekst>
+            </Hjelpetekst>
         ) : skalViseDefaultTapteDagsverk ? (
-            <>
-                <Hjelpetekst>
+            <Hjelpetekst>
+                <Normaltekst className="kalkulator__hjelpetekst-innhold">
                     Sykefraværsprosenten regnes ut fra antall tapte dagsverk delt på antall mulige
                     dagsverk. Mulige dagsverk de siste 12 månedene er hentet fra det dere har meldt
                     inn i A-ordningen.
-                </Hjelpetekst>
-            </>
+                </Normaltekst>
+            </Hjelpetekst>
         ) : (
             antallTapteDagsverkEllerProsent !==
                 AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT && (
-                <>
-                    <Hjelpetekst>
+                <Hjelpetekst>
+                    <Normaltekst className="kalkulator__hjelpetekst-innhold">
                         Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år
-                    </Hjelpetekst>
-                </>
+                    </Normaltekst>
+                </Hjelpetekst>
             )
         );
     const ønsketTapteDagsverkSiste12Mnd =
         restSykefraværshistorikk.status === RestStatus.Suksess &&
         skalViseDefaultTapteDagsverk &&
         antallTapteDagsverkEllerProsent !== AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT ? (
-            <>
-                <Hjelpetekst>
+            <Hjelpetekst>
+                <Normaltekst className="kalkulator__hjelpetekst-innhold">
                     Et dagsverk er arbeid som utføres på en dag. Antall ønsket tapte dagsverk selv
                     velge for det ønskede legemeldte sykefraværet de siste 12 månedene for å beregne
                     hvor mye du kan spare.
-                </Hjelpetekst>
-            </>
+                </Normaltekst>
+            </Hjelpetekst>
         ) : skalViseDefaultTapteDagsverk ? (
-            <>
-                <Hjelpetekst>
+            <Hjelpetekst>
+                <Normaltekst className="kalkulator__hjelpetekst-innhold">
                     Ønsket sykefraværsprosent regnes ut fra ønsket antall tapte dagsverk delt på
                     antall mulige dagsverk dere har hatt de siste 12 månedene. Denne informasjonen
                     hentes fra det dere har meldt inn i A-ordningen.
-                </Hjelpetekst>
-            </>
+                </Normaltekst>
+            </Hjelpetekst>
         ) : (
             antallTapteDagsverkEllerProsent !==
                 AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT && (
-                <>
-                    <Hjelpetekst>
+                <Hjelpetekst>
+                    <Normaltekst className="kalkulator__hjelpetekst-innhold">
                         Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år
-                    </Hjelpetekst>
-                </>
+                    </Normaltekst>
+                </Hjelpetekst>
             )
         );
 
@@ -322,9 +322,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             label={''}
                             onChange={event => setKostnadDagsverk(parseInt(event.target.value))}
                             onClick={() => {
-                                amplitude.logEvent(
-                                    amplitudeloggeventtekst
-                                );
+                                amplitude.logEvent(amplitudeloggeventtekst);
                             }}
                             value={kostnadDagsverk || ''}
                             bredde={'XS'}
@@ -334,12 +332,14 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             placeholder="kr"
                         />
                         <Hjelpetekst>
-                            Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
-                            beregnet SINTEF og NHO at hver uke med sykefravær koster en arbeidsgiver
-                            i snitt 13 000 kr. Det vil si 2600 kr per dag.{' '}
-                            <EksternLenke href="https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/">
-                                Les mer om hva som påvirker kostnader ved sykefravær.
-                            </EksternLenke>
+                            <Normaltekst className="kalkulator__hjelpetekst-innhold">
+                                Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
+                                beregnet SINTEF og NHO at hver uke med sykefravær koster en
+                                arbeidsgiver i snitt 13 000 kr. Det vil si 2600 kr per dag.{' '}
+                                <EksternLenke href="https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/">
+                                    Les mer om hva som påvirker kostnader ved sykefravær.
+                                </EksternLenke>
+                            </Normaltekst>
                         </Hjelpetekst>
                     </div>
                     {!skalViseDefaultTapteDagsverk &&
@@ -358,9 +358,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                                 )
                             }
                             onClick={() => {
-                                amplitude.logEvent(
-                                    amplitudeloggeventtekst
-                                );
+                                amplitude.logEvent(amplitudeloggeventtekst);
                             }}
                             value={
                                 antallTapteDagsverkEllerProsent ===
@@ -395,9 +393,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                                 )
                             }
                             onClick={() => {
-                                amplitude.logEvent(
-                                    amplitudeloggeventtekst
-                                );
+                                amplitude.logEvent(amplitudeloggeventtekst);
                             }}
                             value={
                                 antallTapteDagsverkEllerProsent ===
