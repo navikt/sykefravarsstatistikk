@@ -7,6 +7,7 @@ import Lenkepanel from 'nav-frontend-lenkepanel';
 import Lenke from 'nav-frontend-lenker';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { PATH_FORSIDE } from '../App';
+import MediaQuery from 'react-responsive';
 
 const IAWebRedirectPanel: FunctionComponent = () => {
     return (
@@ -29,7 +30,12 @@ const IAWebRedirectPanel: FunctionComponent = () => {
                     Gå til sykefraværsstatistikk
                 </Lenkepanel>
                 <div className="iaweb-redirectpanel__hotjar_lenke">
-                    <TilbakemeldingIkon style={{ width: 36, height: 36 }} />
+                    <MediaQuery maxWidth={767}>
+                        <TilbakemeldingIkon style={{ width: 40, height: 40 }} />
+                    </MediaQuery>
+                    <MediaQuery minWidth={768}>
+                        <TilbakemeldingIkon />
+                    </MediaQuery>
                     <Lenke
                         className="iaweb-redirectpanel__tilbakemelding_lenke"
                         href={'https://surveys.hotjar.com/s?siteId=118350&surveyId=157037'}
