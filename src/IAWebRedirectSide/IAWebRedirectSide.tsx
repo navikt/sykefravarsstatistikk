@@ -7,7 +7,6 @@ interface Props {
 }
 
 const IAWebRedirectSide: React.FunctionComponent<Props> = props => {
-    const urlTilSykefraværsstatistikk = '/sykefraværsstatistikk/';
     {
         return (
             <div className="forside__wrapper">

@@ -90,7 +90,7 @@ const AppContent: FunctionComponent = () => {
                 )}
                 <Route path={PATH_IAWebRedirectSide} exact={true}>
                     <IAWebRedirectSide restSykefraværshistorikk={restSykefraværshistorikk}>
-                        <IAWebRedirectPanel restSykefraværshistorikk={restSykefraværshistorikk} />
+                        <IAWebRedirectPanel />
                     </IAWebRedirectSide>
                 </Route>
             </>
