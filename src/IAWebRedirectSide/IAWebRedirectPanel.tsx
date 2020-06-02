@@ -29,7 +29,7 @@ const IAWebRedirectPanel: FunctionComponent = () => {
                     Gå til sykefraværsstatistikk
                 </Lenkepanel>
                 <div className="iaweb-redirectpanel__hotjar_lenke">
-                    <TilbakemeldingIkon />
+                    <TilbakemeldingIkon style={{ width: 36, height: 36 }} />
                     <Lenke
                         className="iaweb-redirectpanel__tilbakemelding_lenke"
                         href={'https://surveys.hotjar.com/s?siteId=118350&surveyId=157037'}
