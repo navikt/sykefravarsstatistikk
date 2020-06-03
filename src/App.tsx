@@ -21,10 +21,13 @@ import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { useRestSykefraværshistorikk } from './api/sykefraværshistorikk';
 import amplitude from './utils/amplitude';
 import { trackBedriftsmetrikker, useRestBedriftsmetrikker } from './api/bedriftsmetrikker';
+import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
+import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
 export const PATH_HISTORIKK = '/historikk';
+export const PATH_IAWEB_REDIRECTSIDE = '/iawebredirectside';
 
 const App: FunctionComponent = () => {
     amplitude.logEvent('#sykefravarsstatistikk-forside-sidelastet');
@@ -85,6 +88,11 @@ const AppContent: FunctionComponent = () => {
                         <GrafOgTabell restSykefraværsstatistikk={restSykefraværshistorikk} />
                     </Route>
                 )}
+                <Route path={PATH_IAWEB_REDIRECTSIDE} exact={true}>
+                    <IAWebRedirectSide restSykefraværshistorikk={restSykefraværshistorikk}>
+                        <IAWebRedirectPanel />
+                    </IAWebRedirectSide>
+                </Route>
             </>
         );
     }
