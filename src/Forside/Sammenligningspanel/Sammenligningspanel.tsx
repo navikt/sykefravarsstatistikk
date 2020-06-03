@@ -17,6 +17,7 @@ import Virksomhetspanel from './Virksomhetspanel';
 import Sektorpanel from './Sektorpanel/Sektorpanel';
 import Landspanel from './Landspanel/Landspanel';
 import Skeleton from 'react-loading-skeleton';
+import AlertStripe from 'nav-frontend-alertstriper';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -84,24 +85,30 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
         </div>
     );
 
+    //const skalViseAlert = sammenligningSisteKvartal.virksomhet.erMaskert;
+    //console.log(skalViseAlert);
+
     return (
-        <PanelBase className="sammenligningspanel">
-            <div className="sammenligningspanel__tekst-wrapper">
-                <SammenligningspanelOverskrift
-                    laster={laster}
-                    className="sammenligningspanel__overskrift"
-                >
-                    Legemeldt sykefravær i {kvartal}. kvartal {årstall}
-                </SammenligningspanelOverskrift>
-                <SammenligningspanelFeilmelding
-                    status={restStatus}
-                    className="sammenligningspanel__feilmelding"
-                >
-                    Kunne ikke vise sykefraværet.
-                </SammenligningspanelFeilmelding>
-                {laster ? lasterinnhold : innhold}
-            </div>
-        </PanelBase>
+        <>
+            {false && <AlertStripe type={'info'}>test</AlertStripe>}
+            <PanelBase className="sammenligningspanel">
+                <div className="sammenligningspanel__tekst-wrapper">
+                    <SammenligningspanelOverskrift
+                        laster={laster}
+                        className="sammenligningspanel__overskrift"
+                    >
+                        Legemeldt sykefravær i {kvartal}. kvartal {årstall}
+                    </SammenligningspanelOverskrift>
+                    <SammenligningspanelFeilmelding
+                        status={restStatus}
+                        className="sammenligningspanel__feilmelding"
+                    >
+                        Kunne ikke vise sykefraværet.
+                    </SammenligningspanelFeilmelding>
+                    {laster ? lasterinnhold : innhold}
+                </div>
+            </PanelBase>
+        </>
     );
 };
 
