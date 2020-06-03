@@ -25,6 +25,10 @@ const Virksomhetspanel: FunctionComponent<Props> = props => {
         feilmeldingHvisProsentErUndefined += ` Det kan være fordi det ikke er registrert sykefravær for virksomheten i ${kvartal}. kvartal ${årstall}.`;
     }
 
+    if (sykefraværsprosent?.erMaskert) {
+        return null;
+    }
+
     return (
         <MaskertSykefraværprosentpanel
             sykefraværsprosent={sykefraværsprosent}

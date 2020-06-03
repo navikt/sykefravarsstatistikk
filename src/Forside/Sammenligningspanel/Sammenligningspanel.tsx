@@ -17,7 +17,8 @@ import Virksomhetspanel from './Virksomhetspanel';
 import Sektorpanel from './Sektorpanel/Sektorpanel';
 import Landspanel from './Landspanel/Landspanel';
 import Skeleton from 'react-loading-skeleton';
-import AlertStripe from 'nav-frontend-alertstriper';
+import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -85,12 +86,25 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
         </div>
     );
 
-    //const skalViseAlert = sammenligningSisteKvartal.virksomhet.erMaskert;
-    //console.log(skalViseAlert);
+    const skalViseAlert =
+        sammenligningSisteKvartal.virksomhet && sammenligningSisteKvartal.virksomhet.erMaskert;
+    console.log(skalViseAlert);
 
     return (
         <>
-            {false && <AlertStripe type={'info'}>test</AlertStripe>}
+            {skalViseAlert && (
+                <AlertStripeInfo className="sammenligningspanel__alertstripe">
+                    <Element className="sammenligningspanel__alertstripe-tittel">
+                        Kan ikke vise all sykefraværsstatistikken av hensyn til personvern
+                    </Element>
+                    <Normaltekst>
+                        Det er for få ansatte i virksomheten til at vi kan vise
+                        sykefraværsstatistikken for din virksomhet. Med fire eller færre ansatte vil
+                        det være mulig å identifisere enkelte sykemeldte. Du kan fortsatt se
+                        statistikk om næring, sektor og land.
+                    </Normaltekst>
+                </AlertStripeInfo>
+            )}
             <PanelBase className="sammenligningspanel">
                 <div className="sammenligningspanel__tekst-wrapper">
                     <SammenligningspanelOverskrift

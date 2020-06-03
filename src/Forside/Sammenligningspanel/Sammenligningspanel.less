@@ -7,12 +7,25 @@
     flex-direction: column;
     justify-content: space-around;
     width: 100%;
+
     &__overskrift {
         margin-bottom: 2rem;
     }
 
     &__feilmelding {
         margin-top: 1.5rem;
+    }
+
+    &__alertstripe.alertstripe {
+        width: 100%;
+        .alertstripe__tekst {
+            max-width: 100%;
+            width: 100%;
+        }
+    }
+
+    &__alertstripe-tittel {
+        padding-bottom: 0.5rem;
     }
 
     @media (min-width: @screen-sm-min) {
