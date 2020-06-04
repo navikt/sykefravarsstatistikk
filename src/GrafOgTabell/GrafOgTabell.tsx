@@ -10,6 +10,7 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
 import amplitude from '../utils/amplitude';
+import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -35,7 +36,11 @@ const GrafOgTabell: FunctionComponent<Props> = props => {
                 <NavFrontendSpinner type={'XXL'} />
             </div>
         );
+    } else if (restSykefraværsstatistikk.status === RestStatus.IngenTilgang) {
+        innhold = <ManglerRettigheterIAltinnSide />;
     } else if (restSykefraværsstatistikk.status !== RestStatus.Suksess) {
+        console.log(restSykefraværsstatistikk.status);
+        console.log(restSykefraværsstatistikk);
         innhold = (
             <AlertStripe type="feil" className="graf-og-tabell__feilside">
                 Det skjedde en feil da vi prøvde å hente statistikken.

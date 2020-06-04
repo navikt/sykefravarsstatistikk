@@ -22,6 +22,9 @@ if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
             if (orgnr === '101010101') {
                 return 500;
             }
+            if (orgnr === '100100100') {
+                return 403;
+            }
             return getSykefraværshistorikkMock(orgnr);
         },
         {
@@ -33,6 +36,9 @@ if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
         url => {
             const orgnr = url.match(/[0-9]{9}/)![0];
             if (orgnr === '101010101') {
+                return 500;
+            }
+            if (orgnr === '100100100') {
                 return 500;
             }
             return {
