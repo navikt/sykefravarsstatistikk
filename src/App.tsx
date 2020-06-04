@@ -60,12 +60,16 @@ const AppContent: FunctionComponent = () => {
         !location.pathname.includes('iawebredirectside')
     ) {
         return <Innloggingsside />;
-    } else if (restOrganisasjoner.status !== RestStatus.Suksess) {
+    } else if (
+        restOrganisasjoner.status !== RestStatus.Suksess &&
+        !location.pathname.includes('iawebredirectside')
+    ) {
         innhold = <FeilFraAltinnSide />;
     } else {
         if (
             restBedriftsmetrikker.status === RestStatus.Suksess &&
-            restSykefraværshistorikk.status === RestStatus.Suksess
+            restSykefraværshistorikk.status === RestStatus.Suksess &&
+            !location.pathname.includes('iawebredirectside')
         ) {
             trackBedriftsmetrikker(restBedriftsmetrikker.data, restSykefraværshistorikk.data);
         }
@@ -103,7 +107,9 @@ const AppContent: FunctionComponent = () => {
 
     return (
         <>
-            <Banner tittel="Sykefraværsstatistikk" restOrganisasjoner={restOrganisasjoner} />
+            {!location.pathname.includes('iawebredirectside') && (
+                <Banner tittel="Sykefraværsstatistikk" restOrganisasjoner={restOrganisasjoner} />
+            )}
             {innhold}
         </>
     );
