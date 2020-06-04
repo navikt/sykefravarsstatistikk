@@ -8,6 +8,7 @@ import Lenke from 'nav-frontend-lenker';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { PATH_FORSIDE } from '../App';
 import MediaQuery from 'react-responsive';
+import { Link } from 'react-router-dom';
 
 const IAWebRedirectPanel: FunctionComponent = () => {
     return (
@@ -26,6 +27,11 @@ const IAWebRedirectPanel: FunctionComponent = () => {
                     href={PATH_FORSIDE}
                     tittelProps="normaltekst"
                     border
+                    linkCreator={(props: any) => (
+                        <Link to={props.href} {...props}>
+                            {props.children}
+                        </Link>
+                    )}
                 >
                     Gå til sykefraværsstatistikk
                 </Lenkepanel>
