@@ -23,6 +23,7 @@ import amplitude from './utils/amplitude';
 import { trackBedriftsmetrikker, useRestBedriftsmetrikker } from './api/bedriftsmetrikker';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
+import { useLocation } from 'react-router-dom';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -45,7 +46,7 @@ const AppContent: FunctionComponent = () => {
     const restSykefraværshistorikk = useRestSykefraværshistorikk(orgnr);
     const restFeatureToggles = useRestFeatureToggles();
     const restBedriftsmetrikker = useRestBedriftsmetrikker(orgnr);
-
+    const location = useLocation();
     let innhold;
 
     if (
@@ -54,14 +55,21 @@ const AppContent: FunctionComponent = () => {
         restBedriftsmetrikker.status === RestStatus.LasterInn
     ) {
         innhold = <Lasteside />;
-    } else if (restOrganisasjoner.status === RestStatus.IkkeInnlogget) {
+    } else if (
+        restOrganisasjoner.status === RestStatus.IkkeInnlogget &&
+        !location.pathname.includes('iawebredirectside')
+    ) {
         return <Innloggingsside />;
-    } else if (restOrganisasjoner.status !== RestStatus.Suksess) {
+    } else if (
+        restOrganisasjoner.status !== RestStatus.Suksess &&
+        !location.pathname.includes('iawebredirectside')
+    ) {
         innhold = <FeilFraAltinnSide />;
     } else {
         if (
             restBedriftsmetrikker.status === RestStatus.Suksess &&
-            restSykefraværshistorikk.status === RestStatus.Suksess
+            restSykefraværshistorikk.status === RestStatus.Suksess &&
+            !location.pathname.includes('iawebredirectside')
         ) {
             trackBedriftsmetrikker(restBedriftsmetrikker.data, restSykefraværshistorikk.data);
         }
@@ -99,7 +107,9 @@ const AppContent: FunctionComponent = () => {
 
     return (
         <>
-            <Banner tittel="Sykefraværsstatistikk" restOrganisasjoner={restOrganisasjoner} />
+            {!location.pathname.includes('iawebredirectside') && (
+                <Banner tittel="Sykefraværsstatistikk" restOrganisasjoner={restOrganisasjoner} />
+            )}
             {innhold}
         </>
     );
