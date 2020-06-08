@@ -17,10 +17,7 @@ import Virksomhetspanel from './Virksomhetspanel';
 import Sektorpanel from './Sektorpanel/Sektorpanel';
 import Landspanel from './Landspanel/Landspanel';
 import Skeleton from 'react-loading-skeleton';
-import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
-import { Normaltekst } from 'nav-frontend-typografi';
-import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
-import { ReactComponent as InfoCircle } from './InfoCircle.svg';
+import KoronaInfotekst from './KoronaInfotekst/KoronaInfotekst';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -57,26 +54,7 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
             <Skeleton height={228} />
         </div>
     );
-    const lesMerOmKorona = (
-        <div className="sammenligningspanel__korona_infotekst">
-            <InfoCircle />
-            <LesMerPanel
-                åpneLabel="Koronaepidemien og sykefraværsstatistikken"
-                lukkLabel="Lukk"
-                className="sammenligningspanel__korona_infotekst_les_mer_panel"
-            >
-                <Normaltekst>
-                    Opplever du høyere sykefravær enn normalt i første kvartal? Økning i
-                    korttidssykefraværet skyldes sannsynligvis koronaepidemien. Når din
-                    sykefraværsprosent beregnes, telles permitterte med som ansatte de tre første
-                    månedene av permitteringen.
-                    <EksternLenke href="https://www.nav.no/no/nav-og-samfunn/statistikk/sykefravar-statistikk/sykefravar">
-                        Les mer om hvordan korona påvirker sykefraværet i Norge
-                    </EksternLenke>
-                </Normaltekst>
-            </LesMerPanel>
-        </div>
-    );
+    // const lesMerOmKorona = ();
     const innhold = (
         <div className="sammenligningspanel__innhold">
             <Virksomhetspanel
@@ -122,7 +100,7 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
                 >
                     Kunne ikke vise sykefraværet.
                 </SammenligningspanelFeilmelding>
-                {lesMerOmKorona}
+                <KoronaInfotekst />
                 {laster ? lasterinnhold : innhold}
             </div>
         </PanelBase>
