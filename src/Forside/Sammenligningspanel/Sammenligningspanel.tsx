@@ -64,7 +64,7 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
                 >
                     Kunne ikke vise sykefraværet.
                 </SammenligningspanelFeilmelding>
-                <KoronaInfotekst />
+                {/* TODO Skrus på på torsdag <KoronaInfotekst />*/}
                 {laster ? (
                     <div className="sammenligningspanel__skeleton">
                         <Skeleton height={228} />
