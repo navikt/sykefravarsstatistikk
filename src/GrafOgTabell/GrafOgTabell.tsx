@@ -39,8 +39,6 @@ const GrafOgTabell: FunctionComponent<Props> = props => {
     } else if (restSykefraværsstatistikk.status === RestStatus.IngenTilgang) {
         innhold = <ManglerRettigheterIAltinnSide />;
     } else if (restSykefraværsstatistikk.status !== RestStatus.Suksess) {
-        console.log(restSykefraværsstatistikk.status);
-        console.log(restSykefraværsstatistikk);
         innhold = (
             <AlertStripe type="feil" className="graf-og-tabell__feilside">
                 Det skjedde en feil da vi prøvde å hente statistikken.
