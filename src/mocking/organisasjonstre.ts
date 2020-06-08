@@ -81,9 +81,26 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
         Name: 'FEIL',
         Type: 'Business',
         OrganizationNumber: '101010101',
-        OrganizationForm: 'AS',
+        OrganizationForm: 'BEDR',
         Status: 'Active',
         ParentOrganizationNumber: '999999999',
+    },
+    {
+        Name: 'Ingen tilgang AS',
+        Type: 'Enterprise',
+        OrganizationNumber: '900900900',
+        OrganizationForm: 'AS',
+        Status: 'Active',
+        ParentOrganizationNumber: '',
+    },
+
+    {
+        Name: 'Ingen tilgang',
+        Type: 'Business',
+        OrganizationNumber: '100100100',
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '900900900',
     },
 ];
 

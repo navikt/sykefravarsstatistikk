@@ -10,6 +10,7 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
 import amplitude from '../utils/amplitude';
+import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -35,6 +36,8 @@ const GrafOgTabell: FunctionComponent<Props> = props => {
                 <NavFrontendSpinner type={'XXL'} />
             </div>
         );
+    } else if (restSykefraværsstatistikk.status === RestStatus.IngenTilgang) {
+        innhold = <ManglerRettigheterIAltinnSide />;
     } else if (restSykefraværsstatistikk.status !== RestStatus.Suksess) {
         innhold = (
             <AlertStripe type="feil" className="graf-og-tabell__feilside">
@@ -53,38 +56,45 @@ const GrafOgTabell: FunctionComponent<Props> = props => {
     return (
         <div className="graf-og-tabell__wrapper">
             <div className="graf-og-tabell">
-                <div className="graf-og-tabell__overdel-wrapper">
-                    <div className="graf-og-tabell__tekst-wrapper">
-                        <Systemtittel tag="h1" className="graf-og-tabell__tittel">
-                            Se sykefraværet over tid
-                        </Systemtittel>
-                        <Normaltekst className="graf-og-tabell__ingress">
-                            Se hvordan det legemeldte sykefraværet utvikler seg over tid. Du kan
-                            sammenligne sykefraværet deres med næringen og sektoren dere tilhører.
-                        </Normaltekst>
-                    </div>
-                    <ToggleGruppePure
-                        className="graf-og-tabell__knapper"
-                        toggles={[
-                            {
-                                children: 'Graf',
-                                pressed: grafEllerTabell === 'graf',
-                                onClick: () => setGrafEllerTabell('graf'),
-                            },
-                            {
-                                children: 'Tabell',
-                                pressed: grafEllerTabell === 'tabell',
-                                onClick: () => {
-                                    setGrafEllerTabell('tabell');
-                                    amplitude.logEvent(
-                                        '#sykefravarsstatistikk-historikk toggle tabell-klikk'
-                                    );
+                {restSykefraværsstatistikk.status !== RestStatus.IngenTilgang ? (
+                    <div className="graf-og-tabell__overdel-wrapper">
+                        <div className="graf-og-tabell__tekst-wrapper">
+                            <Systemtittel tag="h1" className="graf-og-tabell__tittel">
+                                Se sykefraværet over tid
+                            </Systemtittel>
+                            <Normaltekst className="graf-og-tabell__ingress">
+                                Se hvordan det legemeldte sykefraværet utvikler seg over tid. Du kan
+                                sammenligne sykefraværet deres med næringen og sektoren dere
+                                tilhører.
+                            </Normaltekst>
+                        </div>
+                        <ToggleGruppePure
+                            className="graf-og-tabell__knapper"
+                            toggles={[
+                                {
+                                    children: 'Graf',
+                                    pressed: grafEllerTabell === 'graf',
+                                    onClick: () => setGrafEllerTabell('graf'),
                                 },
-                            },
-                        ]}
-                    />
-                </div>
-                <div className="graf-og-tabell__innhold">{innhold}</div>
+                                {
+                                    children: 'Tabell',
+                                    pressed: grafEllerTabell === 'tabell',
+                                    onClick: () => {
+                                        setGrafEllerTabell('tabell');
+                                        amplitude.logEvent(
+                                            '#sykefravarsstatistikk-historikk toggle tabell-klikk'
+                                        );
+                                    },
+                                },
+                            ]}
+                        />
+                    </div>
+                ) : (
+                    innhold
+                )}
+                {restSykefraværsstatistikk.status !== RestStatus.IngenTilgang && (
+                    <div className="graf-og-tabell__innhold">{innhold}</div>
+                )}
             </div>
         </div>
     );
