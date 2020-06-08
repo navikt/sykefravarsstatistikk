@@ -49,42 +49,6 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
 
     const { årstall, kvartal } = sammenligningSisteKvartal;
 
-    const lasterinnhold = (
-        <div className="sammenligningspanel__skeleton">
-            <Skeleton height={228} />
-        </div>
-    );
-    // const lesMerOmKorona = ();
-    const innhold = (
-        <div className="sammenligningspanel__innhold">
-            <Virksomhetspanel
-                sykefraværsprosent={sammenligningSisteKvartal.virksomhet}
-                sykefraværprosentLabel={labels.virksomhet}
-                laster={laster}
-                className="sammenligningspanel__syfopanel"
-            />
-            <NæringEllerBransjePanel
-                laster={laster}
-                sykefraværsprosent={sammenligningSisteKvartal.næringEllerBransje}
-                sykefraværprosentLabel={labels.næringEllerBransje}
-                harBransje={harBransje}
-                className="sammenligningspanel__syfopanel"
-            />
-            <Sektorpanel
-                laster={laster}
-                sykefraværsprosent={sammenligningSisteKvartal.sektor}
-                sykefraværprosentLabel={labels.sektor}
-                className="sammenligningspanel__syfopanel"
-            />
-            <Landspanel
-                laster={laster}
-                sykefraværsprosent={sammenligningSisteKvartal.land}
-                sykefraværprosentLabel={labels.land}
-                className="sammenligningspanel__syfopanel"
-            />
-        </div>
-    );
-
     return (
         <PanelBase className="sammenligningspanel">
             <div className="sammenligningspanel__tekst-wrapper">
@@ -101,7 +65,39 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
                     Kunne ikke vise sykefraværet.
                 </SammenligningspanelFeilmelding>
                 <KoronaInfotekst />
-                {laster ? lasterinnhold : innhold}
+                {laster ? (
+                    <div className="sammenligningspanel__skeleton">
+                        <Skeleton height={228} />
+                    </div>
+                ) : (
+                    <div className="sammenligningspanel__innhold">
+                        <Virksomhetspanel
+                            sykefraværsprosent={sammenligningSisteKvartal.virksomhet}
+                            sykefraværprosentLabel={labels.virksomhet}
+                            laster={laster}
+                            className="sammenligningspanel__syfopanel"
+                        />
+                        <NæringEllerBransjePanel
+                            laster={laster}
+                            sykefraværsprosent={sammenligningSisteKvartal.næringEllerBransje}
+                            sykefraværprosentLabel={labels.næringEllerBransje}
+                            harBransje={harBransje}
+                            className="sammenligningspanel__syfopanel"
+                        />
+                        <Sektorpanel
+                            laster={laster}
+                            sykefraværsprosent={sammenligningSisteKvartal.sektor}
+                            sykefraværprosentLabel={labels.sektor}
+                            className="sammenligningspanel__syfopanel"
+                        />
+                        <Landspanel
+                            laster={laster}
+                            sykefraværsprosent={sammenligningSisteKvartal.land}
+                            sykefraværprosentLabel={labels.land}
+                            className="sammenligningspanel__syfopanel"
+                        />
+                    </div>
+                )}
             </div>
         </PanelBase>
     );
