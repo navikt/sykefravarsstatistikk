@@ -103,9 +103,9 @@ const Kalkulator: FunctionComponent<Props> = props => {
     };
 
     const amplitudeloggeventtekst =
-    antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-        ? '#sykefravarsstatistikk_kalkulator-input-prosent_endret'
-        : '#sykefravarsstatistikk_kalkulator-input-dagsverk_endret'
+        antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+            ? '#sykefravarsstatistikk_kalkulator-input-prosent_endret'
+            : '#sykefravarsstatistikk_kalkulator-input-dagsverk_endret';
 
     function setVerdiMuligeDagsverk(verdi: number) {
         if (!skalViseDefaultTapteDagsverk && erVerdiAkseptabelt(verdi)) {
@@ -122,9 +122,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                 label={''}
                 onChange={event => setVerdiMuligeDagsverk(parseFloat(event.target.value))}
                 onClick={() => {
-                    amplitude.logEvent(
-                        amplitudeloggeventtekst
-                    );
+                    amplitude.logEvent(amplitudeloggeventtekst);
                 }}
                 value={muligeDagsverk}
                 bredde={'XS'}
@@ -322,9 +320,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                             label={''}
                             onChange={event => setKostnadDagsverk(parseInt(event.target.value))}
                             onClick={() => {
-                                amplitude.logEvent(
-                                    amplitudeloggeventtekst
-                                );
+                                amplitude.logEvent(amplitudeloggeventtekst);
                             }}
                             value={kostnadDagsverk || ''}
                             bredde={'XS'}
@@ -358,9 +354,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                                 )
                             }
                             onClick={() => {
-                                amplitude.logEvent(
-                                    amplitudeloggeventtekst
-                                );
+                                amplitude.logEvent(amplitudeloggeventtekst);
                             }}
                             value={
                                 antallTapteDagsverkEllerProsent ===
@@ -395,9 +389,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                                 )
                             }
                             onClick={() => {
-                                amplitude.logEvent(
-                                    amplitudeloggeventtekst
-                                );
+                                amplitude.logEvent(amplitudeloggeventtekst);
                             }}
                             value={
                                 antallTapteDagsverkEllerProsent ===
