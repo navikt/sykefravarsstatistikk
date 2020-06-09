@@ -4,15 +4,17 @@ import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltin
 import Innloggingsside from '../Innloggingsside/Innloggingsside';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { RestStatus } from '../api/api-utils';
+import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon/altinnorganisasjon-api';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
+    restOrganisasjoner?: RestAltinnOrganisasjoner;
 }
 
 const Forside: React.FunctionComponent<Props> = props => {
     switch (props.restSykefraværshistorikk.status) {
         case RestStatus.IngenTilgang: {
-            return <ManglerRettigheterIAltinnSide />;
+            return <ManglerRettigheterIAltinnSide restOrgannisasjoner={props.restOrganisasjoner} />;
         }
         case RestStatus.IkkeInnlogget: {
             return <Innloggingsside />;

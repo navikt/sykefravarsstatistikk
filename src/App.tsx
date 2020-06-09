@@ -77,7 +77,10 @@ const AppContent: FunctionComponent = () => {
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                    <Forside restSykefraværshistorikk={restSykefraværshistorikk}>
+                    <Forside
+                        restSykefraværshistorikk={restSykefraværshistorikk}
+                        restOrganisasjoner={restOrganisasjoner}
+                    >
                         <Sammenligningspanel restSykefraværshistorikk={restSykefraværshistorikk} />
                         <KalkulatorPanel />
                         {skalViseGraf && <Historikkpanel />}

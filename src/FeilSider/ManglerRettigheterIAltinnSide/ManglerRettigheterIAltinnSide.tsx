@@ -3,8 +3,15 @@ import informasjonsirkelSvg from './informasjon-sirkel.svg';
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './ManglerRettigheterIAltinnSide.less';
 import Lenke from 'nav-frontend-lenker';
+import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon/altinnorganisasjon-api';
+import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
+interface Props {
+    restOrgannisasjoner?: RestAltinnOrganisasjoner;
+}
 
-const ManglerRettigheterIAltinnSide: React.FunctionComponent = () => {
+const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = props => {
+    console.log(props.restOrgannisasjoner?.status);
+    console.log(props.restOrgannisasjoner);
     return (
         <div className="mangler-rettigheter-i-altinn__wrapper">
             <div className="mangler-rettigheter-i-altinn">
@@ -18,13 +25,14 @@ const ManglerRettigheterIAltinnSide: React.FunctionComponent = () => {
                 </div>
 
                 <Normaltekst className="mangler-rettigheter-i-altinn__overskrift">
-                    Du har ikke Altinn-tilgangen for å se sykefraværsstatistikk for denne
-                    virksomheten.
+                    Du har ikke Altinn-tilgangen du trenger for å se Sykefraværsstatistikk for denne
+                    virksomheten. Bytt til en virksomhet der du har tilgang eller be om tilgang i
+                    Altinn for denne virksomheten.
                 </Normaltekst>
-                <Element className="mangler-rettigheter-i-altinn__overskrift">
+                {/*<Element className="mangler-rettigheter-i-altinn__overskrift">
                     For å se sykefraværsstatistikk kan du
-                </Element>
-                <ul className="mangler-rettigheter-i-altinn__list-wrapper">
+                </Element>*/}
+                {/*<ul className="mangler-rettigheter-i-altinn__list-wrapper">
                     <li>
                         <Normaltekst>
                             Bytte til en virksomhet der du har tilgang til sykefraværsstatistikk
@@ -33,7 +41,7 @@ const ManglerRettigheterIAltinnSide: React.FunctionComponent = () => {
                     <li>
                         <Normaltekst>Be om tilgang til Altinn for denne virksomhet</Normaltekst>
                     </li>
-                </ul>
+                </ul>*/}
                 <Lenke
                     className="mangler-rettigheter-i-altinn__lenke"
                     href={
@@ -42,6 +50,7 @@ const ManglerRettigheterIAltinnSide: React.FunctionComponent = () => {
                 >
                     Les mer om hvordan tilgangsstyringen i Altinn fungerer
                 </Lenke>
+                <LesMerPanel åpneLabel={} lukkLabel={}
             </div>
         </div>
     );
