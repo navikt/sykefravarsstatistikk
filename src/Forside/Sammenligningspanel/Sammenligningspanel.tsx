@@ -17,9 +17,7 @@ import Virksomhetspanel from './Virksomhetspanel';
 import Sektorpanel from './Sektorpanel/Sektorpanel';
 import Landspanel from './Landspanel/Landspanel';
 import Skeleton from 'react-loading-skeleton';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import { ForFåAnsatteAlertStripe } from './ForFåAnsatteAlertStripe/ForFåAnsatteAlertStripe';
+import { SammenligningspanelAlertStripe } from './SammenligningspanelAlertStripe/SammenligningspanelAlertStripe';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -53,7 +51,7 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
 
     return (
         <>
-            <ForFåAnsatteAlertStripe sykefraværVirksomhet={sammenligningSisteKvartal.virksomhet} />
+            <SammenligningspanelAlertStripe sammenligningSisteKvartal={sammenligningSisteKvartal} />
             <PanelBase className="sammenligningspanel">
                 <div className="sammenligningspanel__tekst-wrapper">
                     <SammenligningspanelOverskrift
