@@ -5,7 +5,12 @@ import './EksternLenke.less';
 import classNames from 'classnames';
 
 const EksternLenke: FunctionComponent<Props> = props => (
-    <Lenke {...props} className={classNames('ekstern-lenke', props.className)} target="_blank">
+    <Lenke
+        {...props}
+        className={classNames('ekstern-lenke', props.className)}
+        target="_blank"
+        rel="noopener noreferrer"
+    >
         {props.children}
         <EksternLenkeIkon className="ekstern-lenke__ikon" />
     </Lenke>
