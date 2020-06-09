@@ -16,7 +16,7 @@ const Forside: React.FunctionComponent<Props> = props => {
         case RestStatus.IngenTilgang: {
             return (
                 <ManglerRettigheterIAltinnSide
-                    restOrgannisasjoner={props.restOrganisasjonerForStatistikk}
+                    restOrganisasjonerForStatistikk={props.restOrganisasjonerForStatistikk}
                 />
             );
         }

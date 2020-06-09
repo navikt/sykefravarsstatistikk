@@ -6,12 +6,10 @@ import Lenke from 'nav-frontend-lenker';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 interface Props {
-    restOrgannisasjoner?: RestAltinnOrganisasjoner;
+    restOrganisasjonerForStatistikk?: RestAltinnOrganisasjoner;
 }
 
 const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = props => {
-    console.log(props.restOrgannisasjoner?.status);
-    console.log(props.restOrgannisasjoner);
     return (
         <div className="mangler-rettigheter-i-altinn__wrapper">
             <div className="mangler-rettigheter-i-altinn">

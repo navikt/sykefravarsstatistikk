@@ -1,6 +1,7 @@
 import { getRestStatus, RestRessurs, RestStatus } from './api-utils';
 import { useEffect, useState } from 'react';
 import * as Sentry from '@sentry/browser';
+import { BASE_PATH } from '../server/konstanter';
 
 export type RestAltinnOrganisasjoner = RestRessurs<AltinnOrganisasjon[]>;
 
@@ -26,8 +27,9 @@ export const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (): Promise<Alt
     }
     return await respons.json();
 };
+
 export const hentAltinnOrganisasjonerDerBrukerHarTilgangTilStatistikk = async (): Promise<AltinnOrganisasjon[]> => {
-    const respons = await fetch('/api/organisasjoner/statistikk');
+    const respons = await fetch(`${BASE_PATH}/api/organisasjoner/statistikk`);
     const restStatus: RestStatus = getRestStatus(respons.status);
 
     if (restStatus !== RestStatus.Suksess) {
@@ -55,6 +57,7 @@ export const useRestOrganisasjoner = (): RestAltinnOrganisasjoner => {
 
     return restAltinnOrganisasjoner;
 };
+
 export const useRestOrganisasjonerMedTilgangTilStatistikk = (): RestAltinnOrganisasjoner => {
     const [restAltinnOrganisasjoner, setRestAltinnOrganisasjoner] = useState<
         RestAltinnOrganisasjoner
@@ -71,17 +74,6 @@ export const useRestOrganisasjonerMedTilgangTilStatistikk = (): RestAltinnOrgani
     return restAltinnOrganisasjoner;
 };
 
-/*const hentAltinnOrganisasjoner = async (): Promise<RestRessurs<AltinnOrganisasjon[]>> => {
-    try {
-        const altinnOrganisasjoner = await hentAltinnOrganisasjonerBrukerHarTilgangTil();
-        return {
-            status: RestStatus.Suksess,
-            data: altinnOrganisasjoner,
-        };
-    } catch (error) {
-        Sentry.captureException(error);
-        return { status: error.status || RestStatus.Feil };
-    }*/
 const hentAltinnOrganisasjoner = async (
     hentOrganisasjoner: () => Promise<AltinnOrganisasjon[]>
 ): Promise<RestRessurs<AltinnOrganisasjon[]>> => {
