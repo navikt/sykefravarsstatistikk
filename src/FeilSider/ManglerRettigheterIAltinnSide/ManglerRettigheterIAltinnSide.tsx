@@ -3,7 +3,7 @@ import informasjonsirkelSvg from './informasjon-sirkel.svg';
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './ManglerRettigheterIAltinnSide.less';
 import Lenke from 'nav-frontend-lenker';
-import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon/altinnorganisasjon-api';
+import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 interface Props {
     restOrgannisasjoner?: RestAltinnOrganisasjoner;
@@ -50,7 +50,6 @@ const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = props => {
                 >
                     Les mer om hvordan tilgangsstyringen i Altinn fungerer
                 </Lenke>
-                <LesMerPanel åpneLabel={} lukkLabel={}
             </div>
         </div>
     );

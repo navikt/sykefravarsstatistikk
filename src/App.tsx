@@ -1,12 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import Banner from './Banner/Banner';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, useLocation } from 'react-router-dom';
 import { BASE_PATH } from './server/konstanter';
 import { useOrgnr } from './utils/orgnr-hook';
 import Kalkulator from './Kalkulator/Kalkulator';
 import Forside from './Forside/Forside';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
-import { useRestOrganisasjoner } from './api/altinnorganisasjon/altinnorganisasjon-api';
+import {
+    useRestOrganisasjoner,
+    useRestOrganisasjonerMedTilgangTilStatistikk,
+} from './api/altinnorganisasjon-api';
 import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
@@ -22,7 +25,6 @@ import amplitude from './utils/amplitude';
 import { trackBedriftsmetrikker, useRestBedriftsmetrikker } from './api/bedriftsmetrikker';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
-import { useLocation } from 'react-router-dom';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -42,6 +44,7 @@ const AppContent: FunctionComponent = () => {
     const orgnr = useOrgnr();
 
     const restOrganisasjoner = useRestOrganisasjoner();
+    const restOrganisasjonerForStatistikk = useRestOrganisasjonerMedTilgangTilStatistikk();
     const restSykefraværshistorikk = useRestSykefraværshistorikk(orgnr);
     const restFeatureToggles = useRestFeatureToggles();
     const restBedriftsmetrikker = useRestBedriftsmetrikker(orgnr);
@@ -50,12 +53,14 @@ const AppContent: FunctionComponent = () => {
 
     if (
         restOrganisasjoner.status === RestStatus.LasterInn ||
+        restOrganisasjonerForStatistikk.status === RestStatus.LasterInn ||
         restFeatureToggles.status === RestStatus.LasterInn ||
         restBedriftsmetrikker.status === RestStatus.LasterInn
     ) {
         innhold = <Lasteside />;
     } else if (
-        restOrganisasjoner.status === RestStatus.IkkeInnlogget &&
+        (restOrganisasjoner.status === RestStatus.IkkeInnlogget ||
+            restOrganisasjonerForStatistikk.status === RestStatus.IkkeInnlogget) &&
         !location.pathname.includes('iawebredirectside')
     ) {
         return <Innloggingsside />;
@@ -79,7 +84,7 @@ const AppContent: FunctionComponent = () => {
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <Forside
                         restSykefraværshistorikk={restSykefraværshistorikk}
-                        restOrganisasjoner={restOrganisasjoner}
+                        restOrganisasjonerForStatistikk={restOrganisasjonerForStatistikk}
                     >
                         <Sammenligningspanel restSykefraværshistorikk={restSykefraværshistorikk} />
                         <KalkulatorPanel />
