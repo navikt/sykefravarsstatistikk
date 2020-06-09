@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ReactElement } from 'react';
-import { Element, Normaltekst, Sidetittel, Innholdstittel } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Innholdstittel } from 'nav-frontend-typografi';
 import './Sykefraværsprosentpanel.less';
 import Skeleton from 'react-loading-skeleton';
 import { Sykefraværsprosent } from '../../../api/sykefraværshistorikk';

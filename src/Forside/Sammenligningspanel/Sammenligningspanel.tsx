@@ -17,7 +17,6 @@ import Virksomhetspanel from './Virksomhetspanel';
 import Sektorpanel from './Sektorpanel/Sektorpanel';
 import Landspanel from './Landspanel/Landspanel';
 import Skeleton from 'react-loading-skeleton';
-import KoronaInfotekst from './KoronaInfotekst/KoronaInfotekst';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
