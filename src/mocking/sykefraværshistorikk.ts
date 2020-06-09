@@ -1,61 +1,7 @@
-import {
-    KvartalsvisSykefraværsprosent,
-    Sykefraværshistorikk,
-    SykefraværshistorikkType,
-} from '../api/sykefraværshistorikk';
-import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
+import { Sykefraværshistorikk, SykefraværshistorikkType } from '../api/sykefraværshistorikk';
+import { genererHistorikk, genererMaskertHistorikk } from './generering-av-historikk';
 
-const neste = (årstallOgKvartal: ÅrstallOgKvartal): ÅrstallOgKvartal => {
-    const { årstall, kvartal } = årstallOgKvartal;
-    if (kvartal === 4) {
-        return {
-            årstall: årstall + 1,
-            kvartal: 1,
-        };
-    } else {
-        return {
-            årstall,
-            kvartal: kvartal + 1,
-        };
-    }
-};
-
-const randomNumber = (min: number, max: number): number => Math.random() * (max - min) + min;
-
-export const genererHistorikk = (
-    startÅrstallOgKvartal: ÅrstallOgKvartal,
-    antallKvartaler: number,
-    startprosent: number,
-    variasjon: number,
-    randomness: number,
-    vekst: number
-): KvartalsvisSykefraværsprosent[] => {
-    let historikk: KvartalsvisSykefraværsprosent[] = [];
-
-    let årstallOgKvartal = { ...startÅrstallOgKvartal };
-    let prosent = startprosent;
-
-    for (let i = 0; i < antallKvartaler; i += 1) {
-        historikk.push({
-            ...årstallOgKvartal,
-            erMaskert: false,
-            prosent: prosent,
-            tapteDagsverk: prosent * 10,
-            muligeDagsverk: prosent * 1000,
-        });
-        årstallOgKvartal = neste(årstallOgKvartal);
-        prosent =
-            prosent +
-            variasjon * Math.sin(0.5 + (Math.PI * i) / 2) +
-            randomNumber(vekst - randomness, vekst + randomness);
-        prosent = Math.max(0, prosent);
-        prosent = parseFloat(prosent.toFixed(1));
-    }
-
-    return historikk;
-};
-
-const lagHistorikkMedLandSektor = (): Sykefraværshistorikk[] => {
+const lagHistorikkMedLandOgSektor = (): Sykefraværshistorikk[] => {
     return [
         {
             type: SykefraværshistorikkType.LAND,
@@ -84,21 +30,23 @@ const lagHistorikkMedLandSektor = (): Sykefraværshistorikk[] => {
     ];
 };
 
+const historikkNæring = () => ({
+    type: SykefraværshistorikkType.NÆRING,
+    label: 'Produksjon av nærings- og nytelsesmidler',
+    kvartalsvisSykefraværsprosent: genererHistorikk(
+        { årstall: 2014, kvartal: 2 },
+        20,
+        6.7,
+        2,
+        0.4,
+        0
+    ),
+});
+
 const lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet = (): Sykefraværshistorikk[] => {
     return [
-        ...lagHistorikkMedLandSektor(),
-        {
-            type: SykefraværshistorikkType.NÆRING,
-            label: 'Produksjon av nærings- og nytelsesmidler',
-            kvartalsvisSykefraværsprosent: genererHistorikk(
-                { årstall: 2014, kvartal: 2 },
-                20,
-                6.7,
-                2,
-                0.4,
-                0
-            ),
-        },
+        ...lagHistorikkMedLandOgSektor(),
+        historikkNæring(),
         {
             type: SykefraværshistorikkType.VIRKSOMHET,
             label: 'FLESK OG FISK AS',
@@ -112,8 +60,18 @@ const lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnder
     ];
 };
 
+const lagMaskertHistorikk = (): Sykefraværshistorikk[] => [
+    ...lagHistorikkMedLandOgSektor(),
+    historikkNæring(),
+    {
+        type: SykefraværshistorikkType.VIRKSOMHET,
+        label: 'FLESK OG FISK AS',
+        kvartalsvisSykefraværsprosent: genererMaskertHistorikk({ årstall: 2014, kvartal: 2 }, 20),
+    },
+];
+
 const lagHistorikkUtenBransjeOgNæring = (): Sykefraværshistorikk[] => [
-    ...lagHistorikkMedLandSektor(),
+    ...lagHistorikkMedLandOgSektor(),
     {
         type: SykefraværshistorikkType.VIRKSOMHET,
         label: 'FLESK OG FISK AS',
@@ -182,7 +140,7 @@ const lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet = () => {
         0.1
     );
     return [
-        ...lagHistorikkMedLandSektor(),
+        ...lagHistorikkMedLandOgSektor(),
         {
             type: SykefraværshistorikkType.NÆRING,
             label: 'Produksjon av nærings- og nytelsesmidler',
@@ -212,6 +170,8 @@ export const getSykefraværshistorikkMock = (orgnr: String): Sykefraværshistori
     switch (orgnr) {
         case '333333333':
             return lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet();
+        case '444444444':
+            return lagMaskertHistorikk();
         case '666666666':
             return lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet();
         case '888888888':

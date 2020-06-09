@@ -13,7 +13,9 @@ const Sektorpanel: FunctionComponent<SykefraværprosentpanelProps> = props => {
             sykefraværsprosent={props.sykefraværsprosent}
             ikon={<SammenligningsIkon label={SykefraværshistorikkType.SEKTOR} />}
             className={props.className}
-        />
+        >
+            Sektor:
+        </Sykefraværsprosentpanel>
     );
 };
 export default Sektorpanel;
