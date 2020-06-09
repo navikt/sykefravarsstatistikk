@@ -11,6 +11,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
 import amplitude from '../utils/amplitude';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
+import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
