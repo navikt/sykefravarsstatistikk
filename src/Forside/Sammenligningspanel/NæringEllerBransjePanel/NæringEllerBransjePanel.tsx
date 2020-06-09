@@ -14,13 +14,13 @@ type Props = SykefraværprosentpanelProps & {
 const NæringEllerBransjePanel: FunctionComponent<Props> = props => {
     const tekstForNæringEllerBransje = props.harBransje ? (
         <div className="næring-eller-bransje-panel__label">
-            Bransjen virksomheten tilhører:
+            Bransje:
             <Hjelpetekst className="næring-eller-bransje-panel__hjelpetekst">
                 Bransjen er definert i samsvar med bransjeprogrammene under IA-avtalen 2019–2022.
             </Hjelpetekst>
         </div>
     ) : (
-        'Næringen virksomheten tilhører:'
+        'Næring:'
     );
 
     return (
