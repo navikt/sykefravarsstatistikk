@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import MaskertSykefraværprosentpanel from './MaskertSykefraværprosentpanel/MaskertSykefraværprosentpanel';
-import { SykefraværprosentpanelProps } from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
+import Sykefraværsprosentpanel, { SykefraværprosentpanelProps } from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import SammenligningsIkon from './SammenligningsIkon';
 import { SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
 
@@ -25,22 +24,17 @@ const Virksomhetspanel: FunctionComponent<Props> = props => {
         feilmeldingHvisProsentErUndefined += ` Det kan være fordi det ikke er registrert sykefravær for virksomheten i ${kvartal}. kvartal ${årstall}.`;
     }
 
-    if (sykefraværsprosent?.erMaskert) {
-        return null;
-    }
 
     return (
-        <MaskertSykefraværprosentpanel
+        <Sykefraværsprosentpanel
             sykefraværsprosent={sykefraværsprosent}
             sykefraværprosentLabel={sykefraværprosentLabel}
-            labelHvisMaskert="Det er for få personer i datagrunnlaget til at vi kan vise sykefraværet."
-            labelHvisUndefined={feilmeldingHvisProsentErUndefined}
             laster={laster}
             ikon={<SammenligningsIkon label={SykefraværshistorikkType.VIRKSOMHET} />}
             className={className}
         >
             Din virksomhet:
-        </MaskertSykefraværprosentpanel>
+        </Sykefraværsprosentpanel>
     );
 };
 

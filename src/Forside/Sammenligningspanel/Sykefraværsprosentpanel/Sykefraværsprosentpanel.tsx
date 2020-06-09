@@ -27,9 +27,6 @@ export const formaterProsent = (prosent: number | null | undefined): string => {
 const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelProps> = props => {
     const { sykefraværsprosent, laster, sykefraværprosentLabel, children, ikon, className } = props;
 
-    if (!laster && (!sykefraværsprosent || !sykefraværsprosent.prosent)) {
-        return null;
-    }
     const tekst = (
         <div className="sykefravarsprosentpanel__innhold">
             {children && <Element tag="div">{children}</Element>}
@@ -37,17 +34,23 @@ const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelP
         </div>
     );
 
-    const prosent = !!sykefraværsprosent && (
+    const skalViseProsent =
+        sykefraværsprosent && sykefraværsprosent.prosent && !sykefraværsprosent.erMaskert;
+
+    const prosent = skalViseProsent ? (
         <Sidetittel className="sykefravarsprosentpanel__prosent">
-            {formaterProsent(sykefraværsprosent.prosent)}&nbsp;%
+            {formaterProsent(sykefraværsprosent!.prosent)}&nbsp;%
         </Sidetittel>
+    ) : (
+        <Normaltekst className="sykefravarsprosentpanel__kan-ikke-vises">
+            Kan ikke vises
+        </Normaltekst>
     );
 
     const innhold = (
         <div className="sykefravarsprosentpanel">
             {ikon}
             {prosent}
-
             {tekst}
         </div>
     );
