@@ -13,7 +13,7 @@ import { RestStatus } from '../../api/api-utils';
 import SammenligningspanelOverskrift from './SammenligningspanelOverskrift';
 import SammenligningspanelFeilmelding from './SammenligningspanelFeilmelding';
 import NæringEllerBransjePanel from './NæringEllerBransjePanel/NæringEllerBransjePanel';
-import Virksomhetspanel from './Virksomhetspanel';
+import { Virksomhetspanel } from './Virksomhetspanel';
 import Sektorpanel from './Sektorpanel/Sektorpanel';
 import Landspanel from './Landspanel/Landspanel';
 import Skeleton from 'react-loading-skeleton';
@@ -51,7 +51,10 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
 
     return (
         <>
-            <SammenligningspanelAlertStripe sammenligningSisteKvartal={sammenligningSisteKvartal} />
+            <SammenligningspanelAlertStripe
+                sammenligningSisteKvartal={sammenligningSisteKvartal}
+                restStatus={restStatus}
+            />
             <PanelBase className="sammenligningspanel">
                 <div className="sammenligningspanel__tekst-wrapper">
                     <SammenligningspanelOverskrift

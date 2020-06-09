@@ -5,7 +5,7 @@ import Sykefraværsprosentpanel, {
 import SammenligningsIkon from './SammenligningsIkon';
 import { SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
 
-const Virksomhetspanel: FunctionComponent<SykefraværprosentpanelProps> = ({
+export const Virksomhetspanel: FunctionComponent<SykefraværprosentpanelProps> = ({
     sykefraværsprosent,
     sykefraværprosentLabel,
     laster,
@@ -23,5 +23,3 @@ const Virksomhetspanel: FunctionComponent<SykefraværprosentpanelProps> = ({
         </Sykefraværsprosentpanel>
     );
 };
-
-export default Virksomhetspanel;
