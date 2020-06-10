@@ -4,8 +4,6 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './ManglerRettigheterIAltinnSide.less';
 import Lenke from 'nav-frontend-lenker';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { RestStatus } from '../../api/api-utils';
 import { OrganisasjonerMedTilgangListe } from './OrganisasjonerMedTilgangListe/OrganisasjonerMedTilgangListe';
 
 interface Props {
