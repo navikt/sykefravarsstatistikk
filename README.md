@@ -10,7 +10,11 @@ Denne appen gir arbeidsgivere muligheten til å sammenligne sykefraværet i egen
 - Kjøre applikasjon med mock: `yarn run mock` (for Windows: `yarn run wock`)
 - Hvis du vil kjøre mot egen backend lokalt, kan du sette `MOCK_SYKEFRAVÆRSSTATISTIKK = false` i `mock.ts` før du kjører `yarn mock`. (NB! Krever at `sykefravarsstatistikk-api` kjører på port 8080.)
 - Kjøre applikasjonen normalt: `yarn start` (NB! Krever integrasjon med `sykefravarsstatistikk-api` og `ditt-nav-arbeidsgiver-api`)
-
+- Kjøre applikasjonen med Docker:
+    1. `yarn install && yarn build`
+    2. `docker build -t sykefravarsstatistikk .`
+    3. `docker run -d -p 3000:3000 sykefravarsstatistikk`
+    4. For å stoppe, kjør `docker stop <id>` med id-en fra forrige kommando
 ---
 
 # Henvendelser
