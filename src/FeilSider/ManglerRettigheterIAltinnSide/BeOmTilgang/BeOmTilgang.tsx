@@ -5,9 +5,8 @@ import './BeOmTilgang.less';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { useOrgnr } from '../../../utils/orgnr-hook';
 
-const beOmTilgangTilSykefraværsstatistikkIAltinnLink = (orgnr: string | undefined) => {
-    return 'https://altinn.no/ui/DelegationRequest?offeredBy=' + orgnr + '&resources=3403_2';
-};
+const beOmTilgangTilSykefraværsstatistikkIAltinnLink = (orgnr: string | undefined) =>
+    'https://altinn.no/ui/DelegationRequest?offeredBy=' + orgnr + '&resources=3403_2';
 
 export const BeOmTilgang: FunctionComponent = () => {
     const orgnr = useOrgnr();

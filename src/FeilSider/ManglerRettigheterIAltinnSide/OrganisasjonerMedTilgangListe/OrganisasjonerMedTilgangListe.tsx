@@ -6,7 +6,6 @@ import './OrganisasjonerMedTilgangListe.less';
 
 interface Props {
     restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
-    orgNrManglerAltinnRettigheter?: string;
 }
 
 export const OrganisasjonerMedTilgangListe: FunctionComponent<Props> = ({

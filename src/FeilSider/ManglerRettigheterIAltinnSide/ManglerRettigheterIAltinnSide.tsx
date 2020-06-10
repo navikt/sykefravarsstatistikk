@@ -9,7 +9,6 @@ import { BeOmTilgang } from './BeOmTilgang/BeOmTilgang';
 
 interface Props {
     restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
-    orgNrManglerAltinnRettigheter?: string;
 }
 
 const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = ({
