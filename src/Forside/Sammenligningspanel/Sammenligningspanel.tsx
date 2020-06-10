@@ -31,7 +31,7 @@ const getSammenligningForSisteKvartal = (
     return kvartalsvisSammenligning[0];
 };
 
-const Sammenligningspanel: FunctionComponent<Props> = props => {
+const Sammenligningspanel: FunctionComponent<Props> = (props) => {
     const restSykefraværshistorikk = props.restSykefraværshistorikk;
     const restStatus = restSykefraværshistorikk.status;
     const laster = restStatus === RestStatus.LasterInn || restStatus === RestStatus.IkkeLastet;
@@ -67,7 +67,8 @@ const Sammenligningspanel: FunctionComponent<Props> = props => {
                         status={restStatus}
                         className="sammenligningspanel__feilmelding"
                     >
-                        Kunne ikke vise sykefraværet.
+                        Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen
+                        senere.
                     </SammenligningspanelFeilmelding>
                     {/* TODO Skrus på på torsdag <KoronaInfotekst />*/}
                     {laster ? (
