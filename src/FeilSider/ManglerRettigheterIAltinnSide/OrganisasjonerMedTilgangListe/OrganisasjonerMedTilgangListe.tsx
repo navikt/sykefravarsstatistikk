@@ -25,8 +25,7 @@ export const OrganisasjonerMedTilgangListe: FunctionComponent<Props> = ({
             >
                 {restOrganisasjonerForStatistikk.data.map(org => (
                     <li
-                        className="organisasjoner-med-tilgang-liste__listelement"
-
+                        className="organisasjoner-med-tilgang-liste__listeelement"
                         key={org.OrganizationNumber}
                     >{`${org.Name} (${org.OrganizationNumber})`}</li>
                 ))}
