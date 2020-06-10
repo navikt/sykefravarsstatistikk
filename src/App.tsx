@@ -50,7 +50,6 @@ const AppContent: FunctionComponent = () => {
     const restBedriftsmetrikker = useRestBedriftsmetrikker(orgnr);
     const location = useLocation();
     let innhold;
-
     if (
         restOrganisasjoner.status === RestStatus.LasterInn ||
         restFeatureToggles.status === RestStatus.LasterInn ||

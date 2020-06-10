@@ -6,6 +6,7 @@ import './OrganisasjonerMedTilgangListe.less';
 
 interface Props {
     restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
+    orgNrManglerAltinnRettigheter?: string;
 }
 
 export const OrganisasjonerMedTilgangListe: FunctionComponent<Props> = ({
@@ -20,10 +21,8 @@ export const OrganisasjonerMedTilgangListe: FunctionComponent<Props> = ({
             tittel="Disse virksomhetene har tilgang til Sykefraværsstatistikk"
             className="organisasjoner-med-tilgang-liste"
         >
-            <ul
-                className="organisasjoner-med-tilgang-liste__liste"
-            >
-                {restOrganisasjonerForStatistikk.data.map(org => (
+            <ul className="organisasjoner-med-tilgang-liste__liste">
+                {restOrganisasjonerForStatistikk.data.map((org) => (
                     <li
                         className="organisasjoner-med-tilgang-liste__listeelement"
                         key={org.OrganizationNumber}

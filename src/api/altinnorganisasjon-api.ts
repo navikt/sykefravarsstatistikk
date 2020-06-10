@@ -55,7 +55,7 @@ export const useRestOrganisasjoner = (): RestAltinnOrganisasjoner => {
     useEffect(() => {
         hentAltinnOrganisasjoner(
             '/min-side-arbeidsgiver/api/organisasjoner'
-        ).then(altinnOrganisasjoner => setRestAltinnOrganisasjoner(altinnOrganisasjoner));
+        ).then((altinnOrganisasjoner) => setRestAltinnOrganisasjoner(altinnOrganisasjoner));
     }, []);
 
     return restAltinnOrganisasjoner;
@@ -71,7 +71,7 @@ export const useRestOrganisasjonerMedTilgangTilStatistikk = (): RestAltinnOrgani
     useEffect(() => {
         hentAltinnOrganisasjoner(
             `${BASE_PATH}/api/organisasjoner/statistikk`
-        ).then(altinnOrganisasjoner => setRestAltinnOrganisasjoner(altinnOrganisasjoner));
+        ).then((altinnOrganisasjoner) => setRestAltinnOrganisasjoner(altinnOrganisasjoner));
     }, []);
 
     return restAltinnOrganisasjoner;

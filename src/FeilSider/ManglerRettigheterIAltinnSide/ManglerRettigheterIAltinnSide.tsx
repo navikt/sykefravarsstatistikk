@@ -9,6 +9,7 @@ import { BeOmTilgang } from './BeOmTilgang/BeOmTilgang';
 
 interface Props {
     restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
+    orgNrManglerAltinnRettigheter?: string;
 }
 
 const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = ({
@@ -36,7 +37,9 @@ const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = ({
                 <OrganisasjonerMedTilgangListe
                     restOrganisasjonerForStatistikk={restOrganisasjonerForStatistikk}
                 />
-                <Element className="mangler-rettigheter-i-altinn__mer-info">Lenker til mer informasjon</Element>
+                <Element className="mangler-rettigheter-i-altinn__mer-info">
+                    Lenker til mer informasjon
+                </Element>
                 <Lenke
                     className="mangler-rettigheter-i-altinn__lenke"
                     href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/informasjon-om-tilgangsstyring"

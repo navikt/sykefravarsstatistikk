@@ -11,7 +11,7 @@ interface Props {
     restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
 }
 
-const Forside: React.FunctionComponent<Props> = props => {
+const Forside: React.FunctionComponent<Props> = (props) => {
     switch (props.restSykefraværshistorikk.status) {
         case RestStatus.IngenTilgang: {
             return (
