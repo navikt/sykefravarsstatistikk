@@ -1,5 +1,5 @@
 const { FRONTEND_API_PATH } = require('./konstanter');
-const proxyMiddleware = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const envProperties = {
     API_GATEWAY: process.env.API_GATEWAY || 'http://localhost:8080',
@@ -40,6 +40,6 @@ if (envProperties.APIGW_HEADER) {
     };
 }
 
-const proxy = proxyMiddleware(FRONTEND_API_PATH, proxyConfig);
+const proxy = createProxyMiddleware(FRONTEND_API_PATH, proxyConfig);
 
 module.exports = proxy;
