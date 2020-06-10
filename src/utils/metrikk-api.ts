@@ -1,4 +1,4 @@
-import { FRONTEND_API_PATH } from '../../server/konstanter';
+import { FRONTEND_API_PATH } from '../konstanter';
 
 const METRIKK_PATH = FRONTEND_API_PATH + '/metrikker';
 
