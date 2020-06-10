@@ -53,7 +53,6 @@ const AppContent: FunctionComponent = () => {
 
     if (
         restOrganisasjoner.status === RestStatus.LasterInn ||
-        restOrganisasjonerForStatistikk.status === RestStatus.LasterInn ||
         restFeatureToggles.status === RestStatus.LasterInn ||
         restBedriftsmetrikker.status === RestStatus.LasterInn
     ) {

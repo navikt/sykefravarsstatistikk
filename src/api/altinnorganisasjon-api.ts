@@ -14,8 +14,10 @@ export interface AltinnOrganisasjon {
     ParentOrganizationNumber: string;
 }
 
-export const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (): Promise<AltinnOrganisasjon[]> => {
-    const respons = await fetch('/min-side-arbeidsgiver/api/organisasjoner');
+const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (
+    url: string
+): Promise<AltinnOrganisasjon[]> => {
+    const respons = await fetch(url);
     const restStatus: RestStatus = getRestStatus(respons.status);
 
     if (restStatus !== RestStatus.Suksess) {
@@ -28,18 +30,19 @@ export const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (): Promise<Alt
     return await respons.json();
 };
 
-export const hentAltinnOrganisasjonerDerBrukerHarTilgangTilStatistikk = async (): Promise<AltinnOrganisasjon[]> => {
-    const respons = await fetch(`${BASE_PATH}/api/organisasjoner/statistikk`);
-    const restStatus: RestStatus = getRestStatus(respons.status);
-
-    if (restStatus !== RestStatus.Suksess) {
-        const error = {
-            status: restStatus,
+const hentAltinnOrganisasjoner = async (
+    url: string
+): Promise<RestRessurs<AltinnOrganisasjon[]>> => {
+    try {
+        const altinnOrganisasjoner = await hentAltinnOrganisasjonerBrukerHarTilgangTil(url);
+        return {
+            status: RestStatus.Suksess,
+            data: altinnOrganisasjoner,
         };
-
-        return Promise.reject(error);
+    } catch (error) {
+        Sentry.captureException(error);
+        return { status: error.status || RestStatus.Feil };
     }
-    return await respons.json();
 };
 
 export const useRestOrganisasjoner = (): RestAltinnOrganisasjoner => {
@@ -51,7 +54,7 @@ export const useRestOrganisasjoner = (): RestAltinnOrganisasjoner => {
 
     useEffect(() => {
         hentAltinnOrganisasjoner(
-            hentAltinnOrganisasjonerBrukerHarTilgangTil
+            '/min-side-arbeidsgiver/api/organisasjoner'
         ).then(altinnOrganisasjoner => setRestAltinnOrganisasjoner(altinnOrganisasjoner));
     }, []);
 
@@ -67,24 +70,9 @@ export const useRestOrganisasjonerMedTilgangTilStatistikk = (): RestAltinnOrgani
 
     useEffect(() => {
         hentAltinnOrganisasjoner(
-            hentAltinnOrganisasjonerDerBrukerHarTilgangTilStatistikk
+            `${BASE_PATH}/api/organisasjoner/statistikk`
         ).then(altinnOrganisasjoner => setRestAltinnOrganisasjoner(altinnOrganisasjoner));
     }, []);
 
     return restAltinnOrganisasjoner;
-};
-
-const hentAltinnOrganisasjoner = async (
-    hentOrganisasjoner: () => Promise<AltinnOrganisasjon[]>
-): Promise<RestRessurs<AltinnOrganisasjon[]>> => {
-    try {
-        const altinnOrganisasjoner = await hentOrganisasjoner();
-        return {
-            status: RestStatus.Suksess,
-            data: altinnOrganisasjoner,
-        };
-    } catch (error) {
-        Sentry.captureException(error);
-        return { status: error.status || RestStatus.Feil };
-    }
 };
