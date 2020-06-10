@@ -1,6 +1,6 @@
 import fetchMock from 'fetch-mock';
 import { enhetsregisteretMockRespons } from './enhetsregisteret';
-import { getOrganisasjonerMock } from './organisasjoner';
+import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './organisasjoner';
 import { getSykefraværshistorikkMock } from './sykefraværshistorikk';
 
 const MOCK_MIN_SIDE_ARBEIDSGIVER = true;
@@ -51,6 +51,13 @@ if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
         },
         {
             delay: 500,
+        }
+    );
+    fetchMock.get(
+        '/sykefravarsstatistikk/api/organisasjoner/statistikk',
+        getOrganisasjonerBrukerHarTilgangTilMock(),
+        {
+            delay: 1000,
         }
     );
 }

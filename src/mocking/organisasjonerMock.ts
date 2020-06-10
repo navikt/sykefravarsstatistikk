@@ -1,5 +1,6 @@
 import { AltinnOrganisasjon } from '../api/altinnorganisasjon-api';
 
+export const orgnrUtenTilgang = '100100100';
 const fleskOgFisk: AltinnOrganisasjon[] = [
     {
         Name: 'FLESK OG FISK AS',
@@ -97,11 +98,11 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
     {
         Name: 'Ingen tilgang',
         Type: 'Business',
-        OrganizationNumber: '100100100',
+        OrganizationNumber: orgnrUtenTilgang,
         OrganizationForm: 'BEDR',
         Status: 'Active',
         ParentOrganizationNumber: '900900900',
     },
 ];
 
-export const organisasjonstreMock: AltinnOrganisasjon[] = fleskOgFisk;
+export const organisasjonerMock: AltinnOrganisasjon[] = fleskOgFisk;
