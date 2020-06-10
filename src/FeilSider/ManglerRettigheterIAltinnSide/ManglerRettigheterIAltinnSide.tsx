@@ -6,7 +6,7 @@ import Lenke from 'nav-frontend-lenker';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { RestStatus } from '../../api/api-utils';
-import { OrganisasjonerMedTilgangListe } from './OrganisasjonerMedTilgangListe';
+import { OrganisasjonerMedTilgangListe } from './OrganisasjonerMedTilgangListe/OrganisasjonerMedTilgangListe';
 
 interface Props {
     restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
