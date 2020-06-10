@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 
 interface Props {
     restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
@@ -8,5 +9,9 @@ interface Props {
 export const OrganisasjonerMedTilgangListe: FunctionComponent<Props> = ({
     restOrganisasjonerForStatistikk,
 }) => {
-    return <div>hei</div>;
+    return (
+        <Ekspanderbartpanel border tittel="Disse virksomhetene har tilgang til Sykefraværsstatistikk">
+            hei
+        </Ekspanderbartpanel>
+    );
 };
