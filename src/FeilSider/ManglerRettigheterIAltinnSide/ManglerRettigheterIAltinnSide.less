@@ -1,7 +1,7 @@
 @import '../../variables';
 
 .mangler-rettigheter-i-altinn {
-    max-width: 40rem;
+    max-width: 50rem;
     margin: 0 auto 2rem;
     padding: 2rem;
     background-color: white;
@@ -38,8 +38,9 @@
     }
 
     &__lenke {
+        .typo-normal-mixin();
         margin-bottom: 1.5rem;
-        .typo-normal();
+        display: block;
     }
 
     @media (min-width: @screen-sm-min) {
