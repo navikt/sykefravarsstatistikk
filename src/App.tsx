@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import Banner from './Banner/Banner';
 import { BrowserRouter, Route, useLocation } from 'react-router-dom';
-import { BASE_PATH } from './server/konstanter';
+import { BASE_PATH } from '../server/konstanter';
 import { useOrgnr } from './utils/orgnr-hook';
 import Kalkulator from './Kalkulator/Kalkulator';
 import Forside from './Forside/Forside';

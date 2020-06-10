@@ -1,4 +1,4 @@
-import { BASE_PATH } from '../server/konstanter';
+import { BASE_PATH } from '../../server/konstanter';
 import { getRestStatus, RestStatus } from './api-utils';
 import { RestFeatureToggles } from './featureToggles';
 import {
