@@ -1,6 +1,6 @@
 import React from 'react';
 import informasjonsirkelSvg from './informasjon-sirkel.svg';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './ManglerRettigheterIAltinnSide.less';
 import Lenke from 'nav-frontend-lenker';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
@@ -32,17 +32,17 @@ const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = ({
                     Altinn for denne virksomheten.
                 </Normaltekst>
                 <BeOmTilgang />
-                <Lenke
-                    className="mangler-rettigheter-i-altinn__lenke"
-                    href={
-                        'https://arbeidsgiver.nav.no/min-side-arbeidsgiver/informasjon-om-tilgangsstyring'
-                    }
-                >
-                    Les mer om hvordan tilgangsstyringen i Altinn fungerer
-                </Lenke>
+
                 <OrganisasjonerMedTilgangListe
                     restOrganisasjonerForStatistikk={restOrganisasjonerForStatistikk}
                 />
+                <Element className="mangler-rettigheter-i-altinn__mer-info">Lenker til mer informasjon</Element>
+                <Lenke
+                    className="mangler-rettigheter-i-altinn__lenke"
+                    href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/informasjon-om-tilgangsstyring"
+                >
+                    Les mer om hvordan tilgangsstyringen i Altinn fungerer
+                </Lenke>
             </div>
         </div>
     );
