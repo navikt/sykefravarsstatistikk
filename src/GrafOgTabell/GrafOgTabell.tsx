@@ -15,6 +15,7 @@ import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
+    restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
 }
 
 const GrafOgTabell: FunctionComponent<Props> = props => {
@@ -38,7 +39,11 @@ const GrafOgTabell: FunctionComponent<Props> = props => {
             </div>
         );
     } else if (restSykefraværsstatistikk.status === RestStatus.IngenTilgang) {
-        innhold = <ManglerRettigheterIAltinnSide />;
+        innhold = (
+            <ManglerRettigheterIAltinnSide
+                restOrganisasjonerForStatistikk={props.restOrganisasjonerForStatistikk}
+            />
+        );
     } else if (restSykefraværsstatistikk.status !== RestStatus.Suksess) {
         innhold = (
             <AlertStripe type="feil" className="graf-og-tabell__feilside">

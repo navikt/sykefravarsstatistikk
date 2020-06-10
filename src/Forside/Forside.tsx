@@ -8,7 +8,7 @@ import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
-    restOrganisasjonerForStatistikk?: RestAltinnOrganisasjoner;
+    restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
 }
 
 const Forside: React.FunctionComponent<Props> = props => {

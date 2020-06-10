@@ -59,8 +59,7 @@ const AppContent: FunctionComponent = () => {
     ) {
         innhold = <Lasteside />;
     } else if (
-        (restOrganisasjoner.status === RestStatus.IkkeInnlogget ||
-            restOrganisasjonerForStatistikk.status === RestStatus.IkkeInnlogget) &&
+        restOrganisasjoner.status === RestStatus.IkkeInnlogget &&
         !location.pathname.includes('iawebredirectside')
     ) {
         return <Innloggingsside />;
@@ -99,7 +98,10 @@ const AppContent: FunctionComponent = () => {
                 {skalViseGraf && (
                     <Route path={PATH_HISTORIKK} exact={true}>
                         <Brødsmulesti gjeldendeSide="historikk" />
-                        <GrafOgTabell restSykefraværsstatistikk={restSykefraværshistorikk} />
+                        <GrafOgTabell
+                            restSykefraværsstatistikk={restSykefraværshistorikk}
+                            restOrganisasjonerForStatistikk={restOrganisasjonerForStatistikk}
+                        />
                     </Route>
                 )}
                 <Route path={PATH_IAWEB_REDIRECTSIDE} exact={true}>

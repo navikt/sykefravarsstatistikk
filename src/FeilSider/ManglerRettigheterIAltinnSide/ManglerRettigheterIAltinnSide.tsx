@@ -9,7 +9,7 @@ import { RestStatus } from '../../api/api-utils';
 import { OrganisasjonerMedTilgangListe } from './OrganisasjonerMedTilgangListe';
 
 interface Props {
-    restOrganisasjonerForStatistikk?: RestAltinnOrganisasjoner;
+    restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
 }
 
 const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = ({
