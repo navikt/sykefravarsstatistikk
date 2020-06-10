@@ -17,7 +17,7 @@ if (MOCK_MIN_SIDE_ARBEIDSGIVER) {
 if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
     fetchMock.get(
         'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk',
-        url => {
+        (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
             if (orgnr === '101010101') {
                 return 500;
@@ -33,7 +33,7 @@ if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
     );
     fetchMock.get(
         'express:/sykefravarsstatistikk/api/:orgnr/bedriftsmetrikker',
-        url => {
+        (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
             if (orgnr === '101010101') {
                 return 500;
@@ -58,7 +58,7 @@ if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
 if (MOCK_ENHETSREGISTERET) {
     fetchMock.get(
         'begin:https://data.brreg.no/enhetsregisteret/api/enheter/?organisasjonsnummer=',
-        url => {
+        (url) => {
             const query = new URLSearchParams(url.split('?')[1]);
 
             return enhetsregisteretMockRespons(
