@@ -5,7 +5,7 @@ const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
 const proxy = require('./proxy');
 const { BASE_PATH } = require('./konstanter');
-const buildPath = path.join(__dirname, '../../build');
+const buildPath = path.join(__dirname, '../build');
 
 const PORT = process.env.PORT || 3000;
 

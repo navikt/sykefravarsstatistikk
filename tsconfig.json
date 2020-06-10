@@ -16,5 +16,7 @@
     "jsx": "preserve"
   },
   "include": ["src"],
-  "exclude": ["src/server"]
+  "exclude": [
+    "server"
+  ]
 }
