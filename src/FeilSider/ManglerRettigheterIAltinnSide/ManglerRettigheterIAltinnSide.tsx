@@ -5,6 +5,7 @@ import './ManglerRettigheterIAltinnSide.less';
 import Lenke from 'nav-frontend-lenker';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import { OrganisasjonerMedTilgangListe } from './OrganisasjonerMedTilgangListe/OrganisasjonerMedTilgangListe';
+import { BeOmTilgang } from './BeOmTilgang/BeOmTilgang';
 
 interface Props {
     restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
@@ -30,6 +31,7 @@ const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = ({
                     virksomheten. Bytt til en virksomhet der du har tilgang eller be om tilgang i
                     Altinn for denne virksomheten.
                 </Normaltekst>
+                <BeOmTilgang />
                 <Lenke
                     className="mangler-rettigheter-i-altinn__lenke"
                     href={
