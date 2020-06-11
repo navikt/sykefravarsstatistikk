@@ -7,14 +7,14 @@ import {
     Sykefraværshistorikk,
     SykefraværshistorikkType,
 } from './sykefraværshistorikk';
-import amplitude from '../utils/amplitude';
+import { sendEvent } from '../utils/amplitude';
 import { RestBedriftsmetrikker } from './bedriftsmetrikker';
 
 const sykefraværshistorikkPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk`;
 
 const featureTogglesPath = (features: string[]) =>
-    `${BASE_PATH}/api/feature?` + features.map(featureNavn => `feature=${featureNavn}`).join('&');
+    `${BASE_PATH}/api/feature?` + features.map((featureNavn) => `feature=${featureNavn}`).join('&');
 
 const bedriftsmetrikkerPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/bedriftsmetrikker`;
 
@@ -30,7 +30,7 @@ export const hentRestSykefraværshistorikk = async (
     if (restStatus === RestStatus.Suksess) {
         return {
             status: RestStatus.Suksess,
-            data: await response.json().then(data => {
+            data: await response.json().then((data) => {
                 return filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(data);
             }),
         };
@@ -105,14 +105,10 @@ export const filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet = (
             sykefraværshistorikkForUnderenhet
         )
     ) {
-        amplitude.logEvent(
-            '#sykefravarsstatistikk-segmentering valgt underenhet er lik overordnet enhet'
-        );
+        sendEvent('segmentering valgt underenhet er lik overordnet enhet', '');
         nullstillOverordnetEnhetshistorikk(data);
     } else {
-        amplitude.logEvent(
-            '#sykefravarsstatistikk-segmentering valgt underenhet er ulik overordnet enhet'
-        );
+        sendEvent('segmentering valgt underenhet er ulik overordnet enhet', '');
     }
 
     return data;
@@ -123,7 +119,7 @@ const getSykefraværshistorikk = (
     sykefraværshistorikkType: SykefraværshistorikkType
 ): KvartalsvisSykefraværsprosent[] => {
     const sykefraværshistorikkForTypen = listeAvSykefraværshistorikk.find(
-        sykefraværshistorikk => sykefraværshistorikk.type === sykefraværshistorikkType
+        (sykefraværshistorikk) => sykefraværshistorikk.type === sykefraværshistorikkType
     );
     return sykefraværshistorikkForTypen
         ? sykefraværshistorikkForTypen.kvartalsvisSykefraværsprosent
@@ -139,10 +135,10 @@ const harSammeSykefraværshistorikk = (
     }
 
     let harFunnetMinstEnUlikSykefraværprosent: boolean = false;
-    sykefraværProsentListe1.forEach(sykefraværProsent1 => {
+    sykefraværProsentListe1.forEach((sykefraværProsent1) => {
         if (
             !sykefraværProsentListe2.some(
-                sykefraværProsent2 =>
+                (sykefraværProsent2) =>
                     sykefraværProsent2.kvartal === sykefraværProsent1.kvartal &&
                     sykefraværProsent2.årstall === sykefraværProsent1.årstall &&
                     sykefraværProsent2.erMaskert === sykefraværProsent1.erMaskert &&
@@ -159,7 +155,7 @@ const harSammeSykefraværshistorikk = (
 
 const nullstillOverordnetEnhetshistorikk = (data: Sykefraværshistorikk[]): void => {
     const sykefraværshistorikkTilOverordnetEnhet = data.find(
-        sf => sf.type === SykefraværshistorikkType.OVERORDNET_ENHET
+        (sf) => sf.type === SykefraværshistorikkType.OVERORDNET_ENHET
     );
 
     if (sykefraværshistorikkTilOverordnetEnhet !== undefined) {

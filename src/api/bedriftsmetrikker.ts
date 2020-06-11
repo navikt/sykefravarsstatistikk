@@ -1,7 +1,7 @@
 import { RestRessurs, RestStatus } from './api-utils';
 import { useEffect, useState } from 'react';
 import { hentRestBedriftsmetrikker } from './api';
-import amplitude from '../utils/amplitude';
+import { sendEvent } from '../utils/amplitude';
 import {
     Sykefraværshistorikk,
     SykefraværshistorikkType,
@@ -78,7 +78,7 @@ export const trackBedriftsmetrikker = (
     } else {
         størrelse = '-store-100+';
     }
-    amplitude.logEvent(`#sykefravarsstatistikk-segmentering-storrelse-${størrelse}`);
+    sendEvent('segmentering-storrelse', størrelse);
 
     const årstallOgKvartalListe: ÅrstallOgKvartal[] = beregnHvilkeÅrstallOgKvartalerSomSkalVises(
         historikkListe
@@ -93,10 +93,10 @@ export const trackBedriftsmetrikker = (
         );
 
         if (sykefraværprosent && !sykefraværprosent.erMaskert && sykefraværprosent.prosent) {
-            const event = `#sykefravarsstatistikk-segmentering-fravarsprosent-${tilSegmenteringSykefraværprosent(
-                sykefraværprosent.prosent
-            ).toString()}`;
-            amplitude.logEvent(event);
+            sendEvent(
+                'segmentering-fravarsprosent',
+                tilSegmenteringSykefraværprosent(sykefraværprosent.prosent).toString()
+            );
         }
     }
 };

@@ -15,4 +15,11 @@ instance.init(getApiKey(), '', {
     includeReferrer: true,
 });
 
-export default instance;
+export const sendEvent = (område: string, hendelse: string, data?: Object): void => {
+    if (hendelse === '') {
+        // Ikke riktig bruk av loggingen. Hendelse skal alltid med.
+        instance.logEvent(['#sykefravarsstatistikk', område].join('-'), data);
+    } else {
+        instance.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
+    }
+};

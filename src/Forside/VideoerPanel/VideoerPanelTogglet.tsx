@@ -2,11 +2,11 @@ import * as React from 'react';
 import { FunctionComponent } from 'react';
 import { ReactComponent as Kalkulatorikon } from './video.svg';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { sendEvent } from '../../utils/metrikk-api';
+import { sendMetrikker } from '../../utils/metrikk-api';
 import PanelBase from 'nav-frontend-paneler';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import './VideoerPanelTogglet.less';
-import amplitude from '../../utils/amplitude';
+import { sendEvent } from '../../utils/amplitude';
 
 const VideoerPanelTogglet: FunctionComponent = () => (
     <PanelBase className="videoerpaneltogglet">
@@ -26,9 +26,9 @@ const VideoerPanelTogglet: FunctionComponent = () => (
                 className="videoerpaneltogglet__lenke"
                 href="https://vimeo.com/showcase/6728595"
                 onClick={() => {
-                    sendEvent('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar');
-                    amplitude.logEvent('#sykefravarsstatistikk-forside videoer folgeopp-klikk');
-                    amplitude.logEvent('#sykefravarsstatistikk-forside noe-klikket-pa');
+                    sendMetrikker('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar');
+                    sendEvent('forside videoer folgeopp', 'klikk');
+                    sendEvent('forside noe-klikket-pa', '');
                 }}
             >
                 Følge opp sykefravær
@@ -38,9 +38,9 @@ const VideoerPanelTogglet: FunctionComponent = () => (
                 className="videoerpaneltogglet__lenke"
                 href="https://vimeo.com/showcase/6728594"
                 onClick={() => {
-                    sendEvent('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet');
-                    amplitude.logEvent('#sykefravarsstatistikk-forside videoer forebygge-klikk');
-                    amplitude.logEvent('#sykefravarsstatistikk-forside noe-klikket-pa');
+                    sendMetrikker('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet');
+                    sendEvent('forside videoer forebygge', 'klikk');
+                    sendEvent('forside noe-klikket-pa', '');
                 }}
             >
                 Forebygge sykefravær

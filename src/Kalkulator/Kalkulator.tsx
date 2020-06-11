@@ -17,14 +17,14 @@ import {
     getØnsketKostnad,
     Maskering,
 } from './kalkulator-utils';
-import amplitude from '../utils/amplitude';
+import { sendEvent } from '../utils/amplitude';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
 }
 
-const Kalkulator: FunctionComponent<Props> = props => {
+const Kalkulator: FunctionComponent<Props> = (props) => {
     const { restSykefraværshistorikk } = props;
     const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<number | undefined>();
     const [ønsketTapteDagsverk, setØnsketTapteDagsverk] = useState<number | undefined>();
@@ -102,10 +102,15 @@ const Kalkulator: FunctionComponent<Props> = props => {
         return !(verdi < 0);
     };
 
-    const amplitudeloggeventtekst =
-        antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-            ? '#sykefravarsstatistikk_kalkulator-input-prosent_endret'
-            : '#sykefravarsstatistikk_kalkulator-input-dagsverk_endret';
+    const sendEventOmEndretInput = () => {
+        if (
+            antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+        ) {
+            sendEvent('kalkulator-input-prosent_endret', '');
+        } else {
+            sendEvent('kalkulator-input-dagsverk_endret', '');
+        }
+    };
 
     function setVerdiMuligeDagsverk(verdi: number) {
         if (!skalViseDefaultTapteDagsverk && erVerdiAkseptabelt(verdi)) {
@@ -120,10 +125,8 @@ const Kalkulator: FunctionComponent<Props> = props => {
             </Element>
             <Input
                 label={''}
-                onChange={event => setVerdiMuligeDagsverk(parseFloat(event.target.value))}
-                onClick={() => {
-                    amplitude.logEvent(amplitudeloggeventtekst);
-                }}
+                onChange={(event) => setVerdiMuligeDagsverk(parseFloat(event.target.value))}
+                onClick={sendEventOmEndretInput}
                 value={muligeDagsverk}
                 bredde={'XS'}
                 maxLength={15}
@@ -279,9 +282,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         setAntalltapteDagsverkEllerProsent(
                             AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
                         );
-                        amplitude.logEvent(
-                            '#sykefravarsstatistikk_kalkulator-radio-basertpadagsverk_klikk'
-                        );
+                        sendEvent('kalkulator-radio-basertpadagsverk_klikk', '');
                     }}
                 />
                 <Radio
@@ -291,9 +292,7 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         setAntalltapteDagsverkEllerProsent(
                             AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
                         );
-                        amplitude.logEvent(
-                            '#sykefravarsstatistikk_kalkulator-radio-basertpaprosent_klikk'
-                        );
+                        sendEvent('kalkulator-radio-basertpaprosent_klikk', '');
                     }}
                 />
             </div>
@@ -320,10 +319,8 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         </Element>
                         <Input
                             label={''}
-                            onChange={event => setKostnadDagsverk(parseInt(event.target.value))}
-                            onClick={() => {
-                                amplitude.logEvent(amplitudeloggeventtekst);
-                            }}
+                            onChange={(event) => setKostnadDagsverk(parseInt(event.target.value))}
+                            onClick={sendEventOmEndretInput}
                             value={kostnadDagsverk || ''}
                             bredde={'XS'}
                             maxLength={15}
@@ -352,14 +349,12 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         </Element>
                         <Input
                             label={''}
-                            onChange={event =>
+                            onChange={(event) =>
                                 setVerdiAntallTapteDagsverkEllerProsent(
                                     parseFloat(event.target.value)
                                 )
                             }
-                            onClick={() => {
-                                amplitude.logEvent(amplitudeloggeventtekst);
-                            }}
+                            onClick={sendEventOmEndretInput}
                             value={
                                 antallTapteDagsverkEllerProsent ===
                                 AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
@@ -387,14 +382,12 @@ const Kalkulator: FunctionComponent<Props> = props => {
                         </Element>
                         <Input
                             label={''}
-                            onChange={event =>
+                            onChange={(event) =>
                                 setØnsketVerdiAntallTapteDagsverkEllerProsent(
                                     parseFloat(event.target.value)
                                 )
                             }
-                            onClick={() => {
-                                amplitude.logEvent(amplitudeloggeventtekst);
-                            }}
+                            onClick={sendEventOmEndretInput}
                             value={
                                 antallTapteDagsverkEllerProsent ===
                                 AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT

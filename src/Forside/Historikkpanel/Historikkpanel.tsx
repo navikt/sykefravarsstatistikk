@@ -3,10 +3,10 @@ import PanelBase from 'nav-frontend-paneler';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { ReactComponent as GrafIkon } from './graf.svg';
 import { PATH_HISTORIKK } from '../../App';
-import { sendEvent } from '../../utils/metrikk-api';
+import { sendMetrikker } from '../../utils/metrikk-api';
 import InternLenke from '../../felleskomponenter/InternLenke/InternLenke';
 import './Historikkpanel.less';
-import amplitude from '../../utils/amplitude';
+import { sendEvent } from '../../utils/amplitude';
 
 const Historikkpanel: FunctionComponent = () => {
     return (
@@ -21,9 +21,9 @@ const Historikkpanel: FunctionComponent = () => {
             <InternLenke
                 pathname={PATH_HISTORIKK}
                 onClick={() => {
-                    sendEvent('sykefravarsstatistikk.klikk-til-historikk');
-                    amplitude.logEvent('#sykefravarsstatistikk-forside historikk-klikk');
-                    amplitude.logEvent('#sykefravarsstatistikk-forside noe-klikket-pa');
+                    sendMetrikker('sykefravarsstatistikk.klikk-til-historikk');
+                    sendEvent('forside historikk', 'klikk');
+                    sendEvent('forside noe-klikket-pa', '');
                 }}
             >
                 Gå til sykefraværshistorikken
