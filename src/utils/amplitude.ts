@@ -1,7 +1,7 @@
 import amplitude from 'amplitude-js';
-import {useOrgnr} from "./orgnr-hook";
-import {useRestBedriftsmetrikker} from "../api/bedriftsmetrikker";
-import {RestStatus} from "../api/api-utils";
+import { RestStatus } from '../api/api-utils';
+import { useContext } from 'react';
+import { bedriftsmetrikkerContext } from './bedriftsmetrikkerContext';
 
 const getApiKey = () => {
     return window.location.hostname === 'arbeidsgiver.nav.no'
@@ -19,8 +19,6 @@ instance.init(getApiKey(), '', {
 });
 
 export const sendEvent = (område: string, hendelse: string, data?: Object): void => {
-    console.log("Sender Event");
-    console.log(data);
     if (hendelse === '') {
         // Ikke riktig bruk av loggingen. Hendelse skal alltid med.
         instance.logEvent(['#sykefravarsstatistikk', område].join('-'), data);
@@ -29,27 +27,20 @@ export const sendEvent = (område: string, hendelse: string, data?: Object): voi
     }
 };
 
-type SendEvent = (
-    område: string, hendelse: string, data?: Object
-) => void ;
+type SendEvent = (område: string, hendelse: string, data?: Object) => void;
 
 export const useSendEvent: () => SendEvent = () => {
-    const orgnr = useOrgnr();
-    const restBedriftsmetrikker = useRestBedriftsmetrikker(orgnr);
-
-    console.log(restBedriftsmetrikker);
+    const restBedriftsmetrikker = useContext(bedriftsmetrikkerContext);
 
     if (restBedriftsmetrikker.status === RestStatus.Suksess) {
-        console.log("Sender Event fordi Status=Suksess");
-        return (område: string, hendelse: string, data?: Object) => sendEvent(område, hendelse, {
-            //næring: restBedriftsmetrikker.data.næringskode5Siffer.kode,
-            næring: "12",
-            //bransje: restBedriftsmetrikker.data.bransje, ...data
-            bransje: "66", ...data
-        });
+        return (område: string, hendelse: string, data?: Object) =>
+            sendEvent(område, hendelse, {
+                næring: restBedriftsmetrikker.data.næringskode5Siffer.kode,
+                bransje: restBedriftsmetrikker.data.bransje,
+                ...data,
+            });
     } else {
-        console.log("Sender Event fordi Status!!!=Suksess");
-        return (område: string, hendelse: string, data?: Object) => sendEvent(område, hendelse, data)
+        return (område: string, hendelse: string, data?: Object) =>
+            sendEvent(område, hendelse, data);
     }
-
 };

@@ -1,6 +1,5 @@
-import { RestRessurs, RestStatus } from './api-utils';
-import { useEffect, useState } from 'react';
-import { hentRestBedriftsmetrikker } from './api';
+import { RestRessurs } from './api-utils';
+import { useContext } from 'react';
 import { sendEvent } from '../utils/amplitude';
 import {
     Sykefraværshistorikk,
@@ -12,6 +11,7 @@ import {
     finnProsent,
     ÅrstallOgKvartal,
 } from '../utils/sykefraværshistorikk-utils';
+import { bedriftsmetrikkerContext } from '../utils/bedriftsmetrikkerContext';
 
 enum SegmenteringSykefraværprosent {
     IKKE_SATT = 'IKKE_SATT',
@@ -41,22 +41,7 @@ export interface Bedriftsmetrikker {
 export type RestBedriftsmetrikker = RestRessurs<Bedriftsmetrikker>;
 
 export const useRestBedriftsmetrikker = (orgnr: string | undefined): RestBedriftsmetrikker => {
-    const [restBedriftsmetrikker, setRestBedriftsmetrikker] = useState<RestBedriftsmetrikker>({
-        status: RestStatus.IkkeLastet,
-    });
-
-    useEffect(() => {
-        if (orgnr) {
-            setRestBedriftsmetrikker({
-                status: RestStatus.IkkeLastet,
-            });
-            const hentRestBedriftsmetrikkerOgSettState = async () => {
-                setRestBedriftsmetrikker(await hentRestBedriftsmetrikker(orgnr));
-            };
-            hentRestBedriftsmetrikkerOgSettState();
-        }
-    }, [orgnr]);
-
+    const restBedriftsmetrikker = useContext(bedriftsmetrikkerContext);
     return restBedriftsmetrikker;
 };
 
