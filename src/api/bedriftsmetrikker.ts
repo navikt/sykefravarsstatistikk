@@ -40,11 +40,6 @@ export interface Bedriftsmetrikker {
 
 export type RestBedriftsmetrikker = RestRessurs<Bedriftsmetrikker>;
 
-export const useRestBedriftsmetrikker = (orgnr: string | undefined): RestBedriftsmetrikker => {
-    const restBedriftsmetrikker = useContext(bedriftsmetrikkerContext);
-    return restBedriftsmetrikker;
-};
-
 export const trackBedriftsmetrikker = (
     bedriftsmetrikker: Bedriftsmetrikker,
     historikkListe: Sykefraværshistorikk[]
