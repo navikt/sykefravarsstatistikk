@@ -7,10 +7,11 @@ import PanelBase from 'nav-frontend-paneler';
 import './KalkulatorPanel.less';
 import { PATH_KALKULATOR } from '../../App';
 import { Link, useLocation } from 'react-router-dom';
-import { sendEvent } from '../../utils/amplitude';
+import { useSendEvent } from '../../utils/amplitude';
 
 const KalkulatorPanel: FunctionComponent = () => {
     const location = useLocation();
+    const sendEvent = useSendEvent();
 
     return (
         <PanelBase className="kalkulatorpanel">

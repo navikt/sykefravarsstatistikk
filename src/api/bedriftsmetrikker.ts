@@ -28,12 +28,13 @@ enum SegmenteringSykefraværprosent {
 }
 
 export type Næringskode5Siffer = {
-    kode: number;
+    kode: string;
     beskrivelse: string;
 };
 
 export interface Bedriftsmetrikker {
     næringskode5Siffer: Næringskode5Siffer;
+    bransje: string;
     antallAnsatte: number;
 }
 

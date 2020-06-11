@@ -17,7 +17,7 @@ import {
     getØnsketKostnad,
     Maskering,
 } from './kalkulator-utils';
-import { sendEvent } from '../utils/amplitude';
+import { useSendEvent } from '../utils/amplitude';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 
 interface Props {
@@ -25,6 +25,7 @@ interface Props {
 }
 
 const Kalkulator: FunctionComponent<Props> = (props) => {
+    const sendEvent = useSendEvent();
     const { restSykefraværshistorikk } = props;
     const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<number | undefined>();
     const [ønsketTapteDagsverk, setØnsketTapteDagsverk] = useState<number | undefined>();
