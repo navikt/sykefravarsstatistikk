@@ -17,10 +17,8 @@ instance.init(getApiKey(), '', {
 
 export const sendEvent = (område: string, hendelse: string, data?: Object): void => {
     if (hendelse === '') {
-        // Ikke riktig bruk av loggingen; hendelse skal alltid med.
+        // Ikke riktig bruk av loggingen. Hendelse skal alltid med.
         instance.logEvent(['#sykefravarsstatistikk', område].join('-'), data);
     }
     instance.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
 };
-
-export default instance;
