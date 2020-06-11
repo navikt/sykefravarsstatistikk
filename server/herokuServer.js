@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const { BASE_PATH } = require('./konstanter');
 
-const buildPath = path.join(__dirname, '../../build');
+const buildPath = path.join(__dirname, '../build');
 
 const PORT = process.env.PORT || 3000;
 
