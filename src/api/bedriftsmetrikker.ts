@@ -1,5 +1,4 @@
 import { RestRessurs } from './api-utils';
-import { useContext } from 'react';
 import { sendEvent } from '../utils/amplitude';
 import {
     Sykefraværshistorikk,
@@ -11,7 +10,6 @@ import {
     finnProsent,
     ÅrstallOgKvartal,
 } from '../utils/sykefraværshistorikk-utils';
-import { bedriftsmetrikkerContext } from '../utils/bedriftsmetrikkerContext';
 
 enum SegmenteringSykefraværprosent {
     IKKE_SATT = 'IKKE_SATT',
