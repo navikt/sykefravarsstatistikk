@@ -2,12 +2,12 @@ import * as React from 'react';
 import { FunctionComponent } from 'react';
 import { ReactComponent as KalkisIkon } from './kalkis.svg';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { sendEvent } from '../../utils/metrikk-api';
+import { sendMetrikker } from '../../utils/metrikk-api';
 import PanelBase from 'nav-frontend-paneler';
 import './KalkulatorPanel.less';
 import { PATH_KALKULATOR } from '../../App';
 import { Link, useLocation } from 'react-router-dom';
-import amplitude from '../../utils/amplitude';
+import { sendEvent } from '../../utils/amplitude';
 
 const KalkulatorPanel: FunctionComponent = () => {
     const location = useLocation();
@@ -28,9 +28,9 @@ const KalkulatorPanel: FunctionComponent = () => {
                 }}
                 className="kalkulatorpanel__lenke"
                 onClick={() => {
-                    sendEvent('sykefravarsstatistikk.klikk-til-kalkulator');
-                    amplitude.logEvent('#sykefravarsstatistikk-forside kalkulator-klikk');
-                    amplitude.logEvent('#sykefravarsstatistikk-forside noe-klikket-pa');
+                    sendMetrikker('sykefravarsstatistikk.klikk-til-kalkulator');
+                    sendEvent('forside kalkulator-klikk', '');
+                    sendEvent('forside noe-klikket-pa', '');
                 }}
             >
                 Gå til kostnadskalkulatoren

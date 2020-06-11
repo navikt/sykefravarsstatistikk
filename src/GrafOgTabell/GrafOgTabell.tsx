@@ -9,7 +9,7 @@ import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
-import amplitude from '../utils/amplitude';
+import { sendEvent } from '../utils/amplitude';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 
@@ -18,7 +18,7 @@ interface Props {
     restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
 }
 
-const GrafOgTabell: FunctionComponent<Props> = props => {
+const GrafOgTabell: FunctionComponent<Props> = (props) => {
     useEffect(() => {
         scrollToBanner();
     }, []);
@@ -87,9 +87,7 @@ const GrafOgTabell: FunctionComponent<Props> = props => {
                                     pressed: grafEllerTabell === 'tabell',
                                     onClick: () => {
                                         setGrafEllerTabell('tabell');
-                                        amplitude.logEvent(
-                                            '#sykefravarsstatistikk-historikk toggle tabell-klikk'
-                                        );
+                                        sendEvent('historikk toggle tabell', 'klikk');
                                     },
                                 },
                             ]}

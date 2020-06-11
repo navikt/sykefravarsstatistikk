@@ -20,7 +20,7 @@ import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { useRestSykefraværshistorikk } from './api/sykefraværshistorikk';
-import amplitude from './utils/amplitude';
+import { sendEvent } from './utils/amplitude';
 import { trackBedriftsmetrikker, useRestBedriftsmetrikker } from './api/bedriftsmetrikker';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
@@ -32,7 +32,7 @@ export const PATH_HISTORIKK = '/historikk';
 export const PATH_IAWEB_REDIRECTSIDE = '/iawebredirectside';
 
 const App: FunctionComponent = () => {
-    amplitude.logEvent('#sykefravarsstatistikk-forside-sidelastet');
+    sendEvent('forside', 'sidelastet');
     return (
         <BrowserRouter basename={BASE_PATH}>
             <AppContent />
