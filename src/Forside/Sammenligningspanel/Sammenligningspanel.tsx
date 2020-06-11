@@ -18,6 +18,7 @@ import Sektorpanel from './Sektorpanel/Sektorpanel';
 import Landspanel from './Landspanel/Landspanel';
 import Skeleton from 'react-loading-skeleton';
 import { SammenligningspanelAlertStripe } from './SammenligningspanelAlertStripe/SammenligningspanelAlertStripe';
+import KoronaInfotekst from './KoronaInfotekst/KoronaInfotekst';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -70,7 +71,7 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                         Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen
                         senere.
                     </SammenligningspanelFeilmelding>
-                    {/* TODO Skrus på på torsdag <KoronaInfotekst />*/}
+                    <KoronaInfotekst />
                     {laster ? (
                         <div className="sammenligningspanel__skeleton">
                             <Skeleton height={228} />
