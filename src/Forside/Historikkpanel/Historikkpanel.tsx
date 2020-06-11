@@ -22,7 +22,7 @@ const Historikkpanel: FunctionComponent = () => {
                 pathname={PATH_HISTORIKK}
                 onClick={() => {
                     sendMetrikker('sykefravarsstatistikk.klikk-til-historikk');
-                    sendEvent('forside historikk-klikk', '');
+                    sendEvent('forside historikk', 'klikk');
                     sendEvent('forside noe-klikket-pa', '');
                 }}
             >

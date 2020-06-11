@@ -29,7 +29,7 @@ const KalkulatorPanel: FunctionComponent = () => {
                 className="kalkulatorpanel__lenke"
                 onClick={() => {
                     sendMetrikker('sykefravarsstatistikk.klikk-til-kalkulator');
-                    sendEvent('forside kalkulator-klikk', '');
+                    sendEvent('forside kalkulator', 'klikk');
                     sendEvent('forside noe-klikket-pa', '');
                 }}
             >
