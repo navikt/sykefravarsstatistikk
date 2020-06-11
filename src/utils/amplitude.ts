@@ -29,7 +29,8 @@ export const sendEvent = (område: string, hendelse: string, data?: Object): voi
 
 type SendEvent = (område: string, hendelse: string, data?: Object) => void;
 
-export const useSendEvent: () => SendEvent = () => {
+
+export const useSendEvent = (): SendEvent => {
     const restBedriftsmetrikker = useContext(bedriftsmetrikkerContext);
 
     if (restBedriftsmetrikker.status === RestStatus.Suksess) {
