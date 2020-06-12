@@ -5,6 +5,7 @@ import Innloggingsside from '../Innloggingsside/Innloggingsside';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { RestStatus } from '../api/api-utils';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
+import { sendEvent } from '../utils/amplitude';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -24,6 +25,7 @@ const Forside: React.FunctionComponent<Props> = (props) => {
             return <Innloggingsside />;
         }
         default: {
+            sendEvent('forside', 'sidelastet');
             return (
                 <div className="forside__wrapper">
                     <div className="forside">{props.children}</div>
