@@ -1,6 +1,7 @@
 import amplitude from 'amplitude-js';
 import { RestStatus } from '../api/api-utils';
 import { useContext } from 'react';
+import { RestBedriftsmetrikker } from '../api/bedriftsmetrikker';
 import { bedriftsmetrikkerContext } from './bedriftsmetrikkerContext';
 
 const getApiKey = () => {
@@ -30,7 +31,7 @@ export const sendEvent = (område: string, hendelse: string, data?: Object): voi
 type SendEvent = (område: string, hendelse: string, data?: Object) => void;
 
 export const useSendEvent = (): SendEvent => {
-    const restBedriftsmetrikker = useContext(bedriftsmetrikkerContext);
+    const restBedriftsmetrikker = useContext<RestBedriftsmetrikker>(bedriftsmetrikkerContext);
 
     if (restBedriftsmetrikker.status === RestStatus.Suksess) {
         return (område: string, hendelse: string, data?: Object) =>
