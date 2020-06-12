@@ -29,14 +29,13 @@ export const sendEvent = (område: string, hendelse: string, data?: Object): voi
 
 type SendEvent = (område: string, hendelse: string, data?: Object) => void;
 
-
 export const useSendEvent = (): SendEvent => {
     const restBedriftsmetrikker = useContext(bedriftsmetrikkerContext);
 
     if (restBedriftsmetrikker.status === RestStatus.Suksess) {
         return (område: string, hendelse: string, data?: Object) =>
             sendEvent(område, hendelse, {
-                næring: restBedriftsmetrikker.data.næringskode5Siffer.kode,
+                næring2siffer: restBedriftsmetrikker.data.næringskode5Siffer.kode.substring(0, 2),
                 bransje: restBedriftsmetrikker.data.bransje,
                 ...data,
             });
