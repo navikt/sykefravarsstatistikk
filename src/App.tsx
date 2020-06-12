@@ -5,7 +5,10 @@ import { useOrgnr } from './utils/orgnr-hook';
 import Kalkulator from './Kalkulator/Kalkulator';
 import Forside from './Forside/Forside';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
-import { useRestOrganisasjoner, useRestOrganisasjonerMedTilgangTilStatistikk } from './api/altinnorganisasjon-api';
+import {
+    useRestOrganisasjoner,
+    useRestOrganisasjonerMedTilgangTilStatistikk,
+} from './api/altinnorganisasjon-api';
 import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
@@ -17,12 +20,15 @@ import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { useRestSykefraværshistorikk } from './api/sykefraværshistorikk';
-import { sendEvent } from './utils/amplitude';
-import { trackBedriftsmetrikker } from './api/bedriftsmetrikker';
+import { RestBedriftsmetrikker, trackBedriftsmetrikker } from './api/bedriftsmetrikker';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import { BASE_PATH } from './konstanter';
-import { bedriftsmetrikkerContext, BedriftsmetrikkerProvider } from './utils/bedriftsmetrikkerContext';
+import {
+    bedriftsmetrikkerContext,
+    BedriftsmetrikkerProvider,
+} from './utils/bedriftsmetrikkerContext';
+import { sendEventDirekte } from './utils/amplitude';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -30,7 +36,7 @@ export const PATH_HISTORIKK = '/historikk';
 export const PATH_IAWEB_REDIRECTSIDE = '/iawebredirectside';
 
 const App: FunctionComponent = () => {
-    sendEvent('forside', 'sidelastet');
+    sendEventDirekte('forside', 'sidelastet');
     return (
         <BrowserRouter basename={BASE_PATH}>
             <BedriftsmetrikkerProvider>
@@ -47,7 +53,7 @@ const AppContent: FunctionComponent = () => {
     const restOrganisasjonerForStatistikk = useRestOrganisasjonerMedTilgangTilStatistikk();
     const restSykefraværshistorikk = useRestSykefraværshistorikk(orgnr);
     const restFeatureToggles = useRestFeatureToggles();
-    const restBedriftsmetrikker = useContext(bedriftsmetrikkerContext);
+    const restBedriftsmetrikker = useContext<RestBedriftsmetrikker>(bedriftsmetrikkerContext);
     const location = useLocation();
     let innhold;
     if (

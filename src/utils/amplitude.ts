@@ -1,6 +1,7 @@
 import amplitude from 'amplitude-js';
 import { RestStatus } from '../api/api-utils';
 import { useContext } from 'react';
+import { RestBedriftsmetrikker } from '../api/bedriftsmetrikker';
 import { bedriftsmetrikkerContext } from './bedriftsmetrikkerContext';
 
 const getApiKey = () => {
@@ -18,11 +19,12 @@ instance.init(getApiKey(), '', {
     includeReferrer: true,
 });
 
-export const sendEvent = (område: string, hendelse: string, data?: Object): void => {
+export const sendEventDirekte = (område: string, hendelse: string, data?: Object): void => {
     if (hendelse === '') {
         // Ikke riktig bruk av loggingen. Hendelse skal alltid med.
         instance.logEvent(['#sykefravarsstatistikk', område].join('-'), data);
     } else {
+        console.log('sender event', område, hendelse, data)
         instance.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
     }
 };
@@ -30,17 +32,17 @@ export const sendEvent = (område: string, hendelse: string, data?: Object): voi
 type SendEvent = (område: string, hendelse: string, data?: Object) => void;
 
 export const useSendEvent = (): SendEvent => {
-    const restBedriftsmetrikker = useContext(bedriftsmetrikkerContext);
+    const restBedriftsmetrikker = useContext<RestBedriftsmetrikker>(bedriftsmetrikkerContext);
 
     if (restBedriftsmetrikker.status === RestStatus.Suksess) {
         return (område: string, hendelse: string, data?: Object) =>
-            sendEvent(område, hendelse, {
+            sendEventDirekte(område, hendelse, {
                 næring2siffer: restBedriftsmetrikker.data.næringskode5Siffer.kode.substring(0, 2),
                 bransje: restBedriftsmetrikker.data.bransje,
                 ...data,
             });
     } else {
         return (område: string, hendelse: string, data?: Object) =>
-            sendEvent(område, hendelse, data);
+            sendEventDirekte(område, hendelse, data);
     }
 };
