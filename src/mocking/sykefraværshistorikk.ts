@@ -7,7 +7,7 @@ const lagHistorikkMedLandOgSektor = (): Sykefraværshistorikk[] => {
             type: SykefraværshistorikkType.LAND,
             label: 'Norge',
             kvartalsvisSykefraværsprosent: genererHistorikk(
-                { årstall: 2014, kvartal: 2 },
+                { årstall: 2015, kvartal: 2 },
                 20,
                 5.5,
                 1,
@@ -19,7 +19,7 @@ const lagHistorikkMedLandOgSektor = (): Sykefraværshistorikk[] => {
             type: SykefraværshistorikkType.SEKTOR,
             label: 'Statlig forvaltning',
             kvartalsvisSykefraværsprosent: genererHistorikk(
-                { årstall: 2014, kvartal: 2 },
+                { årstall: 2015, kvartal: 2 },
                 20,
                 4,
                 2,
@@ -34,7 +34,7 @@ const historikkNæring = () => ({
     type: SykefraværshistorikkType.NÆRING,
     label: 'Produksjon av nærings- og nytelsesmidler',
     kvartalsvisSykefraværsprosent: genererHistorikk(
-        { årstall: 2014, kvartal: 2 },
+        { årstall: 2015, kvartal: 2 },
         20,
         6.7,
         2,
@@ -66,7 +66,7 @@ const lagMaskertHistorikk = (): Sykefraværshistorikk[] => [
     {
         type: SykefraværshistorikkType.VIRKSOMHET,
         label: 'FLESK OG FISK AS',
-        kvartalsvisSykefraværsprosent: genererMaskertHistorikk({ årstall: 2014, kvartal: 2 }, 20),
+        kvartalsvisSykefraværsprosent: genererMaskertHistorikk({ årstall: 2015, kvartal: 2 }, 20),
     },
 ];
 
@@ -76,7 +76,7 @@ const lagHistorikkUtenBransjeOgNæring = (): Sykefraværshistorikk[] => [
         type: SykefraværshistorikkType.VIRKSOMHET,
         label: 'FLESK OG FISK AS',
         kvartalsvisSykefraværsprosent: genererHistorikk(
-            { årstall: 2016, kvartal: 2 },
+            { årstall: 2017, kvartal: 2 },
             20,
             8.3,
             5,
@@ -88,7 +88,7 @@ const lagHistorikkUtenBransjeOgNæring = (): Sykefraværshistorikk[] => [
         type: SykefraværshistorikkType.OVERORDNET_ENHET,
         label: 'THE FISHING GROUP',
         kvartalsvisSykefraværsprosent: genererHistorikk(
-            { årstall: 2015, kvartal: 2 },
+            { årstall: 2016, kvartal: 2 },
             20,
             7.1,
             3,
@@ -104,7 +104,7 @@ const lagHistorikkNæring = () => [
         type: SykefraværshistorikkType.NÆRING,
         label: 'Produksjon av nærings- og nytelsesmidler',
         kvartalsvisSykefraværsprosent: genererHistorikk(
-            { årstall: 2014, kvartal: 2 },
+            { årstall: 2015, kvartal: 2 },
             20,
             6.7,
             2,
@@ -120,7 +120,7 @@ const lagHistorikkBransje = () => [
         type: SykefraværshistorikkType.BRANSJE,
         label: 'Barnehager',
         kvartalsvisSykefraværsprosent: genererHistorikk(
-            { årstall: 2014, kvartal: 2 },
+            { årstall: 2015, kvartal: 2 },
             20,
             6.7,
             2,
@@ -132,7 +132,7 @@ const lagHistorikkBransje = () => [
 
 const lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet = () => {
     const kvartalsvisSykefraværsprosentForBådeVirksomhetOgOverordnetEnhet = genererHistorikk(
-        { årstall: 2016, kvartal: 2 },
+        { årstall: 2017, kvartal: 2 },
         20,
         8.3,
         5,
@@ -145,7 +145,7 @@ const lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet = () => {
             type: SykefraværshistorikkType.NÆRING,
             label: 'Produksjon av nærings- og nytelsesmidler',
             kvartalsvisSykefraværsprosent: genererHistorikk(
-                { årstall: 2014, kvartal: 2 },
+                { årstall: 2015, kvartal: 2 },
                 20,
                 6.7,
                 2,
