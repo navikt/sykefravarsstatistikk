@@ -1,14 +1,11 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 import Banner from './Banner/Banner';
 import { BrowserRouter, Route, useLocation } from 'react-router-dom';
 import { useOrgnr } from './utils/orgnr-hook';
 import Kalkulator from './Kalkulator/Kalkulator';
 import Forside from './Forside/Forside';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
-import {
-    useRestOrganisasjoner,
-    useRestOrganisasjonerMedTilgangTilStatistikk,
-} from './api/altinnorganisasjon-api';
+import { useRestOrganisasjoner, useRestOrganisasjonerMedTilgangTilStatistikk } from './api/altinnorganisasjon-api';
 import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
@@ -21,10 +18,11 @@ import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { useRestSykefraværshistorikk } from './api/sykefraværshistorikk';
 import { sendEvent } from './utils/amplitude';
-import { trackBedriftsmetrikker, useRestBedriftsmetrikker } from './api/bedriftsmetrikker';
+import { trackBedriftsmetrikker } from './api/bedriftsmetrikker';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import { BASE_PATH } from './konstanter';
+import { bedriftsmetrikkerContext, BedriftsmetrikkerProvider } from './utils/bedriftsmetrikkerContext';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -35,7 +33,9 @@ const App: FunctionComponent = () => {
     sendEvent('forside', 'sidelastet');
     return (
         <BrowserRouter basename={BASE_PATH}>
-            <AppContent />
+            <BedriftsmetrikkerProvider>
+                <AppContent />
+            </BedriftsmetrikkerProvider>
         </BrowserRouter>
     );
 };
@@ -47,7 +47,7 @@ const AppContent: FunctionComponent = () => {
     const restOrganisasjonerForStatistikk = useRestOrganisasjonerMedTilgangTilStatistikk();
     const restSykefraværshistorikk = useRestSykefraværshistorikk(orgnr);
     const restFeatureToggles = useRestFeatureToggles();
-    const restBedriftsmetrikker = useRestBedriftsmetrikker(orgnr);
+    const restBedriftsmetrikker = useContext(bedriftsmetrikkerContext);
     const location = useLocation();
     let innhold;
     if (

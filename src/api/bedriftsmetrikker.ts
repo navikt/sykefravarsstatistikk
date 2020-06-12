@@ -1,6 +1,4 @@
-import { RestRessurs, RestStatus } from './api-utils';
-import { useEffect, useState } from 'react';
-import { hentRestBedriftsmetrikker } from './api';
+import { RestRessurs } from './api-utils';
 import { sendEvent } from '../utils/amplitude';
 import {
     Sykefraværshistorikk,
@@ -28,36 +26,17 @@ enum SegmenteringSykefraværprosent {
 }
 
 export type Næringskode5Siffer = {
-    kode: number;
+    kode: string;
     beskrivelse: string;
 };
 
 export interface Bedriftsmetrikker {
     næringskode5Siffer: Næringskode5Siffer;
+    bransje: string;
     antallAnsatte: number;
 }
 
 export type RestBedriftsmetrikker = RestRessurs<Bedriftsmetrikker>;
-
-export const useRestBedriftsmetrikker = (orgnr: string | undefined): RestBedriftsmetrikker => {
-    const [restBedriftsmetrikker, setRestBedriftsmetrikker] = useState<RestBedriftsmetrikker>({
-        status: RestStatus.IkkeLastet,
-    });
-
-    useEffect(() => {
-        if (orgnr) {
-            setRestBedriftsmetrikker({
-                status: RestStatus.IkkeLastet,
-            });
-            const hentRestBedriftsmetrikkerOgSettState = async () => {
-                setRestBedriftsmetrikker(await hentRestBedriftsmetrikker(orgnr));
-            };
-            hentRestBedriftsmetrikkerOgSettState();
-        }
-    }, [orgnr]);
-
-    return restBedriftsmetrikker;
-};
 
 export const trackBedriftsmetrikker = (
     bedriftsmetrikker: Bedriftsmetrikker,
