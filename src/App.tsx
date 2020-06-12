@@ -28,7 +28,7 @@ import {
     bedriftsmetrikkerContext,
     BedriftsmetrikkerProvider,
 } from './utils/bedriftsmetrikkerContext';
-import { sendEvent } from './utils/amplitude';
+import { sendEventDirekte } from './utils/amplitude';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -36,7 +36,7 @@ export const PATH_HISTORIKK = '/historikk';
 export const PATH_IAWEB_REDIRECTSIDE = '/iawebredirectside';
 
 const App: FunctionComponent = () => {
-    sendEvent('forside', 'sidelastet');
+    sendEventDirekte('forside', 'sidelastet');
     return (
         <BrowserRouter basename={BASE_PATH}>
             <BedriftsmetrikkerProvider>

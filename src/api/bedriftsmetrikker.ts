@@ -1,5 +1,5 @@
 import { RestRessurs } from './api-utils';
-import { sendEvent } from '../utils/amplitude';
+import { sendEventDirekte } from '../utils/amplitude';
 import {
     Sykefraværshistorikk,
     SykefraværshistorikkType,
@@ -57,7 +57,7 @@ export const trackBedriftsmetrikker = (
     } else {
         størrelse = '-store-100+';
     }
-    sendEvent('segmentering-storrelse', størrelse);
+    sendEventDirekte('segmentering-storrelse', størrelse);
 
     const årstallOgKvartalListe: ÅrstallOgKvartal[] = beregnHvilkeÅrstallOgKvartalerSomSkalVises(
         historikkListe
@@ -72,7 +72,7 @@ export const trackBedriftsmetrikker = (
         );
 
         if (sykefraværprosent && !sykefraværprosent.erMaskert && sykefraværprosent.prosent) {
-            sendEvent(
+            sendEventDirekte(
                 'segmentering-fravarsprosent',
                 tilSegmenteringSykefraværprosent(sykefraværprosent.prosent).toString()
             );

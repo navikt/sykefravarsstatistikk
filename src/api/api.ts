@@ -7,7 +7,7 @@ import {
     Sykefraværshistorikk,
     SykefraværshistorikkType,
 } from './sykefraværshistorikk';
-import { sendEvent } from '../utils/amplitude';
+import { sendEventDirekte } from '../utils/amplitude';
 import { RestBedriftsmetrikker } from './bedriftsmetrikker';
 
 const sykefraværshistorikkPath = (orgnr: string) =>
@@ -105,10 +105,10 @@ export const filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet = (
             sykefraværshistorikkForUnderenhet
         )
     ) {
-        sendEvent('segmentering valgt underenhet er lik overordnet enhet', '');
+        sendEventDirekte('segmentering valgt underenhet er lik overordnet enhet', '');
         nullstillOverordnetEnhetshistorikk(data);
     } else {
-        sendEvent('segmentering valgt underenhet er ulik overordnet enhet', '');
+        sendEventDirekte('segmentering valgt underenhet er ulik overordnet enhet', '');
     }
 
     return data;

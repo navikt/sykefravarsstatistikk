@@ -19,11 +19,12 @@ instance.init(getApiKey(), '', {
     includeReferrer: true,
 });
 
-export const sendEvent = (område: string, hendelse: string, data?: Object): void => {
+export const sendEventDirekte = (område: string, hendelse: string, data?: Object): void => {
     if (hendelse === '') {
         // Ikke riktig bruk av loggingen. Hendelse skal alltid med.
         instance.logEvent(['#sykefravarsstatistikk', område].join('-'), data);
     } else {
+        console.log('sender event', område, hendelse, data)
         instance.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
     }
 };
@@ -35,13 +36,13 @@ export const useSendEvent = (): SendEvent => {
 
     if (restBedriftsmetrikker.status === RestStatus.Suksess) {
         return (område: string, hendelse: string, data?: Object) =>
-            sendEvent(område, hendelse, {
+            sendEventDirekte(område, hendelse, {
                 næring2siffer: restBedriftsmetrikker.data.næringskode5Siffer.kode.substring(0, 2),
                 bransje: restBedriftsmetrikker.data.bransje,
                 ...data,
             });
     } else {
         return (område: string, hendelse: string, data?: Object) =>
-            sendEvent(område, hendelse, data);
+            sendEventDirekte(område, hendelse, data);
     }
 };
