@@ -32,7 +32,7 @@ const Forside: React.FunctionComponent<Props> = ({
                 ingenTilgang: true,
             });
         }
-    }, [orgnr, status]);
+    }, [orgnr, status, sendEvent]);
 
     switch (status) {
         case RestStatus.IngenTilgang: {
