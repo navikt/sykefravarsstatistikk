@@ -15,6 +15,9 @@ interface Props {
 const Forside: React.FunctionComponent<Props> = (props) => {
     switch (props.restSykefraværshistorikk.status) {
         case RestStatus.IngenTilgang: {
+            sendEvent('forside', 'vist', {
+                ingenTilgang: true,
+            });
             return (
                 <ManglerRettigheterIAltinnSide
                     restOrganisasjonerForStatistikk={props.restOrganisasjonerForStatistikk}
@@ -25,7 +28,7 @@ const Forside: React.FunctionComponent<Props> = (props) => {
             return <Innloggingsside />;
         }
         default: {
-            sendEvent('forside', 'sidelastet');
+            sendEvent('forside', 'vist');
             return (
                 <div className="forside__wrapper">
                     <div className="forside">{props.children}</div>
