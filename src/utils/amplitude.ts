@@ -24,7 +24,6 @@ export const sendEventDirekte = (område: string, hendelse: string, data?: Objec
         // Ikke riktig bruk av loggingen. Hendelse skal alltid med.
         instance.logEvent(['#sykefravarsstatistikk', område].join('-'), data);
     } else {
-        console.log('sender event', område, hendelse, data);
         instance.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
     }
 };
