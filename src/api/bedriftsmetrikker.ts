@@ -38,6 +38,22 @@ export interface Bedriftsmetrikker {
 
 export type RestBedriftsmetrikker = RestRessurs<Bedriftsmetrikker>;
 
+export const mapTilAntallAnsatteBucket = (antallAnsatte: number): string => {
+    if (antallAnsatte === 0) {
+        return '0';
+    } else if (antallAnsatte >= 1 && antallAnsatte <= 4) {
+        return '1-4';
+    } else if (antallAnsatte >= 5 && antallAnsatte <= 19) {
+        return '5-19';
+    } else if (antallAnsatte >= 20 && antallAnsatte <= 49) {
+        return '20-49';
+    } else if (antallAnsatte >= 50 && antallAnsatte <= 99) {
+        return '50-99';
+    } else {
+        return '100+';
+    }
+};
+
 export const trackBedriftsmetrikker = (
     bedriftsmetrikker: Bedriftsmetrikker,
     historikkListe: Sykefraværshistorikk[]
