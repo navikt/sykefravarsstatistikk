@@ -1,7 +1,7 @@
 import amplitude from 'amplitude-js';
 import { RestStatus } from '../api/api-utils';
 import { useContext } from 'react';
-import { RestBedriftsmetrikker } from '../api/bedriftsmetrikker';
+import { mapTilAntallAnsatteBucket, RestBedriftsmetrikker } from '../api/bedriftsmetrikker';
 import { bedriftsmetrikkerContext } from './bedriftsmetrikkerContext';
 
 const getApiKey = () => {
@@ -29,10 +29,12 @@ export const useSendEvent = (): SendEvent => {
     const restBedriftsmetrikker = useContext<RestBedriftsmetrikker>(bedriftsmetrikkerContext);
 
     if (restBedriftsmetrikker.status === RestStatus.Suksess) {
+        const metrikker = restBedriftsmetrikker.data;
         return (område: string, hendelse: string, data?: Object) =>
             sendEventDirekte(område, hendelse, {
-                næring2siffer: restBedriftsmetrikker.data.næringskode5Siffer.kode.substring(0, 2),
-                bransje: restBedriftsmetrikker.data.bransje,
+                næring2siffer: metrikker.næringskode5Siffer.kode.substring(0, 2),
+                bransje: metrikker.bransje,
+                antallAnsatte: mapTilAntallAnsatteBucket(metrikker.antallAnsatte),
                 ...data,
             });
     } else {
