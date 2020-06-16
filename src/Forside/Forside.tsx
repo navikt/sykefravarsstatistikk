@@ -25,7 +25,6 @@ const Forside: React.FunctionComponent<Props> = ({
 
     useEffect(() => {
         if (status === RestStatus.Suksess) {
-            console.log('sender event');
             sendEvent('forside', 'vist');
         } else if (status === RestStatus.IngenTilgang) {
             sendEvent('forside', 'vist', {

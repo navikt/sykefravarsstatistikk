@@ -107,9 +107,9 @@ const Kalkulator: FunctionComponent<Props> = (props) => {
         if (
             antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
         ) {
-            sendEvent('kalkulator-input-prosent_endret', '');
+            sendEvent('kalkulator input prosent', 'endret');
         } else {
-            sendEvent('kalkulator-input-dagsverk_endret', '');
+            sendEvent('kalkulator input dagsverk', 'endret');
         }
     };
 
@@ -122,7 +122,7 @@ const Kalkulator: FunctionComponent<Props> = (props) => {
     const antallMuligeDagsverkForMaskerteBedrifeter = (
         <div className="kalkulator__rad">
             <Element className="kalkulator__label_fast_størrelse">
-                {'Antall mulige dagsverk per år'}
+                Antall mulige dagsverk per år
             </Element>
             <Input
                 label={''}
@@ -283,7 +283,7 @@ const Kalkulator: FunctionComponent<Props> = (props) => {
                         setAntalltapteDagsverkEllerProsent(
                             AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
                         );
-                        sendEvent('kalkulator-radio-basertpadagsverk_klikk', '');
+                        sendEvent('kalkulator radio basertpadagsverk', 'klikk');
                     }}
                 />
                 <Radio
@@ -293,7 +293,7 @@ const Kalkulator: FunctionComponent<Props> = (props) => {
                         setAntalltapteDagsverkEllerProsent(
                             AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
                         );
-                        sendEvent('kalkulator-radio-basertpaprosent_klikk', '');
+                        sendEvent('kalkulator radio basertpaprosent', 'klikk');
                     }}
                 />
             </div>
