@@ -32,7 +32,6 @@ const VideoerPanelTogglet: FunctionComponent = () => {
                     onClick={() => {
                         sendMetrikker('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar');
                         sendEvent('forside videoer folgeopp', 'klikk');
-                        sendEvent('forside noe-klikket-pa', '');
                     }}
                 >
                     Følge opp sykefravær
@@ -44,7 +43,6 @@ const VideoerPanelTogglet: FunctionComponent = () => {
                     onClick={() => {
                         sendMetrikker('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet');
                         sendEvent('forside videoer forebygge', 'klikk');
-                        sendEvent('forside noe-klikket-pa', '');
                     }}
                 >
                     Forebygge sykefravær
