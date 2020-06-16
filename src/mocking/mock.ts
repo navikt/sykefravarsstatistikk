@@ -70,7 +70,7 @@ if (MOCK_ENHETSREGISTERET) {
 
             return enhetsregisteretMockRespons(
                 query.get('organisasjonsnummer')!,
-                'test AS',
+                'test.json AS',
                 '999999999'
             );
         }

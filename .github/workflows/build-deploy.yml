@@ -39,7 +39,7 @@ jobs:
     deploy-to-dev:
         name: Deploy to dev-sbs
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/formater-events'
-        needs: compile-test-and-build
+        needs: compile-test.json-and-build
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1

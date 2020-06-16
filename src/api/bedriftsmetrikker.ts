@@ -11,20 +11,6 @@ import {
     ÅrstallOgKvartal,
 } from '../utils/sykefraværshistorikk-utils';
 
-enum SegmenteringSykefraværprosent {
-    IKKE_SATT = 'IKKE_SATT',
-    NULL = '0',
-    LAVERE_ENN_TO_OG_IKKE_NULL = '<2',
-    TO_TIL_FIRE = '2-4',
-    FIRE_TIL_SEKS = '4-6',
-    SEKS_TIL_ÅTTE = '6-8',
-    ÅTTE_TIL_TI = '8-10',
-    TI_TIL_TOLV = '10-12',
-    TOLV_TIL_FJORTEN = '12-14',
-    FJORTEN_TIL_SEKSTEN = '14-16',
-    OVER_SEKSTEN = '>16',
-}
-
 export type Næringskode5Siffer = {
     kode: string;
     beskrivelse: string;
@@ -90,37 +76,25 @@ export const trackBedriftsmetrikker = (
         if (sykefraværprosent && !sykefraværprosent.erMaskert && sykefraværprosent.prosent) {
             sendEventDirekte(
                 'segmentering-fravarsprosent',
-                tilSegmenteringSykefraværprosent(sykefraværprosent.prosent).toString()
+                tilSegmenteringSykefraværprosent(sykefraværprosent)
             );
         }
     }
 };
 
-const tilSegmenteringSykefraværprosent = (prosent: number): SegmenteringSykefraværprosent => {
-    let segmenteringSykefraværprosent: SegmenteringSykefraværprosent;
-
-    if (prosent === 0) {
-        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.NULL;
-    } else if (prosent > 0 && prosent < 2) {
-        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.LAVERE_ENN_TO_OG_IKKE_NULL;
-    } else if (prosent >= 2 && prosent < 4) {
-        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.TO_TIL_FIRE;
-    } else if (prosent >= 4 && prosent < 6) {
-        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.FIRE_TIL_SEKS;
-    } else if (prosent >= 6 && prosent < 8) {
-        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.SEKS_TIL_ÅTTE;
-    } else if (prosent >= 8 && prosent < 10) {
-        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.ÅTTE_TIL_TI;
-    } else if (prosent >= 10 && prosent < 12) {
-        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.TI_TIL_TOLV;
-    } else if (prosent >= 12 && prosent < 14) {
-        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.TOLV_TIL_FJORTEN;
-    } else if (prosent >= 14 && prosent < 16) {
-        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.FJORTEN_TIL_SEKSTEN;
-    } else if (prosent >= 16) {
-        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.OVER_SEKSTEN;
-    } else {
-        segmenteringSykefraværprosent = SegmenteringSykefraværprosent.IKKE_SATT;
-    }
-    return segmenteringSykefraværprosent;
+export const tilSegmenteringSykefraværprosent = (sykefraværprosent: Sykefraværsprosent): string => {
+    if (sykefraværprosent.erMaskert) return 'MASKERT';
+    const prosent = sykefraværprosent.prosent;
+    if (prosent === undefined || prosent === null) return 'IKKE_SATT';
+    if (prosent === 0) return '0';
+    if (prosent > 0 && prosent < 2) return '<2';
+    if (prosent >= 2 && prosent < 4) return '2-4';
+    if (prosent >= 4 && prosent < 6) return '4-6';
+    if (prosent >= 6 && prosent < 8) return '6-8';
+    if (prosent >= 8 && prosent < 10) return '8-10';
+    if (prosent >= 10 && prosent < 12) return '10-12';
+    if (prosent >= 12 && prosent < 14) return '12-14';
+    if (prosent >= 14 && prosent < 16) return '14-16';
+    if (prosent >= 16) return '>16';
+    return 'IKKE_SATT';
 };
