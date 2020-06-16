@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useContext } from 'react';
 import Banner from './Banner/Banner';
 import { BrowserRouter, Route, useLocation } from 'react-router-dom';
-import { useOrgnr } from './utils/orgnr-hook';
 import Kalkulator from './Kalkulator/Kalkulator';
 import Forside from './Forside/Forside';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
@@ -19,7 +18,7 @@ import { useRestFeatureToggles } from './api/featureToggles';
 import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
-import { useRestSykefraværshistorikk } from './api/sykefraværshistorikk';
+import { RestSykefraværshistorikk } from './api/sykefraværshistorikk';
 import { RestBedriftsmetrikker, trackBedriftsmetrikker } from './api/bedriftsmetrikker';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
@@ -29,6 +28,10 @@ import {
     BedriftsmetrikkerProvider,
 } from './utils/bedriftsmetrikkerContext';
 import { sendEventDirekte } from './utils/amplitude';
+import {
+    sykefraværshistorikkContext,
+    SykefraværshistorikkProvider,
+} from './utils/sykefraværshistorikkContext';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -40,18 +43,20 @@ const App: FunctionComponent = () => {
     return (
         <BrowserRouter basename={BASE_PATH}>
             <BedriftsmetrikkerProvider>
-                <AppContent />
+                <SykefraværshistorikkProvider>
+                    <AppContent />
+                </SykefraværshistorikkProvider>
             </BedriftsmetrikkerProvider>
         </BrowserRouter>
     );
 };
 
 const AppContent: FunctionComponent = () => {
-    const orgnr = useOrgnr();
-
     const restOrganisasjoner = useRestOrganisasjoner();
     const restOrganisasjonerForStatistikk = useRestOrganisasjonerMedTilgangTilStatistikk();
-    const restSykefraværshistorikk = useRestSykefraværshistorikk(orgnr);
+    const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
+        sykefraværshistorikkContext
+    );
     const restFeatureToggles = useRestFeatureToggles();
     const restBedriftsmetrikker = useContext<RestBedriftsmetrikker>(bedriftsmetrikkerContext);
     const location = useLocation();
