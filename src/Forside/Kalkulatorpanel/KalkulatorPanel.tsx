@@ -31,7 +31,6 @@ const KalkulatorPanel: FunctionComponent = () => {
                 onClick={() => {
                     sendMetrikker('sykefravarsstatistikk.klikk-til-kalkulator');
                     sendEvent('forside kalkulator', 'klikk');
-                    sendEvent('forside noe-klikket-pa', '');
                 }}
             >
                 Gå til kostnadskalkulatoren

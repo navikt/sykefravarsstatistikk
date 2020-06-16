@@ -6,7 +6,7 @@ import { PATH_HISTORIKK } from '../../App';
 import { sendMetrikker } from '../../utils/metrikk-api';
 import InternLenke from '../../felleskomponenter/InternLenke/InternLenke';
 import './Historikkpanel.less';
-import {useSendEvent} from '../../utils/amplitude';
+import { useSendEvent } from '../../utils/amplitude';
 
 const Historikkpanel: FunctionComponent = () => {
     const sendEvent = useSendEvent();
@@ -25,7 +25,6 @@ const Historikkpanel: FunctionComponent = () => {
                 onClick={() => {
                     sendMetrikker('sykefravarsstatistikk.klikk-til-historikk');
                     sendEvent('forside historikk', 'klikk');
-                    sendEvent('forside noe-klikket-pa', '');
                 }}
             >
                 Gå til sykefraværshistorikken

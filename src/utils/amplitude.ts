@@ -20,12 +20,7 @@ instance.init(getApiKey(), '', {
 });
 
 export const sendEventDirekte = (område: string, hendelse: string, data?: Object): void => {
-    if (hendelse === '') {
-        // Ikke riktig bruk av loggingen. Hendelse skal alltid med.
-        instance.logEvent(['#sykefravarsstatistikk', område].join('-'), data);
-    } else {
-        instance.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
-    }
+    instance.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
 };
 
 type SendEvent = (område: string, hendelse: string, data?: Object) => void;
@@ -47,4 +42,3 @@ export const useSendEvent = (): SendEvent => {
             sendEventDirekte(område, hendelse, data);
     }
 };
-

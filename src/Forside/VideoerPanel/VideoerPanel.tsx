@@ -41,7 +41,7 @@ const VideoerPanel: FunctionComponent<{ visNyttDesign: boolean }> = (props) => {
                 href="https://vimeo.com/showcase/6728594"
                 onClick={() => {
                     sendMetrikker('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet');
-                    sendEvent('forside videoer redusering', 'klikk');
+                    sendEvent('forside videoer forebygging', 'klikk');
                 }}
             >
                 Forebygge arbeidsmiljøet
