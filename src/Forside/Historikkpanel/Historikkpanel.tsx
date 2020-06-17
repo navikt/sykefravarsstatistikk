@@ -6,7 +6,7 @@ import { PATH_HISTORIKK } from '../../App';
 import { sendMetrikker } from '../../utils/metrikk-api';
 import InternLenke from '../../felleskomponenter/InternLenke/InternLenke';
 import './Historikkpanel.less';
-import { useSendEvent } from '../../utils/amplitude';
+import { useSendEvent } from '../../amplitude/amplitude';
 
 const Historikkpanel: FunctionComponent = () => {
     const sendEvent = useSendEvent();

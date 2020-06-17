@@ -7,7 +7,7 @@ import PanelBase from 'nav-frontend-paneler';
 import './VideoerPanel.less';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import VideoerPanelTogglet from './VideoerPanelTogglet';
-import { useSendEvent } from '../../utils/amplitude';
+import { useSendEvent } from '../../amplitude/amplitude';
 
 const VideoerPanel: FunctionComponent<{ visNyttDesign: boolean }> = (props) => {
     const sendEvent = useSendEvent();
