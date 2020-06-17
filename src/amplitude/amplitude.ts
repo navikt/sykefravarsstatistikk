@@ -2,9 +2,7 @@ import amplitude from 'amplitude-js';
 import { RestStatus } from '../api/api-utils';
 import { useContext } from 'react';
 import {
-    tilSegmenteringAntallAnsatte,
     RestBedriftsmetrikker,
-    tilSegmenteringSykefraværprosent,
 } from '../api/bedriftsmetrikker';
 import { bedriftsmetrikkerContext } from '../utils/bedriftsmetrikkerContext';
 import {
@@ -18,6 +16,7 @@ import {
     finnProsent,
     ÅrstallOgKvartal,
 } from '../utils/sykefraværshistorikk-utils';
+import { tilSegmenteringAntallAnsatte, tilSegmenteringSykefraværprosent } from './segmentering';
 
 const getApiKey = () => {
     return window.location.hostname === 'arbeidsgiver.nav.no'
