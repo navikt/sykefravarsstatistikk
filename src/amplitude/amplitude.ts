@@ -3,19 +3,14 @@ import { RestStatus } from '../api/api-utils';
 import { useContext } from 'react';
 import { RestBedriftsmetrikker } from '../api/bedriftsmetrikker';
 import { bedriftsmetrikkerContext } from '../utils/bedriftsmetrikkerContext';
-import {
-    RestSykefraværshistorikk,
-    SykefraværshistorikkType,
-    Sykefraværsprosent,
-} from '../api/sykefraværshistorikk';
+import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkContext';
+import { konverterTilKvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
 import {
-    beregnHvilkeÅrstallOgKvartalerSomSkalVises,
-    finnProsent,
-    konverterTilKvartalsvisSammenligning,
-    ÅrstallOgKvartal,
-} from '../utils/sykefraværshistorikk-utils';
-import { tilSegmenteringAntallAnsatte, tilSegmenteringSykefraværprosent } from './segmentering';
+    tilSegmenteringAntallAnsatte,
+    tilSegmenteringSammenligning,
+    tilSegmenteringSykefraværprosent,
+} from './segmentering';
 import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
 
 const getApiKey = () => {
@@ -45,7 +40,8 @@ const hentEkstraDataFraBedriftsmetrikker = (
     if (restBedriftsmetrikker.status === RestStatus.Suksess) {
         const metrikker = restBedriftsmetrikker.data;
         const næringskode2siffer = metrikker.næringskode5Siffer.kode.substring(0, 2);
-        const næring2siffer = næringskode2siffer + ' ' + mapTilNæringsbeskrivelse(næringskode2siffer);
+        const næring2siffer =
+            næringskode2siffer + ' ' + mapTilNæringsbeskrivelse(næringskode2siffer);
 
         return {
             næring2siffer,
@@ -67,11 +63,12 @@ const hentEkstraDataFraSykefraværshistorikk = (
         const sammenligningForSisteKvartal = kvartalsvisSammenligning.pop();
 
         if (sammenligningForSisteKvartal) {
-            if (sammenligningForSisteKvartal.virksomhet) {
+            const { virksomhet, næringEllerBransje } = sammenligningForSisteKvartal;
+
+            if (virksomhet) {
                 return {
-                    prosent: tilSegmenteringSykefraværprosent(
-                        sammenligningForSisteKvartal.virksomhet
-                    ),
+                    prosent: tilSegmenteringSykefraværprosent(virksomhet),
+                    sammenligning: tilSegmenteringSammenligning(virksomhet, næringEllerBransje),
                 };
             }
         }
