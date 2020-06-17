@@ -16,7 +16,7 @@ import {
     ÅrstallOgKvartal,
 } from '../utils/sykefraværshistorikk-utils';
 import { tilSegmenteringAntallAnsatte, tilSegmenteringSykefraværprosent } from './segmentering';
-import { hentNæringsbeskrivelse } from './næringsbeskrivelser';
+import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
 
 const getApiKey = () => {
     return window.location.hostname === 'arbeidsgiver.nav.no'
@@ -45,7 +45,7 @@ const hentEkstraDataFraBedriftsmetrikker = (
     if (restBedriftsmetrikker.status === RestStatus.Suksess) {
         const metrikker = restBedriftsmetrikker.data;
         const næringskode2siffer = metrikker.næringskode5Siffer.kode.substring(0, 2);
-        const næring2siffer = næringskode2siffer + ' ' + hentNæringsbeskrivelse(næringskode2siffer);
+        const næring2siffer = næringskode2siffer + ' ' + mapTilNæringsbeskrivelse(næringskode2siffer);
 
         return {
             næring2siffer,
