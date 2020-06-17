@@ -12,6 +12,7 @@ import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkCont
 import {
     beregnHvilkeÅrstallOgKvartalerSomSkalVises,
     finnProsent,
+    konverterTilKvartalsvisSammenligning,
     ÅrstallOgKvartal,
 } from '../utils/sykefraværshistorikk-utils';
 import { tilSegmenteringAntallAnsatte, tilSegmenteringSykefraværprosent } from './segmentering';
@@ -59,21 +60,18 @@ const hentEkstraDataFraSykefraværshistorikk = (
     restSykefraværshistorikk: RestSykefraværshistorikk
 ): Object => {
     if (restSykefraværshistorikk.status === RestStatus.Suksess) {
-        const årstallOgKvartalListe: ÅrstallOgKvartal[] = beregnHvilkeÅrstallOgKvartalerSomSkalVises(
+        const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
             restSykefraværshistorikk.data
         );
-        const sisteÅrstallOgKvartal = årstallOgKvartalListe.pop();
 
-        if (sisteÅrstallOgKvartal) {
-            const sykefraværprosent: Sykefraværsprosent = finnProsent(
-                restSykefraværshistorikk.data,
-                sisteÅrstallOgKvartal,
-                SykefraværshistorikkType.VIRKSOMHET
-            );
+        const sammenligningForSisteKvartal = kvartalsvisSammenligning.pop();
 
-            if (sykefraværprosent) {
+        if (sammenligningForSisteKvartal) {
+            if (sammenligningForSisteKvartal.virksomhet) {
                 return {
-                    prosent: tilSegmenteringSykefraværprosent(sykefraværprosent),
+                    prosent: tilSegmenteringSykefraværprosent(
+                        sammenligningForSisteKvartal.virksomhet
+                    ),
                 };
             }
         }
