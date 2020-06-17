@@ -112,5 +112,5 @@ const næringsbeskrivelser = [
     { kode: '99', navn: 'Internasjonale organisasjoner og organer' },
 ];
 
-export const hentNæringsbeskrivelse = (næringskode2siffer: string): string | undefined =>
+export const mapTilNæringsbeskrivelse = (næringskode2siffer: string): string | undefined =>
     næringsbeskrivelser.find((beskrivelse) => beskrivelse.kode === næringskode2siffer)?.navn;
