@@ -7,7 +7,7 @@ import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { RestStatus } from '../api/api-utils';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { useOrgnr } from '../utils/orgnr-hook';
-import { useSendEvent } from '../utils/amplitude';
+import { useSendEvent } from '../amplitude/amplitude';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;

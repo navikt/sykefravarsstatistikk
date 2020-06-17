@@ -2,22 +2,22 @@ import amplitude from 'amplitude-js';
 import { RestStatus } from '../api/api-utils';
 import { useContext } from 'react';
 import {
-    mapTilAntallAnsatteBucket,
+    tilSegmenteringAntallAnsatte,
     RestBedriftsmetrikker,
     tilSegmenteringSykefraværprosent,
 } from '../api/bedriftsmetrikker';
-import { bedriftsmetrikkerContext } from './bedriftsmetrikkerContext';
+import { bedriftsmetrikkerContext } from '../utils/bedriftsmetrikkerContext';
 import {
     RestSykefraværshistorikk,
     SykefraværshistorikkType,
     Sykefraværsprosent,
 } from '../api/sykefraværshistorikk';
-import { sykefraværshistorikkContext } from './sykefraværshistorikkContext';
+import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkContext';
 import {
     beregnHvilkeÅrstallOgKvartalerSomSkalVises,
     finnProsent,
     ÅrstallOgKvartal,
-} from './sykefraværshistorikk-utils';
+} from '../utils/sykefraværshistorikk-utils';
 
 const getApiKey = () => {
     return window.location.hostname === 'arbeidsgiver.nav.no'
@@ -52,7 +52,7 @@ export const useSendEvent = (): SendEvent => {
         ekstraData = {
             næring2siffer: metrikker.næringskode5Siffer.kode.substring(0, 2),
             bransje: metrikker.bransje,
-            antallAnsatte: mapTilAntallAnsatteBucket(metrikker.antallAnsatte),
+            antallAnsatte: tilSegmenteringAntallAnsatte(metrikker.antallAnsatte),
         };
     }
     if (restSykefraværshistorikk.status === RestStatus.Suksess) {

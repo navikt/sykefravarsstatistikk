@@ -9,7 +9,7 @@ import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
-import { useSendEvent } from '../utils/amplitude';
+import { useSendEvent } from '../amplitude/amplitude';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 

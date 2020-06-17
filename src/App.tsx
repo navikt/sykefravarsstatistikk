@@ -19,7 +19,7 @@ import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { RestSykefraværshistorikk } from './api/sykefraværshistorikk';
-import { RestBedriftsmetrikker, trackBedriftsmetrikker } from './api/bedriftsmetrikker';
+import { RestBedriftsmetrikker } from './api/bedriftsmetrikker';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import { BASE_PATH } from './konstanter';
@@ -27,7 +27,7 @@ import {
     bedriftsmetrikkerContext,
     BedriftsmetrikkerProvider,
 } from './utils/bedriftsmetrikkerContext';
-import { sendEventDirekte } from './utils/amplitude';
+import { sendEventDirekte } from './amplitude/amplitude';
 import {
     sykefraværshistorikkContext,
     SykefraværshistorikkProvider,
@@ -78,13 +78,6 @@ const AppContent: FunctionComponent = () => {
     ) {
         innhold = <FeilFraAltinnSide />;
     } else {
-        if (
-            restBedriftsmetrikker.status === RestStatus.Suksess &&
-            restSykefraværshistorikk.status === RestStatus.Suksess &&
-            !location.pathname.includes('iawebredirectside')
-        ) {
-            trackBedriftsmetrikker(restBedriftsmetrikker.data, restSykefraværshistorikk.data);
-        }
         const skalViseGraf = restFeatureToggles.data['arbeidsgiver.lanser-graf'];
         innhold = (
             <>

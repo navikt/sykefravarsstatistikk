@@ -17,7 +17,7 @@ import {
     getØnsketKostnad,
     Maskering,
 } from './kalkulator-utils';
-import { useSendEvent } from '../utils/amplitude';
+import { useSendEvent } from '../amplitude/amplitude';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 
 interface Props {

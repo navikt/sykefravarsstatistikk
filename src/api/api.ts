@@ -7,7 +7,7 @@ import {
     Sykefraværshistorikk,
     SykefraværshistorikkType,
 } from './sykefraværshistorikk';
-import { sendEventDirekte } from '../utils/amplitude';
+import { sendEventDirekte } from '../amplitude/amplitude';
 import { RestBedriftsmetrikker } from './bedriftsmetrikker';
 
 const sykefraværshistorikkPath = (orgnr: string) =>

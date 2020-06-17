@@ -6,7 +6,7 @@ import { sendMetrikker } from '../../utils/metrikk-api';
 import PanelBase from 'nav-frontend-paneler';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import './VideoerPanelTogglet.less';
-import { useSendEvent } from '../../utils/amplitude';
+import { useSendEvent } from '../../amplitude/amplitude';
 
 const VideoerPanelTogglet: FunctionComponent = () => {
     const sendEvent = useSendEvent();
