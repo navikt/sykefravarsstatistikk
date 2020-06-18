@@ -4,10 +4,7 @@ import { BrowserRouter, Route, useLocation } from 'react-router-dom';
 import Kalkulator from './Kalkulator/Kalkulator';
 import Forside from './Forside/Forside';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
-import {
-    useRestOrganisasjoner,
-    useRestOrganisasjonerMedTilgangTilStatistikk,
-} from './api/altinnorganisasjon-api';
+import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
 import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
@@ -32,6 +29,12 @@ import {
     sykefraværshistorikkContext,
     SykefraværshistorikkProvider,
 } from './utils/sykefraværshistorikkContext';
+import {
+    altinnOrganisasjonerContext,
+    altinnOrganisasjonerMedTilgangTilStatistikkContext,
+    AltinnOrganisasjonerMedTilgangTilStatistikkProvider,
+    AltinnOrganisasjonerProvider,
+} from './utils/altinnOrganisasjonerContext';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -42,18 +45,24 @@ const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
     return (
         <BrowserRouter basename={BASE_PATH}>
-            <BedriftsmetrikkerProvider>
-                <SykefraværshistorikkProvider>
-                    <AppContent />
-                </SykefraværshistorikkProvider>
-            </BedriftsmetrikkerProvider>
+            <AltinnOrganisasjonerProvider>
+                <AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
+                    <BedriftsmetrikkerProvider>
+                        <SykefraværshistorikkProvider>
+                            <AppContent />
+                        </SykefraværshistorikkProvider>
+                    </BedriftsmetrikkerProvider>
+                </AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
+            </AltinnOrganisasjonerProvider>
         </BrowserRouter>
     );
 };
 
 const AppContent: FunctionComponent = () => {
-    const restOrganisasjoner = useRestOrganisasjoner();
-    const restOrganisasjonerForStatistikk = useRestOrganisasjonerMedTilgangTilStatistikk();
+    const restOrganisasjoner = useContext<RestAltinnOrganisasjoner>(altinnOrganisasjonerContext);
+    const restOrganisasjonerForStatistikk = useContext<RestAltinnOrganisasjoner>(
+        altinnOrganisasjonerMedTilgangTilStatistikkContext
+    );
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );

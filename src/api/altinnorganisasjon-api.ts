@@ -1,5 +1,5 @@
 import { getRestStatus, RestRessurs, RestStatus } from './api-utils';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import * as Sentry from '@sentry/browser';
 import { BASE_PATH } from '../konstanter';
 
@@ -30,7 +30,7 @@ const hentAltinnOrganisasjonerBrukerHarTilgangTil = async (
     return await respons.json();
 };
 
-const hentAltinnOrganisasjoner = async (
+export const hentAltinnOrganisasjoner = async (
     url: string
 ): Promise<RestRessurs<AltinnOrganisasjon[]>> => {
     try {
@@ -43,36 +43,4 @@ const hentAltinnOrganisasjoner = async (
         Sentry.captureException(error);
         return { status: error.status || RestStatus.Feil };
     }
-};
-
-export const useRestOrganisasjoner = (): RestAltinnOrganisasjoner => {
-    const [restAltinnOrganisasjoner, setRestAltinnOrganisasjoner] = useState<
-        RestAltinnOrganisasjoner
-    >({
-        status: RestStatus.LasterInn,
-    });
-
-    useEffect(() => {
-        hentAltinnOrganisasjoner(
-            '/min-side-arbeidsgiver/api/organisasjoner'
-        ).then((altinnOrganisasjoner) => setRestAltinnOrganisasjoner(altinnOrganisasjoner));
-    }, []);
-
-    return restAltinnOrganisasjoner;
-};
-
-export const useRestOrganisasjonerMedTilgangTilStatistikk = (): RestAltinnOrganisasjoner => {
-    const [restAltinnOrganisasjoner, setRestAltinnOrganisasjoner] = useState<
-        RestAltinnOrganisasjoner
-    >({
-        status: RestStatus.LasterInn,
-    });
-
-    useEffect(() => {
-        hentAltinnOrganisasjoner(
-            `${BASE_PATH}/api/organisasjoner/statistikk`
-        ).then((altinnOrganisasjoner) => setRestAltinnOrganisasjoner(altinnOrganisasjoner));
-    }, []);
-
-    return restAltinnOrganisasjoner;
 };
