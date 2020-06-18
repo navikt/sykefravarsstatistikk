@@ -44,8 +44,8 @@ export const tilSegmenteringSammenligning = (
     }
     const sammenligning = virksomhet.prosent - næringEllerBransje.prosent;
     const segmenteringProsent = tilSegmenteringProsent(Math.abs(sammenligning));
-    if (sammenligning > 0) return 'over ' + segmenteringProsent;
-    if (sammenligning < 0) return 'under ' + segmenteringProsent;
-    if (sammenligning === 0) return segmenteringProsent;
+    if (sammenligning > 0) return 'virksomhet ligger ' + segmenteringProsent + ' over';
+    if (sammenligning < 0) return 'virksomhet ligger ' + segmenteringProsent + ' under';
+    if (sammenligning === 0) return 'virksomhet ligger likt';
     return 'IKKE_SATT';
 };
