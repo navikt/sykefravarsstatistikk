@@ -3,18 +3,14 @@ import { RestStatus } from '../api/api-utils';
 import { useContext } from 'react';
 import { RestBedriftsmetrikker } from '../api/bedriftsmetrikker';
 import { bedriftsmetrikkerContext } from '../utils/bedriftsmetrikkerContext';
-import {
-    RestSykefraværshistorikk,
-    SykefraværshistorikkType,
-    Sykefraværsprosent,
-} from '../api/sykefraværshistorikk';
+import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkContext';
+import { konverterTilKvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
 import {
-    beregnHvilkeÅrstallOgKvartalerSomSkalVises,
-    finnProsent,
-    ÅrstallOgKvartal,
-} from '../utils/sykefraværshistorikk-utils';
-import { tilSegmenteringAntallAnsatte, tilSegmenteringSykefraværprosent } from './segmentering';
+    tilSegmenteringAntallAnsatte,
+    tilSegmenteringSammenligning,
+    tilSegmenteringSykefraværprosent,
+} from './segmentering';
 import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
 
 const getApiKey = () => {
@@ -44,7 +40,8 @@ const hentEkstraDataFraBedriftsmetrikker = (
     if (restBedriftsmetrikker.status === RestStatus.Suksess) {
         const metrikker = restBedriftsmetrikker.data;
         const næringskode2siffer = metrikker.næringskode5Siffer.kode.substring(0, 2);
-        const næring2siffer = næringskode2siffer + ' ' + mapTilNæringsbeskrivelse(næringskode2siffer);
+        const næring2siffer =
+            næringskode2siffer + ' ' + mapTilNæringsbeskrivelse(næringskode2siffer);
 
         return {
             næring2siffer,
@@ -59,21 +56,19 @@ const hentEkstraDataFraSykefraværshistorikk = (
     restSykefraværshistorikk: RestSykefraværshistorikk
 ): Object => {
     if (restSykefraværshistorikk.status === RestStatus.Suksess) {
-        const årstallOgKvartalListe: ÅrstallOgKvartal[] = beregnHvilkeÅrstallOgKvartalerSomSkalVises(
+        const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
             restSykefraværshistorikk.data
         );
-        const sisteÅrstallOgKvartal = årstallOgKvartalListe.pop();
 
-        if (sisteÅrstallOgKvartal) {
-            const sykefraværprosent: Sykefraværsprosent = finnProsent(
-                restSykefraværshistorikk.data,
-                sisteÅrstallOgKvartal,
-                SykefraværshistorikkType.VIRKSOMHET
-            );
+        const sammenligningForSisteKvartal = kvartalsvisSammenligning.pop();
 
-            if (sykefraværprosent) {
+        if (sammenligningForSisteKvartal) {
+            const { virksomhet, næringEllerBransje } = sammenligningForSisteKvartal;
+
+            if (virksomhet) {
                 return {
-                    prosent: tilSegmenteringSykefraværprosent(sykefraværprosent),
+                    prosent: tilSegmenteringSykefraværprosent(virksomhet),
+                    sammenligning: tilSegmenteringSammenligning(virksomhet, næringEllerBransje),
                 };
             }
         }
