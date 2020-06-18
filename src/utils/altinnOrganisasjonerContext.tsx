@@ -24,15 +24,16 @@ export const AltinnOrganisasjonerProvider: FunctionComponent = (props) => {
     return <Provider value={restAltinnOrganisasjoner}>{props.children}</Provider>;
 };
 
-
-export const altinnOrganisasjonerMedTilgangTilStatistikkContext = createContext<RestAltinnOrganisasjoner>({
+export const altinnOrganisasjonerMedTilgangTilStatistikkContext = createContext<
+    RestAltinnOrganisasjoner
+>({
     status: RestStatus.IkkeLastet,
 });
 
 export const AltinnOrganisasjonerMedTilgangTilStatistikkProvider: FunctionComponent = (props) => {
     const [restAltinnOrganisasjoner, setRestAltinnOrganisasjoner] = useState<
         RestAltinnOrganisasjoner
-        >({
+    >({
         status: RestStatus.LasterInn,
     });
 
@@ -42,6 +43,6 @@ export const AltinnOrganisasjonerMedTilgangTilStatistikkProvider: FunctionCompon
         ).then((altinnOrganisasjoner) => setRestAltinnOrganisasjoner(altinnOrganisasjoner));
     }, []);
 
-    const Provider = altinnOrganisasjonerContext.Provider;
+    const Provider = altinnOrganisasjonerMedTilgangTilStatistikkContext.Provider;
     return <Provider value={restAltinnOrganisasjoner}>{props.children}</Provider>;
 };

@@ -111,6 +111,7 @@ export const useSendEvent = (): SendEvent => {
     const restOrganisasjonerMedStatistikk = useContext<RestAltinnOrganisasjoner>(
         altinnOrganisasjonerMedTilgangTilStatistikkContext
     );
+
     const ekstraData = {
         ...hentEkstraDataFraBedriftsmetrikker(restBedriftsmetrikker),
         ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
