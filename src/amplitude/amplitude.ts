@@ -12,6 +12,11 @@ import {
     tilSegmenteringSykefraværprosent,
 } from './segmentering';
 import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
+import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
+import {
+    altinnOrganisasjonerContext,
+    altinnOrganisasjonerMedTilgangTilStatistikkContext,
+} from '../utils/altinnOrganisasjonerContext';
 
 const getApiKey = () => {
     return window.location.hostname === 'arbeidsgiver.nav.no'
@@ -76,14 +81,43 @@ const hentEkstraDataFraSykefraværshistorikk = (
     return {};
 };
 
+const hentAntallUnderbedrifter = (
+    restOrganisasjoner: RestAltinnOrganisasjoner
+): string | number => {
+    if (restOrganisasjoner.status === RestStatus.Suksess) {
+        return restOrganisasjoner.data.filter(
+            (org) => org.OrganizationNumber && org.OrganizationNumber.length > 0
+        ).length;
+    }
+    return 'IKKE_SATT';
+};
+
+const hentEkstraDataFraAltinnOrganisasjoner = (
+    organisasjoner: RestAltinnOrganisasjoner,
+    organisasjonerMedTilgangTilStatistikk: RestAltinnOrganisasjoner
+): Object => ({
+    antallUnderenheter: hentAntallUnderbedrifter(organisasjoner),
+    antallUnderheterMedTilgangTilStatistikk: hentAntallUnderbedrifter(
+        organisasjonerMedTilgangTilStatistikk
+    ),
+});
+
 export const useSendEvent = (): SendEvent => {
     const restBedriftsmetrikker = useContext<RestBedriftsmetrikker>(bedriftsmetrikkerContext);
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
+    const restOrganisasjoner = useContext<RestAltinnOrganisasjoner>(altinnOrganisasjonerContext);
+    const restOrganisasjonerMedStatistikk = useContext<RestAltinnOrganisasjoner>(
+        altinnOrganisasjonerMedTilgangTilStatistikkContext
+    );
     const ekstraData = {
         ...hentEkstraDataFraBedriftsmetrikker(restBedriftsmetrikker),
         ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
+        ...hentEkstraDataFraAltinnOrganisasjoner(
+            restOrganisasjoner,
+            restOrganisasjonerMedStatistikk
+        ),
     };
 
     return (område: string, hendelse: string, data?: Object) =>
