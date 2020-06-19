@@ -108,7 +108,7 @@ const AppContent: FunctionComponent = () => {
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <Forside
                         restSykefraværshistorikk={restSykefraværshistorikk}
-                        restOrganisasjonerForStatistikk={restOrganisasjonerMedStatistikk}
+                        restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                     >
                         <Sammenligningspanel restSykefraværshistorikk={restSykefraværshistorikk} />
                         <KalkulatorPanel />
@@ -125,7 +125,7 @@ const AppContent: FunctionComponent = () => {
                         <Brødsmulesti gjeldendeSide="historikk" />
                         <GrafOgTabell
                             restSykefraværsstatistikk={restSykefraværshistorikk}
-                            restOrganisasjonerForStatistikk={restOrganisasjonerMedStatistikk}
+                            restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                         />
                     </Route>
                 )}

@@ -5,13 +5,13 @@ import { RestStatus } from '../../../api/api-utils';
 import './OrganisasjonerMedTilgangListe.less';
 
 interface Props {
-    restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
+    restOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
 }
 
 export const OrganisasjonerMedTilgangListe: FunctionComponent<Props> = ({
-    restOrganisasjonerForStatistikk,
+    restOrganisasjonerMedStatistikk,
 }) => {
-    if (restOrganisasjonerForStatistikk.status !== RestStatus.Suksess) {
+    if (restOrganisasjonerMedStatistikk.status !== RestStatus.Suksess) {
         return null;
     }
     return (
@@ -21,7 +21,7 @@ export const OrganisasjonerMedTilgangListe: FunctionComponent<Props> = ({
             className="organisasjoner-med-tilgang-liste"
         >
             <ul className="organisasjoner-med-tilgang-liste__liste">
-                {restOrganisasjonerForStatistikk.data.map((org) => (
+                {restOrganisasjonerMedStatistikk.data.map((org) => (
                     <li
                         className="organisasjoner-med-tilgang-liste__listeelement"
                         key={org.OrganizationNumber}

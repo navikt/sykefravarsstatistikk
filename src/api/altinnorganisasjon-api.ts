@@ -1,7 +1,5 @@
 import { getRestStatus, RestRessurs, RestStatus } from './api-utils';
-import { createContext, useEffect, useState } from 'react';
 import * as Sentry from '@sentry/browser';
-import { BASE_PATH } from '../konstanter';
 
 export type RestAltinnOrganisasjoner = RestRessurs<AltinnOrganisasjon[]>;
 

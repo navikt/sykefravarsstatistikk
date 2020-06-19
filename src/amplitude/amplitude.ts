@@ -12,11 +12,6 @@ import {
     tilSegmenteringSykefraværprosent,
 } from './segmentering';
 import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
-import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
-import {
-    altinnOrganisasjonerContext,
-    altinnOrganisasjonerMedTilgangTilStatistikkContext,
-} from '../utils/altinnOrganisasjonerContext';
 
 const getApiKey = () => {
     return window.location.hostname === 'arbeidsgiver.nav.no'
@@ -88,10 +83,6 @@ export const useSendEvent = (): SendEvent => {
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
-    const restOrganisasjoner = useContext<RestAltinnOrganisasjoner>(altinnOrganisasjonerContext);
-    const restOrganisasjonerMedStatistikk = useContext<RestAltinnOrganisasjoner>(
-        altinnOrganisasjonerMedTilgangTilStatistikkContext
-    );
 
     const ekstraData = {
         ...hentEkstraDataFraBedriftsmetrikker(restBedriftsmetrikker),
@@ -101,31 +92,3 @@ export const useSendEvent = (): SendEvent => {
     return (område: string, hendelse: string, data?: Object) =>
         sendEventDirekte(område, hendelse, { ...ekstraData, ...data });
 };
-const a = [
-    {
-        device_id: '6e5620c0-55fc-4935-80c5-52305af6a6c9R',
-        user_id: null,
-        timestamp: 1592488363067,
-        event_id: 1286,
-        session_id: 1592486956110,
-        event_type: '#sykefravarsstatistikk-banner-bedrift valgt',
-        version_name: null,
-        platform: 'Web',
-        os_name: 'Chrome',
-        os_version: '83',
-        device_model: null,
-        device_manufacturer: null,
-        language: 'en-US',
-        carrier: null,
-        api_properties: {},
-        event_properties: {},
-        user_properties: {},
-        uuid: '46ef6dda-a554-480d-8031-2a44a7600085',
-        library: { name: 'amplitude-js', version: '6.2.0' },
-        sequence_number: 1297,
-        groups: {},
-        group_properties: {},
-        user_agent:
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36',
-    },
-];
