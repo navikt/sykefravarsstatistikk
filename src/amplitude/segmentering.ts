@@ -9,6 +9,21 @@ export const tilSegmenteringAntallAnsatte = (antallAnsatte: number): string => {
     return '100+';
 };
 
+export const tilSegmenteringAntallVirksomheter = (
+    antallVirksomheter: number
+): string | undefined => {
+    if (antallVirksomheter === 0) return '0';
+    if (antallVirksomheter === 1) return '1';
+    if (antallVirksomheter === 2) return '2';
+    if (antallVirksomheter >= 3 && antallVirksomheter <= 5) return '1-5';
+    if (antallVirksomheter >= 6 && antallVirksomheter <= 9) return '6-9';
+    if (antallVirksomheter >= 10 && antallVirksomheter <= 19) return '10-19';
+    if (antallVirksomheter >= 20 && antallVirksomheter <= 49) return '20-49';
+    if (antallVirksomheter >= 50 && antallVirksomheter <= 99) return '50-99';
+    if (antallVirksomheter >= 100) return '100+';
+    return undefined;
+};
+
 export const tilSegmenteringSykefraværprosent = (sykefraværprosent: Sykefraværsprosent): string => {
     if (sykefraværprosent.erMaskert) return 'MASKERT';
     const prosent = sykefraværprosent.prosent;
