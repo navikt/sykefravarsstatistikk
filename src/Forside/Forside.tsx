@@ -11,12 +11,12 @@ import { useSendEvent } from '../amplitude/amplitude';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
-    restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
+    restOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
 }
 
 const Forside: React.FunctionComponent<Props> = ({
     restSykefraværshistorikk,
-    restOrganisasjonerForStatistikk,
+    restOrganisasjonerMedStatistikk,
     children,
 }) => {
     const orgnr = useOrgnr();
@@ -37,7 +37,7 @@ const Forside: React.FunctionComponent<Props> = ({
         case RestStatus.IngenTilgang: {
             return (
                 <ManglerRettigheterIAltinnSide
-                    restOrganisasjonerForStatistikk={restOrganisasjonerForStatistikk}
+                    restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                 />
             );
         }

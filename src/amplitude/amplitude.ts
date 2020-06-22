@@ -28,6 +28,8 @@ instance.init(getApiKey(), '', {
     includeReferrer: true,
 });
 
+export const setUserProperties = (properties: Object) => instance.setUserProperties(properties);
+
 export const sendEventDirekte = (område: string, hendelse: string, data?: Object): void => {
     instance.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
 };
@@ -81,6 +83,7 @@ export const useSendEvent = (): SendEvent => {
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
+
     const ekstraData = {
         ...hentEkstraDataFraBedriftsmetrikker(restBedriftsmetrikker),
         ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),

@@ -8,11 +8,11 @@ import { OrganisasjonerMedTilgangListe } from './OrganisasjonerMedTilgangListe/O
 import { BeOmTilgang } from './BeOmTilgang/BeOmTilgang';
 
 interface Props {
-    restOrganisasjonerForStatistikk: RestAltinnOrganisasjoner;
+    restOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
 }
 
 const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = ({
-    restOrganisasjonerForStatistikk,
+    restOrganisasjonerMedStatistikk,
 }) => {
     return (
         <div className="mangler-rettigheter-i-altinn__wrapper">
@@ -34,7 +34,7 @@ const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = ({
                 <BeOmTilgang />
 
                 <OrganisasjonerMedTilgangListe
-                    restOrganisasjonerForStatistikk={restOrganisasjonerForStatistikk}
+                    restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                 />
                 <Element className="mangler-rettigheter-i-altinn__mer-info">
                     Lenker til mer informasjon
