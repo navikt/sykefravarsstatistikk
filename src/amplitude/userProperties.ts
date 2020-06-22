@@ -12,7 +12,7 @@ const hentAntallUnderenheterSegmentering = (
     organisasjoner: AltinnOrganisasjon[]
 ): string | undefined => {
     const antallUnderenheter = organisasjoner.filter(
-        (org) => org.OrganizationNumber && org.OrganizationNumber.length > 0
+        (org) => org.ParentOrganizationNumber && org.ParentOrganizationNumber.length > 0
     ).length;
     return tilSegmenteringAntallVirksomheter(antallUnderenheter);
 };
