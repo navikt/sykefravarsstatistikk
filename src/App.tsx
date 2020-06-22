@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect } from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 import Banner from './Banner/Banner';
 import { BrowserRouter, Route, useLocation } from 'react-router-dom';
 import Kalkulator from './Kalkulator/Kalkulator';
@@ -35,7 +35,7 @@ import {
     AltinnOrganisasjonerMedTilgangTilStatistikkProvider,
     AltinnOrganisasjonerProvider,
 } from './utils/altinnOrganisasjonerContext';
-import { setAntallUnderenheterUserProperty } from './amplitude/userProperties';
+import { useSetUserProperties } from './amplitude/userProperties';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -70,18 +70,7 @@ const AppContent: FunctionComponent = () => {
     const restFeatureToggles = useRestFeatureToggles();
     const restBedriftsmetrikker = useContext<RestBedriftsmetrikker>(bedriftsmetrikkerContext);
     const location = useLocation();
-
-    useEffect(() => {
-        if (restOrganisasjoner.status === RestStatus.Suksess) {
-            setAntallUnderenheterUserProperty(restOrganisasjoner.data);
-        }
-    }, [restOrganisasjoner]);
-
-    useEffect(() => {
-        if (restOrganisasjonerMedStatistikk.status === RestStatus.Suksess) {
-            setAntallUnderenheterUserProperty(restOrganisasjonerMedStatistikk.data);
-        }
-    }, [restOrganisasjonerMedStatistikk]);
+    useSetUserProperties();
 
     let innhold;
     if (
