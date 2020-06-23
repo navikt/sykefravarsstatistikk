@@ -1,6 +1,4 @@
-import { RestRessurs, RestStatus } from './api-utils';
-import { useEffect, useState } from 'react';
-import { hentRestSykefraværshistorikk } from './api';
+import { RestRessurs } from './api-utils';
 
 export enum SykefraværshistorikkType {
     LAND = 'LAND',
