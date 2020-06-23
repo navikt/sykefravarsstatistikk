@@ -1,6 +1,4 @@
-import { RestRessurs, RestStatus } from './api-utils';
-import { useEffect, useState } from 'react';
-import { hentRestSykefraværshistorikk } from './api';
+import { RestRessurs } from './api-utils';
 
 export enum SykefraværshistorikkType {
     LAND = 'LAND',
@@ -37,27 +35,3 @@ export interface Sykefraværshistorikk {
 }
 
 export type RestSykefraværshistorikk = RestRessurs<Sykefraværshistorikk[]>;
-
-export const useRestSykefraværshistorikk = (
-    orgnr: string | undefined
-): RestSykefraværshistorikk => {
-    const [restSykefraværshistorikk, setRestSykefraværshistorikk] = useState<
-        RestSykefraværshistorikk
-    >({
-        status: RestStatus.IkkeLastet,
-    });
-
-    useEffect(() => {
-        if (orgnr) {
-            setRestSykefraværshistorikk({
-                status: RestStatus.IkkeLastet,
-            });
-            const hentRestSykefraværshistorikkOgSettState = async () => {
-                setRestSykefraværshistorikk(await hentRestSykefraværshistorikk(orgnr));
-            };
-            hentRestSykefraværshistorikkOgSettState();
-        }
-    }, [orgnr]);
-
-    return restSykefraværshistorikk;
-};

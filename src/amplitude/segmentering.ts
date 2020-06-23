@@ -9,11 +9,32 @@ export const tilSegmenteringAntallAnsatte = (antallAnsatte: number): string => {
     return '100+';
 };
 
+export const tilSegmenteringAntallVirksomheter = (
+    antallVirksomheter: number
+): string | undefined => {
+    if (antallVirksomheter === 0) return '0';
+    if (antallVirksomheter === 1) return '1';
+    if (antallVirksomheter === 2) return '2';
+    if (antallVirksomheter >= 3 && antallVirksomheter <= 9) return '3-9';
+    if (antallVirksomheter >= 10 && antallVirksomheter <= 49) return '10-49';
+    if (antallVirksomheter >= 50 && antallVirksomheter <= 99) return '50-99';
+    if (antallVirksomheter >= 100) return '100+';
+    return undefined;
+};
+
 export const tilSegmenteringSykefraværprosent = (sykefraværprosent: Sykefraværsprosent): string => {
     if (sykefraværprosent.erMaskert) return 'MASKERT';
     const prosent = sykefraværprosent.prosent;
     if (prosent === undefined || prosent === null) return 'IKKE_SATT';
     return tilSegmenteringProsent(prosent);
+};
+
+export const tilTiendedeler = (teller: number, nevner: number): string | undefined => {
+    const tiendedeler = Math.round((teller * 10) / nevner);
+    if (tiendedeler >= 0 && tiendedeler <= 10 && !isNaN(tiendedeler)) {
+        return `${tiendedeler} av 10`;
+    }
+    return undefined;
 };
 
 export const tilSegmenteringProsent = (prosent: number): string => {

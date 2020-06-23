@@ -6,22 +6,12 @@ import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
 } from '../utils/altinnOrganisasjonerContext';
+import { tilSegmenteringAntallVirksomheter, tilTiendedeler } from './segmentering';
 
-const hentAntallUnderenheter = (organisasjoner: AltinnOrganisasjon[]): string | number =>
-    organisasjoner.filter((org) => org.OrganizationNumber && org.OrganizationNumber.length > 0)
-        .length;
-
-const setAntallUnderenheterUserProperty = (organisasjoner: AltinnOrganisasjon[]) =>
-    setUserProperties({
-        antallUnderenheter: hentAntallUnderenheter(organisasjoner),
-    });
-
-const setAntallUnderenheterMedTilgangTilStatistikkUserProperty = (
-    organisasjoner: AltinnOrganisasjon[]
-) =>
-    setUserProperties({
-        antallUnderenheterMedTilgangTilStatistikk: hentAntallUnderenheter(organisasjoner),
-    });
+const hentAntallUnderenheter = (organisasjoner: AltinnOrganisasjon[]): number =>
+    organisasjoner.filter(
+        (org) => org.ParentOrganizationNumber && org.ParentOrganizationNumber.length > 0
+    ).length;
 
 export const useSetUserProperties = () => {
     const restOrganisasjoner = useContext<RestAltinnOrganisasjoner>(altinnOrganisasjonerContext);
@@ -30,15 +20,31 @@ export const useSetUserProperties = () => {
     );
     useEffect(() => {
         if (restOrganisasjoner.status === RestStatus.Suksess) {
-            setAntallUnderenheterUserProperty(restOrganisasjoner.data);
+            const segmentering = tilSegmenteringAntallVirksomheter(
+                hentAntallUnderenheter(restOrganisasjoner.data)
+            );
+            setUserProperties({
+                tilgang_til_antall_underenheter: segmentering,
+            });
         }
     }, [restOrganisasjoner]);
 
     useEffect(() => {
-        if (restOrganisasjonerMedStatistikk.status === RestStatus.Suksess) {
-            setAntallUnderenheterMedTilgangTilStatistikkUserProperty(
+        if (
+            restOrganisasjonerMedStatistikk.status === RestStatus.Suksess &&
+            restOrganisasjoner.status === RestStatus.Suksess
+        ) {
+            const antallUnderenheter = hentAntallUnderenheter(restOrganisasjoner.data);
+            const antallUnderenheterMedStatistikk = hentAntallUnderenheter(
                 restOrganisasjonerMedStatistikk.data
             );
+
+            setUserProperties({
+                statistikktilgang_til_antall_underenheter: tilTiendedeler(
+                    antallUnderenheterMedStatistikk,
+                    antallUnderenheter
+                ),
+            });
         }
-    }, [restOrganisasjonerMedStatistikk]);
+    }, [restOrganisasjonerMedStatistikk, restOrganisasjoner]);
 };

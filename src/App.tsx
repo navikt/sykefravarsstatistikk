@@ -35,6 +35,7 @@ import {
     AltinnOrganisasjonerMedTilgangTilStatistikkProvider,
     AltinnOrganisasjonerProvider,
 } from './utils/altinnOrganisasjonerContext';
+import { useSetUserProperties } from './amplitude/userProperties';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -70,8 +71,7 @@ const AppContent: FunctionComponent = () => {
     const restBedriftsmetrikker = useContext<RestBedriftsmetrikker>(bedriftsmetrikkerContext);
     const location = useLocation();
 
-    // TODO Må segmentere userproperties i buckets, og endre navn.
-    // useSetUserProperties();
+    useSetUserProperties();
 
     let innhold;
     if (
