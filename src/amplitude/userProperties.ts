@@ -8,14 +8,10 @@ import {
 } from '../utils/altinnOrganisasjonerContext';
 import { tilSegmenteringAntallVirksomheter, tilTiendedeler } from './segmentering';
 
-const hentAntallUnderenheterSegmentering = (
-    organisasjoner: AltinnOrganisasjon[]
-): string | undefined => {
-    const antallUnderenheter = organisasjoner.filter(
+const hentAntallUnderenheter = (organisasjoner: AltinnOrganisasjon[]): number =>
+    organisasjoner.filter(
         (org) => org.ParentOrganizationNumber && org.ParentOrganizationNumber.length > 0
     ).length;
-    return tilSegmenteringAntallVirksomheter(antallUnderenheter);
-};
 
 export const useSetUserProperties = () => {
     const restOrganisasjoner = useContext<RestAltinnOrganisasjoner>(altinnOrganisasjonerContext);
@@ -24,7 +20,9 @@ export const useSetUserProperties = () => {
     );
     useEffect(() => {
         if (restOrganisasjoner.status === RestStatus.Suksess) {
-            const segmentering = hentAntallUnderenheterSegmentering(restOrganisasjoner.data);
+            const segmentering = tilSegmenteringAntallVirksomheter(
+                hentAntallUnderenheter(restOrganisasjoner.data)
+            );
             setUserProperties({
                 tilgang_til_antall_underenheter: segmentering,
             });
@@ -36,8 +34,10 @@ export const useSetUserProperties = () => {
             restOrganisasjonerMedStatistikk.status === RestStatus.Suksess &&
             restOrganisasjoner.status === RestStatus.Suksess
         ) {
-            const antallUnderenheter = restOrganisasjoner.data.length;
-            const antallUnderenheterMedStatistikk = restOrganisasjonerMedStatistikk.data.length;
+            const antallUnderenheter = hentAntallUnderenheter(restOrganisasjoner.data);
+            const antallUnderenheterMedStatistikk = hentAntallUnderenheter(
+                restOrganisasjonerMedStatistikk.data
+            );
 
             setUserProperties({
                 statistikktilgang_til_antall_underenheter: tilTiendedeler(
