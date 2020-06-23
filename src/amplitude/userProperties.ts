@@ -6,7 +6,7 @@ import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
 } from '../utils/altinnOrganisasjonerContext';
-import { tilSegmenteringAntallVirksomheter } from './segmentering';
+import { tilSegmenteringAntallVirksomheter, tilTiendedeler } from './segmentering';
 
 const hentAntallUnderenheterSegmentering = (
     organisasjoner: AltinnOrganisasjon[]
@@ -32,13 +32,19 @@ export const useSetUserProperties = () => {
     }, [restOrganisasjoner]);
 
     useEffect(() => {
-        if (restOrganisasjonerMedStatistikk.status === RestStatus.Suksess) {
-            const segmentering = hentAntallUnderenheterSegmentering(
-                restOrganisasjonerMedStatistikk.data
-            );
+        if (
+            restOrganisasjonerMedStatistikk.status === RestStatus.Suksess &&
+            restOrganisasjoner.status === RestStatus.Suksess
+        ) {
+            const antallUnderenheter = restOrganisasjoner.data.length;
+            const antallUnderenheterMedStatistikk = restOrganisasjonerMedStatistikk.data.length;
+
             setUserProperties({
-                statistikktilgang_til_antall_underenheter: segmentering,
+                statistikktilgang_til_antall_underenheter: tilTiendedeler(
+                    antallUnderenheterMedStatistikk,
+                    antallUnderenheter
+                ),
             });
         }
-    }, [restOrganisasjonerMedStatistikk]);
+    }, [restOrganisasjonerMedStatistikk, restOrganisasjoner]);
 };
