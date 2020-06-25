@@ -10,7 +10,7 @@ import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
     getLinjerMedLabel,
     getLinjerSomHistorikkenHarDataFor,
-    finnesBransjeIDatagrunnlaget,
+    finnesBransjeIHistorikken,
     hentFørsteKvartalFraAlleÅreneIDatagrunnlaget,
     lagTickString,
 } from './graf-utils';
@@ -50,7 +50,7 @@ const Graf: FunctionComponent<Props> = (props) => {
         };
     });
 
-    const harBransje = finnesBransjeIDatagrunnlaget(props.sykefraværshistorikk);
+    const harBransje = finnesBransjeIHistorikken(props.sykefraværshistorikk);
     const linjerMedLabel = getLinjerMedLabel(props.sykefraværshistorikk);
 
     const punkterPåXAksenSomSkalMarkeres: string[] = hentFørsteKvartalFraAlleÅreneIDatagrunnlaget(
