@@ -11,40 +11,6 @@ interface Props {
 }
 
 export const LegendMedToggles: FunctionComponent<Props> = ({ linjerMedLabel, harBransje }) => {
-    const labels = {
-        virksomhet: (
-            <div className="graf-legend__tekst">
-                <Element className="graf-legend__tekst-element">Virksomhet:</Element>
-                <Normaltekst>{linjerMedLabel.virksomhet}</Normaltekst>
-            </div>
-        ),
-        overordnetEnhet: (
-            <div className="graf-legend__tekst">
-                <Element className="graf-legend__tekst-element">Overordnet enhet:</Element>
-                <Normaltekst>{linjerMedLabel.overordnetEnhet}</Normaltekst>
-            </div>
-        ),
-        næringEllerBransje: (
-            <div className="graf-legend__tekst">
-                <Element className="graf-legend__tekst-element">
-                    {harBransje ? 'Bransje:' : 'Næring:'}
-                </Element>
-                <Normaltekst>{linjerMedLabel.næringEllerBransje}</Normaltekst>
-            </div>
-        ),
-        sektor: (
-            <div className="graf-legend__tekst">
-                <Element className="graf-legend__tekst-element">Sektor:</Element>
-                <Normaltekst>{linjerMedLabel.sektor}</Normaltekst>
-            </div>
-        ),
-        land: (
-            <div className="graf-legend__tekst">
-                <Element>Norge</Element>
-            </div>
-        ),
-    };
-
     return (
         <CheckboxGruppe>
             <Checkbox

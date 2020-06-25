@@ -1,23 +1,13 @@
 import React, { FunctionComponent } from 'react';
-import { CartesianGrid, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
-import grafTooltip from './grafTooltip/grafTooltip';
-import grafLegend from './grafLegend/grafLegend';
-import grafLinjer from './grafLinjer';
 
 import './Graf.less';
 import 'nav-frontend-tabell-style';
 import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
-import {
-    getLinjerMedLabel,
-    getLinjerSomHistorikkenHarDataFor,
-    finnesBransjeIHistorikken,
-    hentFørsteKvartalFraAlleÅreneIDatagrunnlaget,
-    lagTickString,
-} from './graf-utils';
-import XAkseTick from './XAkseTick';
+import { finnesBransjeIHistorikken, getLinjerMedLabel, lagTickString } from './graf-utils';
 import { useInnerWidth } from '../../utils/innerWidth-hook';
 import { konverterTilKvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
 import { LegendMedToggles } from './LegendMedToggles/LegendMedToggles';
+import GrafVisning from './GrafVisning';
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
@@ -54,43 +44,14 @@ const Graf: FunctionComponent<Props> = (props) => {
     const harBransje = finnesBransjeIHistorikken(props.sykefraværshistorikk);
     const linjerMedLabel = getLinjerMedLabel(props.sykefraværshistorikk);
 
-    const punkterPåXAksenSomSkalMarkeres: string[] = hentFørsteKvartalFraAlleÅreneIDatagrunnlaget(
-        kvartalsvisSammenligning
-    ).map((årstallOgKvartal) => lagTickString(årstallOgKvartal.årstall, årstallOgKvartal.kvartal));
-
-    const margin =
-        innerWidth < 500
-            ? { top: 0, right: 20, left: 10, bottom: 20 }
-            : { top: 0, right: 50, left: 50, bottom: 50 };
-    const tickMargin = innerWidth < 500 ? 5 : 20;
-
     return (
         <>
             <LegendMedToggles linjerMedLabel={linjerMedLabel} harBransje={harBransje} />
-            <ResponsiveContainer minHeight={700}>
-                <LineChart data={kvartalsvisSammenligningData} margin={margin}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
-                    <XAxis
-                        dataKey="name"
-                        tickMargin={tickMargin}
-                        tickFormatter={(tickValue) => tickValue.substring(0, 4)}
-                        ticks={punkterPåXAksenSomSkalMarkeres}
-                        tick={XAkseTick}
-                    />
-                    <YAxis
-                        tickMargin={tickMargin}
-                        tickFormatter={(tickValue) => tickValue + ' %'}
-                        width={40}
-                    />
-                    {grafTooltip(harBransje)}
-                    {grafLegend(
-                        linjerMedLabel,
-                        harBransje,
-                        getLinjerSomHistorikkenHarDataFor(props.sykefraværshistorikk)
-                    )}
-                    {grafLinjer()}
-                </LineChart>
-            </ResponsiveContainer>
+            <GrafVisning
+                sykefraværshistorikk={props.sykefraværshistorikk}
+                harBransje={harBransje}
+                linjerSomSkalVises={linjerMedLabel}
+            />
         </>
     );
 };
