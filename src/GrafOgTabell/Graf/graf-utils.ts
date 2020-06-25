@@ -11,6 +11,12 @@ export type Linje =
     | 'land'
     | string;
 
+enum Hei {'hei'}
+
+export type LinjerMedLabel = {
+    [linje in Linje]: string
+};
+
 interface GrafConfig {
     tooltipsnavn: any;
     farger: any;
@@ -59,8 +65,8 @@ export const hentFørsteKvartalFraAlleÅreneIDatagrunnlaget = (
     kvartalsvisSammenligning: KvartalsvisSammenligning[]
 ): ÅrstallOgKvartal[] => {
     return kvartalsvisSammenligning
-        .filter(sammenligning => sammenligning.kvartal === 1)
-        .map(sammenligning => {
+        .filter((sammenligning) => sammenligning.kvartal === 1)
+        .map((sammenligning) => {
             return { årstall: sammenligning.årstall, kvartal: sammenligning.kvartal };
         });
 };
@@ -75,22 +81,22 @@ export const getLinjerSomMatcherHistorikk = (
 
     if (
         !sykefraværshistorikk.find(
-            historikk =>
+            (historikk) =>
                 historikk.type === SykefraværshistorikkType.OVERORDNET_ENHET &&
                 historikk.kvartalsvisSykefraværsprosent.length > 0
         )
     ) {
-        linjer = linjer.filter(name => name !== 'overordnetEnhet');
+        linjer = linjer.filter((name) => name !== 'overordnetEnhet');
     }
 
     if (
         !sykefraværshistorikk.find(
-            historikk =>
+            (historikk) =>
                 historikk.type === SykefraværshistorikkType.VIRKSOMHET &&
                 historikk.kvartalsvisSykefraværsprosent.length > 0
         )
     ) {
-        linjer = linjer.filter(name => name !== 'virksomhet');
+        linjer = linjer.filter((name) => name !== 'virksomhet');
     }
 
     return linjer;

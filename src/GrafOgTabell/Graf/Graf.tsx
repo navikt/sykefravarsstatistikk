@@ -15,19 +15,20 @@ import {
 import XAkseTick from './XAkseTick';
 import { useInnerWidth } from '../../utils/innerWidth-hook';
 import { konverterTilKvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
+import { LegendMedToggles } from './LegendMedToggles/LegendMedToggles';
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
 }
 
-const Graf: FunctionComponent<Props> = props => {
+const Graf: FunctionComponent<Props> = (props) => {
     const innerWidth = useInnerWidth();
 
     const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
         props.sykefraværshistorikk
     );
 
-    const kvartalsvisSammenligningData = kvartalsvisSammenligning.map(sammenligning => {
+    const kvartalsvisSammenligningData = kvartalsvisSammenligning.map((sammenligning) => {
         const {
             årstall,
             kvartal,
@@ -49,18 +50,28 @@ const Graf: FunctionComponent<Props> = props => {
     });
 
     const labelForType = (type: SykefraværshistorikkType): string => {
-        return props.sykefraværshistorikk.find(historikk => historikk.type === type)!
-            ? props.sykefraværshistorikk.find(historikk => historikk.type === type)!.label
+        return props.sykefraværshistorikk.find((historikk) => historikk.type === type)!
+            ? props.sykefraværshistorikk.find((historikk) => historikk.type === type)!.label
             : 'Ingen tilgjengelig data';
     };
 
     const harBransje = !!props.sykefraværshistorikk.find(
-        historikk => historikk.type === SykefraværshistorikkType.BRANSJE
+        (historikk) => historikk.type === SykefraværshistorikkType.BRANSJE
     );
+
+    const linjerMedLabel = {
+        virksomhet: labelForType(SykefraværshistorikkType.VIRKSOMHET),
+        overordnetEnhet: labelForType(SykefraværshistorikkType.OVERORDNET_ENHET),
+        næringEllerBransje: labelForType(
+            harBransje ? SykefraværshistorikkType.BRANSJE : SykefraværshistorikkType.NÆRING
+        ),
+        sektor: labelForType(SykefraværshistorikkType.SEKTOR),
+        land: labelForType(SykefraværshistorikkType.LAND),
+    };
 
     const punkterPåXAksenSomSkalMarkeres: string[] = hentFørsteKvartalFraAlleÅreneIDatagrunnlaget(
         kvartalsvisSammenligning
-    ).map(årstallOgKvartal => lagTickString(årstallOgKvartal.årstall, årstallOgKvartal.kvartal));
+    ).map((årstallOgKvartal) => lagTickString(årstallOgKvartal.årstall, årstallOgKvartal.kvartal));
 
     const margin =
         innerWidth < 500
@@ -69,38 +80,33 @@ const Graf: FunctionComponent<Props> = props => {
     const tickMargin = innerWidth < 500 ? 5 : 20;
 
     return (
-        <ResponsiveContainer minHeight={700}>
-            <LineChart data={kvartalsvisSammenligningData} margin={margin}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
-                <XAxis
-                    dataKey="name"
-                    tickMargin={tickMargin}
-                    tickFormatter={tickValue => tickValue.substring(0, 4)}
-                    ticks={punkterPåXAksenSomSkalMarkeres}
-                    tick={XAkseTick}
-                />
-                <YAxis
-                    tickMargin={tickMargin}
-                    tickFormatter={tickValue => tickValue + ' %'}
-                    width={40}
-                />
-                {grafTooltip(harBransje)}
-                {grafLegend(
-                    labelForType(SykefraværshistorikkType.VIRKSOMHET),
-                    labelForType(SykefraværshistorikkType.OVERORDNET_ENHET),
-                    labelForType(
-                        harBransje
-                            ? SykefraværshistorikkType.BRANSJE
-                            : SykefraværshistorikkType.NÆRING
-                    ),
-                    labelForType(SykefraværshistorikkType.SEKTOR),
-                    labelForType(SykefraværshistorikkType.LAND),
-                    harBransje,
-                    getLinjerSomMatcherHistorikk(props.sykefraværshistorikk)
-                )}
-                {grafLinjer()}
-            </LineChart>
-        </ResponsiveContainer>
+        <>
+            <LegendMedToggles />
+            <ResponsiveContainer minHeight={700}>
+                <LineChart data={kvartalsvisSammenligningData} margin={margin}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
+                    <XAxis
+                        dataKey="name"
+                        tickMargin={tickMargin}
+                        tickFormatter={(tickValue) => tickValue.substring(0, 4)}
+                        ticks={punkterPåXAksenSomSkalMarkeres}
+                        tick={XAkseTick}
+                    />
+                    <YAxis
+                        tickMargin={tickMargin}
+                        tickFormatter={(tickValue) => tickValue + ' %'}
+                        width={40}
+                    />
+                    {grafTooltip(harBransje)}
+                    {grafLegend(
+                        linjerMedLabel,
+                        harBransje,
+                        getLinjerSomMatcherHistorikk(props.sykefraværshistorikk)
+                    )}
+                    {grafLinjer()}
+                </LineChart>
+            </ResponsiveContainer>
+        </>
     );
 };
 

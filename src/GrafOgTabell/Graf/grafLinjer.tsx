@@ -6,7 +6,7 @@ const lineWidth = 2;
 const dotSize = 40;
 
 const grafLinjer = () =>
-    grafConfig.linjer.map(name => (
+    grafConfig.linjer.map((name) => (
         <Line
             key={name}
             type="monotone"

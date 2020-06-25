@@ -3,14 +3,10 @@ import React from 'react';
 import './grafLegend.less';
 import SymbolSvg from '../SymbolSvg';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { getFarge, getSymbol, Linje } from '../graf-utils';
+import { getFarge, getSymbol, Linje, LinjerMedLabel } from '../graf-utils';
 
 const grafLegend = (
-    labelVirksomhet: string,
-    labelOverordnetEnhet: string,
-    labelNæringEllerBransje: string,
-    labelSektor: string,
-    labelLand: string,
+    linjerMedLabel: LinjerMedLabel,
     harBransje: boolean,
     linjer: Linje[]
 ) => {
@@ -18,13 +14,13 @@ const grafLegend = (
         virksomhet: (
             <div className="graf-legend__tekst">
                 <Element className="graf-legend__tekst-element">Virksomhet:</Element>
-                <Normaltekst>{labelVirksomhet}</Normaltekst>
+                <Normaltekst>{linjerMedLabel.virksomhet}</Normaltekst>
             </div>
         ),
         overordnetEnhet: (
             <div className="graf-legend__tekst">
                 <Element className="graf-legend__tekst-element">Overordnet enhet:</Element>
-                <Normaltekst>{labelOverordnetEnhet}</Normaltekst>
+                <Normaltekst>{linjerMedLabel.overordnetEnhet}</Normaltekst>
             </div>
         ),
         næringEllerBransje: (
@@ -32,13 +28,13 @@ const grafLegend = (
                 <Element className="graf-legend__tekst-element">
                     {harBransje ? 'Bransje:' : 'Næring:'}
                 </Element>
-                <Normaltekst>{labelNæringEllerBransje}</Normaltekst>
+                <Normaltekst>{linjerMedLabel.næringEllerBransje}</Normaltekst>
             </div>
         ),
         sektor: (
             <div className="graf-legend__tekst">
                 <Element className="graf-legend__tekst-element">Sektor:</Element>
-                <Normaltekst>Privat og offentlig næringsvirksomhet</Normaltekst>
+                <Normaltekst>{linjerMedLabel.sektor}</Normaltekst>
             </div>
         ),
         land: (
@@ -50,7 +46,7 @@ const grafLegend = (
 
     const innhold = (props: LegendProps) => (
         <ul className="graf-legend">
-            {props.payload!.map(load => (
+            {props.payload!.map((load) => (
                 <li className="graf-legend__listeelement" key={load.value}>
                     <span>
                         <SymbolSvg
@@ -70,7 +66,7 @@ const grafLegend = (
         <Legend
             wrapperStyle={{ paddingBottom: 30 }}
             verticalAlign="top"
-            payload={linjer.map(name => {
+            payload={linjer.map((name) => {
                 return {
                     value: name,
                     type: getSymbol(name),
