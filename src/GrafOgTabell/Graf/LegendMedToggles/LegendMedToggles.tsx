@@ -1,18 +1,36 @@
 import React, { FunctionComponent } from 'react';
 import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
-import { LinjerMedLabel } from '../graf-utils';
+import { Linje, LinjerMedLabel } from '../graf-utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { GrafSymbol } from '../GrafSymbol';
 
 interface Props {
     linjerMedLabel: LinjerMedLabel;
     harBransje: boolean;
+    setLinjerSomSkalVises: (linjer: Linje[]) => void;
+    linjerSomSkalVises: Linje[];
 }
 
-export const LegendMedToggles: FunctionComponent<Props> = ({ linjerMedLabel, harBransje }) => {
+export const LegendMedToggles: FunctionComponent<Props> = ({
+    linjerMedLabel,
+    harBransje,
+    setLinjerSomSkalVises,
+    linjerSomSkalVises,
+}) => {
+    const onChange = (e: any) => {
+        const linje = e.target.value;
+        if (linjerSomSkalVises.includes(linje)) {
+            setLinjerSomSkalVises(linjerSomSkalVises.filter((enLinje) => enLinje !== linje));
+        } else {
+            setLinjerSomSkalVises([...linjerSomSkalVises, linje]);
+        }
+    };
     return (
         <CheckboxGruppe>
             <Checkbox
+                checked={linjerSomSkalVises.includes('virksomhet')}
+                value="virksomhet"
+                onChange={onChange}
                 label={
                     <div className="graf-legend__tekst">
                         <GrafSymbol linje="virksomhet" />

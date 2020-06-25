@@ -1,9 +1,14 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 
 import './Graf.less';
 import 'nav-frontend-tabell-style';
 import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
-import { finnesBransjeIHistorikken, getLinjerMedLabel } from './graf-utils';
+import {
+    finnesBransjeIHistorikken,
+    getLinjeneSomFinnesIHistorikkenMedLabels,
+    Linje,
+    LinjerMedLabel,
+} from './graf-utils';
 import { konverterTilKvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
 import { LegendMedToggles } from './LegendMedToggles/LegendMedToggles';
 import GrafVisning from './GrafVisning';
@@ -13,16 +18,37 @@ interface Props {
 }
 
 const Graf: FunctionComponent<Props> = (props) => {
+    const linjerSomKanVises = getLinjeneSomFinnesIHistorikkenMedLabels(props.sykefraværshistorikk);
+    const [linjerSomSkalVises, setLinjerSomSkalVisesMedLabel] = useState<LinjerMedLabel>(
+        linjerSomKanVises
+    );
+    const setLinjerSomSkalVises = (linjer: Linje[]) => {
+        console.log(linjer)
+        // TODO Litt hacky dette her
+        const alleLinjer = Object.keys(linjerSomKanVises);
+        const nyeLinjer = { ...linjerSomKanVises };
+        alleLinjer.forEach((linje) => {
+            if (!linjer.includes(linje)) {
+                delete nyeLinjer[linje];
+            }
+        });
+        setLinjerSomSkalVisesMedLabel(nyeLinjer);
+    };
+
     const harBransje = finnesBransjeIHistorikken(props.sykefraværshistorikk);
-    const linjerMedLabel = getLinjerMedLabel(props.sykefraværshistorikk);
 
     return (
         <>
-            <LegendMedToggles linjerMedLabel={linjerMedLabel} harBransje={harBransje} />
+            <LegendMedToggles
+                linjerMedLabel={linjerSomKanVises}
+                linjerSomSkalVises={Object.keys(linjerSomSkalVises)}
+                harBransje={harBransje}
+                setLinjerSomSkalVises={setLinjerSomSkalVises}
+            />
             <GrafVisning
                 sykefraværshistorikk={props.sykefraværshistorikk}
                 harBransje={harBransje}
-                linjerSomSkalVises={linjerMedLabel}
+                linjerSomSkalVises={linjerSomSkalVises}
             />
         </>
     );
