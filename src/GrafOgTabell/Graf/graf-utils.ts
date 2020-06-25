@@ -72,35 +72,33 @@ export const hentFørsteKvartalFraAlleÅreneIDatagrunnlaget = (
 export const lagTickString = (årstall: number, kvartal: number) =>
     årstall + ', ' + kvartal + '. kvartal';
 
-export const getLinjerSomMatcherHistorikk = (
+export const getLinjerSomHistorikkenHarDataFor = (
     sykefraværshistorikk: Sykefraværshistorikk[]
 ): Linje[] => {
     let linjer: Linje[] = [...grafConfig.linjer];
 
-    if (
-        !sykefraværshistorikk.find(
-            (historikk) =>
-                historikk.type === SykefraværshistorikkType.OVERORDNET_ENHET &&
-                historikk.kvartalsvisSykefraværsprosent.length > 0
-        )
-    ) {
+    const harHistorikkForOverordnetEnhet = !!sykefraværshistorikk.find(
+        (historikk) =>
+            historikk.type === SykefraværshistorikkType.OVERORDNET_ENHET &&
+            historikk.kvartalsvisSykefraværsprosent.length > 0
+    );
+    const harHistorikkForVirksomhet = !!sykefraværshistorikk.find(
+        (historikk) =>
+            historikk.type === SykefraværshistorikkType.VIRKSOMHET &&
+            historikk.kvartalsvisSykefraværsprosent.length > 0
+    );
+
+    if (!harHistorikkForOverordnetEnhet) {
         linjer = linjer.filter((name) => name !== 'overordnetEnhet');
     }
-
-    if (
-        !sykefraværshistorikk.find(
-            (historikk) =>
-                historikk.type === SykefraværshistorikkType.VIRKSOMHET &&
-                historikk.kvartalsvisSykefraværsprosent.length > 0
-        )
-    ) {
+    if (!harHistorikkForVirksomhet) {
         linjer = linjer.filter((name) => name !== 'virksomhet');
     }
 
     return linjer;
 };
 
-export const harHistorikkBransje = (sykefraværshistorikk: Sykefraværshistorikk[]): boolean =>
+export const finnesBransjeIDatagrunnlaget = (sykefraværshistorikk: Sykefraværshistorikk[]): boolean =>
     !!sykefraværshistorikk.find((historikk) => historikk.type === SykefraværshistorikkType.BRANSJE);
 
 export const getLinjerMedLabel = (sykefraværshistorikk: Sykefraværshistorikk[]): LinjerMedLabel => {
@@ -110,7 +108,7 @@ export const getLinjerMedLabel = (sykefraværshistorikk: Sykefraværshistorikk[]
             : 'Ingen tilgjengelig data';
     };
 
-    const harBransje = harHistorikkBransje(sykefraværshistorikk);
+    const harBransje = finnesBransjeIDatagrunnlaget(sykefraværshistorikk);
 
     return {
         virksomhet: labelForType(SykefraværshistorikkType.VIRKSOMHET),

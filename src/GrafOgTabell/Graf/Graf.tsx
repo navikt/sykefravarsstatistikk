@@ -9,8 +9,8 @@ import 'nav-frontend-tabell-style';
 import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
     getLinjerMedLabel,
-    getLinjerSomMatcherHistorikk,
-    harHistorikkBransje,
+    getLinjerSomHistorikkenHarDataFor,
+    finnesBransjeIDatagrunnlaget,
     hentFørsteKvartalFraAlleÅreneIDatagrunnlaget,
     lagTickString,
 } from './graf-utils';
@@ -50,7 +50,7 @@ const Graf: FunctionComponent<Props> = (props) => {
         };
     });
 
-    const harBransje = harHistorikkBransje(props.sykefraværshistorikk);
+    const harBransje = finnesBransjeIDatagrunnlaget(props.sykefraværshistorikk);
     const linjerMedLabel = getLinjerMedLabel(props.sykefraværshistorikk);
 
     const punkterPåXAksenSomSkalMarkeres: string[] = hentFørsteKvartalFraAlleÅreneIDatagrunnlaget(
@@ -83,7 +83,7 @@ const Graf: FunctionComponent<Props> = (props) => {
                 {grafLegend(
                     linjerMedLabel,
                     harBransje,
-                    getLinjerSomMatcherHistorikk(props.sykefraværshistorikk)
+                    getLinjerSomHistorikkenHarDataFor(props.sykefraværshistorikk)
                 )}
                 {grafLinjer()}
             </LineChart>
