@@ -66,7 +66,7 @@ const Graf: FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <LegendMedToggles linjerMedLabel={linjerMedLabel} />
+            <LegendMedToggles linjerMedLabel={linjerMedLabel} harBransje={harBransje} />
             <ResponsiveContainer minHeight={700}>
                 <LineChart data={kvartalsvisSammenligningData} margin={margin}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
