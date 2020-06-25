@@ -15,7 +15,6 @@ import {
 import XAkseTick from './XAkseTick';
 import { useInnerWidth } from '../../utils/innerWidth-hook';
 import { konverterTilKvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
-import { LegendMedToggles } from './LegendMedToggles/LegendMedToggles';
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
@@ -80,33 +79,30 @@ const Graf: FunctionComponent<Props> = (props) => {
     const tickMargin = innerWidth < 500 ? 5 : 20;
 
     return (
-        <>
-            <LegendMedToggles />
-            <ResponsiveContainer minHeight={700}>
-                <LineChart data={kvartalsvisSammenligningData} margin={margin}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
-                    <XAxis
-                        dataKey="name"
-                        tickMargin={tickMargin}
-                        tickFormatter={(tickValue) => tickValue.substring(0, 4)}
-                        ticks={punkterPåXAksenSomSkalMarkeres}
-                        tick={XAkseTick}
-                    />
-                    <YAxis
-                        tickMargin={tickMargin}
-                        tickFormatter={(tickValue) => tickValue + ' %'}
-                        width={40}
-                    />
-                    {grafTooltip(harBransje)}
-                    {grafLegend(
-                        linjerMedLabel,
-                        harBransje,
-                        getLinjerSomMatcherHistorikk(props.sykefraværshistorikk)
-                    )}
-                    {grafLinjer()}
-                </LineChart>
-            </ResponsiveContainer>
-        </>
+        <ResponsiveContainer minHeight={700}>
+            <LineChart data={kvartalsvisSammenligningData} margin={margin}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
+                <XAxis
+                    dataKey="name"
+                    tickMargin={tickMargin}
+                    tickFormatter={(tickValue) => tickValue.substring(0, 4)}
+                    ticks={punkterPåXAksenSomSkalMarkeres}
+                    tick={XAkseTick}
+                />
+                <YAxis
+                    tickMargin={tickMargin}
+                    tickFormatter={(tickValue) => tickValue + ' %'}
+                    width={40}
+                />
+                {grafTooltip(harBransje)}
+                {grafLegend(
+                    linjerMedLabel,
+                    harBransje,
+                    getLinjerSomMatcherHistorikk(props.sykefraværshistorikk)
+                )}
+                {grafLinjer()}
+            </LineChart>
+        </ResponsiveContainer>
     );
 };
 
