@@ -3,6 +3,7 @@ import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
 import { Linje, LinjerMedLabel } from '../graf-utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { GrafSymbol } from '../GrafSymbol';
+import { LegendCheckbox } from './LegendCheckbox';
 
 interface Props {
     linjerMedLabel: LinjerMedLabel;
@@ -25,63 +26,23 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
             setLinjerSomSkalVises([...linjerSomSkalVises, linje]);
         }
     };
+
+    const fellesprops = {
+        linjerSomSkalVises,
+        linjerMedLabel,
+        onChange,
+    };
     return (
         <CheckboxGruppe>
-            <Checkbox
-                checked={linjerSomSkalVises.includes('virksomhet')}
-                value="virksomhet"
-                onChange={onChange}
-                label={
-                    <div className="graf-legend__tekst">
-                        <GrafSymbol linje="virksomhet" />
-                        <Element tag="span" className="graf-legend__tekst-element">
-                            Virksomhet:
-                        </Element>{' '}
-                        <Normaltekst tag="span">{linjerMedLabel.virksomhet}</Normaltekst>
-                    </div>
-                }
+            <LegendCheckbox linje="virksomhet" prefiks="Virksomhet:" {...fellesprops} />
+            <LegendCheckbox linje="overordnetEnhet" prefiks="Overordnet enhet:" {...fellesprops} />
+            <LegendCheckbox
+                linje="næringEllerBransje"
+                prefiks={harBransje ? 'Bransje:' : 'Næring:'}
+                {...fellesprops}
             />
-            <Checkbox
-                label={
-                    <div className="graf-legend__tekst">
-                        <GrafSymbol linje="overordnetEnhet" />
-                        <Element tag="span" className="graf-legend__tekst-element">
-                            Overordnet enhet:
-                        </Element>{' '}
-                        <Normaltekst tag="span">{linjerMedLabel.overordnetEnhet}</Normaltekst>
-                    </div>
-                }
-            />
-            <Checkbox
-                label={
-                    <div className="graf-legend__tekst">
-                        <GrafSymbol linje="næringEllerBransje" />
-                        <Element tag="span" className="graf-legend__tekst-element">
-                            {harBransje ? 'Bransje:' : 'Næring:'}
-                        </Element>{' '}
-                        <Normaltekst tag="span">{linjerMedLabel.næringEllerBransje}</Normaltekst>
-                    </div>
-                }
-            />
-            <Checkbox
-                label={
-                    <div className="graf-legend__tekst">
-                        <GrafSymbol linje="sektor" />
-                        <Element tag="span" className="graf-legend__tekst-element">
-                            Sektor:
-                        </Element>{' '}
-                        <Normaltekst tag="span">{linjerMedLabel.sektor}</Normaltekst>
-                    </div>
-                }
-            />
-            <Checkbox
-                label={
-                    <div className="graf-legend__tekst">
-                        <GrafSymbol linje="land" />
-                        <Element tag="span">{linjerMedLabel.land}</Element>
-                    </div>
-                }
-            />
+            <LegendCheckbox linje="sektor" prefiks="Sektor:" {...fellesprops} />
+            <LegendCheckbox linje="land" prefiks="" {...fellesprops} />
         </CheckboxGruppe>
     );
 };

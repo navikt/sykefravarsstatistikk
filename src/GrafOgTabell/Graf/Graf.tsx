@@ -23,8 +23,6 @@ const Graf: FunctionComponent<Props> = (props) => {
         linjerSomKanVises
     );
     const setLinjerSomSkalVises = (linjer: Linje[]) => {
-        console.log(linjer)
-        // TODO Litt hacky dette her
         const alleLinjer = Object.keys(linjerSomKanVises);
         const nyeLinjer = { ...linjerSomKanVises };
         alleLinjer.forEach((linje) => {
