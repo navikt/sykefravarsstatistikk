@@ -6,9 +6,11 @@ import grafLinjer from './grafLinjer';
 
 import './Graf.less';
 import 'nav-frontend-tabell-style';
-import { Sykefraværshistorikk, SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
+import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
+    getLinjerMedLabel,
     getLinjerSomMatcherHistorikk,
+    harHistorikkBransje,
     hentFørsteKvartalFraAlleÅreneIDatagrunnlaget,
     lagTickString,
 } from './graf-utils';
@@ -48,25 +50,8 @@ const Graf: FunctionComponent<Props> = (props) => {
         };
     });
 
-    const labelForType = (type: SykefraværshistorikkType): string => {
-        return props.sykefraværshistorikk.find((historikk) => historikk.type === type)!
-            ? props.sykefraværshistorikk.find((historikk) => historikk.type === type)!.label
-            : 'Ingen tilgjengelig data';
-    };
-
-    const harBransje = !!props.sykefraværshistorikk.find(
-        (historikk) => historikk.type === SykefraværshistorikkType.BRANSJE
-    );
-
-    const linjerMedLabel = {
-        virksomhet: labelForType(SykefraværshistorikkType.VIRKSOMHET),
-        overordnetEnhet: labelForType(SykefraværshistorikkType.OVERORDNET_ENHET),
-        næringEllerBransje: labelForType(
-            harBransje ? SykefraværshistorikkType.BRANSJE : SykefraværshistorikkType.NÆRING
-        ),
-        sektor: labelForType(SykefraværshistorikkType.SEKTOR),
-        land: labelForType(SykefraværshistorikkType.LAND),
-    };
+    const harBransje = harHistorikkBransje(props.sykefraværshistorikk);
+    const linjerMedLabel = getLinjerMedLabel(props.sykefraværshistorikk);
 
     const punkterPåXAksenSomSkalMarkeres: string[] = hentFørsteKvartalFraAlleÅreneIDatagrunnlaget(
         kvartalsvisSammenligning

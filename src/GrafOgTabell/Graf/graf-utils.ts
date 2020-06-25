@@ -11,10 +11,8 @@ export type Linje =
     | 'land'
     | string;
 
-enum Hei {'hei'}
-
 export type LinjerMedLabel = {
-    [linje in Linje]: string
+    [linje in Linje]: string;
 };
 
 interface GrafConfig {
@@ -100,4 +98,27 @@ export const getLinjerSomMatcherHistorikk = (
     }
 
     return linjer;
+};
+
+export const harHistorikkBransje = (sykefraværshistorikk: Sykefraværshistorikk[]): boolean =>
+    !!sykefraværshistorikk.find((historikk) => historikk.type === SykefraværshistorikkType.BRANSJE);
+
+export const getLinjerMedLabel = (sykefraværshistorikk: Sykefraværshistorikk[]): LinjerMedLabel => {
+    const labelForType = (type: SykefraværshistorikkType): string => {
+        return sykefraværshistorikk.find((historikk) => historikk.type === type)!
+            ? sykefraværshistorikk.find((historikk) => historikk.type === type)!.label
+            : 'Ingen tilgjengelig data';
+    };
+
+    const harBransje = harHistorikkBransje(sykefraværshistorikk);
+
+    return {
+        virksomhet: labelForType(SykefraværshistorikkType.VIRKSOMHET),
+        overordnetEnhet: labelForType(SykefraværshistorikkType.OVERORDNET_ENHET),
+        næringEllerBransje: labelForType(
+            harBransje ? SykefraværshistorikkType.BRANSJE : SykefraværshistorikkType.NÆRING
+        ),
+        sektor: labelForType(SykefraværshistorikkType.SEKTOR),
+        land: labelForType(SykefraværshistorikkType.LAND),
+    };
 };
