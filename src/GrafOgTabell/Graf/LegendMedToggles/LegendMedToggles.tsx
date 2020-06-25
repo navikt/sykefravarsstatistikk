@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
-import { getFarge, getSymbol, LinjerMedLabel } from '../graf-utils';
-import SymbolSvg from '../SymbolSvg';
+import { LinjerMedLabel } from '../graf-utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { GrafSymbol } from '../GrafSymbol';
 
