@@ -13,6 +13,7 @@ interface Props {
     hjelpetekst?: string | ReactElement;
     placeholder?: string;
     visSpinner?: boolean;
+    step?: number;
 }
 
 export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
@@ -30,6 +31,7 @@ export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
                 type="number"
                 className="kalkulator__input"
                 placeholder={props.placeholder}
+                step={props.step}
             />
             {props.visSpinner && (
                 <NavFrontendSpinner className="kalkulator__spinner" transparent={true} />

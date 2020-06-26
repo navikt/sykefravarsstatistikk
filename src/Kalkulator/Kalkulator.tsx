@@ -16,7 +16,7 @@ interface Props {
 const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
     const [antallTapteDagsverkEllerProsent, setAntalltapteDagsverkEllerProsent] = useState<
         AntallTapteDagsverkEllerProsent
-    >(AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK);
+    >(AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT);
 
     const sendEvent = useSendEvent();
 
@@ -33,7 +33,10 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                 <Radio
                     label="Tapte dagsverk"
                     name="antallTapteDagsverk"
-                    defaultChecked={true}
+                    checked={
+                        antallTapteDagsverkEllerProsent ===
+                        AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
+                    }
                     onChange={() => {
                         setAntalltapteDagsverkEllerProsent(
                             AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
@@ -44,6 +47,10 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                 <Radio
                     label="Sykefraværsprosent"
                     name="antallTapteDagsverk"
+                    checked={
+                        antallTapteDagsverkEllerProsent ===
+                        AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                    }
                     onChange={() => {
                         setAntalltapteDagsverkEllerProsent(
                             AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT

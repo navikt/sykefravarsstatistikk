@@ -17,6 +17,7 @@ import {
 } from './kalkulator-utils';
 import { useSendEvent } from '../amplitude/amplitude';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import { Kalkulatorrad } from './Kalkulatorrad';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -60,7 +61,6 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
     const validerTapteDagsverk = (tapteDagsverk: number): boolean => {
         return !(tapteDagsverk < 0);
     };
-
 
     const sendEventOmEndretInput = () => {
         sendEvent('kalkulator input prosent', 'endret');
@@ -138,105 +138,71 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
         scrollToBanner();
     }, []);
 
-    const nåværendeTapteDagsverkSiste12Mnd = restSykefraværshistorikk.status ===
-        RestStatus.Suksess &&
-        skalViseDefaultTapteDagsverk && (
-            <Hjelpetekst>
-                <Normaltekst className="kalkulator__hjelpetekst-innhold">
-                    Sykefraværsprosenten regnes ut fra antall tapte dagsverk delt på antall mulige
-                    dagsverk. Mulige dagsverk de siste 12 månedene er hentet fra det dere har meldt
-                    inn i A-ordningen.
-                </Normaltekst>
-            </Hjelpetekst>
-        );
-    const ønsketTapteDagsverkSiste12Mnd = restSykefraværshistorikk.status === RestStatus.Suksess &&
-        skalViseDefaultTapteDagsverk && (
-            <Hjelpetekst>
-                <Normaltekst className="kalkulator__hjelpetekst-innhold">
-                    Ønsket sykefraværsprosent regnes ut fra ønsket antall tapte dagsverk delt på
-                    antall mulige dagsverk dere har hatt de siste 12 månedene. Denne informasjonen
-                    hentes fra det dere har meldt inn i A-ordningen.
-                </Normaltekst>
-            </Hjelpetekst>
-        );
+    const nåværendeTapteDagsverkSiste12MndHjelpetekst =
+        restSykefraværshistorikk.status === RestStatus.Suksess && skalViseDefaultTapteDagsverk
+            ? 'Sykefraværsprosenten regnes ut fra antall tapte dagsverk delt på antall mulige dagsverk. ' +
+              'Mulige dagsverk de siste 12 månedene er hentet fra det dere har meldt inn i A-ordningen.'
+            : undefined;
 
-    const tapteDagsverkSpinner = restSykefraværshistorikk.status === RestStatus.IkkeLastet && (
-        <NavFrontendSpinner className="kalkulator__spinner" transparent={true} />
-    );
+    const ønsketTapteDagsverkSiste12MndHjelpetekst =
+        restSykefraværshistorikk.status === RestStatus.Suksess && skalViseDefaultTapteDagsverk
+            ? 'Ønsket sykefraværsprosent regnes ut fra ønsket antall tapte dagsverk delt på antall mulige ' +
+              'dagsverk dere har hatt de siste 12 månedene. Denne informasjonen hentes fra det dere har meldt inn i A-ordningen.'
+            : undefined;
 
     return (
         <>
             <div>
-                <div className="kalkulator__rad">
-                    <Element className="kalkulator__label_fast_størrelse">
-                        Kostnad per dag per ansatt i kroner
-                    </Element>
-                    <Input
-                        label={''}
-                        onChange={(event) => setKostnadDagsverk(parseInt(event.target.value))}
-                        onClick={sendEventOmEndretInput}
-                        value={kostnadDagsverk || ''}
-                        bredde={'XS'}
-                        maxLength={15}
-                        type="number"
-                        className="kalkulator__input"
-                        placeholder="kr"
-                    />
-                    <Hjelpetekst>
-                        <Normaltekst className="kalkulator__hjelpetekst-innhold">
+                <Kalkulatorrad
+                    onChange={(event) => setKostnadDagsverk(parseInt(event.target.value))}
+                    onClick={sendEventOmEndretInput}
+                    value={kostnadDagsverk}
+                    label="Kostnad per dag per ansatt i kroner"
+                    placeholder="kr"
+                    hjelpetekst={
+                        <>
                             Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
                             beregnet SINTEF og NHO at hver uke med sykefravær koster en arbeidsgiver
                             i snitt 13 000 kr. Det vil si 2600 kr per dag.{' '}
                             <EksternLenke href="https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/">
                                 Les mer om hva som påvirker kostnader ved sykefravær.
                             </EksternLenke>
-                        </Normaltekst>
-                    </Hjelpetekst>
-                </div>
-                {!skalViseDefaultTapteDagsverk && antallMuligeDagsverkForMaskerteBedrifeter}
-                <div className="kalkulator__rad">
-                    <Element className="kalkulator__label_fast_størrelse">
-                        Nåværende sykefravær i prosent
-                    </Element>
-                    <Input
-                        label={''}
-                        onChange={(event) =>
-                            validerOgSettNåværendeSykefraværsprosent(parseFloat(event.target.value))
-                        }
+                        </>
+                    }
+                />
+                {!skalViseDefaultTapteDagsverk && (
+                    <Kalkulatorrad
+                        label="Antall mulige dagsverk per år"
+                        onChange={(event) => setVerdiMuligeDagsverk(parseFloat(event.target.value))}
                         onClick={sendEventOmEndretInput}
-                        value={nåværendeSykefraværsprosent}
-                        bredde={'XS'}
-                        maxLength={15}
-                        type="number"
-                        placeholder={'0'}
-                        step={0.1}
-                        className="kalkulator__input"
+                        value={muligeDagsverk}
+                        hjelpetekst="Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år"
+                        placeholder="0"
                     />
-                    {tapteDagsverkSpinner}
-                    {nåværendeTapteDagsverkSiste12Mnd}
-                </div>
-                <div className="kalkulator__rad">
-                    <Element className="kalkulator__label_fast_størrelse">
-                        Ønsket sykefravær i prosent
-                    </Element>
-                    <Input
-                        label={''}
-                        onChange={(event) =>
-                            validerOgSettØnsketSykefraværsprosent(
-                                parseFloat(event.target.value)
-                            )
-                        }
-                        onClick={sendEventOmEndretInput}
-                        value={ønsketSykefraværsprosent}
-                        placeholder={'0'}
-                        step={0.1}
-                        bredde={'XS'}
-                        maxLength={15}
-                        type="number"
-                        className="kalkulator__input"
-                    />
-                    {ønsketTapteDagsverkSiste12Mnd}
-                </div>
+                )}
+                <Kalkulatorrad
+                    onChange={(event) =>
+                        validerOgSettNåværendeSykefraværsprosent(parseFloat(event.target.value))
+                    }
+                    onClick={sendEventOmEndretInput}
+                    value={nåværendeSykefraværsprosent}
+                    label="Nåværende sykefravær i prosent"
+                    step={0.1}
+                    placeholder="0"
+                    visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
+                    hjelpetekst={nåværendeTapteDagsverkSiste12MndHjelpetekst}
+                />
+                <Kalkulatorrad
+                    onChange={(event) =>
+                        validerOgSettØnsketSykefraværsprosent(parseFloat(event.target.value))
+                    }
+                    onClick={sendEventOmEndretInput}
+                    value={ønsketSykefraværsprosent}
+                    label="Ønsket sykefravær i prosent"
+                    placeholder="0"
+                    step={0.1}
+                    hjelpetekst={ønsketTapteDagsverkSiste12MndHjelpetekst}
+                />
             </div>
             <Kostnad
                 nåværendeKostnad={getKostnadForSykefraværsprosent(
