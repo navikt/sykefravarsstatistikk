@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from 'react';
-import { Linje, LinjerMedLabel } from '../graf-utils';
-import { GrafSymbol } from '../GrafSymbol';
+import { Linje, LinjerMedLabel } from '../../graf-utils';
+import { GrafSymbol } from '../../GrafSymbol';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Checkbox } from 'nav-frontend-skjema';
+import './LegendChechbox.less';
 
 interface Props {
     linje: Linje;
@@ -24,14 +25,12 @@ export const LegendCheckbox: FunctionComponent<Props> = ({
         value={linje}
         onChange={onChange}
         label={
-            <div className="graf-legend__tekst">
-                <GrafSymbol linje={linje} />
+            <div className="legend-checkbox">
+                <GrafSymbol linje={linje} className="legend-checkbox__symbol" />
                 {prefiks && (
-                    <>
-                        <Element tag="span" className="graf-legend__tekst-element">
-                            {prefiks}
-                        </Element>{' '}
-                    </>
+                    <Element tag="span" className="legend-checkbox__prefiks">
+                        {prefiks}
+                    </Element>
                 )}
                 <Normaltekst tag="span">{linjerMedLabel[linje]}</Normaltekst>
             </div>

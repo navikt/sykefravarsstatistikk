@@ -1,6 +1,6 @@
 import { Line, Symbols } from 'recharts';
 import React from 'react';
-import { getFarge, getSymbol, grafConfig, Linje } from './graf-utils';
+import { getFarge, getSymbol, Linje } from './graf-utils';
 
 const lineWidth = 2;
 const dotSize = 40;

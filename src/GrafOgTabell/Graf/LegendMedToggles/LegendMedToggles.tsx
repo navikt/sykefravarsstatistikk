@@ -1,9 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import { Checkbox, CheckboxGruppe } from 'nav-frontend-skjema';
+import { CheckboxGruppe } from 'nav-frontend-skjema';
 import { Linje, LinjerMedLabel } from '../graf-utils';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { GrafSymbol } from '../GrafSymbol';
-import { LegendCheckbox } from './LegendCheckbox';
+import { LegendCheckbox } from './LegendChechbox/LegendCheckbox';
+import './LegendMedToggles.less';
 
 interface Props {
     linjerMedLabel: LinjerMedLabel;
@@ -33,16 +32,22 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
         onChange,
     };
     return (
-        <CheckboxGruppe>
-            <LegendCheckbox linje="virksomhet" prefiks="Virksomhet:" {...fellesprops} />
-            <LegendCheckbox linje="overordnetEnhet" prefiks="Overordnet enhet:" {...fellesprops} />
-            <LegendCheckbox
-                linje="næringEllerBransje"
-                prefiks={harBransje ? 'Bransje:' : 'Næring:'}
-                {...fellesprops}
-            />
-            <LegendCheckbox linje="sektor" prefiks="Sektor:" {...fellesprops} />
-            <LegendCheckbox linje="land" prefiks="" {...fellesprops} />
-        </CheckboxGruppe>
+        <div className="legend-med-toggles">
+            <CheckboxGruppe>
+                <LegendCheckbox linje="virksomhet" prefiks="Virksomhet:" {...fellesprops} />
+                <LegendCheckbox
+                    linje="overordnetEnhet"
+                    prefiks="Overordnet enhet:"
+                    {...fellesprops}
+                />
+                <LegendCheckbox
+                    linje="næringEllerBransje"
+                    prefiks={harBransje ? 'Bransje:' : 'Næring:'}
+                    {...fellesprops}
+                />
+                <LegendCheckbox linje="sektor" prefiks="Sektor:" {...fellesprops} />
+                <LegendCheckbox linje="land" prefiks="" {...fellesprops} />
+            </CheckboxGruppe>
+        </div>
     );
 };

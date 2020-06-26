@@ -62,7 +62,7 @@ const GrafVisning: FunctionComponent<Props> = ({
     const tickMargin = innerWidth < 500 ? 5 : 20;
 
     return (
-        <ResponsiveContainer minHeight={700}>
+        <ResponsiveContainer minHeight={400}>
             <LineChart data={kvartalsvisSammenligningData} margin={margin}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
                 <XAxis

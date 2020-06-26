@@ -9,7 +9,6 @@ import {
     Linje,
     LinjerMedLabel,
 } from './graf-utils';
-import { konverterTilKvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
 import { LegendMedToggles } from './LegendMedToggles/LegendMedToggles';
 import GrafVisning from './GrafVisning';
 
