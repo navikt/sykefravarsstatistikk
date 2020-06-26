@@ -16,7 +16,7 @@ interface Props {
 const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
     const [antallTapteDagsverkEllerProsent, setAntalltapteDagsverkEllerProsent] = useState<
         AntallTapteDagsverkEllerProsent
-    >(AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT);
+    >(AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK);
 
     const sendEvent = useSendEvent();
 
