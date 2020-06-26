@@ -89,32 +89,6 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
         }
     }, [restSykefraværshistorikk, harEndretTapteDagsverk, skalViseDefaultTapteDagsverk]);
 
-    const nåværendeTapteDagsverkSiste12Mnd = restSykefraværshistorikk.status ===
-        RestStatus.Suksess &&
-        skalViseDefaultTapteDagsverk && (
-            <Hjelpetekst>
-                <Normaltekst className="kalkulator__hjelpetekst-innhold">
-                    Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes ut
-                    fra det legemeldte sykefraværet de siste 12 månedene og er tilgjengelig i NAVs
-                    datagrunnlag.
-                </Normaltekst>
-            </Hjelpetekst>
-        );
-
-    const ønsketTapteDagsverkSiste12Mnd = restSykefraværshistorikk.status === RestStatus.Suksess &&
-        skalViseDefaultTapteDagsverk && (
-            <Hjelpetekst>
-                <Normaltekst className="kalkulator__hjelpetekst-innhold">
-                    Et dagsverk er arbeid som utføres på en dag. Antall ønsket tapte dagsverk selv
-                    velge for det ønskede legemeldte sykefraværet de siste 12 månedene for å beregne
-                    hvor mye du kan spare.
-                </Normaltekst>
-            </Hjelpetekst>
-        );
-    const tapteDagsverkSpinner = restSykefraværshistorikk.status === RestStatus.IkkeLastet && (
-        <NavFrontendSpinner className="kalkulator__spinner" transparent={true} />
-    );
-
     return (
         <>
             <div>
@@ -143,6 +117,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                     value={nåværendeTapteDagsverk}
                     label={nåværendeTapteDagsverkLabel}
                     placeholder="0"
+                    visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
                 />
                 <Kalkulatorrad
                     onChange={(event) =>

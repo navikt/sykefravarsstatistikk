@@ -3,6 +3,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
+import NavFrontendSpinner from 'nav-frontend-spinner';
 
 interface Props {
     onChange: (event: any) => void;
@@ -11,6 +12,7 @@ interface Props {
     label: string;
     hjelpetekst?: string | ReactElement;
     placeholder?: string;
+    visSpinner?: boolean;
 }
 
 export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
@@ -29,6 +31,9 @@ export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
                 className="kalkulator__input"
                 placeholder={props.placeholder}
             />
+            {props.visSpinner && (
+                <NavFrontendSpinner className="kalkulator__spinner" transparent={true} />
+            )}
             {props.hjelpetekst && (
                 <Hjelpetekst>
                     <Normaltekst className="kalkulator__hjelpetekst-innhold">
