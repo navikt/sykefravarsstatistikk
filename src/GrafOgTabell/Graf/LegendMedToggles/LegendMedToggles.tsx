@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { CheckboxGruppe } from 'nav-frontend-skjema';
-import { Linje, LabelsForLinjer } from '../graf-utils';
+import { LabelsForLinjer, Linje } from '../graf-utils';
 import { LegendCheckbox } from './LegendChechbox/LegendCheckbox';
 import './LegendMedToggles.less';
 
@@ -26,7 +26,7 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
         }
     };
 
-    const fellesprops = {
+    const checkboxProps = {
         linjerSomSkalVises,
         labels,
         onChange,
@@ -34,19 +34,19 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
     return (
         <div className="legend-med-toggles">
             <CheckboxGruppe>
-                <LegendCheckbox linje="virksomhet" prefiks="Virksomhet:" {...fellesprops} />
+                <LegendCheckbox linje="virksomhet" prefiks="Virksomhet:" {...checkboxProps} />
                 <LegendCheckbox
                     linje="overordnetEnhet"
                     prefiks="Overordnet enhet:"
-                    {...fellesprops}
+                    {...checkboxProps}
                 />
                 <LegendCheckbox
                     linje="næringEllerBransje"
                     prefiks={harBransje ? 'Bransje:' : 'Næring:'}
-                    {...fellesprops}
+                    {...checkboxProps}
                 />
-                <LegendCheckbox linje="sektor" prefiks="Sektor:" {...fellesprops} />
-                <LegendCheckbox linje="land" prefiks="" {...fellesprops} />
+                <LegendCheckbox linje="sektor" prefiks="Sektor:" {...checkboxProps} />
+                <LegendCheckbox linje="land" {...checkboxProps} />
             </CheckboxGruppe>
         </div>
     );
