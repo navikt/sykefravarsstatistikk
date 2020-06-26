@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Linje, LinjerMedLabel } from '../../graf-utils';
+import { Linje, LabelsForLinjer } from '../../graf-utils';
 import { GrafSymbol } from '../../GrafSymbol';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Checkbox } from 'nav-frontend-skjema';
@@ -7,10 +7,10 @@ import './LegendChechbox.less';
 
 interface Props {
     linje: Linje;
-    prefiks?: string;
+    prefiks: string;
     linjerSomSkalVises: Linje[];
     onChange: (e: any) => any; // TODO
-    linjerMedLabel: LinjerMedLabel;
+    labels: LabelsForLinjer;
 }
 
 export const LegendCheckbox: FunctionComponent<Props> = ({
@@ -18,7 +18,7 @@ export const LegendCheckbox: FunctionComponent<Props> = ({
     prefiks,
     linjerSomSkalVises,
     onChange,
-    linjerMedLabel,
+    labels,
 }) => (
     <Checkbox
         checked={linjerSomSkalVises.includes(linje)}
@@ -27,12 +27,10 @@ export const LegendCheckbox: FunctionComponent<Props> = ({
         label={
             <div className="legend-checkbox">
                 <GrafSymbol linje={linje} className="legend-checkbox__symbol" />
-                {prefiks && (
-                    <Element tag="span" className="legend-checkbox__prefiks">
-                        {prefiks}
-                    </Element>
-                )}
-                <Normaltekst tag="span">{linjerMedLabel[linje]}</Normaltekst>
+                <Element tag="span" className="legend-checkbox__prefiks">
+                    {prefiks}
+                </Element>
+                <Normaltekst tag="span">{labels[linje]}</Normaltekst>
             </div>
         }
     />

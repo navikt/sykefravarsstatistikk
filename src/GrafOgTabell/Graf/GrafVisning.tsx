@@ -6,11 +6,7 @@ import grafLinjer from './grafLinjer';
 import './Graf.less';
 import 'nav-frontend-tabell-style';
 import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
-import {
-    hentFørsteKvartalFraAlleÅreneIDatagrunnlaget,
-    lagTickString,
-    LinjerMedLabel,
-} from './graf-utils';
+import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString, Linje } from './graf-utils';
 import XAkseTick from './XAkseTick';
 import { useInnerWidth } from '../../utils/innerWidth-hook';
 import { konverterTilKvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
@@ -18,7 +14,7 @@ import { konverterTilKvartalsvisSammenligning } from '../../utils/sykefraværshi
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
     harBransje: boolean;
-    linjerSomSkalVises: LinjerMedLabel;
+    linjerSomSkalVises: Linje[];
 }
 
 const GrafVisning: FunctionComponent<Props> = ({
@@ -78,7 +74,7 @@ const GrafVisning: FunctionComponent<Props> = ({
                     width={40}
                 />
                 {grafTooltip(harBransje)}
-                {grafLinjer(Object.keys(linjerSomSkalVises))}
+                {grafLinjer(linjerSomSkalVises)}
             </LineChart>
         </ResponsiveContainer>
     );

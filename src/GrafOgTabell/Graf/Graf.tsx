@@ -7,7 +7,7 @@ import {
     finnesBransjeIHistorikken,
     getLinjeneSomFinnesIHistorikkenMedLabels,
     Linje,
-    LinjerMedLabel,
+    LabelsForLinjer,
 } from './graf-utils';
 import { LegendMedToggles } from './LegendMedToggles/LegendMedToggles';
 import GrafVisning from './GrafVisning';
@@ -18,28 +18,18 @@ interface Props {
 
 const Graf: FunctionComponent<Props> = (props) => {
     const linjerSomKanVises = getLinjeneSomFinnesIHistorikkenMedLabels(props.sykefraværshistorikk);
-    const [linjerSomSkalVises, setLinjerSomSkalVisesMedLabel] = useState<LinjerMedLabel>(
-        linjerSomKanVises
+    const [linjerSomSkalVises, setLinjerSomSkalVises] = useState<Linje[]>(
+        Object.keys(linjerSomKanVises)
     );
-    const setLinjerSomSkalVises = (linjer: Linje[]) => {
-        const alleLinjer = Object.keys(linjerSomKanVises);
-        const nyeLinjer = { ...linjerSomKanVises };
-        alleLinjer.forEach((linje) => {
-            if (!linjer.includes(linje)) {
-                delete nyeLinjer[linje];
-            }
-        });
-        setLinjerSomSkalVisesMedLabel(nyeLinjer);
-    };
 
     const harBransje = finnesBransjeIHistorikken(props.sykefraværshistorikk);
 
     return (
         <>
             <LegendMedToggles
-                linjerMedLabel={linjerSomKanVises}
-                linjerSomSkalVises={Object.keys(linjerSomSkalVises)}
+                labels={linjerSomKanVises}
                 harBransje={harBransje}
+                linjerSomSkalVises={Object.keys(linjerSomSkalVises)}
                 setLinjerSomSkalVises={setLinjerSomSkalVises}
             />
             <GrafVisning

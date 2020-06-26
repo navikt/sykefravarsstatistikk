@@ -3,10 +3,10 @@ import React from 'react';
 import './grafLegend.less';
 import SymbolSvg from '../SymbolSvg';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { getFarge, getSymbol, Linje, LinjerMedLabel } from '../graf-utils';
+import { getFarge, getSymbol, Linje, LabelsForLinjer } from '../graf-utils';
 
 const grafLegend = (
-    linjerMedLabel: LinjerMedLabel,
+    linjerMedLabel: LabelsForLinjer,
     harBransje: boolean,
     linjer: Linje[]
 ) => {

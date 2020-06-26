@@ -11,7 +11,7 @@ export type Linje =
     | 'land'
     | string;
 
-export type LinjerMedLabel = {
+export type LabelsForLinjer = {
     [linje in Linje]: string;
 };
 
@@ -101,7 +101,7 @@ export const getLinjerSomHistorikkenHarDataFor = (
 export const finnesBransjeIHistorikken = (sykefraværshistorikk: Sykefraværshistorikk[]): boolean =>
     !!sykefraværshistorikk.find((historikk) => historikk.type === SykefraværshistorikkType.BRANSJE);
 
-export const getLinjeneSomFinnesIHistorikkenMedLabels = (sykefraværshistorikk: Sykefraværshistorikk[]): LinjerMedLabel => {
+export const getLinjeneSomFinnesIHistorikkenMedLabels = (sykefraværshistorikk: Sykefraværshistorikk[]): LabelsForLinjer => {
     const labelForType = (type: SykefraværshistorikkType): string => {
         return sykefraværshistorikk.find((historikk) => historikk.type === type)!
             ? sykefraværshistorikk.find((historikk) => historikk.type === type)!.label

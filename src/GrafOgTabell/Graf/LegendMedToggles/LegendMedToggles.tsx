@@ -1,21 +1,21 @@
 import React, { FunctionComponent } from 'react';
 import { CheckboxGruppe } from 'nav-frontend-skjema';
-import { Linje, LinjerMedLabel } from '../graf-utils';
+import { Linje, LabelsForLinjer } from '../graf-utils';
 import { LegendCheckbox } from './LegendChechbox/LegendCheckbox';
 import './LegendMedToggles.less';
 
 interface Props {
-    linjerMedLabel: LinjerMedLabel;
+    labels: LabelsForLinjer;
     harBransje: boolean;
-    setLinjerSomSkalVises: (linjer: Linje[]) => void;
     linjerSomSkalVises: Linje[];
+    setLinjerSomSkalVises: (linjer: Linje[]) => void;
 }
 
 export const LegendMedToggles: FunctionComponent<Props> = ({
-    linjerMedLabel,
+    labels,
     harBransje,
-    setLinjerSomSkalVises,
     linjerSomSkalVises,
+    setLinjerSomSkalVises,
 }) => {
     const onChange = (e: any) => {
         const linje = e.target.value;
@@ -28,7 +28,7 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
 
     const fellesprops = {
         linjerSomSkalVises,
-        linjerMedLabel,
+        labels,
         onChange,
     };
     return (
