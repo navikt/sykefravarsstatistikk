@@ -11,12 +11,11 @@ import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import {
     AntallTapteDagsverkEllerProsent,
     getAntallTapteDagsverkSiste4Kvartaler,
-    getTotalKostnad,
     getKostnadForAntallDagsverk,
-    getØnsketKostnad,
 } from './kalkulator-utils';
 import { useSendEvent } from '../amplitude/amplitude';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import { Kalkulatorrad } from './Kalkulatorrad';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -120,32 +119,11 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
     return (
         <>
             <div>
-                <div className="kalkulator__rad">
-                    <Element className="kalkulator__label_fast_størrelse">
-                        Kostnad per dag per ansatt i kroner
-                    </Element>
-                    <Input
-                        label={''}
-                        onChange={(event) => setKostnadDagsverk(parseInt(event.target.value))}
-                        onClick={sendEventOmEndretInput}
-                        value={kostnadDagsverk || ''}
-                        bredde={'XS'}
-                        maxLength={15}
-                        type="number"
-                        className="kalkulator__input"
-                        placeholder="kr"
-                    />
-                    <Hjelpetekst>
-                        <Normaltekst className="kalkulator__hjelpetekst-innhold">
-                            Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
-                            beregnet SINTEF og NHO at hver uke med sykefravær koster en arbeidsgiver
-                            i snitt 13 000 kr. Det vil si 2600 kr per dag.{' '}
-                            <EksternLenke href="https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/">
-                                Les mer om hva som påvirker kostnader ved sykefravær.
-                            </EksternLenke>
-                        </Normaltekst>
-                    </Hjelpetekst>
-                </div>
+                <Kalkulatorrad
+                    onChange={(event) => setKostnadDagsverk(parseInt(event.target.value))}
+                    onClick={sendEventOmEndretInput}
+                    value={kostnadDagsverk}
+                />
                 <div className="kalkulator__rad">
                     <Element className="kalkulator__label_fast_størrelse">
                         {nåværendeTapteDagsverkLabel}
@@ -174,9 +152,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                     <Input
                         label={''}
                         onChange={(event) =>
-                            validerOgSettØnsketTapteDagsverk(
-                                parseFloat(event.target.value)
-                            )
+                            validerOgSettØnsketTapteDagsverk(parseFloat(event.target.value))
                         }
                         onClick={sendEventOmEndretInput}
                         value={ønsketTapteDagsverk}

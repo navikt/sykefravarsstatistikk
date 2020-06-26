@@ -2,8 +2,6 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './Kalkulator.less';
 import { Radio } from 'nav-frontend-skjema';
-import { RestStatus } from '../api/api-utils';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import { scrollToBanner } from '../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { AntallTapteDagsverkEllerProsent } from './kalkulator-utils';
@@ -29,7 +27,9 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     const radioProsentEllerAntall = (
         <>
             <div>
-                <div className="kalkulator__radiogrouplabel">Beregn kostnad basert på</div>
+                <Normaltekst className="kalkulator__radiogrouplabel">
+                    Beregn kostnad basert på
+                </Normaltekst>
                 <Radio
                     label="Tapte dagsverk"
                     name="antallTapteDagsverk"

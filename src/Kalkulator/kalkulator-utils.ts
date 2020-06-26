@@ -83,6 +83,21 @@ export const getKostnadForAntallDagsverk = (
     }
 };
 
+export const getKostnadForSykefraværsprosent = (
+    kostnadDagsverk: number | undefined,
+    nåværendeSykefraværsprosent: number | undefined,
+    muligeDagsverk: number | undefined,
+) => {
+    if (
+        kostnadDagsverk &&
+        nåværendeSykefraværsprosent &&
+        !isNaN(nåværendeSykefraværsprosent) &&
+        muligeDagsverk
+    ) {
+        return ((nåværendeSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
+    } else return 0;
+};
+
 export const getTotalKostnad = (
     kostnadDagsverk: number | undefined,
     nåværendeSykefraværsprosent: number | undefined,

@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import './Kalkulator.less';
-import { Input, Radio } from 'nav-frontend-skjema';
+import { Input } from 'nav-frontend-skjema';
 import Kostnad from './Kostnad/Kostnad';
 import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
@@ -11,10 +11,8 @@ import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import {
     AntallTapteDagsverkEllerProsent,
     getAntallMuligeDagsverkSiste4Kvartaler,
-    getAntallTapteDagsverkSiste4Kvartaler,
+    getKostnadForSykefraværsprosent,
     getSykefraværsprosentSiste4Kvartaler,
-    getTotalKostnad,
-    getØnsketKostnad,
     Maskering,
 } from './kalkulator-utils';
 import { useSendEvent } from '../amplitude/amplitude';
@@ -27,8 +25,6 @@ interface Props {
 export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
     const sendEvent = useSendEvent();
     const { restSykefraværshistorikk } = props;
-    const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<number | undefined>();
-    const [ønsketTapteDagsverk, setØnsketTapteDagsverk] = useState<number | undefined>();
     const [muligeDagsverk, setMuligeDagsverk] = useState<number | undefined>();
     const [nåværendeSykefraværsprosent, setNåværendeSykefraværsprosent] = useState<
         number | undefined
@@ -40,14 +36,10 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
     >();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
-    const harEndretTapteDagsverk = nåværendeTapteDagsverk !== undefined;
     const harEndretSykefraværsprosent = nåværendeSykefraværsprosent !== undefined;
 
-    const labelsNåværendeTapteDagsverkEllerProsent = 'Nåværende sykefravær i prosent';
-    const labelsØnsketTapteDagsverkEllerProsent = 'Ønsket sykefravær i prosent';
-
-    const setVerdiAntallTapteDagsverkEllerProsent = (verdi: number) => {
-        if (!erVerdiAkseptabeltProsent(verdi)) {
+    const validerOgSettNåværendeSykefraværsprosent = (verdi: number) => {
+        if (!validerSykefraværsprosent(verdi)) {
             return;
         }
         try {
@@ -56,25 +48,26 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
             setNåværendeSykefraværsprosent(0);
         }
     };
-    const setØnsketVerdiAntallTapteDagsverkEllerProsent = (verdi: number) => {
-        if (!erVerdiAkseptabeltProsent(verdi)) {
+    const validerOgSettØnsketSykefraværsprosent = (verdi: number) => {
+        if (!validerSykefraværsprosent(verdi)) {
             return;
         }
         setØnsketSykefraværsprosent(Number(verdi.toFixed(1)));
     };
-    const erVerdiAkseptabeltProsent = (verdi: number): boolean => {
-        return !(verdi < 0 || verdi > 100);
+    const validerSykefraværsprosent = (prosent: number): boolean => {
+        return !(prosent < 0 || prosent > 100);
     };
-    const erVerdiAkseptabelt = (verdi: number): boolean => {
-        return !(verdi < 0);
+    const validerTapteDagsverk = (tapteDagsverk: number): boolean => {
+        return !(tapteDagsverk < 0);
     };
+
 
     const sendEventOmEndretInput = () => {
         sendEvent('kalkulator input prosent', 'endret');
     };
 
     function setVerdiMuligeDagsverk(verdi: number) {
-        if (!skalViseDefaultTapteDagsverk && erVerdiAkseptabelt(verdi)) {
+        if (!skalViseDefaultTapteDagsverk && validerTapteDagsverk(verdi)) {
             setMuligeDagsverk(verdi);
         }
     }
@@ -105,8 +98,6 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
     );
     useEffect(() => {
         if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
-            setNåværendeTapteDagsverk(undefined);
-            setØnsketTapteDagsverk(undefined);
             setMuligeDagsverk(undefined);
             setNåværendeSykefraværsprosent(undefined);
         }
@@ -115,7 +106,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
     useEffect(() => {
         if (
             restSykefraværshistorikk.status === RestStatus.Suksess &&
-            (!harEndretTapteDagsverk || !harEndretSykefraværsprosent)
+            !harEndretSykefraværsprosent
         ) {
             const muligeDagsverkSiste4Kvartaler = getAntallMuligeDagsverkSiste4Kvartaler(
                 restSykefraværshistorikk.data
@@ -141,12 +132,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                 setSkalViseDefaultTapteDagsverk(true);
             }
         }
-    }, [
-        restSykefraværshistorikk,
-        harEndretTapteDagsverk,
-        harEndretSykefraværsprosent,
-        skalViseDefaultTapteDagsverk,
-    ]);
+    }, [restSykefraværshistorikk, harEndretSykefraværsprosent, skalViseDefaultTapteDagsverk]);
 
     useEffect(() => {
         scrollToBanner();
@@ -210,12 +196,12 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                 {!skalViseDefaultTapteDagsverk && antallMuligeDagsverkForMaskerteBedrifeter}
                 <div className="kalkulator__rad">
                     <Element className="kalkulator__label_fast_størrelse">
-                        {labelsNåværendeTapteDagsverkEllerProsent}
+                        Nåværende sykefravær i prosent
                     </Element>
                     <Input
                         label={''}
                         onChange={(event) =>
-                            setVerdiAntallTapteDagsverkEllerProsent(parseFloat(event.target.value))
+                            validerOgSettNåværendeSykefraværsprosent(parseFloat(event.target.value))
                         }
                         onClick={sendEventOmEndretInput}
                         value={nåværendeSykefraværsprosent}
@@ -231,12 +217,12 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                 </div>
                 <div className="kalkulator__rad">
                     <Element className="kalkulator__label_fast_størrelse">
-                        {labelsØnsketTapteDagsverkEllerProsent}
+                        Ønsket sykefravær i prosent
                     </Element>
                     <Input
                         label={''}
                         onChange={(event) =>
-                            setØnsketVerdiAntallTapteDagsverkEllerProsent(
+                            validerOgSettØnsketSykefraværsprosent(
                                 parseFloat(event.target.value)
                             )
                         }
@@ -253,19 +239,15 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                 </div>
             </div>
             <Kostnad
-                nåværendeKostnad={getTotalKostnad(
+                nåværendeKostnad={getKostnadForSykefraværsprosent(
                     kostnadDagsverk,
                     nåværendeSykefraværsprosent,
-                    muligeDagsverk,
-                    nåværendeTapteDagsverk,
-                    AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                    muligeDagsverk
                 )}
-                ønsketKostnad={getØnsketKostnad(
+                ønsketKostnad={getKostnadForSykefraværsprosent(
                     kostnadDagsverk,
                     ønsketSykefraværsprosent,
-                    muligeDagsverk,
-                    ønsketTapteDagsverk,
-                    AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                    muligeDagsverk
                 )}
                 ønsketRedusert={ønsketSykefraværsprosent as number}
                 antallTapteDagsverkEllerProsent={AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT}
