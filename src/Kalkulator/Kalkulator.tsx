@@ -24,43 +24,6 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
         scrollToBanner();
     }, []);
 
-    const radioProsentEllerAntall = (
-        <>
-            <div>
-                <Normaltekst className="kalkulator__radiogrouplabel">
-                    Beregn kostnad basert på
-                </Normaltekst>
-                <Radio
-                    label="Tapte dagsverk"
-                    name="antallTapteDagsverk"
-                    checked={
-                        antallTapteDagsverkEllerProsent ===
-                        AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
-                    }
-                    onChange={() => {
-                        setAntalltapteDagsverkEllerProsent(
-                            AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
-                        );
-                        sendEvent('kalkulator radio basertpadagsverk', 'klikk');
-                    }}
-                />
-                <Radio
-                    label="Sykefraværsprosent"
-                    name="antallTapteDagsverk"
-                    checked={
-                        antallTapteDagsverkEllerProsent ===
-                        AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                    }
-                    onChange={() => {
-                        setAntalltapteDagsverkEllerProsent(
-                            AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                        );
-                        sendEvent('kalkulator radio basertpaprosent', 'klikk');
-                    }}
-                />
-            </div>
-        </>
-    );
     return (
         <div className="kalkulator__wrapper">
             <div className="kalkulator">
@@ -71,7 +34,39 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                     <Normaltekst className="kalkulator__ingress">
                         Se hva sykefraværet koster, og hvor mye virksomheten deres kan spare.
                     </Normaltekst>
-                    {radioProsentEllerAntall}
+                    <div>
+                        <Normaltekst className="kalkulator__radiogrouplabel">
+                            Beregn kostnad basert på
+                        </Normaltekst>
+                        <Radio
+                            label="Tapte dagsverk"
+                            name="antallTapteDagsverk"
+                            checked={
+                                antallTapteDagsverkEllerProsent ===
+                                AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
+                            }
+                            onChange={() => {
+                                setAntalltapteDagsverkEllerProsent(
+                                    AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
+                                );
+                                sendEvent('kalkulator radio basertpadagsverk', 'klikk');
+                            }}
+                        />
+                        <Radio
+                            label="Sykefraværsprosent"
+                            name="antallTapteDagsverk"
+                            checked={
+                                antallTapteDagsverkEllerProsent ===
+                                AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                            }
+                            onChange={() => {
+                                setAntalltapteDagsverkEllerProsent(
+                                    AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                                );
+                                sendEvent('kalkulator radio basertpaprosent', 'klikk');
+                            }}
+                        />
+                    </div>
                     {antallTapteDagsverkEllerProsent ===
                     AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK ? (
                         <KalkulatorMedDagsverk
