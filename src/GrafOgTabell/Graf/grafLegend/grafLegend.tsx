@@ -1,7 +1,7 @@
 import { Legend, LegendProps } from 'recharts';
 import React from 'react';
 import './grafLegend.less';
-import SymbolSvg from '../SymbolSvg';
+import SymbolSvg from '../GrafSymbol/SymbolSvg';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { getFarge, getSymbol, Linje, LabelsForLinjer } from '../graf-utils';
 

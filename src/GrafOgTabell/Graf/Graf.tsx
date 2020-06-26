@@ -29,7 +29,7 @@ const Graf: FunctionComponent<Props> = (props) => {
             <LegendMedToggles
                 labels={linjerSomKanVises}
                 harBransje={harBransje}
-                linjerSomSkalVises={Object.keys(linjerSomSkalVises)}
+                linjerSomSkalVises={linjerSomSkalVises}
                 setLinjerSomSkalVises={setLinjerSomSkalVises}
             />
             <GrafVisning

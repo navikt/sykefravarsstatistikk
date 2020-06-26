@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { getFarge, getSymbol, Linje } from './graf-utils';
+import { getFarge, getSymbol, Linje } from '../graf-utils';
 import SymbolSvg from './SymbolSvg';
 import classNames from 'classnames';
 
