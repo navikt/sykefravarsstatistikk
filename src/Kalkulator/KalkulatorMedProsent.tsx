@@ -66,36 +66,12 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
         sendEvent('kalkulator input prosent', 'endret');
     };
 
-    function setVerdiMuligeDagsverk(verdi: number) {
-        if (!skalViseDefaultTapteDagsverk && validerTapteDagsverk(verdi)) {
-            setMuligeDagsverk(verdi);
+    const validerOgSettMuligeDagsverk = (muligeDagsverk: number) => {
+        if (!skalViseDefaultTapteDagsverk && validerTapteDagsverk(muligeDagsverk)) {
+            setMuligeDagsverk(muligeDagsverk);
         }
-    }
+    };
 
-    const antallMuligeDagsverkForMaskerteBedrifeter = (
-        <div className="kalkulator__rad">
-            <Element className="kalkulator__label_fast_størrelse">
-                Antall mulige dagsverk per år
-            </Element>
-            <Input
-                label={''}
-                onChange={(event) => setVerdiMuligeDagsverk(parseFloat(event.target.value))}
-                onClick={sendEventOmEndretInput}
-                value={muligeDagsverk}
-                bredde={'XS'}
-                maxLength={15}
-                type="number"
-                placeholder={'0'}
-                step="1"
-                className="kalkulator__input"
-            />
-            <Hjelpetekst>
-                <Normaltekst className="kalkulator__hjelpetekst-innhold">
-                    Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år
-                </Normaltekst>
-            </Hjelpetekst>
-        </div>
-    );
     useEffect(() => {
         if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
             setMuligeDagsverk(undefined);
@@ -173,7 +149,9 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                 {!skalViseDefaultTapteDagsverk && (
                     <Kalkulatorrad
                         label="Antall mulige dagsverk per år"
-                        onChange={(event) => setVerdiMuligeDagsverk(parseFloat(event.target.value))}
+                        onChange={(event) =>
+                            validerOgSettMuligeDagsverk(parseFloat(event.target.value))
+                        }
                         onClick={sendEventOmEndretInput}
                         value={muligeDagsverk}
                         hjelpetekst="Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år"
