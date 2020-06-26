@@ -101,7 +101,9 @@ export const getLinjerSomHistorikkenHarDataFor = (
 export const finnesBransjeIHistorikken = (sykefraværshistorikk: Sykefraværshistorikk[]): boolean =>
     !!sykefraværshistorikk.find((historikk) => historikk.type === SykefraværshistorikkType.BRANSJE);
 
-export const getLinjeneSomFinnesIHistorikkenMedLabels = (sykefraværshistorikk: Sykefraværshistorikk[]): LabelsForLinjer => {
+export const getLabelsForLinjene = (
+    sykefraværshistorikk: Sykefraværshistorikk[]
+): LabelsForLinjer => {
     const labelForType = (type: SykefraværshistorikkType): string => {
         return sykefraværshistorikk.find((historikk) => historikk.type === type)!
             ? sykefraværshistorikk.find((historikk) => historikk.type === type)!.label
@@ -119,4 +121,27 @@ export const getLinjeneSomFinnesIHistorikkenMedLabels = (sykefraværshistorikk: 
         sektor: labelForType(SykefraværshistorikkType.SEKTOR),
         land: labelForType(SykefraværshistorikkType.LAND),
     };
+};
+
+export const getLinjerSomHarData = (sykefraværshistorikk: Sykefraværshistorikk[]): Linje[] => {
+    const harData = (type: SykefraværshistorikkType) => {
+        const historikk = sykefraværshistorikk.find((historikk) => historikk.type === type);
+        if (!historikk) {
+            return false;
+        }
+        const historikkHarData = !!historikk.kvartalsvisSykefraværsprosent.find(
+            (prosent) => prosent !== null && prosent !== undefined
+        );
+        return historikkHarData;
+    };
+
+    const linjerSomHarData: Linje[] = [];
+    if (harData(SykefraværshistorikkType.VIRKSOMHET)) linjerSomHarData.push('virksomhet');
+    if (harData(SykefraværshistorikkType.OVERORDNET_ENHET))
+        linjerSomHarData.push('overordnetEnhet');
+    if (harData(SykefraværshistorikkType.BRANSJE) || harData(SykefraværshistorikkType.NÆRING))
+        linjerSomHarData.push('næringEllerBransje');
+    if (harData(SykefraværshistorikkType.SEKTOR)) linjerSomHarData.push('sektor');
+    if (harData(SykefraværshistorikkType.LAND)) linjerSomHarData.push('land');
+    return linjerSomHarData;
 };

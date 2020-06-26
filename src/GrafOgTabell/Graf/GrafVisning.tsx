@@ -25,7 +25,7 @@ const GrafVisning: FunctionComponent<Props> = ({
     const innerWidth = useInnerWidth();
 
     const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(sykefraværshistorikk);
-
+    console.log(kvartalsvisSammenligning);
     const kvartalsvisSammenligningData = kvartalsvisSammenligning.map((sammenligning) => {
         const {
             årstall,

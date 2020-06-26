@@ -5,9 +5,10 @@ import 'nav-frontend-tabell-style';
 import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
     finnesBransjeIHistorikken,
-    getLinjeneSomFinnesIHistorikkenMedLabels,
+    getLabelsForLinjene,
     Linje,
     LabelsForLinjer,
+    getLinjerSomHarData,
 } from './graf-utils';
 import { LegendMedToggles } from './LegendMedToggles/LegendMedToggles';
 import GrafVisning from './GrafVisning';
@@ -17,9 +18,10 @@ interface Props {
 }
 
 const Graf: FunctionComponent<Props> = (props) => {
-    const linjerSomKanVises = getLinjeneSomFinnesIHistorikkenMedLabels(props.sykefraværshistorikk);
+    const labelsForLinjer = getLabelsForLinjene(props.sykefraværshistorikk);
+    const linjerSomKanVises = getLinjerSomHarData(props.sykefraværshistorikk);
     const [linjerSomSkalVises, setLinjerSomSkalVises] = useState<Linje[]>(
-        Object.keys(linjerSomKanVises)
+        Object.keys(labelsForLinjer)
     );
 
     const harBransje = finnesBransjeIHistorikken(props.sykefraværshistorikk);
@@ -27,8 +29,9 @@ const Graf: FunctionComponent<Props> = (props) => {
     return (
         <>
             <LegendMedToggles
-                labels={linjerSomKanVises}
+                labels={labelsForLinjer}
                 harBransje={harBransje}
+                linjerSomKanVises={linjerSomKanVises}
                 linjerSomSkalVises={linjerSomSkalVises}
                 setLinjerSomSkalVises={setLinjerSomSkalVises}
             />

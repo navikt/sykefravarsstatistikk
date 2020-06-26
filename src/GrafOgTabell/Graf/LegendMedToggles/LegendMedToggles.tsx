@@ -7,6 +7,7 @@ import './LegendMedToggles.less';
 interface Props {
     labels: LabelsForLinjer;
     harBransje: boolean;
+    linjerSomKanVises: Linje[];
     linjerSomSkalVises: Linje[];
     setLinjerSomSkalVises: (linjer: Linje[]) => void;
 }
@@ -14,6 +15,7 @@ interface Props {
 export const LegendMedToggles: FunctionComponent<Props> = ({
     labels,
     harBransje,
+    linjerSomKanVises,
     linjerSomSkalVises,
     setLinjerSomSkalVises,
 }) => {
@@ -31,22 +33,26 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
         labels,
         onChange,
     };
+
+    const prefikser: { [linje in Linje]: string } = {
+        virksomhet: 'Virksomhet:',
+        overordnetEnhet: 'Overordnet enhet:',
+        næringEllerBransje: harBransje ? 'Bransje:' : 'Næring:',
+        sektor: 'Sektor:',
+        land: 'Land:',
+    };
+
     return (
         <div className="legend-med-toggles">
             <CheckboxGruppe>
-                <LegendCheckbox linje="virksomhet" prefiks="Virksomhet:" {...checkboxProps} />
-                <LegendCheckbox
-                    linje="overordnetEnhet"
-                    prefiks="Overordnet enhet:"
-                    {...checkboxProps}
-                />
-                <LegendCheckbox
-                    linje="næringEllerBransje"
-                    prefiks={harBransje ? 'Bransje:' : 'Næring:'}
-                    {...checkboxProps}
-                />
-                <LegendCheckbox linje="sektor" prefiks="Sektor:" {...checkboxProps} />
-                <LegendCheckbox linje="land" {...checkboxProps} />
+                {linjerSomKanVises.map((linje) => (
+                    <LegendCheckbox
+                        key={linje}
+                        {...checkboxProps}
+                        linje={linje}
+                        prefiks={prefikser[linje]}
+                    />
+                ))}
             </CheckboxGruppe>
         </div>
     );
