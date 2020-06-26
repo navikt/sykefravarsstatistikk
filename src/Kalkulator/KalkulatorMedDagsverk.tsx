@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import './Kalkulator.less';
-import { Input } from 'nav-frontend-skjema';
 import Kostnad from './Kostnad/Kostnad';
 import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
@@ -123,48 +122,37 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                     onChange={(event) => setKostnadDagsverk(parseInt(event.target.value))}
                     onClick={sendEventOmEndretInput}
                     value={kostnadDagsverk}
+                    label="Kostnad per dag per ansatt i kroner"
+                    placeholder="kr"
+                    hjelpetekst={
+                        <>
+                            Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
+                            beregnet SINTEF og NHO at hver uke med sykefravær koster en arbeidsgiver
+                            i snitt 13 000 kr. Det vil si 2600 kr per dag.{' '}
+                            <EksternLenke href="https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/">
+                                Les mer om hva som påvirker kostnader ved sykefravær.
+                            </EksternLenke>
+                        </>
+                    }
                 />
-                <div className="kalkulator__rad">
-                    <Element className="kalkulator__label_fast_størrelse">
-                        {nåværendeTapteDagsverkLabel}
-                    </Element>
-                    <Input
-                        label={''}
-                        onChange={(event) =>
-                            validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value))
-                        }
-                        onClick={sendEventOmEndretInput}
-                        value={nåværendeTapteDagsverk}
-                        bredde={'XS'}
-                        maxLength={15}
-                        type="number"
-                        placeholder={'0'}
-                        step={1}
-                        className="kalkulator__input"
-                    />
-                    {tapteDagsverkSpinner}
-                    {nåværendeTapteDagsverkSiste12Mnd}
-                </div>
-                <div className="kalkulator__rad">
-                    <Element className="kalkulator__label_fast_størrelse">
-                        {ønsketTapteDagsverkLabel}
-                    </Element>
-                    <Input
-                        label={''}
-                        onChange={(event) =>
-                            validerOgSettØnsketTapteDagsverk(parseFloat(event.target.value))
-                        }
-                        onClick={sendEventOmEndretInput}
-                        value={ønsketTapteDagsverk}
-                        placeholder={'0'}
-                        step={1}
-                        bredde={'XS'}
-                        maxLength={15}
-                        type="number"
-                        className="kalkulator__input"
-                    />
-                    {ønsketTapteDagsverkSiste12Mnd}
-                </div>
+                <Kalkulatorrad
+                    onChange={(event) =>
+                        validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value))
+                    }
+                    onClick={sendEventOmEndretInput}
+                    value={nåværendeTapteDagsverk}
+                    label={nåværendeTapteDagsverkLabel}
+                    placeholder="0"
+                />
+                <Kalkulatorrad
+                    onChange={(event) =>
+                        validerOgSettØnsketTapteDagsverk(parseFloat(event.target.value))
+                    }
+                    onClick={sendEventOmEndretInput}
+                    value={ønsketTapteDagsverk}
+                    placeholder={'0'}
+                    label={ønsketTapteDagsverkLabel}
+                />
             </div>
             <Kostnad
                 nåværendeKostnad={getKostnadForAntallDagsverk(
