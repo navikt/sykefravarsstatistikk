@@ -12,6 +12,7 @@ import {
     AntallTapteDagsverkEllerProsent,
     getAntallTapteDagsverkSiste4Kvartaler,
     getTotalKostnad,
+    getKostnadForAntallDagsverk,
     getØnsketKostnad,
 } from './kalkulator-utils';
 import { useSendEvent } from '../amplitude/amplitude';
@@ -30,7 +31,6 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
     const [nåværendeSykefraværsprosent, setNåværendeSykefraværsprosent] = useState<
         number | undefined
     >();
-    const [ønsketSykefraværsprosent, setØnsketSykefraværsprosent] = useState<number | undefined>();
 
     const [skalViseDefaultTapteDagsverk, setSkalViseDefaultTapteDagsverk] = useState<
         boolean | undefined
@@ -38,7 +38,6 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
     const harEndretTapteDagsverk = nåværendeTapteDagsverk !== undefined;
-    const harEndretSykefraværsprosent = nåværendeSykefraværsprosent !== undefined;
 
     const labelsNåværendeTapteDagsverkEllerProsent = skalViseDefaultTapteDagsverk
         ? 'Nåværende antall tapte dagsverk siste 12 måneder'
@@ -79,10 +78,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
     }, [restSykefraværshistorikk]);
 
     useEffect(() => {
-        if (
-            restSykefraværshistorikk.status === RestStatus.Suksess &&
-            (!harEndretTapteDagsverk || !harEndretSykefraværsprosent)
-        ) {
+        if (restSykefraværshistorikk.status === RestStatus.Suksess && !harEndretTapteDagsverk) {
             const tapteDagsverkSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(
                 restSykefraværshistorikk.data
             );
@@ -96,12 +92,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                 setSkalViseDefaultTapteDagsverk(true);
             }
         }
-    }, [
-        restSykefraværshistorikk,
-        harEndretTapteDagsverk,
-        harEndretSykefraværsprosent,
-        skalViseDefaultTapteDagsverk,
-    ]);
+    }, [restSykefraværshistorikk, harEndretTapteDagsverk, skalViseDefaultTapteDagsverk]);
 
     useEffect(() => {
         scrollToBanner();
@@ -207,20 +198,11 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                 </div>
             </div>
             <Kostnad
-                nåværendeKostnad={getTotalKostnad(
+                nåværendeKostnad={getKostnadForAntallDagsverk(
                     kostnadDagsverk,
-                    nåværendeSykefraværsprosent,
-                    muligeDagsverk,
-                    nåværendeTapteDagsverk,
-                    AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
+                    nåværendeTapteDagsverk
                 )}
-                ønsketKostnad={getØnsketKostnad(
-                    kostnadDagsverk,
-                    ønsketSykefraværsprosent,
-                    muligeDagsverk,
-                    ønsketTapteDagsverk,
-                    AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
-                )}
+                ønsketKostnad={getKostnadForAntallDagsverk(kostnadDagsverk, ønsketTapteDagsverk)}
                 ønsketRedusert={ønsketTapteDagsverk as number}
                 antallTapteDagsverkEllerProsent={
                     AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK

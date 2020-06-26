@@ -71,6 +71,18 @@ export const getSykefraværsprosentSiste4Kvartaler = (
         );
     }
 };
+
+export const getKostnadForAntallDagsverk = (
+    kostnadDagsverk: number | undefined,
+    nåværendeTapteDagsverk: number | undefined,
+) => {
+    if (nåværendeTapteDagsverk && !isNaN(nåværendeTapteDagsverk) && kostnadDagsverk) {
+        return nåværendeTapteDagsverk * kostnadDagsverk;
+    } else {
+        return 0;
+    }
+};
+
 export const getTotalKostnad = (
     kostnadDagsverk: number | undefined,
     nåværendeSykefraværsprosent: number | undefined,
@@ -93,6 +105,7 @@ export const getTotalKostnad = (
         return 0;
     }
 };
+
 export const getØnsketKostnad = (
     kostnadDagsverk: number | undefined,
     ønsketSykefraværsprosent: number | undefined,
