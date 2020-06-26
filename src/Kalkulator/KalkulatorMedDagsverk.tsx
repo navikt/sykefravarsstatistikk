@@ -10,12 +10,9 @@ import { scrollToBanner } from '../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import {
     AntallTapteDagsverkEllerProsent,
-    getAntallMuligeDagsverkSiste4Kvartaler,
     getAntallTapteDagsverkSiste4Kvartaler,
-    getSykefraværsprosentSiste4Kvartaler,
     getTotalKostnad,
     getØnsketKostnad,
-    Maskering,
 } from './kalkulator-utils';
 import { useSendEvent } from '../amplitude/amplitude';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
@@ -34,9 +31,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
         number | undefined
     >();
     const [ønsketSykefraværsprosent, setØnsketSykefraværsprosent] = useState<number | undefined>();
-    const antallTapteDagsverkEllerProsent = true
-        ? AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
-        : AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT;
+
     const [skalViseDefaultTapteDagsverk, setSkalViseDefaultTapteDagsverk] = useState<
         boolean | undefined
     >();
@@ -217,22 +212,19 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                     nåværendeSykefraværsprosent,
                     muligeDagsverk,
                     nåværendeTapteDagsverk,
-                    antallTapteDagsverkEllerProsent
+                    AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
                 )}
                 ønsketKostnad={getØnsketKostnad(
                     kostnadDagsverk,
                     ønsketSykefraværsprosent,
                     muligeDagsverk,
                     ønsketTapteDagsverk,
-                    antallTapteDagsverkEllerProsent
+                    AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
                 )}
-                ønsketRedusert={
-                    antallTapteDagsverkEllerProsent ===
-                    AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                        ? (ønsketSykefraværsprosent as number)
-                        : (ønsketTapteDagsverk as number)
+                ønsketRedusert={ønsketTapteDagsverk as number}
+                antallTapteDagsverkEllerProsent={
+                    AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
                 }
-                antallTapteDagsverkEllerProsent={antallTapteDagsverkEllerProsent}
             />
         </>
     );

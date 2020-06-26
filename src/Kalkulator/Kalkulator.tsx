@@ -1,24 +1,13 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './Kalkulator.less';
-import { Input, Radio } from 'nav-frontend-skjema';
-import Kostnad from './Kostnad/Kostnad';
+import { Radio } from 'nav-frontend-skjema';
 import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
 import { scrollToBanner } from '../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
-import {
-    AntallTapteDagsverkEllerProsent,
-    getAntallMuligeDagsverkSiste4Kvartaler,
-    getAntallTapteDagsverkSiste4Kvartaler,
-    getSykefraværsprosentSiste4Kvartaler,
-    getTotalKostnad,
-    getØnsketKostnad,
-    Maskering,
-} from './kalkulator-utils';
+import { AntallTapteDagsverkEllerProsent } from './kalkulator-utils';
 import { useSendEvent } from '../amplitude/amplitude';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 
