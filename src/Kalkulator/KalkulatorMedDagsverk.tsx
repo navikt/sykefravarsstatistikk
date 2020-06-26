@@ -27,42 +27,41 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
     const { restSykefraværshistorikk } = props;
     const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<number | undefined>();
     const [ønsketTapteDagsverk, setØnsketTapteDagsverk] = useState<number | undefined>();
-    const [muligeDagsverk, setMuligeDagsverk] = useState<number | undefined>();
-    const [nåværendeSykefraværsprosent, setNåværendeSykefraværsprosent] = useState<
-        number | undefined
-    >();
 
     const [skalViseDefaultTapteDagsverk, setSkalViseDefaultTapteDagsverk] = useState<
         boolean | undefined
     >();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
+    useEffect(() => {
+        scrollToBanner();
+    }, []);
+
     const harEndretTapteDagsverk = nåværendeTapteDagsverk !== undefined;
 
-    const labelsNåværendeTapteDagsverkEllerProsent = skalViseDefaultTapteDagsverk
+    const nåværendeTapteDagsverkLabel = skalViseDefaultTapteDagsverk
         ? 'Nåværende antall tapte dagsverk siste 12 måneder'
         : 'Antall tapte dagsverk i løpet av 12 måneder';
-    const labelsØnsketTapteDagsverkEllerProsent = skalViseDefaultTapteDagsverk
+    const ønsketTapteDagsverkLabel = skalViseDefaultTapteDagsverk
         ? 'Ønsket antall tapte dagsverk i en 12 måneders periode'
         : 'Ønsket antall tapte dagsverk i løpet av 12 måneder';
 
-    const setVerdiAntallTapteDagsverkEllerProsent = (verdi: number) => {
+    const validerTapteDagsverk = (tapteDagsverk: number): boolean => {
+        return !(tapteDagsverk < 0);
+    };
+
+    const validerOgSettNåværendeTapteDagsverk = (tapteDagsverk: number) => {
         try {
-            setNåværendeTapteDagsverk(Number(verdi.toFixed(0)));
+            setNåværendeTapteDagsverk(Number(tapteDagsverk.toFixed(0)));
         } catch (e) {
             setNåværendeTapteDagsverk(0);
         }
     };
-    const setØnsketVerdiAntallTapteDagsverkEllerProsent = (verdi: number) => {
-        if (!erVerdiAkseptabelt(verdi)) {
+    const validerOgSettØnsketTapteDagsverk = (tapteDagsverk: number) => {
+        if (!validerTapteDagsverk(tapteDagsverk)) {
             return;
         }
-
-        setØnsketTapteDagsverk(Number(verdi.toFixed(0)));
-    };
-
-    const erVerdiAkseptabelt = (verdi: number): boolean => {
-        return !(verdi < 0);
+        setØnsketTapteDagsverk(Number(tapteDagsverk.toFixed(0)));
     };
 
     const sendEventOmEndretInput = () => {
@@ -72,8 +71,6 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
         if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
             setNåværendeTapteDagsverk(undefined);
             setØnsketTapteDagsverk(undefined);
-            setMuligeDagsverk(undefined);
-            setNåværendeSykefraværsprosent(undefined);
         }
     }, [restSykefraværshistorikk]);
 
@@ -93,10 +90,6 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
             }
         }
     }, [restSykefraværshistorikk, harEndretTapteDagsverk, skalViseDefaultTapteDagsverk]);
-
-    useEffect(() => {
-        scrollToBanner();
-    }, []);
 
     const nåværendeTapteDagsverkSiste12Mnd = restSykefraværshistorikk.status ===
         RestStatus.Suksess &&
@@ -155,12 +148,12 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                 </div>
                 <div className="kalkulator__rad">
                     <Element className="kalkulator__label_fast_størrelse">
-                        {labelsNåværendeTapteDagsverkEllerProsent}
+                        {nåværendeTapteDagsverkLabel}
                     </Element>
                     <Input
                         label={''}
                         onChange={(event) =>
-                            setVerdiAntallTapteDagsverkEllerProsent(parseFloat(event.target.value))
+                            validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value))
                         }
                         onClick={sendEventOmEndretInput}
                         value={nåværendeTapteDagsverk}
@@ -176,12 +169,12 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                 </div>
                 <div className="kalkulator__rad">
                     <Element className="kalkulator__label_fast_størrelse">
-                        {labelsØnsketTapteDagsverkEllerProsent}
+                        {ønsketTapteDagsverkLabel}
                     </Element>
                     <Input
                         label={''}
                         onChange={(event) =>
-                            setØnsketVerdiAntallTapteDagsverkEllerProsent(
+                            validerOgSettØnsketTapteDagsverk(
                                 parseFloat(event.target.value)
                             )
                         }

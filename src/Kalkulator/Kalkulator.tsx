@@ -18,7 +18,7 @@ interface Props {
 const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
     const [antallTapteDagsverkEllerProsent, setAntalltapteDagsverkEllerProsent] = useState<
         AntallTapteDagsverkEllerProsent
-    >();
+    >(AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK);
 
     const sendEvent = useSendEvent();
 
@@ -54,10 +54,6 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
             </div>
         </>
     );
-    const tapteDagsverkSpinner = restSykefraværshistorikk.status === RestStatus.IkkeLastet && (
-        <NavFrontendSpinner className="kalkulator__spinner" transparent={true} />
-    );
-
     return (
         <div className="kalkulator__wrapper">
             <div className="kalkulator">
