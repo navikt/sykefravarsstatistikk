@@ -14,7 +14,6 @@ import SammenligningspanelOverskrift from './SammenligningspanelOverskrift';
 import SammenligningspanelFeilmelding from './SammenligningspanelFeilmelding';
 import NæringEllerBransjePanel from './NæringEllerBransjePanel/NæringEllerBransjePanel';
 import { Virksomhetspanel } from './Virksomhetspanel';
-import Sektorpanel from './Sektorpanel/Sektorpanel';
 import Landspanel from './Landspanel/Landspanel';
 import Skeleton from 'react-loading-skeleton';
 import { SammenligningspanelAlertStripe } from './SammenligningspanelAlertStripe/SammenligningspanelAlertStripe';
@@ -89,12 +88,6 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                                 sykefraværsprosent={sammenligningSisteKvartal.næringEllerBransje}
                                 sykefraværprosentLabel={labels.næringEllerBransje}
                                 harBransje={harBransje}
-                                className="sammenligningspanel__syfopanel"
-                            />
-                            <Sektorpanel
-                                laster={laster}
-                                sykefraværsprosent={sammenligningSisteKvartal.sektor}
-                                sykefraværprosentLabel={labels.sektor}
                                 className="sammenligningspanel__syfopanel"
                             />
                             <Landspanel
