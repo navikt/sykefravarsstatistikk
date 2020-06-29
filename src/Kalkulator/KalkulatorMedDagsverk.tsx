@@ -84,7 +84,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                 setSkalViseDefaultTapteDagsverk(true);
             }
         }
-    }, [restSykefraværshistorikk, harEndretTapteDagsverk, skalViseDefaultTapteDagsverk]);
+    }, [restSykefraværshistorikk, harEndretTapteDagsverk]);
 
     return (
         <>
