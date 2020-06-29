@@ -1,10 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import './Kalkulator.less';
-import { Input } from 'nav-frontend-skjema';
 import Kostnad from './Kostnad/Kostnad';
 import { RestStatus } from '../api/api-utils';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
 import { scrollToBanner } from '../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
@@ -16,7 +13,6 @@ import {
     Maskering,
 } from './kalkulator-utils';
 import { useSendEvent } from '../amplitude/amplitude';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { Kalkulatorrad } from './Kalkulatorrad';
 
 interface Props {
