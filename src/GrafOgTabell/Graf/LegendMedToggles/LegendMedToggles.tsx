@@ -22,8 +22,8 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
 }) => {
     const sendEvent = useSendEvent();
 
-    const onChange = (e: any) => {
-        const linje = e.target.value;
+    const onChange = (event: any) => {
+        const linje = event.target.value;
         if (linjerSomSkalVises.includes(linje)) {
             sendEvent('graf legend ' + linje, 'klikk', {
                 toggle: 'av',

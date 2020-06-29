@@ -9,7 +9,7 @@ interface Props {
     linje: Linje;
     prefiks?: string;
     linjerSomSkalVises: Linje[];
-    onChange: (e: any) => any; // TODO
+    onChange: (event: any) => void;
     labels: LabelsForLinjer;
 }
 
@@ -27,9 +27,11 @@ export const LegendCheckbox: FunctionComponent<Props> = ({
         label={
             <div className="legend-checkbox">
                 <GrafSymbol linje={linje} className="legend-checkbox__symbol" />
-                {prefiks && <Element tag="span" className="legend-checkbox__prefiks">
-                    {prefiks}
-                </Element>}
+                {prefiks && (
+                    <Element tag="span" className="legend-checkbox__prefiks">
+                        {prefiks}
+                    </Element>
+                )}
                 <Normaltekst tag="span">{labels[linje]}</Normaltekst>
             </div>
         }
