@@ -30,7 +30,7 @@ export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
                 maxLength={15}
                 type="number"
                 className="kalkulator__input"
-                placeholder={props.placeholder}
+                placeholder={props.placeholder || '0'}
                 step={props.step}
             />
             {props.visSpinner && (

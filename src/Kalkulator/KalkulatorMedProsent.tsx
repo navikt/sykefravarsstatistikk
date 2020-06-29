@@ -155,7 +155,6 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                         onClick={sendEventOmEndretInput}
                         value={muligeDagsverk}
                         hjelpetekst="Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år"
-                        placeholder="0"
                     />
                 )}
                 <Kalkulatorrad
@@ -166,7 +165,6 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                     value={nåværendeSykefraværsprosent}
                     label="Nåværende sykefravær i prosent"
                     step={0.1}
-                    placeholder="0"
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
                     hjelpetekst={nåværendeTapteDagsverkSiste12MndHjelpetekst}
                 />
@@ -177,7 +175,6 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                     onClick={sendEventOmEndretInput}
                     value={ønsketSykefraværsprosent}
                     label="Ønsket sykefravær i prosent"
-                    placeholder="0"
                     step={0.1}
                     hjelpetekst={ønsketTapteDagsverkSiste12MndHjelpetekst}
                 />

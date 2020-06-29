@@ -113,7 +113,6 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                     onClick={sendEventOmEndretInput}
                     value={nåværendeTapteDagsverk}
                     label={nåværendeTapteDagsverkLabel}
-                    placeholder="0"
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
                 />
                 <Kalkulatorrad
@@ -122,7 +121,6 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                     }
                     onClick={sendEventOmEndretInput}
                     value={ønsketTapteDagsverk}
-                    placeholder={'0'}
                     label={ønsketTapteDagsverkLabel}
                 />
             </div>
