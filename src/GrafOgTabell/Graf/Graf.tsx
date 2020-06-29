@@ -6,9 +6,8 @@ import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
     finnesBransjeIHistorikken,
     getLabelsForLinjene,
-    Linje,
-    LabelsForLinjer,
     getLinjerSomHarData,
+    Linje,
 } from './graf-utils';
 import { LegendMedToggles } from './LegendMedToggles/LegendMedToggles';
 import GrafVisning from './GrafVisning';
