@@ -4,48 +4,50 @@ import { ReactComponent as Kalkulatorikon } from './video.svg';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { sendMetrikker } from '../../utils/metrikk-api';
 import PanelBase from 'nav-frontend-paneler';
-import './VideoerPanel.less';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
-import VideoerPanelTogglet from './VideoerPanelTogglet';
+import './VideoerPanel.less';
 import { useSendEvent } from '../../amplitude/amplitude';
 
-const VideoerPanel: FunctionComponent<{ visNyttDesign: boolean }> = (props) => {
+const VideoerPanel: FunctionComponent = () => {
     const sendEvent = useSendEvent();
 
-    if (props.visNyttDesign) {
-        return <VideoerPanelTogglet />;
-    }
     return (
-        <PanelBase className="videoerpanel">
-            <Systemtittel className="videoerpanel__overskrift" tag="h2">
-                <Kalkulatorikon className="videoerpanel__illustrasjon" />
-                Videoer
-            </Systemtittel>
-            <Normaltekst className="videoerpanel__ingress">
-                Se NAVs videoer om hvordan du kan jobbe med sykefravær og arbeidsmiljø.
-            </Normaltekst>
+        <PanelBase className="videoerpaneltogglet">
+            <div className="videoerpaneltogglet__tekst-wrapper">
+                <Systemtittel className="videoerpaneltogglet__overskrift" tag="h2">
+                    <Kalkulatorikon className="videoerpaneltogglet__illustrasjon" />
+                    Hva kan du gjøre med sykefraværet?
+                </Systemtittel>
 
-            <EksternLenke
-                className="videoerpanel__lenke"
-                href="https://vimeo.com/showcase/6728595"
-                onClick={() => {
-                    sendMetrikker('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar');
-                    sendEvent('forside videoer redusering', 'klikk');
-                }}
-            >
-                Redusering av sykefravær
-            </EksternLenke>
+                <Normaltekst className="videoerpaneltogglet__ingress">
+                    Se NAVs informasjonsvideoer om hvordan du kan jobbe med sykefravær og
+                    arbeidsmiljø.
+                </Normaltekst>
+            </div>
 
-            <EksternLenke
-                className="videoerpanel__lenke"
-                href="https://vimeo.com/showcase/6728594"
-                onClick={() => {
-                    sendMetrikker('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet');
-                    sendEvent('forside videoer forebygging', 'klikk');
-                }}
-            >
-                Forebygge arbeidsmiljøet
-            </EksternLenke>
+            <div className="videoerpaneltogglet__lenke-wrapper">
+                <EksternLenke
+                    className="videoerpaneltogglet__lenke"
+                    href="https://vimeo.com/showcase/6728595"
+                    onClick={() => {
+                        sendMetrikker('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar');
+                        sendEvent('forside videoer folgeopp', 'klikk');
+                    }}
+                >
+                    Følge opp sykefravær
+                </EksternLenke>
+
+                <EksternLenke
+                    className="videoerpaneltogglet__lenke"
+                    href="https://vimeo.com/showcase/6728594"
+                    onClick={() => {
+                        sendMetrikker('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet');
+                        sendEvent('forside videoer forebygge', 'klikk');
+                    }}
+                >
+                    Forebygge sykefravær
+                </EksternLenke>
+            </div>
         </PanelBase>
     );
 };
