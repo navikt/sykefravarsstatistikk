@@ -10,8 +10,7 @@ import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
-import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
-import { useRestFeatureToggles } from './api/featureToggles';
+import { RestFeatureToggles } from './api/featureToggles';
 import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
@@ -36,6 +35,8 @@ import {
     AltinnOrganisasjonerProvider,
 } from './utils/altinnOrganisasjonerContext';
 import { useSetUserProperties } from './amplitude/userProperties';
+import { featureTogglesContext, FeatureTogglesProvider } from './utils/FeatureTogglesContext';
+import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -50,7 +51,9 @@ const App: FunctionComponent = () => {
                 <AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
                     <BedriftsmetrikkerProvider>
                         <SykefraværshistorikkProvider>
-                            <AppContent />
+                            <FeatureTogglesProvider>
+                                <AppContent />
+                            </FeatureTogglesProvider>
                         </SykefraværshistorikkProvider>
                     </BedriftsmetrikkerProvider>
                 </AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
@@ -67,7 +70,7 @@ const AppContent: FunctionComponent = () => {
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
-    const restFeatureToggles = useRestFeatureToggles();
+    const restFeatureToggles = useContext<RestFeatureToggles>(featureTogglesContext);
     const restBedriftsmetrikker = useContext<RestBedriftsmetrikker>(bedriftsmetrikkerContext);
     const location = useLocation();
 
@@ -91,7 +94,6 @@ const AppContent: FunctionComponent = () => {
     ) {
         innhold = <FeilFraAltinnSide />;
     } else {
-        const skalViseGraf = restFeatureToggles.data['arbeidsgiver.lanser-graf'];
         innhold = (
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
@@ -102,23 +104,23 @@ const AppContent: FunctionComponent = () => {
                     >
                         <Sammenligningspanel restSykefraværshistorikk={restSykefraværshistorikk} />
                         <KalkulatorPanel />
-                        {skalViseGraf && <Historikkpanel />}
-                        <VideoerPanel visNyttDesign={skalViseGraf} />
+                        <Historikkpanel />
+                        <VideoerPanel />
                     </Forside>
                 </Route>
                 <Route path={PATH_KALKULATOR} exact={true}>
                     <Brødsmulesti gjeldendeSide="kalkulator" />
                     <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk} />
                 </Route>
-                {skalViseGraf && (
-                    <Route path={PATH_HISTORIKK} exact={true}>
-                        <Brødsmulesti gjeldendeSide="historikk" />
-                        <GrafOgTabell
-                            restSykefraværsstatistikk={restSykefraværshistorikk}
-                            restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
-                        />
-                    </Route>
-                )}
+
+                <Route path={PATH_HISTORIKK} exact={true}>
+                    <Brødsmulesti gjeldendeSide="historikk" />
+                    <GrafOgTabell
+                        restSykefraværsstatistikk={restSykefraværshistorikk}
+                        restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
+                    />
+                </Route>
+
                 <Route path={PATH_IAWEB_REDIRECTSIDE} exact={true}>
                     <IAWebRedirectSide restSykefraværshistorikk={restSykefraværshistorikk}>
                         <IAWebRedirectPanel />

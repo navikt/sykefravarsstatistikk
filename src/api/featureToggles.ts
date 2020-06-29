@@ -7,18 +7,3 @@ export type FeatureToggles = {
 };
 
 export type RestFeatureToggles = LasterInn | Suksess<FeatureToggles>;
-
-export const useRestFeatureToggles = (): RestFeatureToggles => {
-    const [featureToggles, setFeatureToggles] = useState<RestFeatureToggles>({
-        status: RestStatus.LasterInn,
-    });
-
-    useEffect(() => {
-        const hentFeatureTogglesOgSettState = async () => {
-            setFeatureToggles(await hentRestFeatureToggles('arbeidsgiver.lanser-graf'));
-        };
-        hentFeatureTogglesOgSettState();
-    }, []);
-
-    return featureToggles;
-};
