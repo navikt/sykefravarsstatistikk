@@ -23,9 +23,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
     const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<number | undefined>();
     const [ønsketTapteDagsverk, setØnsketTapteDagsverk] = useState<number | undefined>();
 
-    const [skalViseDefaultTapteDagsverk, setSkalViseDefaultTapteDagsverk] = useState<
-        boolean | undefined
-    >();
+    const [erDataMaskert, setErDataMaskert] = useState<boolean | undefined>();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
     useEffect(() => {
@@ -49,31 +47,32 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
             if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
                 setNåværendeTapteDagsverk(0);
                 setØnsketTapteDagsverk(0);
-                setSkalViseDefaultTapteDagsverk(false);
+                setErDataMaskert(true);
             } else {
                 setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler);
                 setØnsketTapteDagsverk(Math.round(tapteDagsverkSiste4Kvartaler * 0.5));
-                setSkalViseDefaultTapteDagsverk(true);
+                setErDataMaskert(false);
             }
         }
-    }, [restSykefraværshistorikk, harEndretTapteDagsverk, setSkalViseDefaultTapteDagsverk]);
+    }, [restSykefraværshistorikk, harEndretTapteDagsverk, setErDataMaskert]);
 
-    const nåværendeTapteDagsverkLabel = skalViseDefaultTapteDagsverk
-        ? 'Nåværende antall tapte dagsverk siste 12 måneder'
-        : 'Antall tapte dagsverk i løpet av 12 måneder';
-    const ønsketTapteDagsverkLabel = skalViseDefaultTapteDagsverk
-        ? 'Ønsket antall tapte dagsverk i en 12 måneders periode'
-        : 'Ønsket antall tapte dagsverk i løpet av 12 måneder';
+    const nåværendeTapteDagsverkLabel = erDataMaskert
+        ? 'Antall tapte dagsverk i løpet av 12 måneder'
+        : 'Nåværende antall tapte dagsverk siste 12 måneder';
 
-    const antallTapteDagsverkHjelpetekst = skalViseDefaultTapteDagsverk
-        ? 'Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes ut fra det ' +
-          'legemeldte sykefraværet de siste 12 månedene og er tilgjengelig i NAVs datagrunnlag.'
-        : 'Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år';
+    const ønsketTapteDagsverkLabel = erDataMaskert
+        ? 'Ønsket antall tapte dagsverk i løpet av 12 måneder'
+        : 'Ønsket antall tapte dagsverk i en 12 måneders periode';
 
-    const ønsketTapteDagsverkHjelpetekst = skalViseDefaultTapteDagsverk
-        ? 'Et dagsverk er arbeid som utføres på en dag. Antall ønsket tapte dagsverk selv velge for det ønskede ' +
-          'legemeldte sykefraværet de siste 12 månedene for å beregne hvor mye du kan spare.'
-        : 'Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år';
+    const antallTapteDagsverkHjelpetekst = erDataMaskert
+        ? 'Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år'
+        : 'Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes ut fra det ' +
+          'legemeldte sykefraværet de siste 12 månedene og er tilgjengelig i NAVs datagrunnlag.';
+
+    const ønsketTapteDagsverkHjelpetekst = erDataMaskert
+        ? 'Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år'
+        : 'Et dagsverk er arbeid som utføres på en dag. Antall ønsket tapte dagsverk selv velge for det ønskede ' +
+          'legemeldte sykefraværet de siste 12 månedene for å beregne hvor mye du kan spare.';
 
     const validerTapteDagsverk = (tapteDagsverk: number): boolean => {
         return !(tapteDagsverk < 0);
