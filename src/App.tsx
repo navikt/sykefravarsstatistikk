@@ -11,7 +11,7 @@ import Innloggingsside from './Innloggingsside/Innloggingsside';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
-import { useRestFeatureToggles } from './api/featureToggles';
+import { FeatureToggles, RestFeatureToggles, useRestFeatureToggles } from './api/featureToggles';
 import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
@@ -36,6 +36,7 @@ import {
     AltinnOrganisasjonerProvider,
 } from './utils/altinnOrganisasjonerContext';
 import { useSetUserProperties } from './amplitude/userProperties';
+import { featureTogglesContext, FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -50,7 +51,9 @@ const App: FunctionComponent = () => {
                 <AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
                     <BedriftsmetrikkerProvider>
                         <SykefraværshistorikkProvider>
-                            <AppContent />
+                            <FeatureTogglesProvider>
+                                <AppContent />
+                            </FeatureTogglesProvider>
                         </SykefraværshistorikkProvider>
                     </BedriftsmetrikkerProvider>
                 </AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
@@ -67,7 +70,7 @@ const AppContent: FunctionComponent = () => {
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
-    const restFeatureToggles = useRestFeatureToggles();
+    const restFeatureToggles = useContext<RestFeatureToggles>(featureTogglesContext);
     const restBedriftsmetrikker = useContext<RestBedriftsmetrikker>(bedriftsmetrikkerContext);
     const location = useLocation();
 

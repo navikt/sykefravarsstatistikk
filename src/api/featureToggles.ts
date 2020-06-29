@@ -17,6 +17,7 @@ export const useRestFeatureToggles = (): RestFeatureToggles => {
         const hentFeatureTogglesOgSettState = async () => {
             setFeatureToggles(await hentRestFeatureToggles('arbeidsgiver.lanser-graf'));
         };
+
         hentFeatureTogglesOgSettState();
     }, []);
 
