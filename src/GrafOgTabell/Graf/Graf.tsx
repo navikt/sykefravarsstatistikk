@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 
 import './Graf.less';
 import 'nav-frontend-tabell-style';
@@ -23,8 +23,14 @@ const Graf: FunctionComponent<Props> = (props) => {
     const [linjerSomSkalVises, setLinjerSomSkalVises] = useState<Linje[]>(
         Object.keys(labelsForLinjer)
     );
-
+    const defaultLinjerSomSkalVises = ['virksomhet', 'overordnetEnhet'];
     const harBransje = finnesBransjeIHistorikken(props.sykefraværshistorikk);
+
+    useEffect(() => {
+        setLinjerSomSkalVises(
+            linjerSomSkalVises.filter((linje) => defaultLinjerSomSkalVises.includes(linje))
+        );
+    }, []);
 
     return (
         <>
