@@ -12,22 +12,22 @@ const VideoerPanel: FunctionComponent = () => {
     const sendEvent = useSendEvent();
 
     return (
-        <PanelBase className="videoerpaneltogglet">
-            <div className="videoerpaneltogglet__tekst-wrapper">
-                <Systemtittel className="videoerpaneltogglet__overskrift" tag="h2">
-                    <Kalkulatorikon className="videoerpaneltogglet__illustrasjon" />
+        <PanelBase className="videoerpanel">
+            <div className="videoerpanel__tekst-wrapper">
+                <Systemtittel className="videoerpanel__overskrift" tag="h2">
+                    <Kalkulatorikon className="videoerpanel__illustrasjon" />
                     Hva kan du gjøre med sykefraværet?
                 </Systemtittel>
 
-                <Normaltekst className="videoerpaneltogglet__ingress">
+                <Normaltekst className="videoerpanel__ingress">
                     Se NAVs informasjonsvideoer om hvordan du kan jobbe med sykefravær og
                     arbeidsmiljø.
                 </Normaltekst>
             </div>
 
-            <div className="videoerpaneltogglet__lenke-wrapper">
+            <div className="videoerpanel__lenke-wrapper">
                 <EksternLenke
-                    className="videoerpaneltogglet__lenke"
+                    className="videoerpanel__lenke"
                     href="https://vimeo.com/showcase/6728595"
                     onClick={() => {
                         sendMetrikker('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar');
@@ -38,7 +38,7 @@ const VideoerPanel: FunctionComponent = () => {
                 </EksternLenke>
 
                 <EksternLenke
-                    className="videoerpaneltogglet__lenke"
+                    className="videoerpanel__lenke"
                     href="https://vimeo.com/showcase/6728594"
                     onClick={() => {
                         sendMetrikker('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet');
