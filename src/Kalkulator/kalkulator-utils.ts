@@ -16,14 +16,15 @@ export const getSiste4KvartalsvisSykefraværshistorikk = (
     historikkListe: Sykefraværshistorikk[]
 ): KvartalsvisSykefraværsprosent[] => {
     const alleProsenter = [
-        ...historikkListe.find(historikk => historikk.type === SykefraværshistorikkType.VIRKSOMHET)!
-            .kvartalsvisSykefraværsprosent,
+        ...historikkListe.find(
+            (historikk) => historikk.type === SykefraværshistorikkType.VIRKSOMHET
+        )!.kvartalsvisSykefraværsprosent,
     ];
     alleProsenter.reverse();
 
     return alleProsenter
         .filter((sammenligning, index) => index < 4)
-        .filter(prosent => !prosent.erMaskert);
+        .filter((prosent) => !prosent.erMaskert);
 };
 
 export const getAntallTapteDagsverkSiste4Kvartaler = (
@@ -34,7 +35,7 @@ export const getAntallTapteDagsverkSiste4Kvartaler = (
         return 'erMaskertEllerHarIkkeNokData';
     }
     const tapteDagsverkForSiste4Kvartaler = prosenterForSiste4Kvartaler.map(
-        prosent => prosent.tapteDagsverk!
+        (prosent) => prosent.tapteDagsverk!
     );
     return Math.round(summerTall(tapteDagsverkForSiste4Kvartaler));
 };
@@ -47,7 +48,7 @@ export const getAntallMuligeDagsverkSiste4Kvartaler = (
         return Maskering.ERMASKERTELLERHARIKKENOEDATA;
     }
     const tapteDagsverkForSiste4Kvartaler = prosenterForSiste4Kvartaler.map(
-        prosent => prosent.muligeDagsverk!
+        (prosent) => prosent.muligeDagsverk!
     );
     return Math.round(summerTall(tapteDagsverkForSiste4Kvartaler));
 };
@@ -74,10 +75,10 @@ export const getSykefraværsprosentSiste4Kvartaler = (
 
 export const getKostnadForAntallDagsverk = (
     kostnadDagsverk: number | undefined,
-    nåværendeTapteDagsverk: number | undefined,
+    antallTapteDagsverk: number | undefined
 ) => {
-    if (nåværendeTapteDagsverk && !isNaN(nåværendeTapteDagsverk) && kostnadDagsverk) {
-        return nåværendeTapteDagsverk * kostnadDagsverk;
+    if (antallTapteDagsverk && !isNaN(antallTapteDagsverk) && kostnadDagsverk) {
+        return antallTapteDagsverk * kostnadDagsverk;
     } else {
         return 0;
     }
@@ -85,15 +86,10 @@ export const getKostnadForAntallDagsverk = (
 
 export const getKostnadForSykefraværsprosent = (
     kostnadDagsverk: number | undefined,
-    nåværendeSykefraværsprosent: number | undefined,
-    muligeDagsverk: number | undefined,
+    sykefraværsprosent: number | undefined,
+    muligeDagsverk: number | undefined
 ) => {
-    if (
-        kostnadDagsverk &&
-        nåværendeSykefraværsprosent &&
-        !isNaN(nåværendeSykefraværsprosent) &&
-        muligeDagsverk
-    ) {
-        return ((nåværendeSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
+    if (kostnadDagsverk && sykefraværsprosent && !isNaN(sykefraværsprosent) && muligeDagsverk) {
+        return ((sykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
     } else return 0;
 };
