@@ -1,10 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import './Kalkulator.less';
-import { Input } from 'nav-frontend-skjema';
 import Kostnad from './Kostnad/Kostnad';
 import { RestStatus } from '../api/api-utils';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
 import { scrollToBanner } from '../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
@@ -16,7 +13,6 @@ import {
     Maskering,
 } from './kalkulator-utils';
 import { useSendEvent } from '../amplitude/amplitude';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import { Kalkulatorrad } from './Kalkulatorrad';
 
 interface Props {
@@ -32,7 +28,9 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
     >();
     const [ønsketSykefraværsprosent, setØnsketSykefraværsprosent] = useState<number | undefined>();
 
-    const [erDataMaskert, setErDataMaskert] = useState<boolean | undefined>();
+    const [skalViseDefaultTapteDagsverk, setSkalViseDefaultTapteDagsverk] = useState<
+        boolean | undefined
+    >();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
     const harEndretSykefraværsprosent = nåværendeSykefraværsprosent !== undefined;
@@ -65,7 +63,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
     };
 
     const validerOgSettMuligeDagsverk = (muligeDagsverk: number) => {
-        if (erDataMaskert && validerTapteDagsverk(muligeDagsverk)) {
+        if (!skalViseDefaultTapteDagsverk && validerTapteDagsverk(muligeDagsverk)) {
             setMuligeDagsverk(muligeDagsverk);
         }
     };
@@ -94,7 +92,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
             ) {
                 setNåværendeSykefraværsprosent(0);
                 setØnsketSykefraværsprosent(0);
-                setErDataMaskert(true);
+                setSkalViseDefaultTapteDagsverk(false);
             } else {
                 setNåværendeSykefraværsprosent(
                     Math.round(prosentTapteDagsverkSiste4Kvartaler * 10) / 10
@@ -103,23 +101,23 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                     Math.round(prosentTapteDagsverkSiste4Kvartaler * 5) / 10
                 );
                 setMuligeDagsverk(muligeDagsverkSiste4Kvartaler);
-                setErDataMaskert(false);
+                setSkalViseDefaultTapteDagsverk(true);
             }
         }
-    }, [restSykefraværshistorikk, harEndretSykefraværsprosent, setErDataMaskert]);
+    }, [restSykefraværshistorikk, harEndretSykefraværsprosent, skalViseDefaultTapteDagsverk]);
 
     useEffect(() => {
         scrollToBanner();
     }, []);
 
     const nåværendeTapteDagsverkSiste12MndHjelpetekst =
-        restSykefraværshistorikk.status === RestStatus.Suksess && !erDataMaskert
+        restSykefraværshistorikk.status === RestStatus.Suksess && skalViseDefaultTapteDagsverk
             ? 'Sykefraværsprosenten regnes ut fra antall tapte dagsverk delt på antall mulige dagsverk. ' +
               'Mulige dagsverk de siste 12 månedene er hentet fra det dere har meldt inn i A-ordningen.'
             : undefined;
 
     const ønsketTapteDagsverkSiste12MndHjelpetekst =
-        restSykefraværshistorikk.status === RestStatus.Suksess && !erDataMaskert
+        restSykefraværshistorikk.status === RestStatus.Suksess && skalViseDefaultTapteDagsverk
             ? 'Ønsket sykefraværsprosent regnes ut fra ønsket antall tapte dagsverk delt på antall mulige ' +
               'dagsverk dere har hatt de siste 12 månedene. Denne informasjonen hentes fra det dere har meldt inn i A-ordningen.'
             : undefined;
@@ -144,7 +142,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                         </>
                     }
                 />
-                {erDataMaskert && (
+                {!skalViseDefaultTapteDagsverk && (
                     <Kalkulatorrad
                         label="Antall mulige dagsverk per år"
                         onChange={(event) =>

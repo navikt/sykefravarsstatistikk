@@ -72,24 +72,42 @@ export const getSykefraværsprosentSiste4Kvartaler = (
         );
     }
 };
-
-export const getKostnadForAntallDagsverk = (
+export const getTotalKostnad = (
     kostnadDagsverk: number | undefined,
-    antallTapteDagsverk: number | undefined
+    nåværendeSykefraværsprosent: number | undefined,
+    muligeDagsverk: number | undefined,
+    nåværendeTapteDagsverk: number | undefined,
+    antallTapteDagsverkEllerProsent: AntallTapteDagsverkEllerProsent | undefined
 ) => {
-    if (antallTapteDagsverk && !isNaN(antallTapteDagsverk) && kostnadDagsverk) {
-        return antallTapteDagsverk * kostnadDagsverk;
+    if (antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT) {
+        if (
+            kostnadDagsverk &&
+            nåværendeSykefraværsprosent &&
+            !isNaN(nåværendeSykefraværsprosent) &&
+            muligeDagsverk
+        ) {
+            return ((nåværendeSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
+        } else return 0;
+    } else if (nåværendeTapteDagsverk && !isNaN(nåværendeTapteDagsverk) && kostnadDagsverk) {
+        return nåværendeTapteDagsverk * kostnadDagsverk;
     } else {
         return 0;
     }
 };
-
-export const getKostnadForSykefraværsprosent = (
+export const getØnsketKostnad = (
     kostnadDagsverk: number | undefined,
-    sykefraværsprosent: number | undefined,
-    muligeDagsverk: number | undefined
+    ønsketSykefraværsprosent: number | undefined,
+    muligeDagsverk: number | undefined,
+    ønsketTapteDagsverk: number | undefined,
+    antallTapteDagsverkEllerProsent: AntallTapteDagsverkEllerProsent | undefined
 ) => {
-    if (kostnadDagsverk && sykefraværsprosent && !isNaN(sykefraværsprosent) && muligeDagsverk) {
-        return ((sykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
-    } else return 0;
+    if (antallTapteDagsverkEllerProsent === AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT) {
+        if (kostnadDagsverk && ønsketSykefraværsprosent && muligeDagsverk)
+            return ((ønsketSykefraværsprosent * muligeDagsverk) / 100) * kostnadDagsverk;
+        else return 0;
+    } else if (ønsketTapteDagsverk && kostnadDagsverk) {
+        return ønsketTapteDagsverk * kostnadDagsverk;
+    } else {
+        return 0;
+    }
 };

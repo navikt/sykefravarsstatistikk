@@ -23,56 +23,23 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
     const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<number | undefined>();
     const [ønsketTapteDagsverk, setØnsketTapteDagsverk] = useState<number | undefined>();
 
-    const [erDataMaskert, setErDataMaskert] = useState<boolean | undefined>();
+    const [skalViseDefaultTapteDagsverk, setSkalViseDefaultTapteDagsverk] = useState<
+        boolean | undefined
+    >();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
     useEffect(() => {
         scrollToBanner();
     }, []);
 
-    useEffect(() => {
-        if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
-            setNåværendeTapteDagsverk(undefined);
-            setØnsketTapteDagsverk(undefined);
-        }
-    }, [restSykefraværshistorikk]);
-
     const harEndretTapteDagsverk = nåværendeTapteDagsverk !== undefined;
 
-    useEffect(() => {
-        if (restSykefraværshistorikk.status === RestStatus.Suksess && !harEndretTapteDagsverk) {
-            const tapteDagsverkSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(
-                restSykefraværshistorikk.data
-            );
-            if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
-                setNåværendeTapteDagsverk(0);
-                setØnsketTapteDagsverk(0);
-                setErDataMaskert(true);
-            } else {
-                setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler);
-                setØnsketTapteDagsverk(Math.round(tapteDagsverkSiste4Kvartaler * 0.5));
-                setErDataMaskert(false);
-            }
-        }
-    }, [restSykefraværshistorikk, harEndretTapteDagsverk, setErDataMaskert]);
-
-    const nåværendeTapteDagsverkLabel = erDataMaskert
-        ? 'Antall tapte dagsverk i løpet av 12 måneder'
-        : 'Nåværende antall tapte dagsverk siste 12 måneder';
-
-    const ønsketTapteDagsverkLabel = erDataMaskert
-        ? 'Ønsket antall tapte dagsverk i løpet av 12 måneder'
-        : 'Ønsket antall tapte dagsverk i en 12 måneders periode';
-
-    const antallTapteDagsverkHjelpetekst = erDataMaskert
-        ? 'Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år'
-        : 'Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes ut fra det ' +
-          'legemeldte sykefraværet de siste 12 månedene og er tilgjengelig i NAVs datagrunnlag.';
-
-    const ønsketTapteDagsverkHjelpetekst = erDataMaskert
-        ? 'Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år'
-        : 'Et dagsverk er arbeid som utføres på en dag. Antall ønsket tapte dagsverk selv velge for det ønskede ' +
-          'legemeldte sykefraværet de siste 12 månedene for å beregne hvor mye du kan spare.';
+    const nåværendeTapteDagsverkLabel = skalViseDefaultTapteDagsverk
+        ? 'Nåværende antall tapte dagsverk siste 12 måneder'
+        : 'Antall tapte dagsverk i løpet av 12 måneder';
+    const ønsketTapteDagsverkLabel = skalViseDefaultTapteDagsverk
+        ? 'Ønsket antall tapte dagsverk i en 12 måneders periode'
+        : 'Ønsket antall tapte dagsverk i løpet av 12 måneder';
 
     const validerTapteDagsverk = (tapteDagsverk: number): boolean => {
         return !(tapteDagsverk < 0);
@@ -95,6 +62,29 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
     const sendEventOmEndretInput = () => {
         sendEvent('kalkulator input dagsverk', 'endret');
     };
+    useEffect(() => {
+        if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
+            setNåværendeTapteDagsverk(undefined);
+            setØnsketTapteDagsverk(undefined);
+        }
+    }, [restSykefraværshistorikk]);
+
+    useEffect(() => {
+        if (restSykefraværshistorikk.status === RestStatus.Suksess && !harEndretTapteDagsverk) {
+            const tapteDagsverkSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(
+                restSykefraværshistorikk.data
+            );
+            if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
+                setNåværendeTapteDagsverk(0);
+                setØnsketTapteDagsverk(0);
+                setSkalViseDefaultTapteDagsverk(false);
+            } else {
+                setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler);
+                setØnsketTapteDagsverk(Math.round(tapteDagsverkSiste4Kvartaler * 0.5));
+                setSkalViseDefaultTapteDagsverk(true);
+            }
+        }
+    }, [restSykefraværshistorikk, harEndretTapteDagsverk]);
 
     return (
         <>
@@ -124,7 +114,6 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                     value={nåværendeTapteDagsverk}
                     label={nåværendeTapteDagsverkLabel}
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
-                    hjelpetekst={antallTapteDagsverkHjelpetekst}
                 />
                 <Kalkulatorrad
                     onChange={(event) =>
@@ -133,7 +122,6 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                     onClick={sendEventOmEndretInput}
                     value={ønsketTapteDagsverk}
                     label={ønsketTapteDagsverkLabel}
-                    hjelpetekst={ønsketTapteDagsverkHjelpetekst}
                 />
             </div>
             <Kostnad

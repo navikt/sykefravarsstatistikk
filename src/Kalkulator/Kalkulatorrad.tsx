@@ -2,7 +2,6 @@ import React, { FunctionComponent, ReactElement } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 
 interface Props {
