@@ -48,7 +48,6 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
         overordnetEnhet: 'Overordnet enhet:',
         næringEllerBransje: harBransje ? 'Bransje:' : 'Næring:',
         sektor: 'Sektor:',
-        land: 'Land:',
     };
 
     return (
