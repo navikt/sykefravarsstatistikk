@@ -32,9 +32,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
     >();
     const [ønsketSykefraværsprosent, setØnsketSykefraværsprosent] = useState<number | undefined>();
 
-    const [skalViseDefaultTapteDagsverk, setSkalViseDefaultTapteDagsverk] = useState<
-        boolean | undefined
-    >();
+    const [erDataMaskert, setErDataMaskert] = useState<boolean | undefined>();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
 
     const harEndretSykefraværsprosent = nåværendeSykefraværsprosent !== undefined;
@@ -67,7 +65,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
     };
 
     const validerOgSettMuligeDagsverk = (muligeDagsverk: number) => {
-        if (!skalViseDefaultTapteDagsverk && validerTapteDagsverk(muligeDagsverk)) {
+        if (erDataMaskert && validerTapteDagsverk(muligeDagsverk)) {
             setMuligeDagsverk(muligeDagsverk);
         }
     };
@@ -96,7 +94,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
             ) {
                 setNåværendeSykefraværsprosent(0);
                 setØnsketSykefraværsprosent(0);
-                setSkalViseDefaultTapteDagsverk(false);
+                setErDataMaskert(true);
             } else {
                 setNåværendeSykefraværsprosent(
                     Math.round(prosentTapteDagsverkSiste4Kvartaler * 10) / 10
@@ -105,23 +103,23 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                     Math.round(prosentTapteDagsverkSiste4Kvartaler * 5) / 10
                 );
                 setMuligeDagsverk(muligeDagsverkSiste4Kvartaler);
-                setSkalViseDefaultTapteDagsverk(true);
+                setErDataMaskert(false);
             }
         }
-    }, [restSykefraværshistorikk, harEndretSykefraværsprosent, skalViseDefaultTapteDagsverk]);
+    }, [restSykefraværshistorikk, harEndretSykefraværsprosent, setErDataMaskert]);
 
     useEffect(() => {
         scrollToBanner();
     }, []);
 
     const nåværendeTapteDagsverkSiste12MndHjelpetekst =
-        restSykefraværshistorikk.status === RestStatus.Suksess && skalViseDefaultTapteDagsverk
+        restSykefraværshistorikk.status === RestStatus.Suksess && !erDataMaskert
             ? 'Sykefraværsprosenten regnes ut fra antall tapte dagsverk delt på antall mulige dagsverk. ' +
               'Mulige dagsverk de siste 12 månedene er hentet fra det dere har meldt inn i A-ordningen.'
             : undefined;
 
     const ønsketTapteDagsverkSiste12MndHjelpetekst =
-        restSykefraværshistorikk.status === RestStatus.Suksess && skalViseDefaultTapteDagsverk
+        restSykefraværshistorikk.status === RestStatus.Suksess && !erDataMaskert
             ? 'Ønsket sykefraværsprosent regnes ut fra ønsket antall tapte dagsverk delt på antall mulige ' +
               'dagsverk dere har hatt de siste 12 månedene. Denne informasjonen hentes fra det dere har meldt inn i A-ordningen.'
             : undefined;
@@ -146,7 +144,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                         </>
                     }
                 />
-                {!skalViseDefaultTapteDagsverk && (
+                {erDataMaskert && (
                     <Kalkulatorrad
                         label="Antall mulige dagsverk per år"
                         onChange={(event) =>
