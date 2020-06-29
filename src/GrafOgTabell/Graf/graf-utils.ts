@@ -11,6 +11,10 @@ export type Linje =
     | 'land'
     | string;
 
+export type LabelsForLinjer = {
+    [linje in Linje]: string;
+};
+
 interface GrafConfig {
     tooltipsnavn: any;
     farger: any;
@@ -59,8 +63,8 @@ export const hentFørsteKvartalFraAlleÅreneIDatagrunnlaget = (
     kvartalsvisSammenligning: KvartalsvisSammenligning[]
 ): ÅrstallOgKvartal[] => {
     return kvartalsvisSammenligning
-        .filter(sammenligning => sammenligning.kvartal === 1)
-        .map(sammenligning => {
+        .filter((sammenligning) => sammenligning.kvartal === 1)
+        .map((sammenligning) => {
             return { årstall: sammenligning.årstall, kvartal: sammenligning.kvartal };
         });
 };
@@ -68,30 +72,76 @@ export const hentFørsteKvartalFraAlleÅreneIDatagrunnlaget = (
 export const lagTickString = (årstall: number, kvartal: number) =>
     årstall + ', ' + kvartal + '. kvartal';
 
-export const getLinjerSomMatcherHistorikk = (
+export const getLinjerSomHistorikkenHarDataFor = (
     sykefraværshistorikk: Sykefraværshistorikk[]
 ): Linje[] => {
     let linjer: Linje[] = [...grafConfig.linjer];
 
-    if (
-        !sykefraværshistorikk.find(
-            historikk =>
-                historikk.type === SykefraværshistorikkType.OVERORDNET_ENHET &&
-                historikk.kvartalsvisSykefraværsprosent.length > 0
-        )
-    ) {
-        linjer = linjer.filter(name => name !== 'overordnetEnhet');
-    }
+    const harHistorikkForOverordnetEnhet = !!sykefraværshistorikk.find(
+        (historikk) =>
+            historikk.type === SykefraværshistorikkType.OVERORDNET_ENHET &&
+            historikk.kvartalsvisSykefraværsprosent.length > 0
+    );
+    const harHistorikkForVirksomhet = !!sykefraværshistorikk.find(
+        (historikk) =>
+            historikk.type === SykefraværshistorikkType.VIRKSOMHET &&
+            historikk.kvartalsvisSykefraværsprosent.length > 0
+    );
 
-    if (
-        !sykefraværshistorikk.find(
-            historikk =>
-                historikk.type === SykefraværshistorikkType.VIRKSOMHET &&
-                historikk.kvartalsvisSykefraværsprosent.length > 0
-        )
-    ) {
-        linjer = linjer.filter(name => name !== 'virksomhet');
+    if (!harHistorikkForOverordnetEnhet) {
+        linjer = linjer.filter((name) => name !== 'overordnetEnhet');
+    }
+    if (!harHistorikkForVirksomhet) {
+        linjer = linjer.filter((name) => name !== 'virksomhet');
     }
 
     return linjer;
+};
+
+export const finnesBransjeIHistorikken = (sykefraværshistorikk: Sykefraværshistorikk[]): boolean =>
+    !!sykefraværshistorikk.find((historikk) => historikk.type === SykefraværshistorikkType.BRANSJE);
+
+export const getLabelsForLinjene = (
+    sykefraværshistorikk: Sykefraværshistorikk[]
+): LabelsForLinjer => {
+    const labelForType = (type: SykefraværshistorikkType): string => {
+        return sykefraværshistorikk.find((historikk) => historikk.type === type)!
+            ? sykefraværshistorikk.find((historikk) => historikk.type === type)!.label
+            : 'Ingen tilgjengelig data';
+    };
+
+    const harBransje = finnesBransjeIHistorikken(sykefraværshistorikk);
+
+    return {
+        virksomhet: labelForType(SykefraværshistorikkType.VIRKSOMHET),
+        overordnetEnhet: labelForType(SykefraværshistorikkType.OVERORDNET_ENHET),
+        næringEllerBransje: labelForType(
+            harBransje ? SykefraværshistorikkType.BRANSJE : SykefraværshistorikkType.NÆRING
+        ),
+        sektor: labelForType(SykefraværshistorikkType.SEKTOR),
+        land: labelForType(SykefraværshistorikkType.LAND),
+    };
+};
+
+export const getLinjerSomHarData = (sykefraværshistorikk: Sykefraværshistorikk[]): Linje[] => {
+    const harData = (type: SykefraværshistorikkType) => {
+        const historikk = sykefraværshistorikk.find((historikk) => historikk.type === type);
+        if (!historikk) {
+            return false;
+        }
+        const historikkHarData = !!historikk.kvartalsvisSykefraværsprosent.find(
+            (prosent) => prosent !== null && prosent !== undefined
+        );
+        return historikkHarData;
+    };
+
+    const linjerSomHarData: Linje[] = [];
+    if (harData(SykefraværshistorikkType.VIRKSOMHET)) linjerSomHarData.push('virksomhet');
+    if (harData(SykefraværshistorikkType.OVERORDNET_ENHET))
+        linjerSomHarData.push('overordnetEnhet');
+    if (harData(SykefraværshistorikkType.BRANSJE) || harData(SykefraværshistorikkType.NÆRING))
+        linjerSomHarData.push('næringEllerBransje');
+    if (harData(SykefraværshistorikkType.SEKTOR)) linjerSomHarData.push('sektor');
+    if (harData(SykefraværshistorikkType.LAND)) linjerSomHarData.push('land');
+    return linjerSomHarData;
 };
