@@ -115,6 +115,10 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                     value={nåværendeTapteDagsverk}
                     label={nåværendeTapteDagsverkLabel}
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
+                    hjelpetekst={
+                        'Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes ut fra det ' +
+                        'legemeldte sykefraværet de siste 12 månedene og er tilgjengelig i NAVs datagrunnlag.'
+                    }
                 />
                 <Kalkulatorrad
                     onChange={(event) =>
