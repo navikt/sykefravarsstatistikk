@@ -65,6 +65,11 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
         ? 'Ønsket antall tapte dagsverk i en 12 måneders periode'
         : 'Ønsket antall tapte dagsverk i løpet av 12 måneder';
 
+    const antallTapteDagsverkHjelpetekst = skalViseDefaultTapteDagsverk
+        ? 'Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes ut fra det ' +
+          'legemeldte sykefraværet de siste 12 månedene og er tilgjengelig i NAVs datagrunnlag.'
+        : 'Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år';
+
     const validerTapteDagsverk = (tapteDagsverk: number): boolean => {
         return !(tapteDagsverk < 0);
     };
@@ -115,10 +120,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                     value={nåværendeTapteDagsverk}
                     label={nåværendeTapteDagsverkLabel}
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
-                    hjelpetekst={
-                        'Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes ut fra det ' +
-                        'legemeldte sykefraværet de siste 12 månedene og er tilgjengelig i NAVs datagrunnlag.'
-                    }
+                    hjelpetekst={antallTapteDagsverkHjelpetekst}
                 />
                 <Kalkulatorrad
                     onChange={(event) =>
