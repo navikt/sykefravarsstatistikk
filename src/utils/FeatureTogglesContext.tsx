@@ -2,7 +2,6 @@ import React, { createContext, FunctionComponent, useEffect, useState } from 're
 import { RestFeatureToggles } from '../api/featureToggles';
 import { RestStatus } from '../api/api-utils';
 import { hentRestFeatureToggles } from '../api/api';
-import { sykefraværshistorikkContext } from './sykefraværshistorikkContext';
 
 export const featureTogglesContext = createContext<RestFeatureToggles>({
     status: RestStatus.LasterInn,
@@ -15,12 +14,7 @@ export const FeatureTogglesProvider: FunctionComponent = (props) => {
 
     useEffect(() => {
         const hentFeatureTogglesOgSettState = async () => {
-            setFeatureToggles(
-                await hentRestFeatureToggles(
-                    'arbeidsgiver.kalkulator-abtesting',
-                    'arbeidsgiver.lanser-graf'
-                )
-            );
+            setFeatureToggles(await hentRestFeatureToggles('arbeidsgiver.kalkulator-abtesting'));
         };
 
         hentFeatureTogglesOgSettState();
