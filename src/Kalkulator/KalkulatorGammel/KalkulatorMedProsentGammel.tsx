@@ -1,25 +1,25 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import './Kalkulator.less';
-import Kostnad from './Kostnad/Kostnad';
-import { RestStatus } from '../api/api-utils';
-import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
-import { scrollToBanner } from '../utils/scrollUtils';
-import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
+import './KalkulatorGammel.less';
+import Kostnad from '../Kostnad/Kostnad';
+import { RestStatus } from '../../api/api-utils';
+import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
+import { scrollToBanner } from '../../utils/scrollUtils';
+import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
     AntallTapteDagsverkEllerProsent,
     getAntallMuligeDagsverkSiste4Kvartaler,
     getKostnadForSykefraværsprosent,
     getSykefraværsprosentSiste4Kvartaler,
     Maskering,
-} from './kalkulator-utils';
-import { useSendEvent } from '../amplitude/amplitude';
-import { Kalkulatorrad } from './Kalkulatorrad';
+} from '../kalkulator-utils';
+import { useSendEvent } from '../../amplitude/amplitude';
+import { KalkulatorradGammel } from './KalkulatorradGammel';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
 }
 
-export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
+export const KalkulatorMedProsentGammel: FunctionComponent<Props> = (props) => {
     const sendEvent = useSendEvent();
     const { restSykefraværshistorikk } = props;
     const [muligeDagsverk, setMuligeDagsverk] = useState<number | undefined>();
@@ -123,7 +123,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
     return (
         <>
             <div>
-                <Kalkulatorrad
+                <KalkulatorradGammel
                     onChange={(event) => setKostnadDagsverk(parseInt(event.target.value))}
                     onClick={sendEventOmEndretInput}
                     value={kostnadDagsverk}
@@ -141,7 +141,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                     }
                 />
                 {erDataMaskert && (
-                    <Kalkulatorrad
+                    <KalkulatorradGammel
                         label="Antall mulige dagsverk per år"
                         onChange={(event) =>
                             validerOgSettMuligeDagsverk(parseFloat(event.target.value))
@@ -151,7 +151,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                         hjelpetekst="Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år"
                     />
                 )}
-                <Kalkulatorrad
+                <KalkulatorradGammel
                     onChange={(event) =>
                         validerOgSettNåværendeSykefraværsprosent(parseFloat(event.target.value))
                     }
@@ -162,7 +162,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = (props) => {
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
                     hjelpetekst={nåværendeTapteDagsverkSiste12MndHjelpetekst}
                 />
-                <Kalkulatorrad
+                <KalkulatorradGammel
                     onChange={(event) =>
                         validerOgSettØnsketSykefraværsprosent(parseFloat(event.target.value))
                     }
