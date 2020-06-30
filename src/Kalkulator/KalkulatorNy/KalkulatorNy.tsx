@@ -1,14 +1,13 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './KalkulatorNy.less';
-import { Radio } from 'nav-frontend-skjema';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import { AntallTapteDagsverkEllerProsent } from '../kalkulator-utils';
 import { useSendEvent } from '../../amplitude/amplitude';
 import { KalkulatorMedDagsverkNy } from './KalkulatorMedDagsverkNy';
 import { KalkulatorMedProsentNy } from './KalkulatorMedProsentNy';
-import { ToggleGruppePure, ToggleKnappPure } from 'nav-frontend-toggle';
+import { ToggleKnappPure } from 'nav-frontend-toggle';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -22,7 +21,6 @@ const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) =
     const sendEvent = useSendEvent();
 
     useEffect(() => {
-        console.log('scroller');
         scrollToBanner();
     }, []);
 
@@ -47,11 +45,12 @@ const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) =
                                         antallTapteDagsverkEllerProsent ===
                                         AntallTapteDagsverkEllerProsent.Sykefraværsprosent
                                     }
-                                    onClick={() =>
+                                    onClick={() => {
+                                        sendEvent('kalkulator toggle prosent', 'klikk');
                                         setAntalltapteDagsverkEllerProsent(
                                             AntallTapteDagsverkEllerProsent.Sykefraværsprosent
-                                        )
-                                    }
+                                        );
+                                    }}
                                 >
                                     Bruk prosent
                                 </ToggleKnappPure>
@@ -60,11 +59,12 @@ const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) =
                                         antallTapteDagsverkEllerProsent ===
                                         AntallTapteDagsverkEllerProsent.AntallTapteDagsverk
                                     }
-                                    onClick={() =>
+                                    onClick={() => {
+                                        sendEvent('kalkulator toggle dagsverk', 'klikk');
                                         setAntalltapteDagsverkEllerProsent(
                                             AntallTapteDagsverkEllerProsent.AntallTapteDagsverk
-                                        )
-                                    }
+                                        );
+                                    }}
                                 >
                                     Bruk dagsverk
                                 </ToggleKnappPure>
