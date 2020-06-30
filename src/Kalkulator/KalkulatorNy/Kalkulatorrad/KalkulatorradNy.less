@@ -1,18 +1,26 @@
+@import '../../../variables';
+
 .kalkulatorrad {
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    flex-direction: column;
+    max-width: 22rem;
 
-    &__label {
-        width: 16rem;
+    + .kalkulatorrad {
+        margin-top: 1rem;
     }
 
     &__input {
-        &.skjemaelement {
-            margin-bottom: 0.5rem;
-            margin-left: 2rem;
-            margin-right: 1rem;
-        }
+        width: 5rem;
+    }
+
+    &__input-hjelpetekst-wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    &__hjelpetekst {
+        margin-left: 1rem;
     }
 
     .kalkulatorrad {
@@ -26,5 +34,17 @@
 
     &__hjelpetekst-innhold {
         max-width: 25rem;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        &__input {
+            &.skjemaelement {
+                margin-left: 1rem;
+            }
+        }
     }
 }

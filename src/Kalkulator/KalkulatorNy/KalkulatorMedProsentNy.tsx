@@ -120,6 +120,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
                     value={kostnadDagsverk}
                     label="Kostnad per dag per ansatt i kroner"
                     placeholder="kr"
+                    name="kostnad-per-dagsverk-prosent"
                     hjelpetekst={
                         <>
                             Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
@@ -139,6 +140,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
                         }
                         onClick={sendEventOmEndretInput}
                         value={muligeDagsverk}
+                        name="mulige-dagsverk-prosent"
                         hjelpetekst="Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år"
                     />
                 )}
@@ -151,6 +153,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
                     label="Nåværende sykefravær i prosent"
                     step={0.1}
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
+                    name="nåværende-prosent"
                     hjelpetekst={nåværendeTapteDagsverkSiste12MndHjelpetekst}
                 />
                 <KalkulatorradNy
@@ -161,6 +164,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
                     value={ønsketSykefraværsprosent}
                     label="Ønsket sykefravær i prosent"
                     step={0.1}
+                    name="ønsket-prosent"
                     hjelpetekst={ønsketTapteDagsverkSiste12MndHjelpetekst}
                 />
             </div>

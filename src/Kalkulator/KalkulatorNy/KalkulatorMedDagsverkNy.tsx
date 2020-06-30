@@ -98,6 +98,7 @@ export const KalkulatorMedDagsverkNy: FunctionComponent<Props> = (props) => {
                     value={kostnadDagsverk}
                     label="Kostnad per dag per ansatt i kroner"
                     placeholder="kr"
+                    name="kostnad-per-dagsverk"
                     hjelpetekst={
                         <>
                             Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
@@ -117,6 +118,7 @@ export const KalkulatorMedDagsverkNy: FunctionComponent<Props> = (props) => {
                     value={nåværendeTapteDagsverk}
                     label={nåværendeTapteDagsverkLabel}
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
+                    name="nåværende-tapte-dagsverk"
                     hjelpetekst={antallTapteDagsverkHjelpetekst}
                 />
                 <KalkulatorradNy
@@ -126,6 +128,7 @@ export const KalkulatorMedDagsverkNy: FunctionComponent<Props> = (props) => {
                     onClick={sendEventOmEndretInput}
                     value={ønsketTapteDagsverk}
                     label={ønsketTapteDagsverkLabel}
+                    name="ønsket-tapte-dagsverk"
                     hjelpetekst={ønsketTapteDagsverkHjelpetekst}
                 />
             </div>
