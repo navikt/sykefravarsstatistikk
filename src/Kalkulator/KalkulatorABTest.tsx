@@ -5,7 +5,7 @@ import { featureTogglesContext } from '../utils/FeatureTogglesContext';
 import { RestStatus } from '../api/api-utils';
 import { useSendEvent } from '../amplitude/amplitude';
 import Lasteside from '../Lasteside/Lasteside';
-import KalkulatorNy from "./KalkulatorNy/KalkulatorNy";
+import KalkulatorNy from './KalkulatorNy/KalkulatorNy';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
