@@ -70,6 +70,24 @@
             &__label_fast_størrelse {
                 width: 16rem;
             }
+
+            &__tittel-wrapper {
+                display: flex;
+            }
+
+            &__dagsverk-eller-prosent-toggle {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                align-items: start;
+
+                .toggleKnapp {
+                    width: unset;
+                    + .toggleKnapp {
+                        margin-top: 0;
+                    }
+                }
+            }
         }
     }
 }
