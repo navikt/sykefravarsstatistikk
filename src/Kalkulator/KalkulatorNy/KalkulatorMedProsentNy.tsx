@@ -12,7 +12,7 @@ import {
     Maskering,
 } from './../kalkulator-utils';
 import { useSendEvent } from '../../amplitude/amplitude';
-import { KalkulatorradNy } from './Kalkulatorrad/KalkulatorradNy';
+import { KalkulatorradNy } from './KalkulatorradNy/KalkulatorradNy';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;

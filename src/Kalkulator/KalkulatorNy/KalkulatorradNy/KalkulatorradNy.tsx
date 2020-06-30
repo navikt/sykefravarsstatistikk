@@ -10,11 +10,11 @@ interface Props {
     onClick: (event: any) => void;
     value: number | undefined;
     label: string;
+    name: string;
     hjelpetekst?: string | ReactElement;
     placeholder?: string;
     visSpinner?: boolean;
     step?: number;
-    name: string;
 }
 
 export const KalkulatorradNy: FunctionComponent<Props> = (props) => {
