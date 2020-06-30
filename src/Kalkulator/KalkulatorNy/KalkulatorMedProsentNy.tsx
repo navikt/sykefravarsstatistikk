@@ -89,14 +89,10 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
                 muligeDagsverkSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA
             ) {
                 setNåværendeSykefraværsprosent(0);
-                setØnsketSykefraværsprosent(0);
                 setErDataMaskert(true);
             } else {
                 setNåværendeSykefraværsprosent(
                     Math.round(prosentTapteDagsverkSiste4Kvartaler * 10) / 10
-                );
-                setØnsketSykefraværsprosent(
-                    Math.round(prosentTapteDagsverkSiste4Kvartaler * 5) / 10
                 );
                 setMuligeDagsverk(muligeDagsverkSiste4Kvartaler);
                 setErDataMaskert(false);

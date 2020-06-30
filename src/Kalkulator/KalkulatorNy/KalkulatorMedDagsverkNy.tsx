@@ -46,11 +46,9 @@ export const KalkulatorMedDagsverkNy: FunctionComponent<Props> = (props) => {
             );
             if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
                 setNåværendeTapteDagsverk(0);
-                setØnsketTapteDagsverk(0);
                 setErDataMaskert(true);
             } else {
                 setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler);
-                setØnsketTapteDagsverk(Math.round(tapteDagsverkSiste4Kvartaler * 0.5));
                 setErDataMaskert(false);
             }
         }
