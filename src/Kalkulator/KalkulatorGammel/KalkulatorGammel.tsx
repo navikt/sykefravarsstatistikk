@@ -16,7 +16,7 @@ interface Props {
 const KalkulatorGammel: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
     const [antallTapteDagsverkEllerProsent, setAntalltapteDagsverkEllerProsent] = useState<
         AntallTapteDagsverkEllerProsent
-    >(AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK);
+    >(AntallTapteDagsverkEllerProsent.AntallTapteDagsverk);
 
     const sendEvent = useSendEvent();
 
@@ -44,11 +44,11 @@ const KalkulatorGammel: FunctionComponent<Props> = ({ restSykefraværshistorikk 
                                 name="antallTapteDagsverk"
                                 checked={
                                     antallTapteDagsverkEllerProsent ===
-                                    AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
+                                    AntallTapteDagsverkEllerProsent.AntallTapteDagsverk
                                 }
                                 onChange={() => {
                                     setAntalltapteDagsverkEllerProsent(
-                                        AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
+                                        AntallTapteDagsverkEllerProsent.AntallTapteDagsverk
                                     );
                                     sendEvent('kalkulator radio basertpadagsverk', 'klikk');
                                 }}
@@ -58,18 +58,18 @@ const KalkulatorGammel: FunctionComponent<Props> = ({ restSykefraværshistorikk 
                                 name="antallTapteDagsverk"
                                 checked={
                                     antallTapteDagsverkEllerProsent ===
-                                    AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                                    AntallTapteDagsverkEllerProsent.Sykefraværsprosent
                                 }
                                 onChange={() => {
                                     setAntalltapteDagsverkEllerProsent(
-                                        AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                                        AntallTapteDagsverkEllerProsent.Sykefraværsprosent
                                     );
                                     sendEvent('kalkulator radio basertpaprosent', 'klikk');
                                 }}
                             />
                         </div>
                         {antallTapteDagsverkEllerProsent ===
-                        AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK ? (
+                        AntallTapteDagsverkEllerProsent.AntallTapteDagsverk ? (
                             <KalkulatorMedDagsverkGammel
                                 restSykefraværshistorikk={restSykefraværshistorikk}
                             />

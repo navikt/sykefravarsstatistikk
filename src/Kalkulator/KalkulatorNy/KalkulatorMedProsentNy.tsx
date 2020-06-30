@@ -3,7 +3,6 @@ import './KalkulatorNy.less';
 import Kostnad from './../Kostnad/Kostnad';
 import { RestStatus } from '../../api/api-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
-import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
     AntallTapteDagsverkEllerProsent,
@@ -13,7 +12,7 @@ import {
     Maskering,
 } from './../kalkulator-utils';
 import { useSendEvent } from '../../amplitude/amplitude';
-import { KalkulatorradNy } from './KalkulatorradNy';
+import { KalkulatorradNy } from './KalkulatorradNy/KalkulatorradNy';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -85,8 +84,8 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
                 restSykefraværshistorikk.data
             );
             if (
-                prosentTapteDagsverkSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA ||
-                muligeDagsverkSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA
+                prosentTapteDagsverkSiste4Kvartaler === Maskering.ErMaskertEllerHarIkkeNokData ||
+                muligeDagsverkSiste4Kvartaler === Maskering.ErMaskertEllerHarIkkeNokData
             ) {
                 setNåværendeSykefraværsprosent(0);
                 setErDataMaskert(true);
@@ -99,10 +98,6 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
             }
         }
     }, [restSykefraværshistorikk, harEndretSykefraværsprosent, setErDataMaskert]);
-
-    useEffect(() => {
-        scrollToBanner();
-    }, []);
 
     const nåværendeTapteDagsverkSiste12MndHjelpetekst =
         restSykefraværshistorikk.status === RestStatus.Suksess && !erDataMaskert
@@ -125,6 +120,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
                     value={kostnadDagsverk}
                     label="Kostnad per dag per ansatt i kroner"
                     placeholder="kr"
+                    name="kostnad-per-dagsverk-prosent"
                     hjelpetekst={
                         <>
                             Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
@@ -144,6 +140,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
                         }
                         onClick={sendEventOmEndretInput}
                         value={muligeDagsverk}
+                        name="mulige-dagsverk-prosent"
                         hjelpetekst="Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år"
                     />
                 )}
@@ -156,6 +153,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
                     label="Nåværende sykefravær i prosent"
                     step={0.1}
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
+                    name="nåværende-prosent"
                     hjelpetekst={nåværendeTapteDagsverkSiste12MndHjelpetekst}
                 />
                 <KalkulatorradNy
@@ -166,6 +164,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
                     value={ønsketSykefraværsprosent}
                     label="Ønsket sykefravær i prosent"
                     step={0.1}
+                    name="ønsket-prosent"
                     hjelpetekst={ønsketTapteDagsverkSiste12MndHjelpetekst}
                 />
             </div>
@@ -181,7 +180,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
                     muligeDagsverk
                 )}
                 ønsketRedusert={ønsketSykefraværsprosent as number}
-                antallTapteDagsverkEllerProsent={AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT}
+                antallTapteDagsverkEllerProsent={AntallTapteDagsverkEllerProsent.Sykefraværsprosent}
             />
         </>
     );

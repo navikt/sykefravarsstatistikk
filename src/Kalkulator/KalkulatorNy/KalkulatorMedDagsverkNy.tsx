@@ -3,7 +3,6 @@ import './KalkulatorNy.less';
 import Kostnad from './../Kostnad/Kostnad';
 import { RestStatus } from '../../api/api-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
-import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
     AntallTapteDagsverkEllerProsent,
@@ -11,7 +10,7 @@ import {
     getKostnadForAntallDagsverk,
 } from './../kalkulator-utils';
 import { useSendEvent } from '../../amplitude/amplitude';
-import { KalkulatorradNy } from './KalkulatorradNy';
+import { KalkulatorradNy } from './KalkulatorradNy/KalkulatorradNy';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -25,10 +24,6 @@ export const KalkulatorMedDagsverkNy: FunctionComponent<Props> = (props) => {
 
     const [erDataMaskert, setErDataMaskert] = useState<boolean | undefined>();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
-
-    useEffect(() => {
-        scrollToBanner();
-    }, []);
 
     useEffect(() => {
         if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
@@ -103,6 +98,7 @@ export const KalkulatorMedDagsverkNy: FunctionComponent<Props> = (props) => {
                     value={kostnadDagsverk}
                     label="Kostnad per dag per ansatt i kroner"
                     placeholder="kr"
+                    name="kostnad-per-dagsverk"
                     hjelpetekst={
                         <>
                             Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
@@ -122,6 +118,7 @@ export const KalkulatorMedDagsverkNy: FunctionComponent<Props> = (props) => {
                     value={nåværendeTapteDagsverk}
                     label={nåværendeTapteDagsverkLabel}
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
+                    name="nåværende-tapte-dagsverk"
                     hjelpetekst={antallTapteDagsverkHjelpetekst}
                 />
                 <KalkulatorradNy
@@ -131,6 +128,7 @@ export const KalkulatorMedDagsverkNy: FunctionComponent<Props> = (props) => {
                     onClick={sendEventOmEndretInput}
                     value={ønsketTapteDagsverk}
                     label={ønsketTapteDagsverkLabel}
+                    name="ønsket-tapte-dagsverk"
                     hjelpetekst={ønsketTapteDagsverkHjelpetekst}
                 />
             </div>
@@ -142,7 +140,7 @@ export const KalkulatorMedDagsverkNy: FunctionComponent<Props> = (props) => {
                 ønsketKostnad={getKostnadForAntallDagsverk(kostnadDagsverk, ønsketTapteDagsverk)}
                 ønsketRedusert={ønsketTapteDagsverk as number}
                 antallTapteDagsverkEllerProsent={
-                    AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
+                    AntallTapteDagsverkEllerProsent.AntallTapteDagsverk
                 }
             />
         </>

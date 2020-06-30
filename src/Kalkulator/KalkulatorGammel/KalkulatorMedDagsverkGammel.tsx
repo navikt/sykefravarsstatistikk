@@ -3,7 +3,6 @@ import './KalkulatorGammel.less';
 import Kostnad from './../Kostnad/Kostnad';
 import { RestStatus } from '../../api/api-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
-import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
     AntallTapteDagsverkEllerProsent,
@@ -25,10 +24,6 @@ export const KalkulatorMedDagsverkGammel: FunctionComponent<Props> = (props) => 
 
     const [erDataMaskert, setErDataMaskert] = useState<boolean | undefined>();
     const [kostnadDagsverk, setKostnadDagsverk] = useState<number | undefined>(2600);
-
-    useEffect(() => {
-        scrollToBanner();
-    }, []);
 
     useEffect(() => {
         if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
@@ -144,7 +139,7 @@ export const KalkulatorMedDagsverkGammel: FunctionComponent<Props> = (props) => 
                 ønsketKostnad={getKostnadForAntallDagsverk(kostnadDagsverk, ønsketTapteDagsverk)}
                 ønsketRedusert={ønsketTapteDagsverk as number}
                 antallTapteDagsverkEllerProsent={
-                    AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
+                    AntallTapteDagsverkEllerProsent.AntallTapteDagsverk
                 }
             />
         </>
