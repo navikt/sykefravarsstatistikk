@@ -1,0 +1,30 @@
+.kalkulatorrad {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    &__label {
+        width: 16rem;
+    }
+
+    &__input {
+        &.skjemaelement {
+            margin-bottom: 0.5rem;
+            margin-left: 2rem;
+            margin-right: 1rem;
+        }
+    }
+
+    .kalkulatorrad {
+        // dobbel selektor pga. overskriving av default-styling
+        &__spinner {
+            width: 1rem;
+            height: 1rem;
+            margin-bottom: -0.2rem;
+        }
+    }
+
+    &__hjelpetekst-innhold {
+        max-width: 25rem;
+    }
+}
