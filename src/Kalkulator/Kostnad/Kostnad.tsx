@@ -17,14 +17,14 @@ const Kostnad: FunctionComponent<Props> = (props) => {
         ${
             props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
                 ? props.antallTapteDagsverkEllerProsent ===
-                  AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                  AntallTapteDagsverkEllerProsent.Sykefraværsprosent
                     ? props.ønsketRedusert.toFixed(1).replace('.', ',')
                     : props.ønsketRedusert.toFixed(0)
                 : 0
         } 
         ${
             props.antallTapteDagsverkEllerProsent ===
-            AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+            AntallTapteDagsverkEllerProsent.Sykefraværsprosent
                 ? ' %'
                 : ' dagsverk'
         } 
@@ -33,14 +33,14 @@ const Kostnad: FunctionComponent<Props> = (props) => {
         ${
             props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
                 ? props.antallTapteDagsverkEllerProsent ===
-                  AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+                  AntallTapteDagsverkEllerProsent.Sykefraværsprosent
                     ? props.ønsketRedusert.toFixed(1).replace('.', ',')
                     : props.ønsketRedusert.toFixed(0)
                 : 0
         } 
         ${
             props.antallTapteDagsverkEllerProsent ===
-            AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
+            AntallTapteDagsverkEllerProsent.Sykefraværsprosent
                 ? ' %'
                 : ' dagsverk'
         } 

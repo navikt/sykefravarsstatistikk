@@ -3,7 +3,6 @@ import './KalkulatorGammel.less';
 import Kostnad from '../Kostnad/Kostnad';
 import { RestStatus } from '../../api/api-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
-import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
     AntallTapteDagsverkEllerProsent,
@@ -85,8 +84,8 @@ export const KalkulatorMedProsentGammel: FunctionComponent<Props> = (props) => {
                 restSykefraværshistorikk.data
             );
             if (
-                prosentTapteDagsverkSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA ||
-                muligeDagsverkSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA
+                prosentTapteDagsverkSiste4Kvartaler === Maskering.ErMaskertEllerHarIkkeNokData ||
+                muligeDagsverkSiste4Kvartaler === Maskering.ErMaskertEllerHarIkkeNokData
             ) {
                 setNåværendeSykefraværsprosent(0);
                 setØnsketSykefraværsprosent(0);
@@ -103,10 +102,6 @@ export const KalkulatorMedProsentGammel: FunctionComponent<Props> = (props) => {
             }
         }
     }, [restSykefraværshistorikk, harEndretSykefraværsprosent, setErDataMaskert]);
-
-    useEffect(() => {
-        scrollToBanner();
-    }, []);
 
     const nåværendeTapteDagsverkSiste12MndHjelpetekst =
         restSykefraværshistorikk.status === RestStatus.Suksess && !erDataMaskert
@@ -185,7 +180,7 @@ export const KalkulatorMedProsentGammel: FunctionComponent<Props> = (props) => {
                     muligeDagsverk
                 )}
                 ønsketRedusert={ønsketSykefraværsprosent as number}
-                antallTapteDagsverkEllerProsent={AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT}
+                antallTapteDagsverkEllerProsent={AntallTapteDagsverkEllerProsent.Sykefraværsprosent}
             />
         </>
     );

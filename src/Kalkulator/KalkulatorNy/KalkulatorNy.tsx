@@ -8,6 +8,7 @@ import { AntallTapteDagsverkEllerProsent } from '../kalkulator-utils';
 import { useSendEvent } from '../../amplitude/amplitude';
 import { KalkulatorMedDagsverkNy } from './KalkulatorMedDagsverkNy';
 import { KalkulatorMedProsentNy } from './KalkulatorMedProsentNy';
+import { ToggleGruppePure } from 'nav-frontend-toggle';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -16,11 +17,12 @@ interface Props {
 const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
     const [antallTapteDagsverkEllerProsent, setAntalltapteDagsverkEllerProsent] = useState<
         AntallTapteDagsverkEllerProsent
-    >(AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK);
+    >(AntallTapteDagsverkEllerProsent.AntallTapteDagsverk);
 
     const sendEvent = useSendEvent();
 
     useEffect(() => {
+        console.log('scroller')
         scrollToBanner();
     }, []);
 
@@ -29,47 +31,42 @@ const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) =
             <div className="kalkulator__wrapper">
                 <div className="kalkulator">
                     <div>
-                        <Systemtittel tag={'h2'} className="kalkulator__tittel">
-                            Så mye koster sykefraværet
-                        </Systemtittel>
-                        <Normaltekst className="kalkulator__ingress">
-                            Se hva sykefraværet koster, og hvor mye virksomheten deres kan spare.
-                        </Normaltekst>
                         <div>
-                            <Normaltekst className="kalkulator__radiogrouplabel">
-                                Beregn kostnad basert på
+                            <Systemtittel tag={'h2'} className="kalkulator__tittel">
+                                Så mye koster sykefraværet
+                            </Systemtittel>
+                            <Normaltekst className="kalkulator__ingress">
+                                Se hva sykefraværet koster, og hvor mye virksomheten deres kan
+                                spare.
                             </Normaltekst>
-                            <Radio
-                                label="Tapte dagsverk"
-                                name="antallTapteDagsverk"
-                                checked={
-                                    antallTapteDagsverkEllerProsent ===
-                                    AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
-                                }
-                                onChange={() => {
-                                    setAntalltapteDagsverkEllerProsent(
-                                        AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK
-                                    );
-                                    sendEvent('kalkulator radio basertpadagsverk', 'klikk');
-                                }}
-                            />
-                            <Radio
-                                label="Sykefraværsprosent"
-                                name="antallTapteDagsverk"
-                                checked={
-                                    antallTapteDagsverkEllerProsent ===
-                                    AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                                }
-                                onChange={() => {
-                                    setAntalltapteDagsverkEllerProsent(
-                                        AntallTapteDagsverkEllerProsent.SYKEFRAVÆRSPROSENT
-                                    );
-                                    sendEvent('kalkulator radio basertpaprosent', 'klikk');
-                                }}
+                            <ToggleGruppePure
+                                className="kalkulator__dagsverk-eller-prosent-toggle"
+                                toggles={[
+                                    {
+                                        children: 'Bruk prosent',
+                                        pressed:
+                                            antallTapteDagsverkEllerProsent ===
+                                            AntallTapteDagsverkEllerProsent.Sykefraværsprosent,
+                                        onClick: () =>
+                                            setAntalltapteDagsverkEllerProsent(
+                                                AntallTapteDagsverkEllerProsent.Sykefraværsprosent
+                                            ),
+                                    },
+                                    {
+                                        children: 'Bruk dagsverk',
+                                        pressed:
+                                            antallTapteDagsverkEllerProsent ===
+                                            AntallTapteDagsverkEllerProsent.AntallTapteDagsverk,
+                                        onClick: () =>
+                                            setAntalltapteDagsverkEllerProsent(
+                                                AntallTapteDagsverkEllerProsent.AntallTapteDagsverk
+                                            ),
+                                    },
+                                ]}
                             />
                         </div>
                         {antallTapteDagsverkEllerProsent ===
-                        AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK ? (
+                        AntallTapteDagsverkEllerProsent.AntallTapteDagsverk ? (
                             <KalkulatorMedDagsverkNy
                                 restSykefraværshistorikk={restSykefraværshistorikk}
                             />

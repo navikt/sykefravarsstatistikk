@@ -6,11 +6,11 @@ import {
 
 const summerTall = (tall: number[]) => tall.reduce((a, b) => a + b);
 export enum AntallTapteDagsverkEllerProsent {
-    ANTALLTAPTEDAGSVERK = 'antallTapteDagsverk',
-    SYKEFRAVÆRSPROSENT = 'sykefraværsprosent',
+    AntallTapteDagsverk = 'antallTapteDagsverk',
+    Sykefraværsprosent = 'sykefraværsprosent',
 }
 export enum Maskering {
-    ERMASKERTELLERHARIKKENOEDATA = 'erMaskertEllerHarIkkeNokData',
+    ErMaskertEllerHarIkkeNokData = 'erMaskertEllerHarIkkeNokData',
 }
 export const getSiste4KvartalsvisSykefraværshistorikk = (
     historikkListe: Sykefraværshistorikk[]
@@ -42,10 +42,10 @@ export const getAntallTapteDagsverkSiste4Kvartaler = (
 
 export const getAntallMuligeDagsverkSiste4Kvartaler = (
     historikkListe: Sykefraværshistorikk[]
-): number | Maskering.ERMASKERTELLERHARIKKENOEDATA => {
+): number | Maskering.ErMaskertEllerHarIkkeNokData => {
     const prosenterForSiste4Kvartaler = getSiste4KvartalsvisSykefraværshistorikk(historikkListe);
     if (prosenterForSiste4Kvartaler.length !== 4) {
-        return Maskering.ERMASKERTELLERHARIKKENOEDATA;
+        return Maskering.ErMaskertEllerHarIkkeNokData;
     }
     const tapteDagsverkForSiste4Kvartaler = prosenterForSiste4Kvartaler.map(
         (prosent) => prosent.muligeDagsverk!
@@ -55,16 +55,16 @@ export const getAntallMuligeDagsverkSiste4Kvartaler = (
 
 export const getSykefraværsprosentSiste4Kvartaler = (
     historikkListe: Sykefraværshistorikk[]
-): number | Maskering.ERMASKERTELLERHARIKKENOEDATA => {
+): number | Maskering.ErMaskertEllerHarIkkeNokData => {
     const antallTapteDagsverSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(historikkListe);
     const antallMuligeDagsverkSiste4Kvartaler = getAntallMuligeDagsverkSiste4Kvartaler(
         historikkListe
     );
     if (
-        antallTapteDagsverSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA ||
-        antallMuligeDagsverkSiste4Kvartaler === Maskering.ERMASKERTELLERHARIKKENOEDATA
+        antallTapteDagsverSiste4Kvartaler === Maskering.ErMaskertEllerHarIkkeNokData ||
+        antallMuligeDagsverkSiste4Kvartaler === Maskering.ErMaskertEllerHarIkkeNokData
     ) {
-        return Maskering.ERMASKERTELLERHARIKKENOEDATA;
+        return Maskering.ErMaskertEllerHarIkkeNokData;
     } else {
         return (
             ((antallTapteDagsverSiste4Kvartaler as number) * 100) /
