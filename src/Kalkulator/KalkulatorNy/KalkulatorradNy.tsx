@@ -15,7 +15,7 @@ interface Props {
     step?: number;
 }
 
-export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
+export const KalkulatorradNy: FunctionComponent<Props> = (props) => {
     // TODO Label er ikke knyttet til input-feltet
     return (
         <div className="kalkulator__rad">

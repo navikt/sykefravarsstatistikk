@@ -1,0 +1,67 @@
+@import '../../variables';
+
+.kalkulator-gammel {
+    .kalkulator {
+        .sideinnhold-mixin();
+
+        &__wrapper {
+            background-color: @navLysGra;
+            min-height: 50rem;
+            padding: 0 1rem 5rem;
+        }
+
+        &__tittel {
+            padding-bottom: 2rem;
+        }
+
+        &__ingress {
+            padding-bottom: 2rem;
+        }
+        &__rad {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        &__lesmer-kostnad-dagsverk {
+            margin-bottom: 2rem;
+        }
+
+        &__lesmer-tapte-dagsverk {
+            margin-bottom: 0;
+        }
+
+        &__hjelpetekst-innhold {
+            max-width: 25rem;
+        }
+
+        .kalkulator {
+            // dobbel selektor pga. overskriving av default-styling
+            &__spinner {
+                width: 1rem;
+                height: 1rem;
+                margin-bottom: -0.2rem;
+            }
+            &__radiogrouplabel {
+                margin-bottom: 1rem;
+            }
+        }
+
+        &__input {
+            &.skjemaelement {
+                margin-bottom: 0.5rem;
+                margin-left: 2rem;
+                margin-right: 1rem;
+            }
+        }
+
+        @media (min-width: @screen-sm-min) {
+            &__lesmer-tapte-dagsverk {
+                margin-bottom: 0;
+            }
+
+            &__label_fast_størrelse {
+                width: 16rem;
+            }
+        }
+    }
+}

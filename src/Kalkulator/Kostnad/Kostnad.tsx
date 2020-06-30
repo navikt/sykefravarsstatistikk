@@ -12,7 +12,7 @@ interface Props {
     antallTapteDagsverkEllerProsent?: AntallTapteDagsverkEllerProsent;
 }
 
-const Kostnad: FunctionComponent<Props> = props => {
+const Kostnad: FunctionComponent<Props> = (props) => {
     const redusertKostnadTekst = `Reduserer dere sykefraværet til  
         ${
             props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)

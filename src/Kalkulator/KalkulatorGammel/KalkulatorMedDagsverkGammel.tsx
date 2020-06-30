@@ -1,23 +1,23 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import './Kalkulator.less';
-import Kostnad from './Kostnad/Kostnad';
-import { RestStatus } from '../api/api-utils';
-import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
-import { scrollToBanner } from '../utils/scrollUtils';
-import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
+import './KalkulatorGammel.less';
+import Kostnad from './../Kostnad/Kostnad';
+import { RestStatus } from '../../api/api-utils';
+import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
+import { scrollToBanner } from '../../utils/scrollUtils';
+import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
     AntallTapteDagsverkEllerProsent,
     getAntallTapteDagsverkSiste4Kvartaler,
     getKostnadForAntallDagsverk,
-} from './kalkulator-utils';
-import { useSendEvent } from '../amplitude/amplitude';
-import { Kalkulatorrad } from './Kalkulatorrad';
+} from '../kalkulator-utils';
+import { useSendEvent } from '../../amplitude/amplitude';
+import { KalkulatorradGammel } from './KalkulatorradGammel';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
 }
 
-export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
+export const KalkulatorMedDagsverkGammel: FunctionComponent<Props> = (props) => {
     const sendEvent = useSendEvent();
     const { restSykefraværshistorikk } = props;
     const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<number | undefined>();
@@ -99,7 +99,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
     return (
         <>
             <div>
-                <Kalkulatorrad
+                <KalkulatorradGammel
                     onChange={(event) => setKostnadDagsverk(parseInt(event.target.value))}
                     onClick={sendEventOmEndretInput}
                     value={kostnadDagsverk}
@@ -116,7 +116,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                         </>
                     }
                 />
-                <Kalkulatorrad
+                <KalkulatorradGammel
                     onChange={(event) =>
                         validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value))
                     }
@@ -126,7 +126,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
                     hjelpetekst={antallTapteDagsverkHjelpetekst}
                 />
-                <Kalkulatorrad
+                <KalkulatorradGammel
                     onChange={(event) =>
                         validerOgSettØnsketTapteDagsverk(parseFloat(event.target.value))
                     }

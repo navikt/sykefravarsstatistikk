@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useContext } from 'react';
 import Banner from './Banner/Banner';
 import { BrowserRouter, Route, useLocation } from 'react-router-dom';
-import Kalkulator from './Kalkulator/Kalkulator';
 import Forside from './Forside/Forside';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
 import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
@@ -10,7 +9,6 @@ import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
-import { RestFeatureToggles } from './api/featureToggles';
 import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
@@ -35,8 +33,9 @@ import {
     AltinnOrganisasjonerProvider,
 } from './utils/altinnOrganisasjonerContext';
 import { useSetUserProperties } from './amplitude/userProperties';
-import { featureTogglesContext, FeatureTogglesProvider } from './utils/FeatureTogglesContext';
+import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
+import { KalkulatorABTest } from './Kalkulator/KalkulatorABTest';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -70,7 +69,6 @@ const AppContent: FunctionComponent = () => {
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
-    const restFeatureToggles = useContext<RestFeatureToggles>(featureTogglesContext);
     const restBedriftsmetrikker = useContext<RestBedriftsmetrikker>(bedriftsmetrikkerContext);
     const location = useLocation();
 
@@ -79,7 +77,6 @@ const AppContent: FunctionComponent = () => {
     let innhold;
     if (
         restOrganisasjoner.status === RestStatus.LasterInn ||
-        restFeatureToggles.status === RestStatus.LasterInn ||
         restBedriftsmetrikker.status === RestStatus.LasterInn
     ) {
         innhold = <Lasteside />;
@@ -110,9 +107,8 @@ const AppContent: FunctionComponent = () => {
                 </Route>
                 <Route path={PATH_KALKULATOR} exact={true}>
                     <Brødsmulesti gjeldendeSide="kalkulator" />
-                    <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk} />
+                    <KalkulatorABTest restSykefraværshistorikk={restSykefraværshistorikk} />
                 </Route>
-
                 <Route path={PATH_HISTORIKK} exact={true}>
                     <Brødsmulesti gjeldendeSide="historikk" />
                     <GrafOgTabell
