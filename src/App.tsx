@@ -1,42 +1,35 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, {FunctionComponent, useContext} from 'react';
 import Banner from './Banner/Banner';
-import { BrowserRouter, Route, useLocation } from 'react-router-dom';
+import {BrowserRouter, Route, useLocation} from 'react-router-dom';
 import Forside from './Forside/Forside';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
-import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
-import { RestStatus } from './api/api-utils';
+import {RestAltinnOrganisasjoner} from './api/altinnorganisasjon-api';
+import {RestStatus} from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
-import { RestFeatureToggles } from './api/featureToggles';
 import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
-import { RestSykefraværshistorikk } from './api/sykefraværshistorikk';
-import { RestBedriftsmetrikker } from './api/bedriftsmetrikker';
+import {RestSykefraværshistorikk} from './api/sykefraværshistorikk';
+import {RestBedriftsmetrikker} from './api/bedriftsmetrikker';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
-import { BASE_PATH } from './konstanter';
-import {
-    bedriftsmetrikkerContext,
-    BedriftsmetrikkerProvider,
-} from './utils/bedriftsmetrikkerContext';
-import { sendEventDirekte } from './amplitude/amplitude';
-import {
-    sykefraværshistorikkContext,
-    SykefraværshistorikkProvider,
-} from './utils/sykefraværshistorikkContext';
+import {BASE_PATH} from './konstanter';
+import {bedriftsmetrikkerContext, BedriftsmetrikkerProvider,} from './utils/bedriftsmetrikkerContext';
+import {sendEventDirekte} from './amplitude/amplitude';
+import {sykefraværshistorikkContext, SykefraværshistorikkProvider,} from './utils/sykefraværshistorikkContext';
 import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
     AltinnOrganisasjonerMedTilgangTilStatistikkProvider,
     AltinnOrganisasjonerProvider,
 } from './utils/altinnOrganisasjonerContext';
-import { useSetUserProperties } from './amplitude/userProperties';
-import { featureTogglesContext, FeatureTogglesProvider } from './utils/FeatureTogglesContext';
+import {useSetUserProperties} from './amplitude/userProperties';
+import {FeatureTogglesProvider} from './utils/FeatureTogglesContext';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
-import { KalkulatorABTest } from './Kalkulator/KalkulatorABTest';
+import {KalkulatorABTest} from './Kalkulator/KalkulatorABTest';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';

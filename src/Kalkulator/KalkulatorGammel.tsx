@@ -13,7 +13,7 @@ interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
 }
 
-const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
+const KalkulatorGammel: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
     const [antallTapteDagsverkEllerProsent, setAntalltapteDagsverkEllerProsent] = useState<
         AntallTapteDagsverkEllerProsent
     >(AntallTapteDagsverkEllerProsent.ANTALLTAPTEDAGSVERK);
@@ -81,4 +81,4 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     );
 };
 
-export default Kalkulator;
+export default KalkulatorGammel;
