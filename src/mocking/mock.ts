@@ -84,7 +84,7 @@ if (MOCK_FEATURE_TOGGLES) {
             'arbeidsgiver.kalkulator-abtesting': true,
         },
         {
-            delay: 5000,
+            delay: 1000,
         }
     );
 }

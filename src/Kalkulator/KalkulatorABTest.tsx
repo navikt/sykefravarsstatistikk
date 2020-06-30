@@ -17,10 +17,10 @@ export const KalkulatorABTest: FunctionComponent<Props> = ({ restSykefraværshis
     if (restFeatureToggles.status === RestStatus.Suksess) {
         const skalBrukeNyKalkulator = restFeatureToggles.data['arbeidsgiver.kalkulator-abtesting'];
         if (skalBrukeNyKalkulator) {
-            sendEvent('kalkulator', 'lastet', { kalkulator: 'ny' });
+            sendEvent('kalkulator', 'lastet', { kalkulatorversjon: 'ny' });
             return <div>ny kalkulator</div>; // TODO Erstatt med ny kalkulator
         } else {
-            sendEvent('kalkulator', 'lastet', { kalkulator: 'gammel' });
+            sendEvent('kalkulator', 'lastet', { kalkulatorversjon: 'gammel' });
             return <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk} />;
         }
     }
