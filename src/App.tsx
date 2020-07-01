@@ -116,7 +116,6 @@ const AppContent: FunctionComponent = () => {
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                     />
                 </Route>
-
                 <Route path={PATH_IAWEB_REDIRECTSIDE} exact={true}>
                     <IAWebRedirectSide restSykefraværshistorikk={restSykefraværshistorikk}>
                         <IAWebRedirectPanel />

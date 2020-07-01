@@ -5,7 +5,7 @@ const apiProxyPath = '/sykefravarsstatistikk/api';
 module.exports = {
     plugins: [{ plugin: CracoLessPlugin }],
     devServer: {
-        before: app => {
+        before: (app) => {
             app.use(
                 createProxyMiddleware(apiProxyPath, {
                     target: 'http://localhost:8080/sykefravarsstatistikk-api',
@@ -19,11 +19,12 @@ module.exports = {
         enable: true,
         mode: 'extends',
         configure: {
-            extends: 'react-app',
-            rules: {
-                // Det er en bug i denne sjekken som automatisk feiler på ÆØÅ: https://github.com/yannickcr/eslint-plugin-react/issues/1654
-                'react/jsx-pascal-case': 'off',
+            parser: '@typescript-eslint/parser',
+            parserOptions: {
+                sourceType: 'module',
             },
+            plugins: ['@typescript-eslint'],
+            extends: ['plugin:jsx-a11y/recommended'],
         },
     },
     jest: {
