@@ -17,10 +17,10 @@ const KalkulatorPanel: FunctionComponent = () => {
         <PanelBase className="kalkulatorpanel">
             <Systemtittel className="kalkulatorpanel__overskrift" tag="h2">
                 <KalkisIkon className="kalkulatorpanel__illustrasjon" />
-                Så mye koster sykefraværet
+                Hvor mye koster sykefraværet?
             </Systemtittel>
             <Normaltekst className="kalkulatorpanel__ingress">
-                Se hva sykefraværet koster, og hvor mye virksomheten deres kan spare.
+                Her kan du beregne hvor mye sykefraværet koster, og hvor mye du kan spare.
             </Normaltekst>
             <Link
                 to={{
