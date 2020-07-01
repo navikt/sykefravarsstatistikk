@@ -72,7 +72,7 @@ const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) =
                             </div>
                         </div>
                         <Normaltekst className="kalkulator__input-overskrift">
-                            Fyll inn og juster tallene så de passer for deg.
+                            Fyll inn og juster tallene så de passer for deg
                         </Normaltekst>
                         {antallTapteDagsverkEllerProsent ===
                         AntallTapteDagsverkEllerProsent.AntallTapteDagsverk ? (
