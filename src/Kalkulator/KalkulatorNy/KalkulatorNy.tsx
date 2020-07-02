@@ -32,11 +32,12 @@ const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) =
                         <div className="kalkulator__tittel-wrapper">
                             <div>
                                 <Systemtittel tag={'h2'} className="kalkulator__tittel">
-                                    Så mye koster sykefraværet
+                                    Hvor mye koster sykefraværet?
                                 </Systemtittel>
                                 <Normaltekst className="kalkulator__ingress">
-                                    Se hva sykefraværet koster, og hvor mye virksomheten deres kan
-                                    spare.
+                                    Her kan du beregne hvor mye sykefraværet koster og hvor mye du
+                                    kan spare. Lønnskostnader og sykepengerefusjon er ikke med i
+                                    regnestykket og kommer i tillegg til kostnad per dag.
                                 </Normaltekst>
                             </div>
                             <div className="kalkulator__dagsverk-eller-prosent-toggle">
@@ -52,7 +53,7 @@ const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) =
                                         );
                                     }}
                                 >
-                                    Bruk prosent
+                                    Prosent
                                 </ToggleKnappPure>
                                 <ToggleKnappPure
                                     pressed={
@@ -66,10 +67,13 @@ const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) =
                                         );
                                     }}
                                 >
-                                    Bruk dagsverk
+                                    Dagsverk
                                 </ToggleKnappPure>
                             </div>
                         </div>
+                        <Normaltekst className="kalkulator__input-overskrift">
+                            Fyll inn og juster tallene så de passer for deg
+                        </Normaltekst>
                         {antallTapteDagsverkEllerProsent ===
                         AntallTapteDagsverkEllerProsent.AntallTapteDagsverk ? (
                             <KalkulatorMedDagsverkNy
