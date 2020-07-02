@@ -9,7 +9,7 @@
         "@navikt/fnrvalidator": "^1.1.2",
         "@sentry/browser": "^5.12.1",
         "@types/amplitude-js": "^5.8.0",
-        "amplitude-js": "^6.2.0",
+        "amplitude-js": "^7.1.0",
         "babel-polyfill": "^6.26.0",
         "classnames": "^2.2.6",
         "core-js": "^3.6.4",
