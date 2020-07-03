@@ -5,11 +5,12 @@ import { RestStatus } from '../../api/api-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
-    AntallTapteDagsverkEllerProsent,
+    Kalkulatorvariant,
     getAntallMuligeDagsverkSiste4Kvartaler,
     getKostnadForSykefraværsprosent,
     getSykefraværsprosentSiste4Kvartaler,
     Maskering,
+    rundAvTilEnDesimal,
 } from './../kalkulator-utils';
 import { useSendEvent } from '../../amplitude/amplitude';
 import { KalkulatorradNy } from './KalkulatorradNy/KalkulatorradNy';
@@ -18,9 +19,8 @@ interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
 }
 
-export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
+export const KalkulatorMedProsentNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
     const sendEvent = useSendEvent();
-    const { restSykefraværshistorikk } = props;
     const [muligeDagsverk, setMuligeDagsverk] = useState<number | undefined>();
     const [nåværendeSykefraværsprosent, setNåværendeSykefraværsprosent] = useState<
         number | undefined
@@ -91,7 +91,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
                 setErDataMaskert(true);
             } else {
                 setNåværendeSykefraværsprosent(
-                    Math.round(prosentTapteDagsverkSiste4Kvartaler * 10) / 10
+                    rundAvTilEnDesimal(prosentTapteDagsverkSiste4Kvartaler)
                 );
                 setMuligeDagsverk(muligeDagsverkSiste4Kvartaler);
                 setErDataMaskert(false);
@@ -180,7 +180,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
                     muligeDagsverk
                 )}
                 ønsketRedusert={ønsketSykefraværsprosent as number}
-                antallTapteDagsverkEllerProsent={AntallTapteDagsverkEllerProsent.Sykefraværsprosent}
+                antallTapteDagsverkEllerProsent={Kalkulatorvariant.Prosent}
             />
         </>
     );

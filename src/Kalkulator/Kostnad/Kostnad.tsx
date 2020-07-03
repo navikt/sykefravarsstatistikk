@@ -3,13 +3,13 @@ import { Element, Systemtittel } from 'nav-frontend-typografi';
 import { ReactComponent as SedlerIkon } from '../sedlerIkon.svg';
 import './Kostnad.less';
 import classNames from 'classnames';
-import { AntallTapteDagsverkEllerProsent } from '../kalkulator-utils';
+import { Kalkulatorvariant } from '../kalkulator-utils';
 
 interface Props {
     nåværendeKostnad: number;
     ønsketKostnad: number;
     ønsketRedusert: number;
-    antallTapteDagsverkEllerProsent?: AntallTapteDagsverkEllerProsent;
+    antallTapteDagsverkEllerProsent?: Kalkulatorvariant;
 }
 
 const Kostnad: FunctionComponent<Props> = (props) => {
@@ -17,14 +17,14 @@ const Kostnad: FunctionComponent<Props> = (props) => {
         ${
             props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
                 ? props.antallTapteDagsverkEllerProsent ===
-                  AntallTapteDagsverkEllerProsent.Sykefraværsprosent
+                  Kalkulatorvariant.Prosent
                     ? props.ønsketRedusert.toFixed(1).replace('.', ',')
                     : props.ønsketRedusert.toFixed(0)
                 : 0
         } 
         ${
             props.antallTapteDagsverkEllerProsent ===
-            AntallTapteDagsverkEllerProsent.Sykefraværsprosent
+            Kalkulatorvariant.Prosent
                 ? ' %'
                 : ' dagsverk'
         } 
@@ -33,14 +33,14 @@ const Kostnad: FunctionComponent<Props> = (props) => {
         ${
             props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
                 ? props.antallTapteDagsverkEllerProsent ===
-                  AntallTapteDagsverkEllerProsent.Sykefraværsprosent
+                  Kalkulatorvariant.Prosent
                     ? props.ønsketRedusert.toFixed(1).replace('.', ',')
                     : props.ønsketRedusert.toFixed(0)
                 : 0
         } 
         ${
             props.antallTapteDagsverkEllerProsent ===
-            AntallTapteDagsverkEllerProsent.Sykefraværsprosent
+            Kalkulatorvariant.Prosent
                 ? ' %'
                 : ' dagsverk'
         } 

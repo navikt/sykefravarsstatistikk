@@ -5,9 +5,12 @@ import {
 } from '../api/sykefraværshistorikk';
 
 const summerTall = (tall: number[]) => tall.reduce((a, b) => a + b);
-export enum AntallTapteDagsverkEllerProsent {
-    AntallTapteDagsverk = 'antallTapteDagsverk',
-    Sykefraværsprosent = 'sykefraværsprosent',
+
+export const rundAvTilEnDesimal = (tall: number) => Math.round(tall * 10) / 10;
+
+export enum Kalkulatorvariant {
+    Dagsverk = 'antallTapteDagsverk',
+    Prosent = 'sykefraværsprosent',
 }
 export enum Maskering {
     ErMaskertEllerHarIkkeNokData = 'erMaskertEllerHarIkkeNokData',
