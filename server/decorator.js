@@ -2,10 +2,9 @@ const jsdom = require('jsdom');
 const request = require('request');
 
 const { JSDOM } = jsdom;
-const url =
-    'https://www.nav.no/dekoratoren/?context=arbeidsgiver&redirectToApp=true';
+const url = 'https://www.nav.no/dekoratoren/?context=arbeidsgiver&redirectToApp=true';
 
-const requestDecorator = callback => request(url, callback);
+const requestDecorator = (callback) => request(url, callback);
 
 const getDecorator = () =>
     new Promise((resolve, reject) => {

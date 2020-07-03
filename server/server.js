@@ -13,7 +13,7 @@ app.engine('html', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', buildPath);
 
-const renderAppMedDecorator = decoratorFragments => {
+const renderAppMedDecorator = (decoratorFragments) => {
     return new Promise((resolve, reject) => {
         app.render('index.html', decoratorFragments, (err, html) => {
             if (err) {
@@ -25,7 +25,7 @@ const renderAppMedDecorator = decoratorFragments => {
     });
 };
 
-const startServer = html => {
+const startServer = (html) => {
     app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
@@ -54,11 +54,11 @@ const startServer = html => {
 };
 
 getDecorator()
-    .then(renderAppMedDecorator, error => {
+    .then(renderAppMedDecorator, (error) => {
         console.error('Kunne ikke hente dekoratør ', error);
         process.exit(1);
     })
-    .then(startServer, error => {
+    .then(startServer, (error) => {
         console.error('Kunne ikke rendre app ', error);
         process.exit(1);
     });
