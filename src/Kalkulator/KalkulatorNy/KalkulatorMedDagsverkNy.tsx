@@ -5,7 +5,7 @@ import { RestStatus } from '../../api/api-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
-    AntallTapteDagsverkEllerProsent,
+    Kalkulatorvariant,
     getAntallTapteDagsverkSiste4Kvartaler,
     getKostnadForAntallDagsverk,
 } from './../kalkulator-utils';
@@ -140,7 +140,7 @@ export const KalkulatorMedDagsverkNy: FunctionComponent<Props> = (props) => {
                 ønsketKostnad={getKostnadForAntallDagsverk(kostnadDagsverk, ønsketTapteDagsverk)}
                 ønsketRedusert={ønsketTapteDagsverk as number}
                 antallTapteDagsverkEllerProsent={
-                    AntallTapteDagsverkEllerProsent.AntallTapteDagsverk
+                    Kalkulatorvariant.Dagsverk
                 }
             />
         </>

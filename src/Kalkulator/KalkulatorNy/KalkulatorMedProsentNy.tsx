@@ -5,7 +5,7 @@ import { RestStatus } from '../../api/api-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
-    AntallTapteDagsverkEllerProsent,
+    Kalkulatorvariant,
     getAntallMuligeDagsverkSiste4Kvartaler,
     getKostnadForSykefraværsprosent,
     getSykefraværsprosentSiste4Kvartaler,
@@ -180,7 +180,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = (props) => {
                     muligeDagsverk
                 )}
                 ønsketRedusert={ønsketSykefraværsprosent as number}
-                antallTapteDagsverkEllerProsent={AntallTapteDagsverkEllerProsent.Sykefraværsprosent}
+                antallTapteDagsverkEllerProsent={Kalkulatorvariant.Prosent}
             />
         </>
     );
