@@ -1,5 +1,4 @@
 import { RestRessurs } from './api-utils';
-import { Sykefraværsprosent } from './sykefraværshistorikk';
 
 export type Næringskode5Siffer = {
     kode: string;

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Linje, LabelsForLinjer } from '../../graf-utils';
+import { LabelsForLinjer, Linje } from '../../graf-utils';
 import { GrafSymbol } from '../../GrafSymbol/GrafSymbol';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Checkbox } from 'nav-frontend-skjema';

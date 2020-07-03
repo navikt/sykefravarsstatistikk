@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
-import { LasterInn, RestStatus, Suksess } from './api-utils';
-import { hentRestFeatureToggles } from './api';
+import { LasterInn, Suksess } from './api-utils';
 
 export type FeatureToggles = {
     [feature: string]: boolean;
