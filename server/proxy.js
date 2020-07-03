@@ -22,7 +22,7 @@ const proxyConfig = {
     changeOrigin: true,
     pathRewrite: (path, req) => {
         const urlErWhitelistet =
-            listeAvTillatteUrler.filter(regexp => regexp.test(path)).length > 0;
+            listeAvTillatteUrler.filter((regexp) => regexp.test(path)).length > 0;
 
         if (urlErWhitelistet) {
             return path.replace(FRONTEND_API_PATH, BACKEND_API_PATH);
