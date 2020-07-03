@@ -4,7 +4,7 @@ import { ReactComponent as EksternLenkeIkon } from './EksternLenkeIkon.svg';
 import './EksternLenke.less';
 import classNames from 'classnames';
 
-const EksternLenke: FunctionComponent<Props> = props => (
+const EksternLenke: FunctionComponent<Props> = (props) => (
     <Lenke
         {...props}
         className={classNames('ekstern-lenke', props.className)}

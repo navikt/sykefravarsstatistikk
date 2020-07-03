@@ -7,7 +7,7 @@ interface Props {
     config: BrødsmulestiConfig;
 }
 
-const ListeMedBrødsmuler: FunctionComponent<Props> = props => {
+const ListeMedBrødsmuler: FunctionComponent<Props> = (props) => {
     const { gjeldendeBrødsmule, config } = props;
     let liste = [<li key={gjeldendeBrødsmule.side}>{gjeldendeBrødsmule.lenketekst}</li>];
 

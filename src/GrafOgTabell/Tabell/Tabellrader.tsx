@@ -28,14 +28,14 @@ const kolonneOverordnetEnhet = (
     }
 };
 
-const Tabellrader: FunctionComponent<Props> = props => {
+const Tabellrader: FunctionComponent<Props> = (props) => {
     const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
         props.sykefraværshistorikk
     );
     kvartalsvisSammenligning.reverse();
     return (
         <>
-            {kvartalsvisSammenligning.map(rad => {
+            {kvartalsvisSammenligning.map((rad) => {
                 const {
                     årstall,
                     kvartal,

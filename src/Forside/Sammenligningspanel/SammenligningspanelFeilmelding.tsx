@@ -8,7 +8,7 @@ interface Props {
     className?: string;
 }
 
-const SammenligningspanelFeilmelding: FunctionComponent<Props> = props => {
+const SammenligningspanelFeilmelding: FunctionComponent<Props> = (props) => {
     const { status, children, className } = props;
     if (
         status === RestStatus.Suksess ||

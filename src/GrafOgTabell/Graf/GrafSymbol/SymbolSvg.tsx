@@ -9,7 +9,7 @@ interface Props {
     fill: string;
     className?: string;
 }
-const SymbolSvg: FunctionComponent<Props> = props => {
+const SymbolSvg: FunctionComponent<Props> = (props) => {
     const { size, symbolType, fill, className } = props;
     const halfSize = size / 2;
     return (

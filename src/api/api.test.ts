@@ -62,7 +62,7 @@ describe('Tester for utils funksjoner', () => {
         expect(
             // @ts-ignore
             result.find(
-                sykefraværshistorikk =>
+                (sykefraværshistorikk) =>
                     sykefraværshistorikk.type === SykefraværshistorikkType.OVERORDNET_ENHET
             ).kvartalsvisSykefraværsprosent.length
         ).toBe(2);
@@ -76,14 +76,14 @@ describe('Tester for utils funksjoner', () => {
         expect(
             // @ts-ignore
             result.find(
-                sykefraværshistorikk =>
+                (sykefraværshistorikk) =>
                     sykefraværshistorikk.type === SykefraværshistorikkType.VIRKSOMHET
             ).kvartalsvisSykefraværsprosent.length
         ).toBe(2);
         expect(
             // @ts-ignore
             result.find(
-                sykefraværshistorikk =>
+                (sykefraværshistorikk) =>
                     sykefraværshistorikk.type === SykefraværshistorikkType.OVERORDNET_ENHET
             ).kvartalsvisSykefraværsprosent.length
         ).toBe(0);

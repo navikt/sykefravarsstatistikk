@@ -5,7 +5,7 @@ import Sykefraværsprosentpanel, {
 import SammenligningsIkon from '../SammenligningsIkon';
 import { SykefraværshistorikkType } from '../../../api/sykefraværshistorikk';
 
-const Landspanel: FunctionComponent<SykefraværprosentpanelProps> = props => {
+const Landspanel: FunctionComponent<SykefraværprosentpanelProps> = (props) => {
     return (
         <Sykefraværsprosentpanel
             laster={props.laster}

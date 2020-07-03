@@ -11,7 +11,7 @@ type Props = SykefraværprosentpanelProps & {
     harBransje?: boolean;
 };
 
-const NæringEllerBransjePanel: FunctionComponent<Props> = props => {
+const NæringEllerBransjePanel: FunctionComponent<Props> = (props) => {
     const tekstForNæringEllerBransje = props.harBransje ? (
         <div className="næring-eller-bransje-panel__label">
             Bransje:

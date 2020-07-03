@@ -8,7 +8,7 @@ import { SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
 
 const SammenligningsIkon: FunctionComponent<{
     label: string;
-}> = props => {
+}> = (props) => {
     switch (props.label) {
         case SykefraværshistorikkType.VIRKSOMHET:
             return <BedriftSvg className="sammenligningsikon" />;

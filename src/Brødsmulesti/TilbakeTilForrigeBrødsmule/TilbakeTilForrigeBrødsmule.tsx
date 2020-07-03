@@ -8,7 +8,7 @@ interface Props {
     config: BrødsmulestiConfig;
 }
 
-const TilbakeTilForrigeBrødsmule: FunctionComponent<Props> = props => {
+const TilbakeTilForrigeBrødsmule: FunctionComponent<Props> = (props) => {
     const { gjeldendeBrødsmule, config } = props;
     const forrigeSmule =
         gjeldendeBrødsmule.overordnetSide &&

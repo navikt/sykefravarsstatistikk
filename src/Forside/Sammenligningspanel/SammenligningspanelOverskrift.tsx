@@ -8,7 +8,7 @@ interface Props {
     className?: string;
 }
 
-const SammenligningspanelOverskrift: FunctionComponent<Props> = props => {
+const SammenligningspanelOverskrift: FunctionComponent<Props> = (props) => {
     const classname = classNames(props.className);
     if (props.laster) {
         return (

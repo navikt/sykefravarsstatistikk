@@ -17,9 +17,15 @@ describe('Tester for ListeMedBrødsmuler', () => {
         const wrapper = shallow(
             <ListeMedBrødsmuler gjeldendeBrødsmule={gjeldendeBrødsmule} config={config} />
         );
-        expect(wrapper.findWhere(element => element.props().href === '/a').exists()).toEqual(true);
-        expect(wrapper.findWhere(element => element.props().href === '/b').exists()).toEqual(true);
-        expect(wrapper.findWhere(element => element.props().href === '/c').exists()).toEqual(true);
+        expect(wrapper.findWhere((element) => element.props().href === '/a').exists()).toEqual(
+            true
+        );
+        expect(wrapper.findWhere((element) => element.props().href === '/b').exists()).toEqual(
+            true
+        );
+        expect(wrapper.findWhere((element) => element.props().href === '/c').exists()).toEqual(
+            true
+        );
     });
 
     it('Skal ikke vise andre brødsmuler enn de foregående', () => {
@@ -35,8 +41,10 @@ describe('Tester for ListeMedBrødsmuler', () => {
         const wrapper = shallow(
             <ListeMedBrødsmuler gjeldendeBrødsmule={gjeldendeBrødsmule} config={config} />
         );
-        expect(wrapper.findWhere(element => element.props().href === '/c').exists()).toEqual(false);
-        expect(wrapper.findWhere(element => element.props().href === '/b2').exists()).toEqual(
+        expect(wrapper.findWhere((element) => element.props().href === '/c').exists()).toEqual(
+            false
+        );
+        expect(wrapper.findWhere((element) => element.props().href === '/b2').exists()).toEqual(
             false
         );
     });
@@ -52,8 +60,10 @@ describe('Tester for ListeMedBrødsmuler', () => {
         const wrapper = shallow(
             <ListeMedBrødsmuler gjeldendeBrødsmule={gjeldendeBrødsmule} config={config} />
         );
-        expect(wrapper.findWhere(element => element.props().href === '/b').exists()).toEqual(false);
-        expect(wrapper.findWhere(element => element.text() === 'Tekst B').exists()).toEqual(true);
+        expect(wrapper.findWhere((element) => element.props().href === '/b').exists()).toEqual(
+            false
+        );
+        expect(wrapper.findWhere((element) => element.text() === 'Tekst B').exists()).toEqual(true);
     });
 });
 
@@ -67,6 +77,6 @@ export const lagTestbrødsmule = (
         side: side,
         lenketekst: lenketekst,
         overordnetSide: overordnetSide,
-        lenke: innhold => <a href={href}>{innhold}</a>,
+        lenke: (innhold) => <a href={href}>{innhold}</a>,
     };
 };

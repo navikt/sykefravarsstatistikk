@@ -33,13 +33,13 @@ describe('Tester for graf-og-tabell-utils', () => {
             ]),
         ]);
 
-        const årstallOgKvartalerSomVises = kvartalsvisSammenligning.map(sammenligning => {
+        const årstallOgKvartalerSomVises = kvartalsvisSammenligning.map((sammenligning) => {
             return { årstall: sammenligning.årstall, kvartal: sammenligning.kvartal };
         });
 
         const resultatInneholder = (årstall: number, kvartal: number): boolean => {
             return !!årstallOgKvartalerSomVises.find(
-                årstallOgKvartal =>
+                (årstallOgKvartal) =>
                     årstallOgKvartal.årstall === årstall && årstallOgKvartal.kvartal === kvartal
             );
         };
@@ -59,7 +59,7 @@ describe('Tester for graf-og-tabell-utils', () => {
         ]);
 
         const resultat = kvartalsvisSammenligning.find(
-            sammenligning => sammenligning.årstall === 2000 && sammenligning.kvartal === 1
+            (sammenligning) => sammenligning.årstall === 2000 && sammenligning.kvartal === 1
         )!.virksomhet;
 
         expect(resultat.erMaskert).toBeFalsy();
@@ -151,7 +151,7 @@ const lagHistorikkMedÅrstallOgKvartal = (
     return {
         type,
         label: '',
-        kvartalsvisSykefraværsprosent: årstallOgKvartalListe.map(årstallOgKvartal => {
+        kvartalsvisSykefraværsprosent: årstallOgKvartalListe.map((årstallOgKvartal) => {
             return {
                 ...årstallOgKvartal,
                 prosent: 5,

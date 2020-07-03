@@ -11,7 +11,7 @@ export interface Brødsmule {
     lenke: (innhold: string | ReactElement) => ReactElement;
 }
 
-const LenkeTilSomBeholderQuery: FunctionComponent<{ href: string }> = props => {
+const LenkeTilSomBeholderQuery: FunctionComponent<{ href: string }> = (props) => {
     const location = useLocation();
     return <Lenke href={props.href + location.search}>{props.children}</Lenke>;
 };
@@ -56,5 +56,5 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
 ];
 
 export const finnBrødsmule = (side: string, config: BrødsmulestiConfig): Brødsmule => {
-    return config.filter(smule => smule.side === side)[0];
+    return config.filter((smule) => smule.side === side)[0];
 };

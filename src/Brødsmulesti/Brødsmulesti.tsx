@@ -10,7 +10,7 @@ interface Props {
     config?: BrødsmulestiConfig;
 }
 
-const Brødsmulesti: FunctionComponent<Props> = props => {
+const Brødsmulesti: FunctionComponent<Props> = (props) => {
     const { gjeldendeSide } = props;
     const config = props.config
         ? { ...defaultBrødsmulestiConfig, ...props.config }

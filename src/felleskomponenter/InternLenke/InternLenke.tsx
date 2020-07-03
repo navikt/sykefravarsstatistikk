@@ -7,7 +7,7 @@ interface Props {
     onClick?: (e: any) => any;
 }
 
-const InternLenke: FunctionComponent<Props> = props => {
+const InternLenke: FunctionComponent<Props> = (props) => {
     const location = useLocation();
 
     return (

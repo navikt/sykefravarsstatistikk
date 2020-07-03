@@ -6,7 +6,7 @@ interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
 }
 
-const IAWebRedirectSide: React.FunctionComponent<Props> = props => {
+const IAWebRedirectSide: React.FunctionComponent<Props> = (props) => {
     return (
         <div className="forside__wrapper">
             <div className="forside">{props.children}</div>

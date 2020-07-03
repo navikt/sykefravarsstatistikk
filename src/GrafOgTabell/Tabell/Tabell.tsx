@@ -14,7 +14,7 @@ interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
 }
 
-const Tabell: FunctionComponent<Props> = props => {
+const Tabell: FunctionComponent<Props> = (props) => {
     const harBransje = historikkHarBransje(props.sykefraværshistorikk);
     const næringEllerBransjeTabellLabel = harBransje ? 'Bransje' : 'Næring';
     const labels: HistorikkLabels = getHistorikkLabels(props.sykefraværshistorikk);

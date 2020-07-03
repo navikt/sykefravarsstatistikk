@@ -30,12 +30,12 @@ export const finnProsent = (
     årstallOgKvartal: ÅrstallOgKvartal,
     type: SykefraværshistorikkType
 ): Sykefraværsprosent => {
-    const historikk = historikkListe.find(historikk => historikk.type === type);
+    const historikk = historikkListe.find((historikk) => historikk.type === type);
     if (!historikk) {
         return TOM_PROSENT;
     }
     const prosent = historikk.kvartalsvisSykefraværsprosent.find(
-        prosent =>
+        (prosent) =>
             prosent.årstall === årstallOgKvartal.årstall &&
             prosent.kvartal === årstallOgKvartal.kvartal
     );
@@ -46,10 +46,10 @@ const mapTilKvartalsvisSammenligning = (
     årstallOgKvartalerSomSkalVises: ÅrstallOgKvartal[]
 ): KvartalsvisSammenligning[] => {
     const harBransje = !!historikkListe.find(
-        historikk => historikk.type === SykefraværshistorikkType.BRANSJE
+        (historikk) => historikk.type === SykefraværshistorikkType.BRANSJE
     );
 
-    return årstallOgKvartalerSomSkalVises.map(årstallOgKvartal => {
+    return årstallOgKvartalerSomSkalVises.map((årstallOgKvartal) => {
         const getProsent = (type: SykefraværshistorikkType): Sykefraværsprosent =>
             finnProsent(historikkListe, årstallOgKvartal, type);
 
@@ -69,8 +69,8 @@ export const beregnHvilkeÅrstallOgKvartalerSomSkalVises = (
     historikkListe: Sykefraværshistorikk[]
 ): ÅrstallOgKvartal[] => {
     return historikkListe
-        .find(historikk => historikk.type === SykefraværshistorikkType.LAND)!
-        .kvartalsvisSykefraværsprosent.map(prosent => {
+        .find((historikk) => historikk.type === SykefraværshistorikkType.LAND)!
+        .kvartalsvisSykefraværsprosent.map((prosent) => {
             return { årstall: prosent.årstall, kvartal: prosent.kvartal };
         });
 };
@@ -84,11 +84,11 @@ export const konverterTilKvartalsvisSammenligning = (
 };
 
 export const historikkHarBransje = (historikkListe: Sykefraværshistorikk[]): boolean =>
-    !!historikkListe.find(historikk => historikk.type === SykefraværshistorikkType.BRANSJE);
+    !!historikkListe.find((historikk) => historikk.type === SykefraværshistorikkType.BRANSJE);
 
 export const historikkHarOverordnetEnhet = (historikkListe: Sykefraværshistorikk[]): boolean =>
     !!historikkListe.find(
-        historikk =>
+        (historikk) =>
             historikk.type === SykefraværshistorikkType.OVERORDNET_ENHET &&
             historikk.kvartalsvisSykefraværsprosent.length > 0
     );
@@ -103,7 +103,7 @@ export interface HistorikkLabels {
 
 export const getHistorikkLabels = (historikkListe: Sykefraværshistorikk[]): HistorikkLabels => {
     const getHistorikk = (type: SykefraværshistorikkType): Sykefraværshistorikk | undefined =>
-        historikkListe.find(historikk => historikk.type === type);
+        historikkListe.find((historikk) => historikk.type === type);
     return {
         virksomhet:
             getHistorikk(SykefraværshistorikkType.VIRKSOMHET) !== undefined
