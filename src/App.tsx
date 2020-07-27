@@ -74,6 +74,9 @@ const AppContent: FunctionComponent = () => {
 
     useSetUserProperties();
 
+    const brukerHarIkkeTilgangTilNoenOrganisasjoner =
+        restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
+
     let innhold;
     if (
         restOrganisasjoner.status === RestStatus.LasterInn ||
@@ -90,6 +93,8 @@ const AppContent: FunctionComponent = () => {
         !location.pathname.includes('iawebredirectside')
     ) {
         innhold = <FeilFraAltinnSide />;
+    } else if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
+        window.location.replace('/min-side-arbeidsgiver');
     } else {
         innhold = (
             <>
