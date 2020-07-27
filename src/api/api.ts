@@ -37,12 +37,14 @@ export const hentRestSykefraværshistorikk = async (
         };
     }
     if (restStatus === RestStatus.Feil) {
-        const body = await response.json();
-        if (body.causedBy === 'INGEN_NÆRING') {
-            return {
-                status: SykefraværshistorikkFeil.FeilPgaIngenNæring,
-            };
-        }
+        try {
+            const body = await response.json();
+            if (body.causedBy === 'INGEN_NÆRING') {
+                return {
+                    status: SykefraværshistorikkFeil.FeilPgaIngenNæring,
+                };
+            }
+        } catch (ignored) {}
     }
     return {
         status: restStatus,
