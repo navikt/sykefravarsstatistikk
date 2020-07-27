@@ -2,7 +2,7 @@ import { BASE_PATH } from '../konstanter';
 import { getRestStatus, RestStatus } from './api-utils';
 import { RestFeatureToggles } from './featureToggles';
 import {
-    FeilPgaIngenNæring,
+    SykefraværshistorikkFeil,
     KvartalsvisSykefraværsprosent,
     RestSykefraværshistorikk,
     Sykefraværshistorikk,
@@ -40,7 +40,7 @@ export const hentRestSykefraværshistorikk = async (
         const body = await response.json();
         if (body.causedBy === 'INGEN_NÆRING') {
             return {
-                status: FeilPgaIngenNæring.FeilPgaIngenNæring,
+                status: SykefraværshistorikkFeil.FeilPgaIngenNæring,
             };
         }
     }

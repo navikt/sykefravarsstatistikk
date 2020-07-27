@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { RestStatus } from '../../api/api-utils';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import classNames from 'classnames';
-import { FeilPgaIngenNæring, RestSykefraværshistorikkStatus } from '../../api/sykefraværshistorikk';
+import { SykefraværshistorikkFeil, RestSykefraværshistorikkStatus } from '../../api/sykefraværshistorikk';
 
 interface Props {
     status: RestSykefraværshistorikkStatus;
@@ -17,7 +17,7 @@ const SammenligningspanelFeilmelding: FunctionComponent<Props> = (props) => {
         status === RestStatus.LasterInn
     ) {
         return null;
-    } else if (status === FeilPgaIngenNæring.FeilPgaIngenNæring) {
+    } else if (status === SykefraværshistorikkFeil.FeilPgaIngenNæring) {
         return (
             <AlertStripeFeil className={classNames(className)}>
                 Kan ikke vise sykefraværshistorikk for denne virksomheten.

@@ -34,14 +34,14 @@ export interface Sykefraværshistorikk {
     kvartalsvisSykefraværsprosent: KvartalsvisSykefraværsprosent[];
 }
 
-export enum FeilPgaIngenNæring {
+export enum SykefraværshistorikkFeil {
     FeilPgaIngenNæring = 'FeilPgaIngenNæring',
 }
 
-export type RestSykefraværshistorikkStatus = RestStatus | FeilPgaIngenNæring;
+export type RestSykefraværshistorikkStatus = RestStatus | SykefraværshistorikkFeil;
 
 export type RestSykefraværshistorikk =
     | RestRessurs<Sykefraværshistorikk[]>
     | {
-          status: FeilPgaIngenNæring.FeilPgaIngenNæring;
+          status: SykefraværshistorikkFeil.FeilPgaIngenNæring;
       };
