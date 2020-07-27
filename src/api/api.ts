@@ -2,6 +2,7 @@ import { BASE_PATH } from '../konstanter';
 import { getRestStatus, RestStatus } from './api-utils';
 import { RestFeatureToggles } from './featureToggles';
 import {
+    FeilPgaIngenNæring,
     KvartalsvisSykefraværsprosent,
     RestSykefraværshistorikk,
     Sykefraværshistorikk,
@@ -34,6 +35,14 @@ export const hentRestSykefraværshistorikk = async (
                 return filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(data);
             }),
         };
+    }
+    if (restStatus === RestStatus.Feil) {
+        const body = await response.json();
+        if (body.causedBy === 'INGEN_NÆRING') {
+            return {
+                status: FeilPgaIngenNæring.FeilPgaIngenNæring,
+            };
+        }
     }
     return {
         status: restStatus,

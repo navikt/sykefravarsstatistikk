@@ -4,10 +4,11 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import './SammenligningspanelAlertStripe.less';
 import { RestStatus } from '../../../api/api-utils';
+import { RestSykefraværshistorikkStatus } from '../../../api/sykefraværshistorikk';
 
 interface Props {
     sammenligningSisteKvartal: KvartalsvisSammenligning;
-    restStatus: RestStatus;
+    restStatus: RestSykefraværshistorikkStatus;
 }
 
 export const SammenligningspanelAlertStripe: FunctionComponent<Props> = ({
