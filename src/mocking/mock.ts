@@ -4,7 +4,7 @@ import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from 
 import { getSykefraværshistorikkMock } from './sykefraværshistorikk';
 
 const MOCK_MIN_SIDE_ARBEIDSGIVER = true;
-const MOCK_SYKEFRAVÆRSSTATISTIKK_API = true;
+const MOCK_SYKEFRAVÆRSSTATISTIKK_API = false;
 const MOCK_ENHETSREGISTERET = true;
 const MOCK_FEATURE_TOGGLES = true;
 
