@@ -20,7 +20,7 @@ const SammenligningspanelFeilmelding: FunctionComponent<Props> = (props) => {
     } else if (status === SykefraværshistorikkFeil.FeilPgaIngenNæring) {
         return (
             <AlertStripeFeil className={classNames(className)}>
-                Kan ikke vise sykefraværshistorikk for denne virksomheten.
+                Kan ikke vise sykefraværet. Virksomheten har ikke registrert en næring.
             </AlertStripeFeil>
         );
     } else {
