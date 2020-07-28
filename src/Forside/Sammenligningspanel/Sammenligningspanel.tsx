@@ -64,7 +64,7 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                         Legemeldt sykefravær i {kvartal}. kvartal {årstall}
                     </SammenligningspanelOverskrift>
                     <SammenligningspanelFeilmelding
-                        status={restStatus}
+                        restSykefraværshistorikk={restSykefraværshistorikk}
                         className="sammenligningspanel__feilmelding"
                     />
                     <KoronaInfotekst />

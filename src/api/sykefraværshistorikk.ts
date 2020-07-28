@@ -1,4 +1,4 @@
-import { RestRessurs, RestStatus } from './api-utils';
+import { RestRessurs } from './api-utils';
 
 export enum SykefraværshistorikkType {
     LAND = 'LAND',
@@ -34,14 +34,4 @@ export interface Sykefraværshistorikk {
     kvartalsvisSykefraværsprosent: KvartalsvisSykefraværsprosent[];
 }
 
-export enum SykefraværshistorikkFeil {
-    FeilPgaIngenNæring = 'FeilPgaIngenNæring',
-}
-
-export type RestSykefraværshistorikkStatus = RestStatus | SykefraværshistorikkFeil;
-
-export type RestSykefraværshistorikk =
-    | RestRessurs<Sykefraværshistorikk[]>
-    | {
-          status: SykefraværshistorikkFeil.FeilPgaIngenNæring;
-      };
+export type RestSykefraværshistorikk = RestRessurs<Sykefraværshistorikk[]>;

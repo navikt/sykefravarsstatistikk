@@ -1,8 +1,7 @@
 import { BASE_PATH } from '../konstanter';
-import { getRestStatus, RestStatus } from './api-utils';
+import { getRestStatus, RestStatus, Årsak } from './api-utils';
 import { RestFeatureToggles } from './featureToggles';
 import {
-    SykefraværshistorikkFeil,
     KvartalsvisSykefraværsprosent,
     RestSykefraværshistorikk,
     Sykefraværshistorikk,
@@ -39,9 +38,13 @@ export const hentRestSykefraværshistorikk = async (
     if (restStatus === RestStatus.Feil) {
         try {
             const body = await response.json();
-            if (body.causedBy === 'INGEN_NÆRING') {
+
+            const causedBy: string = body.causedBy;
+
+            if (!!causedBy && Object.keys(Årsak).includes(causedBy)) {
                 return {
-                    status: SykefraværshistorikkFeil.FeilPgaIngenNæring,
+                    status: RestStatus.Feil,
+                    causedBy: Årsak[causedBy as keyof typeof Årsak],
                 };
             }
         } catch (ignored) {}
