@@ -1,5 +1,5 @@
 import { BASE_PATH } from '../konstanter';
-import { getRestStatus, RestStatus } from './api-utils';
+import { getRestStatus, RestStatus, Årsak } from './api-utils';
 import { RestFeatureToggles } from './featureToggles';
 import {
     KvartalsvisSykefraværsprosent,
@@ -34,6 +34,20 @@ export const hentRestSykefraværshistorikk = async (
                 return filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(data);
             }),
         };
+    }
+    if (restStatus === RestStatus.Feil) {
+        try {
+            const body = await response.json();
+
+            const causedBy: string = body.causedBy;
+
+            if (!!causedBy && Object.keys(Årsak).includes(causedBy)) {
+                return {
+                    status: RestStatus.Feil,
+                    causedBy: Årsak[causedBy as keyof typeof Årsak],
+                };
+            }
+        } catch (ignored) {}
     }
     return {
         status: restStatus,

@@ -28,8 +28,13 @@ export interface Suksess<T> {
     data: T;
 }
 
+export enum Årsak {
+    INGEN_NÆRING = 'INGEN_NÆRING',
+}
+
 export interface Feil {
     status: RestStatus.Feil;
+    causedBy?: Årsak;
 }
 
 export type RestRessurs<T> =

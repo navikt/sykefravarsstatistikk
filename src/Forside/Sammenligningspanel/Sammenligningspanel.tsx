@@ -64,12 +64,9 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                         Legemeldt sykefravær i {kvartal}. kvartal {årstall}
                     </SammenligningspanelOverskrift>
                     <SammenligningspanelFeilmelding
-                        status={restStatus}
+                        restSykefraværshistorikk={restSykefraværshistorikk}
                         className="sammenligningspanel__feilmelding"
-                    >
-                        Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen
-                        senere.
-                    </SammenligningspanelFeilmelding>
+                    />
                     <KoronaInfotekst />
                     {laster ? (
                         <div className="sammenligningspanel__skeleton">
