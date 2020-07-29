@@ -5,9 +5,18 @@ export type Næringskode5Siffer = {
     beskrivelse: string;
 };
 
+export enum Bransjetype {
+    BARNEHAGER = 'BARNEHAGER',
+    NÆRINGSMIDDELINDUSTRI = 'NÆRINGSMIDDELINDUSTRI',
+    SYKEHUS = 'SYKEHUS',
+    SYKEHJEM = 'SYKEHJEM',
+    TRANSPORT = 'TRANSPORT',
+}
+
+// TODO Rename til VirksomhetMetadata?
 export interface Bedriftsmetrikker {
     næringskode5Siffer: Næringskode5Siffer;
-    bransje: string;
+    bransje: Bransjetype;
     antallAnsatte: number;
 }
 

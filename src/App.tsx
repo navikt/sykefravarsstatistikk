@@ -17,15 +17,9 @@ import { RestBedriftsmetrikker } from './api/bedriftsmetrikker';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import { BASE_PATH } from './konstanter';
-import {
-    bedriftsmetrikkerContext,
-    BedriftsmetrikkerProvider,
-} from './utils/bedriftsmetrikkerContext';
+import { bedriftsmetrikkerContext, BedriftsmetrikkerProvider } from './utils/bedriftsmetrikkerContext';
 import { sendEventDirekte } from './amplitude/amplitude';
-import {
-    sykefraværshistorikkContext,
-    SykefraværshistorikkProvider,
-} from './utils/sykefraværshistorikkContext';
+import { sykefraværshistorikkContext, SykefraværshistorikkProvider } from './utils/sykefraværshistorikkContext';
 import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
@@ -96,6 +90,20 @@ const AppContent: FunctionComponent = () => {
     } else if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
         window.location.replace('/min-side-arbeidsgiver');
     } else {
+        /*
+        Hvorvidt virksomheten er en barnehage kan avgjøres via Bedriftsmetrikker.
+
+        Det finnes 2 måter å håndtere en spesifikk barnehage-side på.
+        1. Ha samme grunnoppsett, men lage barnehage-versjoner av underkomponentene.
+            > Ikke så fleksibelt, men får gjenbrukt mye kode
+        2. Lage en helt ny sandbox for barnehager.
+            > Veldig fleksibelt, mindre gjenbruk
+            > Hvordan skal det deles inn? Url kan være vanskelig
+
+        Vanskelig å avgjøre hva som er best uten å vite konkret hva vi skal lage.
+        Mulig det beste er å begynne med 1, og gå over til 2 senere.
+         */
+
         innhold = (
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
