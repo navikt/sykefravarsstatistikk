@@ -94,7 +94,7 @@ const AppContent: FunctionComponent = () => {
     ) {
         innhold = <FeilFraAltinnSide />;
     } else if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
-        window.location.replace('/min-side-arbeidsgiver');
+        window.location.replace('/min-side-arbeidsgiver/mangler-tilgang');
     } else {
         innhold = (
             <>
