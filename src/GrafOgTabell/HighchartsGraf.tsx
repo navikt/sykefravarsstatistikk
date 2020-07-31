@@ -51,6 +51,12 @@ export const HighchartsGraf: FunctionComponent<Props> = ({ sykefraværshistorikk
         },
         xAxis: {
             categories: årstallOgKvartalKategorier,
+            minTickInterval: 4,
+        },
+        yAxis: {
+            labels: {
+                formatter: (name: any) => `${name.value} %`
+            }
         },
         series: data,
     };
