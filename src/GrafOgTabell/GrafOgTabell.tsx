@@ -12,6 +12,7 @@ import { scrollToBanner } from '../utils/scrollUtils';
 import { useSendEvent } from '../amplitude/amplitude';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
+import { HighchartsGraf } from './HighchartsGraf';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -54,7 +55,7 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
     } else {
         innhold =
             grafEllerTabell === 'graf' ? (
-                <Graf sykefraværshistorikk={restSykefraværsstatistikk.data} />
+                <HighchartsGraf sykefraværshistorikk={restSykefraværsstatistikk.data} />
             ) : (
                 <Tabell sykefraværshistorikk={restSykefraværsstatistikk.data} />
             );
