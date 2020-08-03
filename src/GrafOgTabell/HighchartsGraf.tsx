@@ -8,6 +8,9 @@ import {
     ÅrstallOgKvartal,
 } from '../utils/sykefraværshistorikk-utils';
 import './highcharts.less';
+import accessibility from './accessibility';
+
+accessibility(Highcharts);
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
@@ -46,20 +49,10 @@ export const HighchartsGraf: FunctionComponent<Props> = ({ sykefraværshistorikk
 
     console.log(sykefraværshistorikk);
     const options = {
-        accessibility: { enabled: true, description: 'Heisann!' },
         chart: {
             type: 'spline',
             styledMode: true,
             height: 500,
-            accessibility: { enabled: true, description: 'Heisann!' },
-        },
-        legend: {
-            accessibility: {
-                enabled: true,
-                keyboardNavigation: {
-                    enabled: true,
-                },
-            },
         },
         title: {
             text: undefined,
@@ -72,6 +65,9 @@ export const HighchartsGraf: FunctionComponent<Props> = ({ sykefraværshistorikk
             tickWidth: 1,
             labels: {
                 y: 35,
+            },
+            accessibility: {
+                description: 'Time from December 2010 to September 2019'
             },
         },
         yAxis: {
