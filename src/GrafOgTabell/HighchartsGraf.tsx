@@ -2,10 +2,12 @@ import { FunctionComponent, default as React } from 'react';
 import { KvartalsvisSykefraværsprosent, Sykefraværshistorikk } from '../api/sykefraværshistorikk';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
+import './HighchartsGraf.less';
 import {
     beregnHvilkeÅrstallOgKvartalerSomSkalVises,
     ÅrstallOgKvartal,
 } from '../utils/sykefraværshistorikk-utils';
+import './highcharts.less';
 
 interface Props {
     sykefraværshistorikk: Sykefraværshistorikk[];
@@ -39,27 +41,76 @@ export const HighchartsGraf: FunctionComponent<Props> = ({ sykefraværshistorikk
     const data = sykefraværshistorikk.map((historikk) => ({
         name: historikk.label,
         data: padMedNull(historikk.kvartalsvisSykefraværsprosent, årstallOgKvartalSomSkalVises),
+        accessibility: { description: '@@@Test' },
     }));
 
     console.log(sykefraværshistorikk);
     const options = {
+        accessibility: { enabled: true, description: 'Heisann!' },
         chart: {
             type: 'spline',
+            styledMode: true,
+            height: 500,
+            accessibility: { enabled: true, description: 'Heisann!' },
+        },
+        legend: {
+            accessibility: {
+                enabled: true,
+                keyboardNavigation: {
+                    enabled: true,
+                },
+            },
         },
         title: {
-            text: 'My chart',
+            text: undefined,
         },
         xAxis: {
             categories: årstallOgKvartalKategorier,
             minTickInterval: 4,
+            className: 'highcharts-graf__xAxis',
+            tickLength: 5,
+            tickWidth: 1,
+            labels: {
+                y: 35,
+            },
         },
         yAxis: {
+            lineWidth: 2,
             labels: {
-                formatter: (name: any) => `${name.value} %`
-            }
+                formatter: (name: any) => `${name.value} %`,
+            },
+            className: 'highcharts-graf__yAxis',
+            title: { text: 'Sykefraværsprosent' },
         },
         series: data,
     };
 
-    return <HighchartsReact highcharts={Highcharts} options={options} />;
+    const optionsStyledModeFalse = {
+        ...options,
+        chart: {
+            ...options.chart,
+            styledMode: false,
+            plotBorderWidth: 1,
+            marginLeft: 100,
+        },
+        xAxis: {
+            ...options.xAxis,
+            margin: 100,
+            labels: {
+                padding: 20,
+                rotation: 45,
+            },
+        },
+    };
+
+    return (
+        <div className="highcharts-graf">
+            <div className="highcharts-graf1">
+                <HighchartsReact highcharts={Highcharts} options={options} />
+            </div>
+            <div className="highcharts-graf2">
+                <HighchartsReact highcharts={Highcharts} options={optionsStyledModeFalse} />
+            </div>
+        </div>
+    );
 };
