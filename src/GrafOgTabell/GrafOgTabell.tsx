@@ -55,7 +55,10 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
     } else {
         innhold =
             grafEllerTabell === 'graf' ? (
-                <HighchartsGraf sykefraværshistorikk={restSykefraværsstatistikk.data} />
+                <>
+                    <HighchartsGraf sykefraværshistorikk={restSykefraværsstatistikk.data} />
+                    <Graf sykefraværshistorikk={restSykefraværsstatistikk.data} />
+                </>
             ) : (
                 <Tabell sykefraværshistorikk={restSykefraværsstatistikk.data} />
             );
