@@ -83,14 +83,12 @@ export const HighchartsGraf: FunctionComponent<Props> = ({ sykefraværshistorikk
     const getLegendTekst = (type: SykefraværshistorikkType) => {
         if (type === SykefraværshistorikkType.LAND)
             return '<span class="typo-element">Norge</span>';
-        //return labelsConfig[type].typeTabel + ': ' + labelsConfig[type].historikkLabel;
         return (
             `<span class="typo-element">${labelsConfig[type].typeTabel}: </span>` +
             `<span class="typo-normal">${labelsConfig[type].historikkLabel}</span>`
         );
     };
 
-    console.log(sykefraværshistorikk);
     const options = {
         chart: {
             type: 'spline',
@@ -127,26 +125,6 @@ export const HighchartsGraf: FunctionComponent<Props> = ({ sykefraværshistorikk
                 return `<span class="heisann">${getLegendTekst(type)}</span>`;
             },
         },
-        /*
-        tooltip: {
-            formatter: function () {
-                const { x, y, series } = this as any;
-                console.log(this);
-                if (x) {
-                    const name = getLegendTekst(x as SykefraværshistorikkType);
-                    return (
-                        'The value for <b>' +
-                        x +
-                        '</b> is <b>' +
-                        y +
-                        '</b>, in series ' +
-                        series.name
-                    );
-                }
-
-                //return `${name}: ${y} %`;
-            },
-        },*/
         tooltip: {
             split: true,
             pointFormatter: function () {
