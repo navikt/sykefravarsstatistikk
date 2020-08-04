@@ -1,10 +1,15 @@
-import { FunctionComponent, default as React } from 'react';
-import { KvartalsvisSykefraværsprosent, Sykefraværshistorikk } from '../api/sykefraværshistorikk';
+import { default as React, FunctionComponent } from 'react';
+import {
+    KvartalsvisSykefraværsprosent,
+    Sykefraværshistorikk,
+    SykefraværshistorikkType,
+} from '../api/sykefraværshistorikk';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 import './HighchartsGraf.less';
 import {
     beregnHvilkeÅrstallOgKvartalerSomSkalVises,
+    getHistorikkLabels,
     ÅrstallOgKvartal,
 } from '../utils/sykefraværshistorikk-utils';
 import './highcharts.less';
@@ -42,10 +47,48 @@ export const HighchartsGraf: FunctionComponent<Props> = ({ sykefraværshistorikk
         });
 
     const data = sykefraværshistorikk.map((historikk) => ({
-        name: historikk.label,
+        name: historikk.type,
         data: padMedNull(historikk.kvartalsvisSykefraværsprosent, årstallOgKvartalSomSkalVises),
-        accessibility: { description: '@@@Test' },
     }));
+
+    const historikkLabels = getHistorikkLabels(sykefraværshistorikk);
+
+    const labelsConfig = {
+        [SykefraværshistorikkType.LAND]: {
+            typeTabel: 'Land',
+            historikkLabel: 'Norge',
+        },
+        [SykefraværshistorikkType.SEKTOR]: {
+            typeTabel: 'Sektor',
+            historikkLabel: historikkLabels.sektor,
+        },
+        [SykefraværshistorikkType.NÆRING]: {
+            typeTabel: 'Næring',
+            historikkLabel: historikkLabels.næringEllerBransje,
+        },
+        [SykefraværshistorikkType.BRANSJE]: {
+            typeTabel: 'Bransje',
+            historikkLabel: historikkLabels.næringEllerBransje,
+        },
+        [SykefraværshistorikkType.OVERORDNET_ENHET]: {
+            typeTabel: 'Overordnet enhet',
+            historikkLabel: historikkLabels.overordnetEnhet,
+        },
+        [SykefraværshistorikkType.VIRKSOMHET]: {
+            typeTabel: 'Virksomhet',
+            historikkLabel: historikkLabels.virksomhet,
+        },
+    };
+
+    const getLegendTekst = (type: SykefraværshistorikkType) => {
+        if (type === SykefraværshistorikkType.LAND)
+            return '<span class="typo-element">Norge</span>';
+        //return labelsConfig[type].typeTabel + ': ' + labelsConfig[type].historikkLabel;
+        return (
+            `<span class="typo-element">${labelsConfig[type].typeTabel}: </span>` +
+            `<span class="typo-normal">${labelsConfig[type].historikkLabel}</span>`
+        );
+    };
 
     console.log(sykefraværshistorikk);
     const options = {
@@ -67,7 +110,7 @@ export const HighchartsGraf: FunctionComponent<Props> = ({ sykefraværshistorikk
                 y: 35,
             },
             accessibility: {
-                description: 'Time from December 2010 to September 2019'
+                description: 'Time from December 2010 to September 2019',
             },
         },
         yAxis: {
@@ -77,6 +120,42 @@ export const HighchartsGraf: FunctionComponent<Props> = ({ sykefraværshistorikk
             },
             className: 'highcharts-graf__yAxis',
             title: { text: 'Sykefraværsprosent' },
+        },
+        legend: {
+            labelFormatter: function () {
+                const type: SykefraværshistorikkType = (this as any).name;
+                return `<span class="heisann">${getLegendTekst(type)}</span>`;
+            },
+        },
+        /*
+        tooltip: {
+            formatter: function () {
+                const { x, y, series } = this as any;
+                console.log(this);
+                if (x) {
+                    const name = getLegendTekst(x as SykefraværshistorikkType);
+                    return (
+                        'The value for <b>' +
+                        x +
+                        '</b> is <b>' +
+                        y +
+                        '</b>, in series ' +
+                        series.name
+                    );
+                }
+
+                //return `${name}: ${y} %`;
+            },
+        },*/
+        tooltip: {
+            split: true,
+            pointFormatter: function () {
+                const { y, series } = this as any;
+                return `<span class="highcharts-color-${series.colorIndex}">●</span><span class="typo-normal"> ${
+                    labelsConfig[series.name as SykefraværshistorikkType].typeTabel
+                }:</span> <span class="typo-element"> ${y} %</span>`;
+            },
+            headerFormat: '<span class="typo-normal">{point.key}</span><br/>'
         },
         series: data,
     };
