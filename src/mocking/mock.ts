@@ -4,10 +4,10 @@ import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from 
 import { getSykefraværshistorikkMock } from './sykefraværshistorikk';
 
 const mock = {
-    minSideArbeidsgiver: false,
-    sykefraværsstatistikkApi: false,
-    enhetsregisteret: false,
-    featureToggles: false
+    minSideArbeidsgiver: true,
+    sykefraværsstatistikkApi: true,
+    enhetsregisteret: true,
+    featureToggles: true
 };
 
 if (process.env.REACT_APP_HEROKU) {

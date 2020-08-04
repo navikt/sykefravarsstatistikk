@@ -4,8 +4,8 @@ import Sykefraværsprosentpanel, {
 } from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import './NæringEllerBransjePanel.less';
-import SammenligningsIkon from '../SammenligningsIkon';
-import { SykefraværshistorikkType } from '../../../api/sykefraværshistorikk';
+import { SykefraværshistorikkType } from '../../../../api/sykefraværshistorikk';
+import SammenligningsIkon from '../SammenligningsIkon/SammenligningsIkon';
 
 type Props = SykefraværprosentpanelProps & {
     harBransje?: boolean;
