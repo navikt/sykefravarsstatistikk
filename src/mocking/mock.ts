@@ -13,7 +13,6 @@ const mock = {
 if (process.env.REACT_APP_HEROKU) {
     // Alt skal alltid mockes på heroku
     Object.keys(mock).forEach(skalMockes => (mock as any)[skalMockes] = true);
-    console.log(mock);
 }
 
 if (mock.minSideArbeidsgiver) {
