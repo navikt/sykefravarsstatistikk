@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FunctionComponent } from 'react';
-import { ReactComponent as BedriftSvg } from './Bedrift.svg';
+import { ReactComponent as OverordnetEnhetSvg } from './OverordnetEnhet.svg';
+import { ReactComponent as VirksomhetSvg } from './Virksomhet.svg';
 import { ReactComponent as NæringSvg } from './Næring.svg';
 import { ReactComponent as SektorSvg } from './Sektor.svg';
 import { ReactComponent as LandSvg } from './Norge.svg';
@@ -11,9 +12,9 @@ const SammenligningsIkon: FunctionComponent<{
 }> = (props) => {
     switch (props.label) {
         case SykefraværshistorikkType.VIRKSOMHET:
-            return <BedriftSvg className="sammenligningsikon" />;
-        case SykefraværshistorikkType.OVERORDNET_ENHET: // TODO
-            return <BedriftSvg className="sammenligningsikon" />;
+            return <VirksomhetSvg className="sammenligningsikon" />;
+        case SykefraværshistorikkType.OVERORDNET_ENHET:
+            return <OverordnetEnhetSvg className="sammenligningsikon" />;
         case SykefraværshistorikkType.NÆRING:
             return <NæringSvg className="sammenligningsikon" />;
         case SykefraværshistorikkType.SEKTOR:
@@ -21,7 +22,7 @@ const SammenligningsIkon: FunctionComponent<{
         case SykefraværshistorikkType.LAND:
             return <LandSvg style={{ width: 24, height: 24 }} className="sammenligningsikon" />;
         default:
-            return <BedriftSvg className="sammenligningsikon" />;
+            return <VirksomhetSvg className="sammenligningsikon" />;
     }
 };
 
