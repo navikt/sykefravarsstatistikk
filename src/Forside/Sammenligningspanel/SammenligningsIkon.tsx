@@ -12,6 +12,8 @@ const SammenligningsIkon: FunctionComponent<{
     switch (props.label) {
         case SykefraværshistorikkType.VIRKSOMHET:
             return <BedriftSvg className="sammenligningsikon" />;
+        case SykefraværshistorikkType.OVERORDNET_ENHET: // TODO
+            return <BedriftSvg className="sammenligningsikon" />;
         case SykefraværshistorikkType.NÆRING:
             return <NæringSvg className="sammenligningsikon" />;
         case SykefraværshistorikkType.SEKTOR:

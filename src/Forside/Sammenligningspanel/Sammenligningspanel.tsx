@@ -5,6 +5,7 @@ import { RestSykefraværshistorikk, Sykefraværshistorikk } from '../../api/syke
 import {
     getHistorikkLabels,
     historikkHarBransje,
+    historikkHarOverordnetEnhet,
     HistorikkLabels,
     konverterTilKvartalsvisSammenligning,
     KvartalsvisSammenligning,
@@ -18,6 +19,7 @@ import Landspanel from './Landspanel/Landspanel';
 import Skeleton from 'react-loading-skeleton';
 import { SammenligningspanelAlertStripe } from './SammenligningspanelAlertStripe/SammenligningspanelAlertStripe';
 import KoronaInfotekst from './KoronaInfotekst/KoronaInfotekst';
+import { OverordnetEnhetPanel } from './OverordnetEnhetPanel';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -39,12 +41,14 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
     let labels: HistorikkLabels | any = {};
     let sammenligningSisteKvartal: KvartalsvisSammenligning | any = {};
     let harBransje = undefined;
+    let skalViseOverordnetEnhet = undefined;
 
     if (restSykefraværshistorikk.status === RestStatus.Suksess) {
         const historikkListe = restSykefraværshistorikk.data;
         labels = getHistorikkLabels(historikkListe);
         sammenligningSisteKvartal = getSammenligningForSisteKvartal(historikkListe);
-        harBransje = historikkHarBransje(restSykefraværshistorikk.data);
+        harBransje = historikkHarBransje(historikkListe);
+        skalViseOverordnetEnhet = historikkHarOverordnetEnhet(historikkListe);
     }
 
     const { årstall, kvartal } = sammenligningSisteKvartal;
@@ -80,6 +84,14 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                                 laster={laster}
                                 className="sammenligningspanel__syfopanel"
                             />
+                            {skalViseOverordnetEnhet && (
+                                <OverordnetEnhetPanel
+                                    sykefraværsprosent={sammenligningSisteKvartal.overordnetEnhet}
+                                    sykefraværprosentLabel={labels.overordnetEnhet}
+                                    laster={laster}
+                                    className="sammenligningspanel__syfopanel"
+                                />
+                            )}
                             <NæringEllerBransjePanel
                                 laster={laster}
                                 sykefraværsprosent={sammenligningSisteKvartal.næringEllerBransje}
