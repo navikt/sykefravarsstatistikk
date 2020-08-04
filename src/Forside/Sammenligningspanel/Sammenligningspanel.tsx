@@ -13,13 +13,13 @@ import {
 import { RestStatus } from '../../api/api-utils';
 import SammenligningspanelOverskrift from './SammenligningspanelOverskrift';
 import SammenligningspanelFeilmelding from './SammenligningspanelFeilmelding';
-import NæringEllerBransjePanel from './NæringEllerBransjePanel/NæringEllerBransjePanel';
-import { Virksomhetspanel } from './Virksomhetspanel';
-import Landspanel from './Landspanel/Landspanel';
+import NæringEllerBransjePanel from './Paneler/NæringEllerBransjePanel/NæringEllerBransjePanel';
+import { Virksomhetspanel } from './Paneler/Virksomhetspanel';
+import Landspanel from './Paneler/Landspanel';
 import Skeleton from 'react-loading-skeleton';
 import { SammenligningspanelAlertStripe } from './SammenligningspanelAlertStripe/SammenligningspanelAlertStripe';
 import KoronaInfotekst from './KoronaInfotekst/KoronaInfotekst';
-import { OverordnetEnhetPanel } from './OverordnetEnhetPanel';
+import { OverordnetEnhetPanel } from './Paneler/OverordnetEnhetPanel';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
