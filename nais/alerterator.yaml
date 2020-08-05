@@ -10,8 +10,8 @@ spec:
       channel: 'arbeidsgiver-teamia-utvikling'
       prependText: '<!here> | '
   alerts:
-    - alert: applikasjon nede
-      expr: up{app="sykefravarsstatistikk", job="kubernetes-pods"} == 0
-      for: 2m
-      description: "{{ $labels.app }} er nede"
-      action: "`kubectl describe pod {{ $labels.kubernetes_pod_name }}` for events, og `kubectl logs {{ $labels.kubernetes_pod_name }}` for logger"
+    - alert: Applikasjon nede
+      expr: sum(up{app="sykefravarsstatistikk", job="kubernetes-pods"}) == 0
+      for: 30s
+      description: "sykefravarsstatistikk er nede"
+      action: "Sjekk logs.adeo.no for logger, og Grafana-dashboardet vårt: https://grafana.adeo.no/d/MwhvlzSMz/team-ia-samledashboard"
