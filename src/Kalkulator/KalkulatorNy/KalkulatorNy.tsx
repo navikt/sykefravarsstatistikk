@@ -24,6 +24,15 @@ const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) =
         scrollToBanner();
     }, []);
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            sendEvent('kalkulator', 'brukt i 30s')
+        }, 30000);
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [sendEvent]);
+
     return (
         <div className="kalkulator-ny">
             <div className="kalkulator__wrapper">
