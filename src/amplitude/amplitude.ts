@@ -1,6 +1,6 @@
 import amplitude from 'amplitude-js';
 import { RestStatus } from '../api/api-utils';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { RestBedriftsmetrikker } from '../api/bedriftsmetrikker';
 import { bedriftsmetrikkerContext } from '../utils/bedriftsmetrikkerContext';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
@@ -98,19 +98,22 @@ export const useMålingAvTidsbruk = (
     ...antallSekunderFørEventSendes: number[]
 ): void => {
     const sendEvent = useSendEvent();
+    const skalSetteTimer = useRef(true);
 
     useEffect(() => {
-        const timers = antallSekunderFørEventSendes.map((antallSekunder) =>
-            setTimeout(() => {
-                sendEvent(område, 'tidsbruk', {
-                    sekunder: antallSekunder,
-                });
-                console.log(område, antallSekunder);
-            }, antallSekunder * 1000)
-        );
+        if (skalSetteTimer.current) {
+            const timers = antallSekunderFørEventSendes.map((antallSekunder) =>
+                setTimeout(() => {
+                    sendEvent(område, 'tidsbruk', {
+                        sekunder: antallSekunder,
+                    });
+                    console.log(område, antallSekunder);
+                }, antallSekunder * 1000)
+            );
 
-        return () => {
-            timers.forEach((timer) => clearTimeout(timer));
-        };
+            return () => {
+                timers.forEach((timer) => clearTimeout(timer));
+            };
+        }
     }, [sendEvent, antallSekunderFørEventSendes, område]);
 };

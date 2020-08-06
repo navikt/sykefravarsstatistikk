@@ -73,7 +73,7 @@ const AppContent: FunctionComponent = () => {
     const location = useLocation();
 
     useSetUserProperties();
-    useMålingAvTidsbruk('kalkulator', 1, 2, 3, 10);
+    useMålingAvTidsbruk('hele appen', 1, 2, 3, 10);
 
     const brukerHarIkkeTilgangTilNoenOrganisasjoner =
         restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
