@@ -4,7 +4,7 @@ import './KalkulatorNy.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import { useMålingAvTidsbruk, useSendEvent } from '../../amplitude/amplitude';
+import { useSendEvent } from '../../amplitude/amplitude';
 import { KalkulatorMedDagsverkNy } from './KalkulatorMedDagsverkNy';
 import { KalkulatorMedProsentNy } from './KalkulatorMedProsentNy';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
