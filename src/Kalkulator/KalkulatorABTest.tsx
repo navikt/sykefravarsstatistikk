@@ -22,6 +22,7 @@ export const KalkulatorABTest: FunctionComponent<Props> = ({ restSykefraværshis
             sendEvent('kalkulator', 'vist', { kalkulatorversjon: 'ny' });
             return <KalkulatorNy restSykefraværshistorikk={restSykefraværshistorikk} />;
         } else {
+            // TODO Denne sendes kanskje for ofte; må fikses når vi avslutter AB-testen
             sendEvent('kalkulator', 'vist', { kalkulatorversjon: 'gammel' });
             return <KalkulatorGammel restSykefraværshistorikk={restSykefraværshistorikk} />;
         }
