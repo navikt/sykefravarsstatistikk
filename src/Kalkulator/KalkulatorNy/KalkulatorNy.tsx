@@ -4,7 +4,7 @@ import './KalkulatorNy.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import { useSendEvent } from '../../amplitude/amplitude';
+import { useMålingAvTidsbruk, useSendEvent } from '../../amplitude/amplitude';
 import { KalkulatorMedDagsverkNy } from './KalkulatorMedDagsverkNy';
 import { KalkulatorMedProsentNy } from './KalkulatorMedProsentNy';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
@@ -24,14 +24,7 @@ const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) =
         scrollToBanner();
     }, []);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            sendEvent('kalkulator', 'brukt i 30s')
-        }, 30000);
-        return () => {
-            clearTimeout(timer);
-        };
-    }, [sendEvent]);
+    useMålingAvTidsbruk('kalkulator', 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
     return (
         <div className="kalkulator-ny">
