@@ -99,21 +99,26 @@ export const useMålingAvTidsbruk = (
 ): void => {
     const sendEvent = useSendEvent();
     const skalSetteTimer = useRef(true);
+    const timers = useRef<NodeJS.Timeout[]>([]);
 
     useEffect(() => {
         if (skalSetteTimer.current) {
-            const timers = antallSekunderFørEventSendes.map((antallSekunder) =>
+            skalSetteTimer.current = false;
+            timers.current = antallSekunderFørEventSendes.map((antallSekunder) =>
                 setTimeout(() => {
                     sendEvent(område, 'tidsbruk', {
                         sekunder: antallSekunder,
                     });
-                    console.log(område, antallSekunder);
                 }, antallSekunder * 1000)
             );
-
-            return () => {
-                timers.forEach((timer) => clearTimeout(timer));
-            };
         }
     }, [sendEvent, antallSekunderFørEventSendes, område]);
+
+    // Cleanup når komponenten unmountes
+    useEffect(
+        () => () => {
+            timers.current.forEach((timer) => clearTimeout(timer));
+        },
+        []
+    );
 };
