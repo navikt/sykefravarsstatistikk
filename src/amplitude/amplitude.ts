@@ -1,6 +1,6 @@
 import amplitude from 'amplitude-js';
 import { RestStatus } from '../api/api-utils';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { RestBedriftsmetrikker } from '../api/bedriftsmetrikker';
 import { bedriftsmetrikkerContext } from '../utils/bedriftsmetrikkerContext';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
@@ -91,4 +91,21 @@ export const useSendEvent = (): SendEvent => {
 
     return (område: string, hendelse: string, data?: Object) =>
         sendEventDirekte(område, hendelse, { ...ekstraData, ...data });
+};
+
+export const useSendSidevisningEvent = (område: string, orgnr: string | undefined) => {
+    const sendEvent = useSendEvent();
+    const skalSendeEvent = useRef(true);
+
+    useEffect(() => {
+        skalSendeEvent.current = true;
+    }, [orgnr]);
+
+    useEffect(() => {
+        if (skalSendeEvent.current) {
+            skalSendeEvent.current = false;
+            console.log('forside vist', orgnr)
+            sendEvent(område, 'vist');
+        }
+    }, [orgnr, område, sendEvent]);
 };
