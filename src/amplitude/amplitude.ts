@@ -108,3 +108,27 @@ export const useSendSidevisningEvent = (område: string, orgnr: string | undefin
         }
     }, [orgnr, område, sendEvent]);
 };
+
+export const useMålingAvTidsbruk = (
+    område: string,
+    ...antallSekunderFørEventSendes: number[]
+): void => {
+    const sendEvent = useSendEvent();
+
+    useEffect(() => {
+        const timers = antallSekunderFørEventSendes.map((antallSekunder) =>
+            setTimeout(() => {
+                sendEvent(område, 'tidsbruk', {
+                    sekunder: antallSekunder,
+                });
+            }, antallSekunder * 1000)
+        );
+
+        return () =>
+            timers.forEach((timer) => {
+                clearTimeout(timer);
+            });
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    // eslint klager fordi vi ikke legger til alle variabler vi bruker i dependency-listen.
+    // Vi vil ikke legge dependencies der, fordi koden bare skal kjøre når komponenten mountes.
+};

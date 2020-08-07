@@ -3,7 +3,6 @@ import PanelBase from 'nav-frontend-paneler';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { ReactComponent as GrafIkon } from './graf.svg';
 import { PATH_HISTORIKK } from '../../App';
-import { sendMetrikker } from '../../utils/metrikk-api';
 import InternLenke from '../../felleskomponenter/InternLenke/InternLenke';
 import './Historikkpanel.less';
 import { useSendEvent } from '../../amplitude/amplitude';
@@ -22,10 +21,7 @@ const Historikkpanel: FunctionComponent = () => {
             </Normaltekst>
             <InternLenke
                 pathname={PATH_HISTORIKK}
-                onClick={() => {
-                    sendMetrikker('sykefravarsstatistikk.klikk-til-historikk');
-                    sendEvent('forside historikk', 'klikk');
-                }}
+                onClick={() => sendEvent('forside historikk', 'klikk')}
             >
                 Gå til sykefraværshistorikken
             </InternLenke>

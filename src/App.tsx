@@ -21,7 +21,7 @@ import {
     bedriftsmetrikkerContext,
     BedriftsmetrikkerProvider,
 } from './utils/bedriftsmetrikkerContext';
-import { sendEventDirekte } from './amplitude/amplitude';
+import { sendEventDirekte, useMålingAvTidsbruk } from './amplitude/amplitude';
 import {
     sykefraværshistorikkContext,
     SykefraværshistorikkProvider,
@@ -73,6 +73,7 @@ const AppContent: FunctionComponent = () => {
     const location = useLocation();
 
     useSetUserProperties();
+    useMålingAvTidsbruk('hele appen', 5, 30, 120, 300);
 
     const brukerHarIkkeTilgangTilNoenOrganisasjoner =
         restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;

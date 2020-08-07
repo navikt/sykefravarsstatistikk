@@ -2,7 +2,6 @@ import * as React from 'react';
 import { FunctionComponent } from 'react';
 import { ReactComponent as KalkisIkon } from './kalkis.svg';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { sendMetrikker } from '../../utils/metrikk-api';
 import PanelBase from 'nav-frontend-paneler';
 import './KalkulatorPanel.less';
 import { PATH_KALKULATOR } from '../../App';
@@ -28,10 +27,7 @@ const KalkulatorPanel: FunctionComponent = () => {
                     search: location.search,
                 }}
                 className="kalkulatorpanel__lenke"
-                onClick={() => {
-                    sendMetrikker('sykefravarsstatistikk.klikk-til-kalkulator');
-                    sendEvent('forside kalkulator', 'klikk');
-                }}
+                onClick={() => sendEvent('forside kalkulator', 'klikk')}
             >
                 Gå til kostnadskalkulatoren
             </Link>
