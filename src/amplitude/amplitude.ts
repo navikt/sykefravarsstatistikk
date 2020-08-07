@@ -1,6 +1,6 @@
 import amplitude from 'amplitude-js';
 import { RestStatus } from '../api/api-utils';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { RestBedriftsmetrikker } from '../api/bedriftsmetrikker';
 import { bedriftsmetrikkerContext } from '../utils/bedriftsmetrikkerContext';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
@@ -91,4 +91,28 @@ export const useSendEvent = (): SendEvent => {
 
     return (område: string, hendelse: string, data?: Object) =>
         sendEventDirekte(område, hendelse, { ...ekstraData, ...data });
+};
+
+export const useMålingAvTidsbruk = (
+    område: string,
+    ...antallSekunderFørEventSendes: number[]
+): void => {
+    const sendEvent = useSendEvent();
+
+    useEffect(() => {
+        const timers = antallSekunderFørEventSendes.map((antallSekunder) =>
+            setTimeout(() => {
+                sendEvent(område, 'tidsbruk', {
+                    sekunder: antallSekunder,
+                });
+            }, antallSekunder * 1000)
+        );
+
+        return () =>
+            timers.forEach((timer) => {
+                clearTimeout(timer);
+            });
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    // eslint klager fordi vi ikke legger til alle variabler vi bruker i dependency-listen.
+    // Vi vil ikke legge dependencies der, fordi koden bare skal kjøre når komponenten mountes.
 };
