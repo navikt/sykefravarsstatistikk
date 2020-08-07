@@ -104,7 +104,6 @@ export const useSendSidevisningEvent = (område: string, orgnr: string | undefin
     useEffect(() => {
         if (skalSendeEvent.current) {
             skalSendeEvent.current = false;
-            console.log('forside vist', orgnr)
             sendEvent(område, 'vist');
         }
     }, [orgnr, område, sendEvent]);
