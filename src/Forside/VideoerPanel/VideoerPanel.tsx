@@ -2,7 +2,6 @@ import * as React from 'react';
 import { FunctionComponent } from 'react';
 import { ReactComponent as Kalkulatorikon } from './video.svg';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { sendMetrikker } from '../../utils/metrikk-api';
 import PanelBase from 'nav-frontend-paneler';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import './VideoerPanel.less';
@@ -29,10 +28,7 @@ const VideoerPanel: FunctionComponent = () => {
                 <EksternLenke
                     className="videoerpanel__lenke"
                     href="https://vimeo.com/showcase/6728595"
-                    onClick={() => {
-                        sendMetrikker('sykefravarsstatistikk.klikk-til-redusering-av-sykefravar');
-                        sendEvent('forside videoer folgeopp', 'klikk');
-                    }}
+                    onClick={() => sendEvent('forside videoer folgeopp', 'klikk')}
                 >
                     Følge opp sykefravær
                 </EksternLenke>
@@ -40,10 +36,7 @@ const VideoerPanel: FunctionComponent = () => {
                 <EksternLenke
                     className="videoerpanel__lenke"
                     href="https://vimeo.com/showcase/6728594"
-                    onClick={() => {
-                        sendMetrikker('sykefravarsstatistikk.klikk-til-forebygge-arbeidsmiljoet');
-                        sendEvent('forside videoer forebygge', 'klikk');
-                    }}
+                    onClick={() => sendEvent('forside videoer forebygge', 'klikk')}
                 >
                     Forebygge sykefravær
                 </EksternLenke>
