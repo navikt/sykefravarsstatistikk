@@ -113,5 +113,6 @@ export const useMålingAvTidsbruk = (
                 clearTimeout(timer);
             });
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
-    // Disabler eslint fordi dette alltid utelukkende skal kjøre på mounting av komponenten
+    // eslint klager fordi vi ikke legger til alle variabler vi bruker i dependency-listen.
+    // Vi vil ikke legge dependencies der, fordi koden bare skal kjøre når komponenten mountes.
 };
