@@ -102,7 +102,6 @@ export const useMålingAvTidsbruk = (
     useEffect(() => {
         const timers = antallSekunderFørEventSendes.map((antallSekunder) =>
             setTimeout(() => {
-                console.log('timer', område, antallSekunder);
                 sendEvent(område, 'tidsbruk', {
                     sekunder: antallSekunder,
                 });
@@ -111,7 +110,6 @@ export const useMålingAvTidsbruk = (
 
         return () =>
             timers.forEach((timer) => {
-                console.log('cleanup timer', område, timer);
                 clearTimeout(timer);
             });
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
