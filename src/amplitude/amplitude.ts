@@ -1,6 +1,6 @@
 import amplitude from 'amplitude-js';
 import { RestStatus } from '../api/api-utils';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect } from 'react';
 import { RestBedriftsmetrikker } from '../api/bedriftsmetrikker';
 import { bedriftsmetrikkerContext } from '../utils/bedriftsmetrikkerContext';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
@@ -98,27 +98,22 @@ export const useMålingAvTidsbruk = (
     ...antallSekunderFørEventSendes: number[]
 ): void => {
     const sendEvent = useSendEvent();
-    const skalSetteTimer = useRef(true);
-    const timers = useRef<NodeJS.Timeout[]>([]);
 
     useEffect(() => {
-        if (skalSetteTimer.current) {
-            skalSetteTimer.current = false;
-            timers.current = antallSekunderFørEventSendes.map((antallSekunder) =>
-                setTimeout(() => {
-                    sendEvent(område, 'tidsbruk', {
-                        sekunder: antallSekunder,
-                    });
-                }, antallSekunder * 1000)
-            );
-        }
-    }, [sendEvent, antallSekunderFørEventSendes, område]);
+        const timers = antallSekunderFørEventSendes.map((antallSekunder) =>
+            setTimeout(() => {
+                console.log('timer', område, antallSekunder);
+                sendEvent(område, 'tidsbruk', {
+                    sekunder: antallSekunder,
+                });
+            }, antallSekunder * 1000)
+        );
 
-    // Cleanup når komponenten unmountes
-    useEffect(
-        () => () => {
-            timers.current.forEach((timer) => clearTimeout(timer));
-        },
-        []
-    );
+        return () =>
+            timers.forEach((timer) => {
+                console.log('cleanup timer', område, timer);
+                clearTimeout(timer);
+            });
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    // Disabler eslint fordi dette alltid utelukkende skal kjøre på mounting av komponenten
 };
