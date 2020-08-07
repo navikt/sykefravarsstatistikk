@@ -13,7 +13,6 @@ const listeAvTillatteUrler = [
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk'),
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/bedriftsmetrikker'),
     new RegExp('^' + FRONTEND_API_PATH + '/organisasjoner/statistikk'),
-    new RegExp('^/sykefravarsstatistikk/api/metrikker/[a-zA-Z0-9._-]+$'),
     new RegExp('^' + FRONTEND_API_PATH + '/feature'),
 ];
 
@@ -21,10 +20,10 @@ const proxyConfig = {
     target: API_GATEWAY_BASEURL,
     changeOrigin: true,
     pathRewrite: (path, req) => {
-        const urlErWhitelistet =
+        const urlErTillatt =
             listeAvTillatteUrler.filter((regexp) => regexp.test(path)).length > 0;
 
-        if (urlErWhitelistet) {
+        if (urlErTillatt) {
             return path.replace(FRONTEND_API_PATH, BACKEND_API_PATH);
         }
         return BACKEND_API_PATH + '/not-found';
