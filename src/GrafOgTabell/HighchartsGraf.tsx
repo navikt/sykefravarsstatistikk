@@ -137,23 +137,21 @@ export const HighchartsGraf: FunctionComponent<Props> = ({ sykefraværshistorikk
         },
         series: data,
     };
-
-    const optionsStyledModeFalse = {
-        ...options,
+    const options2 = {
         chart: {
-            ...options.chart,
-            styledMode: false,
-            plotBorderWidth: 1,
-            marginLeft: 100,
+            type: 'spline',
+            height: 500,
+        },
+        title: {
+            text: undefined,
         },
         xAxis: {
-            ...options.xAxis,
-            margin: 100,
-            labels: {
-                padding: 20,
-                rotation: 45,
-            },
+            categories: årstallOgKvartalKategorier,
         },
+        yAxis: {
+            title: { text: 'Sykefraværsprosent' },
+        },
+        series: data,
     };
 
     return (
@@ -161,8 +159,8 @@ export const HighchartsGraf: FunctionComponent<Props> = ({ sykefraværshistorikk
             <div className="highcharts-graf1">
                 <HighchartsReact highcharts={Highcharts} options={options} />
             </div>
-            <div className="highcharts-graf2">
-                <HighchartsReact highcharts={Highcharts} options={optionsStyledModeFalse} />
+            <div className="highcharts-graf1">
+                <HighchartsReact highcharts={Highcharts} options={options2} />
             </div>
         </div>
     );
