@@ -88,7 +88,6 @@ if (mock.featureToggles) {
     fetchMock.get(
         'begin:/sykefravarsstatistikk/api/feature',
         {
-            'arbeidsgiver.kalkulator-abtesting': true,
         },
         {
             delay: 1000,
