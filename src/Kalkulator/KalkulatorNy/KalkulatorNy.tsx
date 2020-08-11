@@ -4,10 +4,11 @@ import './KalkulatorNy.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import { useSendEvent } from '../../amplitude/amplitude';
+import { useSendEvent, useSendSidevisningEvent } from '../../amplitude/amplitude';
 import { KalkulatorMedDagsverkNy } from './KalkulatorMedDagsverkNy';
 import { KalkulatorMedProsentNy } from './KalkulatorMedProsentNy';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
+import { useOrgnr } from '../../utils/orgnr-hook';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -17,8 +18,9 @@ const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) =
     const [kalkulatorvariant, setKalkulatorvariant] = useState<Kalkulatorvariant>(
         Kalkulatorvariant.Prosent
     );
-
+    const orgnr = useOrgnr();
     const sendEvent = useSendEvent();
+    useSendSidevisningEvent('kalkulator', orgnr);
 
     useEffect(() => {
         scrollToBanner();
