@@ -14,7 +14,7 @@ export const FeatureTogglesProvider: FunctionComponent = (props) => {
 
     useEffect(() => {
         const hentFeatureTogglesOgSettState = async () => {
-            setFeatureToggles(await hentRestFeatureToggles('arbeidsgiver.kalkulator-abtesting'));
+            setFeatureToggles(await hentRestFeatureToggles(/* Send med features her */));
         };
 
         hentFeatureTogglesOgSettState();

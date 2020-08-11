@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import './KalkulatorGammel.less';
+import './Kalkulator.less';
 import Kostnad from './../Kostnad/Kostnad';
 import { RestStatus } from '../../api/api-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
@@ -8,15 +8,15 @@ import {
     Kalkulatorvariant,
     getAntallTapteDagsverkSiste4Kvartaler,
     getKostnadForAntallDagsverk,
-} from '../kalkulator-utils';
+} from './../kalkulator-utils';
 import { useSendEvent } from '../../amplitude/amplitude';
-import { KalkulatorradGammel } from './KalkulatorradGammel';
+import { Kalkulatorrad } from './Kalkulatorrad/Kalkulatorrad';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
 }
 
-export const KalkulatorMedDagsverkGammel: FunctionComponent<Props> = (props) => {
+export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
     const sendEvent = useSendEvent();
     const { restSykefraværshistorikk } = props;
     const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<number | undefined>();
@@ -41,11 +41,9 @@ export const KalkulatorMedDagsverkGammel: FunctionComponent<Props> = (props) => 
             );
             if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
                 setNåværendeTapteDagsverk(0);
-                setØnsketTapteDagsverk(0);
                 setErDataMaskert(true);
             } else {
                 setNåværendeTapteDagsverk(tapteDagsverkSiste4Kvartaler);
-                setØnsketTapteDagsverk(Math.round(tapteDagsverkSiste4Kvartaler * 0.5));
                 setErDataMaskert(false);
             }
         }
@@ -94,12 +92,13 @@ export const KalkulatorMedDagsverkGammel: FunctionComponent<Props> = (props) => 
     return (
         <>
             <div>
-                <KalkulatorradGammel
+                <Kalkulatorrad
                     onChange={(event) => setKostnadDagsverk(parseInt(event.target.value))}
                     onClick={sendEventOmEndretInput}
                     value={kostnadDagsverk}
                     label="Kostnad per dag per ansatt i kroner"
                     placeholder="kr"
+                    name="kostnad-per-dagsverk"
                     hjelpetekst={
                         <>
                             Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
@@ -111,7 +110,7 @@ export const KalkulatorMedDagsverkGammel: FunctionComponent<Props> = (props) => 
                         </>
                     }
                 />
-                <KalkulatorradGammel
+                <Kalkulatorrad
                     onChange={(event) =>
                         validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value))
                     }
@@ -119,15 +118,17 @@ export const KalkulatorMedDagsverkGammel: FunctionComponent<Props> = (props) => 
                     value={nåværendeTapteDagsverk}
                     label={nåværendeTapteDagsverkLabel}
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
+                    name="nåværende-tapte-dagsverk"
                     hjelpetekst={antallTapteDagsverkHjelpetekst}
                 />
-                <KalkulatorradGammel
+                <Kalkulatorrad
                     onChange={(event) =>
                         validerOgSettØnsketTapteDagsverk(parseFloat(event.target.value))
                     }
                     onClick={sendEventOmEndretInput}
                     value={ønsketTapteDagsverk}
                     label={ønsketTapteDagsverkLabel}
+                    name="ønsket-tapte-dagsverk"
                     hjelpetekst={ønsketTapteDagsverkHjelpetekst}
                 />
             </div>

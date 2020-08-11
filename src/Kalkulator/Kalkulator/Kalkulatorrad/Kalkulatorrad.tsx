@@ -3,7 +3,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import './KalkulatorradNy.less';
+import './Kalkulatorrad.less';
 
 interface Props {
     onChange: (event: any) => void;
@@ -17,7 +17,7 @@ interface Props {
     step?: number;
 }
 
-export const KalkulatorradNy: FunctionComponent<Props> = (props) => {
+export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
     const labelId = props.name + '-label';
     return (
         <div className="kalkulatorrad">
