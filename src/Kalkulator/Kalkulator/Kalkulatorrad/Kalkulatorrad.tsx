@@ -7,7 +7,6 @@ import './Kalkulatorrad.less';
 
 interface Props {
     onChange: (event: any) => void;
-    onClick: (event: any) => void;
     value: number | undefined;
     label: string;
     name: string;
@@ -28,7 +27,6 @@ export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
                 <Input
                     label=""
                     onChange={props.onChange}
-                    onClick={props.onClick}
                     value={props.value || ''}
                     type="number"
                     className="kalkulatorrad__input"
