@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import './KalkulatorNy.less';
+import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import { Kalkulatorvariant } from '../kalkulator-utils';
 import { useSendEvent, useSendSidevisningEvent } from '../../amplitude/amplitude';
-import { KalkulatorMedDagsverkNy } from './KalkulatorMedDagsverkNy';
-import { KalkulatorMedProsentNy } from './KalkulatorMedProsentNy';
+import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
+import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
 import { useOrgnr } from '../../utils/orgnr-hook';
 
@@ -14,7 +14,7 @@ interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
 }
 
-const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
+const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
     const [kalkulatorvariant, setKalkulatorvariant] = useState<Kalkulatorvariant>(
         Kalkulatorvariant.Prosent
     );
@@ -67,11 +67,11 @@ const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) =
                             Fyll inn og juster tallene så de passer for deg
                         </Normaltekst>
                         {kalkulatorvariant === Kalkulatorvariant.Dagsverk ? (
-                            <KalkulatorMedDagsverkNy
+                            <KalkulatorMedDagsverk
                                 restSykefraværshistorikk={restSykefraværshistorikk}
                             />
                         ) : (
-                            <KalkulatorMedProsentNy
+                            <KalkulatorMedProsent
                                 restSykefraværshistorikk={restSykefraværshistorikk}
                             />
                         )}
@@ -82,4 +82,4 @@ const KalkulatorNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) =
     );
 };
 
-export default KalkulatorNy;
+export default Kalkulator;

@@ -35,7 +35,7 @@ import {
 import { useSetUserProperties } from './amplitude/userProperties';
 import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
-import KalkulatorNy from './Kalkulator/KalkulatorNy/KalkulatorNy';
+import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -113,7 +113,7 @@ const AppContent: FunctionComponent = () => {
                 </Route>
                 <Route path={PATH_KALKULATOR} exact={true}>
                     <Brødsmulesti gjeldendeSide="kalkulator" />
-                    <KalkulatorNy restSykefraværshistorikk={restSykefraværshistorikk} />
+                    <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk} />
                 </Route>
                 <Route path={PATH_HISTORIKK} exact={true}>
                     <Brødsmulesti gjeldendeSide="historikk" />

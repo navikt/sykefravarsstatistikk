@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import './KalkulatorNy.less';
+import './Kalkulator.less';
 import Kostnad from './../Kostnad/Kostnad';
 import { RestStatus } from '../../api/api-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
@@ -13,13 +13,13 @@ import {
     rundAvTilEnDesimal,
 } from './../kalkulator-utils';
 import { useSendEvent } from '../../amplitude/amplitude';
-import { KalkulatorradNy } from './KalkulatorradNy/KalkulatorradNy';
+import { Kalkulatorrad } from './Kalkulatorrad/Kalkulatorrad';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
 }
 
-export const KalkulatorMedProsentNy: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
+export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
     const sendEvent = useSendEvent();
     const [muligeDagsverk, setMuligeDagsverk] = useState<number | undefined>();
     const [nåværendeSykefraværsprosent, setNåværendeSykefraværsprosent] = useState<
@@ -114,7 +114,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = ({ restSykefrav�
     return (
         <>
             <div>
-                <KalkulatorradNy
+                <Kalkulatorrad
                     onChange={(event) => setKostnadDagsverk(parseInt(event.target.value))}
                     onClick={sendEventOmEndretInput}
                     value={kostnadDagsverk}
@@ -133,7 +133,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = ({ restSykefrav�
                     }
                 />
                 {erDataMaskert && (
-                    <KalkulatorradNy
+                    <Kalkulatorrad
                         label="Antall mulige dagsverk per år"
                         onChange={(event) =>
                             validerOgSettMuligeDagsverk(parseFloat(event.target.value))
@@ -144,7 +144,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = ({ restSykefrav�
                         hjelpetekst="Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år"
                     />
                 )}
-                <KalkulatorradNy
+                <Kalkulatorrad
                     onChange={(event) =>
                         validerOgSettNåværendeSykefraværsprosent(parseFloat(event.target.value))
                     }
@@ -156,7 +156,7 @@ export const KalkulatorMedProsentNy: FunctionComponent<Props> = ({ restSykefrav�
                     name="nåværende-prosent"
                     hjelpetekst={nåværendeTapteDagsverkSiste12MndHjelpetekst}
                 />
-                <KalkulatorradNy
+                <Kalkulatorrad
                     onChange={(event) =>
                         validerOgSettØnsketSykefraværsprosent(parseFloat(event.target.value))
                     }

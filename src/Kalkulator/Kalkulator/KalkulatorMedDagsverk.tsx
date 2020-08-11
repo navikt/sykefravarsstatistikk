@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import './KalkulatorNy.less';
+import './Kalkulator.less';
 import Kostnad from './../Kostnad/Kostnad';
 import { RestStatus } from '../../api/api-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
@@ -10,13 +10,13 @@ import {
     getKostnadForAntallDagsverk,
 } from './../kalkulator-utils';
 import { useSendEvent } from '../../amplitude/amplitude';
-import { KalkulatorradNy } from './KalkulatorradNy/KalkulatorradNy';
+import { Kalkulatorrad } from './Kalkulatorrad/Kalkulatorrad';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
 }
 
-export const KalkulatorMedDagsverkNy: FunctionComponent<Props> = (props) => {
+export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
     const sendEvent = useSendEvent();
     const { restSykefraværshistorikk } = props;
     const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<number | undefined>();
@@ -92,7 +92,7 @@ export const KalkulatorMedDagsverkNy: FunctionComponent<Props> = (props) => {
     return (
         <>
             <div>
-                <KalkulatorradNy
+                <Kalkulatorrad
                     onChange={(event) => setKostnadDagsverk(parseInt(event.target.value))}
                     onClick={sendEventOmEndretInput}
                     value={kostnadDagsverk}
@@ -110,7 +110,7 @@ export const KalkulatorMedDagsverkNy: FunctionComponent<Props> = (props) => {
                         </>
                     }
                 />
-                <KalkulatorradNy
+                <Kalkulatorrad
                     onChange={(event) =>
                         validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value))
                     }
@@ -121,7 +121,7 @@ export const KalkulatorMedDagsverkNy: FunctionComponent<Props> = (props) => {
                     name="nåværende-tapte-dagsverk"
                     hjelpetekst={antallTapteDagsverkHjelpetekst}
                 />
-                <KalkulatorradNy
+                <Kalkulatorrad
                     onChange={(event) =>
                         validerOgSettØnsketTapteDagsverk(parseFloat(event.target.value))
                     }
