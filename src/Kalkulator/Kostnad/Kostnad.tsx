@@ -36,7 +36,7 @@ const Kostnad: FunctionComponent<Props> = (props) => {
                 <Element>{formaterTall(props.nåværendeKostnad)}&nbsp;kr</Element>
             </div>
             <div className={classNames('kostnad__tekst', 'kostnad__sisterad')}>
-                <Element>Totale kostnader per år med målsatt sykefravær </Element>
+                <Element>Totale kostnader per år ved målsatt sykefravær</Element>
                 <Element>{formaterTall(props.ønsketKostnad)}&nbsp;kr</Element>
             </div>
 
