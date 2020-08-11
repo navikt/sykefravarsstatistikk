@@ -13,38 +13,20 @@ interface Props {
 }
 
 const Kostnad: FunctionComponent<Props> = (props) => {
-    const redusertKostnadTekst = `Reduserer dere sykefraværet til  
-        ${
-            props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
-                ? props.antallTapteDagsverkEllerProsent ===
-                  Kalkulatorvariant.Prosent
-                    ? props.ønsketRedusert.toFixed(1).replace('.', ',')
-                    : props.ønsketRedusert.toFixed(0)
-                : 0
-        } 
-        ${
-            props.antallTapteDagsverkEllerProsent ===
-            Kalkulatorvariant.Prosent
-                ? ' %'
-                : ' dagsverk'
-        } 
-         sparer dere årlig`;
-    const øktKostnadTekst = `Øker dere sykefraværet til 
-        ${
-            props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
-                ? props.antallTapteDagsverkEllerProsent ===
-                  Kalkulatorvariant.Prosent
-                    ? props.ønsketRedusert.toFixed(1).replace('.', ',')
-                    : props.ønsketRedusert.toFixed(0)
-                : 0
-        } 
-        ${
-            props.antallTapteDagsverkEllerProsent ===
-            Kalkulatorvariant.Prosent
-                ? ' %'
-                : ' dagsverk'
-        } 
-         taper dere ytterligere årlig`;
+    const sykefraværMål =
+        props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
+            ? props.antallTapteDagsverkEllerProsent === Kalkulatorvariant.Prosent
+                ? props.ønsketRedusert.toFixed(1).replace('.', ',')
+                : props.ønsketRedusert.toFixed(0)
+            : 0;
+    const formatertSykefraværMål =
+        `${sykefraværMål} ` + props.antallTapteDagsverkEllerProsent === Kalkulatorvariant.Prosent
+            ? '%'
+            : 'dagsverk';
+
+    const redusertKostnadTekst = `Reduserer dere sykefraværet til ${formatertSykefraværMål} sparer dere årlig`;
+    const øktKostnadTekst = `Øker dere sykefraværet til ${formatertSykefraværMål} taper dere ytterligere årlig`;
+
     return (
         <div className="kostnad">
             <Systemtittel tag="h2" className="kostnad__tittel">
@@ -55,7 +37,7 @@ const Kostnad: FunctionComponent<Props> = (props) => {
                 <Element>{formaterTall(props.nåværendeKostnad)}&nbsp;kr</Element>
             </div>
             <div className={classNames('kostnad__tekst', 'kostnad__sisterad')}>
-                <Element>Totale kostnader per år med ønsket sykefravær </Element>
+                <Element>Totale kostnader per år med målsatt sykefravær </Element>
                 <Element>{formaterTall(props.ønsketKostnad)}&nbsp;kr</Element>
             </div>
 

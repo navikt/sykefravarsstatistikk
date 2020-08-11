@@ -49,23 +49,11 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
         }
     }, [restSykefraværshistorikk, harEndretTapteDagsverk, setErDataMaskert]);
 
-    const nåværendeTapteDagsverkLabel = erDataMaskert
-        ? 'Antall tapte dagsverk i løpet av 12 måneder'
-        : 'Nåværende antall tapte dagsverk siste 12 måneder';
-
-    const ønsketTapteDagsverkLabel = erDataMaskert
-        ? 'Ønsket antall tapte dagsverk i løpet av 12 måneder'
-        : 'Ønsket antall tapte dagsverk i en 12 måneders periode';
-
     const antallTapteDagsverkHjelpetekst = erDataMaskert
-        ? 'Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år'
-        : 'Et dagsverk er arbeid som utføres på en dag. Antall tapte dagsverk bergenes ut fra det ' +
-          'legemeldte sykefraværet de siste 12 månedene og er tilgjengelig i NAVs datagrunnlag.';
-
-    const ønsketTapteDagsverkHjelpetekst = erDataMaskert
-        ? 'Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år'
-        : 'Et dagsverk er arbeid som utføres på en dag. Antall ønsket tapte dagsverk selv velge for det ønskede ' +
-          'legemeldte sykefraværet de siste 12 månedene for å beregne hvor mye du kan spare.';
+        ? 'Et dagsverk er arbeid som utføres på en dag. ' +
+          'Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år.'
+        : 'NAV har legemeldt fravær tilgjengelig i sitt datagrunnlag. Vi ser på de siste 12 månedene ' +
+          'og beregner hvor mange dagsverk som er tapt. Et dagsverk er arbeid som utføres på en dag.';
 
     const validerTapteDagsverk = (tapteDagsverk: number): boolean => {
         return !(tapteDagsverk < 0);
@@ -99,9 +87,9 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                     name="kostnad-per-dagsverk"
                     hjelpetekst={
                         <>
-                            Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
-                            beregnet SINTEF og NHO at hver uke med sykefravær koster en arbeidsgiver
-                            i snitt 13 000 kr. Det vil si 2600 kr per dag.{' '}
+                            SINTEF har beregnet at en dags sykefravær gjennomsnittlig koster 2600
+                            kroner. Beløpet uttrykker produksjonstap og økte kostnader. Lønn og
+                            refusjoner knyttet til sykefravær er ikke en del av beregnet kostnad.{' '}
                             <EksternLenke href="https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/">
                                 Les mer om hva som påvirker kostnader ved sykefravær.
                             </EksternLenke>
@@ -114,7 +102,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                         validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value));
                     }}
                     value={nåværendeTapteDagsverk}
-                    label={nåværendeTapteDagsverkLabel}
+                    label="Antall tapte dagsverk siste 12 måneder"
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
                     name="nåværende-tapte-dagsverk"
                     hjelpetekst={antallTapteDagsverkHjelpetekst}
@@ -125,9 +113,9 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                         validerOgSettØnsketTapteDagsverk(parseFloat(event.target.value));
                     }}
                     value={ønsketTapteDagsverk}
-                    label={ønsketTapteDagsverkLabel}
+                    label="Mål for sykefraværet i antall tapte dagsverk over 12 måneder"
                     name="ønsket-tapte-dagsverk"
-                    hjelpetekst={ønsketTapteDagsverkHjelpetekst}
+                    hjelpetekst="Skriv inn mål for sykefraværet i antall tapte dagsverk i en periode på 12 måneder, for å beregne hvor mye du kan spare."
                 />
             </div>
             <Kostnad
