@@ -157,10 +157,10 @@ export const HighchartsGraf: FunctionComponent<Props> = ({ sykefraværshistorikk
     return (
         <div className="highcharts-graf">
             <div className="highcharts-graf1">
-                <HighchartsReact highcharts={Highcharts} options={options} />
+                <HighchartsReact highcharts={Highcharts} options={options2} />
             </div>
             <div className="highcharts-graf1">
-                <HighchartsReact highcharts={Highcharts} options={options2} />
+                <HighchartsReact highcharts={Highcharts} options={options} />
             </div>
         </div>
     );
