@@ -85,16 +85,14 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
         setØnsketTapteDagsverk(Number(tapteDagsverk.toFixed(0)));
     };
 
-    const sendEventOmEndretInput = () => {
-        sendEvent('kalkulator input dagsverk', 'endret');
-    };
-
     return (
         <>
             <div>
                 <Kalkulatorrad
-                    onChange={(event) => setKostnadDagsverk(parseInt(event.target.value))}
-                    onClick={sendEventOmEndretInput}
+                    onChange={(event) => {
+                        sendEvent('kalkulator dagsverk kostnad per dag', 'endret');
+                        setKostnadDagsverk(parseInt(event.target.value));
+                    }}
                     value={kostnadDagsverk}
                     label="Kostnad per dag per ansatt i kroner"
                     placeholder="kr"
@@ -111,10 +109,10 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                     }
                 />
                 <Kalkulatorrad
-                    onChange={(event) =>
-                        validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value))
-                    }
-                    onClick={sendEventOmEndretInput}
+                    onChange={(event) => {
+                        sendEvent('kalkulator dagsverk nåværende tapte dagsverk', 'endret');
+                        validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value));
+                    }}
                     value={nåværendeTapteDagsverk}
                     label={nåværendeTapteDagsverkLabel}
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
@@ -122,10 +120,10 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                     hjelpetekst={antallTapteDagsverkHjelpetekst}
                 />
                 <Kalkulatorrad
-                    onChange={(event) =>
-                        validerOgSettØnsketTapteDagsverk(parseFloat(event.target.value))
-                    }
-                    onClick={sendEventOmEndretInput}
+                    onChange={(event) => {
+                        sendEvent('kalkulator dagsverk ønsket tapte dagsverk', 'endret');
+                        validerOgSettØnsketTapteDagsverk(parseFloat(event.target.value));
+                    }}
                     value={ønsketTapteDagsverk}
                     label={ønsketTapteDagsverkLabel}
                     name="ønsket-tapte-dagsverk"
@@ -139,9 +137,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                 )}
                 ønsketKostnad={getKostnadForAntallDagsverk(kostnadDagsverk, ønsketTapteDagsverk)}
                 ønsketRedusert={ønsketTapteDagsverk as number}
-                antallTapteDagsverkEllerProsent={
-                    Kalkulatorvariant.Dagsverk
-                }
+                antallTapteDagsverkEllerProsent={Kalkulatorvariant.Dagsverk}
             />
         </>
     );

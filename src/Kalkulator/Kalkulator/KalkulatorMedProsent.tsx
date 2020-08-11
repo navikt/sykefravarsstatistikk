@@ -55,10 +55,6 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
         return !(tapteDagsverk < 0);
     };
 
-    const sendEventOmEndretInput = () => {
-        sendEvent('kalkulator input prosent', 'endret');
-    };
-
     const validerOgSettMuligeDagsverk = (muligeDagsverk: number) => {
         if (erDataMaskert && validerTapteDagsverk(muligeDagsverk)) {
             setMuligeDagsverk(muligeDagsverk);
@@ -115,8 +111,10 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
         <>
             <div>
                 <Kalkulatorrad
-                    onChange={(event) => setKostnadDagsverk(parseInt(event.target.value))}
-                    onClick={sendEventOmEndretInput}
+                    onChange={(event) => {
+                        sendEvent('kalkulator prosent kostnad per dag', 'endret');
+                        setKostnadDagsverk(parseInt(event.target.value));
+                    }}
                     value={kostnadDagsverk}
                     label="Kostnad per dag per ansatt i kroner"
                     placeholder="kr"
@@ -135,20 +133,20 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                 {erDataMaskert && (
                     <Kalkulatorrad
                         label="Antall mulige dagsverk per år"
-                        onChange={(event) =>
-                            validerOgSettMuligeDagsverk(parseFloat(event.target.value))
-                        }
-                        onClick={sendEventOmEndretInput}
+                        onChange={(event) => {
+                            sendEvent('kalkulator prosent mulige dagsverk', 'endret');
+                            validerOgSettMuligeDagsverk(parseFloat(event.target.value));
+                        }}
                         value={muligeDagsverk}
                         name="mulige-dagsverk-prosent"
                         hjelpetekst="Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år"
                     />
                 )}
                 <Kalkulatorrad
-                    onChange={(event) =>
-                        validerOgSettNåværendeSykefraværsprosent(parseFloat(event.target.value))
-                    }
-                    onClick={sendEventOmEndretInput}
+                    onChange={(event) => {
+                        sendEvent('kalkulator prosent nåværende prosent', 'endret');
+                        validerOgSettNåværendeSykefraværsprosent(parseFloat(event.target.value));
+                    }}
                     value={nåværendeSykefraværsprosent}
                     label="Nåværende sykefravær i prosent"
                     step={0.1}
@@ -157,10 +155,10 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                     hjelpetekst={nåværendeTapteDagsverkSiste12MndHjelpetekst}
                 />
                 <Kalkulatorrad
-                    onChange={(event) =>
-                        validerOgSettØnsketSykefraværsprosent(parseFloat(event.target.value))
-                    }
-                    onClick={sendEventOmEndretInput}
+                    onChange={(event) => {
+                        sendEvent('kalkulator prosent ønsket prosent', 'endret');
+                        validerOgSettØnsketSykefraværsprosent(parseFloat(event.target.value));
+                    }}
                     value={ønsketSykefraværsprosent}
                     label="Ønsket sykefravær i prosent"
                     step={0.1}
