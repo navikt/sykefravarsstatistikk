@@ -13,7 +13,7 @@ import {
 import { RestStatus } from '../../api/api-utils';
 import SammenligningspanelOverskrift from './SammenligningspanelOverskrift';
 import SammenligningspanelFeilmelding from './SammenligningspanelFeilmelding';
-import NæringEllerBransjePanel from './Paneler/NæringEllerBransjePanel/NæringEllerBransjePanel';
+import NæringEllerBransjePanel from './Paneler/NæringEllerBransjePanel';
 import { Virksomhetspanel } from './Paneler/Virksomhetspanel';
 import Landspanel from './Paneler/Landspanel';
 import Skeleton from 'react-loading-skeleton';

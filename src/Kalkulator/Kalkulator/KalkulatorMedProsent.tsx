@@ -55,10 +55,6 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
         return !(tapteDagsverk < 0);
     };
 
-    const sendEventOmEndretInput = () => {
-        sendEvent('kalkulator input prosent', 'endret');
-    };
-
     const validerOgSettMuligeDagsverk = (muligeDagsverk: number) => {
         if (erDataMaskert && validerTapteDagsverk(muligeDagsverk)) {
             setMuligeDagsverk(muligeDagsverk);
@@ -107,25 +103,26 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
 
     const ønsketTapteDagsverkSiste12MndHjelpetekst =
         restSykefraværshistorikk.status === RestStatus.Suksess && !erDataMaskert
-            ? 'Ønsket sykefraværsprosent regnes ut fra ønsket antall tapte dagsverk delt på antall mulige ' +
-              'dagsverk dere har hatt de siste 12 månedene. Denne informasjonen hentes fra det dere har meldt inn i A-ordningen.'
+            ? 'Når vi beregner mål for sykefraværet benytter vi samme antall mulige dagsverk som når vi beregner nåværende sykefraværsprosent.'
             : undefined;
 
     return (
         <>
             <div>
                 <Kalkulatorrad
-                    onChange={(event) => setKostnadDagsverk(parseInt(event.target.value))}
-                    onClick={sendEventOmEndretInput}
+                    onChange={(event) => {
+                        sendEvent('kalkulator prosent kostnad', 'endret');
+                        setKostnadDagsverk(parseInt(event.target.value));
+                    }}
                     value={kostnadDagsverk}
                     label="Kostnad per dag per ansatt i kroner"
                     placeholder="kr"
                     name="kostnad-per-dagsverk-prosent"
                     hjelpetekst={
                         <>
-                            Hvor mye taper virksomheten på at noen er sykemeldt en dag? I 2011
-                            beregnet SINTEF og NHO at hver uke med sykefravær koster en arbeidsgiver
-                            i snitt 13 000 kr. Det vil si 2600 kr per dag.{' '}
+                            SINTEF har beregnet at en dags sykefravær gjennomsnittlig koster 2600
+                            kroner. Beløpet uttrykker produksjonstap og økte kostnader. Lønn og
+                            refusjoner knyttet til sykefravær er ikke en del av beregnet kostnad.{' '}
                             <EksternLenke href="https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/">
                                 Les mer om hva som påvirker kostnader ved sykefravær.
                             </EksternLenke>
@@ -135,34 +132,34 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                 {erDataMaskert && (
                     <Kalkulatorrad
                         label="Antall mulige dagsverk per år"
-                        onChange={(event) =>
-                            validerOgSettMuligeDagsverk(parseFloat(event.target.value))
-                        }
-                        onClick={sendEventOmEndretInput}
+                        onChange={(event) => {
+                            sendEvent('kalkulator prosent mulige dagsverk', 'endret');
+                            validerOgSettMuligeDagsverk(parseFloat(event.target.value));
+                        }}
                         value={muligeDagsverk}
                         name="mulige-dagsverk-prosent"
-                        hjelpetekst="Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år"
+                        hjelpetekst="En ansatt som jobber full stilling i 12 måneder, utgjør 230 dagsverk."
                     />
                 )}
                 <Kalkulatorrad
-                    onChange={(event) =>
-                        validerOgSettNåværendeSykefraværsprosent(parseFloat(event.target.value))
-                    }
-                    onClick={sendEventOmEndretInput}
+                    onChange={(event) => {
+                        sendEvent('kalkulator prosent nåværende', 'endret');
+                        validerOgSettNåværendeSykefraværsprosent(parseFloat(event.target.value));
+                    }}
                     value={nåværendeSykefraværsprosent}
-                    label="Nåværende sykefravær i prosent"
+                    label="Sykefravær i prosent de siste 12 månedene"
                     step={0.1}
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
                     name="nåværende-prosent"
                     hjelpetekst={nåværendeTapteDagsverkSiste12MndHjelpetekst}
                 />
                 <Kalkulatorrad
-                    onChange={(event) =>
-                        validerOgSettØnsketSykefraværsprosent(parseFloat(event.target.value))
-                    }
-                    onClick={sendEventOmEndretInput}
+                    onChange={(event) => {
+                        sendEvent('kalkulator prosent mål', 'endret');
+                        validerOgSettØnsketSykefraværsprosent(parseFloat(event.target.value));
+                    }}
                     value={ønsketSykefraværsprosent}
-                    label="Ønsket sykefravær i prosent"
+                    label="Mål for sykefraværet i prosent"
                     step={0.1}
                     name="ønsket-prosent"
                     hjelpetekst={ønsketTapteDagsverkSiste12MndHjelpetekst}
