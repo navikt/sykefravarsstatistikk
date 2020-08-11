@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useContext } from 'react';
 import Banner from './Banner/Banner';
 import { BrowserRouter, Route, useLocation } from 'react-router-dom';
-import Forside from './Forside/Forside';
+import ForsideWrapper from './Forside/ForsideWrapper';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
 import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
 import { RestStatus } from './api/api-utils';
@@ -101,7 +101,7 @@ const AppContent: FunctionComponent = () => {
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                    <Forside
+                    <ForsideWrapper
                         restSykefraværshistorikk={restSykefraværshistorikk}
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                     >
@@ -109,7 +109,7 @@ const AppContent: FunctionComponent = () => {
                         <KalkulatorPanel />
                         <Historikkpanel />
                         <VideoerPanel />
-                    </Forside>
+                    </ForsideWrapper>
                 </Route>
                 <Route path={PATH_KALKULATOR} exact={true}>
                     <Brødsmulesti gjeldendeSide="kalkulator" />
