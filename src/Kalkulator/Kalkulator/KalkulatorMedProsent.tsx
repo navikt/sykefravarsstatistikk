@@ -111,7 +111,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
             <div>
                 <Kalkulatorrad
                     onChange={(event) => {
-                        sendEvent('kalkulator prosent kostnad per dag', 'endret');
+                        sendEvent('kalkulator prosent kostnad', 'endret');
                         setKostnadDagsverk(parseInt(event.target.value));
                     }}
                     value={kostnadDagsverk}
@@ -143,7 +143,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                 )}
                 <Kalkulatorrad
                     onChange={(event) => {
-                        sendEvent('kalkulator prosent nåværende prosent', 'endret');
+                        sendEvent('kalkulator prosent nåværende', 'endret');
                         validerOgSettNåværendeSykefraværsprosent(parseFloat(event.target.value));
                     }}
                     value={nåværendeSykefraværsprosent}
@@ -155,7 +155,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                 />
                 <Kalkulatorrad
                     onChange={(event) => {
-                        sendEvent('kalkulator prosent ønsket prosent', 'endret');
+                        sendEvent('kalkulator prosent mål', 'endret');
                         validerOgSettØnsketSykefraværsprosent(parseFloat(event.target.value));
                     }}
                     value={ønsketSykefraværsprosent}

@@ -78,7 +78,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
             <div>
                 <Kalkulatorrad
                     onChange={(event) => {
-                        sendEvent('kalkulator dagsverk kostnad per dag', 'endret');
+                        sendEvent('kalkulator dagsverk kostnad', 'endret');
                         setKostnadDagsverk(parseInt(event.target.value));
                     }}
                     value={kostnadDagsverk}
@@ -98,7 +98,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                 />
                 <Kalkulatorrad
                     onChange={(event) => {
-                        sendEvent('kalkulator dagsverk nåværende tapte dagsverk', 'endret');
+                        sendEvent('kalkulator dagsverk nåværende', 'endret');
                         validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value));
                     }}
                     value={nåværendeTapteDagsverk}
@@ -109,7 +109,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                 />
                 <Kalkulatorrad
                     onChange={(event) => {
-                        sendEvent('kalkulator dagsverk ønsket tapte dagsverk', 'endret');
+                        sendEvent('kalkulator dagsverk mål', 'endret');
                         validerOgSettØnsketTapteDagsverk(parseFloat(event.target.value));
                     }}
                     value={ønsketTapteDagsverk}
