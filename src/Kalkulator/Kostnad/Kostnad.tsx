@@ -20,9 +20,8 @@ const Kostnad: FunctionComponent<Props> = (props) => {
                 : props.ønsketRedusert.toFixed(0)
             : 0;
     const formatertSykefraværMål =
-        `${sykefraværMål} ` + props.antallTapteDagsverkEllerProsent === Kalkulatorvariant.Prosent
-            ? '%'
-            : 'dagsverk';
+        `${sykefraværMål} ` +
+        (props.antallTapteDagsverkEllerProsent === Kalkulatorvariant.Prosent ? '%' : 'dagsverk');
 
     const redusertKostnadTekst = `Reduserer dere sykefraværet til ${formatertSykefraværMål} sparer dere årlig`;
     const øktKostnadTekst = `Øker dere sykefraværet til ${formatertSykefraværMål} taper dere ytterligere årlig`;
