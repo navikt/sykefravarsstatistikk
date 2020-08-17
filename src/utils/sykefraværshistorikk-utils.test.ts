@@ -2,7 +2,7 @@ import { Sykefraværshistorikk, SykefraværshistorikkType } from '../api/sykefra
 import {
     getHistorikkLabels,
     konverterTilKvartalsvisSammenligning,
-    summerSykefraværsprosent,
+    summerSykefraværsprosenter,
     ÅrstallOgKvartal,
 } from './sykefraværshistorikk-utils';
 
@@ -126,7 +126,7 @@ describe('Tester for graf-og-tabell-utils', () => {
 
     test('summerSykefraværsprosent skal summere prosenten riktig', () => {
         expect(
-            summerSykefraværsprosent([
+            summerSykefraværsprosenter([
                 { erMaskert: false, tapteDagsverk: 10, muligeDagsverk: 100, prosent: 10 },
                 { erMaskert: false, tapteDagsverk: 20, muligeDagsverk: 50, prosent: 40 },
             ])
@@ -135,7 +135,7 @@ describe('Tester for graf-og-tabell-utils', () => {
 
     test('summerSykefraværsprosent skal bli maskert hvis ett av argumentene er maskert', () => {
         expect(
-            summerSykefraværsprosent([
+            summerSykefraværsprosenter([
                 { erMaskert: true, tapteDagsverk: null, muligeDagsverk: null, prosent: null },
                 { erMaskert: false, tapteDagsverk: 20, muligeDagsverk: 50, prosent: 40 },
             ])
@@ -144,7 +144,7 @@ describe('Tester for graf-og-tabell-utils', () => {
 
     test('summerSykefraværsprosent skal bli undefined hvis ett av argumentene er undefined', () => {
         expect(
-            summerSykefraværsprosent([
+            summerSykefraværsprosenter([
                 { erMaskert: false, tapteDagsverk: 20, muligeDagsverk: 50, prosent: 40 },
                 { erMaskert: false, tapteDagsverk: 20, muligeDagsverk: undefined, prosent: 40 },
             ])

@@ -50,13 +50,12 @@ export const finnProsent = (
     );
     return prosent || TOM_PROSENT;
 };
+
 const mapTilKvartalsvisSammenligning = (
     historikkListe: Sykefraværshistorikk[],
     årstallOgKvartalerSomSkalVises: ÅrstallOgKvartal[]
 ): KvartalsvisSammenligning[] => {
-    const harBransje = !!historikkListe.find(
-        (historikk) => historikk.type === SykefraværshistorikkType.BRANSJE
-    );
+    const harBransje = historikkHarBransje(historikkListe);
 
     return årstallOgKvartalerSomSkalVises.map((årstallOgKvartal) => {
         const getProsent = (type: SykefraværshistorikkType): Sykefraværsprosent =>
@@ -74,6 +73,30 @@ const mapTilKvartalsvisSammenligning = (
         };
     });
 };
+
+export const getSammenligningFor4SisteKvartaler = (
+    historikkListe: Sykefraværshistorikk[]
+): SammenligningOverFlereKvartaler => {
+    const harBransje = historikkHarBransje(historikkListe);
+    const fireSisteKvartaler = beregnFireSisteKvartaler(historikkListe);
+
+    const summerProsenter = (type: SykefraværshistorikkType): Sykefraværsprosent =>
+        summerSykefraværsprosenter(
+            fireSisteKvartaler.map((kvartal) => finnProsent(historikkListe, kvartal, type))
+        );
+
+    return {
+        kvartaler: fireSisteKvartaler,
+        virksomhet: summerProsenter(SykefraværshistorikkType.VIRKSOMHET),
+        overordnetEnhet: summerProsenter(SykefraværshistorikkType.OVERORDNET_ENHET),
+        næringEllerBransje: summerProsenter(
+            harBransje ? SykefraværshistorikkType.BRANSJE : SykefraværshistorikkType.NÆRING
+        ),
+        sektor: summerProsenter(SykefraværshistorikkType.SEKTOR),
+        land: summerProsenter(SykefraværshistorikkType.LAND),
+    };
+};
+
 export const beregnHvilkeÅrstallOgKvartalerSomSkalVises = (
     historikkListe: Sykefraværshistorikk[]
 ): ÅrstallOgKvartal[] => {
@@ -83,6 +106,12 @@ export const beregnHvilkeÅrstallOgKvartalerSomSkalVises = (
             return { årstall: prosent.årstall, kvartal: prosent.kvartal };
         });
 };
+
+const beregnFireSisteKvartaler = (historikkListe: Sykefraværshistorikk[]): ÅrstallOgKvartal[] => {
+    const alleKvartaler = beregnHvilkeÅrstallOgKvartalerSomSkalVises(historikkListe);
+    return alleKvartaler.slice(alleKvartaler.length - 4, alleKvartaler.length);
+};
+
 export const konverterTilKvartalsvisSammenligning = (
     historikkListe: Sykefraværshistorikk[]
 ): KvartalsvisSammenligning[] => {
@@ -130,7 +159,7 @@ export const getHistorikkLabels = (historikkListe: Sykefraværshistorikk[]): His
     };
 };
 
-export const summerSykefraværsprosent = (
+export const summerSykefraværsprosenter = (
     sykefraværsprosent: Sykefraværsprosent[]
 ): Sykefraværsprosent => {
     if (sykefraværsprosent.find((prosent) => prosent.erMaskert)) {
