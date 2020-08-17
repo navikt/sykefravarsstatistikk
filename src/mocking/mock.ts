@@ -7,12 +7,12 @@ const mock = {
     minSideArbeidsgiver: true,
     sykefraværsstatistikkApi: true,
     enhetsregisteret: true,
-    featureToggles: true
+    featureToggles: true,
 };
 
 if (process.env.REACT_APP_HEROKU) {
     // Alt skal alltid mockes på heroku
-    Object.keys(mock).forEach(skalMockes => (mock as any)[skalMockes] = true);
+    Object.keys(mock).forEach((skalMockes) => ((mock as any)[skalMockes] = true));
 }
 
 if (mock.minSideArbeidsgiver) {
@@ -87,8 +87,7 @@ if (mock.enhetsregisteret) {
 if (mock.featureToggles) {
     fetchMock.get(
         'begin:/sykefravarsstatistikk/api/feature',
-        {
-        },
+        {},
         {
             delay: 1000,
         }

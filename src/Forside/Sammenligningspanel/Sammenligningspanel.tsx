@@ -50,7 +50,7 @@ const getFireSisteKvartaler = (historikkListe: Sykefraværshistorikk[]) => {
 const getSammenligningFor4SisteKvartaler = (
     historikkListe: Sykefraværshistorikk[]
 ): SammenligningOverFlereKvartaler => {
-    console.log(historikkListe)
+    console.log(historikkListe);
 
     const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(historikkListe);
     const kvartaler = beregnHvilkeÅrstallOgKvartalerSomSkalVises(historikkListe);
@@ -62,7 +62,7 @@ const getSammenligningFor4SisteKvartaler = (
     const sammenligningSiste4KvartalerForVirksomhet: Sykefraværsprosent[] = sammenligningSiste4Kvartaler.map(
         (sammenligning) => sammenligning.virksomhet
     );
-    console.log(sammenligningSiste4KvartalerForVirksomhet)
+    console.log(sammenligningSiste4KvartalerForVirksomhet);
 
     const sammenligningSiste4KvartalerForOverordnetEnhet: Sykefraværsprosent[] = sammenligningSiste4Kvartaler.map(
         (sammenligning) => sammenligning.overordnetEnhet

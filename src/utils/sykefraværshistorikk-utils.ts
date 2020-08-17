@@ -130,7 +130,9 @@ export const getHistorikkLabels = (historikkListe: Sykefraværshistorikk[]): His
     };
 };
 
-export const summerSykefraværsprosent = (sykefraværsprosent: Sykefraværsprosent[]): Sykefraværsprosent => {
+export const summerSykefraværsprosent = (
+    sykefraværsprosent: Sykefraværsprosent[]
+): Sykefraværsprosent => {
     if (sykefraværsprosent.find((prosent) => prosent.erMaskert)) {
         return {
             erMaskert: true,
@@ -166,8 +168,8 @@ export const summerSykefraværsprosent = (sykefraværsprosent: Sykefraværsprose
 
     return {
         erMaskert: false,
-        prosent: tapteDagsverk * 100 / muligeDagsverk,
+        prosent: (tapteDagsverk * 100) / muligeDagsverk,
         tapteDagsverk,
         muligeDagsverk,
-    }
+    };
 };

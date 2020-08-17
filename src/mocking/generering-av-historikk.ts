@@ -37,7 +37,7 @@ export const genererHistorikk = (
             erMaskert: false,
             prosent: prosent,
             tapteDagsverk: prosent * 10,
-            muligeDagsverk: prosent * 1000,
+            muligeDagsverk: 1000,
         });
         årstallOgKvartal = neste(årstallOgKvartal);
         prosent =
