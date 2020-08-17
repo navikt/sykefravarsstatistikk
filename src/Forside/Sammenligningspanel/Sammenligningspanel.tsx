@@ -1,16 +1,25 @@
 import React, { FunctionComponent } from 'react';
 import PanelBase from 'nav-frontend-paneler';
 import './Sammenligningspanel.less';
-import { RestSykefraværshistorikk, Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
+    RestSykefraværshistorikk,
+    Sykefraværshistorikk,
+    SykefraværshistorikkType,
+    Sykefraværsprosent,
+} from '../../api/sykefraværshistorikk';
+import {
+    beregnHvilkeÅrstallOgKvartalerSomSkalVises,
     getHistorikkLabels,
     historikkHarBransje,
     historikkHarOverordnetEnhet,
     HistorikkLabels,
     konverterTilKvartalsvisSammenligning,
     KvartalsvisSammenligning,
+    SammenligningOverFlereKvartaler,
+    summerSykefraværsprosent,
+    ÅrstallOgKvartal,
 } from '../../utils/sykefraværshistorikk-utils';
-import { RestStatus } from '../../api/api-utils';
+import { RestStatus, Årsak } from '../../api/api-utils';
 import SammenligningspanelOverskrift from './SammenligningspanelOverskrift';
 import SammenligningspanelFeilmelding from './SammenligningspanelFeilmelding';
 import NæringEllerBransjePanel from './Paneler/NæringEllerBransjePanel';
@@ -33,30 +42,80 @@ const getSammenligningForSisteKvartal = (
     return kvartalsvisSammenligning[0];
 };
 
+const getFireSisteKvartaler = (historikkListe: Sykefraværshistorikk[]) => {
+    const kvartaler = beregnHvilkeÅrstallOgKvartalerSomSkalVises(historikkListe);
+    return kvartaler.slice(kvartaler.length - 4, kvartaler.length);
+};
+
+const getSammenligningFor4SisteKvartaler = (
+    historikkListe: Sykefraværshistorikk[]
+): SammenligningOverFlereKvartaler => {
+    console.log(historikkListe)
+
+    const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(historikkListe);
+    const kvartaler = beregnHvilkeÅrstallOgKvartalerSomSkalVises(historikkListe);
+    const sammenligningSiste4Kvartaler = kvartalsvisSammenligning.slice(
+        kvartaler.length - 4,
+        kvartaler.length
+    );
+
+    const sammenligningSiste4KvartalerForVirksomhet: Sykefraværsprosent[] = sammenligningSiste4Kvartaler.map(
+        (sammenligning) => sammenligning.virksomhet
+    );
+    console.log(sammenligningSiste4KvartalerForVirksomhet)
+
+    const sammenligningSiste4KvartalerForOverordnetEnhet: Sykefraværsprosent[] = sammenligningSiste4Kvartaler.map(
+        (sammenligning) => sammenligning.overordnetEnhet
+    );
+    const sammenligningSiste4KvartalerForSektor: Sykefraværsprosent[] = sammenligningSiste4Kvartaler.map(
+        (sammenligning) => sammenligning.sektor
+    );
+    const sammenligningSiste4KvartalerForLand: Sykefraværsprosent[] = sammenligningSiste4Kvartaler.map(
+        (sammenligning) => sammenligning.land
+    );
+    const sammenligningSiste4KvartalerForNæringEllerBransje: Sykefraværsprosent[] = sammenligningSiste4Kvartaler.map(
+        (sammenligning) => sammenligning.næringEllerBransje
+    );
+
+    return {
+        kvartaler: sammenligningSiste4Kvartaler.map((sammenligning) => ({
+            årstall: sammenligning.årstall,
+            kvartal: sammenligning.kvartal,
+        })),
+        virksomhet: summerSykefraværsprosent(sammenligningSiste4KvartalerForVirksomhet),
+        overordnetEnhet: summerSykefraværsprosent(sammenligningSiste4KvartalerForOverordnetEnhet),
+        sektor: summerSykefraværsprosent(sammenligningSiste4KvartalerForSektor),
+        land: summerSykefraværsprosent(sammenligningSiste4KvartalerForLand),
+        næringEllerBransje: summerSykefraværsprosent(
+            sammenligningSiste4KvartalerForNæringEllerBransje
+        ),
+    };
+};
+
 const Sammenligningspanel: FunctionComponent<Props> = (props) => {
     const restSykefraværshistorikk = props.restSykefraværshistorikk;
     const restStatus = restSykefraværshistorikk.status;
     const laster = restStatus === RestStatus.LasterInn || restStatus === RestStatus.IkkeLastet;
 
     let labels: HistorikkLabels | any = {};
-    let sammenligningSisteKvartal: KvartalsvisSammenligning | any = {};
+    let sammenligningSisteKvartaler: KvartalsvisSammenligning | any = {};
     let harBransje = undefined;
     let skalViseOverordnetEnhet = undefined;
 
     if (restSykefraværshistorikk.status === RestStatus.Suksess) {
         const historikkListe = restSykefraværshistorikk.data;
         labels = getHistorikkLabels(historikkListe);
-        sammenligningSisteKvartal = getSammenligningForSisteKvartal(historikkListe);
+        sammenligningSisteKvartaler = getSammenligningFor4SisteKvartaler(historikkListe);
         harBransje = historikkHarBransje(historikkListe);
         skalViseOverordnetEnhet = historikkHarOverordnetEnhet(historikkListe);
     }
 
-    const { årstall, kvartal } = sammenligningSisteKvartal;
+    const { årstall, kvartal } = sammenligningSisteKvartaler;
 
     return (
         <>
             <SammenligningspanelAlertStripe
-                sammenligningSisteKvartal={sammenligningSisteKvartal}
+                sammenligningSisteKvartal={sammenligningSisteKvartaler}
                 restStatus={restStatus}
             />
             <PanelBase className="sammenligningspanel">
@@ -79,14 +138,14 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                     ) : (
                         <div className="sammenligningspanel__innhold">
                             <Virksomhetspanel
-                                sykefraværsprosent={sammenligningSisteKvartal.virksomhet}
+                                sykefraværsprosent={sammenligningSisteKvartaler.virksomhet}
                                 sykefraværprosentLabel={labels.virksomhet}
                                 laster={laster}
                                 className="sammenligningspanel__syfopanel"
                             />
                             {skalViseOverordnetEnhet && (
                                 <OverordnetEnhetPanel
-                                    sykefraværsprosent={sammenligningSisteKvartal.overordnetEnhet}
+                                    sykefraværsprosent={sammenligningSisteKvartaler.overordnetEnhet}
                                     sykefraværprosentLabel={labels.overordnetEnhet}
                                     laster={laster}
                                     className="sammenligningspanel__syfopanel"
@@ -94,14 +153,14 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                             )}
                             <NæringEllerBransjePanel
                                 laster={laster}
-                                sykefraværsprosent={sammenligningSisteKvartal.næringEllerBransje}
+                                sykefraværsprosent={sammenligningSisteKvartaler.næringEllerBransje}
                                 sykefraværprosentLabel={labels.næringEllerBransje}
                                 harBransje={harBransje}
                                 className="sammenligningspanel__syfopanel"
                             />
                             <Landspanel
                                 laster={laster}
-                                sykefraværsprosent={sammenligningSisteKvartal.land}
+                                sykefraværsprosent={sammenligningSisteKvartaler.land}
                                 sykefraværprosentLabel={labels.land}
                                 className="sammenligningspanel__syfopanel"
                             />

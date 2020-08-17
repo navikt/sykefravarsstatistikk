@@ -4,6 +4,15 @@ import {
     Sykefraværsprosent,
 } from '../api/sykefraværshistorikk';
 
+export interface SammenligningOverFlereKvartaler {
+    kvartaler: ÅrstallOgKvartal[];
+    virksomhet: Sykefraværsprosent;
+    overordnetEnhet: Sykefraværsprosent;
+    næringEllerBransje: Sykefraværsprosent;
+    sektor: Sykefraværsprosent;
+    land: Sykefraværsprosent;
+}
+
 export interface KvartalsvisSammenligning {
     årstall: number;
     kvartal: number;
@@ -119,4 +128,46 @@ export const getHistorikkLabels = (historikkListe: Sykefraværshistorikk[]): His
         sektor: getHistorikk(SykefraværshistorikkType.SEKTOR)!.label,
         land: getHistorikk(SykefraværshistorikkType.LAND)!.label,
     };
+};
+
+export const summerSykefraværsprosent = (sykefraværsprosent: Sykefraværsprosent[]): Sykefraværsprosent => {
+    if (sykefraværsprosent.find((prosent) => prosent.erMaskert)) {
+        return {
+            erMaskert: true,
+            prosent: null,
+            tapteDagsverk: null,
+            muligeDagsverk: null,
+        };
+    }
+
+    if (
+        sykefraværsprosent.find(
+            (prosent) =>
+                prosent.prosent === undefined ||
+                prosent.tapteDagsverk === undefined ||
+                prosent.muligeDagsverk === undefined
+        )
+    ) {
+        return {
+            erMaskert: false,
+            prosent: undefined,
+            tapteDagsverk: undefined,
+            muligeDagsverk: undefined,
+        };
+    }
+
+    let tapteDagsverk = 0;
+    let muligeDagsverk = 0;
+
+    sykefraværsprosent.forEach((prosent) => {
+        tapteDagsverk += prosent.tapteDagsverk!;
+        muligeDagsverk += prosent.muligeDagsverk!;
+    });
+
+    return {
+        erMaskert: false,
+        prosent: tapteDagsverk * 100 / muligeDagsverk,
+        tapteDagsverk,
+        muligeDagsverk,
+    }
 };
