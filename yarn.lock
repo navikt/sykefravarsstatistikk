@@ -1414,23 +1414,24 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@navikt/bedriftsmeny@^2.0.5":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@navikt/bedriftsmeny/-/bedriftsmeny-2.1.2.tgz#37e3b1ac815d0c4da30d2706ef4691f956adaf97"
-  integrity sha512-9idDHF1iiuBy0fxCJn2jJwaxRVF+E5bsKgiea/9tE8m5ULh7YT771/7JRDOjyumOjGmgG1BtpqBK3RSAJrtgrQ==
+"@navikt/bedriftsmeny@^2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@navikt/bedriftsmeny/-/bedriftsmeny-2.1.3.tgz#b19adb3ce2509cbca0af3ac9cd89b3349ad55bc1"
+  integrity sha512-baeJHCvKRz9l4VsO9ANIwrMsAJMba3JijRjpWBoJJSHJt83IHuNa5y1hn9Au6Pn+tpaBMkXWSpf5FaFcRxsiqg==
   dependencies:
     classnames "^2.2.6"
     fuzzysort "^1.1.4"
     lodash.throttle "^4.1.1"
     postcss-loader "^3.0.0"
     postcss-prefix-selector "^1.7.2"
+    prop-types "^15.7.2"
     react-motion "^0.5.2"
-    whatwg-fetch "^3.0.0"
+    whatwg-fetch "^3.3.1"
 
-"@navikt/fnrvalidator@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@navikt/fnrvalidator/-/fnrvalidator-1.1.2.tgz#b8fdf0997149aef1c2da0cee398281175f756c4c"
-  integrity sha512-F3Y8jzUtafjOEij+PvfL2TPjuvLnVQ+Gnd5cI/sPl56sUZMo2SIy104kgigdie9i3r8ya4bZRfIVHWjd272KEw==
+"@navikt/fnrvalidator@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@navikt/fnrvalidator/-/fnrvalidator-1.1.3.tgz#1bd136977a708120b6069276b0069b2a9cc9ae73"
+  integrity sha512-xBwlPOI08kbByUWI4Yyd6NbIYLFs78I0h05mlHPjmrPPikyM89IQRbMac+6ovkgpi2s63OV6ryv3w4QqPubwiw==
 
 "@nodelib/fs.stat@^1.1.2":
   version "1.1.3"
@@ -7981,10 +7982,10 @@ nav-frontend-skjema-style@^2.0.8:
   resolved "https://registry.yarnpkg.com/nav-frontend-skjema-style/-/nav-frontend-skjema-style-2.0.9.tgz#afaa3e98db78834726c606e23d3b5ee61c86e9e9"
   integrity sha512-WPQ1nvy5LH+R1IIVpMBUnasvU8+Bd0WvtOMBBPpIgTaZkt+xEh2p2QJGJXSTt+vmNxRk1wEwFybV5shX5o8KfQ==
 
-nav-frontend-skjema@^3.0.6:
-  version "3.0.16"
-  resolved "https://registry.yarnpkg.com/nav-frontend-skjema/-/nav-frontend-skjema-3.0.16.tgz#8bcbb947809ede1f801d4b7d19056e6813c1c1f4"
-  integrity sha512-ElFLNsOTdP5dVwhzlI4luPg5FQHImg7ycG3rucp/AnCdq1UiN0fvvlwubYAAivC4i8HtY/2BzLT2krJc6ysq3A==
+nav-frontend-skjema@^3.0.17:
+  version "3.0.17"
+  resolved "https://registry.yarnpkg.com/nav-frontend-skjema/-/nav-frontend-skjema-3.0.17.tgz#22ad6e661a6272aa726131e58cc4b23f34a28a67"
+  integrity sha512-iVjitnL/EHkjnpelcste7Q/3VOBSRhZwg043pSTMWCKbfHNTpg9DLVK5ya0tQqKtYHzROt7CP5N6hGOPf5tqmg==
 
 nav-frontend-spinner-style@^0.2.5:
   version "0.2.5"
@@ -8018,10 +8019,10 @@ nav-frontend-typografi-style@^1.0.20:
   dependencies:
     nav-frontend-core "^5.0.1"
 
-nav-frontend-typografi@^2.0.19:
-  version "2.0.25"
-  resolved "https://registry.yarnpkg.com/nav-frontend-typografi/-/nav-frontend-typografi-2.0.25.tgz#0c23eab354857e225e6f614bb53448710ee01fd3"
-  integrity sha512-TFqUtFufNrw4Ps63+e5xiCTO/Oc/aU598vccz8NInmTadKFmT76yhGkptYa9ondboYSiIu83siDpGsoywkVABw==
+nav-frontend-typografi@^2.0.26:
+  version "2.0.26"
+  resolved "https://registry.yarnpkg.com/nav-frontend-typografi/-/nav-frontend-typografi-2.0.26.tgz#a7701af21ddbdc6bdc0259549e398b36afb46835"
+  integrity sha512-GZ4WcQ0H4HBw7GHcVJtuDihSyrzPQ+df5dls4h60oOV3zNiedarMMGy43xFPxvPZnI0LTYlOX7rDGVxLBR9NBg==
 
 nearley@^2.7.10:
   version "2.19.5"
@@ -11991,6 +11992,11 @@ whatwg-fetch@^3.0.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.2.0.tgz#8e134f701f0a4ab5fda82626f113e2b647fd16dc"
   integrity sha512-SdGPoQMMnzVYThUbSrEvqTlkvC1Ux27NehaJ/GUHBfNrh5Mjg+1/uRyFMwVnxO2MrikMWvWAqUGgQOfVU4hT7w==
+
+whatwg-fetch@^3.3.1:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.4.0.tgz#e11de14f4878f773fbebcde8871b2c0699af8b30"
+  integrity sha512-rsum2ulz2iuZH08mJkT0Yi6JnKhwdw4oeyMjokgxd+mmqYSd9cPpOQf01TIWgjxG/U4+QR+AwKq6lSbXVxkyoQ==
 
 whatwg-mimetype@^2.1.0, whatwg-mimetype@^2.2.0, whatwg-mimetype@^2.3.0:
   version "2.3.0"
