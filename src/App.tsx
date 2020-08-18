@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useContext } from 'react';
 import Banner from './Banner/Banner';
-import { BrowserRouter, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Route, useLocation, Redirect } from 'react-router-dom';
 import ForsideWrapper from './Forside/ForsideWrapper';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
 import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
@@ -13,12 +13,18 @@ import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { RestSykefraværshistorikk } from './api/sykefraværshistorikk';
-import { RestBedriftsmetrikker } from './api/bedriftsmetrikker';
+import { Bransjetype, RestBedriftsmetrikker } from './api/bedriftsmetrikker';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import { BASE_PATH } from './konstanter';
-import { bedriftsmetrikkerContext, BedriftsmetrikkerProvider } from './utils/bedriftsmetrikkerContext';
-import { sykefraværshistorikkContext, SykefraværshistorikkProvider } from './utils/sykefraværshistorikkContext';
+import {
+    bedriftsmetrikkerContext,
+    BedriftsmetrikkerProvider,
+} from './utils/bedriftsmetrikkerContext';
+import {
+    sykefraværshistorikkContext,
+    SykefraværshistorikkProvider,
+} from './utils/sykefraværshistorikkContext';
 import { sendEventDirekte, useMålingAvTidsbruk } from './amplitude/amplitude';
 import {
     altinnOrganisasjonerContext,
@@ -30,8 +36,11 @@ import { useSetUserProperties } from './amplitude/userProperties';
 import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
+import { BarnehageRedirect, VanligForsideRedirect } from './utils/redirects';
 
 export const PATH_FORSIDE = '/';
+export const PATH_FORSIDE_VANLIG = '/sammenligning';
+export const PATH_FORSIDE_BARNEHAGE = PATH_FORSIDE_VANLIG + '/barnehage';
 export const PATH_KALKULATOR = '/kalkulator';
 export const PATH_HISTORIKK = '/historikk';
 export const PATH_IAWEB_REDIRECTSIDE = '/iawebredirectside';
@@ -91,23 +100,30 @@ const AppContent: FunctionComponent = () => {
     } else if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
         window.location.replace('/min-side-arbeidsgiver/mangler-tilgang');
     } else {
-        /*
-        Hvorvidt virksomheten er en barnehage kan avgjøres via Bedriftsmetrikker.
-
-        Det finnes 2 måter å håndtere en spesifikk barnehage-side på.
-        1. Ha samme grunnoppsett, men lage barnehage-versjoner av underkomponentene.
-            > Ikke så fleksibelt, men får gjenbrukt mye kode
-        2. Lage en helt ny sandbox for barnehager.
-            > Veldig fleksibelt, mindre gjenbruk
-            > Hvordan skal det deles inn? Url kan være vanskelig
-
-        Vanskelig å avgjøre hva som er best uten å vite konkret hva vi skal lage.
-        Mulig det beste er å begynne med 1, og gå over til 2 senere.
-         */
-
         innhold = (
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
+                    <BarnehageRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
+                    <VanligForsideRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
+                </Route>
+                <Route path={PATH_FORSIDE_BARNEHAGE} exact={true}>
+                    <VanligForsideRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
+                    <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
+                    <ForsideWrapper
+                        restSykefraværshistorikk={restSykefraværshistorikk}
+                        restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
+                    >
+                        <Sammenligningspanel restSykefraværshistorikk={restSykefraværshistorikk} />
+                        {/*
+                            <h1>Her er det barnehagespesifikt innhold! :)</h1>
+                        */}
+                        <KalkulatorPanel />
+                        <Historikkpanel />
+                        <VideoerPanel />
+                    </ForsideWrapper>
+                </Route>
+                <Route path={PATH_FORSIDE_VANLIG} exact={true}>
+                    <BarnehageRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <ForsideWrapper
                         restSykefraværshistorikk={restSykefraværshistorikk}
