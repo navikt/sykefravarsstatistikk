@@ -31,6 +31,7 @@ instance.init(getApiKey(), '', {
 export const setUserProperties = (properties: Object) => instance.setUserProperties(properties);
 
 export const sendEventDirekte = (område: string, hendelse: string, data?: Object): void => {
+    console.log(hendelse, data);
     instance.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
 };
 
@@ -84,13 +85,17 @@ export const useSendEvent = (): SendEvent => {
         sykefraværshistorikkContext
     );
 
-    const ekstraData = {
-        ...hentEkstraDataFraBedriftsmetrikker(restBedriftsmetrikker),
-        ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
-    };
+    const ekstra = useRef<any>({});
+
+    useEffect(() => {
+        ekstra.current = {
+            ...hentEkstraDataFraBedriftsmetrikker(restBedriftsmetrikker),
+            ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
+        }
+    }, [restBedriftsmetrikker, restSykefraværshistorikk]);
 
     return (område: string, hendelse: string, data?: Object) =>
-        sendEventDirekte(område, hendelse, { ...ekstraData, ...data });
+        sendEventDirekte(område, hendelse, { ...ekstra.current, ...data });
 };
 
 export const useSendSidevisningEvent = (område: string, orgnr: string | undefined) => {
@@ -118,6 +123,7 @@ export const useMålingAvTidsbruk = (
     useEffect(() => {
         const timers = antallSekunderFørEventSendes.map((antallSekunder) =>
             setTimeout(() => {
+                console.log('tidsbruk', område, antallSekunder);
                 sendEvent(område, 'tidsbruk', {
                     sekunder: antallSekunder,
                 });
