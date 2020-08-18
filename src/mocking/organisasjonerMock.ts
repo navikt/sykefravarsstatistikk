@@ -20,7 +20,7 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
         ParentOrganizationNumber: '111111111',
     },
     {
-        Name: 'FLESK OG FISK HAMAR',
+        Name: 'FLESK OG FISK ULLENSAKER',
         Type: 'Business',
         OrganizationNumber: '333333333',
         OrganizationForm: 'BEDR',
@@ -28,7 +28,7 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
         ParentOrganizationNumber: '111111111',
     },
     {
-        Name: 'FLESK OG FISK GULEN',
+        Name: 'FLESK OG FISK SIGDAL',
         Type: 'Business',
         OrganizationNumber: '444444444',
         OrganizationForm: 'BEDR',
@@ -70,7 +70,7 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
         ParentOrganizationNumber: '777777777',
     },
     {
-        Name: 'FEIL AS',
+        Name: 'SYSTEMFEIL AS',
         Type: 'Enterprise',
         OrganizationNumber: '999999999',
         OrganizationForm: 'AS',
@@ -79,7 +79,7 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
     },
 
     {
-        Name: 'FEIL',
+        Name: 'SYSTEMFEIL',
         Type: 'Business',
         OrganizationNumber: '101010101',
         OrganizationForm: 'BEDR',
@@ -87,7 +87,7 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
         ParentOrganizationNumber: '999999999',
     },
     {
-        Name: 'Ingen tilgang AS',
+        Name: 'INGEN TILGANG AS',
         Type: 'Enterprise',
         OrganizationNumber: '900900900',
         OrganizationForm: 'AS',
@@ -96,7 +96,7 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
     },
 
     {
-        Name: 'Ingen tilgang',
+        Name: 'INGEN TILGANG',
         Type: 'Business',
         OrganizationNumber: orgnrUtenTilgang,
         OrganizationForm: 'BEDR',

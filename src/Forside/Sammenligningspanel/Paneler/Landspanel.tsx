@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import Sykefraværsprosentpanel, {
     SykefraværprosentpanelProps,
-} from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
-import SammenligningsIkon from '../SammenligningsIkon';
+} from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
+import SammenligningsIkon from './SammenligningsIkon/SammenligningsIkon';
 import { SykefraværshistorikkType } from '../../../api/sykefraværshistorikk';
 
 const Landspanel: FunctionComponent<SykefraværprosentpanelProps> = (props) => {

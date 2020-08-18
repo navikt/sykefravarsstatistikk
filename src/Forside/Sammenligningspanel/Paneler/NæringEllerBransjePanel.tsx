@@ -1,27 +1,16 @@
 import React, { FunctionComponent } from 'react';
 import Sykefraværsprosentpanel, {
     SykefraværprosentpanelProps,
-} from '../Sykefraværsprosentpanel/Sykefraværsprosentpanel';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import './NæringEllerBransjePanel.less';
-import SammenligningsIkon from '../SammenligningsIkon';
+} from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { SykefraværshistorikkType } from '../../../api/sykefraværshistorikk';
+import SammenligningsIkon from './SammenligningsIkon/SammenligningsIkon';
 
 type Props = SykefraværprosentpanelProps & {
     harBransje?: boolean;
 };
 
 const NæringEllerBransjePanel: FunctionComponent<Props> = (props) => {
-    const tekstForNæringEllerBransje = props.harBransje ? (
-        <div className="næring-eller-bransje-panel__label">
-            Bransje:
-            <Hjelpetekst className="næring-eller-bransje-panel__hjelpetekst">
-                Bransjen er definert i samsvar med bransjeprogrammene under IA-avtalen 2019–2022.
-            </Hjelpetekst>
-        </div>
-    ) : (
-        'Næring:'
-    );
+    const tekstForNæringEllerBransje = props.harBransje ? 'Bransje:' : 'Næring:';
 
     return (
         <Sykefraværsprosentpanel

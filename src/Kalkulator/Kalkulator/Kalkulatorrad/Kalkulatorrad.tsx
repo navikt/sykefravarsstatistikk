@@ -3,11 +3,10 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import './KalkulatorradNy.less';
+import './Kalkulatorrad.less';
 
 interface Props {
     onChange: (event: any) => void;
-    onClick: (event: any) => void;
     value: number | undefined;
     label: string;
     name: string;
@@ -17,7 +16,7 @@ interface Props {
     step?: number;
 }
 
-export const KalkulatorradNy: FunctionComponent<Props> = (props) => {
+export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
     const labelId = props.name + '-label';
     return (
         <div className="kalkulatorrad">
@@ -28,7 +27,6 @@ export const KalkulatorradNy: FunctionComponent<Props> = (props) => {
                 <Input
                     label=""
                     onChange={props.onChange}
-                    onClick={props.onClick}
                     value={props.value || ''}
                     type="number"
                     className="kalkulatorrad__input"

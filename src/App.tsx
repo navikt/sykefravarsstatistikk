@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useContext } from 'react';
 import Banner from './Banner/Banner';
 import { BrowserRouter, Route, useLocation } from 'react-router-dom';
-import Forside from './Forside/Forside';
+import ForsideWrapper from './Forside/ForsideWrapper';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
 import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
 import { RestStatus } from './api/api-utils';
@@ -18,8 +18,8 @@ import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import { BASE_PATH } from './konstanter';
 import { bedriftsmetrikkerContext, BedriftsmetrikkerProvider } from './utils/bedriftsmetrikkerContext';
-import { sendEventDirekte } from './amplitude/amplitude';
 import { sykefraværshistorikkContext, SykefraværshistorikkProvider } from './utils/sykefraværshistorikkContext';
+import { sendEventDirekte, useMålingAvTidsbruk } from './amplitude/amplitude';
 import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
@@ -29,7 +29,7 @@ import {
 import { useSetUserProperties } from './amplitude/userProperties';
 import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
-import { KalkulatorABTest } from './Kalkulator/KalkulatorABTest';
+import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 
 export const PATH_FORSIDE = '/';
 export const PATH_KALKULATOR = '/kalkulator';
@@ -67,6 +67,7 @@ const AppContent: FunctionComponent = () => {
     const location = useLocation();
 
     useSetUserProperties();
+    useMålingAvTidsbruk('hele appen', 5, 30, 120, 300);
 
     const brukerHarIkkeTilgangTilNoenOrganisasjoner =
         restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
@@ -88,7 +89,7 @@ const AppContent: FunctionComponent = () => {
     ) {
         innhold = <FeilFraAltinnSide />;
     } else if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
-        window.location.replace('/min-side-arbeidsgiver');
+        window.location.replace('/min-side-arbeidsgiver/mangler-tilgang');
     } else {
         /*
         Hvorvidt virksomheten er en barnehage kan avgjøres via Bedriftsmetrikker.
@@ -108,7 +109,7 @@ const AppContent: FunctionComponent = () => {
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                    <Forside
+                    <ForsideWrapper
                         restSykefraværshistorikk={restSykefraværshistorikk}
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                     >
@@ -116,11 +117,11 @@ const AppContent: FunctionComponent = () => {
                         <KalkulatorPanel />
                         <Historikkpanel />
                         <VideoerPanel />
-                    </Forside>
+                    </ForsideWrapper>
                 </Route>
                 <Route path={PATH_KALKULATOR} exact={true}>
                     <Brødsmulesti gjeldendeSide="kalkulator" />
-                    <KalkulatorABTest restSykefraværshistorikk={restSykefraværshistorikk} />
+                    <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk} />
                 </Route>
                 <Route path={PATH_HISTORIKK} exact={true}>
                     <Brødsmulesti gjeldendeSide="historikk" />

@@ -2,10 +2,10 @@ import React, { FunctionComponent } from 'react';
 import Sykefraværsprosentpanel, {
     SykefraværprosentpanelProps,
 } from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
-import SammenligningsIkon from './SammenligningsIkon';
-import { SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
+import SammenligningsIkon from './SammenligningsIkon/SammenligningsIkon';
+import { SykefraværshistorikkType } from '../../../api/sykefraværshistorikk';
 
-export const Virksomhetspanel: FunctionComponent<SykefraværprosentpanelProps> = ({
+export const OverordnetEnhetPanel: FunctionComponent<SykefraværprosentpanelProps> = ({
     sykefraværsprosent,
     sykefraværprosentLabel,
     laster,
@@ -16,10 +16,10 @@ export const Virksomhetspanel: FunctionComponent<SykefraværprosentpanelProps> =
             sykefraværsprosent={sykefraværsprosent}
             sykefraværprosentLabel={sykefraværprosentLabel}
             laster={laster}
-            ikon={<SammenligningsIkon label={SykefraværshistorikkType.VIRKSOMHET} />}
+            ikon={<SammenligningsIkon label={SykefraværshistorikkType.OVERORDNET_ENHET} />}
             className={className}
         >
-            Din virksomhet:
+            Overordnet enhet:
         </Sykefraværsprosentpanel>
     );
 };

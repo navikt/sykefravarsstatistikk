@@ -3,18 +3,25 @@ import { enhetsregisteretMockRespons } from './enhetsregisteret';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './organisasjoner';
 import { getSykefraværshistorikkMock } from './sykefraværshistorikk';
 
-const MOCK_MIN_SIDE_ARBEIDSGIVER = true;
-const MOCK_SYKEFRAVÆRSSTATISTIKK_API = true;
-const MOCK_ENHETSREGISTERET = true;
-const MOCK_FEATURE_TOGGLES = true;
+const mock = {
+    minSideArbeidsgiver: true,
+    sykefraværsstatistikkApi: true,
+    enhetsregisteret: true,
+    featureToggles: true
+};
 
-if (MOCK_MIN_SIDE_ARBEIDSGIVER) {
+if (process.env.REACT_APP_HEROKU) {
+    // Alt skal alltid mockes på heroku
+    Object.keys(mock).forEach(skalMockes => (mock as any)[skalMockes] = true);
+}
+
+if (mock.minSideArbeidsgiver) {
     fetchMock.get('/min-side-arbeidsgiver/api/organisasjoner', getOrganisasjonerMock(), {
         delay: 1000,
     });
 }
 
-if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
+if (mock.sykefraværsstatistikkApi) {
     fetchMock.get(
         'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk',
         (url) => {
@@ -62,7 +69,7 @@ if (MOCK_SYKEFRAVÆRSSTATISTIKK_API) {
     );
 }
 
-if (MOCK_ENHETSREGISTERET) {
+if (mock.enhetsregisteret) {
     fetchMock.get(
         'begin:https://data.brreg.no/enhetsregisteret/api/enheter/?organisasjonsnummer=',
         (url) => {
@@ -77,11 +84,10 @@ if (MOCK_ENHETSREGISTERET) {
     );
 }
 
-if (MOCK_FEATURE_TOGGLES) {
+if (mock.featureToggles) {
     fetchMock.get(
         'begin:/sykefravarsstatistikk/api/feature',
         {
-            'arbeidsgiver.kalkulator-abtesting': true,
         },
         {
             delay: 1000,
