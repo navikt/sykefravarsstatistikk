@@ -74,7 +74,7 @@ const mapTilKvartalsvisSammenligning = (
     });
 };
 
-export const getSammenligningFor4SisteKvartaler = (
+export const summerSammenligningForSisteKvartaler = (
     historikkListe: Sykefraværshistorikk[]
 ): SammenligningOverFlereKvartaler => {
     const harBransje = historikkHarBransje(historikkListe);

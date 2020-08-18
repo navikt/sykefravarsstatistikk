@@ -4,11 +4,12 @@ import './Sammenligningspanel.less';
 import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import {
     getHistorikkLabels,
-    getSammenligningFor4SisteKvartaler,
     historikkHarBransje,
     historikkHarOverordnetEnhet,
     HistorikkLabels,
-    KvartalsvisSammenligning,
+    SammenligningOverFlereKvartaler,
+    summerSammenligningForSisteKvartaler,
+    ÅrstallOgKvartal,
 } from '../../utils/sykefraværshistorikk-utils';
 import { RestStatus } from '../../api/api-utils';
 import SammenligningspanelOverskrift from './SammenligningspanelOverskrift';
@@ -31,19 +32,24 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
     const laster = restStatus === RestStatus.LasterInn || restStatus === RestStatus.IkkeLastet;
 
     let labels: HistorikkLabels | any = {};
-    let sammenligningSisteKvartaler: KvartalsvisSammenligning | any = {};
+    let sammenligningSisteKvartaler: SammenligningOverFlereKvartaler | any = {};
     let harBransje = undefined;
     let skalViseOverordnetEnhet = undefined;
 
     if (restSykefraværshistorikk.status === RestStatus.Suksess) {
         const historikkListe = restSykefraværshistorikk.data;
         labels = getHistorikkLabels(historikkListe);
-        sammenligningSisteKvartaler = getSammenligningFor4SisteKvartaler(historikkListe);
+        sammenligningSisteKvartaler = summerSammenligningForSisteKvartaler(historikkListe);
         harBransje = historikkHarBransje(historikkListe);
         skalViseOverordnetEnhet = historikkHarOverordnetEnhet(historikkListe);
     }
 
-    const { årstall, kvartal } = sammenligningSisteKvartaler;
+    const kvartaler = sammenligningSisteKvartaler.kvartaler;
+    const førsteKvartal = kvartaler[0];
+    const sisteKvartal = kvartaler[kvartaler.length - 1];
+
+    const formaterKvartal = (årstallOgKvartal: ÅrstallOgKvartal) =>
+        `${årstallOgKvartal.kvartal}. kvartal ${årstallOgKvartal.årstall}`;
 
     return (
         <>
@@ -57,7 +63,8 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                         laster={laster}
                         className="sammenligningspanel__overskrift"
                     >
-                        Legemeldt sykefravær i {kvartal}. kvartal {årstall}
+                        Legemeldt sykefravær mellom {formaterKvartal(førsteKvartal)} og{' '}
+                        {formaterKvartal(sisteKvartal)}
                     </SammenligningspanelOverskrift>
                     <SammenligningspanelFeilmelding
                         restSykefraværshistorikk={restSykefraværshistorikk}
