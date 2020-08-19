@@ -20,6 +20,7 @@ import Skeleton from 'react-loading-skeleton';
 import { SammenligningspanelAlertStripe } from './SammenligningspanelAlertStripe/SammenligningspanelAlertStripe';
 import KoronaInfotekst from './KoronaInfotekst/KoronaInfotekst';
 import { OverordnetEnhetPanel } from './Paneler/OverordnetEnhetPanel';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -67,6 +68,9 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                     >
                         Legemeldt sykefravær i {kvartal}. kvartal {årstall}
                     </SammenligningspanelOverskrift>
+                    <Normaltekst className="sammenligningspanel__neste-oppdatering">
+                        Neste oppdatering: 02.09.2020
+                    </Normaltekst>
                     <SammenligningspanelFeilmelding
                         restSykefraværshistorikk={restSykefraværshistorikk}
                         className="sammenligningspanel__feilmelding"
