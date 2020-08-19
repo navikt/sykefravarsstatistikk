@@ -107,6 +107,23 @@ const AppContent: FunctionComponent = () => {
                     <BarnehageRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
                     <VanligForsideRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
                 </Route>
+                <Route path={PATH_FORSIDE_VANLIG} exact={true}>
+                    <BarnehageRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
+                    <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
+                    <InnloggingssideWrapper
+                        restSykefraværshistorikk={restSykefraværshistorikk}
+                        restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
+                    >
+                        <Forside>
+                            <Sammenligningspanel
+                                restSykefraværshistorikk={restSykefraværshistorikk}
+                            />
+                            <KalkulatorPanel />
+                            <Historikkpanel />
+                            <VideoerPanel />
+                        </Forside>
+                    </InnloggingssideWrapper>
+                </Route>
                 <Route path={PATH_FORSIDE_BARNEHAGE} exact={true}>
                     <VanligForsideRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
@@ -121,23 +138,6 @@ const AppContent: FunctionComponent = () => {
                             {/*
                                 <h1>Her er det barnehagespesifikt innhold! :)</h1>
                             */}
-                            <KalkulatorPanel />
-                            <Historikkpanel />
-                            <VideoerPanel />
-                        </Forside>
-                    </InnloggingssideWrapper>
-                </Route>
-                <Route path={PATH_FORSIDE_VANLIG} exact={true}>
-                    <BarnehageRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
-                    <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                    <InnloggingssideWrapper
-                        restSykefraværshistorikk={restSykefraværshistorikk}
-                        restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
-                    >
-                        <Forside>
-                            <Sammenligningspanel
-                                restSykefraværshistorikk={restSykefraværshistorikk}
-                            />
                             <KalkulatorPanel />
                             <Historikkpanel />
                             <VideoerPanel />
