@@ -13,11 +13,10 @@ export enum Bransjetype {
     TRANSPORT = 'TRANSPORT',
 }
 
-// TODO Rename til VirksomhetMetadata?
-export interface Bedriftsmetrikker {
+export interface VirksomhetMetadata {
     næringskode5Siffer: Næringskode5Siffer;
     bransje: Bransjetype;
     antallAnsatte: number;
 }
 
-export type RestBedriftsmetrikker = RestRessurs<Bedriftsmetrikker>;
+export type RestVirksomhetMetadata = RestRessurs<VirksomhetMetadata>;

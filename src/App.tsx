@@ -13,14 +13,14 @@ import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { RestSykefraværshistorikk } from './api/sykefraværshistorikk';
-import { RestBedriftsmetrikker } from './api/bedriftsmetrikker';
+import { RestVirksomhetMetadata } from './api/virksomhetMetadata';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import { BASE_PATH } from './konstanter';
 import {
-    bedriftsmetrikkerContext,
-    BedriftsmetrikkerProvider,
-} from './utils/bedriftsmetrikkerContext';
+    virksomhetMetadataContext,
+    VirksomhetMetadataProvider,
+} from './utils/virksomhetMetadataContext';
 import {
     sykefraværshistorikkContext,
     SykefraværshistorikkProvider,
@@ -52,13 +52,13 @@ const App: FunctionComponent = () => {
         <BrowserRouter basename={BASE_PATH}>
             <AltinnOrganisasjonerProvider>
                 <AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
-                    <BedriftsmetrikkerProvider>
+                    <VirksomhetMetadataProvider>
                         <SykefraværshistorikkProvider>
                             <FeatureTogglesProvider>
                                 <AppContent />
                             </FeatureTogglesProvider>
                         </SykefraværshistorikkProvider>
-                    </BedriftsmetrikkerProvider>
+                    </VirksomhetMetadataProvider>
                 </AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
             </AltinnOrganisasjonerProvider>
         </BrowserRouter>
@@ -73,7 +73,7 @@ const AppContent: FunctionComponent = () => {
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
-    const restBedriftsmetrikker = useContext<RestBedriftsmetrikker>(bedriftsmetrikkerContext);
+    const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
     const location = useLocation();
 
     useSetUserProperties();
@@ -85,7 +85,7 @@ const AppContent: FunctionComponent = () => {
     let innhold;
     if (
         restOrganisasjoner.status === RestStatus.LasterInn ||
-        restBedriftsmetrikker.status === RestStatus.LasterInn
+        restVirksomhetMetadata.status === RestStatus.LasterInn
     ) {
         innhold = <Lasteside />;
     } else if (
@@ -104,11 +104,11 @@ const AppContent: FunctionComponent = () => {
         innhold = (
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
-                    <BarnehageRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
-                    <VanligForsideRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
+                    <BarnehageRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
+                    <VanligForsideRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
                 </Route>
                 <Route path={PATH_FORSIDE_VANLIG} exact={true}>
-                    <BarnehageRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
+                    <BarnehageRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <InnloggingssideWrapper
                         restSykefraværshistorikk={restSykefraværshistorikk}
@@ -125,7 +125,7 @@ const AppContent: FunctionComponent = () => {
                     </InnloggingssideWrapper>
                 </Route>
                 <Route path={PATH_FORSIDE_BARNEHAGE} exact={true}>
-                    <VanligForsideRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
+                    <VanligForsideRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <InnloggingssideWrapper
                         restSykefraværshistorikk={restSykefraværshistorikk}

@@ -1,8 +1,8 @@
 import amplitude from 'amplitude-js';
 import { RestStatus } from '../api/api-utils';
 import { useContext, useEffect, useRef } from 'react';
-import { RestBedriftsmetrikker } from '../api/bedriftsmetrikker';
-import { bedriftsmetrikkerContext } from '../utils/bedriftsmetrikkerContext';
+import { RestVirksomhetMetadata } from '../api/virksomhetMetadata';
+import { virksomhetMetadataContext } from '../utils/virksomhetMetadataContext';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkContext';
 import { konverterTilKvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
@@ -36,11 +36,11 @@ export const sendEventDirekte = (område: string, hendelse: string, data?: Objec
 
 type SendEvent = (område: string, hendelse: string, data?: Object) => void;
 
-const hentEkstraDataFraBedriftsmetrikker = (
-    restBedriftsmetrikker: RestBedriftsmetrikker
+const hentEkstraDataFraVirksomhetMetadata = (
+    restVirksomhetMetadata: RestVirksomhetMetadata
 ): Object => {
-    if (restBedriftsmetrikker.status === RestStatus.Suksess) {
-        const metrikker = restBedriftsmetrikker.data;
+    if (restVirksomhetMetadata.status === RestStatus.Suksess) {
+        const metrikker = restVirksomhetMetadata.data;
         const næringskode2siffer = metrikker.næringskode5Siffer.kode.substring(0, 2);
         const næring2siffer =
             næringskode2siffer + ' ' + mapTilNæringsbeskrivelse(næringskode2siffer);
@@ -79,13 +79,13 @@ const hentEkstraDataFraSykefraværshistorikk = (
 };
 
 export const useSendEvent = (): SendEvent => {
-    const restBedriftsmetrikker = useContext<RestBedriftsmetrikker>(bedriftsmetrikkerContext);
+    const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
 
     const ekstraData = {
-        ...hentEkstraDataFraBedriftsmetrikker(restBedriftsmetrikker),
+        ...hentEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
         ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
     };
 

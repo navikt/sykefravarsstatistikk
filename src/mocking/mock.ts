@@ -2,7 +2,7 @@ import fetchMock from 'fetch-mock';
 import { enhetsregisteretMockRespons } from './enhetsregisteret';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './organisasjoner';
 import { getSykefraværshistorikkMock } from './sykefraværshistorikk';
-import { Bransjetype } from '../api/bedriftsmetrikker';
+import { Bransjetype } from '../api/virksomhetMetadata';
 
 const mock = {
     minSideArbeidsgiver: true,

@@ -8,7 +8,7 @@ import {
     SykefraværshistorikkType,
 } from './sykefraværshistorikk';
 import { sendEventDirekte } from '../amplitude/amplitude';
-import { RestBedriftsmetrikker } from './bedriftsmetrikker';
+import { RestVirksomhetMetadata } from './virksomhetMetadata';
 
 const sykefraværshistorikkPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk`;
@@ -16,7 +16,7 @@ const sykefraværshistorikkPath = (orgnr: string) =>
 const featureTogglesPath = (features: string[]) =>
     `${BASE_PATH}/api/feature?` + features.map((featureNavn) => `feature=${featureNavn}`).join('&');
 
-const bedriftsmetrikkerPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/bedriftsmetrikker`;
+const virksomhetMetadataPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/bedriftsmetrikker`;
 
 export const hentRestSykefraværshistorikk = async (
     orgnr: string
@@ -83,8 +83,8 @@ export const hentRestFeatureToggles = async (
     };
 };
 
-export const hentRestBedriftsmetrikker = async (orgnr: string): Promise<RestBedriftsmetrikker> => {
-    const response = await fetch(bedriftsmetrikkerPath(orgnr), {
+export const hentRestVirksomhetMetadata = async (orgnr: string): Promise<RestVirksomhetMetadata> => {
+    const response = await fetch(virksomhetMetadataPath(orgnr), {
         method: 'GET',
         credentials: 'include',
     });
