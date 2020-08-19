@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useContext } from 'react';
 import Banner from './Banner/Banner';
-import { BrowserRouter, Route, useLocation, Redirect } from 'react-router-dom';
-import ForsideWrapper from './Forside/ForsideWrapper';
+import { BrowserRouter, Route, useLocation } from 'react-router-dom';
+import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
 import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
 import { RestStatus } from './api/api-utils';
@@ -13,7 +13,7 @@ import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { RestSykefraværshistorikk } from './api/sykefraværshistorikk';
-import { Bransjetype, RestBedriftsmetrikker } from './api/bedriftsmetrikker';
+import { RestBedriftsmetrikker } from './api/bedriftsmetrikker';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import { BASE_PATH } from './konstanter';
@@ -37,6 +37,7 @@ import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { BarnehageRedirect, VanligForsideRedirect } from './utils/redirects';
+import { Forside } from './Forside/Forside';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_VANLIG = '/sammenligning';
@@ -109,31 +110,39 @@ const AppContent: FunctionComponent = () => {
                 <Route path={PATH_FORSIDE_BARNEHAGE} exact={true}>
                     <VanligForsideRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                    <ForsideWrapper
+                    <InnloggingssideWrapper
                         restSykefraværshistorikk={restSykefraværshistorikk}
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                     >
-                        <Sammenligningspanel restSykefraværshistorikk={restSykefraværshistorikk} />
-                        {/*
+                        <Forside>
+                            <Sammenligningspanel
+                                restSykefraværshistorikk={restSykefraværshistorikk}
+                            />
+                            {/*
                             <h1>Her er det barnehagespesifikt innhold! :)</h1>
                         */}
-                        <KalkulatorPanel />
-                        <Historikkpanel />
-                        <VideoerPanel />
-                    </ForsideWrapper>
+                            <KalkulatorPanel />
+                            <Historikkpanel />
+                            <VideoerPanel />
+                        </Forside>
+                    </InnloggingssideWrapper>
                 </Route>
                 <Route path={PATH_FORSIDE_VANLIG} exact={true}>
                     <BarnehageRedirect restBedriftsmetrikker={restBedriftsmetrikker} />
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                    <ForsideWrapper
+                    <InnloggingssideWrapper
                         restSykefraværshistorikk={restSykefraværshistorikk}
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                     >
-                        <Sammenligningspanel restSykefraværshistorikk={restSykefraværshistorikk} />
-                        <KalkulatorPanel />
-                        <Historikkpanel />
-                        <VideoerPanel />
-                    </ForsideWrapper>
+                        <Forside>
+                            <Sammenligningspanel
+                                restSykefraværshistorikk={restSykefraværshistorikk}
+                            />
+                            <KalkulatorPanel />
+                            <Historikkpanel />
+                            <VideoerPanel />
+                        </Forside>
+                    </InnloggingssideWrapper>
                 </Route>
                 <Route path={PATH_KALKULATOR} exact={true}>
                     <Brødsmulesti gjeldendeSide="kalkulator" />

@@ -5,14 +5,13 @@ import Innloggingsside from '../Innloggingsside/Innloggingsside';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { RestStatus } from '../api/api-utils';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
-import { Forside } from './Forside';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
     restOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
 }
 
-const ForsideWrapper: React.FunctionComponent<Props> = ({
+const InnloggingssideWrapper: React.FunctionComponent<Props> = ({
     restSykefraværshistorikk,
     restOrganisasjonerMedStatistikk,
     children,
@@ -30,9 +29,9 @@ const ForsideWrapper: React.FunctionComponent<Props> = ({
             return <Innloggingsside />;
         }
         default: {
-            return <Forside>{children}</Forside>;
+            return <>{children}</>;
         }
     }
 };
 
-export default ForsideWrapper;
+export default InnloggingssideWrapper;
