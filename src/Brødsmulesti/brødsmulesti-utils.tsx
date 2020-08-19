@@ -11,7 +11,7 @@ export interface Brødsmule {
     lenke: (innhold: string | ReactElement) => ReactElement;
 }
 
-const LenkeTilSomBeholderQuery: FunctionComponent<{ href: string }> = (props) => {
+const LenkeSomBeholderQuery: FunctionComponent<{ href: string }> = (props) => {
     const location = useLocation();
     return <Lenke href={props.href + location.search}>{props.children}</Lenke>;
 };
@@ -24,9 +24,9 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
         lenketekst: 'Min side – arbeidsgiver',
         overordnetSide: undefined,
         lenke: (innhold: string | ReactElement) => (
-            <LenkeTilSomBeholderQuery href={'/min-side-arbeidsgiver/'}>
+            <LenkeSomBeholderQuery href={'/min-side-arbeidsgiver/'}>
                 {innhold}
-            </LenkeTilSomBeholderQuery>
+            </LenkeSomBeholderQuery>
         ),
     },
     {

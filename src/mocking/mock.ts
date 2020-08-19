@@ -2,6 +2,7 @@ import fetchMock from 'fetch-mock';
 import { enhetsregisteretMockRespons } from './enhetsregisteret';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './organisasjoner';
 import { getSykefraværshistorikkMock } from './sykefraværshistorikk';
+import { Bransjetype } from '../api/virksomhetMetadata';
 
 const mock = {
     minSideArbeidsgiver: true,
@@ -47,6 +48,16 @@ if (mock.sykefraværsstatistikkApi) {
             }
             if (orgnr === '100100100') {
                 return 500;
+            }
+            if (orgnr === '888888888') {
+                return {
+                    antallAnsatte: 99,
+                    næringskode5Siffer: {
+                        kode: '10300',
+                        beskrivelse: 'Trygdeordninger underlagt offentlig forvaltning',
+                    },
+                    bransje: Bransjetype.BARNEHAGER,
+                };
             }
             return {
                 antallAnsatte: 99,

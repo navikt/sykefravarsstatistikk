@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useContext } from 'react';
 import Banner from './Banner/Banner';
 import { BrowserRouter, Route, useLocation } from 'react-router-dom';
-import ForsideWrapper from './Forside/ForsideWrapper';
+import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
 import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
 import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
 import { RestStatus } from './api/api-utils';
@@ -13,19 +13,19 @@ import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { RestSykefraværshistorikk } from './api/sykefraværshistorikk';
-import { RestBedriftsmetrikker } from './api/bedriftsmetrikker';
+import { RestVirksomhetMetadata } from './api/virksomhetMetadata';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import { BASE_PATH } from './konstanter';
 import {
-    bedriftsmetrikkerContext,
-    BedriftsmetrikkerProvider,
-} from './utils/bedriftsmetrikkerContext';
-import { sendEventDirekte, useMålingAvTidsbruk } from './amplitude/amplitude';
+    virksomhetMetadataContext,
+    VirksomhetMetadataProvider,
+} from './utils/virksomhetMetadataContext';
 import {
     sykefraværshistorikkContext,
     SykefraværshistorikkProvider,
 } from './utils/sykefraværshistorikkContext';
+import { sendEventDirekte, useMålingAvTidsbruk } from './amplitude/amplitude';
 import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
@@ -36,8 +36,12 @@ import { useSetUserProperties } from './amplitude/userProperties';
 import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
+import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
+import { Forside } from './Forside/Forside';
 
 export const PATH_FORSIDE = '/';
+export const PATH_FORSIDE_GENERELL = '/sammenligning';
+export const PATH_FORSIDE_BARNEHAGE = PATH_FORSIDE_GENERELL + '/barnehage';
 export const PATH_KALKULATOR = '/kalkulator';
 export const PATH_HISTORIKK = '/historikk';
 export const PATH_IAWEB_REDIRECTSIDE = '/iawebredirectside';
@@ -48,13 +52,13 @@ const App: FunctionComponent = () => {
         <BrowserRouter basename={BASE_PATH}>
             <AltinnOrganisasjonerProvider>
                 <AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
-                    <BedriftsmetrikkerProvider>
+                    <VirksomhetMetadataProvider>
                         <SykefraværshistorikkProvider>
                             <FeatureTogglesProvider>
                                 <AppContent />
                             </FeatureTogglesProvider>
                         </SykefraværshistorikkProvider>
-                    </BedriftsmetrikkerProvider>
+                    </VirksomhetMetadataProvider>
                 </AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
             </AltinnOrganisasjonerProvider>
         </BrowserRouter>
@@ -69,7 +73,7 @@ const AppContent: FunctionComponent = () => {
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
-    const restBedriftsmetrikker = useContext<RestBedriftsmetrikker>(bedriftsmetrikkerContext);
+    const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
     const location = useLocation();
 
     useSetUserProperties();
@@ -81,7 +85,7 @@ const AppContent: FunctionComponent = () => {
     let innhold;
     if (
         restOrganisasjoner.status === RestStatus.LasterInn ||
-        restBedriftsmetrikker.status === RestStatus.LasterInn
+        restVirksomhetMetadata.status === RestStatus.LasterInn
     ) {
         innhold = <Lasteside />;
     } else if (
@@ -100,16 +104,45 @@ const AppContent: FunctionComponent = () => {
         innhold = (
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
+                    <BarnehageRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
+                    <GenerellForsideRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
+                </Route>
+                <Route path={PATH_FORSIDE_GENERELL} exact={true}>
+                    <BarnehageRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                    <ForsideWrapper
+                    <InnloggingssideWrapper
                         restSykefraværshistorikk={restSykefraværshistorikk}
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                     >
-                        <Sammenligningspanel restSykefraværshistorikk={restSykefraværshistorikk} />
-                        <KalkulatorPanel />
-                        <Historikkpanel />
-                        <VideoerPanel />
-                    </ForsideWrapper>
+                        <Forside>
+                            <Sammenligningspanel
+                                restSykefraværshistorikk={restSykefraværshistorikk}
+                            />
+                            <KalkulatorPanel />
+                            <Historikkpanel />
+                            <VideoerPanel />
+                        </Forside>
+                    </InnloggingssideWrapper>
+                </Route>
+                <Route path={PATH_FORSIDE_BARNEHAGE} exact={true}>
+                    <GenerellForsideRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
+                    <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
+                    <InnloggingssideWrapper
+                        restSykefraværshistorikk={restSykefraværshistorikk}
+                        restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
+                    >
+                        <Forside>
+                            <Sammenligningspanel
+                                restSykefraværshistorikk={restSykefraværshistorikk}
+                            />
+                            {/*
+                                <h1>Her er det barnehagespesifikt innhold! :)</h1>
+                            */}
+                            <KalkulatorPanel />
+                            <Historikkpanel />
+                            <VideoerPanel />
+                        </Forside>
+                    </InnloggingssideWrapper>
                 </Route>
                 <Route path={PATH_KALKULATOR} exact={true}>
                     <Brødsmulesti gjeldendeSide="kalkulator" />
