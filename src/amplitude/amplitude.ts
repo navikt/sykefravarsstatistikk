@@ -91,7 +91,7 @@ export const useSendEvent = (): SendEvent => {
         ekstra.current = {
             ...hentEkstraDataFraBedriftsmetrikker(restBedriftsmetrikker),
             ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
-        }
+        };
     }, [restBedriftsmetrikker, restSykefraværshistorikk]);
 
     return (område: string, hendelse: string, data?: Object) =>
@@ -119,22 +119,18 @@ export const useMålingAvTidsbruk = (
     ...antallSekunderFørEventSendes: number[]
 ): void => {
     const sendEvent = useSendEvent();
+    const skalSendeEvent = useRef(true);
 
     useEffect(() => {
-        const timers = antallSekunderFørEventSendes.map((antallSekunder) =>
-            setTimeout(() => {
-                console.log('tidsbruk', område, antallSekunder);
-                sendEvent(område, 'tidsbruk', {
-                    sekunder: antallSekunder,
-                });
-            }, antallSekunder * 1000)
-        );
-
-        return () =>
-            timers.forEach((timer) => {
-                clearTimeout(timer);
-            });
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-    // eslint klager fordi vi ikke legger til alle variabler vi bruker i dependency-listen.
-    // Vi vil ikke legge dependencies der, fordi koden bare skal kjøre når komponenten mountes.
+        if (skalSendeEvent.current) {
+            skalSendeEvent.current = false;
+            antallSekunderFørEventSendes.map((antallSekunder) =>
+                setTimeout(() => {
+                    sendEvent(område, 'tidsbruk', {
+                        sekunder: antallSekunder,
+                    });
+                }, antallSekunder * 1000)
+            );
+        }
+    }, [område, antallSekunderFørEventSendes, sendEvent]);
 };
