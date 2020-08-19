@@ -31,7 +31,6 @@ instance.init(getApiKey(), '', {
 export const setUserProperties = (properties: Object) => instance.setUserProperties(properties);
 
 export const sendEventDirekte = (område: string, hendelse: string, data?: Object): void => {
-    console.log(hendelse, data);
     instance.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
 };
 
@@ -84,18 +83,17 @@ export const useSendEvent = (): SendEvent => {
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
-
-    const ekstra = useRef<any>({});
+    const ekstradata = useRef<Object>({});
 
     useEffect(() => {
-        ekstra.current = {
+        ekstradata.current = {
             ...hentEkstraDataFraBedriftsmetrikker(restBedriftsmetrikker),
             ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
         };
     }, [restBedriftsmetrikker, restSykefraværshistorikk]);
 
     return (område: string, hendelse: string, data?: Object) =>
-        sendEventDirekte(område, hendelse, { ...ekstra.current, ...data });
+        sendEventDirekte(område, hendelse, { ...ekstradata.current, ...data });
 };
 
 export const useSendSidevisningEvent = (område: string, orgnr: string | undefined) => {
