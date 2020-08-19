@@ -119,8 +119,8 @@ const AppContent: FunctionComponent = () => {
                                 restSykefraværshistorikk={restSykefraværshistorikk}
                             />
                             {/*
-                            <h1>Her er det barnehagespesifikt innhold! :)</h1>
-                        */}
+                                <h1>Her er det barnehagespesifikt innhold! :)</h1>
+                            */}
                             <KalkulatorPanel />
                             <Historikkpanel />
                             <VideoerPanel />
