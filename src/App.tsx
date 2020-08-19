@@ -36,12 +36,12 @@ import { useSetUserProperties } from './amplitude/userProperties';
 import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
-import { BarnehageRedirect, VanligForsideRedirect } from './utils/redirects';
+import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
 import { Forside } from './Forside/Forside';
 
 export const PATH_FORSIDE = '/';
-export const PATH_FORSIDE_VANLIG = '/sammenligning';
-export const PATH_FORSIDE_BARNEHAGE = PATH_FORSIDE_VANLIG + '/barnehage';
+export const PATH_FORSIDE_GENERELL = '/sammenligning';
+export const PATH_FORSIDE_BARNEHAGE = PATH_FORSIDE_GENERELL + '/barnehage';
 export const PATH_KALKULATOR = '/kalkulator';
 export const PATH_HISTORIKK = '/historikk';
 export const PATH_IAWEB_REDIRECTSIDE = '/iawebredirectside';
@@ -105,9 +105,9 @@ const AppContent: FunctionComponent = () => {
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
                     <BarnehageRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
-                    <VanligForsideRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
+                    <GenerellForsideRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
                 </Route>
-                <Route path={PATH_FORSIDE_VANLIG} exact={true}>
+                <Route path={PATH_FORSIDE_GENERELL} exact={true}>
                     <BarnehageRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <InnloggingssideWrapper
@@ -125,7 +125,7 @@ const AppContent: FunctionComponent = () => {
                     </InnloggingssideWrapper>
                 </Route>
                 <Route path={PATH_FORSIDE_BARNEHAGE} exact={true}>
-                    <VanligForsideRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
+                    <GenerellForsideRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <InnloggingssideWrapper
                         restSykefraværshistorikk={restSykefraværshistorikk}
