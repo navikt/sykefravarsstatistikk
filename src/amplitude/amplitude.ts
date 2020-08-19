@@ -83,14 +83,17 @@ export const useSendEvent = (): SendEvent => {
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
+    const ekstradata = useRef<Object>({});
 
-    const ekstraData = {
-        ...hentEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
-        ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
-    };
+    useEffect(() => {
+        ekstradata.current = {
+            ...hentEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
+            ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
+        };
+    }, [restVirksomhetMetadata, restSykefraværshistorikk]);
 
     return (område: string, hendelse: string, data?: Object) =>
-        sendEventDirekte(område, hendelse, { ...ekstraData, ...data });
+        sendEventDirekte(område, hendelse, { ...ekstradata.current, ...data });
 };
 
 export const useSendSidevisningEvent = (område: string, orgnr: string | undefined) => {
@@ -114,21 +117,18 @@ export const useMålingAvTidsbruk = (
     ...antallSekunderFørEventSendes: number[]
 ): void => {
     const sendEvent = useSendEvent();
+    const skalSendeEvent = useRef(true);
 
     useEffect(() => {
-        const timers = antallSekunderFørEventSendes.map((antallSekunder) =>
-            setTimeout(() => {
-                sendEvent(område, 'tidsbruk', {
-                    sekunder: antallSekunder,
-                });
-            }, antallSekunder * 1000)
-        );
-
-        return () =>
-            timers.forEach((timer) => {
-                clearTimeout(timer);
-            });
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-    // eslint klager fordi vi ikke legger til alle variabler vi bruker i dependency-listen.
-    // Vi vil ikke legge dependencies der, fordi koden bare skal kjøre når komponenten mountes.
+        if (skalSendeEvent.current) {
+            skalSendeEvent.current = false;
+            antallSekunderFørEventSendes.map((antallSekunder) =>
+                setTimeout(() => {
+                    sendEvent(område, 'tidsbruk', {
+                        sekunder: antallSekunder,
+                    });
+                }, antallSekunder * 1000)
+            );
+        }
+    }, [område, antallSekunderFørEventSendes, sendEvent]);
 };

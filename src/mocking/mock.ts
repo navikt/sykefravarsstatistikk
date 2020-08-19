@@ -68,7 +68,7 @@ if (mock.sykefraværsstatistikkApi) {
             };
         },
         {
-            delay: 500,
+            delay: 2000,
         }
     );
     fetchMock.get(
