@@ -19,7 +19,7 @@
         padding-top: 1rem;
     }
 
-    @media (min-width: @screen-sm-min) {
+    @media (min-width: @screen-sm-min), print {
         &__innhold {
             display: flex;
             align-items: flex-start;
@@ -30,6 +30,12 @@
         }
         &__syfopanel {
             width: 25%;
+        }
+    }
+
+    @media print {
+        &__print-knapp {
+            display: none;
         }
     }
 }

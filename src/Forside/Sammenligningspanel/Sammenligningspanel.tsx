@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useRef } from 'react';
 import PanelBase from 'nav-frontend-paneler';
 import './Sammenligningspanel.less';
 import { RestSykefraværshistorikk, Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
@@ -21,6 +21,8 @@ import { SammenligningspanelAlertStripe } from './SammenligningspanelAlertStripe
 import KoronaInfotekst from './KoronaInfotekst/KoronaInfotekst';
 import { OverordnetEnhetPanel } from './Paneler/OverordnetEnhetPanel';
 import { Normaltekst } from 'nav-frontend-typografi';
+import { Knapp } from 'nav-frontend-knapper';
+import ReactToPrint from 'react-to-print';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -38,6 +40,7 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
     const restSykefraværshistorikk = props.restSykefraværshistorikk;
     const restStatus = restSykefraværshistorikk.status;
     const laster = restStatus === RestStatus.LasterInn || restStatus === RestStatus.IkkeLastet;
+    const printRef = useRef<any>();
 
     let labels: HistorikkLabels | any = {};
     let sammenligningSisteKvartal: KvartalsvisSammenligning | any = {};
@@ -60,7 +63,12 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                 sammenligningSisteKvartal={sammenligningSisteKvartal}
                 restStatus={restStatus}
             />
-            <PanelBase className="sammenligningspanel">
+            <PanelBase className="sammenligningspanel" ref={printRef}>
+                <ReactToPrint
+                    trigger={() => <Knapp className="sammenligningspanel__print-knapp">print</Knapp>}
+                    content={() => printRef.current}
+                    bodyClass="sammenligningspanel__print"
+                />
                 <div className="sammenligningspanel__tekst-wrapper">
                     <SammenligningspanelOverskrift
                         laster={laster}
