@@ -38,10 +38,10 @@ import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
 import { Forside } from './Forside/Forside';
-import { HvittPanel } from './felleskomponenter/HvittPanel/HvittPanel';
 import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/SammenligningIngress';
 import { SammenligningMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningMedBransje';
 import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
+import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -136,11 +136,11 @@ const AppContent: FunctionComponent = () => {
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                     >
                         <Forside>
-                            <HvittPanel>
+                            <SammenligningspanelBarnehage>
                                 <SammenligningIngress />
                                 <SammenligningMedBransje />
                                 <DetaljertSammenligning />
-                            </HvittPanel>
+                            </SammenligningspanelBarnehage>
                             <KalkulatorPanel />
                             <Historikkpanel />
                             <VideoerPanel />

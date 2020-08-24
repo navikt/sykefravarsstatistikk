@@ -1,0 +1,21 @@
+@import '../../../variables';
+
+.sammenligningspanel-barnehage {
+    padding: 2rem;
+    width: 100%;
+    background: white;
+    border-radius: 0.25rem;
+    position: relative;
+
+    &__knapp {
+        display: none;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        &__knapp {
+            display: block;
+            position: absolute;
+            right: 2rem;
+        }
+    }
+}
