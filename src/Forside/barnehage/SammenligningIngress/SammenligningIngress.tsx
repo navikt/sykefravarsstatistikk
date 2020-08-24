@@ -1,15 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningIngress.less';
-import KoronaInfotekst from '../Sammenligningspanel/KoronaInfotekst/KoronaInfotekst';
-import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
+import KoronaInfotekst from '../../Sammenligningspanel/KoronaInfotekst/KoronaInfotekst';
+import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 
 export const SammenligningIngress: FunctionComponent = () => {
     // TODO: Teksten her er ikke ferdig.
     return (
         <>
             <KoronaInfotekst className="sammenligning-ingress__koronainfo" />
-            <Systemtittel className="sammenligning-ingress__tittel">
+            <Systemtittel tag="h2" className="sammenligning-ingress__tittel">
                 Hvor er ditt potensial?
             </Systemtittel>
             <Normaltekst>
@@ -18,8 +18,8 @@ export const SammenligningIngress: FunctionComponent = () => {
             </Normaltekst>
             <LesMerPanel
                 className="sammenligning-ingress__utregningsinfo"
-                åpneLabel={'Hvordan utarbeides sammenligningen?'}
-                lukkLabel={'Lukk'}
+                åpneLabel="Hvordan utarbeides sammenligningen?"
+                lukkLabel="Lukk"
             >
                 <div className="sammenligning-ingress__utregningsinfo-innhold">
                     <Normaltekst>

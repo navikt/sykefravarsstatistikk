@@ -39,7 +39,9 @@ import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
 import { Forside } from './Forside/Forside';
 import { HvittPanel } from './felleskomponenter/HvittPanel/HvittPanel';
-import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress';
+import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/SammenligningIngress';
+import { SammenligningMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningMedBransje';
+import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -136,6 +138,8 @@ const AppContent: FunctionComponent = () => {
                         <Forside>
                             <HvittPanel>
                                 <SammenligningIngress />
+                                <SammenligningMedBransje />
+                                <DetaljertSammenligning />
                             </HvittPanel>
                             <KalkulatorPanel />
                             <Historikkpanel />

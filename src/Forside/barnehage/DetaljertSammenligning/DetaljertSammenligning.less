@@ -1,0 +1,23 @@
+@import '../../../variables';
+
+.detaljert-sammenligning {
+    width: 100%;
+    margin-top: 1rem;
+
+    &__panel {
+        border: 1px solid black;
+        width: 100%;
+    }
+    &__panel + &__panel {
+        margin-top: 1rem;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        display: flex;
+
+        &__panel + &__panel {
+            margin-top: 0;
+            margin-left: 1rem;
+        }
+    }
+}
