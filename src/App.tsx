@@ -38,6 +38,8 @@ import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
 import { Forside } from './Forside/Forside';
+import { HvittPanel } from './felleskomponenter/HvittPanel/HvittPanel';
+import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -132,12 +134,9 @@ const AppContent: FunctionComponent = () => {
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                     >
                         <Forside>
-                            <Sammenligningspanel
-                                restSykefraværshistorikk={restSykefraværshistorikk}
-                            />
-                            {/*
-                                <h1>Her er det barnehagespesifikt innhold! :)</h1>
-                            */}
+                            <HvittPanel>
+                                <SammenligningIngress />
+                            </HvittPanel>
                             <KalkulatorPanel />
                             <Historikkpanel />
                             <VideoerPanel />

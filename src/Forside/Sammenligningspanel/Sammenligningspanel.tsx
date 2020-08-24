@@ -75,7 +75,7 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                         restSykefraværshistorikk={restSykefraværshistorikk}
                         className="sammenligningspanel__feilmelding"
                     />
-                    <KoronaInfotekst />
+                    <KoronaInfotekst className="sammenligningspanel__koronainfo" />
                     {laster ? (
                         <div className="sammenligningspanel__skeleton">
                             <Skeleton height={228} />
