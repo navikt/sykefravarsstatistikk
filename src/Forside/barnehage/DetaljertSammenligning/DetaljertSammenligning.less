@@ -4,38 +4,15 @@
     width: 100%;
     margin-top: 1rem;
 
-    &__panel {
-        border: 1px solid black;
-        width: 100%;
-    }
-    &__panel + &__panel {
-        margin-top: 1rem;
-    }
-    &__ikon-og-les-mer {
+    .detaljert-sammenligning-panel + .detaljert-sammenligning-panel {
         margin-top: 1rem;
     }
 
     @media print, (min-width: @screen-sm-min) {
         display: flex;
 
-        &__panel + &__panel {
+        .detaljert-sammenligning-panel + .detaljert-sammenligning-panel {
             margin-top: 0;
-            margin-left: 1rem;
-        }
-
-        &__ikon-og-les-mer {
-            display: flex;
-        }
-
-        &__les-mer {
-            margin-left: 1rem;
-        }
-
-        .les-mer-panel {
-            align-self: flex-end;
-        }
-
-        &__les-mer-innhold {
             margin-left: 1rem;
         }
     }
