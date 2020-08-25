@@ -20,10 +20,11 @@ const getFarge = (resultat: SykefraværResultat): string => {
 interface Props {
     resultat: SykefraværResultat;
     stor?: boolean;
+    className?: string;
 }
 
-export const Speedometer: FunctionComponent<Props> = ({ resultat, stor }) => {
-    const størrelsesfaktor = stor ? 1.5 : 1;
+export const Speedometer: FunctionComponent<Props> = ({ resultat, stor, className }) => {
+    const størrelsesfaktor = stor ? 2 : 1;
     return (
         <svg
             width={123 * størrelsesfaktor}
@@ -31,6 +32,7 @@ export const Speedometer: FunctionComponent<Props> = ({ resultat, stor }) => {
             viewBox="0 0 123 64"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            className={className}
         >
             <path
                 d="M122 61.26a60.14 60.14 0 00-17.72-42.61A60.622 60.622 0 0061.5 1a60.622 60.622 0 00-42.78 17.65A60.14 60.14 0 001 61.26h22.514A37.76 37.76 0 0134.64 34.508 38.062 38.062 0 0161.5 23.425a38.062 38.062 0 0126.86 11.082 37.76 37.76 0 0111.126 26.754H122z"
