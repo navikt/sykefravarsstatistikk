@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningMedBransje.less';
 import Panel from 'nav-frontend-paneler';
+import { Speedometer, SykefraværResultat } from '../Speedometer';
 
 export const SammenligningMedBransje: FunctionComponent = () => {
     return (
@@ -13,7 +14,7 @@ export const SammenligningMedBransje: FunctionComponent = () => {
                 <Normaltekst>
                     Du har <strong>lavere fravær</strong> enn andre
                 </Normaltekst>
-                {/* ikon */}
+                <Speedometer stor resultat={SykefraværResultat.MIDDELS} />
                 <Normaltekst>Neste oppdatering: 02.09.2020</Normaltekst>
             </Panel>
         </div>
