@@ -149,7 +149,9 @@ const AppContent: FunctionComponent = () => {
                                 <SammenligningMedBransje
                                     restSykefraværsvarighet={restSykefraværsvarighet}
                                 />
-                                <DetaljertSammenligning />
+                                <DetaljertSammenligning
+                                    restSykefraværsvarighet={restSykefraværsvarighet}
+                                />
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel />
                             <Historikkpanel />
