@@ -130,7 +130,7 @@ const AppContent: FunctionComponent = () => {
                             <Sammenligningspanel
                                 restSykefraværshistorikk={restSykefraværshistorikk}
                             />
-                            <KalkulatorPanel />
+                            <KalkulatorPanel liten />
                             <Historikkpanel />
                             <VideoerPanel />
                         </Forside>
@@ -154,7 +154,6 @@ const AppContent: FunctionComponent = () => {
                                 />
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel />
-                            <Historikkpanel />
                             <VideoerPanel />
                         </Forside>
                     </InnloggingssideWrapper>

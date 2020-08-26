@@ -8,10 +8,34 @@ import './DetaljertSammenligningPanel.less';
 interface Props {
     resultat: SykefraværResultat;
 }
+
+const getVurderingstekst = (resultat: SykefraværResultat) => {
+    switch (resultat) {
+        case SykefraværResultat.UNDER:
+            return (
+                <>
+                    Du har et <strong>lavere legemeldt korttidsfravær</strong> enn bransjen
+                </>
+            );
+        case SykefraværResultat.MIDDELS:
+            return (
+                <>
+                    Du har <strong>omtrent likt legemeldt korttidsfravær</strong> som bransjen
+                </>
+            );
+        case SykefraværResultat.OVER:
+            return (
+                <>
+                    Du har et <strong>høyere legemeldt korttidsfravær</strong> enn bransjen
+                </>
+            );
+    }
+};
+
 export const KorttidSammenligningPanel: FunctionComponent<Props> = ({ resultat }) => (
     <Panel className="detaljert-sammenligning-panel">
         <Normaltekst tag="h3">
-            Du har et <strong>lavere korttidsfravær</strong> enn bransjen
+            {getVurderingstekst(resultat)}
         </Normaltekst>
         <div className="detaljert-sammenligning-panel__ikon-og-les-mer">
             <Speedometer resultat={resultat} />

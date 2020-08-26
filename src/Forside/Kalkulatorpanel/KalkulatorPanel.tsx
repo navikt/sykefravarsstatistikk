@@ -7,13 +7,14 @@ import './KalkulatorPanel.less';
 import { PATH_KALKULATOR } from '../../App';
 import { Link, useLocation } from 'react-router-dom';
 import { useSendEvent } from '../../amplitude/amplitude';
+import classNames from 'classnames';
 
-const KalkulatorPanel: FunctionComponent = () => {
+const KalkulatorPanel: FunctionComponent<{ liten?: boolean }> = ({ liten }) => {
     const location = useLocation();
     const sendEvent = useSendEvent();
 
     return (
-        <PanelBase className="kalkulatorpanel">
+        <PanelBase className={classNames('kalkulatorpanel', liten && 'kalkulatorpanel--liten')}>
             <Systemtittel className="kalkulatorpanel__overskrift" tag="h2">
                 <KalkisIkon className="kalkulatorpanel__illustrasjon" />
                 Hvor mye koster sykefraværet?
