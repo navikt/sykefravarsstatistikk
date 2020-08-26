@@ -9,14 +9,23 @@ import {
     getResultatForLangtidsfravær,
     sykefraværForBarnehagerSiste4Kvartaler,
 } from '../barnehage-utils';
+import { formaterProsent } from '../../Sammenligningspanel/Paneler/Sykefraværsprosentpanel/Sykefraværsprosentpanel';
+import Skeleton from 'react-loading-skeleton';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
 }
 
 export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefraværsvarighet }) => {
+    if (
+        restSykefraværsvarighet.status === RestStatus.LasterInn ||
+        restSykefraværsvarighet.status === RestStatus.IkkeLastet
+    ) {
+        return <Skeleton className="detaljert-sammenligning" height={160} />;
+    }
+
     if (restSykefraværsvarighet.status !== RestStatus.Suksess) {
-        return null; // TODO Feilhåndtering og lasting
+        return null; // TODO Feilhåndtering
     }
     const varighet = restSykefraværsvarighet.data;
 
@@ -35,16 +44,24 @@ export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefrav�
                 resultat={resultatKorttid}
             >
                 <Normaltekst>Andelen legemeldt sykefravær mellom 1 og 16 dager:</Normaltekst>
-                <Normaltekst>Ditt resultat: {korttidVirksomhet}&nbsp;%</Normaltekst>
-                <Normaltekst>Bransjens resultat: {korttidBransje}&nbsp;%</Normaltekst>
+                <Normaltekst>
+                    Ditt resultat: {formaterProsent(korttidVirksomhet)}&nbsp;%
+                </Normaltekst>
+                <Normaltekst>
+                    Bransjens resultat: {formaterProsent(korttidBransje)}&nbsp;%
+                </Normaltekst>
             </DetaljertSammenligningPanel>
             <DetaljertSammenligningPanel
                 korttidEllerLangtid="langtidsfravær"
                 resultat={resultatLangtid}
             >
                 <Normaltekst>Andel langtidsfravær fra 17. dag:</Normaltekst>
-                <Normaltekst>Ditt resultat: {korttidVirksomhet}&nbsp;%</Normaltekst>
-                <Normaltekst>Bransjens resultat: {korttidBransje}&nbsp;%</Normaltekst>
+                <Normaltekst>
+                    Ditt resultat: {formaterProsent(langtidVirksomhet)}&nbsp;%
+                </Normaltekst>
+                <Normaltekst>
+                    Bransjens resultat: {formaterProsent(langtidBransje)}&nbsp;%
+                </Normaltekst>
             </DetaljertSammenligningPanel>
         </div>
     );
