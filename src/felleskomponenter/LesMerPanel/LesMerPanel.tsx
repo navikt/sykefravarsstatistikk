@@ -45,6 +45,9 @@ const LesMerPanel: React.FunctionComponent<Props> = ({
             <div className="les-mer-panel__innhold">
                 <Collapse isOpened={åpen}>{children}</Collapse>
             </div>
+            <div className="les-mer-panel__print-innhold">
+                {children}
+            </div>
         </div>
     );
 };
