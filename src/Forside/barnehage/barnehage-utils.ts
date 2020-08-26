@@ -34,3 +34,4 @@ const getResultat = (
     }
     throw new Error('virksomhetens eller bransjens tall er NaN');
 };
+
