@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { Speedometer, SykefraværResultat } from '../../Speedometer';
+import { Speedometer, SykefraværResultat } from '../../Speedometer/Speedometer';
 import LesMerPanel from '../../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import Panel from 'nav-frontend-paneler';
 import './DetaljertSammenligningPanel.less';
@@ -21,9 +21,9 @@ export const LangtidSammenligningPanel: FunctionComponent<Props> = ({resultat}) 
                 lukkLabel="Lukk"
             >
                 <div className="detaljert-sammenligning-panel__les-mer-innhold">
-                    <Normaltekst>Andelen sykefraværsdager som er gradert:</Normaltekst>
-                    <Normaltekst>Ditt resultat: 20%</Normaltekst>
-                    <Normaltekst>Bransjens resultat: 5%</Normaltekst>
+                    <Normaltekst>Andel langtidssykefravær fra 17. dag:</Normaltekst>
+                    <Normaltekst>Ditt resultat: 20 %</Normaltekst>
+                    <Normaltekst>Bransjens resultat: 5 %</Normaltekst>
                 </div>
             </LesMerPanel>
         </div>

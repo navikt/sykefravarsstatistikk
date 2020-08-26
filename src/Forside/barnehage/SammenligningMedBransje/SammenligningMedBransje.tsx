@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import { Ingress, Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
+import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningMedBransje.less';
 import Panel from 'nav-frontend-paneler';
-import { Speedometer, SykefraværResultat } from '../Speedometer';
+import { Speedometer, SykefraværResultat } from '../Speedometer/Speedometer';
 import InternLenke from '../../../felleskomponenter/InternLenke/InternLenke';
 import { PATH_HISTORIKK } from '../../../App';
 import { HoyreChevron } from 'nav-frontend-chevron';

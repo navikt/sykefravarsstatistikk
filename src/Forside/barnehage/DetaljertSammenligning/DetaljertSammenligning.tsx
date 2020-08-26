@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import './DetaljertSammenligning.less';
-import { SykefraværResultat } from '../Speedometer';
+import { SykefraværResultat } from '../Speedometer/Speedometer';
 import { KorttidSammenligningPanel } from './DetaljertSammenligningPanel/KorttidSammenligningPanel';
 import { LangtidSammenligningPanel } from './DetaljertSammenligningPanel/LangtidSammenligningPanel';
 
