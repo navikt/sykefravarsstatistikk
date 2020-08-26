@@ -106,6 +106,7 @@ export const hentRestVirksomhetMetadata = async (
     };
 };
 
+// TODO Sykefraværsvarighet -> varighetSiste4Kvartaler?
 export const hentRestSykefraværsvarighet = async (
     orgnr: string
 ): Promise<RestSykefraværsvarighet> => {

@@ -14,6 +14,7 @@ export const SykefraværsvarighetProvider: FunctionComponent = (props) => {
         { status: RestStatus.IkkeLastet }
     );
 
+    // TODO La være å hente varighet hvis det ikke er en barnehage?
     useEffect(() => {
         if (orgnr) {
             setRestSykefraværsvarighet({
