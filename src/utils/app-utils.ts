@@ -1,0 +1,1 @@
+export const nesteOppdatering = "02.09.2020";

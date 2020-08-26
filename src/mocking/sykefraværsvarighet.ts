@@ -1,6 +1,6 @@
 export const sykefraværsvarighetMock = {
     korttidsfraværSiste4Kvartaler: {
-        prosent: 1.3,
+        prosent: 2.3,
         tapteDagsverk: 140.6,
         muligeDagsverk: 3990.4,
         erMaskert: false,
@@ -24,7 +24,7 @@ export const sykefraværsvarighetMock = {
         ],
     },
     langtidsfraværSiste4Kvartaler: {
-        prosent: 2.9,
+        prosent: 6.1,
         tapteDagsverk: 116.7,
         muligeDagsverk: 3990.4,
         erMaskert: false,

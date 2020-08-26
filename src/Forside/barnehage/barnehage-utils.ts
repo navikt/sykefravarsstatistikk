@@ -20,7 +20,7 @@ export const getResultatForLangtidsfravær = (varighet: Sykefraværsvarighet): S
     );
 };
 
-const getResultat = (
+export const getResultat = (
     virksomhetensProsent: number,
     bransjensProsent: number
 ): SykefraværResultat => {

@@ -39,7 +39,7 @@ import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
 import { Forside } from './Forside/Forside';
 import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/SammenligningIngress';
-import { SammenligningMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningMedBransje';
+import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
 import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
 import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
 import {
@@ -146,7 +146,7 @@ const AppContent: FunctionComponent = () => {
                         <Forside>
                             <SammenligningspanelBarnehage>
                                 <SammenligningIngress />
-                                <SammenligningMedBransje
+                                <SammenligningSiste4KvartalerMedBransje
                                     restSykefraværsvarighet={restSykefraværsvarighet}
                                 />
                                 <DetaljertSammenligning
