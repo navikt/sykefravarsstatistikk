@@ -42,6 +42,11 @@ import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/S
 import { SammenligningMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningMedBransje';
 import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
 import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
+import {
+    sykefraværsvarighetContext,
+    SykefraværsvarighetProvider,
+} from './utils/sykefraværsvarighetContext';
+import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -57,11 +62,13 @@ const App: FunctionComponent = () => {
             <AltinnOrganisasjonerProvider>
                 <AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
                     <VirksomhetMetadataProvider>
-                        <SykefraværshistorikkProvider>
-                            <FeatureTogglesProvider>
-                                <AppContent />
-                            </FeatureTogglesProvider>
-                        </SykefraværshistorikkProvider>
+                        <SykefraværsvarighetProvider>
+                            <SykefraværshistorikkProvider>
+                                <FeatureTogglesProvider>
+                                    <AppContent />
+                                </FeatureTogglesProvider>
+                            </SykefraværshistorikkProvider>
+                        </SykefraværsvarighetProvider>
                     </VirksomhetMetadataProvider>
                 </AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
             </AltinnOrganisasjonerProvider>
@@ -74,6 +81,7 @@ const AppContent: FunctionComponent = () => {
     const restOrganisasjonerMedStatistikk = useContext<RestAltinnOrganisasjoner>(
         altinnOrganisasjonerMedTilgangTilStatistikkContext
     );
+    const restSykefraværsvarighet = useContext<RestSykefraværsvarighet>(sykefraværsvarighetContext);
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
@@ -138,7 +146,9 @@ const AppContent: FunctionComponent = () => {
                         <Forside>
                             <SammenligningspanelBarnehage>
                                 <SammenligningIngress />
-                                <SammenligningMedBransje />
+                                <SammenligningMedBransje
+                                    restSykefraværsvarighet={restSykefraværsvarighet}
+                                />
                                 <DetaljertSammenligning />
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel />

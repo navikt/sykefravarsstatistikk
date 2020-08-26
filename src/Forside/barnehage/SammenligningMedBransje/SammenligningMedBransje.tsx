@@ -7,8 +7,14 @@ import InternLenke from '../../../felleskomponenter/InternLenke/InternLenke';
 import { PATH_HISTORIKK } from '../../../App';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
+import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
 
-export const SammenligningMedBransje: FunctionComponent = () => {
+interface Props {
+    restSykefraværsvarighet: RestSykefraværsvarighet;
+}
+
+export const SammenligningMedBransje: FunctionComponent<Props> = ({ restSykefraværsvarighet }) => {
+    console.log(restSykefraværsvarighet);
     return (
         <div className="sammenligning-med-bransje">
             <Systemtittel className="sammenligning-med-bransje__tittel">
