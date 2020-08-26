@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningIngress.less';
 import KoronaInfotekst from '../../Sammenligningspanel/KoronaInfotekst/KoronaInfotekst';
-import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 
 export const SammenligningIngress: FunctionComponent = () => {
     // TODO: Teksten her er ikke ferdig.

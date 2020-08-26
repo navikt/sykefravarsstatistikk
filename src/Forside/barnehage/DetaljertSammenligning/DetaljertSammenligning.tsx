@@ -11,6 +11,7 @@ import {
 } from '../barnehage-utils';
 import { formaterProsent } from '../../Sammenligningspanel/Paneler/Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import Skeleton from 'react-loading-skeleton';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
@@ -25,7 +26,11 @@ export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefrav�
     }
 
     if (restSykefraværsvarighet.status !== RestStatus.Suksess) {
-        return null; // TODO Feilhåndtering
+        return (
+            <AlertStripeFeil className="detaljert-sammenligning__feil">
+                Kunne ikke vist langtids- og korttidsfravær
+            </AlertStripeFeil>
+        ); // TODO Feilhåndtering
     }
     const varighet = restSykefraværsvarighet.data;
 

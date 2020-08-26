@@ -14,7 +14,6 @@ interface Props {
 }
 
 export const SammenligningMedBransje: FunctionComponent<Props> = ({ restSykefraværsvarighet }) => {
-    console.log(restSykefraværsvarighet);
     return (
         <div className="sammenligning-med-bransje">
             <Systemtittel className="sammenligning-med-bransje__tittel">

@@ -1,11 +1,10 @@
-// TODO Dette er ikke relle tall. Må oppdateres!
 import { Sykefraværsvarighet } from '../../api/sykefraværsvarighet';
 import { SykefraværResultat } from './Speedometer/Speedometer';
 
 export const sykefraværForBarnehagerSiste4Kvartaler = {
-    totalt: 8.6,
-    langtidsfravær: 4.6,
-    korttidsfravær: 4,
+    totalt: 8.3,
+    langtidsfravær: 7.2,
+    korttidsfravær: 1.1,
 };
 
 export const getResultatForKorttidsfravær = (varighet: Sykefraværsvarighet): SykefraværResultat => {

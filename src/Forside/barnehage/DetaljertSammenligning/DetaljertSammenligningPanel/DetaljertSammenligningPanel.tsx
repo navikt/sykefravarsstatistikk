@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Speedometer, SykefraværResultat } from '../../Speedometer/Speedometer';
 import LesMerPanel from '../../../../felleskomponenter/LesMerPanel/LesMerPanel';
