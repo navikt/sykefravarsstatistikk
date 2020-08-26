@@ -3,17 +3,18 @@ import { enhetsregisteretMockRespons } from './enhetsregisteret';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './organisasjoner';
 import { getSykefraværshistorikkMock } from './sykefraværshistorikk';
 import { Bransjetype } from '../api/virksomhetMetadata';
+import { sykefraværsvarighetMock } from './sykefraværsvarighet';
 
 const mock = {
     minSideArbeidsgiver: true,
     sykefraværsstatistikkApi: true,
     enhetsregisteret: true,
-    featureToggles: true
+    featureToggles: true,
 };
 
 if (process.env.REACT_APP_HEROKU) {
     // Alt skal alltid mockes på heroku
-    Object.keys(mock).forEach(skalMockes => (mock as any)[skalMockes] = true);
+    Object.keys(mock).forEach((skalMockes) => ((mock as any)[skalMockes] = true));
 }
 
 if (mock.minSideArbeidsgiver) {
@@ -39,6 +40,23 @@ if (mock.sykefraværsstatistikkApi) {
             delay: 1000,
         }
     );
+    fetchMock.get(
+        'express:/sykefravarsstatistikk/api/:orgnr/varighet',
+        (url) => {
+            const orgnr = url.match(/[0-9]{9}/)![0];
+            if (orgnr === '101010101') {
+                return 500;
+            }
+            if (orgnr === '100100100') {
+                return 403;
+            }
+            return sykefraværsvarighetMock;
+        },
+        {
+            delay: 1000,
+        }
+    );
+
     fetchMock.get(
         'express:/sykefravarsstatistikk/api/:orgnr/bedriftsmetrikker',
         (url) => {
@@ -98,8 +116,7 @@ if (mock.enhetsregisteret) {
 if (mock.featureToggles) {
     fetchMock.get(
         'begin:/sykefravarsstatistikk/api/feature',
-        {
-        },
+        {},
         {
             delay: 1000,
         }
