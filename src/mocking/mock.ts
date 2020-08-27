@@ -50,7 +50,7 @@ if (mock.sykefraværsstatistikkApi) {
             if (orgnr === '100100100') {
                 return 403;
             }
-            return sykefraværsvarighetMock;
+            return sykefraværsvarighetMock(orgnr);
         },
         {
             delay: 1000,
@@ -67,7 +67,7 @@ if (mock.sykefraværsstatistikkApi) {
             if (orgnr === '100100100') {
                 return 500;
             }
-            if (orgnr === '888888888') {
+            if (orgnr.match('88888888.')) {
                 return {
                     antallAnsatte: 99,
                     næringskode5Siffer: {

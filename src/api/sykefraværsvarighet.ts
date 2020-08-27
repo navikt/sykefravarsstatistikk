@@ -2,9 +2,9 @@ import { RestRessurs } from './api-utils';
 import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
 
 interface SykefraværSiste4Kvartaler {
-    prosent: number;
-    tapteDagsverk: number;
-    muligeDagsverk: number;
+    prosent: number | null;
+    tapteDagsverk: number | null;
+    muligeDagsverk: number | null;
     kvartaler: ÅrstallOgKvartal[];
     erMaskert: boolean;
 }

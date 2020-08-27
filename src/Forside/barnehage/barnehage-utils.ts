@@ -21,9 +21,14 @@ export const getResultatForLangtidsfravær = (varighet: Sykefraværsvarighet): S
 };
 
 export const getResultat = (
-    virksomhetensProsent: number,
+    virksomhetensProsent: number | null,
     bransjensProsent: number
 ): SykefraværResultat => {
+
+    if (virksomhetensProsent === null) {
+        throw new Error('virksomhetens eller bransjens tall er null');
+    }
+
     if (virksomhetensProsent < 0.9 * bransjensProsent) {
         return SykefraværResultat.UNDER;
     } else if (virksomhetensProsent < bransjensProsent * 1.1) {

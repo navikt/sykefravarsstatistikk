@@ -10,7 +10,7 @@ import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import {
     erMaskert,
     harSykefravær,
-    RestSykefraværsvarighet,
+    RestSykefraværsvarighet, Sykefraværsvarighet,
 } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import { formaterProsent } from '../../Sammenligningspanel/Paneler/Sykefraværsprosentpanel/Sykefraværsprosentpanel';
@@ -46,6 +46,17 @@ const getResultatTekstForSammenligningMedBransjen = (sykefraværResultat: Sykefr
     }
 };
 
+const getSykefraværVirksomhet = (varighet: Sykefraværsvarighet) : number => {
+    if (varighet.korttidsfraværSiste4Kvartaler.prosent === null
+        || varighet.langtidsfraværSiste4Kvartaler.prosent === null) {
+        return 0;
+    }
+
+    return varighet.korttidsfraværSiste4Kvartaler.prosent +
+        varighet.langtidsfraværSiste4Kvartaler.prosent;
+};
+
+
 export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = ({
     restSykefraværsvarighet,
 }) => {
@@ -76,9 +87,7 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
 
     const kvartaler = varighet.korttidsfraværSiste4Kvartaler.kvartaler.slice().reverse();
 
-    const sykefraværVirksomhet =
-        varighet.korttidsfraværSiste4Kvartaler.prosent +
-        varighet.langtidsfraværSiste4Kvartaler.prosent;
+    const sykefraværVirksomhet = getSykefraværVirksomhet(varighet);
 
     const sammenligningResultat = getResultat(
         sykefraværVirksomhet,
@@ -90,7 +99,7 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
     return (
         <div className="sammenligning-med-bransje">
             <Systemtittel className="sammenligning-med-bransje__tittel">
-                Legemeldt sykefravær: Dine tall
+                Legemeldt sykefravær siste 4 kvartal
             </Systemtittel>
             <LesMerPanel
                 className="sammenligning-med-bransje__utregningsinfo"
@@ -101,8 +110,8 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
                     <Normaltekst>Det er ikke tatt hensyn til virksomhetens størrelse.</Normaltekst>
                     <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <ul>
-                        {kvartaler.map((kvartal) => (
-                            <Normaltekst tag="li">
+                        {kvartaler.map((kvartal, index) => (
+                            <Normaltekst tag="li" key={index}>
                                 {kvartal.kvartal}. kvartal {kvartal.årstall}
                             </Normaltekst>
                         ))}

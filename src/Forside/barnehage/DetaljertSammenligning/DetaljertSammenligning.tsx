@@ -15,7 +15,6 @@ import {
 } from '../barnehage-utils';
 import { formaterProsent } from '../../Sammenligningspanel/Paneler/Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import Skeleton from 'react-loading-skeleton';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
