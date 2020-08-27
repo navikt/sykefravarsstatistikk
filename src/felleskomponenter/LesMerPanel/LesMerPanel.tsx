@@ -8,7 +8,7 @@ import classNames from 'classnames';
 
 interface Props {
     åpneLabel: string;
-    lukkLabel: string;
+    lukkLabel?: string;
     className?: string;
     onÅpne?: () => void;
 }
@@ -29,6 +29,8 @@ const LesMerPanel: React.FunctionComponent<Props> = ({
         }
     };
 
+    const lukkTekst = lukkLabel || åpneLabel;
+
     return (
         <div className="les-mer-panel">
             <div
@@ -39,15 +41,13 @@ const LesMerPanel: React.FunctionComponent<Props> = ({
                 )}
             >
                 <InfoToggler onToggle={() => setÅpen(!åpen)} åpen={åpen}>
-                    <Normaltekst tag="span">{åpen ? lukkLabel : åpneLabel}</Normaltekst>
+                    <Normaltekst tag="span">{åpen ? lukkTekst : åpneLabel}</Normaltekst>
                 </InfoToggler>
             </div>
             <div className="les-mer-panel__innhold">
                 <Collapse isOpened={åpen}>{children}</Collapse>
             </div>
-            <div className="les-mer-panel__print-innhold">
-                {children}
-            </div>
+            <div className="les-mer-panel__print-innhold">{children}</div>
         </div>
     );
 };

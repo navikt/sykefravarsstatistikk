@@ -23,7 +23,6 @@ export const DetaljertSammenligningPanel: FunctionComponent<Props> = ({
                 <LesMerPanel
                     className="detaljert-sammenligning-panel__les-mer"
                     åpneLabel="Se tallene"
-                    lukkLabel="Lukk"
                 >
                     <div className="detaljert-sammenligning-panel__les-mer-innhold">{children}</div>
                 </LesMerPanel>

@@ -48,6 +48,8 @@ const getResultatTekstForSammenligningMedBransjen = (
                 </>
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
+            // bold: mangler tall
+            // space
             return 'Vi mangler tall for deler av perioden med sammenligning.';
         case SykefraværResultat.MASKERT:
             return 'Det er for få ansatte i virksomheten til at vi kan vise sykefraværsstatistikken for din virksomhet.';
@@ -125,7 +127,6 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
             <LesMerPanel
                 className="sammenligning-med-bransje__utregningsinfo"
                 åpneLabel="Slik har vi kommet fram til ditt resultat"
-                lukkLabel="Lukk"
             >
                 <div className="sammenligning-med-bransje__utregningsinfo-innhold">
                     <Normaltekst>Det er ikke tatt hensyn til virksomhetens størrelse.</Normaltekst>
