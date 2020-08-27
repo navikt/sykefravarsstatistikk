@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
-import { formaterProsent } from '../../Sammenligningspanel/Paneler/Sykefraværsprosentpanel/Sykefraværsprosentpanel';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { SykefraværSiste4Kvartaler } from '../../../api/sykefraværsvarighet';
 import { SykefraværResultat } from '../Speedometer/Speedometer';
 import { Prosent } from '../Prosent';
+import './DetaljertSammenligningLesMer.less';
 
 interface Props {
     korttidsfraværSiste4KvartalerVirksomhet: SykefraværSiste4Kvartaler;
@@ -23,7 +23,9 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
         case SykefraværResultat.MIDDELS:
             return (
                 <>
-                    <Normaltekst>Andelen legemeldt sykefravær mellom 1 og 16 dager:</Normaltekst>
+                    <Normaltekst className="detaljert-sammenligning-les-mer__ingress">
+                        Andelen legemeldt sykefravær mellom 1 og 16 dager:
+                    </Normaltekst>
                     <Normaltekst>
                         Ditt resultat: <Prosent prosent={prosentVirksomhet} />
                     </Normaltekst>
@@ -36,7 +38,9 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
         case SykefraværResultat.UFULLSTENDIG_DATA:
             return (
                 <>
-                    <Element>Vi mangler dine tall for deler av perioden med sammenligning.</Element>
+                    <Element className="detaljert-sammenligning-les-mer__ingress">
+                        Vi mangler dine tall for deler av perioden med sammenligning.
+                    </Element>
                     <Normaltekst>
                         Ditt resultat: <Prosent prosent={prosentVirksomhet} />
                     </Normaltekst>
@@ -49,7 +53,7 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
         case SykefraværResultat.MASKERT:
             return (
                 <>
-                    <Element>
+                    <Element className="detaljert-sammenligning-les-mer__ingress">
                         Det er for få ansatte i virksomheten til at vi kan vise
                         sykefraværsstatistikken for din virksomhet.
                     </Element>
