@@ -1,24 +1,20 @@
 import React, { FunctionComponent } from 'react';
 import './DetaljertSammenligning.less';
 import {
-    erMaskert,
-    harSykefravær,
+    harSykefraværEllerErMaskert,
     RestSykefraværsvarighet,
 } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import { DetaljertSammenligningPanel } from './DetaljertSammenligningPanel/DetaljertSammenligningPanel';
-import { Normaltekst } from 'nav-frontend-typografi';
 import {
     getResultatForSammenligningAvSykefravær,
     sykefraværForBarnehagerSiste4Kvartaler,
 } from '../barnehage-utils';
-import { formaterProsent } from '../../Sammenligningspanel/Paneler/Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import Skeleton from 'react-loading-skeleton';
 import {
     getVurderingstekstKorttid,
     getVurderingstekstLangtid,
-    Vurderingstekst,
-} from './DetaljertSammenligningPanel/Vurderingstekst';
+} from './DetaljertSammenligningPanel/vurderingstekster';
 import { LesMerKorttid } from './LesMerKorttid';
 import { LesMerLangtid } from './LesMerLangtid';
 
@@ -38,7 +34,7 @@ export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefrav�
         return null;
     }
 
-    if (erMaskert(restSykefraværsvarighet.data) || !harSykefravær(restSykefraværsvarighet.data)) {
+    if (!harSykefraværEllerErMaskert(restSykefraværsvarighet.data)) {
         return null;
     }
 
@@ -63,7 +59,6 @@ export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefrav�
     return (
         <div className="detaljert-sammenligning">
             <DetaljertSammenligningPanel
-                korttidEllerLangtid="korttidsfravær"
                 resultat={resultatKorttid}
                 vurderingstekst={getVurderingstekstKorttid(resultatKorttid)}
             >
@@ -74,7 +69,6 @@ export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefrav�
                 />
             </DetaljertSammenligningPanel>
             <DetaljertSammenligningPanel
-                korttidEllerLangtid="langtidsfravær"
                 resultat={resultatLangtid}
                 vurderingstekst={getVurderingstekstLangtid(resultatLangtid)}
             >

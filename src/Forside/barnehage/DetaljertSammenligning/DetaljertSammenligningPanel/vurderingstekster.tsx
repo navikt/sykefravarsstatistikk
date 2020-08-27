@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { SykefraværResultat } from '../../Speedometer/Speedometer';
-import { Normaltekst } from 'nav-frontend-typografi';
 
 interface Props {
     resultat: SykefraværResultat;
@@ -28,12 +27,12 @@ export const getVurderingstekstKorttid = (resultat: SykefraværResultat) => {
                 </>
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
+        case SykefraværResultat.MASKERT:
             return (
                 <>
                     Andel <strong>legemeldt korttidsfravær</strong> mellom 1 og 16 dager:
                 </>
             );
-        case SykefraværResultat.MASKERT:
         case SykefraværResultat.INGEN_DATA:
         case SykefraværResultat.FEIL: // TODO
             return <>Her er det noe som ikke stemmer :/</>;
@@ -61,19 +60,19 @@ export const getVurderingstekstLangtid = (resultat: SykefraværResultat) => {
                 </>
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
+        case SykefraværResultat.MASKERT:
             return (
                 <>
                     Andel <strong>langtidsfravær</strong> fra 17. dag:
                 </>
             );
-        case SykefraværResultat.MASKERT:
         case SykefraværResultat.INGEN_DATA:
         case SykefraværResultat.FEIL: // TODO
             return <>Her er det noe som ikke stemmer :/</>;
     }
 };
 
-export const Vurderingstekst: FunctionComponent<Props> = ({ resultat, korttidEllerLangtid }) => {
+export const Vurderingstekster: FunctionComponent<Props> = ({ resultat, korttidEllerLangtid }) => {
     switch (resultat) {
         case SykefraværResultat.UNDER:
             return (

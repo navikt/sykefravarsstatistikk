@@ -18,8 +18,11 @@ export const erMaskert = (sykefraværsvarighet: Sykefraværsvarighet) => {
     return sykefraværsvarighet.langtidsfraværSiste4Kvartaler.erMaskert;
 };
 
-export const harSykefravær = (sykefraværsvarighet: Sykefraværsvarighet) => {
-    return sykefraværsvarighet.langtidsfraværSiste4Kvartaler.kvartaler.length !== 0;
+export const harSykefraværEllerErMaskert = (sykefraværsvarighet: Sykefraværsvarighet) => {
+    return (
+        sykefraværsvarighet.langtidsfraværSiste4Kvartaler.erMaskert ||
+        sykefraværsvarighet.langtidsfraværSiste4Kvartaler.kvartaler.length !== 0
+    );
 };
 
 export type RestSykefraværsvarighet = RestRessurs<Sykefraværsvarighet>;

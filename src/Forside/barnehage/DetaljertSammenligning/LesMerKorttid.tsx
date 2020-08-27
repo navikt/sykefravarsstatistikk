@@ -3,6 +3,7 @@ import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { formaterProsent } from '../../Sammenligningspanel/Paneler/Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { SykefraværSiste4Kvartaler } from '../../../api/sykefraværsvarighet';
 import { SykefraværResultat } from '../Speedometer/Speedometer';
+import { Prosent } from '../Prosent';
 
 interface Props {
     korttidsfraværSiste4KvartalerVirksomhet: SykefraværSiste4Kvartaler;
@@ -15,6 +16,7 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
     korttidsfraværSiste4KvartalerBransje,
     resultat,
 }) => {
+    const prosentVirksomhet = korttidsfraværSiste4KvartalerVirksomhet.prosent;
     switch (resultat) {
         case SykefraværResultat.UNDER:
         case SykefraværResultat.OVER:
@@ -23,13 +25,11 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
                 <>
                     <Normaltekst>Andelen legemeldt sykefravær mellom 1 og 16 dager:</Normaltekst>
                     <Normaltekst>
-                        Ditt resultat:{' '}
-                        {formaterProsent(korttidsfraværSiste4KvartalerVirksomhet.prosent)}
-                        &nbsp;%
+                        Ditt resultat: <Prosent prosent={prosentVirksomhet} />
                     </Normaltekst>
                     <Normaltekst>
-                        Bransjens resultat: {formaterProsent(korttidsfraværSiste4KvartalerBransje)}
-                        &nbsp;%
+                        Bransjens resultat:{' '}
+                        <Prosent prosent={korttidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
                 </>
             );
@@ -38,13 +38,27 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
                 <>
                     <Element>Vi mangler dine tall for deler av perioden med sammenligning.</Element>
                     <Normaltekst>
-                        Ditt resultat:{' '}
-                        {formaterProsent(korttidsfraværSiste4KvartalerVirksomhet.prosent)}
-                        &nbsp;%
+                        Ditt resultat: <Prosent prosent={prosentVirksomhet} />
                     </Normaltekst>
                     <Normaltekst>
-                        Bransjens resultat: {formaterProsent(korttidsfraværSiste4KvartalerBransje)}
-                        &nbsp;%
+                        Bransjens resultat:{' '}
+                        <Prosent prosent={korttidsfraværSiste4KvartalerBransje} />
+                    </Normaltekst>
+                </>
+            );
+        case SykefraværResultat.MASKERT:
+            return (
+                <>
+                    <Element>
+                        Det er for få ansatte i virksomheten til at vi kan vise
+                        sykefraværsstatistikken for din virksomhet.
+                    </Element>
+                    <Normaltekst>
+                        Ditt resultat: <Prosent prosent={prosentVirksomhet} />
+                    </Normaltekst>
+                    <Normaltekst>
+                        Bransjens resultat:{' '}
+                        <Prosent prosent={korttidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
                 </>
             );

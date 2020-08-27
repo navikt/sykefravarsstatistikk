@@ -59,13 +59,6 @@ const getResultatTekstForSammenligningMedBransjen = (
     }
 };
 
-const getSykefraværVirksomhet = (varighet: Sykefraværsvarighet): number | null => {
-    return addNullable(
-        varighet.korttidsfraværSiste4Kvartaler.prosent,
-        varighet.langtidsfraværSiste4Kvartaler.prosent
-    );
-};
-
 const addNullable = (number1: number | null, number2: number | null) => {
     if (number1 === null || number2 === null) return null;
     return number1 + number2;

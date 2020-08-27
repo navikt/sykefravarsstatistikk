@@ -3,26 +3,21 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { Speedometer, SykefraværResultat } from '../../Speedometer/Speedometer';
 import LesMerPanel from '../../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import Panel from 'nav-frontend-paneler';
-import { Vurderingstekst } from './Vurderingstekst';
 import './DetaljertSammenligningPanel.less';
 
 interface Props {
     resultat: SykefraværResultat;
-    korttidEllerLangtid: 'korttidsfravær' | 'langtidsfravær';
     vurderingstekst: ReactElement | string;
 }
 
 export const DetaljertSammenligningPanel: FunctionComponent<Props> = ({
     children,
     resultat,
-    korttidEllerLangtid,
-    vurderingstekst
+    vurderingstekst,
 }) => {
     return (
         <Panel className="detaljert-sammenligning-panel">
-            <Normaltekst tag="h3">
-                {vurderingstekst}
-            </Normaltekst>
+            <Normaltekst tag="h3">{vurderingstekst}</Normaltekst>
             <div className="detaljert-sammenligning-panel__ikon-og-les-mer">
                 <Speedometer resultat={resultat} />
                 <LesMerPanel
