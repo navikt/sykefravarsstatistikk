@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { SykefraværResultat } from './Speedometer/Speedometer';
 
 interface Props {
