@@ -14,7 +14,7 @@ import { RestSykefraværsvarighet } from './sykefraværsvarighet';
 const sykefraværshistorikkPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk`;
 
-const varighetPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/varighet`;
+const varighetPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/varighetsiste4kvartaler`;
 
 const featureTogglesPath = (features: string[]) =>
     `${BASE_PATH}/api/feature?` + features.map((featureNavn) => `feature=${featureNavn}`).join('&');
