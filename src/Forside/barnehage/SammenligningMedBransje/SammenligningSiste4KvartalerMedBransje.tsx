@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningSiste4KvartalerMedBransje.less';
 import Panel from 'nav-frontend-paneler';
@@ -20,46 +20,11 @@ import {
 import { nesteOppdatering } from '../../../utils/app-utils';
 import Skeleton from 'react-loading-skeleton';
 import { Prosent } from '../Prosent';
+import { getVurderingstekstTotalt } from '../vurderingstekster';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
 }
-
-const getResultatTekstForSammenligningMedBransjen = (
-    sykefraværResultat: SykefraværResultat
-): ReactElement | string => {
-    switch (sykefraværResultat) {
-        case SykefraværResultat.UNDER:
-            return (
-                <>
-                    Du har <strong>lavere sykefravær</strong> enn andre barnehager i Norge
-                </>
-            );
-        case SykefraværResultat.MIDDELS:
-            return (
-                <>
-                    Du har <strong>omtrent likt sykefravær</strong> som andre barnehager i Norge
-                </>
-            );
-        case SykefraværResultat.OVER:
-            return (
-                <>
-                    Du har <strong>høyere sykefravær</strong> enn andre barnehager i Norge
-                </>
-            );
-        case SykefraværResultat.UFULLSTENDIG_DATA:
-            return (
-                <>
-                    Vi <strong>mangler tall</strong> for deler av perioden med sammenligning.
-                </>
-            );
-        case SykefraværResultat.MASKERT:
-            return 'Det er for få ansatte i virksomheten til at vi kan vise sykefraværsstatistikken for din virksomhet.';
-        case SykefraværResultat.INGEN_DATA:
-        case SykefraværResultat.FEIL: // TODO
-            return <>Her er det noe som ikke stemmer :/</>;
-    }
-};
 
 const addNullable = (number1: number | null, number2: number | null) => {
     if (number1 === null || number2 === null) return null;
@@ -144,7 +109,7 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
             </LesMerPanel>
             <Panel className="sammenligning-med-bransje__panel">
                 <Ingress className="sammenligning-med-bransje__panel-tittel">
-                    {getResultatTekstForSammenligningMedBransjen(sammenligningResultat)}
+                    {getVurderingstekstTotalt(sammenligningResultat)}
                 </Ingress>
                 <div className="sammenligning-med-bransje__ikon-og-tall">
                     <Speedometer

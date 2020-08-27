@@ -4,7 +4,6 @@ import './SammenligningIngress.less';
 import KoronaInfotekst from '../../Sammenligningspanel/KoronaInfotekst/KoronaInfotekst';
 
 export const SammenligningIngress: FunctionComponent = () => {
-    // TODO: Teksten her er ikke ferdig.
     return (
         <>
             <KoronaInfotekst className="sammenligning-ingress__koronainfo" />
