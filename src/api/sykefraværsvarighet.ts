@@ -1,7 +1,7 @@
 import { RestRessurs } from './api-utils';
 import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
 
-interface SykefraværSiste4Kvartaler {
+export interface SykefraværSiste4Kvartaler {
     prosent: number | null;
     tapteDagsverk: number | null;
     muligeDagsverk: number | null;

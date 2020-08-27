@@ -4,11 +4,16 @@ import { SpeedometerGul } from './SpeedometerGul';
 import { SpeedometerGrønn } from './SpeedometerGrønn';
 import './Speedometer.less';
 import classNames from 'classnames';
+import { SpeedometerGrå } from './SpeedometerGrå';
 
 export enum SykefraværResultat {
     UNDER = 'UNDER',
     MIDDELS = 'MIDDELS',
     OVER = 'OVER',
+    MASKERT = 'MASKERT',
+    INGEN_DATA = 'INGEN_DATA',
+    UFULLSTENDIG_DATA = 'UFULLSTENDIG_DATA',
+    FEIL = 'FEIL',
 }
 
 interface Props {
@@ -37,5 +42,10 @@ const SpeedometerSvg: FunctionComponent<{
             return <SpeedometerGul størrelsesfaktor={størrelsesfaktor} />;
         case SykefraværResultat.OVER:
             return <SpeedometerRød størrelsesfaktor={størrelsesfaktor} />;
+        case SykefraværResultat.MASKERT:
+        case SykefraværResultat.INGEN_DATA:
+        case SykefraværResultat.UFULLSTENDIG_DATA:
+        case SykefraværResultat.FEIL:
+            return <SpeedometerGrå størrelsesfaktor={størrelsesfaktor} />;
     }
 };

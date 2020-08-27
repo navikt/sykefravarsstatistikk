@@ -27,5 +27,10 @@ export const Vurderingstekst: FunctionComponent<Props> = ({ resultat, korttidEll
                     Du har et <strong>høyere legemeldt {korttidEllerLangtid}</strong> enn bransjen
                 </>
             );
+        case SykefraværResultat.MASKERT:
+        case SykefraværResultat.INGEN_DATA:
+        case SykefraværResultat.UFULLSTENDIG_DATA:
+        case SykefraværResultat.FEIL: // TODO
+            return <>Her er det noe som ikke stemmer :/</>
     }
 };
