@@ -7,7 +7,11 @@ import InternLenke from '../../../felleskomponenter/InternLenke/InternLenke';
 import { PATH_HISTORIKK } from '../../../App';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
-import { RestSykefraværsvarighet, Sykefraværsvarighet } from '../../../api/sykefraværsvarighet';
+import {
+    RestSykefraværsvarighet,
+    SykefraværSiste4Kvartaler,
+    Sykefraværsvarighet,
+} from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import { formaterProsent } from '../../Sammenligningspanel/Paneler/Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { getResultat, sykefraværForBarnehagerSiste4Kvartaler } from '../barnehage-utils';
@@ -64,12 +68,16 @@ const getSykefraværVirksomhet = (varighet: Sykefraværsvarighet): number => {
 };
 
 const getResultatForTotaltSykefravær = (
-    restSykefraværsvarighet: RestSykefraværsvarighet
+    restStatus: RestStatus,
+    sykefravær: SykefraværSiste4Kvartaler | undefined,
+    bransjensProsent: number
 ): SykefraværResultat => {
-    switch (restSykefraværsvarighet.status) {
+    switch (restStatus) {
         case RestStatus.Suksess:
-            const antallKvartaler =
-                restSykefraværsvarighet.data.langtidsfraværSiste4Kvartaler.kvartaler.length;
+            if (sykefravær === undefined) {
+                return SykefraværResultat.INGEN_DATA;
+            }
+            const antallKvartaler = sykefravær.kvartaler.length;
 
             if (antallKvartaler === 0) {
                 return SykefraværResultat.INGEN_DATA;
@@ -77,12 +85,10 @@ const getResultatForTotaltSykefravær = (
                 return SykefraværResultat.UFULLSTENDIG_DATA;
             }
 
-            const langtid = restSykefraværsvarighet.data.langtidsfraværSiste4Kvartaler.prosent;
-            const korttid = restSykefraværsvarighet.data.korttidsfraværSiste4Kvartaler.prosent;
-            if (langtid === null || korttid === null) {
+            if (sykefravær.prosent === null) {
                 return SykefraværResultat.INGEN_DATA;
             }
-            return getResultat(korttid + langtid, sykefraværForBarnehagerSiste4Kvartaler.totalt);
+            return getResultat(sykefravær.prosent, bransjensProsent);
 
         case RestStatus.Feil:
         case RestStatus.IngenTilgang:
@@ -90,6 +96,26 @@ const getResultatForTotaltSykefravær = (
         default:
             return SykefraværResultat.FEIL;
     }
+};
+
+const addNullable = (number1: number | null, number2: number | null) => {
+    if (number1 === null || number2 === null) return null;
+    return number1 + number2;
+};
+
+const getTotaltSykefraværSiste4Kvartaler = (
+    varighet: Sykefraværsvarighet | undefined
+): SykefraværSiste4Kvartaler | undefined => {
+    if (varighet === undefined) return undefined;
+    const korttid = varighet.korttidsfraværSiste4Kvartaler;
+    const langtid = varighet.langtidsfraværSiste4Kvartaler;
+    return {
+        kvartaler: korttid.kvartaler,
+        tapteDagsverk: addNullable(korttid.tapteDagsverk, langtid.tapteDagsverk),
+        muligeDagsverk: korttid.muligeDagsverk,
+        prosent: addNullable(korttid.prosent, langtid.prosent),
+        erMaskert: korttid.erMaskert,
+    };
 };
 
 export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = ({
@@ -108,7 +134,12 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
             : undefined;
     const kvartaler = varighet?.korttidsfraværSiste4Kvartaler.kvartaler.slice().reverse();
     const sykefraværVirksomhet = varighet && getSykefraværVirksomhet(varighet);
-    const sammenligningResultat = getResultatForTotaltSykefravær(restSykefraværsvarighet);
+
+    const sammenligningResultat = getResultatForTotaltSykefravær(
+        restSykefraværsvarighet.status,
+        getTotaltSykefraværSiste4Kvartaler(varighet),
+        0
+    );
 
     const sykefraværBransje = sykefraværForBarnehagerSiste4Kvartaler.totalt;
 
