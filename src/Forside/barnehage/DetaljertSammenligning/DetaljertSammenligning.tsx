@@ -1,6 +1,10 @@
 import React, { FunctionComponent } from 'react';
 import './DetaljertSammenligning.less';
-import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
+import {
+    erMaskert,
+    harSykefravær,
+    RestSykefraværsvarighet,
+} from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import { DetaljertSammenligningPanel } from './DetaljertSammenligningPanel/DetaljertSammenligningPanel';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -11,6 +15,7 @@ import {
 } from '../barnehage-utils';
 import { formaterProsent } from '../../Sammenligningspanel/Paneler/Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import Skeleton from 'react-loading-skeleton';
+import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
@@ -25,6 +30,10 @@ export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefrav�
     }
 
     if (restSykefraværsvarighet.status !== RestStatus.Suksess) {
+        return null;
+    }
+
+    if (erMaskert(restSykefraværsvarighet.data) || !harSykefravær(restSykefraværsvarighet.data)) {
         return null;
     }
 

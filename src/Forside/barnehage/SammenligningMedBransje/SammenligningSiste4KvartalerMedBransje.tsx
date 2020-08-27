@@ -7,7 +7,11 @@ import InternLenke from '../../../felleskomponenter/InternLenke/InternLenke';
 import { PATH_HISTORIKK } from '../../../App';
 import { HoyreChevron } from 'nav-frontend-chevron';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
-import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
+import {
+    erMaskert,
+    harSykefravær,
+    RestSykefraværsvarighet,
+} from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import { formaterProsent } from '../../Sammenligningspanel/Paneler/Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import { getResultat, sykefraværForBarnehagerSiste4Kvartaler } from '../barnehage-utils';
@@ -58,6 +62,14 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
                 Kunne ikke vise sykefravær
             </AlertStripeFeil>
         ); // TODO Feilhåndtering
+    }
+
+    if (erMaskert(restSykefraværsvarighet.data) || !harSykefravær(restSykefraværsvarighet.data)) {
+        return (
+            <AlertStripeFeil className="sammenligning-med-bransje__feil">
+                Kunne ikke vise sykefravær
+            </AlertStripeFeil>
+        );
     }
 
     const varighet = restSykefraværsvarighet.data;
