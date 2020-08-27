@@ -11,12 +11,9 @@ import {
     sykefraværForBarnehagerSiste4Kvartaler,
 } from '../barnehage-utils';
 import Skeleton from 'react-loading-skeleton';
-import {
-    getVurderingstekstKorttid,
-    getVurderingstekstLangtid,
-} from './DetaljertSammenligningPanel/vurderingstekster';
-import { LesMerKorttid } from './LesMerKorttid';
-import { LesMerLangtid } from './LesMerLangtid';
+import { getVurderingstekstKorttid, getVurderingstekstLangtid } from './vurderingstekster';
+import { LesMerKorttid } from './LesMer/LesMerKorttid';
+import { LesMerLangtid } from './LesMer/LesMerLangtid';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;

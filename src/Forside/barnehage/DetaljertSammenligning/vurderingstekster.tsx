@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { SykefraværResultat } from '../../Speedometer/Speedometer';
+import { SykefraværResultat } from '../Speedometer/Speedometer';
 
 interface Props {
     resultat: SykefraværResultat;
