@@ -14,7 +14,11 @@ import {
 } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import { formaterProsent } from '../../Sammenligningspanel/Paneler/Sykefraværsprosentpanel/Sykefraværsprosentpanel';
-import { getResultat, sykefraværForBarnehagerSiste4Kvartaler } from '../barnehage-utils';
+import {
+    getResultat,
+    getResultatForSammenligningAvSykefravær,
+    sykefraværForBarnehagerSiste4Kvartaler,
+} from '../barnehage-utils';
 import { nesteOppdatering } from '../../../utils/app-utils';
 import Skeleton from 'react-loading-skeleton';
 
@@ -67,37 +71,6 @@ const getSykefraværVirksomhet = (varighet: Sykefraværsvarighet): number => {
     );
 };
 
-const getResultatForTotaltSykefravær = (
-    restStatus: RestStatus,
-    sykefravær: SykefraværSiste4Kvartaler | undefined,
-    bransjensProsent: number
-): SykefraværResultat => {
-    switch (restStatus) {
-        case RestStatus.Suksess:
-            if (sykefravær === undefined) {
-                return SykefraværResultat.INGEN_DATA;
-            }
-            const antallKvartaler = sykefravær.kvartaler.length;
-
-            if (antallKvartaler === 0) {
-                return SykefraværResultat.INGEN_DATA;
-            } else if (antallKvartaler < 4) {
-                return SykefraværResultat.UFULLSTENDIG_DATA;
-            }
-
-            if (sykefravær.prosent === null) {
-                return SykefraværResultat.INGEN_DATA;
-            }
-            return getResultat(sykefravær.prosent, bransjensProsent);
-
-        case RestStatus.Feil:
-        case RestStatus.IngenTilgang:
-            return SykefraværResultat.FEIL;
-        default:
-            return SykefraværResultat.FEIL;
-    }
-};
-
 const addNullable = (number1: number | null, number2: number | null) => {
     if (number1 === null || number2 === null) return null;
     return number1 + number2;
@@ -135,7 +108,7 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
     const kvartaler = varighet?.korttidsfraværSiste4Kvartaler.kvartaler.slice().reverse();
     const sykefraværVirksomhet = varighet && getSykefraværVirksomhet(varighet);
 
-    const sammenligningResultat = getResultatForTotaltSykefravær(
+    const sammenligningResultat = getResultatForSammenligningAvSykefravær(
         restSykefraværsvarighet.status,
         getTotaltSykefraværSiste4Kvartaler(varighet),
         0

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactElement } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Speedometer, SykefraværResultat } from '../../Speedometer/Speedometer';
 import LesMerPanel from '../../../../felleskomponenter/LesMerPanel/LesMerPanel';
@@ -9,17 +9,19 @@ import './DetaljertSammenligningPanel.less';
 interface Props {
     resultat: SykefraværResultat;
     korttidEllerLangtid: 'korttidsfravær' | 'langtidsfravær';
+    vurderingstekst: ReactElement | string;
 }
 
 export const DetaljertSammenligningPanel: FunctionComponent<Props> = ({
     children,
     resultat,
     korttidEllerLangtid,
+    vurderingstekst
 }) => {
     return (
         <Panel className="detaljert-sammenligning-panel">
             <Normaltekst tag="h3">
-                <Vurderingstekst resultat={resultat} korttidEllerLangtid={korttidEllerLangtid} />
+                {vurderingstekst}
             </Normaltekst>
             <div className="detaljert-sammenligning-panel__ikon-og-les-mer">
                 <Speedometer resultat={resultat} />

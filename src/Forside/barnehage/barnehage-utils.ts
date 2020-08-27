@@ -1,5 +1,6 @@
-import { Sykefraværsvarighet } from '../../api/sykefraværsvarighet';
+import { SykefraværSiste4Kvartaler, Sykefraværsvarighet } from '../../api/sykefraværsvarighet';
 import { SykefraværResultat } from './Speedometer/Speedometer';
+import { RestStatus } from '../../api/api-utils';
 
 export const sykefraværForBarnehagerSiste4Kvartaler = {
     totalt: 8.3,
@@ -7,17 +8,35 @@ export const sykefraværForBarnehagerSiste4Kvartaler = {
     korttidsfravær: 1.1,
 };
 
-export const getResultatForKorttidsfravær = (varighet: Sykefraværsvarighet): SykefraværResultat => {
-    return getResultat(
-        varighet.korttidsfraværSiste4Kvartaler.prosent,
-        sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær
-    );
-};
-export const getResultatForLangtidsfravær = (varighet: Sykefraværsvarighet): SykefraværResultat => {
-    return getResultat(
-        varighet.langtidsfraværSiste4Kvartaler.prosent,
-        sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær
-    );
+export const getResultatForSammenligningAvSykefravær = (
+    restStatus: RestStatus,
+    sykefravær: SykefraværSiste4Kvartaler | undefined,
+    bransjensProsent: number
+): SykefraværResultat => {
+    switch (restStatus) {
+        case RestStatus.Suksess:
+            if (sykefravær === undefined) {
+                return SykefraværResultat.INGEN_DATA;
+            }
+            const antallKvartaler = sykefravær.kvartaler.length;
+
+            if (antallKvartaler === 0) {
+                return SykefraværResultat.INGEN_DATA;
+            } else if (antallKvartaler < 4) {
+                return SykefraværResultat.UFULLSTENDIG_DATA;
+            }
+
+            if (sykefravær.prosent === null) {
+                return SykefraværResultat.INGEN_DATA;
+            }
+            return getResultat(sykefravær.prosent, bransjensProsent);
+
+        case RestStatus.Feil:
+        case RestStatus.IngenTilgang:
+            return SykefraværResultat.FEIL;
+        default:
+            return SykefraværResultat.FEIL;
+    }
 };
 
 export const getResultat = (

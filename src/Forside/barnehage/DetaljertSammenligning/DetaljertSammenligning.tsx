@@ -9,12 +9,18 @@ import { RestStatus } from '../../../api/api-utils';
 import { DetaljertSammenligningPanel } from './DetaljertSammenligningPanel/DetaljertSammenligningPanel';
 import { Normaltekst } from 'nav-frontend-typografi';
 import {
-    getResultatForKorttidsfravær,
-    getResultatForLangtidsfravær,
+    getResultatForSammenligningAvSykefravær,
     sykefraværForBarnehagerSiste4Kvartaler,
 } from '../barnehage-utils';
 import { formaterProsent } from '../../Sammenligningspanel/Paneler/Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import Skeleton from 'react-loading-skeleton';
+import {
+    getVurderingstekstKorttid,
+    getVurderingstekstLangtid,
+    Vurderingstekst,
+} from './DetaljertSammenligningPanel/Vurderingstekst';
+import { LesMerKorttid } from './LesMerKorttid';
+import { LesMerLangtid } from './LesMerLangtid';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
@@ -38,39 +44,45 @@ export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefrav�
 
     const varighet = restSykefraværsvarighet.data;
 
-    const korttidVirksomhet = varighet.korttidsfraværSiste4Kvartaler.prosent;
+    const korttidVirksomhet = varighet.korttidsfraværSiste4Kvartaler;
     const korttidBransje = sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær;
-    const resultatKorttid = getResultatForKorttidsfravær(varighet);
+    const resultatKorttid = getResultatForSammenligningAvSykefravær(
+        restSykefraværsvarighet.status,
+        korttidVirksomhet,
+        korttidBransje
+    );
 
-    const langtidVirksomhet = varighet.langtidsfraværSiste4Kvartaler.prosent;
+    const langtidVirksomhet = varighet.langtidsfraværSiste4Kvartaler;
     const langtidBransje = sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær;
-    const resultatLangtid = getResultatForLangtidsfravær(varighet);
+    const resultatLangtid = getResultatForSammenligningAvSykefravær(
+        restSykefraværsvarighet.status,
+        langtidVirksomhet,
+        langtidBransje
+    );
 
     return (
         <div className="detaljert-sammenligning">
             <DetaljertSammenligningPanel
                 korttidEllerLangtid="korttidsfravær"
                 resultat={resultatKorttid}
+                vurderingstekst={getVurderingstekstKorttid(resultatKorttid)}
             >
-                <Normaltekst>Andelen legemeldt sykefravær mellom 1 og 16 dager:</Normaltekst>
-                <Normaltekst>
-                    Ditt resultat: {formaterProsent(korttidVirksomhet)}&nbsp;%
-                </Normaltekst>
-                <Normaltekst>
-                    Bransjens resultat: {formaterProsent(korttidBransje)}&nbsp;%
-                </Normaltekst>
+                <LesMerKorttid
+                    korttidsfraværSiste4KvartalerVirksomhet={korttidVirksomhet}
+                    korttidsfraværSiste4KvartalerBransje={korttidBransje}
+                    resultat={resultatKorttid}
+                />
             </DetaljertSammenligningPanel>
             <DetaljertSammenligningPanel
                 korttidEllerLangtid="langtidsfravær"
                 resultat={resultatLangtid}
+                vurderingstekst={getVurderingstekstLangtid(resultatLangtid)}
             >
-                <Normaltekst>Andel langtidsfravær fra 17. dag:</Normaltekst>
-                <Normaltekst>
-                    Ditt resultat: {formaterProsent(langtidVirksomhet)}&nbsp;%
-                </Normaltekst>
-                <Normaltekst>
-                    Bransjens resultat: {formaterProsent(langtidBransje)}&nbsp;%
-                </Normaltekst>
+                <LesMerLangtid
+                    langtidsfraværSiste4KvartalerVirksomhet={langtidVirksomhet}
+                    langtidsfraværSiste4KvartalerBransje={langtidBransje}
+                    resultat={resultatLangtid}
+                />
             </DetaljertSammenligningPanel>
         </div>
     );
