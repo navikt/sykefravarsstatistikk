@@ -13,9 +13,7 @@ import {
     Sykefraværsvarighet,
 } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
-import { formaterProsent } from '../../Sammenligningspanel/Paneler/Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import {
-    getResultat,
     getResultatForSammenligningAvSykefravær,
     sykefraværForBarnehagerSiste4Kvartaler,
 } from '../barnehage-utils';
@@ -97,14 +95,13 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
 
     const totaltSykefraværSiste4Kvartaler = getTotaltSykefraværSiste4Kvartaler(varighet);
     const sykefraværVirksomhet = totaltSykefraværSiste4Kvartaler?.prosent;
+    const sykefraværBransje = sykefraværForBarnehagerSiste4Kvartaler.totalt;
 
     const sammenligningResultat = getResultatForSammenligningAvSykefravær(
         restSykefraværsvarighet.status,
         getTotaltSykefraværSiste4Kvartaler(varighet),
-        0
+        sykefraværBransje
     );
-
-    const sykefraværBransje = sykefraværForBarnehagerSiste4Kvartaler.totalt;
 
     const antallKvartalerVirksomhet =
         sammenligningResultat === SykefraværResultat.UFULLSTENDIG_DATA ? (
