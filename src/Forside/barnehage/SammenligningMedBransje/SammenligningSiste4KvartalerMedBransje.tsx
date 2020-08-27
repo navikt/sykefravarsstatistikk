@@ -21,6 +21,7 @@ import {
 } from '../barnehage-utils';
 import { nesteOppdatering } from '../../../utils/app-utils';
 import Skeleton from 'react-loading-skeleton';
+import { Prosent } from '../Prosent';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
@@ -51,22 +52,16 @@ const getResultatTekstForSammenligningMedBransjen = (
         case SykefraværResultat.UFULLSTENDIG_DATA:
             return 'Vi mangler tall for deler av perioden med sammenligning.';
         case SykefraværResultat.MASKERT:
+            return 'Det er for få ansatte i virksomheten til at vi kan vise sykefraværsstatistikken for din virksomhet.';
         case SykefraværResultat.INGEN_DATA:
         case SykefraværResultat.FEIL: // TODO
             return <>Her er det noe som ikke stemmer :/</>;
     }
 };
 
-const getSykefraværVirksomhet = (varighet: Sykefraværsvarighet): number => {
-    if (
-        varighet.korttidsfraværSiste4Kvartaler.prosent === null ||
-        varighet.langtidsfraværSiste4Kvartaler.prosent === null
-    ) {
-        return 0;
-    }
-
-    return (
-        varighet.korttidsfraværSiste4Kvartaler.prosent +
+const getSykefraværVirksomhet = (varighet: Sykefraværsvarighet): number | null => {
+    return addNullable(
+        varighet.korttidsfraværSiste4Kvartaler.prosent,
         varighet.langtidsfraværSiste4Kvartaler.prosent
     );
 };
@@ -106,7 +101,9 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
             ? restSykefraværsvarighet.data
             : undefined;
     const kvartaler = varighet?.korttidsfraværSiste4Kvartaler.kvartaler.slice().reverse();
-    const sykefraværVirksomhet = varighet && getSykefraværVirksomhet(varighet);
+
+    const totaltSykefraværSiste4Kvartaler = getTotaltSykefraværSiste4Kvartaler(varighet);
+    const sykefraværVirksomhet = totaltSykefraværSiste4Kvartaler?.prosent;
 
     const sammenligningResultat = getResultatForSammenligningAvSykefravær(
         restSykefraværsvarighet.status,
@@ -166,11 +163,15 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
                         <Ingress className="sammenligning-med-bransje__virksomhet-tittel">
                             Din virksomhet{antallKvartalerVirksomhet}:
                         </Ingress>
-                        <Systemtittel>{formaterProsent(sykefraværVirksomhet)}&nbsp;%</Systemtittel>
+                        <Systemtittel>
+                            <Prosent prosent={sykefraværVirksomhet} />
+                        </Systemtittel>
                         <Ingress className="sammenligning-med-bransje__bransje-tittel">
                             Barnehager i Norge{antallKvartalerBransje}:
                         </Ingress>
-                        <Systemtittel>{formaterProsent(sykefraværBransje)}&nbsp;%</Systemtittel>
+                        <Systemtittel>
+                            <Prosent prosent={sykefraværBransje} />
+                        </Systemtittel>
                         <Normaltekst className="sammenligning-med-bransje__neste-oppdatering">
                             Neste oppdatering: {nesteOppdatering}
                         </Normaltekst>

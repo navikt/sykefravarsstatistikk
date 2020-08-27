@@ -1,4 +1,4 @@
-import { SykefraværSiste4Kvartaler, Sykefraværsvarighet } from '../../api/sykefraværsvarighet';
+import { SykefraværSiste4Kvartaler } from '../../api/sykefraværsvarighet';
 import { SykefraværResultat } from './Speedometer/Speedometer';
 import { RestStatus } from '../../api/api-utils';
 
@@ -18,6 +18,10 @@ export const getResultatForSammenligningAvSykefravær = (
             if (sykefravær === undefined) {
                 return SykefraværResultat.INGEN_DATA;
             }
+            if (sykefravær.erMaskert) {
+                return SykefraværResultat.MASKERT;
+            }
+
             const antallKvartaler = sykefravær.kvartaler.length;
 
             if (antallKvartaler === 0) {
@@ -43,7 +47,6 @@ export const getResultat = (
     virksomhetensProsent: number | null,
     bransjensProsent: number
 ): SykefraværResultat => {
-
     if (virksomhetensProsent === null) {
         throw new Error('virksomhetens eller bransjens tall er null');
     }
@@ -57,4 +60,3 @@ export const getResultat = (
     }
     throw new Error('virksomhetens eller bransjens tall er NaN');
 };
-
