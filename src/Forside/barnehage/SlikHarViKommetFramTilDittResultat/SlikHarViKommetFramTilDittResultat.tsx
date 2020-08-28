@@ -56,6 +56,31 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                     </Normaltekst>
                 </>
             );
+        case SykefraværResultat.INGEN_DATA:
+            return (
+                <>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Vi finner ikke tall for virksomheten din. Det kan være fordi bedriften nylig
+                        har blitt opprettet. Statistikken publiseres kvartalsvis.
+                    </Normaltekst>
+                    <Normaltekst>
+                        Bransjens tall er beregnet på sykefraværsstatistikk fra:
+                    </Normaltekst>
+                    <Kvartalsliste kvartaler={siste4PubliserteKvartaler} />
+                    <Normaltekst>
+                        Sammenligningen lages når vi har tall for alle perioder.
+                    </Normaltekst>
+                </>
+            );
+        case SykefraværResultat.FEIL:
+            return (
+                <>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Tallene er beregnet på sykefraværsstatistikk fra:
+                    </Normaltekst>
+                    <Normaltekst>—</Normaltekst>
+                </>
+            );
         default:
             return null;
     }
