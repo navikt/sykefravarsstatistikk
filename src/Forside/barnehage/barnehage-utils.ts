@@ -51,9 +51,9 @@ export const getTotaltSykefraværSiste4Kvartaler = (
     const langtid = varighet.langtidsfraværSiste4Kvartaler;
     return {
         kvartaler: korttid.kvartaler,
-        tapteDagsverk: addNullable(korttid.tapteDagsverk, langtid.tapteDagsverk),
+        tapteDagsverk: addEllerReturnerNull(korttid.tapteDagsverk, langtid.tapteDagsverk),
         muligeDagsverk: korttid.muligeDagsverk,
-        prosent: addNullable(korttid.prosent, langtid.prosent),
+        prosent: addEllerReturnerNull(korttid.prosent, langtid.prosent),
         erMaskert: korttid.erMaskert,
     };
 };
@@ -76,7 +76,7 @@ export const getResultat = (
     throw new Error('virksomhetens eller bransjens tall er NaN');
 };
 
-const addNullable = (number1: number | null, number2: number | null) => {
+const addEllerReturnerNull = (number1: number | null, number2: number | null) => {
     if (number1 === null || number2 === null) return null;
     return number1 + number2;
 };
