@@ -97,11 +97,10 @@ const hentEkstraDataFraSykefraværsvarighet = (
         return {};
     }
     const varighet = restSykefraværsvarighet.data;
-    const sykefraværTotalt = getTotaltSykefraværSiste4Kvartaler(varighet)?.prosent;
 
     return {
         sykefraværSiste4Kvartaler: getResultat(
-            sykefraværTotalt || null,
+            getTotaltSykefraværSiste4Kvartaler(varighet)!.prosent,
             sykefraværForBarnehagerSiste4Kvartaler.totalt
         ),
         korttidSiste4Kvartaler: getResultat(
