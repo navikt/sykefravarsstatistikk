@@ -98,20 +98,24 @@ const hentEkstraDataFraSykefraværsvarighet = (
     }
     const varighet = restSykefraværsvarighet.data;
 
-    return {
-        sykefraværSiste4Kvartaler: getResultat(
-            getTotaltSykefraværSiste4Kvartaler(varighet)!.prosent,
-            sykefraværForBarnehagerSiste4Kvartaler.totalt
-        ),
-        korttidSiste4Kvartaler: getResultat(
-            varighet.korttidsfraværSiste4Kvartaler.prosent,
-            sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær
-        ),
-        langtidSiste4Kvartaler: getResultat(
-            varighet.langtidsfraværSiste4Kvartaler.prosent,
-            sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær
-        ),
-    };
+    try {
+        return {
+            sykefraværSiste4Kvartaler: getResultat(
+                getTotaltSykefraværSiste4Kvartaler(varighet)!.prosent,
+                sykefraværForBarnehagerSiste4Kvartaler.totalt
+            ),
+            korttidSiste4Kvartaler: getResultat(
+                varighet.korttidsfraværSiste4Kvartaler.prosent,
+                sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær
+            ),
+            langtidSiste4Kvartaler: getResultat(
+                varighet.langtidsfraværSiste4Kvartaler.prosent,
+                sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær
+            ),
+        };
+    } catch (error) {
+        return {};
+    }
 };
 
 export const useSendEvent = (): SendEvent => {
