@@ -139,7 +139,7 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
                     className="sammenligning-med-bransje__historikk-lenke"
                     pathname={PATH_HISTORIKK}
                 >
-                    Gå til sykefraværshistorikken <HoyreChevron />
+                    Gå til sykefraværshistorikken
                 </InternLenke>
             </Panel>
         </div>
