@@ -27,11 +27,11 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
                         Andel langtidsfravær fra 17. dag:
                     </Normaltekst>
                     <Normaltekst>
-                        Ditt resultat: <Prosent prosent={prosentVirksomhet} />
+                        Ditt resultat: <Prosent strong prosent={prosentVirksomhet} />
                     </Normaltekst>
                     <Normaltekst>
                         Bransjens resultat:{' '}
-                        <Prosent prosent={langtidsfraværSiste4KvartalerBransje} />
+                        <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
                 </>
             );
@@ -42,11 +42,11 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
                         Vi mangler dine tall for deler av perioden med sammenligning.
                     </Normaltekst>
                     <Normaltekst>
-                        Ditt resultat: <Prosent prosent={prosentVirksomhet} />
+                        Ditt resultat: <Prosent strong prosent={prosentVirksomhet} />
                     </Normaltekst>
                     <Normaltekst>
                         Bransjens resultat:{' '}
-                        <Prosent prosent={langtidsfraværSiste4KvartalerBransje} />
+                        <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
                 </>
             );
@@ -61,7 +61,7 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
                     </Normaltekst>
                     <Normaltekst>
                         Bransjens resultat:{' '}
-                        <Prosent prosent={langtidsfraværSiste4KvartalerBransje} />
+                        <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
                 </>
             );
@@ -72,16 +72,15 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
                         Vi finner ikke tall for virksomheten din.
                     </Normaltekst>
                     <Normaltekst>
-                        Ditt resultat: <Prosent prosent={null} />
+                        Ditt resultat: <Prosent strong prosent={null} />
                     </Normaltekst>
                     <Normaltekst>
                         Bransjens resultat:{' '}
-                        <Prosent prosent={langtidsfraværSiste4KvartalerBransje} />
+                        <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
                 </>
             );
         default:
-            // TODO
-            return <>Her er det noe som ikke stemmer :/</>;
+            return <>—</>;
     }
 };
