@@ -1,9 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import './DetaljertSammenligning.less';
-import {
-    harSykefraværEllerErMaskert,
-    RestSykefraværsvarighet,
-} from '../../../api/sykefraværsvarighet';
+import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import { DetaljertSammenligningPanel } from './DetaljertSammenligningPanel/DetaljertSammenligningPanel';
 import {
@@ -28,10 +25,6 @@ export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefrav�
     }
 
     if (restSykefraværsvarighet.status !== RestStatus.Suksess) {
-        return null;
-    }
-
-    if (!harSykefraværEllerErMaskert(restSykefraværsvarighet.data)) {
         return null;
     }
 

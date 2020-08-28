@@ -8,7 +8,7 @@ interface Props {
 
 export const getVurderingstekstTotalt = (
     sykefraværResultat: SykefraværResultat
-): ReactElement | string => {
+): ReactElement | string | null => {
     switch (sykefraværResultat) {
         case SykefraværResultat.UNDER:
             return (
@@ -44,8 +44,13 @@ export const getVurderingstekstTotalt = (
                 </>
             );
         case SykefraværResultat.INGEN_DATA:
-        case SykefraværResultat.FEIL: // TODO
-            return <>Her er det noe som ikke stemmer :/</>;
+            return (
+                <>
+                    Vi <strong>finner ikke tall</strong> for virksomheten din.
+                </>
+            );
+        case SykefraværResultat.FEIL:
+            return null;
     }
 };
 
@@ -71,12 +76,12 @@ export const getVurderingstekstKorttid = (resultat: SykefraværResultat) => {
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
         case SykefraværResultat.MASKERT:
+        case SykefraværResultat.INGEN_DATA:
             return (
                 <>
                     Andel <strong>legemeldt korttidsfravær</strong> mellom 1 og 16 dager:
                 </>
             );
-        case SykefraværResultat.INGEN_DATA:
         case SykefraværResultat.FEIL: // TODO
             return <>Her er det noe som ikke stemmer :/</>;
     }
@@ -104,12 +109,12 @@ export const getVurderingstekstLangtid = (resultat: SykefraværResultat) => {
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
         case SykefraværResultat.MASKERT:
+        case SykefraværResultat.INGEN_DATA:
             return (
                 <>
                     Andel <strong>langtidsfravær</strong> fra 17. dag:
                 </>
             );
-        case SykefraværResultat.INGEN_DATA:
         case SykefraværResultat.FEIL: // TODO
             return <>Her er det noe som ikke stemmer :/</>;
     }

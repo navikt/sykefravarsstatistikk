@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import { SykefraværSiste4Kvartaler } from '../../../../api/sykefraværsvarighet';
 import { SykefraværResultat } from '../../Speedometer/Speedometer';
 import { Prosent } from '../../Prosent';
@@ -58,6 +58,21 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
                     </Normaltekst>
                     <Normaltekst>
                         Ditt resultat: <Prosent prosent={prosentVirksomhet} />
+                    </Normaltekst>
+                    <Normaltekst>
+                        Bransjens resultat:{' '}
+                        <Prosent prosent={langtidsfraværSiste4KvartalerBransje} />
+                    </Normaltekst>
+                </>
+            );
+        case SykefraværResultat.INGEN_DATA:
+            return (
+                <>
+                    <Normaltekst className="detaljert-sammenligning-les-mer__ingress">
+                        Vi finner ikke tall for virksomheten din.
+                    </Normaltekst>
+                    <Normaltekst>
+                        Ditt resultat: <Prosent prosent={null} />
                     </Normaltekst>
                     <Normaltekst>
                         Bransjens resultat:{' '}

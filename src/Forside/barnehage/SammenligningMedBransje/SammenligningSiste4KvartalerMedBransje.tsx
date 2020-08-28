@@ -74,14 +74,16 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
     );
 
     const antallKvartalerVirksomhet =
-        sammenligningResultat === SykefraværResultat.UFULLSTENDIG_DATA ? (
+        sammenligningResultat === SykefraværResultat.UFULLSTENDIG_DATA ||
+        sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
             <>
-                <strong> / {kvartaler?.length} av 4 kvartaler</strong>
+                <strong> / {kvartaler?.length || 0} av 4 kvartaler</strong>
             </>
         ) : null;
 
     const antallKvartalerBransje =
-        sammenligningResultat === SykefraværResultat.UFULLSTENDIG_DATA ? (
+        sammenligningResultat === SykefraværResultat.UFULLSTENDIG_DATA ||
+        sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
             <>
                 <strong> / 4 av 4 kvartaler</strong>
             </>
@@ -115,16 +117,18 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
                     />
                     <div className="sammenligning-med-bransje__tall">
                         <Ingress className="sammenligning-med-bransje__virksomhet-tittel">
-                            Din virksomhet{antallKvartalerVirksomhet}:
+                            Din virksomhet:
                         </Ingress>
                         <Systemtittel>
                             <Prosent prosent={sykefraværVirksomhet} />
+                            {antallKvartalerVirksomhet}
                         </Systemtittel>
                         <Ingress className="sammenligning-med-bransje__bransje-tittel">
-                            Barnehager i Norge{antallKvartalerBransje}:
+                            Barnehager i Norge:
                         </Ingress>
                         <Systemtittel>
                             <Prosent prosent={sykefraværBransje} />
+                            {antallKvartalerBransje}
                         </Systemtittel>
                         <Normaltekst className="sammenligning-med-bransje__neste-oppdatering">
                             Neste oppdatering: {nesteOppdatering}
