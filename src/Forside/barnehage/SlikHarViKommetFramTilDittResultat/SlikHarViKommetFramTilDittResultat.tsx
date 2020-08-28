@@ -15,11 +15,34 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
 }) => {
     switch (resultat) {
         case SykefraværResultat.OVER:
+            return (
+                <>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Sammenligningen blir markert rød når ditt sykefravær er høyere enn 9,1
+                        prosent. Det er ikke tatt hensyn til din virksomhetens størrelse.
+                    </Normaltekst>
+                    <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
+                    <Kvartalsliste kvartaler={kvartaler} />
+                </>
+            );
         case SykefraværResultat.MIDDELS:
+            return (
+                <>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Sammenligningen blir markert gul når ditt sykefravær ligger mellom 7,5 og
+                        9,1 prosent. Det er ikke tatt hensyn til din virksomhetens størrelse.
+                    </Normaltekst>
+                    <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
+                    <Kvartalsliste kvartaler={kvartaler} />
+                </>
+            );
         case SykefraværResultat.UNDER:
             return (
                 <>
-                    <Normaltekst>Det er ikke tatt hensyn til virksomhetens størrelse.</Normaltekst>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Sammenligningen blir markert grønn når ditt sykefravær ligger under 7,5
+                        prosent. Det er ikke tatt hensyn til din virksomhetens størrelse.
+                    </Normaltekst>
                     <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={kvartaler} />
                 </>
