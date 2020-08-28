@@ -21,6 +21,7 @@ import { nesteOppdatering } from '../../../utils/app-utils';
 import Skeleton from 'react-loading-skeleton';
 import { Prosent } from '../Prosent';
 import { getVurderingstekstTotalt } from '../vurderingstekster';
+import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
@@ -96,15 +97,10 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
                 åpneLabel="Slik har vi kommet fram til ditt resultat"
             >
                 <div className="sammenligning-med-bransje__utregningsinfo-innhold">
-                    <Normaltekst>Det er ikke tatt hensyn til virksomhetens størrelse.</Normaltekst>
-                    <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
-                    <ul>
-                        {kvartaler?.map((kvartal, index) => (
-                            <Normaltekst tag="li" key={index}>
-                                {kvartal.kvartal}. kvartal {kvartal.årstall}
-                            </Normaltekst>
-                        ))}
-                    </ul>
+                    <SlikHarViKommetFramTilDittResultat
+                        resultat={sammenligningResultat}
+                        kvartaler={kvartaler}
+                    />
                 </div>
             </LesMerPanel>
             <Panel className="sammenligning-med-bransje__panel">
