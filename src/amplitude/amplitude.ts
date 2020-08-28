@@ -14,7 +14,6 @@ import {
 import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
 import { RestSykefraværsvarighet } from '../api/sykefraværsvarighet';
 import { sykefraværsvarighetContext } from '../utils/sykefraværsvarighetContext';
-import { SykefraværResultat } from '../Forside/barnehage/Speedometer/Speedometer';
 import {
     getResultat,
     getTotaltSykefraværSiste4Kvartaler,

@@ -11,7 +11,6 @@ import Skeleton from 'react-loading-skeleton';
 import { getVurderingstekstKorttid, getVurderingstekstLangtid } from '../vurderingstekster';
 import { LesMerKorttid } from './LesMer/LesMerKorttid';
 import { LesMerLangtid } from './LesMer/LesMerLangtid';
-import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { useSendEvent } from '../../../amplitude/amplitude';
 
 interface Props {
