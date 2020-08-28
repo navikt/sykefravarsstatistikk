@@ -24,7 +24,7 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
             return (
                 <>
                     <Normaltekst className="detaljert-sammenligning-les-mer__ingress">
-                        Andelen legemeldt sykefravær mellom 1 og 16 dager:
+                        Andel legemeldt sykefravær mellom 1 og 16 dager:
                     </Normaltekst>
                     <Normaltekst>
                         Ditt resultat: <Prosent strong prosent={prosentVirksomhet} />

@@ -91,7 +91,8 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                     </Normaltekst>
                     <Kvartalsliste kvartaler={siste4PubliserteKvartaler} />
                     <Normaltekst>
-                        Sammenligningen lages når vi har tall for alle perioder.
+                        Vi viser dine tall når de publiseres. Sammenligningen lages når vi har tall
+                        for alle perioder.
                     </Normaltekst>
                 </>
             );
