@@ -9,9 +9,12 @@ import {
 } from './sykefraværshistorikk';
 import { sendEventDirekte } from '../amplitude/amplitude';
 import { RestVirksomhetMetadata } from './virksomhetMetadata';
+import { RestSykefraværsvarighet } from './sykefraværsvarighet';
 
 const sykefraværshistorikkPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk`;
+
+const varighetPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/varighetsiste4kvartaler`;
 
 const featureTogglesPath = (features: string[]) =>
     `${BASE_PATH}/api/feature?` + features.map((featureNavn) => `feature=${featureNavn}`).join('&');
@@ -83,7 +86,9 @@ export const hentRestFeatureToggles = async (
     };
 };
 
-export const hentRestVirksomhetMetadata = async (orgnr: string): Promise<RestVirksomhetMetadata> => {
+export const hentRestVirksomhetMetadata = async (
+    orgnr: string
+): Promise<RestVirksomhetMetadata> => {
     const response = await fetch(virksomhetMetadataPath(orgnr), {
         method: 'GET',
         credentials: 'include',
@@ -95,6 +100,42 @@ export const hentRestVirksomhetMetadata = async (orgnr: string): Promise<RestVir
             status: RestStatus.Suksess,
             data: await response.json(),
         };
+    }
+    return {
+        status: restStatus,
+    };
+};
+
+// TODO Sykefraværsvarighet -> varighetSiste4Kvartaler?
+export const hentRestSykefraværsvarighet = async (
+    orgnr: string
+): Promise<RestSykefraværsvarighet> => {
+    // TODO: Generaliser feilhåndteringen?
+    const response = await fetch(varighetPath(orgnr), {
+        method: 'GET',
+        credentials: 'include',
+    });
+
+    const restStatus = getRestStatus(response.status);
+    if (restStatus === RestStatus.Suksess) {
+        return {
+            status: RestStatus.Suksess,
+            data: await response.json(),
+        };
+    }
+    if (restStatus === RestStatus.Feil) {
+        try {
+            const body = await response.json();
+
+            const causedBy: string = body.causedBy;
+
+            if (!!causedBy && Object.keys(Årsak).includes(causedBy)) {
+                return {
+                    status: RestStatus.Feil,
+                    causedBy: Årsak[causedBy as keyof typeof Årsak],
+                };
+            }
+        } catch (ignored) {}
     }
     return {
         status: restStatus,

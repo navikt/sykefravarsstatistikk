@@ -2,16 +2,17 @@ import { ReactComponent as InfoCircle } from './InfoCircle.svg';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { Normaltekst } from 'nav-frontend-typografi';
 import EksternLenke from '../../../felleskomponenter/EksternLenke/EksternLenke';
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import './KoronaInfotekst.less';
+import classNames from 'classnames';
 
-const KoronaInfotekst = () => {
+const KoronaInfotekst: FunctionComponent<{ className?: string }> = ({ className }) => {
     return (
-        <div className="korona-infotekst">
+        <div className={classNames('korona-infotekst', className)}>
             <div className="korona-infotekst__info-circle">
                 <InfoCircle />
             </div>
-            <LesMerPanel åpneLabel="Koronaepidemien og sykefraværsstatistikken" lukkLabel="Lukk">
+            <LesMerPanel åpneLabel="Koronaepidemien og sykefraværsstatistikken">
                 <Normaltekst>
                     Opplever du høyere sykefravær enn normalt i første kvartal? Økning i
                     korttidssykefraværet skyldes sannsynligvis koronaepidemien. Når din

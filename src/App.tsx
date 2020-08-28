@@ -38,6 +38,15 @@ import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
 import { Forside } from './Forside/Forside';
+import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/SammenligningIngress';
+import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
+import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
+import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
+import {
+    sykefraværsvarighetContext,
+    SykefraværsvarighetProvider,
+} from './utils/sykefraværsvarighetContext';
+import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -53,11 +62,13 @@ const App: FunctionComponent = () => {
             <AltinnOrganisasjonerProvider>
                 <AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
                     <VirksomhetMetadataProvider>
-                        <SykefraværshistorikkProvider>
-                            <FeatureTogglesProvider>
-                                <AppContent />
-                            </FeatureTogglesProvider>
-                        </SykefraværshistorikkProvider>
+                        <SykefraværsvarighetProvider>
+                            <SykefraværshistorikkProvider>
+                                <FeatureTogglesProvider>
+                                    <AppContent />
+                                </FeatureTogglesProvider>
+                            </SykefraværshistorikkProvider>
+                        </SykefraværsvarighetProvider>
                     </VirksomhetMetadataProvider>
                 </AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
             </AltinnOrganisasjonerProvider>
@@ -70,6 +81,7 @@ const AppContent: FunctionComponent = () => {
     const restOrganisasjonerMedStatistikk = useContext<RestAltinnOrganisasjoner>(
         altinnOrganisasjonerMedTilgangTilStatistikkContext
     );
+    const restSykefraværsvarighet = useContext<RestSykefraværsvarighet>(sykefraværsvarighetContext);
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
@@ -118,7 +130,7 @@ const AppContent: FunctionComponent = () => {
                             <Sammenligningspanel
                                 restSykefraværshistorikk={restSykefraværshistorikk}
                             />
-                            <KalkulatorPanel />
+                            <KalkulatorPanel liten />
                             <Historikkpanel />
                             <VideoerPanel />
                         </Forside>
@@ -132,14 +144,18 @@ const AppContent: FunctionComponent = () => {
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                     >
                         <Forside>
-                            <Sammenligningspanel
-                                restSykefraværshistorikk={restSykefraværshistorikk}
-                            />
-                            {/*
-                                <h1>Her er det barnehagespesifikt innhold! :)</h1>
-                            */}
+                            <SammenligningspanelBarnehage
+                                restSykefraværsvarighet={restSykefraværsvarighet}
+                            >
+                                <SammenligningIngress />
+                                <SammenligningSiste4KvartalerMedBransje
+                                    restSykefraværsvarighet={restSykefraværsvarighet}
+                                />
+                                <DetaljertSammenligning
+                                    restSykefraværsvarighet={restSykefraværsvarighet}
+                                />
+                            </SammenligningspanelBarnehage>
                             <KalkulatorPanel />
-                            <Historikkpanel />
                             <VideoerPanel />
                         </Forside>
                     </InnloggingssideWrapper>

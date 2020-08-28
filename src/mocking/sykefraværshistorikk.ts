@@ -176,6 +176,10 @@ export const getSykefraværshistorikkMock = (orgnr: String): Sykefraværshistori
             return lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet();
         case '888888888':
             return lagHistorikkBransje();
+        case '888888887':
+            return lagHistorikkBransje();
+        case '888888886':
+            return lagHistorikkBransje();
         default:
             return lagHistorikkNæring();
     }

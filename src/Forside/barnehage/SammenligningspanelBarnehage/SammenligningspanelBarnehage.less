@@ -1,0 +1,34 @@
+@import '../../../variables';
+
+.sammenligningspanel-barnehage {
+    padding: 2rem 1.5rem;
+    width: 100%;
+    background: white;
+    border-radius: 0.25rem;
+    position: relative;
+
+    &__feilmelding {
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    &__knapp {
+        display: none;
+    }
+
+    @media print, (min-width: @screen-sm-min) {
+        padding: 2rem;
+
+        &__knapp {
+            display: block;
+            position: absolute;
+            right: 2rem;
+        }
+    }
+
+    @media print {
+        &__knapp {
+            display: none;
+        }
+    }
+}

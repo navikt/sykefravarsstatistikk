@@ -1,9 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './InternLenke.less';
+import classNames from 'classnames';
 
 interface Props {
     pathname: string;
+    className?: string;
     onClick?: (e: any) => any;
 }
 
@@ -17,7 +19,7 @@ const InternLenke: FunctionComponent<Props> = (props) => {
                 search: location.search,
             }}
             onClick={props.onClick}
-            className="intern-lenke"
+            className={classNames('intern-lenke', props.className)}
         >
             {props.children}
         </Link>

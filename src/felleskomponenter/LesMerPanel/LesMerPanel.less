@@ -17,8 +17,26 @@
         }
     }
 
+    .infoToggler {
+        text-align: left;
+    }
+
     &__innhold {
         order: 1;
         margin-top: 0.25rem;
+    }
+
+    &__print-innhold {
+        display: none;
+    }
+
+    @media print {
+        &__print-innhold {
+            display: block;
+        }
+        &__toggler,
+        &__innhold {
+            display: none;
+        }
     }
 }
