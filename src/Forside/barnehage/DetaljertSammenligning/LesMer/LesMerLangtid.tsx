@@ -38,9 +38,9 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
         case SykefraværResultat.UFULLSTENDIG_DATA:
             return (
                 <>
-                    <Element className="detaljert-sammenligning-les-mer__ingress">
+                    <Normaltekst className="detaljert-sammenligning-les-mer__ingress">
                         Vi mangler dine tall for deler av perioden med sammenligning.
-                    </Element>
+                    </Normaltekst>
                     <Normaltekst>
                         Ditt resultat: <Prosent prosent={prosentVirksomhet} />
                     </Normaltekst>

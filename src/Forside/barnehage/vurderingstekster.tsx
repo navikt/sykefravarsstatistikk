@@ -31,7 +31,9 @@ export const getVurderingstekstTotalt = (
         case SykefraværResultat.UFULLSTENDIG_DATA:
             return (
                 <>
-                    Vi <strong>mangler tall</strong> for deler av perioden med sammenligning.
+                    <strong>Vi mangler dine tall for deler av perioden</strong> med sammenligning.
+                    <br />
+                    Sammenligning lages når vi har tall for alle perioder.
                 </>
             );
         case SykefraværResultat.MASKERT:
