@@ -71,7 +71,7 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
     return (
         <div className="sammenligning-med-bransje">
             <Systemtittel className="sammenligning-med-bransje__tittel">
-                Legemeldt sykefravær siste 4 kvartal
+                Legemeldt sykefravær siste 4 kvartaler
             </Systemtittel>
             <LesMerPanel
                 className="sammenligning-med-bransje__utregningsinfo"
