@@ -22,6 +22,7 @@ import Skeleton from 'react-loading-skeleton';
 import { Prosent } from '../Prosent';
 import { getVurderingstekstTotalt } from '../vurderingstekster';
 import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
+import { useSendEvent } from '../../../amplitude/amplitude';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
@@ -50,6 +51,8 @@ const getTotaltSykefraværSiste4Kvartaler = (
 export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = ({
     restSykefraværsvarighet,
 }) => {
+    const sendEvent = useSendEvent();
+
     if (
         restSykefraværsvarighet.status === RestStatus.LasterInn ||
         restSykefraværsvarighet.status === RestStatus.IkkeLastet
@@ -97,6 +100,7 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
             <LesMerPanel
                 className="sammenligning-med-bransje__utregningsinfo"
                 åpneLabel="Slik har vi kommet fram til ditt resultat"
+                onÅpne={() => sendEvent('barnehage sammenligning total lesmer', 'åpne')}
             >
                 <div className="sammenligning-med-bransje__utregningsinfo-innhold">
                     <SlikHarViKommetFramTilDittResultat
