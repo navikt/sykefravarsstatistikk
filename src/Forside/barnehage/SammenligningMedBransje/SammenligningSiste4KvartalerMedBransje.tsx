@@ -5,16 +5,12 @@ import Panel from 'nav-frontend-paneler';
 import { Speedometer, SykefraværResultat } from '../Speedometer/Speedometer';
 import InternLenke from '../../../felleskomponenter/InternLenke/InternLenke';
 import { PATH_HISTORIKK } from '../../../App';
-import { HoyreChevron } from 'nav-frontend-chevron';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
-import {
-    RestSykefraværsvarighet,
-    SykefraværSiste4Kvartaler,
-    Sykefraværsvarighet,
-} from '../../../api/sykefraværsvarighet';
+import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import {
     getResultatForSammenligningAvSykefravær,
+    getTotaltSykefraværSiste4Kvartaler,
     sykefraværForBarnehagerSiste4Kvartaler,
 } from '../barnehage-utils';
 import { nesteOppdatering } from '../../../utils/app-utils';
@@ -27,26 +23,6 @@ import { useSendEvent } from '../../../amplitude/amplitude';
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
 }
-
-const addNullable = (number1: number | null, number2: number | null) => {
-    if (number1 === null || number2 === null) return null;
-    return number1 + number2;
-};
-
-const getTotaltSykefraværSiste4Kvartaler = (
-    varighet: Sykefraværsvarighet | undefined
-): SykefraværSiste4Kvartaler | undefined => {
-    if (varighet === undefined) return undefined;
-    const korttid = varighet.korttidsfraværSiste4Kvartaler;
-    const langtid = varighet.langtidsfraværSiste4Kvartaler;
-    return {
-        kvartaler: korttid.kvartaler,
-        tapteDagsverk: addNullable(korttid.tapteDagsverk, langtid.tapteDagsverk),
-        muligeDagsverk: korttid.muligeDagsverk,
-        prosent: addNullable(korttid.prosent, langtid.prosent),
-        erMaskert: korttid.erMaskert,
-    };
-};
 
 export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = ({
     restSykefraværsvarighet,

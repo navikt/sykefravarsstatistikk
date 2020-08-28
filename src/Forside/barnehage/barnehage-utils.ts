@@ -1,4 +1,4 @@
-import { SykefraværSiste4Kvartaler } from '../../api/sykefraværsvarighet';
+import { SykefraværSiste4Kvartaler, Sykefraværsvarighet } from '../../api/sykefraværsvarighet';
 import { SykefraværResultat } from './Speedometer/Speedometer';
 import { RestStatus } from '../../api/api-utils';
 
@@ -43,6 +43,21 @@ export const getResultatForSammenligningAvSykefravær = (
     }
 };
 
+export const getTotaltSykefraværSiste4Kvartaler = (
+    varighet: Sykefraværsvarighet | undefined
+): SykefraværSiste4Kvartaler | undefined => {
+    if (varighet === undefined) return undefined;
+    const korttid = varighet.korttidsfraværSiste4Kvartaler;
+    const langtid = varighet.langtidsfraværSiste4Kvartaler;
+    return {
+        kvartaler: korttid.kvartaler,
+        tapteDagsverk: addNullable(korttid.tapteDagsverk, langtid.tapteDagsverk),
+        muligeDagsverk: korttid.muligeDagsverk,
+        prosent: addNullable(korttid.prosent, langtid.prosent),
+        erMaskert: korttid.erMaskert,
+    };
+};
+
 export const getResultat = (
     virksomhetensProsent: number | null,
     bransjensProsent: number
@@ -59,4 +74,9 @@ export const getResultat = (
         return SykefraværResultat.OVER;
     }
     throw new Error('virksomhetens eller bransjens tall er NaN');
+};
+
+const addNullable = (number1: number | null, number2: number | null) => {
+    if (number1 === null || number2 === null) return null;
+    return number1 + number2;
 };
