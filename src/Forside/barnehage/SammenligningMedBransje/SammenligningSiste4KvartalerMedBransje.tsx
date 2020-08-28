@@ -5,7 +5,6 @@ import Panel from 'nav-frontend-paneler';
 import { Speedometer, SykefraværResultat } from '../Speedometer/Speedometer';
 import InternLenke from '../../../felleskomponenter/InternLenke/InternLenke';
 import { PATH_HISTORIKK } from '../../../App';
-import { HoyreChevron } from 'nav-frontend-chevron';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import {
     RestSykefraværsvarighet,
