@@ -32,8 +32,6 @@ export const getVurderingstekstTotalt = (
             return (
                 <>
                     <strong>Vi mangler dine tall for deler av perioden</strong> med sammenligning.
-                    <br />
-                    Sammenligning lages når vi har tall for alle perioder.
                 </>
             );
         case SykefraværResultat.MASKERT:
