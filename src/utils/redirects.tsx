@@ -21,10 +21,16 @@ export const GenerellForsideRedirect: FunctionComponent<{
     restVirksomhetMetadata: RestVirksomhetMetadata;
 }> = ({ restVirksomhetMetadata }) => {
     const location = useLocation();
-    if (restVirksomhetMetadata.status !== RestStatus.Suksess) {
+    if (
+        restVirksomhetMetadata.status !== RestStatus.Suksess &&
+        restVirksomhetMetadata.status !== RestStatus.Feil
+    ) {
         return null;
     }
-    if (restVirksomhetMetadata.data.bransje === Bransjetype.BARNEHAGER) {
+    if (
+        restVirksomhetMetadata.status === RestStatus.Suksess &&
+        restVirksomhetMetadata.data.bransje === Bransjetype.BARNEHAGER
+    ) {
         return null;
     }
     return <Redirect to={PATH_FORSIDE_GENERELL + location.search} />;
