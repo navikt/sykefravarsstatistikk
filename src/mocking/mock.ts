@@ -19,7 +19,7 @@ if (process.env.REACT_APP_HEROKU) {
 
 if (mock.minSideArbeidsgiver) {
     fetchMock.get('/min-side-arbeidsgiver/api/organisasjoner', getOrganisasjonerMock(), {
-        delay: 1000,
+        // delay: 1000,
     });
 }
 
@@ -37,7 +37,7 @@ if (mock.sykefraværsstatistikkApi) {
             return getSykefraværshistorikkMock(orgnr);
         },
         {
-            delay: 1000,
+            // delay: 1000,
         }
     );
     fetchMock.get(
@@ -53,7 +53,7 @@ if (mock.sykefraværsstatistikkApi) {
             return sykefraværsvarighetMock(orgnr);
         },
         {
-            delay: 1000,
+            // delay: 1000,
         }
     );
 
@@ -86,14 +86,14 @@ if (mock.sykefraværsstatistikkApi) {
             };
         },
         {
-            delay: 1000,
+            // delay: 1000,
         }
     );
     fetchMock.get(
         '/sykefravarsstatistikk/api/organisasjoner/statistikk',
         getOrganisasjonerBrukerHarTilgangTilMock(),
         {
-            delay: 1000,
+            // delay: 1000,
         }
     );
 }
@@ -118,7 +118,7 @@ if (mock.featureToggles) {
         'begin:/sykefravarsstatistikk/api/feature',
         {},
         {
-            delay: 1000,
+            // delay: 1000,
         }
     );
 }
