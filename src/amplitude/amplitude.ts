@@ -132,7 +132,7 @@ export const useSendEvent = (): SendEvent => {
                 restVirksomhetMetadata
             ),
         };
-    }, [restVirksomhetMetadata, restSykefraværshistorikk]);
+    }, [restVirksomhetMetadata, restSykefraværshistorikk, restSykefraværsvarighet]);
 
     return (område: string, hendelse: string, data?: Object) =>
         sendEventDirekte(område, hendelse, { ...ekstradata.current, ...data });
