@@ -12,8 +12,8 @@ export const SammenligningIngress: FunctionComponent = () => {
             </Systemtittel>
             <Normaltekst>
                 Du kan få hjelp til å forstå det ved å sammenligne deg med andre barnehager i Norge.
-                Vi har laget en oversikt for deg.
             </Normaltekst>
+            <Normaltekst>Vi har laget en oversikt for deg.</Normaltekst>
         </>
     );
 };

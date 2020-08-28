@@ -35,7 +35,12 @@ export const getVurderingstekstTotalt = (
                 </>
             );
         case SykefraværResultat.MASKERT:
-            return 'Det er for få ansatte i virksomheten til at vi kan vise sykefraværsstatistikken for din virksomhet.';
+            return (
+                <>
+                    Du har <strong>for lave tall</strong> til at vi kan vise sykefraværsstatistikken
+                    din.
+                </>
+            );
         case SykefraværResultat.INGEN_DATA:
         case SykefraværResultat.FEIL: // TODO
             return <>Her er det noe som ikke stemmer :/</>;

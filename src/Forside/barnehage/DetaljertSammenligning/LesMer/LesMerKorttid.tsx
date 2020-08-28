@@ -53,10 +53,9 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
         case SykefraværResultat.MASKERT:
             return (
                 <>
-                    <Element className="detaljert-sammenligning-les-mer__ingress">
-                        Det er for få ansatte i virksomheten til at vi kan vise
-                        sykefraværsstatistikken for din virksomhet.
-                    </Element>
+                    <Normaltekst className="detaljert-sammenligning-les-mer__ingress">
+                        Du har for lave tall til at vi kan vise sykefraværstatistikken din.
+                    </Normaltekst>
                     <Normaltekst>
                         Ditt resultat: <Prosent prosent={prosentVirksomhet} />
                     </Normaltekst>
