@@ -11,12 +11,15 @@ import Skeleton from 'react-loading-skeleton';
 import { getVurderingstekstKorttid, getVurderingstekstLangtid } from '../vurderingstekster';
 import { LesMerKorttid } from './LesMer/LesMerKorttid';
 import { LesMerLangtid } from './LesMer/LesMerLangtid';
+import { useSendEvent } from '../../../amplitude/amplitude';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
 }
 
 export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefraværsvarighet }) => {
+    const sendEvent = useSendEvent();
+
     if (
         restSykefraværsvarighet.status === RestStatus.LasterInn ||
         restSykefraværsvarighet.status === RestStatus.IkkeLastet
@@ -51,6 +54,7 @@ export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefrav�
             <DetaljertSammenligningPanel
                 resultat={resultatKorttid}
                 vurderingstekst={getVurderingstekstKorttid(resultatKorttid)}
+                onÅpne={() => sendEvent('barnehage sammenligning korttid lesmer', 'åpne')}
             >
                 <LesMerKorttid
                     korttidsfraværSiste4KvartalerVirksomhet={korttidVirksomhet}
@@ -61,6 +65,7 @@ export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefrav�
             <DetaljertSammenligningPanel
                 resultat={resultatLangtid}
                 vurderingstekst={getVurderingstekstLangtid(resultatLangtid)}
+                onÅpne={() => sendEvent('barnehage sammenligning langtid lesmer', 'åpne')}
             >
                 <LesMerLangtid
                     langtidsfraværSiste4KvartalerVirksomhet={langtidVirksomhet}

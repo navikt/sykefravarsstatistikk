@@ -1,7 +1,7 @@
 import amplitude from 'amplitude-js';
 import { RestStatus } from '../api/api-utils';
 import { useContext, useEffect, useRef } from 'react';
-import { RestVirksomhetMetadata } from '../api/virksomhetMetadata';
+import { Bransjetype, RestVirksomhetMetadata } from '../api/virksomhetMetadata';
 import { virksomhetMetadataContext } from '../utils/virksomhetMetadataContext';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkContext';
@@ -12,6 +12,13 @@ import {
     tilSegmenteringSykefraværprosent,
 } from './segmentering';
 import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
+import { RestSykefraværsvarighet } from '../api/sykefraværsvarighet';
+import { sykefraværsvarighetContext } from '../utils/sykefraværsvarighetContext';
+import {
+    getResultat,
+    getTotaltSykefraværSiste4Kvartaler,
+    sykefraværForBarnehagerSiste4Kvartaler,
+} from '../Forside/barnehage/barnehage-utils';
 
 const getApiKey = () => {
     return window.location.hostname === 'arbeidsgiver.nav.no'
@@ -78,19 +85,53 @@ const hentEkstraDataFraSykefraværshistorikk = (
     return {};
 };
 
+const hentEkstraDataFraSykefraværsvarighet = (
+    restSykefraværsvarighet: RestSykefraværsvarighet,
+    restVirksomhetMetadata: RestVirksomhetMetadata
+): Object => {
+    if (
+        restSykefraværsvarighet.status !== RestStatus.Suksess ||
+        restVirksomhetMetadata.status !== RestStatus.Suksess ||
+        restVirksomhetMetadata.data.bransje !== Bransjetype.BARNEHAGER
+    ) {
+        return {};
+    }
+    const varighet = restSykefraværsvarighet.data;
+
+    return {
+        sykefraværSiste4Kvartaler: getResultat(
+            getTotaltSykefraværSiste4Kvartaler(varighet)!.prosent,
+            sykefraværForBarnehagerSiste4Kvartaler.totalt
+        ),
+        korttidSiste4Kvartaler: getResultat(
+            varighet.korttidsfraværSiste4Kvartaler.prosent,
+            sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær
+        ),
+        langtidSiste4Kvartaler: getResultat(
+            varighet.langtidsfraværSiste4Kvartaler.prosent,
+            sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær
+        ),
+    };
+};
+
 export const useSendEvent = (): SendEvent => {
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
+    const restSykefraværsvarighet = useContext<RestSykefraværsvarighet>(sykefraværsvarighetContext);
     const ekstradata = useRef<Object>({});
 
     useEffect(() => {
         ekstradata.current = {
             ...hentEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
             ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
+            ...hentEkstraDataFraSykefraværsvarighet(
+                restSykefraværsvarighet,
+                restVirksomhetMetadata
+            ),
         };
-    }, [restVirksomhetMetadata, restSykefraværshistorikk]);
+    }, [restVirksomhetMetadata, restSykefraværshistorikk, restSykefraværsvarighet]);
 
     return (område: string, hendelse: string, data?: Object) =>
         sendEventDirekte(område, hendelse, { ...ekstradata.current, ...data });

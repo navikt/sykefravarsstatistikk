@@ -8,12 +8,14 @@ import './DetaljertSammenligningPanel.less';
 interface Props {
     resultat: SykefraværResultat;
     vurderingstekst: ReactElement | string;
+    onÅpne?: () => void;
 }
 
 export const DetaljertSammenligningPanel: FunctionComponent<Props> = ({
     children,
     resultat,
     vurderingstekst,
+    onÅpne,
 }) => {
     return (
         <Panel className="detaljert-sammenligning-panel">
@@ -23,6 +25,7 @@ export const DetaljertSammenligningPanel: FunctionComponent<Props> = ({
                 <LesMerPanel
                     className="detaljert-sammenligning-panel__les-mer"
                     åpneLabel="Se tallene"
+                    onÅpne={onÅpne}
                 >
                     <div className="detaljert-sammenligning-panel__les-mer-innhold">{children}</div>
                 </LesMerPanel>

@@ -6,14 +6,11 @@ import { Speedometer, SykefraværResultat } from '../Speedometer/Speedometer';
 import InternLenke from '../../../felleskomponenter/InternLenke/InternLenke';
 import { PATH_HISTORIKK } from '../../../App';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
-import {
-    RestSykefraværsvarighet,
-    SykefraværSiste4Kvartaler,
-    Sykefraværsvarighet,
-} from '../../../api/sykefraværsvarighet';
+import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import {
     getResultatForSammenligningAvSykefravær,
+    getTotaltSykefraværSiste4Kvartaler,
     sykefraværForBarnehagerSiste4Kvartaler,
 } from '../barnehage-utils';
 import { nesteOppdatering } from '../../../utils/app-utils';
@@ -21,34 +18,17 @@ import Skeleton from 'react-loading-skeleton';
 import { Prosent } from '../Prosent';
 import { getVurderingstekstTotalt } from '../vurderingstekster';
 import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
+import { useSendEvent } from '../../../amplitude/amplitude';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
 }
 
-const addNullable = (number1: number | null, number2: number | null) => {
-    if (number1 === null || number2 === null) return null;
-    return number1 + number2;
-};
-
-const getTotaltSykefraværSiste4Kvartaler = (
-    varighet: Sykefraværsvarighet | undefined
-): SykefraværSiste4Kvartaler | undefined => {
-    if (varighet === undefined) return undefined;
-    const korttid = varighet.korttidsfraværSiste4Kvartaler;
-    const langtid = varighet.langtidsfraværSiste4Kvartaler;
-    return {
-        kvartaler: korttid.kvartaler,
-        tapteDagsverk: addNullable(korttid.tapteDagsverk, langtid.tapteDagsverk),
-        muligeDagsverk: korttid.muligeDagsverk,
-        prosent: addNullable(korttid.prosent, langtid.prosent),
-        erMaskert: korttid.erMaskert,
-    };
-};
-
 export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = ({
     restSykefraværsvarighet,
 }) => {
+    const sendEvent = useSendEvent();
+
     if (
         restSykefraværsvarighet.status === RestStatus.LasterInn ||
         restSykefraværsvarighet.status === RestStatus.IkkeLastet
@@ -96,6 +76,7 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
             <LesMerPanel
                 className="sammenligning-med-bransje__utregningsinfo"
                 åpneLabel="Slik har vi kommet fram til ditt resultat"
+                onÅpne={() => sendEvent('barnehage sammenligning total lesmer', 'åpne')}
             >
                 <div className="sammenligning-med-bransje__utregningsinfo-innhold">
                     <SlikHarViKommetFramTilDittResultat
