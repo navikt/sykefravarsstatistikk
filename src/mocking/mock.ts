@@ -44,7 +44,7 @@ if (mock.sykefraværsstatistikkApi) {
         'express:/sykefravarsstatistikk/api/:orgnr/varighetsiste4kvartaler',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
-            if (orgnr === '101010101') {
+            if (['101010101', '888888884'].includes(orgnr)) {
                 return 500;
             }
             if (orgnr === '100100100') {
@@ -62,13 +62,12 @@ if (mock.sykefraværsstatistikkApi) {
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
             if (orgnr === '101010101') {
-                // TODO Denne tuller med barnehage-siden. Burde ha flere feil-bedrifter.
-                // return 500;
+                return 500;
             }
             if (orgnr === '100100100') {
                 return 500;
             }
-            if (orgnr.match('88888888.') || orgnr === '101010101') {
+            if (orgnr.match('88888888.')) {
                 return {
                     antallAnsatte: 99,
                     næringskode5Siffer: {

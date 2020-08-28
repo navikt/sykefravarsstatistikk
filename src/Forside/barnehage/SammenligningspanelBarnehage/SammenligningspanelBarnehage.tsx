@@ -3,7 +3,6 @@ import './SammenligningspanelBarnehage.less';
 import { Knapp } from 'nav-frontend-knapper';
 import ReactToPrint from 'react-to-print';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import classNames from 'classnames';
 import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 
