@@ -21,7 +21,7 @@ import { SammenligningspanelAlertStripe } from './SammenligningspanelAlertStripe
 import KoronaInfotekst from './KoronaInfotekst/KoronaInfotekst';
 import { OverordnetEnhetPanel } from './Paneler/OverordnetEnhetPanel';
 import { Normaltekst } from 'nav-frontend-typografi';
-import {nesteOppdatering} from "../../utils/app-utils";
+import { nesteOppdatering } from '../../utils/app-utils';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;

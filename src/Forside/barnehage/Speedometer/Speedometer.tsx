@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import { SpeedometerRød } from './SpeedometerRød';
 import { SpeedometerGul } from './SpeedometerGul';
 import { SpeedometerGrønn } from './SpeedometerGrønn';
-import './Speedometer.less';
 import classNames from 'classnames';
 import { SpeedometerGrå } from './SpeedometerGrå';
 

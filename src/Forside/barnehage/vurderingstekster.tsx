@@ -82,8 +82,8 @@ export const getVurderingstekstKorttid = (resultat: SykefraværResultat) => {
                     Andel <strong>legemeldt korttidsfravær</strong> mellom 1 og 16 dager:
                 </>
             );
-        case SykefraværResultat.FEIL: // TODO
-            return <>Her er det noe som ikke stemmer :/</>;
+        case SykefraværResultat.FEIL:
+            return <>—</>;
     }
 };
 
@@ -115,7 +115,7 @@ export const getVurderingstekstLangtid = (resultat: SykefraværResultat) => {
                     Andel <strong>langtidsfravær</strong> fra 17. dag:
                 </>
             );
-        case SykefraværResultat.FEIL: // TODO
-            return <>Her er det noe som ikke stemmer :/</>;
+        case SykefraværResultat.FEIL:
+            return <>—</>;
     }
 };
