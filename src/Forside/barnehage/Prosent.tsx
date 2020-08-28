@@ -3,10 +3,15 @@ import { formaterProsent } from '../Sammenligningspanel/Paneler/Sykefraværspros
 
 interface Props {
     prosent: number | null | undefined;
+    strong?: boolean;
 }
 
-export const Prosent: FunctionComponent<Props> = ({ prosent }) => {
+export const Prosent: FunctionComponent<Props> = ({ prosent, strong }) => {
     const prosentErTall = prosent !== null && prosent !== undefined;
     const formatertProsent = prosentErTall ? formaterProsent(prosent) : '—';
-    return <>{formatertProsent}&nbsp;%</>;
+    if (strong) {
+        return <strong>{formatertProsent}&nbsp;%</strong>;
+    } else {
+        return <>{formatertProsent}&nbsp;%</>;
+    }
 };
