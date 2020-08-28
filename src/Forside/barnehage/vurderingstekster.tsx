@@ -8,7 +8,7 @@ interface Props {
 
 export const getVurderingstekstTotalt = (
     sykefraværResultat: SykefraværResultat
-): ReactElement | string | null => {
+): ReactElement | string => {
     switch (sykefraværResultat) {
         case SykefraværResultat.UNDER:
             return (
@@ -50,7 +50,7 @@ export const getVurderingstekstTotalt = (
                 </>
             );
         case SykefraværResultat.FEIL:
-            return null;
+            return <></>;
     }
 };
 

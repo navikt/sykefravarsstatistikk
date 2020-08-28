@@ -144,7 +144,9 @@ const AppContent: FunctionComponent = () => {
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                     >
                         <Forside>
-                            <SammenligningspanelBarnehage>
+                            <SammenligningspanelBarnehage
+                                restSykefraværsvarighet={restSykefraværsvarighet}
+                            >
                                 <SammenligningIngress />
                                 <SammenligningSiste4KvartalerMedBransje
                                     restSykefraværsvarighet={restSykefraværsvarighet}
