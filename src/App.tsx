@@ -48,7 +48,6 @@ import {
 } from './utils/sykefraværsvarighetContext';
 import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
 import { TilbakemeldingerMedKnapper } from './felleskomponenter/tilbakemeldinger-knapper/TilbakemeldingerMedKnapper';
-import InternLenke from './felleskomponenter/InternLenke/InternLenke';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
