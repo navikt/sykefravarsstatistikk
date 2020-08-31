@@ -8,7 +8,7 @@ env:
 jobs:
     compile-test-and-build:
         name: Build and run tests
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/barnehage-forside'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/tilbakemeldingsknapper-maalinger'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
@@ -38,7 +38,7 @@ jobs:
 
     deploy-to-dev:
         name: Deploy to dev-sbs
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/barnehage-forside'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/tilbakemeldingsknapper-maalinger'
         needs: compile-test-and-build
         runs-on: ubuntu-latest
         steps:
