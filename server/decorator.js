@@ -3,7 +3,7 @@ const request = require('request');
 
 const { JSDOM } = jsdom;
 const url =
-    'https://www.nav.no/dekoratoren/?context=arbeidsgiver&redirectToApp=true&FEEDBACK=false';
+    'https://www.nav.no/dekoratoren/?context=arbeidsgiver&redirectToApp=true&feedback=false';
 
 const requestDecorator = (callback) => request(url, callback);
 
