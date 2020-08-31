@@ -68,6 +68,9 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
             </>
         ) : null;
 
+    const visningAvProsentForBransje =
+        sammenligningResultat === SykefraværResultat.FEIL ? null : sykefraværBransje;
+
     return (
         <div className="sammenligning-med-bransje">
             <Systemtittel className="sammenligning-med-bransje__tittel">
@@ -107,7 +110,7 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
                             Barnehager i Norge:
                         </Ingress>
                         <Systemtittel>
-                            <Prosent prosent={sykefraværBransje} />
+                            <Prosent prosent={visningAvProsentForBransje} />
                             {antallKvartalerBransje}
                         </Systemtittel>
                         <Normaltekst className="sammenligning-med-bransje__neste-oppdatering">
