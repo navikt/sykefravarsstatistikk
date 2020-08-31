@@ -25,7 +25,7 @@ import {
     sykefraværshistorikkContext,
     SykefraværshistorikkProvider,
 } from './utils/sykefraværshistorikkContext';
-import { sendEventDirekte, useMålingAvTidsbruk } from './amplitude/amplitude';
+import { sendEventDirekte, useMålingAvTidsbruk, useSendEvent } from './amplitude/amplitude';
 import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
@@ -47,6 +47,8 @@ import {
     SykefraværsvarighetProvider,
 } from './utils/sykefraværsvarighetContext';
 import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
+import { TilbakemeldingerMedKnapper } from './felleskomponenter/tilbakemeldinger-knapper/TilbakemeldingerMedKnapper';
+import InternLenke from './felleskomponenter/InternLenke/InternLenke';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -87,7 +89,7 @@ const AppContent: FunctionComponent = () => {
     );
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
     const location = useLocation();
-
+    const sendEvent = useSendEvent();
     useSetUserProperties();
     useMålingAvTidsbruk('hele appen', 5, 30, 120, 300);
 
@@ -153,6 +155,15 @@ const AppContent: FunctionComponent = () => {
                                 />
                                 <DetaljertSammenligning
                                     restSykefraværsvarighet={restSykefraværsvarighet}
+                                />
+                                <TilbakemeldingerMedKnapper
+                                    tekst="Lærte du noe nytt fra denn siden?"
+                                    onClickJA={() =>
+                                        sendEvent('SammenligningspanelBarnehage', 'JA')
+                                    }
+                                    onClickNEI={() =>
+                                        sendEvent('SammenligningspanelBarnehage', 'NEI')
+                                    }
                                 />
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel />
