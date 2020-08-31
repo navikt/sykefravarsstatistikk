@@ -25,7 +25,7 @@ import {
     sykefraværshistorikkContext,
     SykefraværshistorikkProvider,
 } from './utils/sykefraværshistorikkContext';
-import { sendEventDirekte, useMålingAvTidsbruk, useSendEvent } from './amplitude/amplitude';
+import { sendEventDirekte, useMålingAvTidsbruk } from './amplitude/amplitude';
 import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
@@ -88,7 +88,6 @@ const AppContent: FunctionComponent = () => {
     );
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
     const location = useLocation();
-    const sendEvent = useSendEvent();
     useSetUserProperties();
     useMålingAvTidsbruk('hele appen', 5, 30, 120, 300);
 
@@ -156,13 +155,8 @@ const AppContent: FunctionComponent = () => {
                                     restSykefraværsvarighet={restSykefraværsvarighet}
                                 />
                                 <TilbakemeldingerMedKnapper
-                                    tekst="Lærte du noe nytt fra denn siden?"
-                                    onClickJA={() =>
-                                        sendEvent('SammenligningspanelBarnehage', 'JA')
-                                    }
-                                    onClickNEI={() =>
-                                        sendEvent('SammenligningspanelBarnehage', 'NEI')
-                                    }
+                                    tekst="Lærte du noe nytt av denne siden?"
+                                    område="SammenligningspanelBarnehage"
                                 />
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel />
