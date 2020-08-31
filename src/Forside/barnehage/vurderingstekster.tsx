@@ -37,8 +37,7 @@ export const getVurderingstekstTotalt = (
         case SykefraværResultat.MASKERT:
             return (
                 <>
-                    Du har <strong>for lave tall</strong> til at vi kan vise sykefraværsstatistikken
-                    din.
+                    Du har <strong>for lave tall</strong> til at vi kan vise statistikken din.
                 </>
             );
         case SykefraværResultat.INGEN_DATA:
