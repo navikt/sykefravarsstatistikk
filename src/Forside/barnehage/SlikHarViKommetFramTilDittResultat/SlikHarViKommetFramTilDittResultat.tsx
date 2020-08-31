@@ -51,9 +51,9 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
             return (
                 <>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
-                        Du har for lave tall til at vi kan vise sykefraværstatistikken din. Med få
-                        ansatte kan det være mulig å identifisere enkeltansatte. Vi viser derfor
-                        ikke statistikken av hensyn til personvern.
+                        Du har for lave tall til at vi kan vise statistikken din. Med få ansatte kan
+                        det være mulig å identifisere enkeltansatte. Vi viser derfor ikke
+                        statistikken av hensyn til personvern.
                     </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Du kan fortsatt se statistikk for din bransje.
