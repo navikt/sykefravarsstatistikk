@@ -77,7 +77,7 @@ export const getVurderingstekstKorttid = (resultat: SykefraværResultat) => {
         case SykefraværResultat.INGEN_DATA:
             return (
                 <>
-                    Andel <strong>legemeldt korttidsfravær</strong> mellom 1 og 16 dager:
+                    Andel <strong>legemeldt korttidsfravær</strong> fra 1. til 16. dag:
                 </>
             );
         case SykefraværResultat.FEIL:
