@@ -121,6 +121,7 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
                 <InternLenke
                     className="sammenligning-med-bransje__historikk-lenke"
                     pathname={PATH_HISTORIKK}
+                    onClick={() => sendEvent('forside historikk', 'klikk')}
                 >
                     Gå til sykefraværshistorikken
                 </InternLenke>
