@@ -16,6 +16,10 @@
         display: none;
     }
 
+    &__print-header {
+        display: none;
+    }
+
     @media print, (min-width: @screen-sm-min) {
         padding: 2rem;
 
@@ -29,6 +33,18 @@
     @media print {
         &__knapp {
             display: none;
+        }
+
+        &__print-header {
+            display: block;
+        }
+
+        &__href {
+            padding-bottom: 1rem;
+        }
+
+        &__print-tittel {
+            padding-bottom: 1rem;
         }
     }
 }

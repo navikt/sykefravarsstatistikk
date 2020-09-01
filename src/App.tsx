@@ -146,6 +146,7 @@ const AppContent: FunctionComponent = () => {
                         <Forside>
                             <SammenligningspanelBarnehage
                                 restSykefraværsvarighet={restSykefraværsvarighet}
+                                restAltinnOrganisasjoner={restOrganisasjoner}
                             >
                                 <SammenligningIngress />
                                 <SammenligningSiste4KvartalerMedBransje
