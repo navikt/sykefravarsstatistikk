@@ -6,6 +6,7 @@ import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import { useSendEvent } from '../../../amplitude/amplitude';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 export const SammenligningspanelBarnehage: FunctionComponent<{
     restSykefraværsvarighet: RestSykefraværsvarighet;
@@ -22,6 +23,7 @@ export const SammenligningspanelBarnehage: FunctionComponent<{
                 </AlertStripeFeil>
             )}
             <div className="sammenligningspanel-barnehage" ref={panelRef}>
+                <Normaltekst className="sammenligningspanel-barnehage__href">{window.location.href}</Normaltekst>
                 <ReactToPrint
                     onBeforePrint={() => sendEvent('forside barnehage', 'print')}
                     content={() => panelRef.current}

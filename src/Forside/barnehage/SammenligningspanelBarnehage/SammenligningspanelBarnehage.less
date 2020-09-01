@@ -16,6 +16,10 @@
         display: none;
     }
 
+    &__href {
+        display: none;
+    }
+
     @media print, (min-width: @screen-sm-min) {
         padding: 2rem;
 
@@ -29,6 +33,11 @@
     @media print {
         &__knapp {
             display: none;
+        }
+
+        &__href {
+            display: block;
+            padding-bottom: 1rem;
         }
     }
 }
