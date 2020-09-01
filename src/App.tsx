@@ -47,7 +47,7 @@ import {
     SykefraværsvarighetProvider,
 } from './utils/sykefraværsvarighetContext';
 import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
-import { TilbakemeldingerMedKnapper } from './felleskomponenter/tilbakemeldinger-knapper/TilbakemeldingerMedKnapper';
+import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -154,7 +154,7 @@ const AppContent: FunctionComponent = () => {
                                 <DetaljertSammenligning
                                     restSykefraværsvarighet={restSykefraværsvarighet}
                                 />
-                                <TilbakemeldingerMedKnapper
+                                <LærteDuNoeNyttPanel
                                     tekst="Lærte du noe nytt av denne siden?"
                                     område="SammenligningspanelBarnehage"
                                 />

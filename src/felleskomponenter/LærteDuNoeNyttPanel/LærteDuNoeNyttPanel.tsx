@@ -1,18 +1,20 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Ingress, Undertekst } from 'nav-frontend-typografi';
+import {Element, Ingress, Normaltekst, Undertekst} from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
 import { useSendEvent } from '../../amplitude/amplitude';
+import './LærteDuNoeNyttPanel.less';
 
 interface Props {
     tekst: string;
     område: string;
 }
-export const TilbakemeldingerMedKnapper: FunctionComponent<Props> = (props) => {
+
+export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
     const sendEvent = useSendEvent();
     const [harSendtTilbakemeldingState, setharSendtTilbakemeldingState] = useState<boolean>(false);
     const knapper = (
-        <>
-            <Knapp
+        <div className="lærte-du-noe-nytt-panel__knapp-wrapper">
+            <Knapp className="lærte-du-noe-nytt-panel__knapp"
                 onClick={() => {
                     sendEvent('Lærte du noe nytt-' + props.område + '-JA', 'klikk');
                     setharSendtTilbakemeldingState(true);
@@ -28,20 +30,28 @@ export const TilbakemeldingerMedKnapper: FunctionComponent<Props> = (props) => {
             >
                 NEI
             </Knapp>
-        </>
+        </div>
     );
 
     return (
-        <>
-            <Ingress>{props.tekst}</Ingress>
-            <Undertekst>
-                Vi ønsker å forstå om det var nyttig å se tallene dine på denne måten.
-            </Undertekst>
+        <div className="lærte-du-noe-nytt-panel">
+            {!harSendtTilbakemeldingState ? (
+                <Element className="lærte-du-noe-nytt-panel__spørsmål">{props.tekst}</Element>
+            ): null
+            }
+
+
+            {/*
+                <Undertekst>
+                    Vi ønsker å forstå om det var nyttig å se tallene dine på denne måten.
+                </Undertekst>
+
+            */}
             {!harSendtTilbakemeldingState ? (
                 knapper
             ) : (
-                <Ingress>Takk for din tilbakemelding</Ingress>
+                <Undertekst className="lærte-du-noe-nytt-panel__takk">Takk for tilbakemeldingen din</Undertekst>
             )}
-        </>
+        </div>
     );
 };
