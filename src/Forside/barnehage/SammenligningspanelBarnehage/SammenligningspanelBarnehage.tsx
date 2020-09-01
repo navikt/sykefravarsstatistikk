@@ -28,7 +28,7 @@ export const SammenligningspanelBarnehage: FunctionComponent<{
                     onBeforePrint={() => sendEvent('forside barnehage', 'print')}
                     content={() => panelRef.current}
                     trigger={() => (
-                        <Knapp className="sammenligningspanel-barnehage__knapp">Skriv ut</Knapp>
+                        <Knapp className="sammenligningspanel-barnehage__knapp">Last ned</Knapp>
                     )}
                 />
                 {props.children}
