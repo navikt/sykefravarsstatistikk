@@ -6,14 +6,23 @@ import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import { useSendEvent } from '../../../amplitude/amplitude';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
+import { AltinnOrganisasjon, RestAltinnOrganisasjoner } from '../../../api/altinnorganisasjon-api';
+import { useOrgnr } from '../../../utils/orgnr-hook';
 
 export const SammenligningspanelBarnehage: FunctionComponent<{
     restSykefraværsvarighet: RestSykefraværsvarighet;
-}> = (props) => {
+    restAltinnOrganisasjoner: RestAltinnOrganisasjoner;
+}> = ({ restSykefraværsvarighet, restAltinnOrganisasjoner, children }) => {
     const panelRef = useRef<HTMLDivElement>(null);
-    const harFeil = props.restSykefraværsvarighet.status === RestStatus.Feil;
+    const harFeil = restSykefraværsvarighet.status === RestStatus.Feil;
     const sendEvent = useSendEvent();
+    const orgnr = useOrgnr();
+    const navnPåVirksomhet =
+        restAltinnOrganisasjoner.status === RestStatus.Suksess &&
+        restAltinnOrganisasjoner.data.find(
+            (organisasjon) => organisasjon.OrganizationNumber === orgnr
+        )?.Name;
 
     return (
         <>
@@ -23,7 +32,14 @@ export const SammenligningspanelBarnehage: FunctionComponent<{
                 </AlertStripeFeil>
             )}
             <div className="sammenligningspanel-barnehage" ref={panelRef}>
-                <Normaltekst className="sammenligningspanel-barnehage__href">{window.location.href}</Normaltekst>
+                <div className="sammenligningspanel-barnehage__print-header">
+                    <Normaltekst className="sammenligningspanel-barnehage__href">
+                        {window.location.href}
+                    </Normaltekst>
+                    <Systemtittel tag="h1" className="sammenligningspanel-barnehage__print-tittel">
+                        Sykefraværsstatistikk for {navnPåVirksomhet} ({orgnr})
+                    </Systemtittel>
+                </div>
                 <ReactToPrint
                     onBeforePrint={() => sendEvent('forside barnehage', 'print')}
                     content={() => panelRef.current}
@@ -31,7 +47,7 @@ export const SammenligningspanelBarnehage: FunctionComponent<{
                         <Knapp className="sammenligningspanel-barnehage__knapp">Last ned</Knapp>
                     )}
                 />
-                {props.children}
+                {children}
             </div>
         </>
     );
