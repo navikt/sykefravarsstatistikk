@@ -6,8 +6,8 @@ import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import { useSendEvent } from '../../../amplitude/amplitude';
-import { Normaltekst, Systemtittel, Undertittel } from 'nav-frontend-typografi';
-import { AltinnOrganisasjon, RestAltinnOrganisasjoner } from '../../../api/altinnorganisasjon-api';
+import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { RestAltinnOrganisasjoner } from '../../../api/altinnorganisasjon-api';
 import { useOrgnr } from '../../../utils/orgnr-hook';
 
 export const SammenligningspanelBarnehage: FunctionComponent<{
