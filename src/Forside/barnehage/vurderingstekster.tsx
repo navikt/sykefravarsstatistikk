@@ -1,11 +1,6 @@
 import React, { ReactElement } from 'react';
 import { SykefraværResultat } from './Speedometer/Speedometer';
 
-interface Props {
-    resultat: SykefraværResultat;
-    korttidEllerLangtid: 'korttidsfravær' | 'langtidsfravær';
-}
-
 export const getVurderingstekstTotalt = (
     sykefraværResultat: SykefraværResultat
 ): ReactElement | string => {
