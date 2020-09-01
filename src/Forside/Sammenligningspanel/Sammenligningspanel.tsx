@@ -113,6 +113,7 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                         </div>
                     )}
                 </div>
+                {props.children}
             </PanelBase>
         </>
     );

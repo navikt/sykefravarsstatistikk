@@ -129,7 +129,12 @@ const AppContent: FunctionComponent = () => {
                         <Forside>
                             <Sammenligningspanel
                                 restSykefraværshistorikk={restSykefraværshistorikk}
-                            />
+                            >
+                                <LærteDuNoeNyttPanel
+                                    tekst="Var dette nyttig?"
+                                    område="SammenligningspanelBarnehage"
+                                />
+                            </Sammenligningspanel>
                             <KalkulatorPanel liten />
                             <Historikkpanel />
                             <VideoerPanel />
@@ -155,7 +160,7 @@ const AppContent: FunctionComponent = () => {
                                     restSykefraværsvarighet={restSykefraværsvarighet}
                                 />
                                 <LærteDuNoeNyttPanel
-                                    tekst="Lærte du noe nytt av denne siden?"
+                                    tekst="Var dette nyttig?"
                                     område="SammenligningspanelBarnehage"
                                 />
                             </SammenligningspanelBarnehage>

@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import {Element, Ingress, Normaltekst, Undertekst} from 'nav-frontend-typografi';
+import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
 import { useSendEvent } from '../../amplitude/amplitude';
 import './LærteDuNoeNyttPanel.less';
@@ -9,12 +9,16 @@ interface Props {
     område: string;
 }
 
+const ANONYM_TILBAKEMELDING_INFOTEKST =
+    'Tilbakemeldingen kan ikke knyttes til deg eller din virksomhet.';
+
 export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
     const sendEvent = useSendEvent();
     const [harSendtTilbakemeldingState, setharSendtTilbakemeldingState] = useState<boolean>(false);
     const knapper = (
         <div className="lærte-du-noe-nytt-panel__knapp-wrapper">
-            <Knapp className="lærte-du-noe-nytt-panel__knapp"
+            <Knapp
+                className="lærte-du-noe-nytt-panel__knapp"
                 onClick={() => {
                     sendEvent('Lærte du noe nytt-' + props.område + '-JA', 'klikk');
                     setharSendtTilbakemeldingState(true);
@@ -36,21 +40,29 @@ export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
     return (
         <div className="lærte-du-noe-nytt-panel">
             {!harSendtTilbakemeldingState ? (
-                <Element className="lærte-du-noe-nytt-panel__spørsmål">{props.tekst}</Element>
-            ): null
-            }
+                <Element className="lærte-du-noe-nytt-panel__overskrift">{props.tekst}</Element>
+            ) : null}
 
+            {!harSendtTilbakemeldingState ? (
+                <>
+                    <Undertekst>
+                        Vi ønsker å forstå om sammenligningen ga deg ny kunnskap.
+                    </Undertekst>
+                    <Undertekst>{ANONYM_TILBAKEMELDING_INFOTEKST}</Undertekst>
+                </>
+            ) : null}
 
-            {/*
-                <Undertekst>
-                    Vi ønsker å forstå om det var nyttig å se tallene dine på denne måten.
-                </Undertekst>
-
-            */}
             {!harSendtTilbakemeldingState ? (
                 knapper
             ) : (
-                <Undertekst className="lærte-du-noe-nytt-panel__takk">Takk for tilbakemeldingen din</Undertekst>
+                <>
+                    <Element className="lærte-du-noe-nytt-panel__overskrift">
+                        Takk for tilbakemeldingen din
+                    </Element>
+                    <Undertekst className="lærte-du-noe-nytt-panel__takk">
+                        {ANONYM_TILBAKEMELDING_INFOTEKST}
+                    </Undertekst>
+                </>
             )}
         </div>
     );
