@@ -1,12 +1,33 @@
 import { SykefraværSiste4Kvartaler, Sykefraværsvarighet } from '../../api/sykefraværsvarighet';
 import { SykefraværResultat } from './Speedometer/Speedometer';
 import { RestStatus } from '../../api/api-utils';
+import { ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
 
 export const sykefraværForBarnehagerSiste4Kvartaler = {
     totalt: 8.5,
     langtidsfravær: 7.4,
     korttidsfravær: 1.1,
 };
+
+// TODO Hardkodede tall
+export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
+    {
+        årstall: 2020,
+        kvartal: 2,
+    },
+    {
+        årstall: 2020,
+        kvartal: 1,
+    },
+    {
+        årstall: 2019,
+        kvartal: 4,
+    },
+    {
+        årstall: 2019,
+        kvartal: 3,
+    },
+];
 
 export const getResultatForSammenligningAvSykefravær = (
     restStatus: RestStatus,
