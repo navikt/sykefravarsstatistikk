@@ -34,7 +34,7 @@ import {
 } from './utils/altinnOrganisasjonerContext';
 import { useSetUserProperties } from './amplitude/userProperties';
 import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
-import VideoerPanel from './Forside/VideoerPanel/VideoerPanel';
+import Lenkeressurser from './Forside/Lenkeressurser/Lenkeressurser';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
 import { Forside } from './Forside/Forside';
@@ -132,7 +132,7 @@ const AppContent: FunctionComponent = () => {
                             />
                             <KalkulatorPanel liten />
                             <Historikkpanel />
-                            <VideoerPanel />
+                            <Lenkeressurser />
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>
@@ -164,7 +164,7 @@ const AppContent: FunctionComponent = () => {
                                 />
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel />
-                            <VideoerPanel />
+                            <Lenkeressurser />
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>
