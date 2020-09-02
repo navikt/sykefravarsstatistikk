@@ -54,7 +54,7 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
             return (
                 <>
                     <Normaltekst className="detaljert-sammenligning-les-mer__ingress">
-                        Du har for lave tall til at vi kan vise sykefraværstatistikken din.
+                        Du har for lave tall til at vi kan vise statistikken din.
                     </Normaltekst>
                     <Normaltekst>
                         Ditt resultat: <Prosent prosent={prosentVirksomhet} />

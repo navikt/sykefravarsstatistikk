@@ -3,6 +3,7 @@ import { SykefraværResultat } from '../Speedometer/Speedometer';
 import { ÅrstallOgKvartal } from '../../../utils/sykefraværshistorikk-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import './SlikHarViKommetFramTilDittResultat.less';
+import { siste4PubliserteKvartaler } from '../barnehage-utils';
 
 interface Props {
     resultat: SykefraværResultat;
@@ -51,9 +52,9 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
             return (
                 <>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
-                        Du har for lave tall til at vi kan vise sykefraværstatistikken din. Med få
-                        ansatte kan det være mulig å identifisere enkeltansatte. Vi viser derfor
-                        ikke statistikken av hensyn til personvern.
+                        Du har for lave tall til at vi kan vise statistikken din. Med få ansatte kan
+                        det være mulig å identifisere enkeltansatte. Vi viser derfor ikke
+                        statistikken av hensyn til personvern.
                     </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Du kan fortsatt se statistikk for din bransje.
@@ -109,26 +110,6 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
             return null;
     }
 };
-
-// TODO Hardkodede tall
-const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
-    {
-        årstall: 2020,
-        kvartal: 1,
-    },
-    {
-        årstall: 2019,
-        kvartal: 4,
-    },
-    {
-        årstall: 2019,
-        kvartal: 3,
-    },
-    {
-        årstall: 2019,
-        kvartal: 2,
-    },
-];
 
 const Kvartalsliste: FunctionComponent<{ kvartaler?: ÅrstallOgKvartal[] }> = ({ kvartaler }) => (
     <ul className="slik-har-vi-kommet-fram-til-ditt-resultat__kvartalsliste">

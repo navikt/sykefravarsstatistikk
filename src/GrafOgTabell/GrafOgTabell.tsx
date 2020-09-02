@@ -9,9 +9,10 @@ import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
-import { useMålingAvTidsbruk, useSendEvent } from '../amplitude/amplitude';
+import { useMålingAvTidsbruk, useSendEvent, useSendSidevisningEvent } from '../amplitude/amplitude';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
+import { useOrgnr } from '../utils/orgnr-hook';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -20,10 +21,13 @@ interface Props {
 
 const GrafOgTabell: FunctionComponent<Props> = (props) => {
     const sendEvent = useSendEvent();
+    const orgnr = useOrgnr();
+
     useEffect(() => {
         scrollToBanner();
     }, []);
-    useMålingAvTidsbruk('kalkulator', 5, 30, 120);
+    useMålingAvTidsbruk('historikk', 5, 30, 120);
+    useSendSidevisningEvent('historikk', orgnr);
 
     const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
 
