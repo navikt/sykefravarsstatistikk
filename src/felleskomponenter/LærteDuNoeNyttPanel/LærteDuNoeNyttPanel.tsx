@@ -24,7 +24,12 @@ export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
     if (!harSendtTilbakemeldingState) {
         return (
             <div className="lærte-du-noe-nytt-panel">
-                <Element className="lærte-du-noe-nytt-panel__overskrift">{props.tekst}</Element>
+                <Element
+                    className="lærte-du-noe-nytt-panel__overskrift"
+                    id="lærte-du-noe-nytt-panel__spørsmål-id"
+                >
+                    {props.tekst}
+                </Element>
 
                 <Undertekst>Vi ønsker å forstå om sammenligningen ga deg ny kunnskap.</Undertekst>
                 <Undertekst>{ANONYM_TILBAKEMELDING_INFOTEKST}</Undertekst>
@@ -36,6 +41,7 @@ export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
                             sendEvent(props.område, 'klikk', { svar: 'ja' });
                             setharSendtTilbakemeldingState(true);
                         }}
+                        aria-labelledby="lærte-du-noe-nytt-panel__spørsmål-id"
                     >
                         JA
                     </Knapp>
@@ -44,6 +50,7 @@ export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
                             sendEvent(props.område, 'klikk', { svar: 'nei' });
                             setharSendtTilbakemeldingState(true);
                         }}
+                        aria-labelledby="lærte-du-noe-nytt-panel__spørsmål-id"
                     >
                         NEI
                     </Knapp>
