@@ -117,6 +117,7 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                 <LærteDuNoeNyttPanel
                     tekst="Var dette nyttig?"
                     område="forside sammenligning tilbakemelding"
+                    skalVises={restSykefraværshistorikk.status === RestStatus.Suksess}
                 />
             </PanelBase>
         </>

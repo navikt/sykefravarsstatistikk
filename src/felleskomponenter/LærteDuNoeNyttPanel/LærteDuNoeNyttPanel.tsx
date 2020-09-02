@@ -7,6 +7,7 @@ import './LærteDuNoeNyttPanel.less';
 interface Props {
     tekst: string;
     område: string;
+    skalVises: boolean;
 }
 
 const ANONYM_TILBAKEMELDING_INFOTEKST =
@@ -15,6 +16,10 @@ const ANONYM_TILBAKEMELDING_INFOTEKST =
 export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
     const sendEvent = useSendEvent();
     const [harSendtTilbakemeldingState, setharSendtTilbakemeldingState] = useState<boolean>(false);
+
+    if (!props.skalVises) {
+        return null;
+    }
 
     if (!harSendtTilbakemeldingState) {
         return (

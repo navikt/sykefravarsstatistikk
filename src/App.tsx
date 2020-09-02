@@ -129,7 +129,7 @@ const AppContent: FunctionComponent = () => {
                         <Forside>
                             <Sammenligningspanel
                                 restSykefraværshistorikk={restSykefraværshistorikk}
-                            ></Sammenligningspanel>
+                            />
                             <KalkulatorPanel liten />
                             <Historikkpanel />
                             <VideoerPanel />
@@ -158,6 +158,9 @@ const AppContent: FunctionComponent = () => {
                                 <LærteDuNoeNyttPanel
                                     tekst="Var dette nyttig?"
                                     område="forside sammenligning tilbakemelding"
+                                    skalVises={
+                                        restSykefraværsvarighet.status === RestStatus.Suksess
+                                    }
                                 />
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel />
