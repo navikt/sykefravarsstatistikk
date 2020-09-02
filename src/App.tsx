@@ -47,6 +47,7 @@ import {
     SykefraværsvarighetProvider,
 } from './utils/sykefraværsvarighetContext';
 import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
+import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -87,7 +88,6 @@ const AppContent: FunctionComponent = () => {
     );
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
     const location = useLocation();
-
     useSetUserProperties();
     useMålingAvTidsbruk('hele appen', 5, 30, 120, 300);
 
@@ -129,7 +129,7 @@ const AppContent: FunctionComponent = () => {
                         <Forside>
                             <Sammenligningspanel
                                 restSykefraværshistorikk={restSykefraværshistorikk}
-                            />
+                            ></Sammenligningspanel>
                             <KalkulatorPanel liten />
                             <Historikkpanel />
                             <VideoerPanel />
@@ -154,6 +154,10 @@ const AppContent: FunctionComponent = () => {
                                 />
                                 <DetaljertSammenligning
                                     restSykefraværsvarighet={restSykefraværsvarighet}
+                                />
+                                <LærteDuNoeNyttPanel
+                                    tekst="Var dette nyttig?"
+                                    område="forside sammenligning tilbakemelding"
                                 />
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel />

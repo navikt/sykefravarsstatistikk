@@ -22,6 +22,7 @@ import KoronaInfotekst from './KoronaInfotekst/KoronaInfotekst';
 import { OverordnetEnhetPanel } from './Paneler/OverordnetEnhetPanel';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { sisteOppdatering } from '../../utils/app-utils';
+import { LærteDuNoeNyttPanel } from '../../felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -113,6 +114,10 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                         </div>
                     )}
                 </div>
+                <LærteDuNoeNyttPanel
+                    tekst="Var dette nyttig?"
+                    område="forside sammenligning tilbakemelding"
+                />
             </PanelBase>
         </>
     );
