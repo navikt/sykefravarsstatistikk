@@ -20,7 +20,7 @@ export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
             <Knapp
                 className="lærte-du-noe-nytt-panel__knapp"
                 onClick={() => {
-                    sendEvent('Lærte du noe nytt-' + props.område + '-JA', 'klikk');
+                    sendEvent(props.område, 'klikk', { svar: 'ja' });
                     setharSendtTilbakemeldingState(true);
                 }}
             >
@@ -28,7 +28,7 @@ export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
             </Knapp>
             <Knapp
                 onClick={() => {
-                    sendEvent('Lærte du noe nytt-' + props.område + '-NEI', 'klikk');
+                    sendEvent(props.område, 'klikk', { svar: 'nei' });
                     setharSendtTilbakemeldingState(true);
                 }}
             >

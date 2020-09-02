@@ -2,14 +2,13 @@
 
 .lærte-du-noe-nytt-panel {
     width: 100%;
-    border-top: 0.125rem solid @navLysGra;
     margin-top: 1.5rem;
+    padding-top: 1rem;
     display: flex;
     flex-direction: column;
 
     &__overskrift {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
     }
 
     &__takk {
@@ -26,4 +25,7 @@
         margin: 0.5rem;
     }
 
+    @media (min-width: @screen-sm-min) {
+        border-top: 0.125rem solid @navLysGra;
+    }
 }
