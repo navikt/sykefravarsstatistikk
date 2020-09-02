@@ -3,8 +3,8 @@ import { SykefraværResultat } from './Speedometer/Speedometer';
 import { RestStatus } from '../../api/api-utils';
 
 export const sykefraværForBarnehagerSiste4Kvartaler = {
-    totalt: 8.3,
-    langtidsfravær: 7.2,
+    totalt: 8.5,
+    langtidsfravær: 7.4,
     korttidsfravær: 1.1,
 };
 
