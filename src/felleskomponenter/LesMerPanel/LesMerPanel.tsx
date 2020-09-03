@@ -3,7 +3,7 @@ import { useState } from 'react';
 import InfoToggler from './InfoToggler/InfoToggler';
 import { Normaltekst } from 'nav-frontend-typografi';
 import './LesMerPanel.less';
-import { Collapse } from 'react-collapse';
+import { UnmountClosed } from 'react-collapse';
 import classNames from 'classnames';
 
 interface Props {
@@ -45,7 +45,7 @@ const LesMerPanel: React.FunctionComponent<Props> = ({
                 </InfoToggler>
             </div>
             <div className="les-mer-panel__innhold">
-                <Collapse isOpened={åpen}>{children}</Collapse>
+                <UnmountClosed isOpened={åpen}>{children}</UnmountClosed>
             </div>
             <div className={classNames('les-mer-panel__print-innhold', className)}>{children}</div>
         </div>
