@@ -15,7 +15,7 @@ import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
 import { RestSykefraværsvarighet } from '../api/sykefraværsvarighet';
 import { sykefraværsvarighetContext } from '../utils/sykefraværsvarighetContext';
 import {
-    getResultat,
+    getResultatForSammenligningAvSykefravær,
     getTotaltSykefraværSiste4Kvartaler,
     sykefraværForBarnehagerSiste4Kvartaler,
 } from '../Forside/barnehage/barnehage-utils';
@@ -90,26 +90,32 @@ const hentEkstraDataFraSykefraværsvarighet = (
     restVirksomhetMetadata: RestVirksomhetMetadata
 ): Object => {
     if (
-        restSykefraværsvarighet.status !== RestStatus.Suksess ||
         restVirksomhetMetadata.status !== RestStatus.Suksess ||
         restVirksomhetMetadata.data.bransje !== Bransjetype.BARNEHAGER
     ) {
         return {};
     }
-    const varighet = restSykefraværsvarighet.data;
+
+    const varighet =
+        restSykefraværsvarighet.status === RestStatus.Suksess
+            ? restSykefraværsvarighet.data
+            : undefined;
 
     try {
         return {
-            sykefraværSiste4Kvartaler: getResultat(
-                getTotaltSykefraværSiste4Kvartaler(varighet)!.prosent,
+            sykefraværSiste4Kvartaler: getResultatForSammenligningAvSykefravær(
+                restSykefraværsvarighet.status,
+                getTotaltSykefraværSiste4Kvartaler(varighet),
                 sykefraværForBarnehagerSiste4Kvartaler.totalt
             ),
-            korttidSiste4Kvartaler: getResultat(
-                varighet.korttidsfraværSiste4Kvartaler.prosent,
+            korttidSiste4Kvartaler: getResultatForSammenligningAvSykefravær(
+                restSykefraværsvarighet.status,
+                varighet?.korttidsfraværSiste4Kvartaler,
                 sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær
             ),
-            langtidSiste4Kvartaler: getResultat(
-                varighet.langtidsfraværSiste4Kvartaler.prosent,
+            langtidSiste4Kvartaler: getResultatForSammenligningAvSykefravær(
+                restSykefraværsvarighet.status,
+                varighet?.langtidsfraværSiste4Kvartaler,
                 sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær
             ),
         };
