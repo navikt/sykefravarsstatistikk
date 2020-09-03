@@ -9,6 +9,13 @@ export const sykefraværForBarnehagerSiste4Kvartaler = {
     korttidsfravær: 1.1,
 };
 
+const byttPunktumMedKomma = (tall: number): string => `${tall}`.replace('.', ',');
+
+export const getGrønnGrense = () =>
+    byttPunktumMedKomma(Math.ceil(sykefraværForBarnehagerSiste4Kvartaler.totalt * 0.9 * 10) / 10);
+export const getRødGrense = () =>
+    byttPunktumMedKomma(Math.floor(sykefraværForBarnehagerSiste4Kvartaler.totalt * 1.1 * 10) / 10);
+
 // TODO Hardkodede tall
 export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
     {
