@@ -19,6 +19,10 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
             return (
                 <>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
+                        som NAV og Statistisk sentralbyrå (SSB) utarbeider.
+                    </Normaltekst>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Sammenligningen blir markert rød når ditt sykefravær er høyere enn 9,1
                         prosent. Det er ikke tatt hensyn til din virksomhetens størrelse.
                     </Normaltekst>
@@ -29,6 +33,10 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
         case SykefraværResultat.MIDDELS:
             return (
                 <>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
+                        som NAV og Statistisk sentralbyrå (SSB) utarbeider.
+                    </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Sammenligningen blir markert gul når ditt sykefravær ligger mellom 7,5 og
                         9,1 prosent. Det er ikke tatt hensyn til din virksomhetens størrelse.
@@ -41,6 +49,10 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
             return (
                 <>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
+                        som NAV og Statistisk sentralbyrå (SSB) utarbeider.
+                    </Normaltekst>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Sammenligningen blir markert grønn når ditt sykefravær ligger under 7,5
                         prosent. Det er ikke tatt hensyn til din virksomhetens størrelse.
                     </Normaltekst>
@@ -51,6 +63,10 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
         case SykefraværResultat.MASKERT:
             return (
                 <>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
+                        som NAV og Statistisk sentralbyrå (SSB) utarbeider.
+                    </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Du har for lave tall til at vi kan vise statistikken din. Med få ansatte kan
                         det være mulig å identifisere enkeltansatte. Vi viser derfor ikke
@@ -66,6 +82,10 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
         case SykefraværResultat.UFULLSTENDIG_DATA:
             return (
                 <>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
+                        som NAV og Statistisk sentralbyrå (SSB) utarbeider.
+                    </Normaltekst>
                     <Normaltekst>Dine tall er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={kvartaler} />
                     <Normaltekst>
@@ -84,6 +104,10 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
             return (
                 <>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
+                        som NAV og Statistisk sentralbyrå (SSB) utarbeider.
+                    </Normaltekst>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Vi finner ikke tall for virksomheten din. Det kan være fordi bedriften nylig
                         har blitt opprettet. Statistikken publiseres kvartalsvis.
                     </Normaltekst>
@@ -100,6 +124,10 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
         case SykefraværResultat.FEIL:
             return (
                 <>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
+                        som NAV og Statistisk sentralbyrå (SSB) utarbeider.
+                    </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Tallene er beregnet på sykefraværsstatistikk fra:
                     </Normaltekst>
