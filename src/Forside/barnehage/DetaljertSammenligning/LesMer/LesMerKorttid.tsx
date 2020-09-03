@@ -79,8 +79,8 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
                     <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
                         Sammenligningen blir markert rød når ditt legemeldt korttidsfravær ligger
                         over {rødGrense} prosent.
-                        <LenkeTilHistorikk kildeSomSendesMedEvent="les mer korttid" />
                     </Normaltekst>
+                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer korttid" />
                 </>
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
