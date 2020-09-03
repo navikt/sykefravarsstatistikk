@@ -3,8 +3,6 @@ import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningSiste4KvartalerMedBransje.less';
 import Panel from 'nav-frontend-paneler';
 import { Speedometer, SykefraværResultat } from '../Speedometer/Speedometer';
-import InternLenke from '../../../felleskomponenter/InternLenke/InternLenke';
-import { PATH_HISTORIKK } from '../../../App';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
@@ -118,13 +116,6 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
                         </Normaltekst>
                     </div>
                 </div>
-                <InternLenke
-                    className="sammenligning-med-bransje__historikk-lenke"
-                    pathname={PATH_HISTORIKK}
-                    onClick={() => sendEvent('forside historikk', 'klikk')}
-                >
-                    Gå til sykefraværshistorikken
-                </InternLenke>
             </Panel>
         </div>
     );

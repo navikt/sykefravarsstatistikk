@@ -17,13 +17,14 @@ const Historikkpanel: FunctionComponent = () => {
                 Sykefraværshistorikk
             </Systemtittel>
             <Normaltekst className="historikkpanel__ingress">
-                Se hvordan det legemeldte sykefraværet har endret seg de siste årene.
+                Se hvordan det legemeldte sykefraværet har endret seg de siste årene og se
+                statistikken kvartalsvis.
             </Normaltekst>
             <InternLenke
                 pathname={PATH_HISTORIKK}
                 onClick={() => sendEvent('forside historikk', 'klikk')}
             >
-                Gå til sykefraværshistorikken
+                Gå til sykefravær over tid
             </InternLenke>
         </PanelBase>
     );
