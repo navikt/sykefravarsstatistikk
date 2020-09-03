@@ -48,6 +48,7 @@ import {
 } from './utils/sykefraværsvarighetContext';
 import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
 import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
+import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -66,7 +67,9 @@ const App: FunctionComponent = () => {
                         <SykefraværsvarighetProvider>
                             <SykefraværshistorikkProvider>
                                 <FeatureTogglesProvider>
-                                    <AppContent />
+                                    <TilbakemeldingContextProvider>
+                                        <AppContent />
+                                    </TilbakemeldingContextProvider>
                                 </FeatureTogglesProvider>
                             </SykefraværshistorikkProvider>
                         </SykefraværsvarighetProvider>
