@@ -1,7 +1,4 @@
 import React, { createContext, FunctionComponent, useState } from 'react';
-import { RestSykefraværsvarighet } from '../api/sykefraværsvarighet';
-import { RestStatus } from '../api/api-utils';
-import { sykefraværsvarighetContext } from './sykefraværsvarighetContext';
 
 export const tilbakemeldingContext = createContext<{
     harSendtTilbakemelding: boolean;
