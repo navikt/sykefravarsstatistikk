@@ -8,19 +8,20 @@ export const getVurderingstekstTotalt = (
         case SykefraværResultat.UNDER:
             return (
                 <>
-                    Du har <strong>lavere sykefravær</strong> enn andre barnehager i Norge
+                    Markert grønn: Du har <strong>lavere sykefravær</strong> enn andre barnehager i
+                    Norge
                 </>
             );
         case SykefraværResultat.MIDDELS:
             return (
                 <>
-                    Du har <strong>omtrent likt sykefravær</strong> som andre barnehager i Norge
+                    Markert gul: Du har <strong>omtrent likt sykefravær</strong> som andre barnehager i Norge
                 </>
             );
         case SykefraværResultat.OVER:
             return (
                 <>
-                    Du har <strong>høyere sykefravær</strong> enn andre barnehager i Norge
+                    Markert rød: Du har <strong>høyere sykefravær</strong> enn andre barnehager i Norge
                 </>
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
@@ -51,19 +52,19 @@ export const getVurderingstekstKorttid = (resultat: SykefraværResultat) => {
         case SykefraværResultat.UNDER:
             return (
                 <>
-                    Du har et <strong>lavere legemeldt korttidsfravær</strong> enn bransjen
+                    Markert grønn: Du har et <strong>lavere legemeldt korttidsfravær</strong> enn bransjen
                 </>
             );
         case SykefraværResultat.MIDDELS:
             return (
                 <>
-                    Du har <strong>omtrent likt legemeldt korttidsfravær</strong> som bransjen
+                    Markert gul: Du har <strong>omtrent likt legemeldt korttidsfravær</strong> som bransjen
                 </>
             );
         case SykefraværResultat.OVER:
             return (
                 <>
-                    Du har et <strong>høyere legemeldt korttidsfravær</strong> enn bransjen
+                    Markert rød: Du har et <strong>høyere legemeldt korttidsfravær</strong> enn bransjen
                 </>
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
@@ -84,19 +85,19 @@ export const getVurderingstekstLangtid = (resultat: SykefraværResultat) => {
         case SykefraværResultat.UNDER:
             return (
                 <>
-                    Du har et <strong>lavere langtidsfravær</strong> enn bransjen
+                    Markert grønn: Du har et <strong>lavere langtidsfravær</strong> enn bransjen
                 </>
             );
         case SykefraværResultat.MIDDELS:
             return (
                 <>
-                    Du har <strong>omtrent likt langtidsfravær</strong> som bransjen
+                    Markert gul: Du har <strong>omtrent likt langtidsfravær</strong> som bransjen
                 </>
             );
         case SykefraværResultat.OVER:
             return (
                 <>
-                    Du har et <strong>høyere langtidsfravær</strong> enn bransjen
+                    Markert rød: Du har et <strong>høyere langtidsfravær</strong> enn bransjen
                 </>
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
