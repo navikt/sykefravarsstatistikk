@@ -5,6 +5,7 @@ import { SykefraværResultat } from '../../Speedometer/Speedometer';
 import { Prosent } from '../../Prosent';
 import './DetaljertSammenligningLesMer.less';
 import { getGrønnGrenseTekst, getRødGrenseTekst } from '../../barnehage-utils';
+import { LenkeTilHistorikk } from '../../../../felleskomponenter/LenkeTilHistorikk';
 
 interface Props {
     korttidsfraværSiste4KvartalerVirksomhet: SykefraværSiste4Kvartaler;
@@ -39,6 +40,7 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
                         Sammenligningen blir markert grønn når ditt legemeldt korttidsfravær ligger
                         under {grønnGrense} prosent.
                     </Normaltekst>
+                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer korttid" />
                 </>
             );
         case SykefraværResultat.MIDDELS:
@@ -58,6 +60,7 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
                         Sammenligningen blir markert gul når ditt legemeldt korttidsfravær ligger
                         mellom {grønnGrense} og {rødGrense} prosent.
                     </Normaltekst>
+                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer korttid" />
                 </>
             );
         case SykefraværResultat.OVER:
@@ -76,6 +79,7 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
                     <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
                         Sammenligningen blir markert rød når ditt legemeldt korttidsfravær ligger
                         over {rødGrense} prosent.
+                        <LenkeTilHistorikk kildeSomSendesMedEvent="les mer korttid" />
                     </Normaltekst>
                 </>
             );
@@ -91,6 +95,7 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
                     <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
                         Bransjens resultat:{' '}
                         <Prosent strong prosent={korttidsfraværSiste4KvartalerBransje} />
+                        <LenkeTilHistorikk kildeSomSendesMedEvent="les mer korttid" />
                     </Normaltekst>
                 </>
             );

@@ -9,6 +9,7 @@ import {
     siste4PubliserteKvartaler,
     sykefraværForBarnehagerSiste4Kvartaler,
 } from '../barnehage-utils';
+import { LenkeTilHistorikk } from '../../../felleskomponenter/LenkeTilHistorikk';
 
 interface Props {
     resultat: SykefraværResultat;
@@ -37,6 +38,7 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                     </Normaltekst>
                     <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={kvartaler} />
+                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
         case SykefraværResultat.MIDDELS:
@@ -54,6 +56,7 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                     </Normaltekst>
                     <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={kvartaler} />
+                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
         case SykefraværResultat.UNDER:
@@ -70,6 +73,7 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                     </Normaltekst>
                     <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={kvartaler} />
+                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
         case SykefraværResultat.MASKERT:
@@ -116,6 +120,7 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                     <Normaltekst>
                         Sammenligningen lages når vi har tall for alle perioder.
                     </Normaltekst>
+                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
         case SykefraværResultat.INGEN_DATA:
