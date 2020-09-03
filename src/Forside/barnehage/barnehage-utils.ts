@@ -9,13 +9,6 @@ export const sykefraværForBarnehagerSiste4Kvartaler = {
     korttidsfravær: 1.1,
 };
 
-const byttPunktumMedKomma = (tall: number): string => `${tall}`.replace('.', ',');
-
-export const getGrønnGrense = () =>
-    byttPunktumMedKomma(Math.ceil(sykefraværForBarnehagerSiste4Kvartaler.totalt * 0.9 * 10) / 10);
-export const getRødGrense = () =>
-    byttPunktumMedKomma(Math.floor(sykefraværForBarnehagerSiste4Kvartaler.totalt * 1.1 * 10) / 10);
-
 // TODO Hardkodede tall
 export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
     {
@@ -94,15 +87,25 @@ export const getResultat = (
         throw new Error('virksomhetens eller bransjens tall er null');
     }
 
-    if (virksomhetensProsent < 0.9 * bransjensProsent) {
+    if (virksomhetensProsent < getGrønnGrense(bransjensProsent)) {
         return SykefraværResultat.UNDER;
-    } else if (virksomhetensProsent < bransjensProsent * 1.1) {
+    } else if (virksomhetensProsent < getRødGrense(bransjensProsent)) {
         return SykefraværResultat.MIDDELS;
-    } else if (virksomhetensProsent >= bransjensProsent * 1.1) {
+    } else if (virksomhetensProsent >= getRødGrense(bransjensProsent)) {
         return SykefraværResultat.OVER;
     }
     throw new Error('virksomhetens eller bransjens tall er NaN');
 };
+
+export const getGrønnGrense = (bransjensProsent: number) => bransjensProsent * 0.9;
+export const getRødGrense = (bransjensProsent: number) => bransjensProsent * 1.1;
+
+const byttPunktumMedKomma = (tall: number): string => `${tall}`.replace('.', ',');
+
+export const getGrønnGrenseTekst = (bransjensProsent: number) =>
+    byttPunktumMedKomma(Math.ceil(getGrønnGrense(bransjensProsent) * 10) / 10);
+export const getRødGrenseTekst = (bransjensProsent: number) =>
+    byttPunktumMedKomma(Math.floor(getRødGrense(bransjensProsent) * 10) / 10);
 
 const addEllerReturnerNull = (number1: number | null, number2: number | null) => {
     if (number1 === null || number2 === null) return null;

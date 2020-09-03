@@ -3,7 +3,12 @@ import { SykefraværResultat } from '../Speedometer/Speedometer';
 import { ÅrstallOgKvartal } from '../../../utils/sykefraværshistorikk-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import './SlikHarViKommetFramTilDittResultat.less';
-import { getGrønnGrense, getRødGrense, siste4PubliserteKvartaler } from '../barnehage-utils';
+import {
+    getGrønnGrenseTekst,
+    getRødGrenseTekst,
+    siste4PubliserteKvartaler,
+    sykefraværForBarnehagerSiste4Kvartaler,
+} from '../barnehage-utils';
 
 interface Props {
     resultat: SykefraværResultat;
@@ -14,6 +19,9 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
     resultat,
     kvartaler,
 }) => {
+    const grønnGrense = getGrønnGrenseTekst(sykefraværForBarnehagerSiste4Kvartaler.totalt);
+    const rødGrense = getRødGrenseTekst(sykefraværForBarnehagerSiste4Kvartaler.totalt);
+
     switch (resultat) {
         case SykefraværResultat.OVER:
             return (
@@ -24,7 +32,7 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                     </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Sammenligningen blir markert rød når ditt sykefravær er høyere enn{' '}
-                        {getRødGrense()} prosent. Det betyr at du har høyere sykefravær enn andre
+                        {rødGrense} prosent. Det betyr at du har høyere sykefravær enn andre
                         barnehager i Norge. Det er ikke tatt hensyn til din virksomhetens størrelse.
                     </Normaltekst>
                     <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
@@ -40,9 +48,9 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                     </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Sammenligningen blir markert gul når ditt sykefravær ligger mellom{' '}
-                        {getGrønnGrense()} og {getRødGrense()} prosent. Det betyr at du har omtrent
-                        likt sykefravær som andre barnehager i Norge. Det er ikke tatt hensyn til
-                        din virksomhetens størrelse.
+                        {grønnGrense} og {rødGrense} prosent. Det betyr at du har omtrent likt
+                        sykefravær som andre barnehager i Norge. Det er ikke tatt hensyn til din
+                        virksomhetens størrelse.
                     </Normaltekst>
                     <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={kvartaler} />
@@ -57,7 +65,7 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                     </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Sammenligningen blir markert grønn når ditt sykefravær ligger under{' '}
-                        {getGrønnGrense()} prosent. Det betyr at du har lavere sykefravær enn andre
+                        {grønnGrense} prosent. Det betyr at du har lavere sykefravær enn andre
                         barnehager i Norge. Det er ikke tatt hensyn til din virksomhetens størrelse.
                     </Normaltekst>
                     <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>

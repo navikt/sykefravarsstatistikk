@@ -4,6 +4,7 @@ import { SykefraværSiste4Kvartaler } from '../../../../api/sykefraværsvarighet
 import { SykefraværResultat } from '../../Speedometer/Speedometer';
 import { Prosent } from '../../Prosent';
 import './DetaljertSammenligningLesMer.less';
+import { GrenseforklaringLangtid } from './GrenseforklaringLangtid';
 
 interface Props {
     langtidsfraværSiste4KvartalerVirksomhet: SykefraværSiste4Kvartaler;
@@ -23,61 +24,73 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
         case SykefraværResultat.MIDDELS:
             return (
                 <>
-                    <Normaltekst className="detaljert-sammenligning-les-mer__ingress">
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
                         Andel langtidsfravær fra 17. dag:
                     </Normaltekst>
                     <Normaltekst>
                         Ditt resultat: <Prosent strong prosent={prosentVirksomhet} />
                     </Normaltekst>
-                    <Normaltekst>
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
                         Bransjens resultat:{' '}
                         <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
+                    <GrenseforklaringLangtid
+                        bransjensProsent={langtidsfraværSiste4KvartalerBransje}
+                    />
                 </>
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
             return (
                 <>
-                    <Normaltekst className="detaljert-sammenligning-les-mer__ingress">
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
                         Vi mangler dine tall for deler av perioden med sammenligning.
                     </Normaltekst>
                     <Normaltekst>
                         Ditt resultat: <Prosent strong prosent={prosentVirksomhet} />
                     </Normaltekst>
-                    <Normaltekst>
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
                         Bransjens resultat:{' '}
                         <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
+                    <GrenseforklaringLangtid
+                        bransjensProsent={langtidsfraværSiste4KvartalerBransje}
+                    />
                 </>
             );
         case SykefraværResultat.MASKERT:
             return (
                 <>
-                    <Normaltekst className="detaljert-sammenligning-les-mer__ingress">
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
                         Du har for lave tall til at vi kan vise statistikken din.
                     </Normaltekst>
                     <Normaltekst>
                         Ditt resultat: <Prosent prosent={prosentVirksomhet} />
                     </Normaltekst>
-                    <Normaltekst>
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
                         Bransjens resultat:{' '}
                         <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
+                    <GrenseforklaringLangtid
+                        bransjensProsent={langtidsfraværSiste4KvartalerBransje}
+                    />
                 </>
             );
         case SykefraværResultat.INGEN_DATA:
             return (
                 <>
-                    <Normaltekst className="detaljert-sammenligning-les-mer__ingress">
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
                         Vi finner ikke tall for virksomheten din.
                     </Normaltekst>
                     <Normaltekst>
                         Ditt resultat: <Prosent strong prosent={null} />
                     </Normaltekst>
-                    <Normaltekst>
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
                         Bransjens resultat:{' '}
                         <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
+                    <GrenseforklaringLangtid
+                        bransjensProsent={langtidsfraværSiste4KvartalerBransje}
+                    />
                 </>
             );
         default:
