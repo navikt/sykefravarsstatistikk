@@ -4,7 +4,7 @@ import { SykefraværSiste4Kvartaler } from '../../../../api/sykefraværsvarighet
 import { SykefraværResultat } from '../../Speedometer/Speedometer';
 import { Prosent } from '../../Prosent';
 import './DetaljertSammenligningLesMer.less';
-import { GrenseforklaringLangtid } from './GrenseforklaringLangtid';
+import { getGrønnGrenseTekst, getRødGrenseTekst } from '../../barnehage-utils';
 
 interface Props {
     langtidsfraværSiste4KvartalerVirksomhet: SykefraværSiste4Kvartaler;
@@ -18,9 +18,29 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
     resultat,
 }) => {
     const prosentVirksomhet = langtidsfraværSiste4KvartalerVirksomhet.prosent;
+    const grønnGrense = getGrønnGrenseTekst(langtidsfraværSiste4KvartalerBransje);
+    const rødGrense = getRødGrenseTekst(langtidsfraværSiste4KvartalerBransje);
+
     switch (resultat) {
         case SykefraværResultat.UNDER:
-        case SykefraværResultat.OVER:
+            return (
+                <>
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
+                        Andel langtidsfravær fra 17. dag:
+                    </Normaltekst>
+                    <Normaltekst>
+                        Ditt resultat: <Prosent strong prosent={prosentVirksomhet} />
+                    </Normaltekst>
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
+                        Bransjens resultat:{' '}
+                        <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
+                    </Normaltekst>
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
+                        Sammenligningen blir markert grønn når ditt legemeldt langtidsfravær ligger
+                        under {grønnGrense} prosent.
+                    </Normaltekst>
+                </>
+            );
         case SykefraværResultat.MIDDELS:
             return (
                 <>
@@ -34,9 +54,29 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
                         Bransjens resultat:{' '}
                         <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
-                    <GrenseforklaringLangtid
-                        bransjensProsent={langtidsfraværSiste4KvartalerBransje}
-                    />
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
+                        Sammenligningen blir markert gul når ditt legemeldt langtidsfravær ligger
+                        mellom {grønnGrense} og {rødGrense} prosent.
+                    </Normaltekst>
+                </>
+            );
+        case SykefraværResultat.OVER:
+            return (
+                <>
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
+                        Andel langtidsfravær fra 17. dag:
+                    </Normaltekst>
+                    <Normaltekst>
+                        Ditt resultat: <Prosent strong prosent={prosentVirksomhet} />
+                    </Normaltekst>
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
+                        Bransjens resultat:{' '}
+                        <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
+                    </Normaltekst>
+                    <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
+                        Sammenligningen blir markert rød når ditt legemeldt langtidsfravær ligger
+                        over {rødGrense} prosent.
+                    </Normaltekst>
                 </>
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
@@ -52,9 +92,6 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
                         Bransjens resultat:{' '}
                         <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
-                    <GrenseforklaringLangtid
-                        bransjensProsent={langtidsfraværSiste4KvartalerBransje}
-                    />
                 </>
             );
         case SykefraværResultat.MASKERT:
@@ -70,9 +107,6 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
                         Bransjens resultat:{' '}
                         <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
-                    <GrenseforklaringLangtid
-                        bransjensProsent={langtidsfraværSiste4KvartalerBransje}
-                    />
                 </>
             );
         case SykefraværResultat.INGEN_DATA:
@@ -88,9 +122,6 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
                         Bransjens resultat:{' '}
                         <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
-                    <GrenseforklaringLangtid
-                        bransjensProsent={langtidsfraværSiste4KvartalerBransje}
-                    />
                 </>
             );
         default:
