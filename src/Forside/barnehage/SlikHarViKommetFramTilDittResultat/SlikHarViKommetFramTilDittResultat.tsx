@@ -3,7 +3,7 @@ import { SykefraværResultat } from '../Speedometer/Speedometer';
 import { ÅrstallOgKvartal } from '../../../utils/sykefraværshistorikk-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import './SlikHarViKommetFramTilDittResultat.less';
-import { siste4PubliserteKvartaler } from '../barnehage-utils';
+import { getGrønnGrense, getRødGrense, siste4PubliserteKvartaler } from '../barnehage-utils';
 
 interface Props {
     resultat: SykefraværResultat;
@@ -23,8 +23,9 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                         som NAV og Statistisk sentralbyrå (SSB) utarbeider.
                     </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
-                        Sammenligningen blir markert rød når ditt sykefravær er høyere enn 9,1
-                        prosent. Det er ikke tatt hensyn til din virksomhetens størrelse.
+                        Sammenligningen blir markert rød når ditt sykefravær er høyere enn{' '}
+                        {getRødGrense()} prosent. Det betyr at du har høyere sykefravær enn andre
+                        barnehager i Norge. Det er ikke tatt hensyn til din virksomhetens størrelse.
                     </Normaltekst>
                     <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={kvartaler} />
@@ -38,8 +39,10 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                         som NAV og Statistisk sentralbyrå (SSB) utarbeider.
                     </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
-                        Sammenligningen blir markert gul når ditt sykefravær ligger mellom 7,5 og
-                        9,1 prosent. Det er ikke tatt hensyn til din virksomhetens størrelse.
+                        Sammenligningen blir markert gul når ditt sykefravær ligger mellom{' '}
+                        {getGrønnGrense()} og {getRødGrense()} prosent. Det betyr at du har omtrent
+                        likt sykefravær som andre barnehager i Norge. Det er ikke tatt hensyn til
+                        din virksomhetens størrelse.
                     </Normaltekst>
                     <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={kvartaler} />
@@ -53,8 +56,9 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                         som NAV og Statistisk sentralbyrå (SSB) utarbeider.
                     </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
-                        Sammenligningen blir markert grønn når ditt sykefravær ligger under 7,5
-                        prosent. Det er ikke tatt hensyn til din virksomhetens størrelse.
+                        Sammenligningen blir markert grønn når ditt sykefravær ligger under{' '}
+                        {getGrønnGrense()} prosent. Det betyr at du har lavere sykefravær enn andre
+                        barnehager i Norge. Det er ikke tatt hensyn til din virksomhetens størrelse.
                     </Normaltekst>
                     <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={kvartaler} />
