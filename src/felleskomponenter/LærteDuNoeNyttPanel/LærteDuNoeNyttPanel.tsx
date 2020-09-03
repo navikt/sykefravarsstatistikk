@@ -1,8 +1,9 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useContext, useState } from 'react';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
 import { useSendEvent } from '../../amplitude/amplitude';
 import './LærteDuNoeNyttPanel.less';
+import { tilbakemeldingContext } from '../../utils/TilbakemeldingContext';
 
 interface Props {
     tekst: string;
@@ -17,7 +18,9 @@ export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
     const sendEvent = useSendEvent();
     const [harSendtTilbakemeldingState, setharSendtTilbakemeldingState] = useState<boolean>(false);
 
-    if (!props.skalVises) {
+    const context = useContext(tilbakemeldingContext);
+
+    if (!props.skalVises || (context.harSendtTilbakemelding && !harSendtTilbakemeldingState)) {
         return null;
     }
 
@@ -40,6 +43,7 @@ export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
                         onClick={() => {
                             sendEvent(props.område, 'klikk', { svar: 'ja' });
                             setharSendtTilbakemeldingState(true);
+                            context.setHarSendtTilbakemelding(true);
                         }}
                         aria-labelledby="lærte-du-noe-nytt-panel__spørsmål-id"
                     >
@@ -49,6 +53,7 @@ export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
                         onClick={() => {
                             sendEvent(props.område, 'klikk', { svar: 'nei' });
                             setharSendtTilbakemeldingState(true);
+                            context.setHarSendtTilbakemelding(true);
                         }}
                         aria-labelledby="lærte-du-noe-nytt-panel__spørsmål-id"
                     >
