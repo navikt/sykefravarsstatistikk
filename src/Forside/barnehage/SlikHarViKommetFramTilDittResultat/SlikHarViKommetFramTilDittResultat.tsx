@@ -72,6 +72,9 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                         som NAV og Statistisk sentralbyrå (SSB) utarbeider.
                     </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Resultatet blir markert grå når vi ikke kan sammenligne.
+                    </Normaltekst>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Du har for lave tall til at vi kan vise statistikken din. Med få ansatte kan
                         det være mulig å identifisere enkeltansatte. Vi viser derfor ikke
                         statistikken av hensyn til personvern.
@@ -89,6 +92,9 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
                         som NAV og Statistisk sentralbyrå (SSB) utarbeider.
+                    </Normaltekst>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Resultatet blir markert grå når vi ikke kan sammenligne.
                     </Normaltekst>
                     <Normaltekst>Dine tall er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={kvartaler} />
@@ -110,6 +116,9 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
                         som NAV og Statistisk sentralbyrå (SSB) utarbeider.
+                    </Normaltekst>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Resultatet blir markert grå når vi ikke kan sammenligne.
                     </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Vi finner ikke tall for virksomheten din. Det kan være fordi bedriften nylig
