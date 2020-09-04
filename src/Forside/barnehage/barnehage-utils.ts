@@ -37,7 +37,7 @@ export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
 ];
 
 export const getResultatForSammenligningAvSykefravær = (
-    restStatus: RestStatus,
+    restStatus: RestStatus.Suksess | RestStatus.Feil,
     sykefravær: SykefraværSiste4Kvartaler | undefined,
     bransjensProsent: number
 ): SykefraværResultat => {
@@ -64,9 +64,6 @@ export const getResultatForSammenligningAvSykefravær = (
             return getResultat(sykefravær.prosent, bransjensProsent);
 
         case RestStatus.Feil:
-        case RestStatus.IngenTilgang:
-            return SykefraværResultat.FEIL;
-        default:
             return SykefraværResultat.FEIL;
     }
 };
