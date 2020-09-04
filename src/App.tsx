@@ -166,7 +166,8 @@ const AppContent: FunctionComponent = () => {
                                     }
                                 />
                             </SammenligningspanelBarnehage>
-                            <KalkulatorPanel />
+                            <KalkulatorPanel liten />
+                            <Historikkpanel />
                             <Lenkeressurser />
                         </Forside>
                     </InnloggingssideWrapper>

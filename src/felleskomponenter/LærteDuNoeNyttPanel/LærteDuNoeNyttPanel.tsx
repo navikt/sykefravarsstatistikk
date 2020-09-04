@@ -50,6 +50,7 @@ export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
                         JA
                     </Knapp>
                     <Knapp
+                        className="lærte-du-noe-nytt-panel__knapp"
                         onClick={() => {
                             sendEvent(props.område, 'klikk', { svar: 'nei' });
                             setharSendtTilbakemeldingState(true);

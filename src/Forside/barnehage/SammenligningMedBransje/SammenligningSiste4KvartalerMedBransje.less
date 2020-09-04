@@ -18,6 +18,7 @@
     &__utregningsinfo-innhold {
         margin-top: 1rem;
         max-width: 30rem;
+        padding-bottom: 1rem;
     }
 
     &__panel {
@@ -58,8 +59,6 @@
     }
 
     @media print {
-        &__historikk-lenke {
-            display: none;
-        }
+        page-break-after: always;
     }
 }

@@ -19,7 +19,7 @@ export const DetaljertSammenligningPanel: FunctionComponent<Props> = ({
 }) => {
     return (
         <Panel className="detaljert-sammenligning-panel">
-            <Normaltekst tag="h3">{vurderingstekst}</Normaltekst>
+            <Normaltekst tag="h3" className="detaljert-sammenligning-panel__tittel">{vurderingstekst}</Normaltekst>
             <div className="detaljert-sammenligning-panel__ikon-og-les-mer">
                 <Speedometer resultat={resultat} />
                 <LesMerPanel
