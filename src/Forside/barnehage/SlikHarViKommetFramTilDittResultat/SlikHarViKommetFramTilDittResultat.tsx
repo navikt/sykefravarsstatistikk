@@ -83,7 +83,7 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                         Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
                         som NAV og Statistisk sentralbyrå (SSB) utarbeider.
                     </Normaltekst>
-                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                    <Normaltekst>
                         Resultatet blir markert grå når vi ikke kan sammenligne.
                     </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
@@ -131,7 +131,7 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                         Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
                         som NAV og Statistisk sentralbyrå (SSB) utarbeider.
                     </Normaltekst>
-                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                    <Normaltekst>
                         Resultatet blir markert grå når vi ikke kan sammenligne.
                     </Normaltekst>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
