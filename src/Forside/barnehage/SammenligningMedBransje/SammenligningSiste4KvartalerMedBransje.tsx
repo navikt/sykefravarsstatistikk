@@ -30,6 +30,13 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
     const sendEvent = useSendEvent();
 
     if (
+        restSykefraværsvarighet.status === RestStatus.IngenTilgang ||
+        restSykefraværsvarighet.status === RestStatus.IkkeInnlogget
+    ) {
+        return null;
+    }
+
+    if (
         restSykefraværsvarighet.status === RestStatus.LasterInn ||
         restSykefraværsvarighet.status === RestStatus.IkkeLastet
     ) {

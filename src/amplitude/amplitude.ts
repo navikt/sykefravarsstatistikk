@@ -96,6 +96,13 @@ const hentEkstraDataFraSykefraværsvarighet = (
         return {};
     }
 
+    if (
+        restSykefraværsvarighet.status !== RestStatus.Suksess &&
+        restSykefraværsvarighet.status !== RestStatus.Feil
+    ) {
+        return {};
+    }
+
     const varighet =
         restSykefraværsvarighet.status === RestStatus.Suksess
             ? restSykefraværsvarighet.data
