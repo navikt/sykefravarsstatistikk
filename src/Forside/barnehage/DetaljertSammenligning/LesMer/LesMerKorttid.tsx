@@ -95,8 +95,8 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
                     <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
                         Bransjens resultat:{' '}
                         <Prosent strong prosent={korttidsfraværSiste4KvartalerBransje} />
-                        <LenkeTilHistorikk kildeSomSendesMedEvent="les mer korttid" />
                     </Normaltekst>
+                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer korttid" />
                 </>
             );
         case SykefraværResultat.MASKERT:
