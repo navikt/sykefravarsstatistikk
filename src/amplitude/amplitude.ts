@@ -175,18 +175,17 @@ export const useMålingAvTidsbruk = (
     ...antallSekunderFørEventSendes: number[]
 ): void => {
     const sendEvent = useSendEvent();
-    const skalSendeEvent = useRef(true);
+    const antallSekunder = useRef<number>(0);
 
     useEffect(() => {
-        if (skalSendeEvent.current) {
-            skalSendeEvent.current = false;
-            antallSekunderFørEventSendes.map((antallSekunder) =>
-                setTimeout(() => {
-                    sendEvent(område, 'tidsbruk', {
-                        sekunder: antallSekunder,
-                    });
-                }, antallSekunder * 1000)
-            );
-        }
-    }, [område, antallSekunderFørEventSendes, sendEvent]);
+        const interval = setInterval(() => {
+            antallSekunder.current += 1;
+            if (antallSekunderFørEventSendes.includes(antallSekunder.current)) {
+                sendEvent(område, 'tidsbruk', {
+                    sekunder: antallSekunder.current,
+                });
+            }
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [antallSekunderFørEventSendes, område, sendEvent]);
 };
