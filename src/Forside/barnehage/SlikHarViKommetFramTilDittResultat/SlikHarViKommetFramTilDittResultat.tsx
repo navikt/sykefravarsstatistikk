@@ -109,18 +109,18 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
                         Resultatet blir markert grå når vi ikke kan sammenligne.
                     </Normaltekst>
+                    <Normaltekst>
+                        Vi mangler tall for deler av perioden med sammenligning.
+                    </Normaltekst>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Sammenligningen lages når vi har tall for alle perioder.
+                    </Normaltekst>
                     <Normaltekst>Dine tall er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={kvartaler} />
                     <Normaltekst>
                         Bransjens tall er beregnet på sykefraværsstatistikk fra:
                     </Normaltekst>
                     <Kvartalsliste kvartaler={siste4PubliserteKvartaler} />
-                    <Normaltekst>
-                        Vi mangler tall for deler av perioden med sammenligning.
-                    </Normaltekst>
-                    <Normaltekst>
-                        Sammenligningen lages når vi har tall for alle perioder.
-                    </Normaltekst>
                     <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
@@ -138,14 +138,14 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                         Vi finner ikke tall for virksomheten din. Det kan være fordi bedriften nylig
                         har blitt opprettet. Statistikken publiseres kvartalsvis.
                     </Normaltekst>
+                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat__paragraf">
+                        Vi viser dine tall når de publiseres. Sammenligningen lages når vi har tall
+                        for alle perioder.
+                    </Normaltekst>
                     <Normaltekst>
                         Bransjens tall er beregnet på sykefraværsstatistikk fra:
                     </Normaltekst>
                     <Kvartalsliste kvartaler={siste4PubliserteKvartaler} />
-                    <Normaltekst>
-                        Vi viser dine tall når de publiseres. Sammenligningen lages når vi har tall
-                        for alle perioder.
-                    </Normaltekst>
                 </>
             );
         case SykefraværResultat.FEIL:
