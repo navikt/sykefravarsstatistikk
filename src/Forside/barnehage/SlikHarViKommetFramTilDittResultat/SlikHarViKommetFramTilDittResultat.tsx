@@ -96,6 +96,7 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = ({
                     </Normaltekst>
                     <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={siste4PubliserteKvartaler} />
+                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:

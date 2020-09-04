@@ -5,7 +5,6 @@ import { SykefraværResultat } from '../../Speedometer/Speedometer';
 import { Prosent } from '../../Prosent';
 import './DetaljertSammenligningLesMer.less';
 import { getGrønnGrenseTekst, getRødGrenseTekst } from '../../barnehage-utils';
-import { LenkeTilHistorikk } from '../../../../felleskomponenter/LenkeTilHistorikk';
 
 interface Props {
     langtidsfraværSiste4KvartalerVirksomhet: SykefraværSiste4Kvartaler;
@@ -40,7 +39,6 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
                         Sammenligningen blir markert grønn når ditt legemeldt langtidsfravær ligger
                         under {grønnGrense} prosent.
                     </Normaltekst>
-                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer langtid" />
                 </>
             );
         case SykefraværResultat.MIDDELS:
@@ -60,7 +58,6 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
                         Sammenligningen blir markert gul når ditt legemeldt langtidsfravær ligger
                         mellom {grønnGrense} og {rødGrense} prosent.
                     </Normaltekst>
-                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer langtid" />
                 </>
             );
         case SykefraværResultat.OVER:
@@ -80,7 +77,6 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
                         Sammenligningen blir markert rød når ditt legemeldt langtidsfravær ligger
                         over {rødGrense} prosent.
                     </Normaltekst>
-                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer langtid" />
                 </>
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
@@ -96,7 +92,6 @@ export const LesMerLangtid: FunctionComponent<Props> = ({
                         Bransjens resultat:{' '}
                         <Prosent strong prosent={langtidsfraværSiste4KvartalerBransje} />
                     </Normaltekst>
-                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer langtid" />
                 </>
             );
         case SykefraværResultat.MASKERT:
