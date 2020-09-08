@@ -9,7 +9,11 @@ interface Props {
 
 const ListeMedBrødsmuler: FunctionComponent<Props> = (props) => {
     const { gjeldendeBrødsmule, config } = props;
-    let liste = [<li key={gjeldendeBrødsmule.side}>{gjeldendeBrødsmule.lenketekst}</li>];
+    let liste = [
+        <li key={gjeldendeBrødsmule.side} aria-current="location">
+            {gjeldendeBrødsmule.lenke(gjeldendeBrødsmule.lenketekst, true)}
+        </li>,
+    ];
 
     let overordnetSide = gjeldendeBrødsmule.overordnetSide;
     while (overordnetSide) {

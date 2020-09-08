@@ -19,14 +19,21 @@ const Brødsmulesti: FunctionComponent<Props> = (props) => {
     const gjeldendeSmule = finnBrødsmule(gjeldendeSide, config);
 
     return (
-        <nav className="brødsmulesti">
+        <>
             <MediaQuery minWidth={768}>
-                <ListeMedBrødsmuler gjeldendeBrødsmule={gjeldendeSmule} config={config} />
+                <nav className="brødsmulesti" aria-label="breadcrumbs">
+                    <ListeMedBrødsmuler gjeldendeBrødsmule={gjeldendeSmule} config={config} />
+                </nav>
             </MediaQuery>
             <MediaQuery maxWidth={767}>
-                <TilbakeTilForrigeBrødsmule gjeldendeBrødsmule={gjeldendeSmule} config={config} />
+                <nav className="brødsmulesti">
+                    <TilbakeTilForrigeBrødsmule
+                        gjeldendeBrødsmule={gjeldendeSmule}
+                        config={config}
+                    />
+                </nav>
             </MediaQuery>
-        </nav>
+        </>
     );
 };
 
