@@ -45,8 +45,9 @@ export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
                             setharSendtTilbakemeldingState(true);
                             context.setHarSendtTilbakemelding(true);
                         }}
+                        aria-labelledby="lærte-du-noe-nytt-panel__spørsmål-id lærte-du-noe-nytt-panel__ja-knapp-id"
                     >
-                        JA
+                        <span id="lærte-du-noe-nytt-panel__ja-knapp-id">JA</span>
                     </Knapp>
                     <Knapp
                         className="lærte-du-noe-nytt-panel__knapp"
@@ -55,8 +56,9 @@ export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
                             setharSendtTilbakemeldingState(true);
                             context.setHarSendtTilbakemelding(true);
                         }}
+                        aria-labelledby="lærte-du-noe-nytt-panel__spørsmål-id lærte-du-noe-nytt-panel__nei-knapp-id"
                     >
-                        NEI
+                        <span id="lærte-du-noe-nytt-panel__nei-knapp-id">NEI</span>
                     </Knapp>
                 </div>
             </div>
