@@ -45,7 +45,6 @@ export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
                             setharSendtTilbakemeldingState(true);
                             context.setHarSendtTilbakemelding(true);
                         }}
-                        aria-labelledby="lærte-du-noe-nytt-panel__spørsmål-id"
                     >
                         JA
                     </Knapp>
@@ -56,7 +55,6 @@ export const LærteDuNoeNyttPanel: FunctionComponent<Props> = (props) => {
                             setharSendtTilbakemeldingState(true);
                             context.setHarSendtTilbakemelding(true);
                         }}
-                        aria-labelledby="lærte-du-noe-nytt-panel__spørsmål-id"
                     >
                         NEI
                     </Knapp>
