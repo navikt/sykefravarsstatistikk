@@ -36,7 +36,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                     <div>
                         <div className="kalkulator__tittel-wrapper">
                             <div>
-                                <Systemtittel tag={'h2'} className="kalkulator__tittel">
+                                <Systemtittel tag="h1" className="kalkulator__tittel">
                                     Hvor mye koster sykefraværet?
                                 </Systemtittel>
                                 <Normaltekst className="kalkulator__ingress">
