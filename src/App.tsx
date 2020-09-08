@@ -68,7 +68,10 @@ const App: FunctionComponent = () => {
                             <SykefraværshistorikkProvider>
                                 <FeatureTogglesProvider>
                                     <TilbakemeldingContextProvider>
-                                        <AppContent />
+                                        <main id="maincontent">
+                                            {/* TODO Hva burde egentlig maincontent være? Burde vi kutte ut bedriftsmenyen? */}
+                                            <AppContent />
+                                        </main>
                                     </TilbakemeldingContextProvider>
                                 </FeatureTogglesProvider>
                             </SykefraværshistorikkProvider>
