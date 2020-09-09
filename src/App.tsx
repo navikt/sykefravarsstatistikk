@@ -69,7 +69,6 @@ const App: FunctionComponent = () => {
                                 <FeatureTogglesProvider>
                                     <TilbakemeldingContextProvider>
                                         <main id="maincontent">
-                                            {/* TODO Hva burde egentlig maincontent være? Burde vi kutte ut bedriftsmenyen? */}
                                             <AppContent />
                                         </main>
                                     </TilbakemeldingContextProvider>
