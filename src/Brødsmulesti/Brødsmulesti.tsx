@@ -21,7 +21,7 @@ const Brødsmulesti: FunctionComponent<Props> = (props) => {
     return (
         <>
             <MediaQuery minWidth={768}>
-                <nav className="brødsmulesti" aria-label="breadcrumbs">
+                <nav className="brødsmulesti" aria-label="brødsmulesti">
                     <ListeMedBrødsmuler gjeldendeBrødsmule={gjeldendeSmule} config={config} />
                 </nav>
             </MediaQuery>
