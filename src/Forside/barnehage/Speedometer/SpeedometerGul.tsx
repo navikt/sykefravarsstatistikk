@@ -12,6 +12,7 @@ export const SpeedometerGul: FunctionComponent<SpeedometerSvgProps> = ({ større
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
     >
+        <title>Gult speedometer der pilen indikerer et middels tall</title>
         <path
             d="M1 107.174c0-28.16 11.22-55.165 31.193-75.076C52.166 12.186 79.254 1 107.5 1c28.246 0 55.334 11.186 75.307 31.098C202.779 52.009 214 79.015 214 107.174h-39.632a66.56 66.56 0 00-19.585-47.138A66.975 66.975 0 00107.5 40.511a66.972 66.972 0 00-47.283 19.525 66.56 66.56 0 00-19.585 47.138H1z"
             fill="#F9D91B"

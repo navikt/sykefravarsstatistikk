@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useRef } from 'react';
 import './SammenligningspanelBarnehage.less';
-import { Knapp } from 'nav-frontend-knapper';
 import ReactToPrint from 'react-to-print';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
@@ -15,6 +14,7 @@ export const SammenligningspanelBarnehage: FunctionComponent<{
     restAltinnOrganisasjoner: RestAltinnOrganisasjoner;
 }> = ({ restSykefraværsvarighet, restAltinnOrganisasjoner, children }) => {
     const panelRef = useRef<HTMLDivElement>(null);
+    const lastNedKnappRef = useRef<HTMLButtonElement>(null);
     const harFeil = restSykefraværsvarighet.status === RestStatus.Feil;
     const sendEvent = useSendEvent();
     const orgnr = useOrgnr();
@@ -42,9 +42,19 @@ export const SammenligningspanelBarnehage: FunctionComponent<{
                 </div>
                 <ReactToPrint
                     onBeforePrint={() => sendEvent('forside barnehage', 'print')}
+                    onAfterPrint={() => {
+                        if (lastNedKnappRef.current) {
+                            lastNedKnappRef.current.focus();
+                        }
+                    }}
                     content={() => panelRef.current}
                     trigger={() => (
-                        <Knapp className="sammenligningspanel-barnehage__knapp">Last ned</Knapp>
+                        <button
+                            ref={lastNedKnappRef}
+                            className="sammenligningspanel-barnehage__knapp knapp"
+                        >
+                            Last ned
+                        </button>
                     )}
                 />
                 {children}

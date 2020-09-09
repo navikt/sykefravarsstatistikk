@@ -94,7 +94,7 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
                 </div>
             </LesMerPanel>
             <Panel className="sammenligning-med-bransje__panel">
-                <Ingress className="sammenligning-med-bransje__panel-tittel">
+                <Ingress tag="h3" className="sammenligning-med-bransje__panel-tittel">
                     {getVurderingstekstTotalt(sammenligningResultat)}
                 </Ingress>
                 <div className="sammenligning-med-bransje__ikon-og-tall">
@@ -107,14 +107,14 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
                         <Ingress className="sammenligning-med-bransje__virksomhet-tittel">
                             Din virksomhet:
                         </Ingress>
-                        <Systemtittel>
+                        <Systemtittel tag="p">
                             <Prosent prosent={sykefraværVirksomhet} />
                             {antallKvartalerVirksomhet}
                         </Systemtittel>
                         <Ingress className="sammenligning-med-bransje__bransje-tittel">
                             Barnehager i Norge:
                         </Ingress>
-                        <Systemtittel>
+                        <Systemtittel tag="p">
                             <Prosent prosent={visningAvProsentForBransje} />
                             {antallKvartalerBransje}
                         </Systemtittel>

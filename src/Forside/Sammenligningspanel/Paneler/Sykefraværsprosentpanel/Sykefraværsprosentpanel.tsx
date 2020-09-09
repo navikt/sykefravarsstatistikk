@@ -35,7 +35,7 @@ const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelP
         sykefraværsprosent && sykefraværsprosent.prosent && !sykefraværsprosent.erMaskert;
 
     const prosent = skalViseProsent ? (
-        <Innholdstittel className="sykefravarsprosentpanel__prosent">
+        <Innholdstittel tag="p" className="sykefravarsprosentpanel__prosent">
             {formaterProsent(sykefraværsprosent!.prosent)}&nbsp;%
         </Innholdstittel>
     ) : (

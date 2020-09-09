@@ -7,6 +7,7 @@ interface Props {
     pathname: string;
     className?: string;
     onClick?: (e: any) => any;
+    ariaCurrentLocation?: boolean;
 }
 
 const InternLenke: FunctionComponent<Props> = (props) => {
@@ -20,6 +21,7 @@ const InternLenke: FunctionComponent<Props> = (props) => {
             }}
             onClick={props.onClick}
             className={classNames('intern-lenke', props.className)}
+            aria-current={props.ariaCurrentLocation && 'location'}
         >
             {props.children}
         </Link>

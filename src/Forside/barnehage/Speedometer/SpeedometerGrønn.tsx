@@ -9,6 +9,7 @@ export const SpeedometerGrønn: FunctionComponent<SpeedometerSvgProps> = ({ stø
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
     >
+        <title>Grønt speedometer der pilen indikerer et lavt tall</title>
         <path
             d="M214 107.174c0-28.16-11.221-55.165-31.193-75.076C162.834 12.186 135.746 1 107.5 1 79.254 1 52.166 12.186 32.193 32.098 12.221 52.009 1 79.015 1 107.174h39.632a66.56 66.56 0 0119.585-47.138A66.972 66.972 0 01107.5 40.511a66.975 66.975 0 0147.283 19.525 66.56 66.56 0 0119.585 47.138H214z"
             fill="#38A161"

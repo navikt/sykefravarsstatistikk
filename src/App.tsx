@@ -68,7 +68,9 @@ const App: FunctionComponent = () => {
                             <SykefraværshistorikkProvider>
                                 <FeatureTogglesProvider>
                                     <TilbakemeldingContextProvider>
-                                        <AppContent />
+                                        <main id="maincontent">
+                                            <AppContent />
+                                        </main>
                                     </TilbakemeldingContextProvider>
                                 </FeatureTogglesProvider>
                             </SykefraværshistorikkProvider>

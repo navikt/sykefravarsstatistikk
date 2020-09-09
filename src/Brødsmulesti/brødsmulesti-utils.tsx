@@ -8,7 +8,7 @@ export interface Brødsmule {
     side: string;
     overordnetSide: string | undefined;
     lenketekst: string;
-    lenke: (innhold: string | ReactElement) => ReactElement;
+    lenke: (innhold: string | ReactElement, ariaCurrentLocation?: boolean) => ReactElement;
 }
 
 const LenkeSomBeholderQuery: FunctionComponent<{ href: string }> = (props) => {
@@ -33,24 +33,30 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
         side: 'sykefraværsstatistikk',
         overordnetSide: 'minSideArbeidsgiver',
         lenketekst: 'Sykefraværsstatistikk',
-        lenke: (innhold: string | ReactElement) => (
-            <InternLenke pathname={PATH_FORSIDE}>{innhold}</InternLenke>
+        lenke: (innhold: string | ReactElement, ariaCurrentLocation?: boolean) => (
+            <InternLenke pathname={PATH_FORSIDE} ariaCurrentLocation={ariaCurrentLocation}>
+                {innhold}
+            </InternLenke>
         ),
     },
     {
         side: 'kalkulator',
         overordnetSide: 'sykefraværsstatistikk',
         lenketekst: 'Kostnadskalkulator',
-        lenke: (innhold: string | ReactElement) => (
-            <InternLenke pathname={PATH_KALKULATOR}>{innhold}</InternLenke>
+        lenke: (innhold: string | ReactElement, ariaCurrentLocation?: boolean) => (
+            <InternLenke pathname={PATH_KALKULATOR} ariaCurrentLocation={ariaCurrentLocation}>
+                {innhold}
+            </InternLenke>
         ),
     },
     {
         side: 'historikk',
         overordnetSide: 'sykefraværsstatistikk',
         lenketekst: 'Sykefraværshistorikk',
-        lenke: (innhold: string | ReactElement) => (
-            <InternLenke pathname={PATH_HISTORIKK}>{innhold}</InternLenke>
+        lenke: (innhold: string | ReactElement, ariaCurrentLocation?: boolean) => (
+            <InternLenke pathname={PATH_HISTORIKK} ariaCurrentLocation={ariaCurrentLocation}>
+                {innhold}
+            </InternLenke>
         ),
     },
 ];
