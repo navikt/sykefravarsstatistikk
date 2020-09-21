@@ -6,12 +6,14 @@ export interface Underenhet {
     organisasjonsnummer: string;
     overordnetEnhet: string;
 }
-export type RestOverordnetEnhet = RestRessurs<OverordnetEnhet>;
 export interface OverordnetEnhet {
     organisasjonsnummer: string;
     institusjonellSektorkode: { kode: string; beskrivelse: string };
 }
+
+export type RestOverordnetEnhet = RestRessurs<OverordnetEnhet>;
 export type RestUnderenhet = RestRessurs<Underenhet>;
+
 export const hentInformasjonOmUnderenhet = async (orgnr: string): Promise<RestUnderenhet> => {
     const response = await fetch(ENHETSREGISTERET_URL + 'underenheter/' + orgnr);
     const restStatus: RestStatus = getRestStatus(response.status);

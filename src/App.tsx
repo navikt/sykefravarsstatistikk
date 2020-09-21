@@ -17,14 +17,8 @@ import { RestVirksomhetMetadata } from './api/virksomhetMetadata';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import { BASE_PATH } from './konstanter';
-import {
-    virksomhetMetadataContext,
-    VirksomhetMetadataProvider,
-} from './utils/virksomhetMetadataContext';
-import {
-    sykefraværshistorikkContext,
-    SykefraværshistorikkProvider,
-} from './utils/sykefraværshistorikkContext';
+import { virksomhetMetadataContext, VirksomhetMetadataProvider } from './utils/virksomhetMetadataContext';
+import { sykefraværshistorikkContext, SykefraværshistorikkProvider } from './utils/sykefraværshistorikkContext';
 import { sendEventDirekte, useMålingAvTidsbruk } from './amplitude/amplitude';
 import {
     altinnOrganisasjonerContext,
@@ -42,14 +36,11 @@ import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/S
 import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
 import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
 import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
-import {
-    sykefraværsvarighetContext,
-    SykefraværsvarighetProvider,
-} from './utils/sykefraværsvarighetContext';
+import { sykefraværsvarighetContext, SykefraværsvarighetProvider } from './utils/sykefraværsvarighetContext';
 import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
 import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
-import { hentInformasjonOmUnderenhet } from './api/enhetsregisteret-api';
+import { EnhetsregisteretProvider } from './utils/enhetsregisteretContext';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -65,17 +56,19 @@ const App: FunctionComponent = () => {
             <AltinnOrganisasjonerProvider>
                 <AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
                     <VirksomhetMetadataProvider>
-                        <SykefraværsvarighetProvider>
-                            <SykefraværshistorikkProvider>
-                                <FeatureTogglesProvider>
-                                    <TilbakemeldingContextProvider>
-                                        <main id="maincontent">
-                                            <AppContent />
-                                        </main>
-                                    </TilbakemeldingContextProvider>
-                                </FeatureTogglesProvider>
-                            </SykefraværshistorikkProvider>
-                        </SykefraværsvarighetProvider>
+                        <EnhetsregisteretProvider>
+                            <SykefraværsvarighetProvider>
+                                <SykefraværshistorikkProvider>
+                                    <FeatureTogglesProvider>
+                                        <TilbakemeldingContextProvider>
+                                            <main id="maincontent">
+                                                <AppContent />
+                                            </main>
+                                        </TilbakemeldingContextProvider>
+                                    </FeatureTogglesProvider>
+                                </SykefraværshistorikkProvider>
+                            </SykefraværsvarighetProvider>
+                        </EnhetsregisteretProvider>
                     </VirksomhetMetadataProvider>
                 </AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
             </AltinnOrganisasjonerProvider>
@@ -96,7 +89,7 @@ const AppContent: FunctionComponent = () => {
     const location = useLocation();
     useSetUserProperties();
     useMålingAvTidsbruk('hele appen', 5, 30, 120, 300);
-    hentInformasjonOmUnderenhet('888888888').then((resultat) => console.log(resultat));
+
     const brukerHarIkkeTilgangTilNoenOrganisasjoner =
         restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
 
