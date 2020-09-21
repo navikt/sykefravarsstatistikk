@@ -11,7 +11,9 @@ const API_GATEWAY_BASEURL = `${envProperties.API_GATEWAY}`;
 
 const listeAvTillatteUrler = [
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk'),
+    new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/summert'),
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/varighetsiste4kvartaler'),
+    new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/kvartalsvis'),
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/bedriftsmetrikker'),
     new RegExp('^' + FRONTEND_API_PATH + '/organisasjoner/statistikk'),
     new RegExp('^' + FRONTEND_API_PATH + '/feature'),
