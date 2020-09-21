@@ -1,11 +1,13 @@
 import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
-import { RestStatus } from '../api/api-utils';
+import { RestRessurs, RestStatus } from '../api/api-utils';
 import { useOrgnr } from './orgnr-hook';
 import {
     hentInformasjonOmOverordnetEnhet,
     hentInformasjonOmUnderenhet,
+    OverordnetEnhet,
     RestOverordnetEnhet,
     RestUnderenhet,
+    Underenhet,
 } from '../api/enhetsregisteret-api';
 
 interface EnhetsregisteretState {
@@ -32,74 +34,67 @@ type OverordnetEnhetState = {
     restOverordnetEnhet: RestOverordnetEnhet;
 }[];
 
-export const EnhetsregisteretProvider: FunctionComponent = (props) => {
+interface DataForVirksomhet<T> {
+    orgnr: string;
+    restData: RestRessurs<T>;
+}
+
+export const useRestDataForFlereVirksomheter = <T extends Object>(
+    hentData: (orgnr: string) => Promise<RestRessurs<T>>
+): [RestRessurs<T>, DataForVirksomhet<T>[]] => {
     const orgnr = useOrgnr();
 
-    const [gjeldendeUnderenhet, setGjeldendeUnderenhet] = useState<RestUnderenhet>({
+    const [gjeldendeData, setGjeldendeData] = useState<RestRessurs<T>>({
         status: RestStatus.IkkeLastet,
     });
 
-    const [underenheter, setUnderenheter] = useState<UnderenheterState>([]);
-
-    const [gjeldendeOverordnetEnhet, setGjeldendeOverordnetEnhet] = useState<RestOverordnetEnhet>({
-        status: RestStatus.IkkeLastet,
-    });
-
-    const [overordnedeEnheter, setOverordnedeEnheter] = useState<OverordnetEnhetState>([]);
+    const [dataForAlleVirksomheter, setDataForAlleVirksomheter] = useState<DataForVirksomhet<T>[]>(
+        []
+    );
 
     useEffect(() => {
         if (orgnr) {
-            const infoOmUnderenhet = underenheter.find((enhet) => enhet.orgnr === orgnr);
+            const dataOmGjeldendeVirksomhet = dataForAlleVirksomheter.find(
+                (data) => data.orgnr === orgnr
+            );
 
-            if (infoOmUnderenhet) {
-                setGjeldendeUnderenhet(infoOmUnderenhet.restUnderenhet);
+            if (dataOmGjeldendeVirksomhet) {
+                setGjeldendeData(dataOmGjeldendeVirksomhet.restData);
             } else {
-                setGjeldendeUnderenhet({
+                setGjeldendeData({
                     status: RestStatus.IkkeLastet,
                 });
-                const hentRestUnderenhetOgSetState = async () => {
-                    const restUnderenhet = await hentInformasjonOmUnderenhet(orgnr);
-                    setGjeldendeUnderenhet(restUnderenhet);
-                    setUnderenheter([
-                        ...underenheter,
+                const hentRestDataOgSetState = async () => {
+                    const restData = await hentData(orgnr);
+                    setGjeldendeData(restData);
+                    setDataForAlleVirksomheter([
+                        ...dataForAlleVirksomheter,
                         {
                             orgnr: orgnr,
-                            restUnderenhet: restUnderenhet,
+                            restData: restData,
                         },
                     ]);
                 };
-                hentRestUnderenhetOgSetState();
+                hentRestDataOgSetState();
             }
         }
-    }, [orgnr, underenheter]);
+    }, [orgnr, dataForAlleVirksomheter, hentData]);
 
-    useEffect(() => {
-        if (orgnr) {
-            const infoOmOverordnetEnhet = overordnedeEnheter.find((enhet) => enhet.orgnr === orgnr);
+    return [gjeldendeData, dataForAlleVirksomheter];
+};
 
-            if (infoOmOverordnetEnhet) {
-                setGjeldendeOverordnetEnhet(infoOmOverordnetEnhet.restOverordnetEnhet);
-            } else {
-                setGjeldendeOverordnetEnhet({
-                    status: RestStatus.IkkeLastet,
-                });
-                const hentRestOverordnetEnhetOgSetState = async () => {
-                    const restOverordnetEnhet = await hentInformasjonOmOverordnetEnhet(orgnr);
-                    setGjeldendeOverordnetEnhet(restOverordnetEnhet);
-                    setOverordnedeEnheter([
-                        ...overordnedeEnheter,
-                        {
-                            orgnr: orgnr,
-                            restOverordnetEnhet: restOverordnetEnhet,
-                        },
-                    ]);
-                };
-                hentRestOverordnetEnhetOgSetState();
-            }
-        }
-    }, [orgnr, overordnedeEnheter]);
+export const EnhetsregisteretProvider: FunctionComponent = (props) => {
+    const [gjeldendeUnderenhet, alleUnderenheter] = useRestDataForFlereVirksomheter<Underenhet>(
+        (orgnr) => hentInformasjonOmUnderenhet(orgnr)
+    );
+    const [gjeldendeOverordnetEnhet, alleOverordnedeEnheter] = useRestDataForFlereVirksomheter<
+        OverordnetEnhet
+    >((orgnr) => hentInformasjonOmOverordnetEnhet(orgnr));
 
     const Provider = enhetsregisteretContext.Provider;
+
+    console.log('gjeldende underenhet', JSON.stringify(gjeldendeUnderenhet));
+    console.log('alle underenheter', JSON.stringify(alleUnderenheter));
 
     const contextValue: EnhetsregisteretState = {
         restUnderenhet: gjeldendeUnderenhet,
