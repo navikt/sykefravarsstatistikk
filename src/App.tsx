@@ -49,6 +49,7 @@ import {
 import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
 import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
+import { hentInformasjonOmUnderenhet } from './api/enhetsregisteret-api';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -95,7 +96,7 @@ const AppContent: FunctionComponent = () => {
     const location = useLocation();
     useSetUserProperties();
     useMålingAvTidsbruk('hele appen', 5, 30, 120, 300);
-
+    hentInformasjonOmUnderenhet('888888888').then((resultat) => console.log(resultat));
     const brukerHarIkkeTilgangTilNoenOrganisasjoner =
         restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
 

@@ -1,9 +1,9 @@
 import fetchMock from 'fetch-mock';
-import { enhetsregisteretMockRespons } from './enhetsregisteret';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './organisasjoner';
 import { getSykefraværshistorikkMock } from './sykefraværshistorikk';
 import { Bransjetype } from '../api/virksomhetMetadata';
 import { sykefraværsvarighetMock } from './sykefraværsvarighet';
+import { OverordnetEnhet, Underenhet } from '../api/enhetsregisteret-api';
 
 const mock = {
     minSideArbeidsgiver: true,
@@ -102,18 +102,24 @@ if (mock.sykefraværsstatistikkApi) {
 }
 
 if (mock.enhetsregisteret) {
-    fetchMock.get(
-        'begin:https://data.brreg.no/enhetsregisteret/api/enheter/?organisasjonsnummer=',
-        (url) => {
-            const query = new URLSearchParams(url.split('?')[1]);
+    fetchMock.get('begin:https://data.brreg.no/enhetsregisteret/api/enheter/', (url) => {
+        const orgnr = url.match(/[0-9]{9}/)![0];
 
-            return enhetsregisteretMockRespons(
-                query.get('organisasjonsnummer')!,
-                'test AS',
-                '999999999'
-            );
-        }
-    );
+        const overordnetEnhet: OverordnetEnhet = {
+            organisasjonsnummer: orgnr /*query.get('organisasjonsnummer')!*/,
+            institusjonellSektorkode: { kode: '6500', beskrivelse: 'Offentlig sektor' },
+        };
+        return overordnetEnhet;
+    });
+    fetchMock.get('begin:https://data.brreg.no/enhetsregisteret/api/underenheter/', (url) => {
+        const orgnr = url.match(/[0-9]{9}/)![0];
+
+        const underenhet: Underenhet = {
+            organisasjonsnummer: orgnr,
+            overordnetEnhet: '777777777',
+        };
+        return underenhet;
+    });
 }
 
 if (mock.featureToggles) {
