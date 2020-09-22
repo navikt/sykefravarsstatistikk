@@ -6,7 +6,11 @@ import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
 } from '../utils/altinnOrganisasjonerContext';
-import { tilSegmenteringAntallVirksomheter, tilTiendedeler } from './segmentering';
+import {
+    AntallVirksomheterSegmentering,
+    tilSegmenteringAntallVirksomheter,
+    tilTiendedeler,
+} from './segmentering';
 
 const hentAntallUnderenheter = (organisasjoner: AltinnOrganisasjon[]): number =>
     organisasjoner.filter(
@@ -20,7 +24,7 @@ export const useSetUserProperties = () => {
     );
     useEffect(() => {
         if (restOrganisasjoner.status === RestStatus.Suksess) {
-            const segmentering = tilSegmenteringAntallVirksomheter(
+            const segmentering: AntallVirksomheterSegmentering = tilSegmenteringAntallVirksomheter(
                 hentAntallUnderenheter(restOrganisasjoner.data)
             );
             setUserProperties({

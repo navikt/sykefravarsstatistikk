@@ -24,16 +24,6 @@ export const enhetsregisteretContext = createContext<EnhetsregisteretState>({
     },
 });
 
-type UnderenheterState = {
-    orgnr: string;
-    restUnderenhet: RestUnderenhet;
-}[];
-
-type OverordnetEnhetState = {
-    orgnr: string;
-    restOverordnetEnhet: RestOverordnetEnhet;
-}[];
-
 interface DataForVirksomhet<T> {
     orgnr: string;
     restData: RestRessurs<T>;
@@ -84,21 +74,19 @@ export const useRestDataForFlereVirksomheter = <T extends Object>(
 };
 
 export const EnhetsregisteretProvider: FunctionComponent = (props) => {
-    const [gjeldendeUnderenhet, alleUnderenheter] = useRestDataForFlereVirksomheter<Underenhet>(
+    const [gjeldendeUnderenhet] = useRestDataForFlereVirksomheter<Underenhet>(
         (orgnr) => hentInformasjonOmUnderenhet(orgnr)
     );
-    const [gjeldendeOverordnetEnhet, alleOverordnedeEnheter] = useRestDataForFlereVirksomheter<
+    const [gjeldendeOverordnetEnhet] = useRestDataForFlereVirksomheter<
         OverordnetEnhet
     >((orgnr) => hentInformasjonOmOverordnetEnhet(orgnr));
 
     const Provider = enhetsregisteretContext.Provider;
 
-    console.log('gjeldende underenhet', JSON.stringify(gjeldendeUnderenhet));
-    console.log('alle underenheter', JSON.stringify(alleUnderenheter));
-
     const contextValue: EnhetsregisteretState = {
         restUnderenhet: gjeldendeUnderenhet,
         restOverordnetEnhet: gjeldendeOverordnetEnhet,
     };
+
     return <Provider value={contextValue}>{props.children}</Provider>;
 };

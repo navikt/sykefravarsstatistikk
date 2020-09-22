@@ -7,9 +7,10 @@ import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkContext';
 import { konverterTilKvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
 import {
+    AntallAnsatteSegmentering, SegmenteringSammenligning, SegmenteringSykefraværsprosent,
     tilSegmenteringAntallAnsatte,
     tilSegmenteringSammenligning,
-    tilSegmenteringSykefraværprosent,
+    tilSegmenteringSykefraværsprosent,
 } from './segmentering';
 import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
 import { RestSykefraværsvarighet } from '../api/sykefraværsvarighet';
@@ -19,6 +20,8 @@ import {
     getTotaltSykefraværSiste4Kvartaler,
     sykefraværForBarnehagerSiste4Kvartaler,
 } from '../Forside/barnehage/barnehage-utils';
+import { RestOverordnetEnhet } from '../api/enhetsregisteret-api';
+import { SykefraværResultat } from '../Forside/barnehage/Speedometer/Speedometer';
 
 const getApiKey = () => {
     return window.location.hostname === 'arbeidsgiver.nav.no'
@@ -43,9 +46,22 @@ export const sendEventDirekte = (område: string, hendelse: string, data?: Objec
 
 type SendEvent = (område: string, hendelse: string, data?: Object) => void;
 
+interface Ekstradata {
+    næring2siffer: string;
+    bransje: string;
+    antallAnsatte: AntallAnsatteSegmentering;
+
+    prosent: SegmenteringSykefraværsprosent;
+    sammenligning: SegmenteringSammenligning;
+
+    sykefraværSiste4Kvartaler: SykefraværResultat;
+    korttidSiste4Kvartaler: SykefraværResultat;
+    langtidSiste4Kvartaler: SykefraværResultat
+}
+
 const hentEkstraDataFraVirksomhetMetadata = (
     restVirksomhetMetadata: RestVirksomhetMetadata
-): Object => {
+): Partial<Ekstradata> => {
     if (restVirksomhetMetadata.status === RestStatus.Suksess) {
         const metrikker = restVirksomhetMetadata.data;
         const næringskode2siffer = metrikker.næringskode5Siffer.kode.substring(0, 2);
@@ -63,7 +79,7 @@ const hentEkstraDataFraVirksomhetMetadata = (
 
 const hentEkstraDataFraSykefraværshistorikk = (
     restSykefraværshistorikk: RestSykefraværshistorikk
-): Object => {
+): Partial<Ekstradata> => {
     if (restSykefraværshistorikk.status === RestStatus.Suksess) {
         const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
             restSykefraværshistorikk.data
@@ -76,7 +92,7 @@ const hentEkstraDataFraSykefraværshistorikk = (
 
             if (virksomhet) {
                 return {
-                    prosent: tilSegmenteringSykefraværprosent(virksomhet),
+                    prosent: tilSegmenteringSykefraværsprosent(virksomhet),
                     sammenligning: tilSegmenteringSammenligning(virksomhet, næringEllerBransje),
                 };
             }
@@ -85,10 +101,25 @@ const hentEkstraDataFraSykefraværshistorikk = (
     return {};
 };
 
+// TODO
+const hentEkstraDataFraEnhetsregisteret = (
+    restOverordnetEnhet: RestOverordnetEnhet,
+    restVirksomhetMetadata: RestVirksomhetMetadata
+): Object => {
+    if (
+        restVirksomhetMetadata.status === RestStatus.Suksess &&
+        restVirksomhetMetadata.data.bransje === Bransjetype.BARNEHAGER &&
+        restOverordnetEnhet.status === RestStatus.Suksess
+    ) {
+        return {sektor: ""};
+    }
+    return {};
+};
+
 const hentEkstraDataFraSykefraværsvarighet = (
     restSykefraværsvarighet: RestSykefraværsvarighet,
     restVirksomhetMetadata: RestVirksomhetMetadata
-): Object => {
+): Partial<Ekstradata> => {
     if (
         restVirksomhetMetadata.status !== RestStatus.Suksess ||
         restVirksomhetMetadata.data.bransje !== Bransjetype.BARNEHAGER
@@ -137,7 +168,7 @@ export const useSendEvent = (): SendEvent => {
         sykefraværshistorikkContext
     );
     const restSykefraværsvarighet = useContext<RestSykefraværsvarighet>(sykefraværsvarighetContext);
-    const ekstradata = useRef<Object>({});
+    const ekstradata = useRef<Partial<Ekstradata>>({});
 
     useEffect(() => {
         ekstradata.current = {
