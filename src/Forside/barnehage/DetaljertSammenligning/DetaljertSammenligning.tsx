@@ -33,7 +33,7 @@ export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefrav�
 
     const varighet = restSykefraværsvarighet.data;
 
-    const korttidVirksomhet = varighet.korttidsfraværSiste4Kvartaler;
+    const korttidVirksomhet = varighet.summertKorttidsfravær;
     const korttidBransje = sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær;
     const resultatKorttid = getResultatForSammenligningAvSykefravær(
         restSykefraværsvarighet.status,
@@ -41,7 +41,7 @@ export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefrav�
         korttidBransje
     );
 
-    const langtidVirksomhet = varighet.langtidsfraværSiste4Kvartaler;
+    const langtidVirksomhet = varighet.summertLangtidsfravær;
     const langtidBransje = sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær;
     const resultatLangtid = getResultatForSammenligningAvSykefravær(
         restSykefraværsvarighet.status,

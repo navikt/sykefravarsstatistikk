@@ -1,13 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { SykefraværSiste4Kvartaler } from '../../../../api/sykefraværsvarighet';
+import { SummertSykefravær } from '../../../../api/sykefraværsvarighet';
 import { SykefraværResultat } from '../../Speedometer/Speedometer';
 import { Prosent } from '../../Prosent';
 import './DetaljertSammenligningLesMer.less';
 import { getGrønnGrenseTekst, getRødGrenseTekst } from '../../barnehage-utils';
 
 interface Props {
-    korttidsfraværSiste4KvartalerVirksomhet: SykefraværSiste4Kvartaler;
+    korttidsfraværSiste4KvartalerVirksomhet: SummertSykefravær;
     korttidsfraværSiste4KvartalerBransje: number;
     resultat: SykefraværResultat;
 }
