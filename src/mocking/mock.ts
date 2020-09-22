@@ -28,7 +28,7 @@ if (mock.minSideArbeidsgiver) {
 
 if (mock.sykefraværsstatistikkApi) {
     fetchMock.get(
-        'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk',
+        'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/kvartalsvis',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
             if (orgnr === '101010101') {
@@ -44,7 +44,7 @@ if (mock.sykefraværsstatistikkApi) {
         }
     );
     fetchMock.get(
-        'express:/sykefravarsstatistikk/api/:orgnr/varighetsiste4kvartaler',
+        'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/summert',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
             if (['101010101', '888888884'].includes(orgnr)) {

@@ -1,7 +1,7 @@
 import { RestRessurs } from './api-utils';
 import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
 
-export interface SykefraværSiste4Kvartaler {
+export interface SummertSykefravær {
     prosent: number | null;
     tapteDagsverk: number | null;
     muligeDagsverk: number | null;
@@ -10,18 +10,18 @@ export interface SykefraværSiste4Kvartaler {
 }
 
 export interface Sykefraværsvarighet {
-    korttidsfraværSiste4Kvartaler: SykefraværSiste4Kvartaler;
-    langtidsfraværSiste4Kvartaler: SykefraværSiste4Kvartaler;
+    summertKorttidsfravær: SummertSykefravær;
+    summertLangtidsfravær: SummertSykefravær;
 }
 
 export const erMaskert = (sykefraværsvarighet: Sykefraværsvarighet) => {
-    return sykefraværsvarighet.langtidsfraværSiste4Kvartaler.erMaskert;
+    return sykefraværsvarighet.summertLangtidsfravær.erMaskert;
 };
 
 export const harSykefraværEllerErMaskert = (sykefraværsvarighet: Sykefraværsvarighet) => {
     return (
-        sykefraværsvarighet.langtidsfraværSiste4Kvartaler.erMaskert ||
-        sykefraværsvarighet.langtidsfraværSiste4Kvartaler.kvartaler.length !== 0
+        sykefraværsvarighet.summertLangtidsfravær.erMaskert ||
+        sykefraværsvarighet.summertLangtidsfravær.kvartaler.length !== 0
     );
 };
 

@@ -45,7 +45,7 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
         restSykefraværsvarighet.status === RestStatus.Suksess
             ? restSykefraværsvarighet.data
             : undefined;
-    const kvartaler = varighet?.korttidsfraværSiste4Kvartaler.kvartaler.slice().reverse();
+    const kvartaler = varighet?.summertKorttidsfravær.kvartaler.slice().reverse();
 
     const totaltSykefraværSiste4Kvartaler = getTotaltSykefraværSiste4Kvartaler(varighet);
     const sykefraværVirksomhet = totaltSykefraværSiste4Kvartaler?.prosent;
