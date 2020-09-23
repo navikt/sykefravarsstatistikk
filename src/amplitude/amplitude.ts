@@ -22,7 +22,7 @@ import {
     getTotaltSykefraværSiste4Kvartaler,
     sykefraværForBarnehagerSiste4Kvartaler,
 } from '../Forside/barnehage/barnehage-utils';
-import {InstitusjonellSektorkode, RestOverordnetEnhet} from '../api/enhetsregisteret-api';
+import { InstitusjonellSektorkode, RestOverordnetEnhet } from '../api/enhetsregisteret-api';
 import { SykefraværResultat } from '../Forside/barnehage/Speedometer/Speedometer';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
 
@@ -191,7 +191,12 @@ export const useSendEvent = (): SendEvent => {
                 restVirksomhetMetadata
             ),
         };
-    }, [restVirksomhetMetadata, restOverordnetEnhet, restSykefraværshistorikk, restSykefraværsvarighet]);
+    }, [
+        restVirksomhetMetadata,
+        restOverordnetEnhet,
+        restSykefraværshistorikk,
+        restSykefraværsvarighet,
+    ]);
 
     return (område: string, hendelse: string, data?: Object) =>
         sendEventDirekte(område, hendelse, { ...ekstradata.current, ...data });
