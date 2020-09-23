@@ -17,8 +17,14 @@ import { RestVirksomhetMetadata } from './api/virksomhetMetadata';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import { BASE_PATH } from './konstanter';
-import { virksomhetMetadataContext, VirksomhetMetadataProvider } from './utils/virksomhetMetadataContext';
-import { sykefraværshistorikkContext, SykefraværshistorikkProvider } from './utils/sykefraværshistorikkContext';
+import {
+    virksomhetMetadataContext,
+    VirksomhetMetadataProvider,
+} from './utils/virksomhetMetadataContext';
+import {
+    sykefraværshistorikkContext,
+    SykefraværshistorikkProvider,
+} from './utils/sykefraværshistorikkContext';
 import { sendEventDirekte, useMålingAvTidsbruk } from './amplitude/amplitude';
 import {
     altinnOrganisasjonerContext,
@@ -36,7 +42,10 @@ import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/S
 import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
 import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
 import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
-import { sykefraværsvarighetContext, SykefraværsvarighetProvider } from './utils/sykefraværsvarighetContext';
+import {
+    sykefraværsvarighetContext,
+    SykefraværsvarighetProvider,
+} from './utils/sykefraværsvarighetContext';
 import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
 import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';

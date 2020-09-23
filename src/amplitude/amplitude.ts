@@ -7,7 +7,9 @@ import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkContext';
 import { konverterTilKvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
 import {
-    AntallAnsatteSegmentering, SegmenteringSammenligning, SegmenteringSykefraværsprosent,
+    AntallAnsatteSegmentering,
+    SegmenteringSammenligning,
+    SegmenteringSykefraværsprosent,
     tilSegmenteringAntallAnsatte,
     tilSegmenteringSammenligning,
     tilSegmenteringSykefraværsprosent,
@@ -22,6 +24,7 @@ import {
 } from '../Forside/barnehage/barnehage-utils';
 import { RestOverordnetEnhet } from '../api/enhetsregisteret-api';
 import { SykefraværResultat } from '../Forside/barnehage/Speedometer/Speedometer';
+import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
 
 const getApiKey = () => {
     return window.location.hostname === 'arbeidsgiver.nav.no'
@@ -56,7 +59,7 @@ interface Ekstradata {
 
     sykefraværSiste4Kvartaler: SykefraværResultat;
     korttidSiste4Kvartaler: SykefraværResultat;
-    langtidSiste4Kvartaler: SykefraværResultat
+    langtidSiste4Kvartaler: SykefraværResultat;
 }
 
 const hentEkstraDataFraVirksomhetMetadata = (
@@ -111,7 +114,7 @@ const hentEkstraDataFraEnhetsregisteret = (
         restVirksomhetMetadata.data.bransje === Bransjetype.BARNEHAGER &&
         restOverordnetEnhet.status === RestStatus.Suksess
     ) {
-        return {sektor: ""};
+        return { sektor: restOverordnetEnhet.data.institusjonellSektorkode };
     }
     return {};
 };
@@ -167,8 +170,11 @@ export const useSendEvent = (): SendEvent => {
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
+    console.log(restSykefraværshistorikk);
     const restSykefraværsvarighet = useContext<RestSykefraværsvarighet>(sykefraværsvarighetContext);
     const ekstradata = useRef<Partial<Ekstradata>>({});
+
+    const restOverordnetEnhet = useContext<EnhetsregisteretState>(enhetsregisteretContext);
 
     useEffect(() => {
         ekstradata.current = {
@@ -176,6 +182,10 @@ export const useSendEvent = (): SendEvent => {
             ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
             ...hentEkstraDataFraSykefraværsvarighet(
                 restSykefraværsvarighet,
+                restVirksomhetMetadata
+            ),
+            ...hentEkstraDataFraEnhetsregisteret(
+                restOverordnetEnhet.restOverordnetEnhet,
                 restVirksomhetMetadata
             ),
         };

@@ -10,7 +10,7 @@ import {
     Underenhet,
 } from '../api/enhetsregisteret-api';
 
-interface EnhetsregisteretState {
+export interface EnhetsregisteretState {
     restUnderenhet: RestUnderenhet;
     restOverordnetEnhet: RestOverordnetEnhet;
 }
@@ -74,12 +74,12 @@ export const useRestDataForFlereVirksomheter = <T extends Object>(
 };
 
 export const EnhetsregisteretProvider: FunctionComponent = (props) => {
-    const [gjeldendeUnderenhet] = useRestDataForFlereVirksomheter<Underenhet>(
-        (orgnr) => hentInformasjonOmUnderenhet(orgnr)
+    const [gjeldendeUnderenhet] = useRestDataForFlereVirksomheter<Underenhet>((orgnr) =>
+        hentInformasjonOmUnderenhet(orgnr)
     );
-    const [gjeldendeOverordnetEnhet] = useRestDataForFlereVirksomheter<
-        OverordnetEnhet
-    >((orgnr) => hentInformasjonOmOverordnetEnhet(orgnr));
+    const [gjeldendeOverordnetEnhet] = useRestDataForFlereVirksomheter<OverordnetEnhet>((orgnr) =>
+        hentInformasjonOmOverordnetEnhet(orgnr)
+    );
 
     const Provider = enhetsregisteretContext.Provider;
 
