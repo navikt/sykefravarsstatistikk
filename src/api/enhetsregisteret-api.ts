@@ -6,9 +6,15 @@ export interface Underenhet {
     organisasjonsnummer: string;
     overordnetEnhet: string;
 }
+
+export interface InstitusjonellSektorkode {
+    verdi: string;
+    beskrivelse: string;
+}
+
 export interface OverordnetEnhet {
     organisasjonsnummer: string;
-    institusjonellSektorkode: { kode: string; beskrivelse: string };
+    institusjonellSektorkode: InstitusjonellSektorkode;
 }
 
 export type RestOverordnetEnhet = RestRessurs<OverordnetEnhet>;

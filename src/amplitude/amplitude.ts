@@ -22,7 +22,7 @@ import {
     getTotaltSykefraværSiste4Kvartaler,
     sykefraværForBarnehagerSiste4Kvartaler,
 } from '../Forside/barnehage/barnehage-utils';
-import { RestOverordnetEnhet } from '../api/enhetsregisteret-api';
+import {InstitusjonellSektorkode, RestOverordnetEnhet} from '../api/enhetsregisteret-api';
 import { SykefraværResultat } from '../Forside/barnehage/Speedometer/Speedometer';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
 
@@ -60,6 +60,8 @@ interface Ekstradata {
     sykefraværSiste4Kvartaler: SykefraværResultat;
     korttidSiste4Kvartaler: SykefraværResultat;
     langtidSiste4Kvartaler: SykefraværResultat;
+
+    sektor: InstitusjonellSektorkode;
 }
 
 const hentEkstraDataFraVirksomhetMetadata = (
@@ -104,11 +106,10 @@ const hentEkstraDataFraSykefraværshistorikk = (
     return {};
 };
 
-// TODO
 const hentEkstraDataFraEnhetsregisteret = (
     restOverordnetEnhet: RestOverordnetEnhet,
     restVirksomhetMetadata: RestVirksomhetMetadata
-): Object => {
+): Partial<Ekstradata> => {
     if (
         restVirksomhetMetadata.status === RestStatus.Suksess &&
         restVirksomhetMetadata.data.bransje === Bransjetype.BARNEHAGER &&
@@ -167,11 +168,12 @@ const hentEkstraDataFraSykefraværsvarighet = (
 
 export const useSendEvent = (): SendEvent => {
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
+
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
-    console.log(restSykefraværshistorikk);
     const restSykefraværsvarighet = useContext<RestSykefraværsvarighet>(sykefraværsvarighetContext);
+
     const ekstradata = useRef<Partial<Ekstradata>>({});
 
     const restOverordnetEnhet = useContext<EnhetsregisteretState>(enhetsregisteretContext);
@@ -189,7 +191,7 @@ export const useSendEvent = (): SendEvent => {
                 restVirksomhetMetadata
             ),
         };
-    }, [restVirksomhetMetadata, restSykefraværshistorikk, restSykefraværsvarighet]);
+    }, [restVirksomhetMetadata, restOverordnetEnhet, restSykefraværshistorikk, restSykefraværsvarighet]);
 
     return (område: string, hendelse: string, data?: Object) =>
         sendEventDirekte(område, hendelse, { ...ekstradata.current, ...data });
