@@ -8,7 +8,7 @@ env:
 jobs:
     compile-test-and-build:
         name: Build and run tests
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/tilbakemeldingsknapper-maalinger'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/hente-sektor-fra-enhetsregisteret'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
