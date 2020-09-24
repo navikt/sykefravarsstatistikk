@@ -22,9 +22,10 @@ import {
     getTotaltSykefraværSiste4Kvartaler,
     sykefraværForBarnehagerSiste4Kvartaler,
 } from '../Forside/barnehage/barnehage-utils';
-import { InstitusjonellSektorkode, RestOverordnetEnhet } from '../api/enhetsregisteret-api';
+import { RestOverordnetEnhet } from '../api/enhetsregisteret-api';
 import { SykefraværResultat } from '../Forside/barnehage/Speedometer/Speedometer';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
+import { mapTilPrivatElleOffentligSektor } from '../utils/amplitude-utils';
 
 const getApiKey = () => {
     return window.location.hostname === 'arbeidsgiver.nav.no'
@@ -47,6 +48,7 @@ export const sendEventDirekte = (område: string, hendelse: string, data?: Objec
     instance.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
 };
 
+export type Sektor = 'offentlig' | 'privat';
 type SendEvent = (område: string, hendelse: string, data?: Object) => void;
 
 interface Ekstradata {
@@ -61,7 +63,7 @@ interface Ekstradata {
     korttidSiste4Kvartaler: SykefraværResultat;
     langtidSiste4Kvartaler: SykefraværResultat;
 
-    sektor: InstitusjonellSektorkode;
+    sektor: Sektor;
 }
 
 const hentEkstraDataFraVirksomhetMetadata = (
@@ -115,7 +117,11 @@ const hentEkstraDataFraEnhetsregisteret = (
         restVirksomhetMetadata.data.bransje === Bransjetype.BARNEHAGER &&
         restOverordnetEnhet.status === RestStatus.Suksess
     ) {
-        return { sektor: restOverordnetEnhet.data.institusjonellSektorkode };
+        return {
+            sektor: mapTilPrivatElleOffentligSektor(
+                restOverordnetEnhet.data.institusjonellSektorkode
+            ),
+        };
     }
     return {};
 };

@@ -30,9 +30,9 @@ interface DataForVirksomhet<T> {
 }
 
 export const useRestDataForFlereVirksomheter = <T extends Object>(
-    hentData: (orgnr: string) => Promise<RestRessurs<T>>
+    hentData: (orgnr: string) => Promise<RestRessurs<T>>,
+    orgnr: string | undefined
 ): [RestRessurs<T>, DataForVirksomhet<T>[]] => {
-    const orgnr = useOrgnr();
 
     const [gjeldendeData, setGjeldendeData] = useState<RestRessurs<T>>({
         status: RestStatus.IkkeLastet,
@@ -74,11 +74,17 @@ export const useRestDataForFlereVirksomheter = <T extends Object>(
 };
 
 export const EnhetsregisteretProvider: FunctionComponent = (props) => {
-    const [gjeldendeUnderenhet] = useRestDataForFlereVirksomheter<Underenhet>((orgnr) =>
-        hentInformasjonOmUnderenhet(orgnr)
+    const underenhetOrgnr = useOrgnr();
+
+    const [gjeldendeUnderenhet] = useRestDataForFlereVirksomheter<Underenhet>(
+        hentInformasjonOmUnderenhet,
+        underenhetOrgnr
     );
-    const [gjeldendeOverordnetEnhet] = useRestDataForFlereVirksomheter<OverordnetEnhet>((orgnr) =>
-        hentInformasjonOmOverordnetEnhet(orgnr)
+    const [gjeldendeOverordnetEnhet] = useRestDataForFlereVirksomheter<OverordnetEnhet>(
+        hentInformasjonOmOverordnetEnhet,
+        gjeldendeUnderenhet.status === RestStatus.Suksess
+            ? gjeldendeUnderenhet.data.overordnetEnhet
+            : undefined
     );
 
     const Provider = enhetsregisteretContext.Provider;
