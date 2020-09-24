@@ -1,7 +1,6 @@
-import { mapTilPrivatElleOffentligSektor } from './amplitude-utils';
+import { mapTilPrivatElleOffentligSektor } from './sektorUtils';
 
-describe('Tester for amplitude funksjoner', () => {
-    '
+describe('Tester for sektorUtils funksjoner', () => {
     test('mapTilPrivatElleOffentligSektor returnerer "offentlig" eller "private" avhengig av institusjonell sektor kode', () => {
         const resulatMedOffentligSektorkode = mapTilPrivatElleOffentligSektor({
             verdi: '6500',

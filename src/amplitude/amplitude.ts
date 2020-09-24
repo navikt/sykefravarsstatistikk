@@ -25,7 +25,7 @@ import {
 import { RestOverordnetEnhet } from '../api/enhetsregisteret-api';
 import { SykefraværResultat } from '../Forside/barnehage/Speedometer/Speedometer';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
-import { mapTilPrivatElleOffentligSektor } from '../utils/amplitude-utils';
+import { mapTilPrivatElleOffentligSektor } from '../utils/sektorUtils';
 
 const getApiKey = () => {
     return window.location.hostname === 'arbeidsgiver.nav.no'
