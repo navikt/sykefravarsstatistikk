@@ -49,6 +49,7 @@ import {
 import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
 import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
+import { EnhetsregisteretProvider } from './utils/enhetsregisteretContext';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -64,17 +65,19 @@ const App: FunctionComponent = () => {
             <AltinnOrganisasjonerProvider>
                 <AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
                     <VirksomhetMetadataProvider>
-                        <SykefraværsvarighetProvider>
-                            <SykefraværshistorikkProvider>
-                                <FeatureTogglesProvider>
-                                    <TilbakemeldingContextProvider>
-                                        <main id="maincontent">
-                                            <AppContent />
-                                        </main>
-                                    </TilbakemeldingContextProvider>
-                                </FeatureTogglesProvider>
-                            </SykefraværshistorikkProvider>
-                        </SykefraværsvarighetProvider>
+                        <EnhetsregisteretProvider>
+                            <SykefraværsvarighetProvider>
+                                <SykefraværshistorikkProvider>
+                                    <FeatureTogglesProvider>
+                                        <TilbakemeldingContextProvider>
+                                            <main id="maincontent">
+                                                <AppContent />
+                                            </main>
+                                        </TilbakemeldingContextProvider>
+                                    </FeatureTogglesProvider>
+                                </SykefraværshistorikkProvider>
+                            </SykefraværsvarighetProvider>
+                        </EnhetsregisteretProvider>
                     </VirksomhetMetadataProvider>
                 </AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
             </AltinnOrganisasjonerProvider>
