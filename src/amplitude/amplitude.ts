@@ -158,12 +158,12 @@ const hentEkstraDataFraSykefraværsvarighet = (
             ),
             korttidSiste4Kvartaler: getResultatForSammenligningAvSykefravær(
                 restSykefraværsvarighet.status,
-                varighet?.korttidsfraværSiste4Kvartaler,
+                varighet?.summertKorttidsfravær,
                 sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær
             ),
             langtidSiste4Kvartaler: getResultatForSammenligningAvSykefravær(
                 restSykefraværsvarighet.status,
-                varighet?.langtidsfraværSiste4Kvartaler,
+                varighet?.summertLangtidsfravær,
                 sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær
             ),
         };

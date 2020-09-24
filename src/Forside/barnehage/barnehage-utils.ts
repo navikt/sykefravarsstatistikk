@@ -1,4 +1,4 @@
-import { SykefraværSiste4Kvartaler, Sykefraværsvarighet } from '../../api/sykefraværsvarighet';
+import { SummertSykefravær, Sykefraværsvarighet } from '../../api/sykefraværsvarighet';
 import { SykefraværResultat } from './Speedometer/Speedometer';
 import { RestStatus } from '../../api/api-utils';
 import { ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
@@ -31,7 +31,7 @@ export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
 
 export const getResultatForSammenligningAvSykefravær = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,
-    sykefravær: SykefraværSiste4Kvartaler | undefined,
+    sykefravær: SummertSykefravær | undefined,
     bransjensProsent: number
 ): SykefraværResultat => {
     switch (restStatus) {
@@ -63,10 +63,10 @@ export const getResultatForSammenligningAvSykefravær = (
 
 export const getTotaltSykefraværSiste4Kvartaler = (
     varighet: Sykefraværsvarighet | undefined
-): SykefraværSiste4Kvartaler | undefined => {
+): SummertSykefravær | undefined => {
     if (varighet === undefined) return undefined;
-    const korttid = varighet.korttidsfraværSiste4Kvartaler;
-    const langtid = varighet.langtidsfraværSiste4Kvartaler;
+    const korttid = varighet.summertKorttidsfravær;
+    const langtid = varighet.summertLangtidsfravær;
     return {
         kvartaler: korttid.kvartaler,
         tapteDagsverk: addEllerReturnerNull(korttid.tapteDagsverk, langtid.tapteDagsverk),

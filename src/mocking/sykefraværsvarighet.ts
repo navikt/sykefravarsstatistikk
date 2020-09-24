@@ -1,14 +1,14 @@
 import { Sykefraværsvarighet } from '../api/sykefraværsvarighet';
 
 const sykefraværsvarighetMockMaskert = {
-    korttidsfraværSiste4Kvartaler: {
+    summertKorttidsfravær: {
         prosent: null,
         tapteDagsverk: null,
         muligeDagsverk: null,
         erMaskert: true,
         kvartaler: [],
     },
-    langtidsfraværSiste4Kvartaler: {
+    summertLangtidsfravær: {
         prosent: null,
         tapteDagsverk: null,
         muligeDagsverk: null,
@@ -18,14 +18,14 @@ const sykefraværsvarighetMockMaskert = {
 };
 
 const sykefraværsvarighetMockUtenData = {
-    korttidsfraværSiste4Kvartaler: {
+    summertKorttidsfravær: {
         prosent: null,
         tapteDagsverk: null,
         muligeDagsverk: null,
         erMaskert: false,
         kvartaler: [],
     },
-    langtidsfraværSiste4Kvartaler: {
+    summertLangtidsfravær: {
         prosent: null,
         tapteDagsverk: null,
         muligeDagsverk: null,
@@ -35,7 +35,7 @@ const sykefraværsvarighetMockUtenData = {
 };
 
 const sykefraværsvarighetMockMedBare2AvKvartaler = {
-    korttidsfraværSiste4Kvartaler: {
+    summertKorttidsfravær: {
         prosent: 2.3,
         tapteDagsverk: 140.6,
         muligeDagsverk: 3990.4,
@@ -51,7 +51,7 @@ const sykefraværsvarighetMockMedBare2AvKvartaler = {
             },
         ],
     },
-    langtidsfraværSiste4Kvartaler: {
+    summertLangtidsfravær: {
         prosent: 6.1,
         tapteDagsverk: 116.7,
         muligeDagsverk: 3990.4,
@@ -88,14 +88,14 @@ const siste4Kvartaler = [
 ];
 
 const sykefraværsvarighetMockMedSiste4Kvartaler = {
-    korttidsfraværSiste4Kvartaler: {
+    summertKorttidsfravær: {
         prosent: 2.3,
         tapteDagsverk: 140.6,
         muligeDagsverk: 3990.4,
         erMaskert: false,
         kvartaler: siste4Kvartaler,
     },
-    langtidsfraværSiste4Kvartaler: {
+    summertLangtidsfravær: {
         prosent: 6.1,
         tapteDagsverk: 116.7,
         muligeDagsverk: 3990.4,
@@ -104,14 +104,14 @@ const sykefraværsvarighetMockMedSiste4Kvartaler = {
     },
 };
 const sykefraværsvarighetMockGrønn = {
-    korttidsfraværSiste4Kvartaler: {
+    summertKorttidsfravær: {
         prosent: 0.8,
         tapteDagsverk: 140.6,
         muligeDagsverk: 3990.4,
         erMaskert: false,
         kvartaler: siste4Kvartaler,
     },
-    langtidsfraværSiste4Kvartaler: {
+    summertLangtidsfravær: {
         prosent: 5.9,
         tapteDagsverk: 116.7,
         muligeDagsverk: 3990.4,
@@ -120,14 +120,14 @@ const sykefraværsvarighetMockGrønn = {
     },
 };
 const sykefraværsvarighetMockGul = {
-    korttidsfraværSiste4Kvartaler: {
+    summertKorttidsfravær: {
         prosent: 1.2,
         tapteDagsverk: 140.6,
         muligeDagsverk: 3990.4,
         erMaskert: false,
         kvartaler: siste4Kvartaler,
     },
-    langtidsfraværSiste4Kvartaler: {
+    summertLangtidsfravær: {
         prosent: 7.3,
         tapteDagsverk: 116.7,
         muligeDagsverk: 3990.4,
@@ -136,14 +136,14 @@ const sykefraværsvarighetMockGul = {
     },
 };
 const sykefraværsvarighetMockRød = {
-    korttidsfraværSiste4Kvartaler: {
+    summertKorttidsfravær: {
         prosent: 1.8,
         tapteDagsverk: 140.6,
         muligeDagsverk: 3990.4,
         erMaskert: false,
         kvartaler: siste4Kvartaler,
     },
-    langtidsfraværSiste4Kvartaler: {
+    summertLangtidsfravær: {
         prosent: 10.4,
         tapteDagsverk: 116.7,
         muligeDagsverk: 3990.4,

@@ -33,7 +33,6 @@ export const useRestDataForFlereVirksomheter = <T extends Object>(
     hentData: (orgnr: string) => Promise<RestRessurs<T>>,
     orgnr: string | undefined
 ): [RestRessurs<T>, DataForVirksomhet<T>[]] => {
-
     const [gjeldendeData, setGjeldendeData] = useState<RestRessurs<T>>({
         status: RestStatus.IkkeLastet,
     });
