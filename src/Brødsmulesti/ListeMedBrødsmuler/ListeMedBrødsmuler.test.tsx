@@ -48,23 +48,6 @@ describe('Tester for ListeMedBrødsmuler', () => {
             false
         );
     });
-
-    it('Gjeldende brødsmule skal ikke være lenke', () => {
-        const gjeldendeBrødsmule = lagTestbrødsmule('b', 'Tekst B', 'a', '/b');
-
-        const config: BrødsmulestiConfig = [
-            lagTestbrødsmule('a', 'Tekst A', undefined, '/a'),
-            gjeldendeBrødsmule,
-        ];
-
-        const wrapper = shallow(
-            <ListeMedBrødsmuler gjeldendeBrødsmule={gjeldendeBrødsmule} config={config} />
-        );
-        expect(wrapper.findWhere((element) => element.props().href === '/b').exists()).toEqual(
-            false
-        );
-        expect(wrapper.findWhere((element) => element.text() === 'Tekst B').exists()).toEqual(true);
-    });
 });
 
 export const lagTestbrødsmule = (
