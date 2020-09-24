@@ -33,7 +33,6 @@ export const SammenligningspanelBarnehage: FunctionComponent<{
             )}
             <div className="sammenligningspanel-barnehage" ref={panelRef}>
                 <div className="sammenligningspanel-barnehage__print-header">
-                    {sendEvent('forside barnehage', 'lastet-ned-barnehage')}
                     <Normaltekst className="sammenligningspanel-barnehage__href">
                         {window.location.href}
                     </Normaltekst>

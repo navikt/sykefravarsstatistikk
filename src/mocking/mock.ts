@@ -106,7 +106,7 @@ if (mock.enhetsregisteret) {
         const orgnr = url.match(/[0-9]{9}/)![0];
 
         const overordnetEnhet: OverordnetEnhet = {
-            organisasjonsnummer: orgnr /*query.get('organisasjonsnummer')!*/,
+            orgnr: orgnr /*query.get('organisasjonsnummer')!*/,
             institusjonellSektorkode: { verdi: '6500', beskrivelse: 'Offentlig sektor' },
         };
         return overordnetEnhet;
@@ -115,7 +115,7 @@ if (mock.enhetsregisteret) {
         const orgnr = url.match(/[0-9]{9}/)![0];
 
         const underenhet: Underenhet = {
-            organisasjonsnummer: orgnr,
+            orgnr: orgnr,
             overordnetEnhet: '777777777',
         };
         return underenhet;

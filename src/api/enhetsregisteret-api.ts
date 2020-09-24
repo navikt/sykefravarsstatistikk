@@ -3,7 +3,7 @@ import { getRestStatus, RestRessurs, RestStatus } from './api-utils';
 const ENHETSREGISTERET_URL = 'https://data.brreg.no/enhetsregisteret/api/';
 
 export interface Underenhet {
-    organisasjonsnummer: string;
+    orgnr: string;
     overordnetEnhet: string;
 }
 
@@ -13,7 +13,7 @@ export interface InstitusjonellSektorkode {
 }
 
 export interface OverordnetEnhet {
-    organisasjonsnummer: string;
+    orgnr: string;
     institusjonellSektorkode: InstitusjonellSektorkode;
 }
 
@@ -29,12 +29,13 @@ export const hentInformasjonOmUnderenhet = async (orgnr: string): Promise<RestUn
             status: restStatus,
         };
     } else {
+        const responseJson = await response.json();
         return {
             status: restStatus,
-            data: await response.json().then((data) => ({
-                organisasjonsnummer: data.organisasjonsnummer,
-                overordnetEnhet: data.overordnetEnhet,
-            })),
+            data: {
+                orgnr: responseJson.organisasjonsnummer,
+                overordnetEnhet: responseJson.overordnetEnhet,
+            },
         };
     }
 };
@@ -49,12 +50,16 @@ export const hentInformasjonOmOverordnetEnhet = async (
             status: restStatus,
         };
     } else {
+        const responseJson = await response.json();
         return {
             status: restStatus,
-            data: await response.json().then((data) => ({
-                organisasjonsnummer: data.organisasjonsnummer,
-                institusjonellSektorkode: data.institusjonellSektorkode,
-            })),
+            data: {
+                orgnr: responseJson.organisasjonsnummer,
+                institusjonellSektorkode: {
+                    verdi: responseJson.institusjonellSektorkode?.verdi,
+                    beskrivelse: responseJson.institusjonellSektorkode?.beskrivelse,
+                },
+            },
         };
     }
 };
