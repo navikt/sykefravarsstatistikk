@@ -1,5 +1,6 @@
 import { InstitusjonellSektorkode } from '../api/enhetsregisteret-api';
-import { Sektor } from '../amplitude/amplitude';
+
+export type Sektor = 'offentlig' | 'privat';
 
 export const sektorkoderForOffentligeVirksomheter = ['6100', '6500', '3900', '3100'];
 export const mapTilPrivatElleOffentligSektor = (
