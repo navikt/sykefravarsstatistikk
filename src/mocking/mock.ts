@@ -1,4 +1,10 @@
-import fetchMock from 'fetch-mock';
+import fetchMock, {
+    MockMatcher,
+    MockOptionsMethodGet,
+    MockRequest,
+    MockResponse,
+    MockResponseFunction,
+} from 'fetch-mock';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './organisasjoner';
 import { getSykefraværshistorikkMock } from './sykefraværshistorikk';
 import { Bransjetype } from '../api/virksomhetMetadata';
@@ -20,14 +26,35 @@ if (process.env.REACT_APP_HEROKU) {
     delayfaktor = 1;
 }
 
+const mockGetAndLog = (
+    matcher: MockMatcher,
+    response: MockResponse | MockResponseFunction,
+    options?: MockOptionsMethodGet
+): fetchMock.FetchMockStatic => {
+    let responseFunction: MockResponseFunction;
+    if (response instanceof Function) {
+        responseFunction = (url: string, opts: MockRequest) => {
+            const responseValue = response(url, opts);
+            console.log('%cMock: ' + url, 'color:lightblue;font-weight:bold;', responseValue);
+            return responseValue;
+        };
+    } else {
+        responseFunction = (url) => {
+            console.log('%cMock: ' + url, 'color:lightblue;font-weight:bold;', response);
+            return response;
+        };
+    }
+    return fetchMock.get(matcher, responseFunction, options);
+};
+
 if (mock.minSideArbeidsgiver) {
-    fetchMock.get('/min-side-arbeidsgiver/api/organisasjoner', getOrganisasjonerMock(), {
+    mockGetAndLog('/min-side-arbeidsgiver/api/organisasjoner', getOrganisasjonerMock(), {
         delay: 1000 * delayfaktor,
     });
 }
 
 if (mock.sykefraværsstatistikkApi) {
-    fetchMock.get(
+    mockGetAndLog(
         'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/kvartalsvis',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
@@ -43,7 +70,7 @@ if (mock.sykefraværsstatistikkApi) {
             delay: 1000 * delayfaktor,
         }
     );
-    fetchMock.get(
+    mockGetAndLog(
         'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/summert',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
@@ -60,7 +87,7 @@ if (mock.sykefraværsstatistikkApi) {
         }
     );
 
-    fetchMock.get(
+    mockGetAndLog(
         'express:/sykefravarsstatistikk/api/:orgnr/bedriftsmetrikker',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
@@ -92,7 +119,7 @@ if (mock.sykefraværsstatistikkApi) {
             delay: 1000 * delayfaktor,
         }
     );
-    fetchMock.get(
+    mockGetAndLog(
         '/sykefravarsstatistikk/api/organisasjoner/statistikk',
         getOrganisasjonerBrukerHarTilgangTilMock(),
         {
@@ -102,7 +129,7 @@ if (mock.sykefraværsstatistikkApi) {
 }
 
 if (mock.enhetsregisteret) {
-    fetchMock.get('begin:https://data.brreg.no/enhetsregisteret/api/enheter/', (url) => {
+    mockGetAndLog('begin:https://data.brreg.no/enhetsregisteret/api/enheter/', (url) => {
         const orgnr = url.match(/[0-9]{9}/)![0];
 
         const overordnetEnhet: OverordnetEnhet = {
@@ -111,7 +138,7 @@ if (mock.enhetsregisteret) {
         };
         return overordnetEnhet;
     });
-    fetchMock.get('begin:https://data.brreg.no/enhetsregisteret/api/underenheter/', (url) => {
+    mockGetAndLog('begin:https://data.brreg.no/enhetsregisteret/api/underenheter/', (url) => {
         const orgnr = url.match(/[0-9]{9}/)![0];
 
         const underenhet: Underenhet = {
@@ -123,7 +150,7 @@ if (mock.enhetsregisteret) {
 }
 
 if (mock.featureToggles) {
-    fetchMock.get(
+    mockGetAndLog(
         'begin:/sykefravarsstatistikk/api/feature',
         {},
         {
