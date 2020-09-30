@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react';
-import { Tips } from './tips';
 import './TipsVisning.less';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import EksternLenke from '../EksternLenke/EksternLenke';
-import { AntallMinutter } from './AntallMinutter/AntallMinutter';
+import { Tidsbruk } from './Tidsbruk/Tidsbruk';
 import { TipsBilde } from './TipsBilde/TipsBilde';
+import { Tips } from './tips';
 
 interface Props {
     tips: Tips;
@@ -19,10 +19,8 @@ export const TipsVisning: FunctionComponent<Props> = ({ tips }) => {
                     {tips.tittel}
                 </Undertittel>
                 <Normaltekst>{tips.ingress}</Normaltekst>
-                <AntallMinutter
-                    className="tips-visning__tidsbruk"
-                    antallMinutter={tips.antallMinutter}
-                />
+                <Tidsbruk className="tips-visning__tidsbruk">{tips.tidsbruk}</Tidsbruk>
+
                 <EksternLenke href={tips.lenke.href}>{tips.lenke.tekst}</EksternLenke>
             </div>
         </div>

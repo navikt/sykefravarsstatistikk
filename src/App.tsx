@@ -51,7 +51,7 @@ import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/L
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import { EnhetsregisteretProvider } from './utils/enhetsregisteretContext';
 import { TipsVisning } from './felleskomponenter/tips/TipsVisning';
-import { diverseTips, KVALITET_TIPS } from './felleskomponenter/tips/tips';
+import { diverseTips } from './felleskomponenter/tips/tips';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
