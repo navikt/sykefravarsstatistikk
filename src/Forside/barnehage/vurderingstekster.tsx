@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { SykefraværResultat } from './Speedometer/Speedometer';
-import { getGrønnGrense } from './barnehage-utils';
+import { getGrønnGrense, getRødGrense } from './barnehage-utils';
 
 export const getVurderingstekstTotalt = (
     sykefraværResultat: SykefraværResultat
@@ -136,8 +136,11 @@ export const getInfoTekst = (resultat: SykefraværResultat, prosent: number) => 
         case SykefraværResultat.MIDDELS:
             return (
                 <>
-                    Markert gul: Du har <strong>omtrent likt sykefravær</strong> som andre
-                    barnehager i Norge
+                    Du er markert gult.
+                    <strong>
+                        Sammenligningen blir markert gull når ditt sykefravær er mellom{' '}
+                        {getGrønnGrense(prosent)} prosent og {getRødGrense(prosent)} prosent.
+                    </strong>
                 </>
             );
         case SykefraværResultat.OVER:
@@ -153,21 +156,31 @@ export const getInfoTekst = (resultat: SykefraværResultat, prosent: number) => 
         case SykefraværResultat.UFULLSTENDIG_DATA:
             return (
                 <>
-                    Markert grå: <strong>Vi mangler dine tall for deler av perioden</strong> med
-                    sammenligning.
+                    Du er markert grått.
+                    <strong>
+                        Sammenligningen blir markert grå for Vi mangler dine tall for deler av
+                        perioden.
+                    </strong>
                 </>
             );
         case SykefraværResultat.MASKERT:
             return (
                 <>
-                    Markert grå: Du har <strong>for lave tall</strong> til at vi kan vise
-                    statistikken din.
+                    Du er markert grått.
+                    <strong>
+                        Sammenligningen blir markert grå for du har for lave tall til at vi kan vise
+                        statistikken din.
+                    </strong>
                 </>
             );
         case SykefraværResultat.INGEN_DATA:
             return (
                 <>
-                    Markert grå: Vi <strong>finner ikke tall</strong> for virksomheten din.
+                    Du er markert grått.
+                    <strong>
+                        Sammenligningen blir markert grå for vi finner ikke tall for virksomheten
+                        din.
+                    </strong>
                 </>
             );
         case SykefraværResultat.FEIL:
