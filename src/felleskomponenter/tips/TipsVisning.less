@@ -1,0 +1,34 @@
+@import '../../variables';
+
+.tips-visning {
+    margin-top: 3rem; // TODO fjern
+
+    &__tittel {
+        padding-bottom: 1rem;
+        padding-top: 1rem;
+    }
+
+    &__tidsbruk {
+        padding-bottom: 1rem;
+        padding-top: 1rem;
+    }
+
+    &__bilde {
+        max-width: 100%;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        display: flex;
+
+        &__tekst-wrapper {
+            margin-left: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        &__tittel {
+            padding-top: 0;
+        }
+    }
+}
