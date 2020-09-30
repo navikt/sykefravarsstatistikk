@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { SykefraværResultat } from './Speedometer/Speedometer';
+import { getGrønnGrense } from './barnehage-utils';
 
 export const getVurderingstekstTotalt = (
     sykefraværResultat: SykefraværResultat
@@ -117,5 +118,59 @@ export const getVurderingstekstLangtid = (resultat: SykefraværResultat) => {
             );
         case SykefraværResultat.FEIL:
             return <>—</>;
+    }
+};
+
+export const getInfoTekst = (resultat: SykefraværResultat, prosent: number) => {
+    switch (resultat) {
+        case SykefraværResultat.UNDER:
+            return (
+                <>
+                    Du er markert grønn.
+                    <strong>
+                        Sammenligningen blir markert grønn når ditt sykefravær er lavere enn{' '}
+                        {getGrønnGrense(prosent)} prosent.
+                    </strong>
+                </>
+            );
+        case SykefraværResultat.MIDDELS:
+            return (
+                <>
+                    Markert gul: Du har <strong>omtrent likt sykefravær</strong> som andre
+                    barnehager i Norge
+                </>
+            );
+        case SykefraværResultat.OVER:
+            return (
+                <>
+                    Du er markert rødt.
+                    <strong>
+                        Sammenligningen blir markert rød når ditt sykefravær er høyere enn{' '}
+                        {getGrønnGrense(prosent)} prosent.
+                    </strong>
+                </>
+            );
+        case SykefraværResultat.UFULLSTENDIG_DATA:
+            return (
+                <>
+                    Markert grå: <strong>Vi mangler dine tall for deler av perioden</strong> med
+                    sammenligning.
+                </>
+            );
+        case SykefraværResultat.MASKERT:
+            return (
+                <>
+                    Markert grå: Du har <strong>for lave tall</strong> til at vi kan vise
+                    statistikken din.
+                </>
+            );
+        case SykefraværResultat.INGEN_DATA:
+            return (
+                <>
+                    Markert grå: Vi <strong>finner ikke tall</strong> for virksomheten din.
+                </>
+            );
+        case SykefraværResultat.FEIL:
+            return <></>;
     }
 };

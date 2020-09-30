@@ -8014,15 +8014,15 @@ nav-frontend-core@^5.0.1:
   resolved "https://registry.yarnpkg.com/nav-frontend-core/-/nav-frontend-core-5.0.1.tgz#f59d79da9342434cc89046bc289c90e2a5d53ea8"
   integrity sha512-wPcKfXcXvmqA3MPQwlU+nMvB3plJtxLBew4bNmcw5CJNIMtGPwGXEvcexVEIeEdCpJCvOZvwcWxaTc57x16eDA==
 
-nav-frontend-ekspanderbartpanel-style@^1.0.18:
+nav-frontend-ekspanderbartpanel-style@^1.0.19:
   version "1.0.19"
   resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-1.0.19.tgz#e336ffdfdbb829808c79f36bf004f869aeb31a2b"
   integrity sha512-3QOwwWHOv9gqvtLK22j8WfSCrXfgG9snJIc6DBoGpCBxsVJpbZttQ0pAFRyLwA5ejPM/KPGq/MfIFSiCkv2mdA==
 
-nav-frontend-ekspanderbartpanel@^3.0.18:
-  version "3.0.23"
-  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-3.0.23.tgz#504eee1a744526d68c4469eac8937e16b6faff15"
-  integrity sha512-lZisCsKIg5jCz4P93jZHwCsUm4ACunQ0Xuo3IcV1NnfC/X7NGvTuB1ElY4z+sIqxDGC9TRwR/uSua4zUaOHg+w==
+nav-frontend-ekspanderbartpanel@^3.0.24:
+  version "3.0.24"
+  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-3.0.24.tgz#6b61754462a2741fa82ace6f0feb944d9decfe8b"
+  integrity sha512-1K3lszjRoVBtYqunm+8BZUDq9w8uOqAK5/qLIDhTof2srmDfb+LyoyrdaAiAqjuTZxtNawxNYoqCxd1icjK/8A==
 
 nav-frontend-hjelpetekst-style@^2.0.20:
   version "2.0.25"
@@ -8039,7 +8039,7 @@ nav-frontend-ikoner-assets@^2.0.1:
   resolved "https://registry.yarnpkg.com/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-2.0.3.tgz#b5de7cdc59c470f6077f5a61a978e54f40ee8076"
   integrity sha512-B8mizkduCh4O2JzD4BBl2SKUwAZgm9bZCkEGv1JoaSUFrnJFDHBh2ZSRGSFGvceJueJ1omuCNgRwjb/1BCcSfg==
 
-nav-frontend-js-utils@^1.0.8:
+nav-frontend-js-utils@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/nav-frontend-js-utils/-/nav-frontend-js-utils-1.0.9.tgz#3b177db985dd3b1e57911f3e38440d62ca82e51c"
   integrity sha512-Kf2ksWM9cdEFesT1QS3X2c9ZLyQ4BsoHASBVzOgTU/2dd55jQmNtse0rJ43CGLEDguKPYUaIiaYfKdxIqU9SfQ==
@@ -8074,7 +8074,7 @@ nav-frontend-lenker@^1.0.32:
   resolved "https://registry.yarnpkg.com/nav-frontend-lenker/-/nav-frontend-lenker-1.0.41.tgz#5379eaa05d3223b55e1d5bd7a0e7ca2ecd6dbe20"
   integrity sha512-8aiewhtREIFwfYaprd1xKKfr5EXzUx+lJ2nco7MOsQgvGtdZL2p7XOUosC0K4xMSnEgzT3aSNvVYdvdDrDqXqw==
 
-nav-frontend-paneler-style@^0.3.19:
+nav-frontend-paneler-style@^0.3.21:
   version "0.3.21"
   resolved "https://registry.yarnpkg.com/nav-frontend-paneler-style/-/nav-frontend-paneler-style-0.3.21.tgz#bc9f39f8fe6d947a226d5147048cc45ab09e4f13"
   integrity sha512-bo3pmByEHH3Hnl8OphcCEcz23nqs3VK05xF+f3m9quzi+TcPHpYSe+V6NrBzFAA6UB6clRo7b8l5j/ANY7prDg==
@@ -8129,7 +8129,7 @@ nav-frontend-toggle@^0.0.40:
   resolved "https://registry.yarnpkg.com/nav-frontend-toggle/-/nav-frontend-toggle-0.0.40.tgz#c5856a59f3746fc29064459152e406d3c2428c7c"
   integrity sha512-Fb0vCnNuquH/Se1j+ePRXJp24O52nhuf69oNebhzlRzakbASvidigT6hNCSGOyhR9cu4FbyVWkm50X7ssHP39Q==
 
-nav-frontend-typografi-style@^1.0.20:
+nav-frontend-typografi-style@^1.0.22:
   version "1.0.22"
   resolved "https://registry.yarnpkg.com/nav-frontend-typografi-style/-/nav-frontend-typografi-style-1.0.22.tgz#f1f4f2eb271f4ea4bd7d6fe850499dff3b0a4804"
   integrity sha512-MZ7AdSQjQuZz7e/zkfihJFBMSzyolpcmdYSAmHGQTQmtFdvxAAx1WAef8D6BwxKS8aEj2/86CX7cRMS5dXMAnw==
