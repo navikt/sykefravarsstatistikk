@@ -1,0 +1,22 @@
+@import '../../../variables';
+
+@hoyde: 11rem;
+@bredde: 16rem;
+
+.tips-bilde {
+    max-height: 100%;
+    max-width: 100%;
+
+    &__wrapper {
+        height: @hoyde;
+        width: @bredde;
+        max-width: 100%;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        &__wrapper {
+            min-height: @hoyde;
+            min-width: @bredde;
+        }
+    }
+}

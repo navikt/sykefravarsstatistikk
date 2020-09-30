@@ -51,7 +51,7 @@ import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/L
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import { EnhetsregisteretProvider } from './utils/enhetsregisteretContext';
 import { TipsVisning } from './felleskomponenter/tips/TipsVisning';
-import { KVALITET_TIPS } from './felleskomponenter/tips/tips';
+import { diverseTips, KVALITET_TIPS } from './felleskomponenter/tips/tips';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -172,7 +172,7 @@ const AppContent: FunctionComponent = () => {
                                         restSykefraværsvarighet.status === RestStatus.Suksess
                                     }
                                 />
-                                <TipsVisning tips={KVALITET_TIPS} />
+                                {diverseTips.map((tips, index) => <TipsVisning key={index} tips={tips}/>)}
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />

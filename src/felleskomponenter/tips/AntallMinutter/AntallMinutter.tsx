@@ -9,9 +9,12 @@ interface Props {
     antallMinutter: number;
 }
 
-export const AntallMinutter: FunctionComponent<Props> = ({ antallMinutter, className }) => (
-    <Normaltekst className={classNames('antall-minutter', className)}>
-        <img src={klokkeSvg} alt="klokkeikon" />
-        {antallMinutter} minutter
-    </Normaltekst>
-);
+export const AntallMinutter: FunctionComponent<Props> = ({ antallMinutter, className }) => {
+    const tekst = antallMinutter === 1 ? 'minutt' : 'minutter';
+    return (
+        <Normaltekst className={classNames('antall-minutter', className)}>
+            <img src={klokkeSvg} alt="klokkeikon" />
+            {antallMinutter} {tekst}
+        </Normaltekst>
+    );
+};
