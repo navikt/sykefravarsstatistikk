@@ -133,7 +133,7 @@ if (mock.enhetsregisteret) {
         const orgnr = url.match(/[0-9]{9}/)![0];
 
         const overordnetEnhet: OverordnetEnhet = {
-            orgnr: orgnr /*query.get('organisasjonsnummer')!*/,
+            orgnr: orgnr,
             institusjonellSektorkode: { kode: '6500', beskrivelse: 'Offentlig sektor' },
         };
         return overordnetEnhet;
