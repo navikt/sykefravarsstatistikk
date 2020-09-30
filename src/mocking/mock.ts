@@ -134,7 +134,7 @@ if (mock.enhetsregisteret) {
 
         const overordnetEnhet: OverordnetEnhet = {
             orgnr: orgnr /*query.get('organisasjonsnummer')!*/,
-            institusjonellSektorkode: { verdi: '6500', beskrivelse: 'Offentlig sektor' },
+            institusjonellSektorkode: { kode: '6500', beskrivelse: 'Offentlig sektor' },
         };
         return overordnetEnhet;
     });
