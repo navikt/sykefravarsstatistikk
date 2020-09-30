@@ -8,7 +8,7 @@ export interface Underenhet {
 }
 
 export interface InstitusjonellSektorkode {
-    verdi: string;
+    kode: string;
     beskrivelse: string;
 }
 
@@ -56,7 +56,7 @@ export const hentInformasjonOmOverordnetEnhet = async (
             data: {
                 orgnr: responseJson.organisasjonsnummer,
                 institusjonellSektorkode: {
-                    verdi: responseJson.institusjonellSektorkode?.verdi,
+                    kode: responseJson.institusjonellSektorkode?.kode,
                     beskrivelse: responseJson.institusjonellSektorkode?.beskrivelse,
                 },
             },
