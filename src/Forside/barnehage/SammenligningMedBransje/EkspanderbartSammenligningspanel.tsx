@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import './SammenligningSiste4KvartalerMedBransje.less';
+import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværResultat } from '../Speedometer/Speedometer';
 import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
@@ -12,7 +12,7 @@ import {
 import { sisteOppdatering } from '../../../utils/app-utils';
 import Skeleton from 'react-loading-skeleton';
 import { Prosent } from '../Prosent';
-import { getInfoTekst, getVurderingstekstTotalt } from '../vurderingstekster';
+import { getForklaringAvVurdering, getVurderingstekstTotalt } from '../vurderingstekster';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import AlertStripe from 'nav-frontend-alertstriper';
 
@@ -20,7 +20,7 @@ interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
 }
 
-export const SammenligningpanleEkspanderbart: FunctionComponent<Props> = ({
+export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     restSykefraværsvarighet,
 }) => {
     if (
@@ -34,7 +34,7 @@ export const SammenligningpanleEkspanderbart: FunctionComponent<Props> = ({
         restSykefraværsvarighet.status === RestStatus.LasterInn ||
         restSykefraværsvarighet.status === RestStatus.IkkeLastet
     ) {
-        return <Skeleton className="sammenligning-med-bransje__loading-skeleton" height={355} />;
+        return <Skeleton className="ekspanderbart-sammenligningspanel__loading-skeleton" height={355} />;
     }
 
     const varighet =
@@ -73,50 +73,51 @@ export const SammenligningpanleEkspanderbart: FunctionComponent<Props> = ({
         sammenligningResultat === SykefraværResultat.FEIL ? null : sykefraværBransje;
     const periode = '01.04.2019 til 31.03.2020';
     return (
-        <div className="sammenligning-med-bransje">
+        <div className="ekspanderbart-sammenligningspanel">
             <Ekspanderbartpanel
                 apen={true}
                 tittel={
-                    <div>
-                        <Systemtittel className="sammenligning-med-bransje__tittel">
+                    <div className="ekspanderbart-sammenligningspanel__tittel-wrapper">
+                        <Speedometer resultat={sammenligningResultat}/>
+                        <Systemtittel className="ekspanderbart-sammenligningspanel__tittel">
                             {getVurderingstekstTotalt(sammenligningResultat)}
                         </Systemtittel>
                     </div>
                 }
-                className="sammenligning-med-bransje__panel"
+                className="ekspanderbart-sammenligningspanel__panel"
             >
-                <Ingress tag="h3" className="sammenligning-med-bransje__panel-tittel">
+                <Ingress tag="h3" className="ekspanderbart-sammenligningspanel__panel-tittel">
                     Legemeldt sykefravær
                     <Normaltekst>Periode: {periode}</Normaltekst>
                 </Ingress>
-                <div className="sammenligning-med-bransje__ikon-og-tall">
+                <div className="ekspanderbart-sammenligningspanel__ikon-og-tall">
                     <Speedometer
-                        className="sammenligning-med-bransje__ikon"
+                        className="ekspanderbart-sammenligningspanel__ikon"
                         stor
                         resultat={sammenligningResultat}
                     />
-                    <div className="sammenligning-med-bransje__tall">
-                        <Ingress className="sammenligning-med-bransje__virksomhet-tittel">
+                    <div className="ekspanderbart-sammenligningspanel__tall">
+                        <Ingress className="ekspanderbart-sammenligningspanel__virksomhet-tittel">
                             Din virksomhet:
                         </Ingress>
                         <Systemtittel tag="p">
                             <Prosent prosent={sykefraværVirksomhet} />
                             {antallKvartalerVirksomhet}
                         </Systemtittel>
-                        <Ingress className="sammenligning-med-bransje__bransje-tittel">
+                        <Ingress className="ekspanderbart-sammenligningspanel__bransje-tittel">
                             Barnehager i Norge:
                         </Ingress>
                         <Systemtittel tag="p">
                             <Prosent prosent={visningAvProsentForBransje} />
                             {antallKvartalerBransje}
                         </Systemtittel>
-                        <Normaltekst className="sammenligning-med-bransje__neste-oppdatering">
+                        <Normaltekst className="ekspanderbart-sammenligningspanel__neste-oppdatering">
                             Sist oppdatert: {sisteOppdatering}
                         </Normaltekst>
                     </div>
                 </div>
-                <AlertStripe type={'info'}>
-                    {getInfoTekst(
+                <AlertStripe type={'info'} className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering">
+                    {getForklaringAvVurdering(
                         sammenligningResultat,
                         sykefraværForBarnehagerSiste4Kvartaler.totalt
                     )}

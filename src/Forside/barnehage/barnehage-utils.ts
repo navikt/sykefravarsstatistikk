@@ -1,8 +1,4 @@
-import {
-    RestSykefraværsvarighet,
-    SummertSykefravær,
-    Sykefraværsvarighet,
-} from '../../api/sykefraværsvarighet';
+import { SummertSykefravær, Sykefraværsvarighet } from '../../api/sykefraværsvarighet';
 import { SykefraværResultat } from './Speedometer/Speedometer';
 import { RestStatus } from '../../api/api-utils';
 import { ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';

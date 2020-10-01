@@ -50,7 +50,7 @@ import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
 import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import { EnhetsregisteretProvider } from './utils/enhetsregisteretContext';
-import { SammenligningpanleEkspanderbart } from './Forside/barnehage/SammenligningMedBransje/SammenligningpanleEkspanderbart';
+import { EkspanderbartSammenligningspanel } from './Forside/barnehage/SammenligningMedBransje/EkspanderbartSammenligningspanel';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -163,7 +163,7 @@ const AppContent: FunctionComponent = () => {
                                 {/* <SammenligningSiste4KvartalerMedBransje
                                     restSykefraværsvarighet={restSykefraværsvarighet}
                                 />*/}
-                                <SammenligningpanleEkspanderbart
+                                <EkspanderbartSammenligningspanel
                                     restSykefraværsvarighet={restSykefraværsvarighet}
                                 />
                                 <DetaljertSammenligning
