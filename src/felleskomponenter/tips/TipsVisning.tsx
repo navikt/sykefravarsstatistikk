@@ -20,7 +20,6 @@ export const TipsVisning: FunctionComponent<Props> = ({ tips }) => {
                 </Undertittel>
                 <Normaltekst>{tips.ingress}</Normaltekst>
                 <Tidsbruk className="tips-visning__tidsbruk">{tips.tidsbruk}</Tidsbruk>
-
                 <EksternLenke href={tips.lenke.href}>{tips.lenke.tekst}</EksternLenke>
             </div>
         </div>

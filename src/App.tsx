@@ -50,8 +50,6 @@ import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
 import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import { EnhetsregisteretProvider } from './utils/enhetsregisteretContext';
-import { TipsVisning } from './felleskomponenter/tips/TipsVisning';
-import { diverseTips } from './felleskomponenter/tips/tips';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -172,7 +170,6 @@ const AppContent: FunctionComponent = () => {
                                         restSykefraværsvarighet.status === RestStatus.Suksess
                                     }
                                 />
-                                {diverseTips.map((tips, index) => <TipsVisning key={index} tips={tips}/>)}
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />
