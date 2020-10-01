@@ -1,5 +1,26 @@
 import React, { ReactElement } from 'react';
 import { SykefraværResultat } from './Speedometer/Speedometer';
+import { getGrønnGrense, getRødGrense } from './barnehage-utils';
+import {formaterProsent} from "../../utils/app-utils";
+
+export enum SammenligningsType {
+    TOTALT = 'TOTALT',
+    LANGTID = 'LANGTID',
+    KORTTID = 'KORTTID'
+}
+
+export const getVurderingstekst = (
+    sykefraværResultat: SykefraværResultat, sammenligningsType: SammenligningsType
+): ReactElement | string => {
+ switch (sammenligningsType) {
+     case SammenligningsType.TOTALT:
+         return getVurderingstekstTotalt(sykefraværResultat);
+     case SammenligningsType.LANGTID:
+         return getVurderingstekstLangtid(sykefraværResultat);
+     case SammenligningsType.KORTTID:
+         return getVurderingstekstKorttid(sykefraværResultat);
+ }
+};
 
 export const getVurderingstekstTotalt = (
     sykefraværResultat: SykefraværResultat
@@ -117,5 +138,72 @@ export const getVurderingstekstLangtid = (resultat: SykefraværResultat) => {
             );
         case SykefraværResultat.FEIL:
             return <>—</>;
+    }
+};
+
+export const getForklaringAvVurdering = (resultat: SykefraværResultat, bransjensProsent: number) => {
+    switch (resultat) {
+        case SykefraværResultat.UNDER:
+            return (
+                <>
+                    Du er markert grønn.
+                    <strong>
+                        Sammenligningen blir markert grønn når ditt sykefravær er lavere enn{' '}
+                        {formaterProsent(getGrønnGrense(bransjensProsent))} prosent.
+                    </strong>
+                </>
+            );
+        case SykefraværResultat.MIDDELS:
+            return (
+                <>
+                    Du er markert gult.{' '}
+                    <strong>
+                        Sammenligningen blir markert gull når ditt sykefravær er mellom{' '}
+                        {formaterProsent(getGrønnGrense(bransjensProsent))} og {formaterProsent(getRødGrense(bransjensProsent))} prosent.
+                    </strong>
+                </>
+            );
+        case SykefraværResultat.OVER:
+            return (
+                <>
+                    Du er markert rødt.{' '}
+                    <strong>
+                        Sammenligningen blir markert rød når ditt sykefravær er høyere enn{' '}
+                        {formaterProsent(getRødGrense(bransjensProsent))} prosent.
+                    </strong>
+                </>
+            );
+        case SykefraværResultat.UFULLSTENDIG_DATA:
+            return (
+                <>
+                    Du er markert grått.{' '}
+                    <strong>
+                        Sammenligningen blir markert grå for Vi mangler dine tall for deler av
+                        perioden.
+                    </strong>
+                </>
+            );
+        case SykefraværResultat.MASKERT:
+            return (
+                <>
+                    Du er markert grått.{' '}
+                    <strong>
+                        Sammenligningen blir markert grå for du har for lave tall til at vi kan vise
+                        statistikken din.
+                    </strong>
+                </>
+            );
+        case SykefraværResultat.INGEN_DATA:
+            return (
+                <>
+                    Du er markert grått.{' '}
+                    <strong>
+                        Sammenligningen blir markert grå for vi finner ikke tall for virksomheten
+                        din.
+                    </strong>
+                </>
+            );
+        case SykefraværResultat.FEIL:
+            return <></>;
     }
 };
