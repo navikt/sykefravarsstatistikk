@@ -5,7 +5,7 @@ import './Sykefraværsprosentpanel.less';
 import Skeleton from 'react-loading-skeleton';
 import classNames from 'classnames';
 import { Sykefraværsprosent } from '../../../../api/sykefraværshistorikk';
-import {formaterProsent} from "../../../../utils/app-utils";
+import { formaterProsent } from '../../../../utils/app-utils';
 
 export interface SykefraværprosentpanelProps {
     sykefraværsprosent?: Sykefraværsprosent;
@@ -14,7 +14,6 @@ export interface SykefraværprosentpanelProps {
     ikon?: ReactElement;
     className?: string;
 }
-
 
 const Sykefraværsprosentpanel: React.FunctionComponent<SykefraværprosentpanelProps> = (props) => {
     const { sykefraværsprosent, laster, sykefraværprosentLabel, children, ikon, className } = props;
