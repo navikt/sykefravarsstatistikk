@@ -1,86 +1,50 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactElement } from 'react';
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværResultat } from '../Speedometer/Speedometer';
-import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
-import { RestStatus } from '../../../api/api-utils';
-import {
-    getResultatForSammenligningAvSykefravær,
-    getTotaltSykefraværSiste4Kvartaler,
-    sykefraværForBarnehagerSiste4Kvartaler,
-} from '../barnehage-utils';
 import { sisteOppdatering } from '../../../utils/app-utils';
-import Skeleton from 'react-loading-skeleton';
 import { Prosent } from '../Prosent';
-import { getForklaringAvVurdering, getVurderingstekstTotalt } from '../vurderingstekster';
+import {
+    getForklaringAvVurdering,
+    getVurderingstekst,
+    SammenligningsType,
+} from '../vurderingstekster';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 interface Props {
-    restSykefraværsvarighet: RestSykefraværsvarighet;
+    sammenligningResultat: SykefraværResultat;
+    sykefraværVirksomhet: number | null | undefined;
+    sykefraværBransje: number;
+    antallKvartalerVirksomhet: ReactElement | null;
+    antallKvartalerBransje: ReactElement | null;
+    sammenligningsType: SammenligningsType;
+    åpen?: boolean;
 }
 
 export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
-    restSykefraværsvarighet,
+    sammenligningResultat,
+    sykefraværVirksomhet,
+    sykefraværBransje,
+    antallKvartalerVirksomhet,
+    antallKvartalerBransje,
+    sammenligningsType,
+    åpen,
 }) => {
-    if (
-        restSykefraværsvarighet.status === RestStatus.IngenTilgang ||
-        restSykefraværsvarighet.status === RestStatus.IkkeInnlogget
-    ) {
-        return null;
-    }
-
-    if (
-        restSykefraværsvarighet.status === RestStatus.LasterInn ||
-        restSykefraværsvarighet.status === RestStatus.IkkeLastet
-    ) {
-        return <Skeleton className="ekspanderbart-sammenligningspanel__loading-skeleton" height={355} />;
-    }
-
-    const varighet =
-        restSykefraværsvarighet.status === RestStatus.Suksess
-            ? restSykefraværsvarighet.data
-            : undefined;
-    const kvartaler = varighet?.summertKorttidsfravær.kvartaler.slice().reverse();
-
-    const totaltSykefraværSiste4Kvartaler = getTotaltSykefraværSiste4Kvartaler(varighet);
-    const sykefraværVirksomhet = totaltSykefraværSiste4Kvartaler?.prosent;
-    const sykefraværBransje = sykefraværForBarnehagerSiste4Kvartaler.totalt;
-
-    const sammenligningResultat = getResultatForSammenligningAvSykefravær(
-        restSykefraværsvarighet.status,
-        getTotaltSykefraværSiste4Kvartaler(varighet),
-        sykefraværBransje
-    );
-
-    const antallKvartalerVirksomhet =
-        sammenligningResultat === SykefraværResultat.UFULLSTENDIG_DATA ||
-        sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
-            <>
-                <strong> / {kvartaler?.length || 0} av 4 kvartaler</strong>
-            </>
-        ) : null;
-
-    const antallKvartalerBransje =
-        sammenligningResultat === SykefraværResultat.UFULLSTENDIG_DATA ||
-        sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
-            <>
-                <strong> / 4 av 4 kvartaler</strong>
-            </>
-        ) : null;
-
-    const visningAvProsentForBransje =
-        sammenligningResultat === SykefraværResultat.FEIL ? null : sykefraværBransje;
     const periode = '01.04.2019 til 31.03.2020';
+
+    const visningAvProsentForBransje: number | null =
+        sammenligningResultat === SykefraværResultat.FEIL ? null : sykefraværBransje;
+
     return (
         <div className="ekspanderbart-sammenligningspanel">
             <Ekspanderbartpanel
-                apen={true}
+                apen={åpen}
                 tittel={
                     <div className="ekspanderbart-sammenligningspanel__tittel-wrapper">
-                        <Speedometer resultat={sammenligningResultat}/>
+                        <Speedometer resultat={sammenligningResultat} />
                         <Systemtittel className="ekspanderbart-sammenligningspanel__tittel">
-                            {getVurderingstekstTotalt(sammenligningResultat)}
+                            {getVurderingstekst(sammenligningResultat, sammenligningsType)}
                         </Systemtittel>
                     </div>
                 }
@@ -116,11 +80,11 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         </Normaltekst>
                     </div>
                 </div>
-                <AlertStripe type={'info'} className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering">
-                    {getForklaringAvVurdering(
-                        sammenligningResultat,
-                        sykefraværForBarnehagerSiste4Kvartaler.totalt
-                    )}
+                <AlertStripe
+                    type={'info'}
+                    className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering"
+                >
+                    {getForklaringAvVurdering(sammenligningResultat, sykefraværBransje)}
                 </AlertStripe>
             </Ekspanderbartpanel>
         </div>

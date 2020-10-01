@@ -3,6 +3,25 @@ import { SykefraværResultat } from './Speedometer/Speedometer';
 import { getGrønnGrense, getRødGrense } from './barnehage-utils';
 import {formaterProsent} from "../../utils/app-utils";
 
+export enum SammenligningsType {
+    TOTALT = 'TOTALT',
+    LANGTID = 'LANGTID',
+    KORTTID = 'KORTTID'
+}
+
+export const getVurderingstekst = (
+    sykefraværResultat: SykefraværResultat, sammenligningsType: SammenligningsType
+): ReactElement | string => {
+ switch (sammenligningsType) {
+     case SammenligningsType.TOTALT:
+         return getVurderingstekstTotalt(sykefraværResultat);
+     case SammenligningsType.LANGTID:
+         return getVurderingstekstLangtid(sykefraværResultat);
+     case SammenligningsType.KORTTID:
+         return getVurderingstekstKorttid(sykefraværResultat);
+ }
+};
+
 export const getVurderingstekstTotalt = (
     sykefraværResultat: SykefraværResultat
 ): ReactElement | string => {
@@ -150,7 +169,7 @@ export const getForklaringAvVurdering = (resultat: SykefraværResultat, bransjen
                     Du er markert rødt.{' '}
                     <strong>
                         Sammenligningen blir markert rød når ditt sykefravær er høyere enn{' '}
-                        {formaterProsent(getGrønnGrense(bransjensProsent))} prosent.
+                        {formaterProsent(getRødGrense(bransjensProsent))} prosent.
                     </strong>
                 </>
             );
