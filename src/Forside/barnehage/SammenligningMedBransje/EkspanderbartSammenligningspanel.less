@@ -4,16 +4,13 @@
     margin-top: 2rem;
 
     &__tittel-wrapper {
-        display: flex;
+        display: inline-flex;
         align-items: center;
+        flex-direction: column;
     }
 
     &__forklaring-av-vurdering {
         margin-top: 1rem;
-    }
-
-    &__tittel {
-        padding-left: 1rem;
     }
 
     &__loading-skeleton {
@@ -58,6 +55,14 @@
     }
 
     @media print, (min-width: @screen-sm-min) {
+        &__tittel-wrapper {
+            flex-direction: row;
+        }
+
+        &__tittel {
+            padding-left: 1rem;
+        }
+
         &__ikon-og-tall {
             display: flex;
             margin-bottom: 0;

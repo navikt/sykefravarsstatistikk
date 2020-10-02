@@ -41,12 +41,12 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             <Ekspanderbartpanel
                 apen={åpen}
                 tittel={
-                    <div className="ekspanderbart-sammenligningspanel__tittel-wrapper">
-                        <Speedometer resultat={sammenligningResultat} />
-                        <Systemtittel className="ekspanderbart-sammenligningspanel__tittel">
+                    <span className="ekspanderbart-sammenligningspanel__tittel-wrapper">
+                        <Speedometer resultat={sammenligningResultat} inline/>
+                        <Systemtittel tag="h2" className="ekspanderbart-sammenligningspanel__tittel">
                             {getVurderingstekst(sammenligningResultat, sammenligningsType)}
                         </Systemtittel>
-                    </div>
+                    </span>
                 }
                 className="ekspanderbart-sammenligningspanel__panel"
             >
