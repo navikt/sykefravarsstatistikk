@@ -38,20 +38,17 @@ import Lenkeressurser from './Forside/Lenkeressurser/Lenkeressurser';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
 import { Forside } from './Forside/Forside';
-import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/SammenligningIngress';
-import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
-import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
 import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
 import {
     sykefraværsvarighetContext,
     SykefraværsvarighetProvider,
 } from './utils/sykefraværsvarighetContext';
 import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
-import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import { EnhetsregisteretProvider } from './utils/enhetsregisteretContext';
 import { tipsliste } from './felleskomponenter/tips/tips';
-import { TipsVisning } from './felleskomponenter/tips/TipsVisning';
+import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSammenligning/EkspanderbarSammenligning';
+import { EkspanderbareTips } from './Forside/barnehage/EkspanderbareTips/EkspanderbareTips';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -158,7 +155,7 @@ const AppContent: FunctionComponent = () => {
                                 restSykefraværsvarighet={restSykefraværsvarighet}
                                 restAltinnOrganisasjoner={restOrganisasjoner}
                             >
-                                <SammenligningIngress />
+                                {/*<SammenligningIngress />
                                 <SammenligningSiste4KvartalerMedBransje
                                     restSykefraværsvarighet={restSykefraværsvarighet}
                                 />
@@ -171,10 +168,11 @@ const AppContent: FunctionComponent = () => {
                                     skalVises={
                                         restSykefraværsvarighet.status === RestStatus.Suksess
                                     }
+                                />*/}
+                                <EkspanderbarSammenligning
+                                    restSykefraværsvarighet={restSykefraværsvarighet}
                                 />
-                                {tipsliste.map((tips, i) => (
-                                    <TipsVisning tips={tips} key={i} />
-                                ))}
+                                <EkspanderbareTips tips={tipsliste} />
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />
