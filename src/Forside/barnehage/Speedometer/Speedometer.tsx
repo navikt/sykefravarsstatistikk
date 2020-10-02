@@ -19,11 +19,17 @@ interface Props {
     resultat: SykefraværResultat;
     stor?: boolean;
     className?: string;
+    inline?: boolean;
 }
 
-export const Speedometer: FunctionComponent<Props> = ({ resultat, stor, className }) => {
+export const Speedometer: FunctionComponent<Props> = ({ resultat, stor, className, inline }) => {
     const størrelsesfaktor = stor ? 1.2 : 0.7;
-    return (
+
+    return inline ? (
+        <span className={classNames(className, 'speedometer')}>
+            <SpeedometerSvg resultat={resultat} størrelsesfaktor={størrelsesfaktor} />
+        </span>
+    ) : (
         <div className={classNames(className, 'speedometer')}>
             <SpeedometerSvg resultat={resultat} størrelsesfaktor={størrelsesfaktor} />
         </div>
