@@ -38,18 +38,18 @@ import Lenkeressurser from './Forside/Lenkeressurser/Lenkeressurser';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
 import { Forside } from './Forside/Forside';
-import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/SammenligningIngress';
-import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
-import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
 import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
 import {
     sykefraværsvarighetContext,
     SykefraværsvarighetProvider,
 } from './utils/sykefraværsvarighetContext';
 import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
-import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import { EnhetsregisteretProvider } from './utils/enhetsregisteretContext';
+import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/SammenligningIngress';
+import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
+import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
+import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -170,6 +170,10 @@ const AppContent: FunctionComponent = () => {
                                         restSykefraværsvarighet.status === RestStatus.Suksess
                                     }
                                 />
+                                {/*<EkspanderbarSammenligning
+                                    restSykefraværsvarighet={restSykefraværsvarighet}
+                                />
+                                <EkspanderbareTips tips={tipsliste} />*/}
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />

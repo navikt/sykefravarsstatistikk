@@ -1,12 +1,17 @@
 @import '../../variables';
 
 .tips-visning {
+    max-width: 50rem;
+
     &__tittel {
+        .ekstern-lenke {
+            .typo-undertittel-mixin();
+        }
         padding-top: 1rem;
+        padding-bottom: 1rem;
     }
 
     &__tidsbruk {
-        padding-bottom: 0.5rem;
         padding-top: 1rem;
     }
 
@@ -14,7 +19,10 @@
         display: flex;
 
         &__tekst-wrapper {
-            margin-left: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            margin-left: 2.5rem;
         }
 
         &__tittel {
