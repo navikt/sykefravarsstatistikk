@@ -46,9 +46,10 @@ import {
 import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import { EnhetsregisteretProvider } from './utils/enhetsregisteretContext';
-import { tipsliste } from './felleskomponenter/tips/tips';
-import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSammenligning/EkspanderbarSammenligning';
-import { EkspanderbareTips } from './Forside/barnehage/EkspanderbareTips/EkspanderbareTips';
+import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/SammenligningIngress';
+import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
+import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
+import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -155,7 +156,7 @@ const AppContent: FunctionComponent = () => {
                                 restSykefraværsvarighet={restSykefraværsvarighet}
                                 restAltinnOrganisasjoner={restOrganisasjoner}
                             >
-                                {/*<SammenligningIngress />
+                                <SammenligningIngress />
                                 <SammenligningSiste4KvartalerMedBransje
                                     restSykefraværsvarighet={restSykefraværsvarighet}
                                 />
@@ -168,11 +169,11 @@ const AppContent: FunctionComponent = () => {
                                     skalVises={
                                         restSykefraværsvarighet.status === RestStatus.Suksess
                                     }
-                                />*/}
-                                <EkspanderbarSammenligning
+                                />
+                                {/*<EkspanderbarSammenligning
                                     restSykefraværsvarighet={restSykefraværsvarighet}
                                 />
-                                <EkspanderbareTips tips={tipsliste} />
+                                <EkspanderbareTips tips={tipsliste} />*/}
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />
