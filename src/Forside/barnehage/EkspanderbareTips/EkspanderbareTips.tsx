@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Tips } from '../../../felleskomponenter/tips/tips';
+import { Tips, tipsvariasjoner } from '../../../felleskomponenter/tips/tips';
 import { TipsVisning } from '../../../felleskomponenter/tips/TipsVisning';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import './EkspanderbareTips.less';
@@ -32,9 +32,17 @@ export const EkspanderbareTips: FunctionComponent<Props> = ({ tips }) => {
             <TipsVisning className="ekspanderbare-tips__tips" tips={tips[1]} />
             <TipsVisning className="ekspanderbare-tips__tips" tips={tips[2]} />
 
-            <div>skillelinje</div>
+            <Undertittel className="ekspanderbare-tips__undertittel">
+                LAs forslag til variasjoner
+            </Undertittel>
+            {tipsvariasjoner.map((tip) => (
+                <TipsVisning className="ekspanderbare-tips__tips" tips={tip} key={tip.tittel} />
+            ))}
+            <Undertittel className="ekspanderbare-tips__undertittel">
+                Alle tipsene
+            </Undertittel>
             {tips.map((tip) => (
-                <TipsVisning tips={tip} key={tip.tittel} />
+                <TipsVisning className="ekspanderbare-tips__tips" tips={tip} key={tip.tittel} />
             ))}
         </Ekspanderbartpanel>
     );
