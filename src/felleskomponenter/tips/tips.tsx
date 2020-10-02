@@ -11,7 +11,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 export interface Tips {
     tittel: string;
     ingress: string;
-    tidsbruk: ReactElement | string;
+    tidsbruk?: ReactElement | string;
     href: string;
     img: { src: string; alt: string };
 }
@@ -31,7 +31,6 @@ export const tipsliste: Tips[] = [
         tittel: 'Hvordan få ned korttidsfraværet?',
         ingress:
             'Her får du praktisk hjelp til hvordan du kan finne gode løsninger sammen med dine ansatte.',
-        tidsbruk: 'Artikkel: 3 min',
         href: 'https://www.idebanken.org/kloke-grep/artikler/hvordan-fa-ned-korttidsfravaeret',
         img: { src: fåNedKorttidsfravær, alt: '' },
     },

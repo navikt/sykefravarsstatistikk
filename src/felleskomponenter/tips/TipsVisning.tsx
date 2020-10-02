@@ -21,7 +21,9 @@ export const TipsVisning: FunctionComponent<Props> = ({ tips, className }) => {
                     <EksternLenke href={tips.href}>{tips.tittel}</EksternLenke>
                 </Undertittel>
                 <Normaltekst>{tips.ingress}</Normaltekst>
-                <Tidsbruk className="tips-visning__tidsbruk">{tips.tidsbruk}</Tidsbruk>
+                {tips.tidsbruk && (
+                    <Tidsbruk className="tips-visning__tidsbruk">{tips.tidsbruk}</Tidsbruk>
+                )}
             </div>
         </div>
     );

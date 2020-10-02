@@ -47,3 +47,4 @@ export const EkspanderbareTips: FunctionComponent<Props> = ({ tips }) => {
         </Ekspanderbartpanel>
     );
 };
+// må se bra ut uten tidsbruk
