@@ -5,14 +5,16 @@ import EksternLenke from '../EksternLenke/EksternLenke';
 import { Tidsbruk } from './Tidsbruk/Tidsbruk';
 import { TipsBilde } from './TipsBilde/TipsBilde';
 import { Tips } from './tips';
+import classNames from 'classnames';
 
 interface Props {
     tips: Tips;
+    className?: string;
 }
 
-export const TipsVisning: FunctionComponent<Props> = ({ tips }) => {
+export const TipsVisning: FunctionComponent<Props> = ({ tips, className }) => {
     return (
-        <div className="tips-visning">
+        <div className={classNames('tips-visning', className)}>
             <TipsBilde src={tips.img.src} alt={tips.img.alt} />
             <div className="tips-visning__tekst-wrapper">
                 <Undertittel className="tips-visning__tittel" tag="p">

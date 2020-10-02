@@ -14,6 +14,7 @@ export const EkspanderbareTips: FunctionComponent<Props> = ({ tips }) => {
     return (
         <Ekspanderbartpanel
             className="ekspanderbare-tips"
+            apen
             tittel={
                 <>
                     <img className="ekspanderbare-tips__bilde" src={lyspæreSvg} alt="" />
@@ -24,12 +25,17 @@ export const EkspanderbareTips: FunctionComponent<Props> = ({ tips }) => {
             <Undertittel className="ekspanderbare-tips__undertittel">
                 Tips fra andre barnehager i lignende situasjon som deg
             </Undertittel>
-            <TipsVisning tips={tips[0]} />
+            <TipsVisning className="ekspanderbare-tips__tips" tips={tips[0]} />
             <Undertittel className="ekspanderbare-tips__undertittel">
                 Dette kan du gjøre
             </Undertittel>
-            <TipsVisning tips={tips[1]} />
-            <TipsVisning tips={tips[2]} />
+            <TipsVisning className="ekspanderbare-tips__tips" tips={tips[1]} />
+            <TipsVisning className="ekspanderbare-tips__tips" tips={tips[2]} />
+
+            <div>skillelinje</div>
+            {tips.map((tip) => (
+                <TipsVisning tips={tip} key={tip.tittel} />
+            ))}
         </Ekspanderbartpanel>
     );
 };
