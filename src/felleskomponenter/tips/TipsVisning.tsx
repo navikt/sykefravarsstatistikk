@@ -17,10 +17,12 @@ export const TipsVisning: FunctionComponent<Props> = ({ tips, className }) => {
         <div className={classNames('tips-visning', className)}>
             <TipsBilde src={tips.img.src} alt={tips.img.alt} />
             <div className="tips-visning__tekst-wrapper">
-                <Undertittel className="tips-visning__tittel" tag="p">
-                    <EksternLenke href={tips.href}>{tips.tittel}</EksternLenke>
-                </Undertittel>
-                <Normaltekst>{tips.ingress}</Normaltekst>
+                <div>
+                    <Undertittel className="tips-visning__tittel" tag="p">
+                        <EksternLenke href={tips.href}>{tips.tittel}</EksternLenke>
+                    </Undertittel>
+                    <Normaltekst>{tips.ingress}</Normaltekst>
+                </div>
                 {tips.tidsbruk && (
                     <Tidsbruk className="tips-visning__tidsbruk">{tips.tidsbruk}</Tidsbruk>
                 )}
