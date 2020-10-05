@@ -1,8 +1,7 @@
-import React, { FunctionComponent, ReactElement, useContext, useEffect } from 'react';
+import React, { FunctionComponent, ReactElement, useEffect } from 'react';
 import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { ABTestVersjon, getABTestVersjon, sendABTestEvent } from './ab-test-utils';
-import { featureTogglesContext } from '../utils/FeatureTogglesContext';
 import { RestFeatureToggles } from '../api/featureToggles';
 
 interface Props {
@@ -12,7 +11,12 @@ interface Props {
     versjonB: ReactElement;
 }
 
-export const ABTest: FunctionComponent<Props> = ({ feature, versjonA, versjonB, restFeatureToggles }) => {
+export const ABTest: FunctionComponent<Props> = ({
+    feature,
+    versjonA,
+    versjonB,
+    restFeatureToggles,
+}) => {
     useEffect(() => {
         if (restFeatureToggles.status === RestStatus.Suksess) {
             sendABTestEvent(feature, getABTestVersjon(restFeatureToggles.data[feature]));
