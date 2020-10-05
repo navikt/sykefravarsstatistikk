@@ -1,8 +1,8 @@
 import React, { FunctionComponent, ReactElement, useEffect } from 'react';
-import { RestStatus } from '../api/api-utils';
+import { RestStatus } from '../../api/api-utils';
 import { ABTestVersjon, getABTestVersjon, sendABTestEvent } from './ab-test-utils';
-import { RestFeatureToggles } from '../api/featureToggles';
-import Lasteside from '../Lasteside/Lasteside';
+import { RestFeatureToggles } from '../../api/featureToggles';
+import Lasteside from '../../Lasteside/Lasteside';
 
 interface Props {
     feature: string;

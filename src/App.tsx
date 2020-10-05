@@ -50,7 +50,7 @@ import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/S
 import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
 import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
 import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
-import { ABTest } from './ABTest/ABTest';
+import { ABTest } from './felleskomponenter/ABTest/ABTest';
 import { Sidetittel } from 'nav-frontend-typografi';
 import { RestFeatureToggles } from './api/featureToggles';
 

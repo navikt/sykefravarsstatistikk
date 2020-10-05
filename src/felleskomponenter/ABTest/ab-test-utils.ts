@@ -1,4 +1,4 @@
-import { amplitudeInstance } from '../amplitude/amplitude';
+import { amplitudeInstance } from '../../amplitude/amplitude';
 
 export enum ABTestVersjon {
     VersjonA = 'VersjonA',
