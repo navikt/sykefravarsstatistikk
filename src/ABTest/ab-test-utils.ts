@@ -10,9 +10,9 @@ export const getABTestVersjon = (feature: boolean | undefined): ABTestVersjon =>
     if (feature === undefined) return ABTestVersjon.Fallback;
 
     if (feature) {
-        return ABTestVersjon.VersjonA;
-    } else {
         return ABTestVersjon.VersjonB;
+    } else {
+        return ABTestVersjon.VersjonA;
     }
 };
 

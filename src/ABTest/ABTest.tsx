@@ -1,23 +1,18 @@
-import { FunctionComponent, ReactElement, useEffect } from 'react';
-import { RestFeatureToggles } from '../api/featureToggles';
+import React, { FunctionComponent, ReactElement, useContext, useEffect } from 'react';
 import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { sendEventDirekte } from '../amplitude/amplitude';
 import { ABTestVersjon, getABTestVersjon, sendABTestEvent } from './ab-test-utils';
+import { featureTogglesContext } from '../utils/FeatureTogglesContext';
 
 interface Props {
     feature: string;
-    restFeatureToggles: RestFeatureToggles;
     versjonA: ReactElement;
     versjonB: ReactElement;
 }
 
-export const ABTest: FunctionComponent<Props> = ({
-    feature,
-    restFeatureToggles,
-    versjonA,
-    versjonB,
-}) => {
+export const ABTest: FunctionComponent<Props> = ({ feature, versjonA, versjonB }) => {
+    const restFeatureToggles = useContext(featureTogglesContext);
+
     useEffect(() => {
         if (restFeatureToggles.status === RestStatus.Suksess) {
             console.log(
@@ -27,7 +22,7 @@ export const ABTest: FunctionComponent<Props> = ({
             );
             sendABTestEvent(feature, getABTestVersjon(restFeatureToggles.data[feature]));
         }
-    }, [restFeatureToggles]);
+    }, [restFeatureToggles, feature]);
 
     if (restFeatureToggles.status !== RestStatus.Suksess) {
         return <NavFrontendSpinner />;

@@ -15,6 +15,7 @@ Denne appen gir arbeidsgivere muligheten til å sammenligne sykefraværet i egen
     2. `docker build -t sykefravarsstatistikk .`
     3. `docker run -d -p 3000:3000 sykefravarsstatistikk`
     4. For å stoppe, kjør `docker stop <id>` med id-en fra forrige kommando
+
 ---
 
 # Henvendelser
