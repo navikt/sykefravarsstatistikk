@@ -3,16 +3,16 @@ import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { ABTestVersjon, getABTestVersjon, sendABTestEvent } from './ab-test-utils';
 import { featureTogglesContext } from '../utils/FeatureTogglesContext';
+import { RestFeatureToggles } from '../api/featureToggles';
 
 interface Props {
     feature: string;
+    restFeatureToggles: RestFeatureToggles;
     versjonA: ReactElement;
     versjonB: ReactElement;
 }
 
-export const ABTest: FunctionComponent<Props> = ({ feature, versjonA, versjonB }) => {
-    const restFeatureToggles = useContext(featureTogglesContext);
-
+export const ABTest: FunctionComponent<Props> = ({ feature, versjonA, versjonB, restFeatureToggles }) => {
     useEffect(() => {
         if (restFeatureToggles.status === RestStatus.Suksess) {
             sendABTestEvent(feature, getABTestVersjon(restFeatureToggles.data[feature]));

@@ -33,7 +33,7 @@ import {
     AltinnOrganisasjonerProvider,
 } from './utils/altinnOrganisasjonerContext';
 import { useSetUserProperties } from './amplitude/userProperties';
-import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
+import { featureTogglesContext, FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import Lenkeressurser from './Forside/Lenkeressurser/Lenkeressurser';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
@@ -52,6 +52,7 @@ import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligni
 import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 import { ABTest } from './ABTest/ABTest';
 import { Sidetittel } from 'nav-frontend-typografi';
+import { RestFeatureToggles } from './api/featureToggles';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -96,6 +97,7 @@ const AppContent: FunctionComponent = () => {
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
+    const restFeatureToggles = useContext<RestFeatureToggles>(featureTogglesContext);
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
     const location = useLocation();
     useSetUserProperties();
@@ -178,6 +180,7 @@ const AppContent: FunctionComponent = () => {
                                 <EkspanderbareTips tips={tipsliste} />*/}
                                 <ABTest
                                     feature={'sykefravarsstatistikk.ab-test.tips'}
+                                    restFeatureToggles={restFeatureToggles}
                                     versjonA={<Sidetittel>Versjon A</Sidetittel>}
                                     versjonB={<Sidetittel>Versjon B</Sidetittel>}
                                 />
