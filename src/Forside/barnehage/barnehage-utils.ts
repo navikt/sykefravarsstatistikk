@@ -61,6 +61,36 @@ export const getResultatForSammenligningAvSykefravær = (
     }
 };
 
+export const getAlleResultaterForSammenligningAvSykefravær = (
+    restStatus: RestStatus.Suksess | RestStatus.Feil,
+    varighet: Sykefraværsvarighet | undefined
+): {
+    totaltFravær: SykefraværResultat;
+    korttidsfravær: SykefraværResultat;
+    langtidsfravær: SykefraværResultat;
+} => {
+    const resultatTotaltFravær = getResultatForSammenligningAvSykefravær(
+        restStatus,
+        getTotaltSykefraværSiste4Kvartaler(varighet),
+        sykefraværForBarnehagerSiste4Kvartaler.totalt
+    );
+    const resultatKorttidsfravær = getResultatForSammenligningAvSykefravær(
+        restStatus,
+        varighet?.summertKorttidsfravær,
+        sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær
+    );
+    const resultatLangtidsfravær = getResultatForSammenligningAvSykefravær(
+        restStatus,
+        varighet?.summertLangtidsfravær,
+        sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær
+    );
+    return {
+        totaltFravær: resultatTotaltFravær,
+        korttidsfravær: resultatKorttidsfravær,
+        langtidsfravær: resultatLangtidsfravær,
+    };
+};
+
 export const getTotaltSykefraværSiste4Kvartaler = (
     varighet: Sykefraværsvarighet | undefined
 ): SummertSykefravær | undefined => {
