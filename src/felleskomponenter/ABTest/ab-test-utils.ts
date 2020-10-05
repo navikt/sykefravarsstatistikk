@@ -6,10 +6,10 @@ export enum ABTestVersjon {
     Fallback = 'Fallback',
 }
 
-export const getABTestVersjon = (feature: boolean | undefined): ABTestVersjon => {
-    if (feature === undefined) return ABTestVersjon.Fallback;
+export const getABTestVersjon = (erFeatureAktivert: boolean | undefined): ABTestVersjon => {
+    if (erFeatureAktivert === undefined) return ABTestVersjon.Fallback;
 
-    if (feature) {
+    if (erFeatureAktivert) {
         return ABTestVersjon.VersjonB;
     } else {
         return ABTestVersjon.VersjonA;
