@@ -1,8 +1,8 @@
 import React, { FunctionComponent, ReactElement, useEffect } from 'react';
 import { RestStatus } from '../api/api-utils';
-import NavFrontendSpinner from 'nav-frontend-spinner';
 import { ABTestVersjon, getABTestVersjon, sendABTestEvent } from './ab-test-utils';
 import { RestFeatureToggles } from '../api/featureToggles';
+import Lasteside from '../Lasteside/Lasteside';
 
 interface Props {
     feature: string;
@@ -24,7 +24,7 @@ export const ABTest: FunctionComponent<Props> = ({
     }, [restFeatureToggles, feature]);
 
     if (restFeatureToggles.status !== RestStatus.Suksess) {
-        return <NavFrontendSpinner />;
+        return <Lasteside />;
     }
 
     const versjonSomSkalBrukes = getABTestVersjon(restFeatureToggles.data[feature]);
