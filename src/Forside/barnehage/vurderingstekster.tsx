@@ -185,31 +185,28 @@ export const getForklaringAvVurdering = (
         case SykefraværResultat.UFULLSTENDIG_DATA:
             return (
                 <>
-                    Du er markert grått.{' '}
-                    <strong>
-                        Sammenligningen blir markert grå for Vi mangler dine tall for deler av
+                    <Undertekst>
+                        Sammenligningen blir markert grå for vi mangler dine tall for deler av
                         perioden.
-                    </strong>
+                    </Undertekst>
                 </>
             );
         case SykefraværResultat.MASKERT:
             return (
                 <>
-                    Du er markert grått.{' '}
-                    <strong>
+                    <Undertekst>
                         Sammenligningen blir markert grå for du har for lave tall til at vi kan vise
                         statistikken din.
-                    </strong>
+                    </Undertekst>
                 </>
             );
         case SykefraværResultat.INGEN_DATA:
             return (
                 <>
-                    Du er markert grått.{' '}
-                    <strong>
+                    <Undertekst>
                         Sammenligningen blir markert grå for vi finner ikke tall for virksomheten
                         din.
-                    </strong>
+                    </Undertekst>
                 </>
             );
         case SykefraværResultat.FEIL:

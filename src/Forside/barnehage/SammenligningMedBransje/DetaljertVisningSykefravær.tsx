@@ -19,7 +19,7 @@ export const DetaljertVisningSykefravær: FunctionComponent<Props> = ({
             <Ingress className="detaljert-visning-sykefravær__tittel" tag="span">
                 {overskrift}
             </Ingress>
-            <Systemtittel tag="p">
+            <Systemtittel tag="p" className="detaljert-visning-sykefravær__prosent-og-antall-kvartaller">
                 <Prosent prosent={prosent} />
                 {visingAntallKvartaller}
             </Systemtittel>
