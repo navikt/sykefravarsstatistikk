@@ -10,7 +10,8 @@ import {
     SammenligningsType,
 } from '../vurderingstekster';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import AlertStripe from 'nav-frontend-alertstriper';
+import { SykefraværMetadata } from './SykefraværMetadata';
+import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
 
 interface Props {
     sammenligningResultat: SykefraværResultat;
@@ -42,50 +43,33 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 apen={åpen}
                 tittel={
                     <span className="ekspanderbart-sammenligningspanel__tittel-wrapper">
-                        <Speedometer resultat={sammenligningResultat} inline/>
-                        <Systemtittel tag="h2" className="ekspanderbart-sammenligningspanel__tittel">
+                        <Speedometer resultat={sammenligningResultat} inline />
+                        <Systemtittel
+                            tag="h2"
+                            className="ekspanderbart-sammenligningspanel__tittel"
+                        >
                             {getVurderingstekst(sammenligningResultat, sammenligningsType)}
                         </Systemtittel>
                     </span>
                 }
                 className="ekspanderbart-sammenligningspanel__panel"
             >
-                <Ingress tag="h3" className="ekspanderbart-sammenligningspanel__panel-tittel">
-                    Legemeldt sykefravær
-                    <Normaltekst>Periode: {periode}</Normaltekst>
-                </Ingress>
-                <div className="ekspanderbart-sammenligningspanel__ikon-og-tall">
-                    <Speedometer
-                        className="ekspanderbart-sammenligningspanel__ikon"
-                        stor
-                        resultat={sammenligningResultat}
+                <div className="ekspanderbart-sammenligningspanel__metadata-og-detaljert-visning-sykefravær">
+                    <SykefraværMetadata tittel="Legemeldt sykefravær:" periode={periode} />
+                    <DetaljertVisningSykefravær
+                        overskrift="Din virksomhet:"
+                        prosent={sykefraværVirksomhet}
+                        visingAntallKvartaller={antallKvartalerVirksomhet}
                     />
-                    <div className="ekspanderbart-sammenligningspanel__tall">
-                        <Ingress className="ekspanderbart-sammenligningspanel__virksomhet-tittel">
-                            Din virksomhet:
-                        </Ingress>
-                        <Systemtittel tag="p">
-                            <Prosent prosent={sykefraværVirksomhet} />
-                            {antallKvartalerVirksomhet}
-                        </Systemtittel>
-                        <Ingress className="ekspanderbart-sammenligningspanel__bransje-tittel">
-                            Barnehager i Norge:
-                        </Ingress>
-                        <Systemtittel tag="p">
-                            <Prosent prosent={visningAvProsentForBransje} />
-                            {antallKvartalerBransje}
-                        </Systemtittel>
-                        <Normaltekst className="ekspanderbart-sammenligningspanel__neste-oppdatering">
-                            Sist oppdatert: {sisteOppdatering}
-                        </Normaltekst>
-                    </div>
+                    <DetaljertVisningSykefravær
+                        overskrift="Barnehager i Norge:"
+                        prosent={visningAvProsentForBransje}
+                        visingAntallKvartaller={antallKvartalerBransje}
+                    />
                 </div>
-                <AlertStripe
-                    type={'info'}
-                    className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering"
-                >
+                <div className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering">
                     {getForklaringAvVurdering(sammenligningResultat, sykefraværBransje)}
-                </AlertStripe>
+                </div>
             </Ekspanderbartpanel>
         </div>
     );

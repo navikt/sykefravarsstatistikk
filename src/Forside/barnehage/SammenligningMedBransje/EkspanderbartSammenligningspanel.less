@@ -3,16 +3,6 @@
 .ekspanderbart-sammenligningspanel {
     margin-top: 2rem;
 
-    &__tittel-wrapper {
-        display: inline-flex;
-        align-items: center;
-        flex-direction: column;
-    }
-
-    &__forklaring-av-vurdering {
-        margin-top: 1rem;
-    }
-
     &__loading-skeleton {
         margin-top: 2rem;
     }
@@ -21,37 +11,18 @@
         margin-top: 2rem;
     }
 
-    &__utregningsinfo {
-        margin-bottom: 1rem;
-        margin-top: 0.5rem;
+    &__tittel-wrapper {
+        display: inline-flex;
+        align-items: center;
+        flex-direction: column;
     }
-    &__utregningsinfo-innhold {
-        margin-top: 1rem;
-        max-width: 30rem;
-        padding-bottom: 1rem;
+
+    &__forklaring-av-vurdering {
+        margin-top: 2rem;
     }
 
     &__panel {
         border: 1px solid black;
-    }
-
-    &__panel-tittel {
-        padding-bottom: 2rem;
-    }
-
-    &__bransje-tittel,
-    &__neste-oppdatering,
-    &__virksomhet-tittel {
-        padding-top: 1rem;
-    }
-
-    &__ikon-og-tall {
-        margin-bottom: 1rem;
-    }
-
-    &__ikon {
-        display: flex;
-        justify-content: center;
     }
 
     @media print, (min-width: @screen-sm-min) {
@@ -63,16 +34,12 @@
             padding-left: 1rem;
         }
 
-        &__ikon-og-tall {
+        &__metadata-og-detaljert-visning-sykefravær {
             display: flex;
-            margin-bottom: 0;
-        }
-
-        &__virksomhet-tittel {
-            padding-top: 0;
-        }
-        &__ikon {
-            margin-right: 3rem;
+            flex-direction: row;
+            justify-content: space-between;
+            padding-right: 3rem;
+            padding-top: 1rem;
         }
     }
 

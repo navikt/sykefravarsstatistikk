@@ -1,25 +1,27 @@
 import React, { ReactElement } from 'react';
 import { SykefraværResultat } from './Speedometer/Speedometer';
 import { getGrønnGrense, getRødGrense } from './barnehage-utils';
-import {formaterProsent} from "../../utils/app-utils";
+import { formaterProsent } from '../../utils/app-utils';
+import Undertekst from 'nav-frontend-typografi/lib/undertekst';
 
 export enum SammenligningsType {
     TOTALT = 'TOTALT',
     LANGTID = 'LANGTID',
-    KORTTID = 'KORTTID'
+    KORTTID = 'KORTTID',
 }
 
 export const getVurderingstekst = (
-    sykefraværResultat: SykefraværResultat, sammenligningsType: SammenligningsType
+    sykefraværResultat: SykefraværResultat,
+    sammenligningsType: SammenligningsType
 ): ReactElement | string => {
- switch (sammenligningsType) {
-     case SammenligningsType.TOTALT:
-         return getVurderingstekstTotalt(sykefraværResultat);
-     case SammenligningsType.LANGTID:
-         return getVurderingstekstLangtid(sykefraværResultat);
-     case SammenligningsType.KORTTID:
-         return getVurderingstekstKorttid(sykefraværResultat);
- }
+    switch (sammenligningsType) {
+        case SammenligningsType.TOTALT:
+            return getVurderingstekstTotalt(sykefraværResultat);
+        case SammenligningsType.LANGTID:
+            return getVurderingstekstLangtid(sykefraværResultat);
+        case SammenligningsType.KORTTID:
+            return getVurderingstekstKorttid(sykefraværResultat);
+    }
 };
 
 export const getVurderingstekstTotalt = (
@@ -141,36 +143,43 @@ export const getVurderingstekstLangtid = (resultat: SykefraværResultat) => {
     }
 };
 
-export const getForklaringAvVurdering = (resultat: SykefraværResultat, bransjensProsent: number) => {
+export const getForklaringAvVurdering = (
+    resultat: SykefraværResultat,
+    bransjensProsent: number
+) => {
     switch (resultat) {
         case SykefraværResultat.UNDER:
             return (
                 <>
-                    Du er markert grønn.
-                    <strong>
-                        Sammenligningen blir markert grønn når ditt sykefravær er lavere enn{' '}
+                    <Undertekst>
+                        Sammenligningen din er blitt markert som grønn på en skala grønn, gull, rød
+                        <br />
+                        Det skjer når ditt sykefravær er lavere enn{' '}
                         {formaterProsent(getGrønnGrense(bransjensProsent))} prosent.
-                    </strong>
+                    </Undertekst>
                 </>
             );
         case SykefraværResultat.MIDDELS:
             return (
                 <>
-                    Du er markert gult.{' '}
-                    <strong>
-                        Sammenligningen blir markert gull når ditt sykefravær er mellom{' '}
-                        {formaterProsent(getGrønnGrense(bransjensProsent))} og {formaterProsent(getRødGrense(bransjensProsent))} prosent.
-                    </strong>
+                    <Undertekst>
+                        Sammenligningen din er blitt markert som gul på en skala grønn, gull, rød
+                        <br />
+                        Det skjer når ditt sykefravær er mellom{' '}
+                        {formaterProsent(getGrønnGrense(bransjensProsent))} og{' '}
+                        {formaterProsent(getRødGrense(bransjensProsent))} prosent.
+                    </Undertekst>
                 </>
             );
         case SykefraværResultat.OVER:
             return (
                 <>
-                    Du er markert rødt.{' '}
-                    <strong>
-                        Sammenligningen blir markert rød når ditt sykefravær er høyere enn{' '}
+                    <Undertekst>
+                        Sammenligningen din er blitt markert som gull på en skala grønn, gull, rød
+                        <br />
+                        Det skjer når ditt sykefravær er høyere enn{' '}
                         {formaterProsent(getRødGrense(bransjensProsent))} prosent.
-                    </strong>
+                    </Undertekst>
                 </>
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
