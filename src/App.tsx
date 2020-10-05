@@ -50,7 +50,6 @@ import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/S
 import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
 import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
 import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
-import { EkspanderbareTips } from './Forside/barnehage/EkspanderbareTips/EkspanderbareTips';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -173,10 +172,10 @@ const AppContent: FunctionComponent = () => {
                                 />
                                 {/*<EkspanderbarSammenligning
                                     restSykefraværsvarighet={restSykefraværsvarighet}
-                                />*/}
+                                />
                                 <EkspanderbareTips
                                     restSykefraværsvarighet={restSykefraværsvarighet}
-                                />
+                                />*/}
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />

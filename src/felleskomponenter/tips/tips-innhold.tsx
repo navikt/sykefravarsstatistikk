@@ -5,7 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import stabiltToProsentBilde from './bilder/stabilt-to-prosent.png';
 import aldriKjedeligBilde from './bilder/aldri-kjedelig.png';
 import React from 'react';
-
+// TODO Vi må sette på alt-tekster
 export const deTokGrep = {
     tittel: 'Det høye sykefraværet var frustrerende både for ledere og ansatte. Så tok de grep.',
     ingress:
