@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactElement } from 'react';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { Ingress, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværResultat } from '../Speedometer/Speedometer';
 import {
@@ -10,6 +10,10 @@ import {
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { SykefraværMetadata } from './SykefraværMetadata';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
+import { TipsVisning } from '../../../felleskomponenter/tips/TipsVisning';
+import { getTips } from '../../../felleskomponenter/tips/tips';
+import lyspære from './lyspære-liten.svg'
+import lyspæreSvg from "../EkspanderbareTips/lyspære.svg";
 
 interface Props {
     sammenligningResultat: SykefraværResultat;
@@ -22,7 +26,7 @@ interface Props {
 }
 
 export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
-    sammenligningResultat,
+    sammenligningResultat: sykefraværResultat,
     sykefraværVirksomhet,
     sykefraværBransje,
     antallKvartalerVirksomhet,
@@ -33,7 +37,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const periode = '01.04.2019 til 31.03.2020';
 
     const visningAvProsentForBransje: number | null =
-        sammenligningResultat === SykefraværResultat.FEIL ? null : sykefraværBransje;
+        sykefraværResultat === SykefraværResultat.FEIL ? null : sykefraværBransje;
 
     return (
         <div className="ekspanderbart-sammenligningspanel">
@@ -41,12 +45,12 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 apen={åpen}
                 tittel={
                     <span className="ekspanderbart-sammenligningspanel__tittel-wrapper">
-                        <Speedometer resultat={sammenligningResultat} inline />
+                        <Speedometer resultat={sykefraværResultat} inline />
                         <Systemtittel
                             tag="h2"
                             className="ekspanderbart-sammenligningspanel__tittel"
                         >
-                            {getVurderingstekst(sammenligningResultat, sammenligningsType)}
+                            {getVurderingstekst(sykefraværResultat, sammenligningsType)}
                         </Systemtittel>
                     </span>
                 }
@@ -66,8 +70,21 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     />
                 </div>
                 <div className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering">
-                    {getForklaringAvVurdering(sammenligningResultat, sykefraværBransje)}
+                    {getForklaringAvVurdering(sykefraværResultat, sykefraværBransje)}
                 </div>
+
+                {getTips(sammenligningsType, sykefraværResultat) && <div className="ekspanderbart-sammenligningspanel__tips-tittel">
+                    <img className="ekspanderbart-sammenligningspanel__bilde" src={lyspære} alt="" />
+                    <Ingress>
+                        {sammenligningsType === SammenligningsType.TOTALT
+                            ? 'Tips fra andre barnehager i lignende situasjon som deg'
+                            : 'Dette kan du gjøre'}
+                    </Ingress>
+                </div>}
+                <TipsVisning
+                    tips={getTips(sammenligningsType, sykefraværResultat)}
+                    className={'ekspanderbart-sammenligningspanel__tips'}
+                />
             </Ekspanderbartpanel>
         </div>
     );
