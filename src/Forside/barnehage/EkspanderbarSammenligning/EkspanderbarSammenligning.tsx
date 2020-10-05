@@ -63,7 +63,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
         sammenligningResultat === SykefraværResultat.UFULLSTENDIG_DATA ||
         sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
             <>
-                <strong> / {kvartaler?.length || 0} av 4 kvartaler</strong>
+                <strong> {kvartaler?.length || 0} av 4 kvartaler</strong>
             </>
         ) : null;
 
@@ -71,7 +71,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
         sammenligningResultat === SykefraværResultat.UFULLSTENDIG_DATA ||
         sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
             <>
-                <strong> / 4 av 4 kvartaler</strong>
+                <strong>4 av 4 kvartaler</strong>
             </>
         ) : null;
 
