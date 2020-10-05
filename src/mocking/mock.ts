@@ -21,7 +21,7 @@ const mock = {
 let delayfaktor = 0;
 
 if (process.env.REACT_APP_HEROKU) {
-    // Alt skal alltid mockes på heroku
+    // Alt skal alltid mockes på Heroku
     Object.keys(mock).forEach((skalMockes) => ((mock as any)[skalMockes] = true));
     delayfaktor = 1;
 }
@@ -35,12 +35,14 @@ const mockGetAndLog = (
     if (response instanceof Function) {
         responseFunction = (url: string, opts: MockRequest) => {
             const responseValue = response(url, opts);
-            console.log('%cMock: ' + url, 'color:lightblue;font-weight:bold;', responseValue);
+            console.log('%c' + url, 'color:lightblue;font-weight:bold;', {
+                response: responseValue,
+            });
             return responseValue;
         };
     } else {
         responseFunction = (url) => {
-            console.log('%cMock: ' + url, 'color:lightblue;font-weight:bold;', response);
+            console.log('%c' + url, 'color:lightblue;font-weight:bold;', { response });
             return response;
         };
     }
@@ -152,7 +154,9 @@ if (mock.enhetsregisteret) {
 if (mock.featureToggles) {
     mockGetAndLog(
         'begin:/sykefravarsstatistikk/api/feature',
-        {},
+        {
+            'sykefravarsstatistikk.ab-test.tips': true,
+        },
         {
             delay: 1000 * delayfaktor,
         }
