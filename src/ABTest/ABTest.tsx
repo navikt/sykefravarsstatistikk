@@ -15,11 +15,6 @@ export const ABTest: FunctionComponent<Props> = ({ feature, versjonA, versjonB }
 
     useEffect(() => {
         if (restFeatureToggles.status === RestStatus.Suksess) {
-            console.log(
-                'abtest-event',
-                feature,
-                getABTestVersjon(restFeatureToggles.data[feature])
-            );
             sendABTestEvent(feature, getABTestVersjon(restFeatureToggles.data[feature]));
         }
     }, [restFeatureToggles, feature]);
