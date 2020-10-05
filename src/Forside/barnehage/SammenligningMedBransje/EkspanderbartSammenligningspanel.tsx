@@ -1,9 +1,7 @@
 import React, { FunctionComponent, ReactElement } from 'react';
-import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværResultat } from '../Speedometer/Speedometer';
-import { sisteOppdatering } from '../../../utils/app-utils';
-import { Prosent } from '../Prosent';
 import {
     getForklaringAvVurdering,
     getVurderingstekst,
@@ -55,7 +53,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 className="ekspanderbart-sammenligningspanel__panel"
             >
                 <div className="ekspanderbart-sammenligningspanel__metadata-og-detaljert-visning-sykefravær">
-                    <SykefraværMetadata tittel="Legemeldt sykefravær:" periode={periode} />
+                    <SykefraværMetadata sammenligningsType={sammenligningsType} periode={periode} />
                     <DetaljertVisningSykefravær
                         overskrift="Din virksomhet:"
                         prosent={sykefraværVirksomhet}
