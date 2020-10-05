@@ -33,7 +33,7 @@ import {
     AltinnOrganisasjonerProvider,
 } from './utils/altinnOrganisasjonerContext';
 import { useSetUserProperties } from './amplitude/userProperties';
-import { featureTogglesContext, FeatureTogglesProvider } from './utils/FeatureTogglesContext';
+import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import Lenkeressurser from './Forside/Lenkeressurser/Lenkeressurser';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
@@ -50,7 +50,6 @@ import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/S
 import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
 import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
 import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
-import { RestFeatureToggles } from './api/featureToggles';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -95,7 +94,6 @@ const AppContent: FunctionComponent = () => {
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
-    const restFeatureToggles = useContext<RestFeatureToggles>(featureTogglesContext);
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
     const location = useLocation();
     useSetUserProperties();
