@@ -30,6 +30,8 @@ instance.init(getApiKey(), '', {
     includeReferrer: true,
 });
 
+export const amplitudeInstance = instance;
+
 export const setUserProperties = (properties: Object) => instance.setUserProperties(properties);
 
 export const sendEventDirekte = (område: string, hendelse: string, data?: Object): void => {
