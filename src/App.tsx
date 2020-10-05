@@ -173,7 +173,9 @@ const AppContent: FunctionComponent = () => {
                                 {/*<EkspanderbarSammenligning
                                     restSykefraværsvarighet={restSykefraværsvarighet}
                                 />
-                                <EkspanderbareTips tips={tipsliste} />*/}
+                                <EkspanderbareTips
+                                    restSykefraværsvarighet={restSykefraværsvarighet}
+                                />*/}
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />

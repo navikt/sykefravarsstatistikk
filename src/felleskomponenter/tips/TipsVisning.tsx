@@ -8,11 +8,12 @@ import { Tips } from './tips';
 import classNames from 'classnames';
 
 interface Props {
-    tips: Tips;
+    tips: Tips | null;
     className?: string;
 }
 
 export const TipsVisning: FunctionComponent<Props> = ({ tips, className }) => {
+    if (tips === null) return null;
     return (
         <div className={classNames('tips-visning', className)}>
             <TipsBilde src={tips.img.src} alt={tips.img.alt} />
