@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { SykefraværResultat } from './Speedometer/Speedometer';
 import { getGrønnGrense, getRødGrense } from './barnehage-utils';
 import { formaterProsent } from '../../utils/app-utils';
-import Undertekst from 'nav-frontend-typografi/lib/undertekst';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 export enum SammenligningsType {
     TOTALT = 'TOTALT',
@@ -151,62 +151,62 @@ export const getForklaringAvVurdering = (
         case SykefraværResultat.UNDER:
             return (
                 <>
-                    <Undertekst>
+                    <Normaltekst>
                         Sammenligningen din er blitt markert som grønn på en skala grønn, gull, rød
                         <br />
                         Det skjer når ditt sykefravær er lavere enn{' '}
                         {formaterProsent(getGrønnGrense(bransjensProsent))} prosent.
-                    </Undertekst>
+                    </Normaltekst>
                 </>
             );
         case SykefraværResultat.MIDDELS:
             return (
                 <>
-                    <Undertekst>
+                    <Normaltekst>
                         Sammenligningen din er blitt markert som gul på en skala grønn, gull, rød
                         <br />
                         Det skjer når ditt sykefravær er mellom{' '}
                         {formaterProsent(getGrønnGrense(bransjensProsent))} og{' '}
                         {formaterProsent(getRødGrense(bransjensProsent))} prosent.
-                    </Undertekst>
+                    </Normaltekst>
                 </>
             );
         case SykefraværResultat.OVER:
             return (
                 <>
-                    <Undertekst>
+                    <Normaltekst>
                         Sammenligningen din er blitt markert som gull på en skala grønn, gull, rød
                         <br />
                         Det skjer når ditt sykefravær er høyere enn{' '}
                         {formaterProsent(getRødGrense(bransjensProsent))} prosent.
-                    </Undertekst>
+                    </Normaltekst>
                 </>
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
             return (
                 <>
-                    <Undertekst>
+                    <Normaltekst>
                         Sammenligningen blir markert grå for vi mangler dine tall for deler av
                         perioden.
-                    </Undertekst>
+                    </Normaltekst>
                 </>
             );
         case SykefraværResultat.MASKERT:
             return (
                 <>
-                    <Undertekst>
+                    <Normaltekst>
                         Sammenligningen blir markert grå for du har for lave tall til at vi kan vise
                         statistikken din.
-                    </Undertekst>
+                    </Normaltekst>
                 </>
             );
         case SykefraværResultat.INGEN_DATA:
             return (
                 <>
-                    <Undertekst>
+                    <Normaltekst>
                         Sammenligningen blir markert grå for vi finner ikke tall for virksomheten
                         din.
-                    </Undertekst>
+                    </Normaltekst>
                 </>
             );
         case SykefraværResultat.FEIL:

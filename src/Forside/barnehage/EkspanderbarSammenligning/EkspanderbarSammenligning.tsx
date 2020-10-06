@@ -10,6 +10,7 @@ import {
 } from '../barnehage-utils';
 import { SykefraværResultat } from '../Speedometer/Speedometer';
 import { SammenligningsType } from '../vurderingstekster';
+import './EkspanderbarSammenligning.less';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
@@ -76,7 +77,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
         ) : null;
 
     return (
-        <>
+        <div className="ekspanderbar-sammenligning">
             <EkspanderbartSammenligningspanel
                 sammenligningResultat={sammenligningResultat}
                 sykefraværVirksomhet={getTotaltSykefraværSiste4Kvartaler(varighet)?.prosent}
@@ -102,6 +103,6 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.LANGTID}
             />
-        </>
+        </div>
     );
 };

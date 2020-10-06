@@ -18,7 +18,7 @@
     }
 
     &__forklaring-av-vurdering {
-        margin-top: 2rem;
+        margin-top: 2.5rem;
     }
 
     &__panel {
@@ -31,9 +31,11 @@
     }
 
     &__tips-tittel {
-        margin-top: 3rem;
+        margin-top: 4rem;
         display: flex;
         align-items: center;
+        padding-bottom: .5rem;
+        border-bottom: 1px solid @navLysGra;
     }
 
     &__tips {
@@ -43,10 +45,17 @@
     @media print, (min-width: @screen-sm-min) {
         &__tittel-wrapper {
             flex-direction: row;
+            padding-right: 1rem;
+            padding-left: 1rem;
         }
 
         &__tittel {
             padding-left: 1rem;
+        }
+
+        .ekspanderbartPanel__innhold {
+            padding-right: 2rem;
+            padding-left: 2rem;
         }
 
         &__metadata-og-detaljert-visning-sykefravær {
@@ -54,7 +63,7 @@
             flex-direction: row;
             justify-content: space-between;
             padding-right: 3rem;
-            padding-top: 1rem;
+            padding-top: 2rem;
         }
     }
 

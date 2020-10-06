@@ -12,8 +12,7 @@ import { SykefraværMetadata } from './SykefraværMetadata';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
 import { TipsVisning } from '../../../felleskomponenter/tips/TipsVisning';
 import { getTips } from '../../../felleskomponenter/tips/tips';
-import lyspære from './lyspære-liten.svg'
-import lyspæreSvg from "../EkspanderbareTips/lyspære.svg";
+import lyspære from './lyspære-liten.svg';
 
 interface Props {
     sammenligningResultat: SykefraværResultat;
@@ -73,14 +72,20 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     {getForklaringAvVurdering(sykefraværResultat, sykefraværBransje)}
                 </div>
 
-                {getTips(sammenligningsType, sykefraværResultat) && <div className="ekspanderbart-sammenligningspanel__tips-tittel">
-                    <img className="ekspanderbart-sammenligningspanel__bilde" src={lyspære} alt="" />
-                    <Ingress>
-                        {sammenligningsType === SammenligningsType.TOTALT
-                            ? 'Tips fra andre barnehager i lignende situasjon som deg'
-                            : 'Dette kan du gjøre'}
-                    </Ingress>
-                </div>}
+                {getTips(sammenligningsType, sykefraværResultat) && (
+                    <div className="ekspanderbart-sammenligningspanel__tips-tittel">
+                        <img
+                            className="ekspanderbart-sammenligningspanel__bilde"
+                            src={lyspære}
+                            alt=""
+                        />
+                        <Ingress>
+                            {sammenligningsType === SammenligningsType.TOTALT
+                                ? 'Tips fra andre barnehager i lignende situasjon som deg'
+                                : 'Dette kan du gjøre'}
+                        </Ingress>
+                    </div>
+                )}
                 <TipsVisning
                     tips={getTips(sammenligningsType, sykefraværResultat)}
                     className={'ekspanderbart-sammenligningspanel__tips'}
