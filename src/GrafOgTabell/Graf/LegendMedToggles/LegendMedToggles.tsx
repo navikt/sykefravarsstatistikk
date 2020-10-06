@@ -43,6 +43,7 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
         onChange,
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const prefikser: { [linje in Linje]: string } = {
         virksomhet: 'Virksomhet:',
         overordnetEnhet: 'Overordnet enhet:',

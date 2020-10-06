@@ -25,6 +25,10 @@ module.exports = {
             },
             plugins: ['@typescript-eslint'],
             extends: ['plugin:jsx-a11y/recommended'],
+            rules: {
+                'no-use-before-define': 'off',
+                '@typescript-eslint/no-use-before-define': ['off'],
+            },
         },
     },
     jest: {

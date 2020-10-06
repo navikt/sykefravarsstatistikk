@@ -12,7 +12,7 @@ export type Linje =
     | string;
 
 export type LabelsForLinjer = {
-    [linje in Linje]: string;
+    [linje in Linje]: string; // eslint-disable-line @typescript-eslint/no-unused-vars
 };
 
 interface GrafConfig {
