@@ -1655,10 +1655,10 @@
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
 
-"@types/amplitude-js@^5.8.0":
-  version "5.11.1"
-  resolved "https://registry.yarnpkg.com/@types/amplitude-js/-/amplitude-js-5.11.1.tgz#4883aa6f484530df3557de8683ff4529fcb7ec65"
-  integrity sha512-2BAZ8sMlOq4t0zC5LEBRL551u/kJPr+BTOe9OUtFT7J1U4Kgm+gHYmV4nYwq9sZnNj6MisCllKiiL27WEur7Sw==
+"@types/amplitude-js@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@types/amplitude-js/-/amplitude-js-6.0.0.tgz#f53e67c15e7a7af939f95d4cdd54b65e30a20571"
+  integrity sha512-xzOyrhIBM9TQhBp1ARj/nhJHxA8zwZqXgpwN1tdBb04GI0xAUhtsP909x0LDW0iwAl4J0727c5bOMtQKH3KDAQ==
 
 "@types/babel__core@^7.1.0":
   version "7.1.10"
