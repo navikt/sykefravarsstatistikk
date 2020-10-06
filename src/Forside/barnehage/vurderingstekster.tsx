@@ -152,7 +152,7 @@ export const getForklaringAvVurdering = (
             return (
                 <>
                     <Normaltekst>
-                        Sammenligningen din er blitt markert som grønn på en skala grønn, gull, rød
+                        Sammenligningen din er blitt markert som grønn på en skala grønn, gul, rød
                         <br />
                         Det skjer når ditt sykefravær er lavere enn{' '}
                         {formaterProsent(getGrønnGrense(bransjensProsent))} prosent.
@@ -163,7 +163,7 @@ export const getForklaringAvVurdering = (
             return (
                 <>
                     <Normaltekst>
-                        Sammenligningen din er blitt markert som gul på en skala grønn, gull, rød
+                        Sammenligningen din er blitt markert som gul på en skala grønn, gul, rød
                         <br />
                         Det skjer når ditt sykefravær er mellom{' '}
                         {formaterProsent(getGrønnGrense(bransjensProsent))} og{' '}
@@ -175,7 +175,7 @@ export const getForklaringAvVurdering = (
             return (
                 <>
                     <Normaltekst>
-                        Sammenligningen din er blitt markert som gull på en skala grønn, gull, rød
+                        Sammenligningen din er blitt markert som gull på en skala grønn, gul, rød
                         <br />
                         Det skjer når ditt sykefravær er høyere enn{' '}
                         {formaterProsent(getRødGrense(bransjensProsent))} prosent.
