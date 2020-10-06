@@ -10,7 +10,7 @@ interface Props {
 
 export const Tidsbruk: FunctionComponent<Props> = ({ children, className }) => {
     return (
-        <Normaltekst className={classNames('antall-minutter', className)}>
+        <Normaltekst tag="div" className={classNames('antall-minutter', className)}>
             <img src={klokkeSvg} alt="klokkeikon" />
             <div className="antall-minutter__innhold">{children}</div>
         </Normaltekst>
