@@ -51,7 +51,6 @@ import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/Samm
 import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
 import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 import { RestFeatureToggles } from './api/featureToggles';
-import { EkspanderbareTips } from './Forside/barnehage/EkspanderbareTips/EkspanderbareTips';
 import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSammenligning/EkspanderbarSammenligning';
 
 export const PATH_FORSIDE = '/';
@@ -134,7 +133,7 @@ const AppContent: FunctionComponent = () => {
             ] ? (
                 <>
                     <EkspanderbarSammenligning restSykefraværsvarighet={restSykefraværsvarighet} />
-                    <EkspanderbareTips restSykefraværsvarighet={restSykefraværsvarighet} />
+                    {/*<EkspanderbareTips restSykefraværsvarighet={restSykefraværsvarighet} />*/}
                 </>
             ) : (
                 <>
