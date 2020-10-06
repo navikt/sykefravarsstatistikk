@@ -33,7 +33,7 @@ import {
     AltinnOrganisasjonerProvider,
 } from './utils/altinnOrganisasjonerContext';
 import { useSetUserProperties } from './amplitude/userProperties';
-import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
+import { featureTogglesContext, FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import Lenkeressurser from './Forside/Lenkeressurser/Lenkeressurser';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
@@ -50,6 +50,9 @@ import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/S
 import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
 import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
 import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
+import { RestFeatureToggles } from './api/featureToggles';
+import { EkspanderbareTips } from './Forside/barnehage/EkspanderbareTips/EkspanderbareTips';
+import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSammenligning/EkspanderbarSammenligning';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -95,6 +98,7 @@ const AppContent: FunctionComponent = () => {
         sykefraværshistorikkContext
     );
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
+    const restFeatureToggles = useContext<RestFeatureToggles>(featureTogglesContext);
     const location = useLocation();
     useSetUserProperties();
     useMålingAvTidsbruk('hele appen', 5, 30, 120, 300);
@@ -121,6 +125,32 @@ const AppContent: FunctionComponent = () => {
     } else if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
         window.location.replace('/min-side-arbeidsgiver/mangler-tilgang');
     } else {
+        let sammenligningBarnehage;
+        if (restFeatureToggles.status === RestStatus.LasterInn) {
+            sammenligningBarnehage = <Lasteside />;
+        } else {
+            sammenligningBarnehage = restFeatureToggles.data[
+                'sykefravarsstatistikk.barnehage-ny-sammenligning'
+            ] ? (
+                <>
+                    <EkspanderbarSammenligning restSykefraværsvarighet={restSykefraværsvarighet} />
+                    <EkspanderbareTips restSykefraværsvarighet={restSykefraværsvarighet} />
+                </>
+            ) : (
+                <>
+                    <SammenligningIngress />
+                    <SammenligningSiste4KvartalerMedBransje
+                        restSykefraværsvarighet={restSykefraværsvarighet}
+                    />
+                    <DetaljertSammenligning restSykefraværsvarighet={restSykefraværsvarighet} />
+                    <LærteDuNoeNyttPanel
+                        tekst="Var dette nyttig?"
+                        område="forside sammenligning tilbakemelding"
+                        skalVises={restSykefraværsvarighet.status === RestStatus.Suksess}
+                    />
+                </>
+            );
+        }
         innhold = (
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
@@ -156,26 +186,7 @@ const AppContent: FunctionComponent = () => {
                                 restSykefraværsvarighet={restSykefraværsvarighet}
                                 restAltinnOrganisasjoner={restOrganisasjoner}
                             >
-                                <SammenligningIngress />
-                                <SammenligningSiste4KvartalerMedBransje
-                                    restSykefraværsvarighet={restSykefraværsvarighet}
-                                />
-                                <DetaljertSammenligning
-                                    restSykefraværsvarighet={restSykefraværsvarighet}
-                                />
-                                <LærteDuNoeNyttPanel
-                                    tekst="Var dette nyttig?"
-                                    område="forside sammenligning tilbakemelding"
-                                    skalVises={
-                                        restSykefraværsvarighet.status === RestStatus.Suksess
-                                    }
-                                />
-                                {/*<EkspanderbarSammenligning
-                                    restSykefraværsvarighet={restSykefraværsvarighet}
-                                />
-                                <EkspanderbareTips
-                                    restSykefraværsvarighet={restSykefraværsvarighet}
-                                />*/}
+                                {sammenligningBarnehage}
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />
