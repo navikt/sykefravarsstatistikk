@@ -52,6 +52,8 @@ import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligni
 import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 import { RestFeatureToggles } from './api/featureToggles';
 import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSammenligning/EkspanderbarSammenligning';
+import { ABTest } from './felleskomponenter/ABTest/ABTest';
+import { EkspanderbareTips } from './Forside/barnehage/EkspanderbareTips/EkspanderbareTips';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -132,7 +134,27 @@ const AppContent: FunctionComponent = () => {
                 'sykefravarsstatistikk.barnehage-ny-sammenligning'
             ] ? (
                 <>
-                    <EkspanderbarSammenligning restSykefraværsvarighet={restSykefraværsvarighet} />
+                    <ABTest
+                        restFeatureToggles={restFeatureToggles}
+                        feature={'sykefravarsstatistikk.ab-test.tips'}
+                        versjonA={
+                            <EkspanderbarSammenligning
+                                restSykefraværsvarighet={restSykefraværsvarighet}
+                                visTips={true}
+                            />
+                        }
+                        versjonB={
+                            <>
+                                <EkspanderbarSammenligning
+                                    restSykefraværsvarighet={restSykefraværsvarighet}
+                                    visTips={false}
+                                />
+                                <EkspanderbareTips
+                                    restSykefraværsvarighet={restSykefraværsvarighet}
+                                />
+                            </>
+                        }
+                    />
                     {/*<EkspanderbareTips restSykefraværsvarighet={restSykefraværsvarighet} />*/}
                 </>
             ) : (
