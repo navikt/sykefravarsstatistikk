@@ -36,7 +36,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     sammenligningsType,
     åpen,
     visTips,
-    className
+    className,
 }) => {
     const periode = '01.04.2019 til 31.03.2020';
 
@@ -46,13 +46,19 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const innhold = (
         <>
             <div className="ekspanderbart-sammenligningspanel__metadata-og-detaljert-visning-sykefravær">
-                <SykefraværMetadata sammenligningsType={sammenligningsType} periode={periode} />
+                <SykefraværMetadata
+                    className="ekspanderbart-sammenligningspanel__sykefravær-metadata"
+                    sammenligningsType={sammenligningsType}
+                    periode={periode}
+                />
                 <DetaljertVisningSykefravær
+                    className="ekspanderbart-sammenligningspanel__detaljert-visning"
                     overskrift="Din virksomhet:"
                     prosent={sykefraværVirksomhet}
                     visingAntallKvartaller={antallKvartalerVirksomhet}
                 />
                 <DetaljertVisningSykefravær
+                    className="ekspanderbart-sammenligningspanel__detaljert-visning"
                     overskrift="Barnehager i Norge:"
                     prosent={visningAvProsentForBransje}
                     visingAntallKvartaller={antallKvartalerBransje}
@@ -65,7 +71,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     );
 
     return (
-        <div className={classNames("ekspanderbart-sammenligningspanel", className)}>
+        <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
             <Ekspanderbartpanel
                 apen={åpen}
                 tittel={
