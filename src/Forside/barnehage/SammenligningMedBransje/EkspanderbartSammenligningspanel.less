@@ -68,7 +68,16 @@
         }
     }
 
+    &__print-innhold {
+        display: none;
+    }
+
     @media print {
-        page-break-after: always;
+        &__print-innhold {
+            display: block;
+        }
+        &__innhold {
+            display: none;
+        }
     }
 }
