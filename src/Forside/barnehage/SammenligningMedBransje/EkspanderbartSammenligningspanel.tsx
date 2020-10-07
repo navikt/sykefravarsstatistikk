@@ -22,6 +22,7 @@ interface Props {
     antallKvartalerBransje: ReactElement | null;
     sammenligningsType: SammenligningsType;
     åpen?: boolean;
+    visTips: boolean;
 }
 
 export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
@@ -32,6 +33,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     antallKvartalerBransje,
     sammenligningsType,
     åpen,
+    visTips,
 }) => {
     const periode = '01.04.2019 til 31.03.2020';
 
@@ -72,7 +74,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     {getForklaringAvVurdering(sykefraværResultat, sykefraværBransje)}
                 </div>
 
-                {getTips(sammenligningsType, sykefraværResultat) && (
+                {visTips && getTips(sammenligningsType, sykefraværResultat) && (
                     <div className="ekspanderbart-sammenligningspanel__tips-tittel">
                         <img
                             className="ekspanderbart-sammenligningspanel__bilde"
@@ -86,10 +88,12 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         </Ingress>
                     </div>
                 )}
-                <TipsVisning
-                    tips={getTips(sammenligningsType, sykefraværResultat)}
-                    className={'ekspanderbart-sammenligningspanel__tips'}
-                />
+                {visTips && (
+                    <TipsVisning
+                        tips={getTips(sammenligningsType, sykefraværResultat)}
+                        className={'ekspanderbart-sammenligningspanel__tips'}
+                    />
+                )}
             </Ekspanderbartpanel>
         </div>
     );
