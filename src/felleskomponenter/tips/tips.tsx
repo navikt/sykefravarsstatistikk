@@ -1,14 +1,15 @@
-import {ReactElement} from 'react';
+import { ReactElement } from 'react';
 import {
-    aldriKjedelig, barnehagerKoblerErgonomiOgPedagogikk,
+    aldriKjedelig,
+    barnehagerKoblerErgonomiOgPedagogikk,
     deTokGrep,
     fåNedKorttidsfravær,
     seKursForebyggeSykefravær,
     seKursFølgeOppSykefravær,
     stabiltToProsent,
 } from './tips-innhold';
-import {SykefraværResultat} from '../../Forside/barnehage/Speedometer/Speedometer';
-import {SammenligningsType} from '../../Forside/barnehage/vurderingstekster';
+import { SykefraværResultat } from '../../Forside/barnehage/Speedometer/Speedometer';
+import { SammenligningsType } from '../../Forside/barnehage/vurderingstekster';
 
 export interface Tips {
     tittel: string;

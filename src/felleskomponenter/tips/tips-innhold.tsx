@@ -71,6 +71,7 @@ export const barnehagerKoblerErgonomiOgPedagogikk = {
             <Normaltekst>Video: 4:13 min</Normaltekst>
         </>
     ),
-    href: 'https://www.idebanken.org/inspirasjon/artikler/filmer/video-barnehage-med-nyskapende-kobling-mellom-ergonomi-og-pedagogikk',
-    img: { src: barnehagerKoblerErgonomiOgPedagogikkBilde, alt: '' },};
-
+    href:
+        'https://www.idebanken.org/inspirasjon/artikler/filmer/video-barnehage-med-nyskapende-kobling-mellom-ergonomi-og-pedagogikk',
+    img: { src: barnehagerKoblerErgonomiOgPedagogikkBilde, alt: '' },
+};
