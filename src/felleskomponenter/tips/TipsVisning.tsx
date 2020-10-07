@@ -12,6 +12,7 @@ interface Props {
     className?: string;
 }
 
+
 export const TipsVisning: FunctionComponent<Props> = ({ tips, className }) => {
     if (tips === null) return null;
     return (
