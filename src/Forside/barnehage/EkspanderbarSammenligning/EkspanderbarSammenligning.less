@@ -1,3 +1,7 @@
 .ekspanderbar-sammenligning {
-  margin-top: 4rem;
+    @media print {
+        &__sammenligning-totalt {
+            page-break-after: always;
+        }
+    }
 }
