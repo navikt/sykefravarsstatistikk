@@ -155,7 +155,7 @@ if (mock.featureToggles) {
     mockGetAndLog(
         'begin:/sykefravarsstatistikk/api/feature',
         {
-            'sykefravarsstatistikk.ab-test.tips': true,
+            'sykefravarsstatistikk.ab-test.tips': false,
             'sykefravarsstatistikk.barnehage-ny-sammenligning': true,
         },
         {

@@ -133,30 +133,25 @@ const AppContent: FunctionComponent = () => {
             sammenligningBarnehage = restFeatureToggles.data[
                 'sykefravarsstatistikk.barnehage-ny-sammenligning'
             ] ? (
-                <>
-                    <ABTest
-                        restFeatureToggles={restFeatureToggles}
-                        feature={'sykefravarsstatistikk.ab-test.tips'}
-                        versjonA={
+                <ABTest
+                    restFeatureToggles={restFeatureToggles}
+                    feature={'sykefravarsstatistikk.ab-test.tips'}
+                    versjonA={
+                        <EkspanderbarSammenligning
+                            restSykefraværsvarighet={restSykefraværsvarighet}
+                            visTips={true}
+                        />
+                    }
+                    versjonB={
+                        <>
                             <EkspanderbarSammenligning
                                 restSykefraværsvarighet={restSykefraværsvarighet}
-                                visTips={true}
+                                visTips={false}
                             />
-                        }
-                        versjonB={
-                            <>
-                                <EkspanderbarSammenligning
-                                    restSykefraværsvarighet={restSykefraværsvarighet}
-                                    visTips={false}
-                                />
-                                <EkspanderbareTips
-                                    restSykefraværsvarighet={restSykefraværsvarighet}
-                                />
-                            </>
-                        }
-                    />
-                    {/*<EkspanderbareTips restSykefraværsvarighet={restSykefraværsvarighet} />*/}
-                </>
+                            <EkspanderbareTips restSykefraværsvarighet={restSykefraværsvarighet} />
+                        </>
+                    }
+                />
             ) : (
                 <>
                     <SammenligningIngress />
@@ -211,7 +206,10 @@ const AppContent: FunctionComponent = () => {
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />
-                            <Lenkeressurser />
+                            {restFeatureToggles.status === RestStatus.Suksess &&
+                                !restFeatureToggles.data[
+                                    'sykefravarsstatistikk.barnehage-ny-sammenligning'
+                                ] && <Lenkeressurser />}
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>

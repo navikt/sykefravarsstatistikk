@@ -22,7 +22,7 @@ interface Props {
     antallKvartalerBransje: ReactElement | null;
     sammenligningsType: SammenligningsType;
     åpen?: boolean;
-    visTips?: boolean;
+    visTips: boolean;
 }
 
 export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({

@@ -14,7 +14,7 @@ import './EkspanderbarSammenligning.less';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
-    visTips?: boolean;
+    visTips: boolean;
 }
 
 export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
