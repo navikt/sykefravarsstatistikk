@@ -38,7 +38,7 @@ export const SykefraværMetadata: FunctionComponent<Props> = ({
     return (
         <div className={classNames('sykefravær-metadata', className)}>
             <Ingress tag="h3" className="sykefravær-metadata__tittel">
-                {getTittel(sammenligningsType)}
+                <strong>{getTittel(sammenligningsType)}</strong>
             </Ingress>
             <Normaltekst>Periode: {periode}</Normaltekst>
             <Normaltekst>Sist oppdatert: {sisteOppdatering}</Normaltekst>
