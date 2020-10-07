@@ -1,9 +1,11 @@
 import { ReactElement } from 'react';
 import {
     aldriKjedelig,
+    barnehagerKoblerErgonomiOgPedagogikk,
     deTokGrep,
     fåNedKorttidsfravær,
-    seKurs,
+    seKursForebyggeSykefravær,
+    seKursFølgeOppSykefravær,
     stabiltToProsent,
 } from './tips-innhold';
 import { SykefraværResultat } from '../../Forside/barnehage/Speedometer/Speedometer';
@@ -43,13 +45,19 @@ export const getTipsLangtidsfravær = (resultat: SykefraværResultat): Tips | nu
         case SykefraværResultat.UNDER:
         case SykefraværResultat.FEIL:
             return null;
+        case SykefraværResultat.OVER:
+            return seKursFølgeOppSykefravær;
         default:
-            return seKurs;
+            return seKursForebyggeSykefravær;
     }
 };
 
 export const getTipsTotaltFravær = (resultat: SykefraværResultat): Tips | null => {
     switch (resultat) {
+        case SykefraværResultat.INGEN_DATA:
+        case SykefraværResultat.MASKERT:
+        case SykefraværResultat.UFULLSTENDIG_DATA:
+            return barnehagerKoblerErgonomiOgPedagogikk;
         case SykefraværResultat.OVER:
             return deTokGrep;
         case SykefraværResultat.MIDDELS:

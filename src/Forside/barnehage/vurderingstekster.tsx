@@ -152,9 +152,9 @@ export const getForklaringAvVurdering = (
             return (
                 <>
                     <Normaltekst>
-                        Sammenligningen din er blitt markert som grønn på en skala grønn, gul, rød
+                        Sammenligningen din er blitt markert som grønn på en skala grønn, gul og rød
                         <br />
-                        Det skjer når ditt sykefravær er lavere enn{' '}
+                        Dette skjer når ditt sykefravær er lavere enn{' '}
                         {formaterProsent(getGrønnGrense(bransjensProsent))} prosent.
                     </Normaltekst>
                 </>
@@ -163,9 +163,9 @@ export const getForklaringAvVurdering = (
             return (
                 <>
                     <Normaltekst>
-                        Sammenligningen din er blitt markert som gul på en skala grønn, gul, rød
+                        Sammenligningen din er blitt markert som gul på en skala grønn, gul og rød
                         <br />
-                        Det skjer når ditt sykefravær er mellom{' '}
+                        Dette skjer når ditt sykefravær er mellom{' '}
                         {formaterProsent(getGrønnGrense(bransjensProsent))} og{' '}
                         {formaterProsent(getRødGrense(bransjensProsent))} prosent.
                     </Normaltekst>
@@ -175,9 +175,9 @@ export const getForklaringAvVurdering = (
             return (
                 <>
                     <Normaltekst>
-                        Sammenligningen din er blitt markert som gull på en skala grønn, gul, rød
+                        Sammenligningen din er blitt markert som rød på en skala grønn, gul og rød
                         <br />
-                        Det skjer når ditt sykefravær er høyere enn{' '}
+                        Dette skjer når ditt sykefravær er høyere enn{' '}
                         {formaterProsent(getRødGrense(bransjensProsent))} prosent.
                     </Normaltekst>
                 </>
@@ -186,7 +186,7 @@ export const getForklaringAvVurdering = (
             return (
                 <>
                     <Normaltekst>
-                        Sammenligningen blir markert grå for vi mangler dine tall for deler av
+                        Sammenligningen blir markert grå fordi vi mangler dine tall for deler av
                         perioden.
                     </Normaltekst>
                 </>
@@ -195,8 +195,8 @@ export const getForklaringAvVurdering = (
             return (
                 <>
                     <Normaltekst>
-                        Sammenligningen blir markert grå for du har for lave tall til at vi kan vise
-                        statistikken din.
+                        Sammenligningen din er blitt markert som grå fordi du har for lave tall til
+                        at vi kan vise statistikken din.
                     </Normaltekst>
                 </>
             );
@@ -204,8 +204,8 @@ export const getForklaringAvVurdering = (
             return (
                 <>
                     <Normaltekst>
-                        Sammenligningen blir markert grå for vi finner ikke tall for virksomheten
-                        din.
+                        Sammenligningen din er blitt markert som grå fordi vi ikke finner tall for
+                        virksomheten din.
                     </Normaltekst>
                 </>
             );
