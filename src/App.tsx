@@ -133,25 +133,29 @@ const AppContent: FunctionComponent = () => {
             sammenligningBarnehage = restFeatureToggles.data[
                 'sykefravarsstatistikk.barnehage-ny-sammenligning'
             ] ? (
-                <ABTest
-                    restFeatureToggles={restFeatureToggles}
-                    feature={'sykefravarsstatistikk.ab-test.tips'}
-                    versjonA={
-                        <EkspanderbarSammenligning
-                            restSykefraværsvarighet={restSykefraværsvarighet}
-                            visTips={true}
-                        />
-                    }
-                    versjonB={
-                        <>
+                <>
+                    <ABTest
+                        restFeatureToggles={restFeatureToggles}
+                        feature={'sykefravarsstatistikk.ab-test.tips'}
+                        versjonA={
                             <EkspanderbarSammenligning
                                 restSykefraværsvarighet={restSykefraværsvarighet}
-                                visTips={false}
+                                visTips={true}
                             />
-                            <EkspanderbareTips restSykefraværsvarighet={restSykefraværsvarighet} />
-                        </>
-                    }
-                />
+                        }
+                        versjonB={
+                            <>
+                                <EkspanderbarSammenligning
+                                    restSykefraværsvarighet={restSykefraværsvarighet}
+                                    visTips={false}
+                                />
+                                <EkspanderbareTips
+                                    restSykefraværsvarighet={restSykefraværsvarighet}
+                                />
+                            </>
+                        }
+                    />
+                </>
             ) : (
                 <>
                     <SammenligningIngress />

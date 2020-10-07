@@ -3,7 +3,6 @@ import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningSiste4KvartalerMedBransje.less';
 import Panel from 'nav-frontend-paneler';
 import { Speedometer, SykefraværResultat } from '../Speedometer/Speedometer';
-import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import {
@@ -81,18 +80,11 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
             <Systemtittel className="sammenligning-med-bransje__tittel">
                 Legemeldt sykefravær siste 4 kvartaler
             </Systemtittel>
-            <LesMerPanel
-                className="sammenligning-med-bransje__utregningsinfo"
-                åpneLabel="Slik har vi kommet fram til ditt resultat"
+            <SlikHarViKommetFramTilDittResultat
+                resultat={sammenligningResultat}
+                kvartaler={kvartaler}
                 onÅpne={() => sendEvent('barnehage sammenligning total lesmer', 'åpne')}
-            >
-                <div className="sammenligning-med-bransje__utregningsinfo-innhold">
-                    <SlikHarViKommetFramTilDittResultat
-                        resultat={sammenligningResultat}
-                        kvartaler={kvartaler}
-                    />
-                </div>
-            </LesMerPanel>
+            />
             <Panel className="sammenligning-med-bransje__panel">
                 <Ingress tag="h3" className="sammenligning-med-bransje__panel-tittel">
                     {getVurderingstekstTotalt(sammenligningResultat)}

@@ -10,7 +10,9 @@ import {
 } from '../barnehage-utils';
 import { SykefraværResultat } from '../Speedometer/Speedometer';
 import { SammenligningsType } from '../vurderingstekster';
-import './EkspanderbarSammenligning.less';
+import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngress';
+import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
+import { useSendEvent } from '../../../amplitude/amplitude';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
@@ -21,6 +23,8 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
     restSykefraværsvarighet,
     visTips,
 }) => {
+    const sendEvent = useSendEvent();
+
     if (
         restSykefraværsvarighet.status === RestStatus.IngenTilgang ||
         restSykefraværsvarighet.status === RestStatus.IkkeInnlogget
@@ -80,6 +84,12 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
 
     return (
         <div className="ekspanderbar-sammenligning">
+            <SammenligningIngress />
+            <SlikHarViKommetFramTilDittResultat
+                resultat={sammenligningResultat}
+                kvartaler={kvartaler}
+                onÅpne={() => sendEvent('barnehage sammenligning lesmer', 'åpne')}
+            />
             <EkspanderbartSammenligningspanel
                 sammenligningResultat={sammenligningResultat}
                 sykefraværVirksomhet={getTotaltSykefraværSiste4Kvartaler(varighet)?.prosent}
