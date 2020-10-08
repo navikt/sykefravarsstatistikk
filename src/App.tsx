@@ -54,6 +54,7 @@ import { RestFeatureToggles } from './api/featureToggles';
 import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { ABTest } from './felleskomponenter/ABTest/ABTest';
 import { EkspanderbareTips } from './Forside/barnehage/EkspanderbareTips/EkspanderbareTips';
+import { KursForBarnehager } from './Forside/barnehage/KursForBarnehager/KursForBarnehager';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -206,6 +207,7 @@ const AppContent: FunctionComponent = () => {
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />
+                            <KursForBarnehager />
                             {restFeatureToggles.status === RestStatus.Suksess &&
                                 !restFeatureToggles.data[
                                     'sykefravarsstatistikk.barnehage-ny-sammenligning'
