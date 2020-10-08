@@ -12,7 +12,7 @@ export const KursForBarnehager: FunctionComponent = () => (
             <img src={kalenderSvg} alt="Kalenderikon" />
             <Undertittel tag="h2">NAV har nettkurs spesielt rettet mot barnehager</Undertittel>
         </div>
-        <EksternLenke href="https://arbeidsgiver.nav.no/kursoversikt/?tema=Inkluderende%20arbeidsliv%20(IA)">
+        <EksternLenke href="https://arbeidsgiver.nav.no/kursoversikt/?tema=Inkluderende%20arbeidsliv%20(IA)&sokeord=barnehage">
             Gå til kursoversikten
         </EksternLenke>
     </PanelBase>
