@@ -150,64 +150,52 @@ export const getForklaringAvVurdering = (
     switch (resultat) {
         case SykefraværResultat.UNDER:
             return (
-                <>
-                    <Normaltekst>
-                        Sammenligningen din er blitt markert som grønn på en skala grønn, gul og rød
-                        <br />
-                        Dette skjer når ditt sykefravær er lavere enn{' '}
-                        {formaterProsent(getGrønnGrense(bransjensProsent))} prosent.
-                    </Normaltekst>
-                </>
+                <Normaltekst>
+                    Sammenligningen din er blitt markert som grønn på en skala grønn, gul og rød
+                    <br />
+                    Dette skjer når ditt sykefravær er lavere enn{' '}
+                    {formaterProsent(getGrønnGrense(bransjensProsent))} prosent.
+                </Normaltekst>
             );
         case SykefraværResultat.MIDDELS:
             return (
-                <>
-                    <Normaltekst>
-                        Sammenligningen din er blitt markert som gul på en skala grønn, gul og rød
-                        <br />
-                        Dette skjer når ditt sykefravær er mellom{' '}
-                        {formaterProsent(getGrønnGrense(bransjensProsent))} og{' '}
-                        {formaterProsent(getRødGrense(bransjensProsent))} prosent.
-                    </Normaltekst>
-                </>
+                <Normaltekst>
+                    Sammenligningen din er blitt markert som gul på en skala grønn, gul og rød
+                    <br />
+                    Dette skjer når ditt sykefravær er mellom{' '}
+                    {formaterProsent(getGrønnGrense(bransjensProsent))} og{' '}
+                    {formaterProsent(getRødGrense(bransjensProsent))} prosent.
+                </Normaltekst>
             );
         case SykefraværResultat.OVER:
             return (
-                <>
-                    <Normaltekst>
-                        Sammenligningen din er blitt markert som rød på en skala grønn, gul og rød
-                        <br />
-                        Dette skjer når ditt sykefravær er høyere enn{' '}
-                        {formaterProsent(getRødGrense(bransjensProsent))} prosent.
-                    </Normaltekst>
-                </>
+                <Normaltekst>
+                    Sammenligningen din er blitt markert som rød på en skala grønn, gul og rød
+                    <br />
+                    Dette skjer når ditt sykefravær er høyere enn{' '}
+                    {formaterProsent(getRødGrense(bransjensProsent))} prosent.
+                </Normaltekst>
             );
         case SykefraværResultat.UFULLSTENDIG_DATA:
             return (
-                <>
-                    <Normaltekst>
-                        Sammenligningen blir markert grå fordi vi mangler dine tall for deler av
-                        perioden.
-                    </Normaltekst>
-                </>
+                <Normaltekst>
+                    Sammenligningen blir markert grå fordi vi mangler dine tall for deler av
+                    perioden. Sammenligningen lages når vi har tall for alle perioder.
+                </Normaltekst>
             );
         case SykefraværResultat.MASKERT:
             return (
-                <>
-                    <Normaltekst>
-                        Sammenligningen din er blitt markert som grå fordi du har for lave tall til
-                        at vi kan vise statistikken din.
-                    </Normaltekst>
-                </>
+                <Normaltekst>
+                    Sammenligningen din er blitt markert som grå fordi du har for lave tall til at
+                    vi kan vise statistikken din.
+                </Normaltekst>
             );
         case SykefraværResultat.INGEN_DATA:
             return (
-                <>
-                    <Normaltekst>
-                        Sammenligningen din er blitt markert som grå fordi vi ikke finner tall for
-                        virksomheten din.
-                    </Normaltekst>
-                </>
+                <Normaltekst>
+                    Sammenligningen din er blitt markert som grå fordi vi ikke finner tall for
+                    virksomheten din. Vi viser dine tall når de publiseres.
+                </Normaltekst>
             );
         case SykefraværResultat.FEIL:
             return <></>;
