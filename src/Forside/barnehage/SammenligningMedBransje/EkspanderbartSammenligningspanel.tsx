@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import React, { FunctionComponent, ReactElement, useState } from 'react';
 import { Ingress, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværResultat } from '../Speedometer/Speedometer';
@@ -14,6 +14,7 @@ import { TipsVisning } from '../../../felleskomponenter/tips/TipsVisning';
 import { getTips } from '../../../felleskomponenter/tips/tips';
 import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
+import { useSendEvent } from '../../../amplitude/amplitude';
 
 interface Props {
     sammenligningResultat: SykefraværResultat;
@@ -38,6 +39,8 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     visTips,
     className,
 }) => {
+    const [erÅpen, setErÅpen] = useState<boolean>(åpen!! ? true : false);
+    const sendEvent = useSendEvent();
     const periode = '01.04.2019 til 31.03.2020';
 
     const visningAvProsentForBransje: number | null =
@@ -73,6 +76,16 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     return (
         <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
             <Ekspanderbartpanel
+                onClick={() => {
+                    sendEvent('barnehage ekspanderbart sammenligning', 'klikk', {
+                        panel:
+                            sammenligningsType === SammenligningsType.TOTALT
+                                ? `${sammenligningsType.toString().toLocaleLowerCase()}fravær`
+                                : `${sammenligningsType.toString().toLocaleLowerCase()}sfravær`,
+                        action: erÅpen ? 'lukk' : 'åpen',
+                    });
+                    setErÅpen(!erÅpen);
+                }}
                 apen={åpen}
                 tittel={
                     <span className="ekspanderbart-sammenligningspanel__tittel-wrapper">
