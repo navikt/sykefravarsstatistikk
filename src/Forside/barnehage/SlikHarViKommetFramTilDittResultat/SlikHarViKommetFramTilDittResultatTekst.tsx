@@ -57,15 +57,6 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                         Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
                         som NAV og Statistisk sentralbyrå (SSB) utarbeider.
                     </Normaltekst>
-                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__paragraf">
-                        Resultatet blir markert grå når vi ikke kan sammenligne.
-                    </Normaltekst>
-                    <Normaltekst>
-                        Vi mangler tall for deler av perioden med sammenligning.
-                    </Normaltekst>
-                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__paragraf">
-                        Sammenligningen lages når vi har tall for alle perioder.
-                    </Normaltekst>
                     <Normaltekst>Dine tall er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={kvartaler} />
                     <Normaltekst>
@@ -81,10 +72,6 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__paragraf">
                         Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
                         som NAV og Statistisk sentralbyrå (SSB) utarbeider.
-                    </Normaltekst>
-                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__paragraf">
-                        Vi viser dine tall når de publiseres. Sammenligningen lages når vi har tall
-                        for alle perioder.
                     </Normaltekst>
                     <Normaltekst>
                         Bransjens tall er beregnet på sykefraværsstatistikk fra:
