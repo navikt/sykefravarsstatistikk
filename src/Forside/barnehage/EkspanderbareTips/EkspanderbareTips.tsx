@@ -57,8 +57,7 @@ export const EkspanderbareTips: FunctionComponent<Props> = ({ restSykefraværsva
         <EkspanderbartpanelBase
             className="ekspanderbare-tips"
             onClick={() => {
-                sendEvent('barnehage ekspanderbart sammenligning', 'klikk', {
-                    panel: 'tips',
+                sendEvent('barnehage ekspanderbart tips', 'klikk', {
                     action: erÅpen ? 'lukk' : 'åpne',
                 });
                 setErÅpen(!erÅpen);
