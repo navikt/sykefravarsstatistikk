@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import React, { FunctionComponent, ReactElement, useState } from 'react';
 import { Ingress, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværResultat } from '../Speedometer/Speedometer';
@@ -7,13 +7,14 @@ import {
     getVurderingstekst,
     SammenligningsType,
 } from '../vurderingstekster';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import { SykefraværMetadata } from './SykefraværMetadata';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
 import { TipsVisning } from '../../../felleskomponenter/tips/TipsVisning';
 import { getTips } from '../../../felleskomponenter/tips/tips';
 import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
+import { useSendEvent } from '../../../amplitude/amplitude';
 
 interface Props {
     sammenligningResultat: SykefraværResultat;
@@ -22,7 +23,7 @@ interface Props {
     antallKvartalerVirksomhet: ReactElement | null;
     antallKvartalerBransje: ReactElement | null;
     sammenligningsType: SammenligningsType;
-    åpen?: boolean;
+    defaultÅpen?: boolean;
     visTips: boolean;
     className?: string;
 }
@@ -34,15 +35,27 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     antallKvartalerVirksomhet,
     antallKvartalerBransje,
     sammenligningsType,
-    åpen,
+    defaultÅpen,
     visTips,
     className,
 }) => {
+    const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
+    const sendEvent = useSendEvent();
     const periode = '01.04.2019 til 31.03.2020';
 
     const visningAvProsentForBransje: number | null =
         sykefraværResultat === SykefraværResultat.FEIL ? null : sykefraværBransje;
 
+    const getPanelEventtekst = (sammenligningsType: SammenligningsType) => {
+        switch (sammenligningsType) {
+            case SammenligningsType.TOTALT:
+                return 'totalfravær';
+            case SammenligningsType.KORTTID:
+                return 'korttidsfravær';
+            case SammenligningsType.LANGTID:
+                return 'langtidsfravær';
+        }
+    };
     const innhold = (
         <>
             <div className="ekspanderbart-sammenligningspanel__metadata-og-detaljert-visning-sykefravær">
@@ -72,8 +85,15 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
 
     return (
         <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
-            <Ekspanderbartpanel
-                apen={åpen}
+            <EkspanderbartpanelBase
+                onClick={() => {
+                    sendEvent('barnehage ekspanderbart sammenligning', 'klikk', {
+                        panel: getPanelEventtekst(sammenligningsType),
+                        action: erÅpen ? 'lukk' : 'åpne',
+                    });
+                    setErÅpen(!erÅpen);
+                }}
+                apen={erÅpen}
                 tittel={
                     <span className="ekspanderbart-sammenligningspanel__tittel-wrapper">
                         <Speedometer resultat={sykefraværResultat} inline />
@@ -110,7 +130,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         />
                     )}
                 </div>
-            </Ekspanderbartpanel>
+            </EkspanderbartpanelBase>
             <div className="ekspanderbart-sammenligningspanel__print-innhold">{innhold}</div>
         </div>
     );

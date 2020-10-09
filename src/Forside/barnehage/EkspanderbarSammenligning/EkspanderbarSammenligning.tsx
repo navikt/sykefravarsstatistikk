@@ -99,7 +99,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.TOTALT}
-                åpen
+                defaultÅpen
                 visTips={visTips}
             />
             <EkspanderbartSammenligningspanel
