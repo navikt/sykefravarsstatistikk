@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { getTips } from '../../../felleskomponenter/tips/tips';
 import { TipsVisning } from '../../../felleskomponenter/tips/TipsVisning';
-import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import './EkspanderbareTips.less';
 import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import lyspæreSvg from './lyspære.svg';
@@ -10,12 +10,15 @@ import { RestStatus } from '../../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
 import { getAlleResultaterForSammenligningAvSykefravær } from '../barnehage-utils';
 import { SammenligningsType } from '../vurderingstekster';
+import { useSendEvent } from '../../../amplitude/amplitude';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
 }
 
 export const EkspanderbareTips: FunctionComponent<Props> = ({ restSykefraværsvarighet }) => {
+    const [erÅpen, setErÅpen] = useState<boolean>(false);
+    const sendEvent = useSendEvent();
     if (
         restSykefraværsvarighet.status === RestStatus.IngenTilgang ||
         restSykefraværsvarighet.status === RestStatus.IkkeInnlogget
@@ -51,9 +54,16 @@ export const EkspanderbareTips: FunctionComponent<Props> = ({ restSykefraværsva
     const tipsLangtidsfravær = getTips(SammenligningsType.LANGTID, langtidsfravær);
 
     return (
-        <Ekspanderbartpanel
+        <EkspanderbartpanelBase
             className="ekspanderbare-tips"
-            apen
+            onClick={() => {
+                sendEvent('barnehage ekspanderbart sammenligning', 'klikk', {
+                    panel: 'tips',
+                    action: erÅpen ? 'lukk' : 'åpne',
+                });
+                setErÅpen(!erÅpen);
+            }}
+            apen={erÅpen}
             tittel={
                 <>
                     <img className="ekspanderbare-tips__bilde" src={lyspæreSvg} alt="" />
@@ -74,6 +84,6 @@ export const EkspanderbareTips: FunctionComponent<Props> = ({ restSykefraværsva
             )}
             <TipsVisning className="ekspanderbare-tips__tips" tips={tipsKorttidsfravær} />
             <TipsVisning className="ekspanderbare-tips__tips" tips={tipsLangtidsfravær} />
-        </Ekspanderbartpanel>
+        </EkspanderbartpanelBase>
     );
 };
