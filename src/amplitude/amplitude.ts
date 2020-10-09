@@ -38,6 +38,52 @@ export const sendEventDirekte = (område: string, hendelse: string, data?: Objec
     instance.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
 };
 
+interface NavigereEventProperties {
+    url: string;
+    destinasjon?: string;
+    lenketekst?: string;
+}
+
+type SendNavigereEvent = (navigereEventProperties: NavigereEventProperties & Object) => void;
+
+export const useSendNavigereEvent = (): SendNavigereEvent => {
+    const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
+
+    const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
+        sykefraværshistorikkContext
+    );
+    const restSykefraværsvarighet = useContext<RestSykefraværsvarighet>(sykefraværsvarighetContext);
+
+    const ekstradata = useRef<Partial<Ekstradata>>({});
+
+    const restOverordnetEnhet = useContext<EnhetsregisteretState>(enhetsregisteretContext);
+
+    useEffect(() => {
+        ekstradata.current = {
+            ...hentEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
+            ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
+            ...hentEkstraDataFraSykefraværsvarighet(
+                restSykefraværsvarighet,
+                restVirksomhetMetadata
+            ),
+            ...hentEkstraDataFraEnhetsregisteret(
+                restOverordnetEnhet.restOverordnetEnhet,
+                restVirksomhetMetadata
+            ),
+        };
+    }, [
+        restVirksomhetMetadata,
+        restOverordnetEnhet,
+        restSykefraværshistorikk,
+        restSykefraværsvarighet,
+    ]);
+
+    return (navigereEventProperties: NavigereEventProperties & Object) => {
+        navigereEventProperties.url = navigereEventProperties.url.split('?')[0];
+        instance.logEvent('navigere', { ...ekstradata.current, ...navigereEventProperties }); // Todo: legge til applikasjon name
+    };
+};
+
 type SendEvent = (område: string, hendelse: string, data?: Object) => void;
 
 export const useSendEvent = (): SendEvent => {
