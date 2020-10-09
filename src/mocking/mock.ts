@@ -103,8 +103,8 @@ if (mock.sykefraværsstatistikkApi) {
                 return {
                     antallAnsatte: 99,
                     næringskode5Siffer: {
-                        kode: '10300',
-                        beskrivelse: 'Trygdeordninger underlagt offentlig forvaltning',
+                        kode: '88911',
+                        beskrivelse: 'Barnehager',
                     },
                     bransje: Bransjetype.BARNEHAGER,
                 };
@@ -155,7 +155,7 @@ if (mock.featureToggles) {
     mockGetAndLog(
         'begin:/sykefravarsstatistikk/api/feature',
         {
-            'sykefravarsstatistikk.ab-test.tips': true,
+            'sykefravarsstatistikk.ab-test.tips': false,
             'sykefravarsstatistikk.barnehage-ny-sammenligning': true,
         },
         {

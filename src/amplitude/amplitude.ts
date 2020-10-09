@@ -1,5 +1,5 @@
 import amplitude from 'amplitude-js';
-import { useContext, useEffect, useRef } from 'react';
+import { MutableRefObject, useContext, useEffect, useRef } from 'react';
 import { RestVirksomhetMetadata } from '../api/virksomhetMetadata';
 import { virksomhetMetadataContext } from '../utils/virksomhetMetadataContext';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
@@ -30,6 +30,15 @@ instance.init(getApiKey(), '', {
     includeReferrer: true,
 });
 
+interface NavigereEventProperties {
+    url: string;
+    destinasjon?: string;
+    lenketekst?: string;
+}
+
+type SendNavigereEvent = (navigereEventProperties: NavigereEventProperties & Object) => void;
+type SendEvent = (område: string, hendelse: string, data?: Object) => void;
+
 export const amplitudeInstance = instance;
 
 export const setUserProperties = (properties: Object) => instance.setUserProperties(properties);
@@ -38,39 +47,24 @@ export const sendEventDirekte = (område: string, hendelse: string, data?: Objec
     instance.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
 };
 
-type SendEvent = (område: string, hendelse: string, data?: Object) => void;
+export const useSendNavigereEvent = (): SendNavigereEvent => {
+    const ekstradata = useEkstraDataRef();
+
+    return (navigereEventProperties: NavigereEventProperties & Object) => {
+        const metadata = {
+            app: 'sykefravarsstatistikk',
+        };
+        navigereEventProperties.url = navigereEventProperties.url.split('?')[0];
+        instance.logEvent('navigere', {
+            ...metadata,
+            ...ekstradata.current,
+            ...navigereEventProperties,
+        });
+    };
+};
 
 export const useSendEvent = (): SendEvent => {
-    const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
-
-    const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
-        sykefraværshistorikkContext
-    );
-    const restSykefraværsvarighet = useContext<RestSykefraværsvarighet>(sykefraværsvarighetContext);
-
-    const ekstradata = useRef<Partial<Ekstradata>>({});
-
-    const restOverordnetEnhet = useContext<EnhetsregisteretState>(enhetsregisteretContext);
-
-    useEffect(() => {
-        ekstradata.current = {
-            ...hentEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
-            ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
-            ...hentEkstraDataFraSykefraværsvarighet(
-                restSykefraværsvarighet,
-                restVirksomhetMetadata
-            ),
-            ...hentEkstraDataFraEnhetsregisteret(
-                restOverordnetEnhet.restOverordnetEnhet,
-                restVirksomhetMetadata
-            ),
-        };
-    }, [
-        restVirksomhetMetadata,
-        restOverordnetEnhet,
-        restSykefraværshistorikk,
-        restSykefraværsvarighet,
-    ]);
+    const ekstradata = useEkstraDataRef();
 
     return (område: string, hendelse: string, data?: Object) =>
         sendEventDirekte(område, hendelse, { ...ekstradata.current, ...data });
@@ -110,4 +104,37 @@ export const useMålingAvTidsbruk = (
         }, 1000);
         return () => clearInterval(interval);
     }, [antallSekunderFørEventSendes, område, sendEvent]);
+};
+
+const useEkstraDataRef = (): MutableRefObject<Partial<Ekstradata>> => {
+    const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
+
+    const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
+        sykefraværshistorikkContext
+    );
+    const restSykefraværsvarighet = useContext<RestSykefraværsvarighet>(sykefraværsvarighetContext);
+
+    const ekstradata = useRef<Partial<Ekstradata>>({});
+    const restOverordnetEnhet = useContext<EnhetsregisteretState>(enhetsregisteretContext);
+
+    useEffect(() => {
+        ekstradata.current = {
+            ...hentEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
+            ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
+            ...hentEkstraDataFraSykefraværsvarighet(
+                restSykefraværsvarighet,
+                restVirksomhetMetadata
+            ),
+            ...hentEkstraDataFraEnhetsregisteret(
+                restOverordnetEnhet.restOverordnetEnhet,
+                restVirksomhetMetadata
+            ),
+        };
+    }, [
+        restVirksomhetMetadata,
+        restOverordnetEnhet,
+        restSykefraværshistorikk,
+        restSykefraværsvarighet,
+    ]);
+    return ekstradata;
 };
