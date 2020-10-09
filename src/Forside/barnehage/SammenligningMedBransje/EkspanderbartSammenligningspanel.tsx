@@ -39,7 +39,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     visTips,
     className,
 }) => {
-    const [erÅpen, setErÅpen] = useState<boolean>(åpen!! ? true : false);
+    const [erÅpen, setErÅpen] = useState<boolean>(!!åpen);
     const sendEvent = useSendEvent();
     const periode = '01.04.2019 til 31.03.2020';
 
