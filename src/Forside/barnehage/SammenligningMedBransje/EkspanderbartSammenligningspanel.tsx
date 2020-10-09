@@ -23,7 +23,7 @@ interface Props {
     antallKvartalerVirksomhet: ReactElement | null;
     antallKvartalerBransje: ReactElement | null;
     sammenligningsType: SammenligningsType;
-    åpen?: boolean;
+    defaultÅpen?: boolean;
     visTips: boolean;
     className?: string;
 }
@@ -35,11 +35,11 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     antallKvartalerVirksomhet,
     antallKvartalerBransje,
     sammenligningsType,
-    åpen,
+    defaultÅpen,
     visTips,
     className,
 }) => {
-    const [erÅpen, setErÅpen] = useState<boolean>(!!åpen);
+    const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
     const sendEvent = useSendEvent();
     const periode = '01.04.2019 til 31.03.2020';
 
