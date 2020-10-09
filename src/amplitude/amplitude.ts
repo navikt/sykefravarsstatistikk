@@ -48,7 +48,7 @@ export const sendEventDirekte = (område: string, hendelse: string, data?: Objec
 };
 
 export const useSendNavigereEvent = (): SendNavigereEvent => {
-    const ekstradata = useEkstraData();
+    const ekstradata = useEkstraDataRef();
 
     return (navigereEventProperties: NavigereEventProperties & Object) => {
         const metadata = {
@@ -64,7 +64,7 @@ export const useSendNavigereEvent = (): SendNavigereEvent => {
 };
 
 export const useSendEvent = (): SendEvent => {
-    const ekstradata = useEkstraData();
+    const ekstradata = useEkstraDataRef();
 
     return (område: string, hendelse: string, data?: Object) =>
         sendEventDirekte(område, hendelse, { ...ekstradata.current, ...data });
@@ -106,7 +106,7 @@ export const useMålingAvTidsbruk = (
     }, [antallSekunderFørEventSendes, område, sendEvent]);
 };
 
-const useEkstraData = (): MutableRefObject<Partial<Ekstradata>> => {
+const useEkstraDataRef = (): MutableRefObject<Partial<Ekstradata>> => {
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
 
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
