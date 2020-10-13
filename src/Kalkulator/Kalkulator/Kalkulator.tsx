@@ -4,7 +4,11 @@ import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import { useMålingAvTidsbruk, useSendEvent, useSendSidevisningEvent } from '../../amplitude/amplitude';
+import {
+    useMålingAvTidsbruk,
+    useSendEvent,
+    useSendSidevisningEvent,
+} from '../../amplitude/amplitude';
 import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';

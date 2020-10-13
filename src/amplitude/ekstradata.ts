@@ -2,7 +2,9 @@ import {
     AntallAnsatteSegmentering,
     SegmenteringSammenligning,
     SegmenteringSykefraværsprosent,
-    tilSegmenteringAntallAnsatte, tilSegmenteringSammenligning, tilSegmenteringSykefraværsprosent,
+    tilSegmenteringAntallAnsatte,
+    tilSegmenteringSammenligning,
+    tilSegmenteringSykefraværsprosent,
 } from './segmentering';
 import { SykefraværResultat } from '../Forside/barnehage/Speedometer/Speedometer';
 import { Bransjetype, RestVirksomhetMetadata } from '../api/virksomhetMetadata';
@@ -15,7 +17,8 @@ import { mapTilPrivatElleOffentligSektor, Sektor } from '../utils/sektorUtils';
 import { RestSykefraværsvarighet } from '../api/sykefraværsvarighet';
 import {
     getResultatForSammenligningAvSykefravær,
-    getTotaltSykefraværSiste4Kvartaler, sykefraværForBarnehagerSiste4Kvartaler,
+    getTotaltSykefraværSiste4Kvartaler,
+    sykefraværForBarnehagerSiste4Kvartaler,
 } from '../Forside/barnehage/barnehage-utils';
 
 export interface Ekstradata {
