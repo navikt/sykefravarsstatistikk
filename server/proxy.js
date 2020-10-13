@@ -21,8 +21,7 @@ const proxyConfig = {
     target: API_GATEWAY_BASEURL,
     changeOrigin: true,
     pathRewrite: (path, req) => {
-        const urlErTillatt =
-            listeAvTillatteUrler.filter((regexp) => regexp.test(path)).length > 0;
+        const urlErTillatt = listeAvTillatteUrler.filter((regexp) => regexp.test(path)).length > 0;
 
         if (urlErTillatt) {
             return path.replace(FRONTEND_API_PATH, BACKEND_API_PATH);

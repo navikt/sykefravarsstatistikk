@@ -21,8 +21,8 @@ describe('Tester for ABTest', () => {
             />
         );
 
-        expect(wrapper.find("#versjon-a").exists()).toBeTruthy();
-        expect(wrapper.find("#versjon-b").exists()).toBeFalsy();
+        expect(wrapper.find('#versjon-a').exists()).toBeTruthy();
+        expect(wrapper.find('#versjon-b').exists()).toBeFalsy();
     });
 
     it('Skal rendre versjon B hvis toggle er skrudd på', () => {
@@ -41,8 +41,8 @@ describe('Tester for ABTest', () => {
             />
         );
 
-        expect(wrapper.find("#versjon-a").exists()).toBeFalsy();
-        expect(wrapper.find("#versjon-b").exists()).toBeTruthy();
+        expect(wrapper.find('#versjon-a').exists()).toBeFalsy();
+        expect(wrapper.find('#versjon-b').exists()).toBeTruthy();
     });
 
     it('Skal rendre versjon A som fallback hvis toggle ikke finnes', () => {
@@ -59,7 +59,7 @@ describe('Tester for ABTest', () => {
             />
         );
 
-        expect(wrapper.find("#versjon-a").exists()).toBeTruthy();
-        expect(wrapper.find("#versjon-b").exists()).toBeFalsy();
+        expect(wrapper.find('#versjon-a').exists()).toBeTruthy();
+        expect(wrapper.find('#versjon-b').exists()).toBeFalsy();
     });
 });
