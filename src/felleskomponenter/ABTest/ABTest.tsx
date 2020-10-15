@@ -11,6 +11,12 @@ interface Props {
     versjonB: ReactElement;
 }
 
+const sendTriggerTilHotjar = (versjon: ABTestVersjon) => {
+    if (versjon === ABTestVersjon.Fallback) return;
+    const hotjar = (window as any).hj;
+    hotjar && hotjar('trigger', 'ab-test-' + versjon);
+};
+
 export const ABTest: FunctionComponent<Props> = ({
     feature,
     versjonA,
@@ -19,7 +25,9 @@ export const ABTest: FunctionComponent<Props> = ({
 }) => {
     useEffect(() => {
         if (restFeatureToggles.status === RestStatus.Suksess) {
-            sendABTestEvent(feature, getABTestVersjon(restFeatureToggles.data[feature]));
+            const versjon = getABTestVersjon(restFeatureToggles.data[feature]);
+            sendABTestEvent(feature, versjon);
+            sendTriggerTilHotjar(versjon);
         }
     }, [restFeatureToggles, feature]);
 
