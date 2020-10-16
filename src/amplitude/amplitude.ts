@@ -9,10 +9,10 @@ import { sykefraværsvarighetContext } from '../utils/sykefraværsvarighetContex
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
 import {
     Ekstradata,
-    hentEkstraDataFraEnhetsregisteret,
-    hentEkstraDataFraSykefraværshistorikk,
-    hentEkstraDataFraSykefraværsvarighet,
-    hentEkstraDataFraVirksomhetMetadata,
+    getEkstraDataFraEnhetsregisteret,
+    getEkstraDataFraSykefraværshistorikk,
+    getEkstraDataFraSykefraværsvarighet,
+    getEkstraDataFraVirksomhetMetadata,
 } from './ekstradata';
 
 const getApiKey = () => {
@@ -119,13 +119,13 @@ const useEkstraDataRef = (): MutableRefObject<Partial<Ekstradata>> => {
 
     useEffect(() => {
         ekstradata.current = {
-            ...hentEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
-            ...hentEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
-            ...hentEkstraDataFraSykefraværsvarighet(
+            ...getEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
+            ...getEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
+            ...getEkstraDataFraSykefraværsvarighet(
                 restSykefraværsvarighet,
                 restVirksomhetMetadata
             ),
-            ...hentEkstraDataFraEnhetsregisteret(
+            ...getEkstraDataFraEnhetsregisteret(
                 restOverordnetEnhet.restOverordnetEnhet,
                 restVirksomhetMetadata
             ),
