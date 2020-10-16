@@ -32,7 +32,7 @@ export interface Ekstradata {
     sykefraværSiste4Kvartaler: SykefraværResultat;
     korttidSiste4Kvartaler: SykefraværResultat;
     langtidSiste4Kvartaler: SykefraværResultat;
-    antallFarger: number;
+    antallFarger: number; // TODO Midlertidig måling. Må fjernes.
 
     sektor: Sektor;
 }
