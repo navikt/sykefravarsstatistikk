@@ -32,11 +32,12 @@ export interface Ekstradata {
     sykefraværSiste4Kvartaler: SykefraværResultat;
     korttidSiste4Kvartaler: SykefraværResultat;
     langtidSiste4Kvartaler: SykefraværResultat;
+    antallFarger: number; // TODO Midlertidig måling. Må fjernes.
 
     sektor: Sektor;
 }
 
-export const hentEkstraDataFraVirksomhetMetadata = (
+export const getEkstraDataFraVirksomhetMetadata = (
     restVirksomhetMetadata: RestVirksomhetMetadata
 ): Partial<Ekstradata> => {
     if (restVirksomhetMetadata.status === RestStatus.Suksess) {
@@ -54,7 +55,7 @@ export const hentEkstraDataFraVirksomhetMetadata = (
     return {};
 };
 
-export const hentEkstraDataFraSykefraværshistorikk = (
+export const getEkstraDataFraSykefraværshistorikk = (
     restSykefraværshistorikk: RestSykefraværshistorikk
 ): Partial<Ekstradata> => {
     if (restSykefraværshistorikk.status === RestStatus.Suksess) {
@@ -78,7 +79,7 @@ export const hentEkstraDataFraSykefraværshistorikk = (
     return {};
 };
 
-export const hentEkstraDataFraEnhetsregisteret = (
+export const getEkstraDataFraEnhetsregisteret = (
     restOverordnetEnhet: RestOverordnetEnhet,
     restVirksomhetMetadata: RestVirksomhetMetadata
 ): Partial<Ekstradata> => {
@@ -96,7 +97,19 @@ export const hentEkstraDataFraEnhetsregisteret = (
     return {};
 };
 
-export const hentEkstraDataFraSykefraværsvarighet = (
+const getAntallForskjelligeFarger = (...resultater: SykefraværResultat[]): number | undefined => {
+    const resultaterMedRiktigeFarger = resultater.filter((resultat) =>
+        [SykefraværResultat.OVER, SykefraværResultat.MIDDELS, SykefraværResultat.UNDER].includes(
+            resultat
+        )
+    );
+
+    return resultaterMedRiktigeFarger.length > 0
+        ? new Set(resultaterMedRiktigeFarger).size
+        : undefined;
+};
+
+export const getEkstraDataFraSykefraværsvarighet = (
     restSykefraværsvarighet: RestSykefraværsvarighet,
     restVirksomhetMetadata: RestVirksomhetMetadata
 ): Partial<Ekstradata> => {
@@ -120,23 +133,39 @@ export const hentEkstraDataFraSykefraværsvarighet = (
             : undefined;
 
     try {
-        return {
-            sykefraværSiste4Kvartaler: getResultatForSammenligningAvSykefravær(
-                restSykefraværsvarighet.status,
-                getTotaltSykefraværSiste4Kvartaler(varighet),
-                sykefraværForBarnehagerSiste4Kvartaler.totalt
-            ),
-            korttidSiste4Kvartaler: getResultatForSammenligningAvSykefravær(
-                restSykefraværsvarighet.status,
-                varighet?.summertKorttidsfravær,
-                sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær
-            ),
-            langtidSiste4Kvartaler: getResultatForSammenligningAvSykefravær(
-                restSykefraværsvarighet.status,
-                varighet?.summertLangtidsfravær,
-                sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær
-            ),
+        const sykefraværSiste4Kvartaler = getResultatForSammenligningAvSykefravær(
+            restSykefraværsvarighet.status,
+            getTotaltSykefraværSiste4Kvartaler(varighet),
+            sykefraværForBarnehagerSiste4Kvartaler.totalt
+        );
+        const korttidSiste4Kvartaler = getResultatForSammenligningAvSykefravær(
+            restSykefraværsvarighet.status,
+            varighet?.summertKorttidsfravær,
+            sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær
+        );
+        const langtidSiste4Kvartaler = getResultatForSammenligningAvSykefravær(
+            restSykefraværsvarighet.status,
+            varighet?.summertLangtidsfravær,
+            sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær
+        );
+
+        let ekstradata: Partial<Ekstradata> = {
+            sykefraværSiste4Kvartaler,
+            korttidSiste4Kvartaler,
+            langtidSiste4Kvartaler,
         };
+
+        const antallFarger = getAntallForskjelligeFarger(
+            sykefraværSiste4Kvartaler,
+            korttidSiste4Kvartaler,
+            langtidSiste4Kvartaler
+        );
+
+        if (antallFarger !== undefined) {
+            ekstradata = { ...ekstradata, antallFarger };
+        }
+
+        return ekstradata;
     } catch (error) {
         return {};
     }
