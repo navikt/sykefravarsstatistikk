@@ -104,8 +104,6 @@ const getAntallForskjelligeFarger = (...resultater: SykefraværResultat[]): numb
         )
     );
 
-    console.log(new Set(resultaterMedRiktigeFarger).size, resultater);
-
     return resultaterMedRiktigeFarger.length > 0
         ? new Set(resultaterMedRiktigeFarger).size
         : undefined;
