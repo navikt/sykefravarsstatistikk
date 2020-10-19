@@ -21,7 +21,7 @@ import { SammenligningspanelAlertStripe } from './SammenligningspanelAlertStripe
 import KoronaInfotekst from './KoronaInfotekst/KoronaInfotekst';
 import { OverordnetEnhetPanel } from './Paneler/OverordnetEnhetPanel';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { sisteOppdatering } from '../../utils/app-utils';
+import { getTekstForOppdateringsdato } from '../../utils/app-utils';
 import { LærteDuNoeNyttPanel } from '../../felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 
 interface Props {
@@ -71,7 +71,7 @@ const Sammenligningspanel: FunctionComponent<Props> = (props) => {
                         Legemeldt sykefravær i {kvartal}. kvartal {årstall}
                     </SammenligningspanelOverskrift>
                     <Normaltekst className="sammenligningspanel__neste-oppdatering">
-                        Sist oppdatert: {sisteOppdatering}
+                        {getTekstForOppdateringsdato()}
                     </Normaltekst>
                     <SammenligningspanelFeilmelding
                         restSykefraværshistorikk={restSykefraværshistorikk}
