@@ -10,7 +10,7 @@ import {
     getTotaltSykefraværSiste4Kvartaler,
     sykefraværForBarnehagerSiste4Kvartaler,
 } from '../barnehage-utils';
-import { sisteOppdatering } from '../../../utils/app-utils';
+import { getTekstForOppdateringsdato } from '../../../utils/app-utils';
 import Skeleton from 'react-loading-skeleton';
 import { Prosent } from '../Prosent';
 import { getVurderingstekstTotalt } from '../vurderingstekster';
@@ -111,7 +111,7 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
                             {antallKvartalerBransje}
                         </Systemtittel>
                         <Normaltekst className="sammenligning-med-bransje__neste-oppdatering">
-                            Sist oppdatert: {sisteOppdatering}
+                            {getTekstForOppdateringsdato()}
                         </Normaltekst>
                     </div>
                 </div>

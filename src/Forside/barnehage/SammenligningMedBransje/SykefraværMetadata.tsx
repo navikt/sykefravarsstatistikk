@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactElement } from 'react';
 import { Ingress, Normaltekst } from 'nav-frontend-typografi';
-import { sisteOppdatering } from '../../../utils/app-utils';
+import { getTekstForOppdateringsdato } from '../../../utils/app-utils';
 import './SykefraværMetadata.less';
 import { SammenligningsType } from '../vurderingstekster';
 import classNames from 'classnames';
@@ -41,7 +41,7 @@ export const SykefraværMetadata: FunctionComponent<Props> = ({
                 <strong>{getTittel(sammenligningsType)}</strong>
             </Ingress>
             <Normaltekst>Periode: {periode}</Normaltekst>
-            <Normaltekst>Sist oppdatert: {sisteOppdatering}</Normaltekst>
+            <Normaltekst>{getTekstForOppdateringsdato()}</Normaltekst>
         </div>
     );
 };
