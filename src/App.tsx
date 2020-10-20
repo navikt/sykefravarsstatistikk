@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, { FunctionComponent, useContext, useEffect } from 'react';
 import Banner from './Banner/Banner';
 import { BrowserRouter, Route, useLocation } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
@@ -45,7 +45,11 @@ import {
 } from './utils/sykefraværsvarighetContext';
 import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
-import { EnhetsregisteretProvider } from './utils/enhetsregisteretContext';
+import {
+    enhetsregisteretContext,
+    EnhetsregisteretProvider,
+    EnhetsregisteretState,
+} from './utils/enhetsregisteretContext';
 import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/SammenligningIngress';
 import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
 import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
@@ -104,6 +108,20 @@ const AppContent: FunctionComponent = () => {
     const location = useLocation();
     useSetUserProperties();
     useMålingAvTidsbruk('hele appen', 5, 30, 120, 300);
+
+    const { restUnderenhet } = useContext<EnhetsregisteretState>(enhetsregisteretContext);
+
+    useEffect(() => {
+        if (
+            restUnderenhet.status === RestStatus.Suksess &&
+            restUnderenhet.data.næringer.length > 1
+        ) {
+            sendEventDirekte('app', 'flere næringer', {
+                antallNæringer: restUnderenhet.data.næringer.length,
+                næringer: restUnderenhet.data.næringer.map((næring) => næring.kode),
+            });
+        }
+    }, [restUnderenhet]);
 
     const brukerHarIkkeTilgangTilNoenOrganisasjoner =
         restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;

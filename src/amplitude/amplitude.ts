@@ -115,24 +115,21 @@ const useEkstraDataRef = (): MutableRefObject<Partial<Ekstradata>> => {
     const restSykefraværsvarighet = useContext<RestSykefraværsvarighet>(sykefraværsvarighetContext);
 
     const ekstradata = useRef<Partial<Ekstradata>>({});
-    const restOverordnetEnhet = useContext<EnhetsregisteretState>(enhetsregisteretContext);
+    const dataFraEnhetsregisteret = useContext<EnhetsregisteretState>(enhetsregisteretContext);
 
     useEffect(() => {
         ekstradata.current = {
             ...getEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
             ...getEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
-            ...getEkstraDataFraSykefraværsvarighet(
-                restSykefraværsvarighet,
-                restVirksomhetMetadata
-            ),
+            ...getEkstraDataFraSykefraværsvarighet(restSykefraværsvarighet, restVirksomhetMetadata),
             ...getEkstraDataFraEnhetsregisteret(
-                restOverordnetEnhet.restOverordnetEnhet,
+                dataFraEnhetsregisteret.restOverordnetEnhet,
                 restVirksomhetMetadata
             ),
         };
     }, [
         restVirksomhetMetadata,
-        restOverordnetEnhet,
+        dataFraEnhetsregisteret,
         restSykefraværshistorikk,
         restSykefraværsvarighet,
     ]);
