@@ -9,7 +9,8 @@ import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from 
 import { getSykefraværshistorikkMock } from './sykefraværshistorikk';
 import { Bransjetype } from '../api/virksomhetMetadata';
 import { sykefraværsvarighetMock } from './sykefraværsvarighet';
-import { OverordnetEnhet, Underenhet } from '../api/enhetsregisteret-api';
+import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
+import { underenhetMock } from './enhetsregisteret';
 
 const mock = {
     minSideArbeidsgiver: true,
@@ -142,12 +143,8 @@ if (mock.enhetsregisteret) {
     });
     mockGetAndLog('begin:https://data.brreg.no/enhetsregisteret/api/underenheter/', (url) => {
         const orgnr = url.match(/[0-9]{9}/)![0];
-
-        const underenhet: Underenhet = {
-            orgnr: orgnr,
-            overordnetEnhet: '777777777',
-        };
-        return underenhet;
+        const underenhetDto: UnderenhetDto = { ...underenhetMock, organisasjonsnummer: orgnr };
+        return underenhetDto;
     });
 }
 
