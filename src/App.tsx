@@ -50,10 +50,6 @@ import {
     EnhetsregisteretProvider,
     EnhetsregisteretState,
 } from './utils/enhetsregisteretContext';
-import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/SammenligningIngress';
-import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
-import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
-import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 import { RestFeatureToggles } from './api/featureToggles';
 import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { ABTest } from './felleskomponenter/ABTest/ABTest';
