@@ -146,47 +146,6 @@ const AppContent: FunctionComponent = () => {
     } else if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
         window.location.replace('/min-side-arbeidsgiver/mangler-tilgang');
     } else {
-        let sammenligningBarnehage;
-        if (restFeatureToggles.status === RestStatus.LasterInn) {
-            sammenligningBarnehage = <Lasteside />;
-        } else {
-            const nySammenligningToggle =
-                restFeatureToggles.data['sykefravarsstatistikk.barnehage-ny-sammenligning'];
-            sammenligningBarnehage = nySammenligningToggle ? (
-                <ABTest
-                    restFeatureToggles={restFeatureToggles}
-                    feature={'sykefravarsstatistikk.ab-test.tips'}
-                    versjonA={
-                        <EkspanderbarSammenligning
-                            restSykefraværsvarighet={restSykefraværsvarighet}
-                            visTips={true}
-                        />
-                    }
-                    versjonB={
-                        <>
-                            <EkspanderbarSammenligning
-                                restSykefraværsvarighet={restSykefraværsvarighet}
-                                visTips={false}
-                            />
-                            <EkspanderbareTips restSykefraværsvarighet={restSykefraværsvarighet} />
-                        </>
-                    }
-                />
-            ) : (
-                <>
-                    <SammenligningIngress />
-                    <SammenligningSiste4KvartalerMedBransje
-                        restSykefraværsvarighet={restSykefraværsvarighet}
-                    />
-                    <DetaljertSammenligning restSykefraværsvarighet={restSykefraværsvarighet} />
-                    <LærteDuNoeNyttPanel
-                        tekst="Var dette nyttig?"
-                        område="forside sammenligning tilbakemelding"
-                        skalVises={restSykefraværsvarighet.status === RestStatus.Suksess}
-                    />
-                </>
-            );
-        }
         innhold = (
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
@@ -222,19 +181,32 @@ const AppContent: FunctionComponent = () => {
                                 restSykefraværsvarighet={restSykefraværsvarighet}
                                 restAltinnOrganisasjoner={restOrganisasjoner}
                             >
-                                {sammenligningBarnehage}
+                                <ABTest
+                                    restFeatureToggles={restFeatureToggles}
+                                    feature={'sykefravarsstatistikk.ab-test.tips'}
+                                    versjonA={
+                                        <EkspanderbarSammenligning
+                                            restSykefraværsvarighet={restSykefraværsvarighet}
+                                            visTips={true}
+                                        />
+                                    }
+                                    versjonB={
+                                        <>
+                                            <EkspanderbarSammenligning
+                                                restSykefraværsvarighet={restSykefraværsvarighet}
+                                                visTips={false}
+                                            />
+                                            <EkspanderbareTips
+                                                restSykefraværsvarighet={restSykefraværsvarighet}
+                                            />
+                                        </>
+                                    }
+                                />
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />
                             <KursForBarnehager />
-                            {restFeatureToggles.status === RestStatus.Suksess &&
-                                (restFeatureToggles.data[
-                                    'sykefravarsstatistikk.barnehage-ny-sammenligning'
-                                ] ? (
-                                    <RelevanteLenker />
-                                ) : (
-                                    <Lenkeressurser />
-                                ))}
+                            <RelevanteLenker />
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>

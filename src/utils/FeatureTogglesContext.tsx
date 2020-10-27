@@ -17,7 +17,6 @@ export const FeatureTogglesProvider: FunctionComponent = (props) => {
             setFeatureToggles(
                 await hentRestFeatureToggles(
                     'sykefravarsstatistikk.ab-test.tips', // unleash: https://unleash.nais.adeo.no/#/features/strategies/sykefravarsstatistikk.ab-test.tips
-                    'sykefravarsstatistikk.barnehage-ny-sammenligning'
                     /* Send med features her */
                 )
             );

@@ -153,7 +153,6 @@ if (mock.featureToggles) {
         'begin:/sykefravarsstatistikk/api/feature',
         {
             'sykefravarsstatistikk.ab-test.tips': false,
-            'sykefravarsstatistikk.barnehage-ny-sammenligning': true,
         },
         {
             delay: 1000 * delayfaktor,
