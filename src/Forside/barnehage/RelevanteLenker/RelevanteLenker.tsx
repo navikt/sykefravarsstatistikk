@@ -11,8 +11,8 @@ export const RelevanteLenker: FunctionComponent = () => (
 
         <div className="relevante-lenker__lenke-wrapper">
             <img src={videoikonSvg} alt="videoikon" className="relevante-lenker__ikon" />
-            <div>
-                <Normaltekst tag="p">
+            <div className="relevante-lenker__lenke-tekst">
+                <Normaltekst tag="span">
                     Se opptak av tidligere nettkurs om oppfølging og forebygging av sykefravær
                 </Normaltekst>
                 <EksternLenke
@@ -25,8 +25,8 @@ export const RelevanteLenker: FunctionComponent = () => (
         </div>
         <div className="relevante-lenker__lenke-wrapper">
             <img src={idebankenLogoSvg} alt="Idébanken-logo" className="relevante-lenker__ikon" />
-            <div>
-                <Normaltekst tag="p">
+            <div className="relevante-lenker__lenke-tekst">
+                <Normaltekst tag="span">
                     På idebanken.org finner du tips, erfaringer og verktøy som kan bidra til bedre
                     arbeidsmiljø og lavere sykefravær.
                 </Normaltekst>
