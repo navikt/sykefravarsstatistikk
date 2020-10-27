@@ -59,6 +59,7 @@ import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSamme
 import { ABTest } from './felleskomponenter/ABTest/ABTest';
 import { EkspanderbareTips } from './Forside/barnehage/EkspanderbareTips/EkspanderbareTips';
 import { KursForBarnehager } from './Forside/barnehage/KursForBarnehager/KursForBarnehager';
+import { RelevanteLenker } from './Forside/barnehage/RelevanteLenker/RelevanteLenker';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -149,9 +150,9 @@ const AppContent: FunctionComponent = () => {
         if (restFeatureToggles.status === RestStatus.LasterInn) {
             sammenligningBarnehage = <Lasteside />;
         } else {
-            sammenligningBarnehage = restFeatureToggles.data[
-                'sykefravarsstatistikk.barnehage-ny-sammenligning'
-            ] ? (
+            const nySammenligningToggle =
+                restFeatureToggles.data['sykefravarsstatistikk.barnehage-ny-sammenligning'];
+            sammenligningBarnehage = nySammenligningToggle ? (
                 <ABTest
                     restFeatureToggles={restFeatureToggles}
                     feature={'sykefravarsstatistikk.ab-test.tips'}
@@ -227,9 +228,13 @@ const AppContent: FunctionComponent = () => {
                             <Historikkpanel />
                             <KursForBarnehager />
                             {restFeatureToggles.status === RestStatus.Suksess &&
-                                !restFeatureToggles.data[
+                                (restFeatureToggles.data[
                                     'sykefravarsstatistikk.barnehage-ny-sammenligning'
-                                ] && <Lenkeressurser />}
+                                ] ? (
+                                    <RelevanteLenker />
+                                ) : (
+                                    <Lenkeressurser />
+                                ))}
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>
