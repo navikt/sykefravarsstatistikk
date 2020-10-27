@@ -50,15 +50,12 @@ import {
     EnhetsregisteretProvider,
     EnhetsregisteretState,
 } from './utils/enhetsregisteretContext';
-import { SammenligningIngress } from './Forside/barnehage/SammenligningIngress/SammenligningIngress';
-import { SammenligningSiste4KvartalerMedBransje } from './Forside/barnehage/SammenligningMedBransje/SammenligningSiste4KvartalerMedBransje';
-import { DetaljertSammenligning } from './Forside/barnehage/DetaljertSammenligning/DetaljertSammenligning';
-import { LærteDuNoeNyttPanel } from './felleskomponenter/LærteDuNoeNyttPanel/LærteDuNoeNyttPanel';
 import { RestFeatureToggles } from './api/featureToggles';
 import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { ABTest } from './felleskomponenter/ABTest/ABTest';
 import { EkspanderbareTips } from './Forside/barnehage/EkspanderbareTips/EkspanderbareTips';
 import { KursForBarnehager } from './Forside/barnehage/KursForBarnehager/KursForBarnehager';
+import { RelevanteLenker } from './Forside/barnehage/RelevanteLenker/RelevanteLenker';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -145,47 +142,6 @@ const AppContent: FunctionComponent = () => {
     } else if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
         window.location.replace('/min-side-arbeidsgiver/mangler-tilgang');
     } else {
-        let sammenligningBarnehage;
-        if (restFeatureToggles.status === RestStatus.LasterInn) {
-            sammenligningBarnehage = <Lasteside />;
-        } else {
-            sammenligningBarnehage = restFeatureToggles.data[
-                'sykefravarsstatistikk.barnehage-ny-sammenligning'
-            ] ? (
-                <ABTest
-                    restFeatureToggles={restFeatureToggles}
-                    feature={'sykefravarsstatistikk.ab-test.tips'}
-                    versjonA={
-                        <EkspanderbarSammenligning
-                            restSykefraværsvarighet={restSykefraværsvarighet}
-                            visTips={true}
-                        />
-                    }
-                    versjonB={
-                        <>
-                            <EkspanderbarSammenligning
-                                restSykefraværsvarighet={restSykefraværsvarighet}
-                                visTips={false}
-                            />
-                            <EkspanderbareTips restSykefraværsvarighet={restSykefraværsvarighet} />
-                        </>
-                    }
-                />
-            ) : (
-                <>
-                    <SammenligningIngress />
-                    <SammenligningSiste4KvartalerMedBransje
-                        restSykefraværsvarighet={restSykefraværsvarighet}
-                    />
-                    <DetaljertSammenligning restSykefraværsvarighet={restSykefraværsvarighet} />
-                    <LærteDuNoeNyttPanel
-                        tekst="Var dette nyttig?"
-                        område="forside sammenligning tilbakemelding"
-                        skalVises={restSykefraværsvarighet.status === RestStatus.Suksess}
-                    />
-                </>
-            );
-        }
         innhold = (
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
@@ -221,15 +177,32 @@ const AppContent: FunctionComponent = () => {
                                 restSykefraværsvarighet={restSykefraværsvarighet}
                                 restAltinnOrganisasjoner={restOrganisasjoner}
                             >
-                                {sammenligningBarnehage}
+                                <ABTest
+                                    restFeatureToggles={restFeatureToggles}
+                                    feature={'sykefravarsstatistikk.ab-test.tips'}
+                                    versjonA={
+                                        <EkspanderbarSammenligning
+                                            restSykefraværsvarighet={restSykefraværsvarighet}
+                                            visTips={true}
+                                        />
+                                    }
+                                    versjonB={
+                                        <>
+                                            <EkspanderbarSammenligning
+                                                restSykefraværsvarighet={restSykefraværsvarighet}
+                                                visTips={false}
+                                            />
+                                            <EkspanderbareTips
+                                                restSykefraværsvarighet={restSykefraværsvarighet}
+                                            />
+                                        </>
+                                    }
+                                />
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />
                             <KursForBarnehager />
-                            {restFeatureToggles.status === RestStatus.Suksess &&
-                                !restFeatureToggles.data[
-                                    'sykefravarsstatistikk.barnehage-ny-sammenligning'
-                                ] && <Lenkeressurser />}
+                            <RelevanteLenker />
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>
