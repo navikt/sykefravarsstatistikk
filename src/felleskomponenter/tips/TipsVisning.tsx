@@ -6,7 +6,7 @@ import { Tidsbruk } from './Tidsbruk/Tidsbruk';
 import { TipsBilde } from './TipsBilde/TipsBilde';
 import { Tips } from './tips';
 import classNames from 'classnames';
-import LikeTommel from '../LikeTommel/LikeTommel';
+import VarDetteRelevant from '../VarDetteRelevant/VarDetteRelevant';
 
 interface Props {
     tips: Tips | null;
@@ -28,7 +28,7 @@ export const TipsVisning: FunctionComponent<Props> = ({ tips, className }) => {
                 {tips.tidsbruk && (
                     <Tidsbruk className="tips-visning__tidsbruk">{tips.tidsbruk}</Tidsbruk>
                 )}
-                <LikeTommel />
+                <VarDetteRelevant />
             </div>
         </div>
     );
