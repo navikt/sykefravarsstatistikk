@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
 import './VarDetteRelevant.less';
-import { LikeTommel } from './LikeTommel';
+import { TommelOppToggleKnapp } from './TommelOppToggleKnapp';
 
 interface Props {
     kleintID?: string;
@@ -13,21 +12,23 @@ const VarDetteRelevant = (props: Props) => {
 
     return (
         <>
-            <div className="vardetterelevant">
-                <LikeTommel
+            <div className="var-dette-relevant">
+                <TommelOppToggleKnapp
                     retning="opp"
-                    fylt={relevantLikt}
-                    onClick={() => setRelevantLikt(!relevantLikt)}>
+                    pressed={relevantLikt}
+                    onClick={() => setRelevantLikt(!relevantLikt)}
+                >
                     Relevant
-                </LikeTommel>
+                </TommelOppToggleKnapp>
             </div>
-            <div className="vardetterelevant">
-                <LikeTommel
+            <div className="var-dette-relevant">
+                <TommelOppToggleKnapp
                     retning="ned"
-                    fylt={!relevantLikt}
-                    onClick={() => setRelevantLikt(!relevantLikt)}>
+                    pressed={!relevantLikt}
+                    onClick={() => setRelevantLikt(!relevantLikt)}
+                >
                     Ikke relevant
-                </LikeTommel>
+                </TommelOppToggleKnapp>
             </div>
         </>
     );
