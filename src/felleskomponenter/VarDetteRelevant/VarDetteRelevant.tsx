@@ -5,7 +5,6 @@ import { TommelOppToggleKnapp } from './TommelOppToggleKnapp';
 import { useSendEvent } from '../../amplitude/amplitude';
 
 interface Props {
-    klientID?: string;
     tipsID: string;
 }
 const VarDetteRelevant: FunctionComponent<Props> = (props) => {
