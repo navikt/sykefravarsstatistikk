@@ -3,7 +3,45 @@
 .arbeidsmiljøportal-panel {
     .panel-mixin();
 
+    &__tittel-wrapper {
+        display: flex;
+        margin-bottom: 1rem;
+    }
+    &__logo {
+        max-width: 1.5rem;
+        margin-right: 1rem;
+    }
+    &__tittel {
+        padding-top: 1rem;
+    }
+
+    &__liste {
+        padding-left: 1rem;
+    }
+
     &__listeelement {
         .typo-normal-mixin();
+    }
+
+    @media (min-width: @screen-sm-min) {
+        &__logo {
+            max-width: 100%;
+        }
+        &__liste {
+            margin-top: 0;
+        }
+        &__tittel-wrapper {
+            margin-bottom: 2rem;
+        }
+        &__tekst-wrapper {
+            display: flex;
+        }
+        &__høyreblokk {
+            flex: 1;
+            margin-left: 5rem;
+        }
+        &__venstreblokk {
+            flex: 1;
+        }
     }
 }
