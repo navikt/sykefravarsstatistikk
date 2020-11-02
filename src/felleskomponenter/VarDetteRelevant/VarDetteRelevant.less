@@ -1,5 +1,17 @@
+@import '../../variables';
+
 .var-dette-relevant {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
+    max-width: 20rem;
+
+    .tommel-opp-toggle-knapp {
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        max-width: 13rem;
+    }
 }
