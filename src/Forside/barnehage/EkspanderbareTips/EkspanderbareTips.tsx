@@ -11,7 +11,6 @@ import Skeleton from 'react-loading-skeleton';
 import { getAlleResultaterForSammenligningAvSykefravær } from '../barnehage-utils';
 import { SammenligningsType } from '../vurderingstekster';
 import { useSendEvent } from '../../../amplitude/amplitude';
-import VarDetteRelevant from '../../../felleskomponenter/VarDetteRelevant/VarDetteRelevant';
 
 interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
@@ -77,7 +76,6 @@ export const EkspanderbareTips: FunctionComponent<Props> = ({ restSykefraværsva
                 </Undertittel>
             )}
             <TipsVisning className="ekspanderbare-tips__tips" tips={tipsTotaltFravær} />
-            <VarDetteRelevant />
             {(tipsKorttidsfravær || tipsLangtidsfravær) && (
                 <Undertittel className="ekspanderbare-tips__undertittel">
                     Dette kan du gjøre

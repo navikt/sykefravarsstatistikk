@@ -28,7 +28,7 @@ export const TipsVisning: FunctionComponent<Props> = ({ tips, className }) => {
                 {tips.tidsbruk && (
                     <Tidsbruk className="tips-visning__tidsbruk">{tips.tidsbruk}</Tidsbruk>
                 )}
-                <VarDetteRelevant />
+                <VarDetteRelevant tipsID={tips.id}/>
             </div>
         </div>
     );

@@ -1,28 +1,42 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import './VarDetteRelevant.less';
 import { TommelOppToggleKnapp } from './TommelOppToggleKnapp';
+import { useSendEvent } from '../../amplitude/amplitude';
 
 interface Props {
-    kleintID?: string;
-    tipsID?: string;
+    klientID?: string;
+    tipsID: string;
 }
-const VarDetteRelevant = (props: Props) => {
-    const [relevantLikt, setRelevantLikt] = useState<boolean | 'ikke satt'>('ikke satt');
+const VarDetteRelevant: FunctionComponent<Props> = (props) => {
+    const [erRelevant, setErRelevant] = useState<boolean | 'ikke satt'>('ikke satt');
+    const sendEvent = useSendEvent();
+
+    const onClick = (verdi: boolean) => {
+        if (erRelevant === verdi) {
+            setErRelevant('ikke satt');
+        } else {
+            setErRelevant(verdi);
+            sendEvent('tips tilbakemelding', 'svar', {
+                relevant: verdi,
+                tipsID: props.tipsID,
+            });
+        }
+    };
 
     return (
         <div className="var-dette-relevant">
             <TommelOppToggleKnapp
                 retning="opp"
-                pressed={relevantLikt !== 'ikke satt' && relevantLikt}
-                onClick={() => setRelevantLikt(relevantLikt === true ? 'ikke satt' : true)}
+                pressed={erRelevant !== 'ikke satt' && erRelevant}
+                onClick={() => onClick(true)}
             >
                 Relevant
             </TommelOppToggleKnapp>
             <TommelOppToggleKnapp
                 retning="ned"
-                pressed={relevantLikt !== 'ikke satt' && !relevantLikt}
-                onClick={() => setRelevantLikt(relevantLikt === false ? 'ikke satt' : false)}
+                pressed={erRelevant !== 'ikke satt' && !erRelevant}
+                onClick={() => onClick(false)}
             >
                 Ikke relevant
             </TommelOppToggleKnapp>

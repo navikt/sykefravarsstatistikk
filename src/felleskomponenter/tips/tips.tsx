@@ -12,6 +12,7 @@ import { SykefraværResultat } from '../../Forside/barnehage/Speedometer/Speedom
 import { SammenligningsType } from '../../Forside/barnehage/vurderingstekster';
 
 export interface Tips {
+    id: string;
     tittel: string;
     ingress: string;
     tidsbruk?: ReactElement | string;
