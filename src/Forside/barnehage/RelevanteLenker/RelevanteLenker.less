@@ -1,10 +1,8 @@
 @import '../../../variables';
 
 .relevante-lenker {
-    width: 100%;
-    background: white;
+    .panel-mixin();
     margin-top: 1.5rem;
-    padding: 2rem 1.5rem;
 
     &__ikon {
         margin-right: 1rem;
@@ -27,8 +25,6 @@
     }
 
     @media (min-width: @screen-sm-min) {
-        padding: 2rem;
-
         &__ikon {
             max-width: 100%;
         }

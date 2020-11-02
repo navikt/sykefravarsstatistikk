@@ -1,9 +1,7 @@
 @import '../../variables';
 
 .historikkpanel {
-    margin-top: 1.5rem;
-    padding: 2rem 1.5rem;
-    width: 100%;
+    .panel-mixin();
 
     &__overskrift {
         display: flex;
@@ -23,7 +21,6 @@
 
     @media (min-width: @screen-sm-min) {
         flex-direction: row;
-        padding: 2rem;
         width: calc(50% - 0.75rem);
     }
 }
