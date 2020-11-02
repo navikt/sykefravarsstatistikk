@@ -7,6 +7,7 @@ import { useSendNavigereEvent } from '../../amplitude/amplitude';
 
 interface ExtendedProps {
     children: string;
+    eventProperties?: Object;
 }
 
 const EksternLenke: FunctionComponent<Props & ExtendedProps> = (props) => {
@@ -23,6 +24,7 @@ const EksternLenke: FunctionComponent<Props & ExtendedProps> = (props) => {
                     lenketekst: props.children,
                     destinasjon: props.href,
                     url: window.location.href,
+                    ...props.eventProperties,
                 });
             }}
         >

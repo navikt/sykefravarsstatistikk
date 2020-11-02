@@ -6,6 +6,7 @@ import { Tidsbruk } from './Tidsbruk/Tidsbruk';
 import { TipsBilde } from './TipsBilde/TipsBilde';
 import { Tips } from './tips';
 import classNames from 'classnames';
+import VarDetteRelevant from '../VarDetteRelevant/VarDetteRelevant';
 
 interface Props {
     tips: Tips | null;
@@ -20,13 +21,16 @@ export const TipsVisning: FunctionComponent<Props> = ({ tips, className }) => {
             <div className="tips-visning__tekst-wrapper">
                 <div>
                     <Undertittel className="tips-visning__tittel" tag="p">
-                        <EksternLenke href={tips.href}>{tips.tittel}</EksternLenke>
+                        <EksternLenke href={tips.href} eventProperties={{ tipsID: tips.id }}>
+                            {tips.tittel}
+                        </EksternLenke>
                     </Undertittel>
                     <Normaltekst>{tips.ingress}</Normaltekst>
                 </div>
                 {tips.tidsbruk && (
                     <Tidsbruk className="tips-visning__tidsbruk">{tips.tidsbruk}</Tidsbruk>
                 )}
+                <VarDetteRelevant tipsID={tips.id} />
             </div>
         </div>
     );
