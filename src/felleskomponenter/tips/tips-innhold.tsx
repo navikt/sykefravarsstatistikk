@@ -8,9 +8,10 @@ import stabiltToProsentBilde from './bilder/stabilt-to-prosent.png';
 import aldriKjedeligBilde from './bilder/aldri-kjedelig.png';
 import React from 'react';
 import { Tips } from './tips';
+
 // TODO Vi må sette på alt-tekster
 export const deTokGrep: Tips = {
-    id: '1',
+    id: 'de-tok-grep',
     tittel: 'Det høye sykefraværet var frustrerende både for ledere og ansatte. Så tok de grep.',
     ingress:
         'Les mer om hvordan barnehagen reduserte sykefraværet og fikk mer tid til faglig utvikling.',
@@ -21,7 +22,7 @@ export const deTokGrep: Tips = {
 };
 
 export const fåNedKorttidsfravær: Tips = {
-    id: '2',
+    id: 'få-ned-korttidsfravær',
     tittel: 'Hvordan få ned korttidsfraværet?',
     ingress:
         'Her får du praktisk hjelp til hvordan du kan finne gode løsninger sammen med dine ansatte.',
@@ -29,7 +30,7 @@ export const fåNedKorttidsfravær: Tips = {
     img: { src: fåNedKorttidsfraværBilde, alt: '' },
 };
 export const seKursForebyggeSykefravær: Tips = {
-    id: '3',
+    id: 'se-kurs-forebygge',
     tittel: 'Se kurs om hvordan forebygge sykefravær',
     ingress:
         'Her får du korte nettkurs som tar for seg lovkrav og hvordan du gjennomfører sykefraværsoppfølging i praksis.',
@@ -38,7 +39,7 @@ export const seKursForebyggeSykefravær: Tips = {
     img: { src: seKursForebyggeSykefraværBilde, alt: '' },
 };
 export const seKursFølgeOppSykefravær: Tips = {
-    id: '4',
+    id: 'se-kurs-følge-opp',
     tittel: 'Se kurs om å følge opp sykefravær',
     ingress:
         'Her får du korte nettkurs som tar for seg lovkrav og hvordan du gjennomfører sykefraværsoppfølging i praksis.',
@@ -47,7 +48,7 @@ export const seKursFølgeOppSykefravær: Tips = {
     img: { src: seKursFølgeOppSykefraværBilde, alt: '' },
 };
 export const stabiltToProsent: Tips = {
-    id: '5',
+    id: 'stabilt-to-prosent',
     tittel: 'Barnehagen har et stabilt sykefravær på to prosent. Hva er forklaringen?',
     ingress:
         'Les mer om hvordan barnehagen har jobbet med utvikling av barnehagen, samarbeid og kultur for å få et stabilt lavt sykefravær.',
@@ -61,7 +62,7 @@ export const stabiltToProsent: Tips = {
     img: { src: stabiltToProsentBilde, alt: '' },
 };
 export const aldriKjedelig: Tips = {
-    id: '6',
+    id: 'aldri-kjedelig',
     tittel: 'Her er det aldri en kjedelig dag på jobb',
     ingress:
         'Les mer om hvordan barnehagen har jobbet med HMS og arbeidsmiljø til det beste for barna.',
@@ -70,7 +71,7 @@ export const aldriKjedelig: Tips = {
     img: { src: aldriKjedeligBilde, alt: '' },
 };
 export const barnehagerKoblerErgonomiOgPedagogikk: Tips = {
-    id: '7',
+    id: 'koble-ergonomi-pedagogikk',
     tittel: 'Barnehage kobler ergonomi og pedagogikk',
     ingress:
         'Se mer om hvordan pedagogisk utvikling har redusert muskel- og skjelettplager hos ansatte.',
