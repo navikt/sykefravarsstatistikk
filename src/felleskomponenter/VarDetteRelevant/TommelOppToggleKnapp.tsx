@@ -28,7 +28,7 @@ export const TommelOppToggleKnapp: FunctionComponent<Props> = (props) => {
                 {props.pressed ? (
                     <TommelOppFylt title={'tommel ' + props.retning} />
                 ) : (
-                    <TommelOpp />
+                    <TommelOpp title={'tommel ' + props.retning} />
                 )}
             </div>
             {props.children}
