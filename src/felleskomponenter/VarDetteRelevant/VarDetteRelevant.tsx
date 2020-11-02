@@ -8,21 +8,21 @@ interface Props {
     tipsID?: string;
 }
 const VarDetteRelevant = (props: Props) => {
-    const [relevantLikt, setRelevantLikt] = useState<boolean>(false);
+    const [relevantLikt, setRelevantLikt] = useState<boolean | 'ikke satt'>('ikke satt');
 
     return (
         <div className="var-dette-relevant">
             <TommelOppToggleKnapp
                 retning="opp"
-                pressed={relevantLikt}
-                onClick={() => setRelevantLikt(!relevantLikt)}
+                pressed={relevantLikt !== 'ikke satt' && relevantLikt}
+                onClick={() => setRelevantLikt(relevantLikt === true ? 'ikke satt' : true)}
             >
                 Relevant
             </TommelOppToggleKnapp>
             <TommelOppToggleKnapp
                 retning="ned"
-                pressed={!relevantLikt}
-                onClick={() => setRelevantLikt(!relevantLikt)}
+                pressed={relevantLikt !== 'ikke satt' && !relevantLikt}
+                onClick={() => setRelevantLikt(relevantLikt === false ? 'ikke satt' : false)}
             >
                 Ikke relevant
             </TommelOppToggleKnapp>
