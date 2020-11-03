@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { FunctionComponent } from 'react';
-import { ReactComponent as KalkisIkon } from './kalkis.svg';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import kalkisSvg from './kalkis.svg';
+import { Normaltekst } from 'nav-frontend-typografi';
 import PanelBase from 'nav-frontend-paneler';
 import './KalkulatorPanel.less';
 import { PATH_KALKULATOR } from '../../App';
 import { Link, useLocation } from 'react-router-dom';
 import { useSendEvent } from '../../amplitude/amplitude';
 import classNames from 'classnames';
+import { PaneltittelMedIkon } from '../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
 
 const KalkulatorPanel: FunctionComponent<{ liten?: boolean }> = ({ liten }) => {
     const location = useLocation();
@@ -15,10 +16,9 @@ const KalkulatorPanel: FunctionComponent<{ liten?: boolean }> = ({ liten }) => {
 
     return (
         <PanelBase className={classNames('kalkulatorpanel', liten && 'kalkulatorpanel--liten')}>
-            <Systemtittel className="kalkulatorpanel__overskrift" tag="h2">
-                <KalkisIkon className="kalkulatorpanel__illustrasjon" />
+            <PaneltittelMedIkon src={kalkisSvg} alt="Kalkulatorikon">
                 Hvor mye koster sykefraværet?
-            </Systemtittel>
+            </PaneltittelMedIkon>
             <Normaltekst className="kalkulatorpanel__ingress">
                 Her kan du beregne hvor mye sykefraværet koster, og hvor mye du kan spare.
             </Normaltekst>

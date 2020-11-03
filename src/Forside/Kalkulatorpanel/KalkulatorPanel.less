@@ -5,18 +5,12 @@
     padding: 2rem 1.5rem;
     width: 100%;
 
-    &__overskrift {
-        .panel-overskrift-med-logo-mixin();
-    }
     &__ingress {
         padding-bottom: 1rem;
     }
     &__lenke {
         .typo-normal-mixin();
         .lenke-mixin();
-    }
-    &__illustrasjon {
-        margin-bottom: 1rem;
     }
 
     @media (min-width: @screen-sm-min) {
@@ -26,11 +20,6 @@
         &--liten {
             width: calc(50% - 0.75rem);
             margin-right: 1.5rem;
-        }
-
-        &__illustrasjon {
-            margin-bottom: 0;
-            margin-right: 1rem;
         }
     }
 }

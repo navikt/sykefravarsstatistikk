@@ -1,0 +1,26 @@
+@import '../../variables';
+
+.paneltittel-med-ikon {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 1.5rem;
+    align-items: center;
+
+    &__ikon {
+        margin-bottom: 1rem;
+    }
+
+    &__tittel {
+        width: 100%;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        flex-direction: row;
+        align-items: center;
+
+        &__ikon {
+            margin-bottom: 0;
+            margin-right: 1rem;
+        }
+    }
+}

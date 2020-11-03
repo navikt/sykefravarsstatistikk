@@ -1,21 +1,21 @@
 import * as React from 'react';
 import { FunctionComponent } from 'react';
-import { ReactComponent as Kalkulatorikon } from './video.svg';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import videoSvg from './video.svg';
+import { Normaltekst } from 'nav-frontend-typografi';
 import PanelBase from 'nav-frontend-paneler';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import './Lenkeressurser.less';
 import { useSendEvent } from '../../amplitude/amplitude';
+import { PaneltittelMedIkon } from '../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
 
 const Lenkeressurser: FunctionComponent = () => {
     const sendEvent = useSendEvent();
 
     return (
         <PanelBase className="lenkeressurser">
-            <Systemtittel className="lenkeressurser__overskrift" tag="h2">
-                <Kalkulatorikon className="lenkeressurser__illustrasjon" />
+            <PaneltittelMedIkon src={videoSvg} alt="Videoikon">
                 Hva kan du gjøre med sykefraværet?
-            </Systemtittel>
+            </PaneltittelMedIkon>
             <div className="lenkeressurser__videolenker">
                 <Normaltekst className="lenkeressurser__tekst">
                     Se NAVs informasjonsvideoer om hvordan du kan jobbe med sykefravær og
