@@ -14,8 +14,8 @@ export const ArbeidsmiljøportalPanel: FunctionComponent = () => {
                     className="arbeidsmiljøportal-panel__logo"
                     alt="Logo for Arbeidsmiljøportalen"
                 />
-                <div>
-                    <Nyhet />
+                <div className="arbeidsmiljøportal-panel__nyhet-og-tittel">
+                    <Nyhet className="arbeidsmiljøportal-panel__nyhet"/>
                     <Systemtittel className="arbeidsmiljøportal-panel__tittel">
                         Dette påvirker arbeidsmiljøet i næringsmiddelindustrien
                     </Systemtittel>
