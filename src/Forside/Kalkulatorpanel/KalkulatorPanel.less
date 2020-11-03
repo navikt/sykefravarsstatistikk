@@ -6,9 +6,7 @@
     width: 100%;
 
     &__overskrift {
-        display: flex;
-        padding-bottom: 1rem;
-        align-items: center;
+        .panel-overskrift-med-logo-mixin();
     }
     &__ingress {
         padding-bottom: 1rem;
@@ -18,7 +16,7 @@
         .lenke-mixin();
     }
     &__illustrasjon {
-        margin-right: 1rem;
+        margin-bottom: 1rem;
     }
 
     @media (min-width: @screen-sm-min) {
@@ -28,6 +26,11 @@
         &--liten {
             width: calc(50% - 0.75rem);
             margin-right: 1.5rem;
+        }
+
+        &__illustrasjon {
+            margin-bottom: 0;
+            margin-right: 1rem;
         }
     }
 }
