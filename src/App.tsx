@@ -204,8 +204,8 @@ const AppContent: FunctionComponent = () => {
                             <KalkulatorPanel liten />
                             <Historikkpanel />
                             <KursForBarnehager />
-                            <RelevanteLenker />
                             <ArbeidsmiljøportalPanel />
+                            <RelevanteLenker />
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>
