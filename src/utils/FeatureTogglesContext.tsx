@@ -17,7 +17,7 @@ export const FeatureTogglesProvider: FunctionComponent = (props) => {
             setFeatureToggles(
                 await hentRestFeatureToggles(
                     'sykefravarsstatistikk.ab-test.tips', // unleash: https://unleash.nais.io/#/features/strategies/sykefravarsstatistikk.ab-test.tips
-                    'sykefravarsstatistikk.arbeidsmiljøportal', // unleash: https://unleash.nais.io/#/features/strategies/sykefravarsstatistikk.arbeidsmiljøportal
+                    'sykefravarsstatistikk.arbeidsmiljoportal', // unleash: https://unleash.nais.io/#/features/strategies/sykefravarsstatistikk.arbeidsmiljoportal
                     /* Send med features her */
                 )
             );

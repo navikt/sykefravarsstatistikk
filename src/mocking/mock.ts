@@ -153,7 +153,7 @@ if (mock.featureToggles) {
         'begin:/sykefravarsstatistikk/api/feature',
         {
             'sykefravarsstatistikk.ab-test.tips': false,
-            'sykefravarsstatistikk.arbeidsmiljøportal': true,
+            'sykefravarsstatistikk.arbeidsmiljoportal': true,
         },
         {
             delay: 1000 * delayfaktor,

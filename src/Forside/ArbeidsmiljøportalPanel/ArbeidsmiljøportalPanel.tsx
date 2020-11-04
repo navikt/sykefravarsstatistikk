@@ -12,7 +12,7 @@ export const ArbeidsmiljøportalPanel: FunctionComponent = () => {
     const restFeatureToggles = useContext<RestFeatureToggles>(featureTogglesContext);
     if (
         restFeatureToggles.status === RestStatus.LasterInn ||
-        !restFeatureToggles.data['sykefravarsstatistikk.arbeidsmiljøportal']
+        !restFeatureToggles.data['sykefravarsstatistikk.arbeidsmiljoportal']
     ) {
         return null;
     }
