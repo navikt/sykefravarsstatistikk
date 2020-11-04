@@ -1,38 +1,14 @@
 @import '../../../variables';
 
 .kurs-for-barnehager {
+    .panel-mixin();
     margin-top: 1.5rem;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 
-    &.panel {
-        padding: 2rem 1.5rem;
-    }
-
-    &__tittel-wrapper {
-        display: flex;
-        align-items: center;
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-        img {
-            margin-right: 1rem;
-            width: 27px;
-            height: 25px;
-        }
-    }
-
-    @media (min-width: @screen-sm-min) {
-        align-items: center;
-
-        &__tittel-wrapper {
-            margin-top: 0;
-            margin-bottom: 0;
-            img {
-                width: 54px;
-                height: 49px;
-            }
-        }
+    &__tekst {
+        padding-bottom: 1rem;
     }
 }

@@ -56,6 +56,7 @@ import { ABTest } from './felleskomponenter/ABTest/ABTest';
 import { EkspanderbareTips } from './Forside/barnehage/EkspanderbareTips/EkspanderbareTips';
 import { KursForBarnehager } from './Forside/barnehage/KursForBarnehager/KursForBarnehager';
 import { RelevanteLenker } from './Forside/barnehage/RelevanteLenker/RelevanteLenker';
+import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';
@@ -162,6 +163,7 @@ const AppContent: FunctionComponent = () => {
                             <KalkulatorPanel liten />
                             <Historikkpanel />
                             <Lenkeressurser />
+                            <ArbeidsmiljøportalPanel />
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>
@@ -202,6 +204,7 @@ const AppContent: FunctionComponent = () => {
                             <KalkulatorPanel liten />
                             <Historikkpanel />
                             <KursForBarnehager />
+                            <ArbeidsmiljøportalPanel />
                             <RelevanteLenker />
                         </Forside>
                     </InnloggingssideWrapper>
