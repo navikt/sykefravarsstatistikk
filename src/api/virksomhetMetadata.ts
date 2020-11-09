@@ -15,7 +15,7 @@ export enum Bransjetype {
 
 export interface VirksomhetMetadata {
     næringskode5Siffer: Næringskode5Siffer;
-    bransje: Bransjetype;
+    bransje?: Bransjetype;
     antallAnsatte: number;
 }
 

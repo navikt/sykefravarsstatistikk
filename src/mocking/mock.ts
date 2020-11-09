@@ -11,6 +11,7 @@ import { sykefraværsvarighetMockUtenData } from './sykefraværsvarighet';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { underenhetMock } from './enhetsregisteret';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
+import { VirksomhetMetadata } from '../api/virksomhetMetadata';
 
 const mock = {
     minSideArbeidsgiver: true,
@@ -90,18 +91,14 @@ if (mock.sykefraværsstatistikkApi) {
         'express:/sykefravarsstatistikk/api/:orgnr/bedriftsmetrikker',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
-
-            const mockBedriftsmetrikker = getMockOrganisasjon(orgnr)?.bedriftsmetrikker;
-
-            return (
-                mockBedriftsmetrikker || {
-                    antallAnsatte: 99,
-                    næringskode5Siffer: {
-                        kode: '10300',
-                        beskrivelse: 'Trygdeordninger underlagt offentlig forvaltning',
-                    },
-                }
-            );
+            const defaultBedriftsmetrikker: VirksomhetMetadata = {
+                antallAnsatte: 99,
+                næringskode5Siffer: {
+                    kode: '10300',
+                    beskrivelse: 'Trygdeordninger underlagt offentlig forvaltning',
+                },
+            };
+            return getMockOrganisasjon(orgnr)?.bedriftsmetrikker || defaultBedriftsmetrikker;
         },
         {
             delay: 1000 * delayfaktor,
@@ -119,17 +116,20 @@ if (mock.sykefraværsstatistikkApi) {
 if (mock.enhetsregisteret) {
     mockGetAndLog('begin:https://data.brreg.no/enhetsregisteret/api/enheter/', (url) => {
         const orgnr = url.match(/[0-9]{9}/)![0];
-
-        const overordnetEnhet: OverordnetEnhet = {
+        const defaultOverordnetEnhet: OverordnetEnhet = {
             orgnr: orgnr,
             institusjonellSektorkode: { kode: '6500', beskrivelse: 'Offentlig sektor' },
         };
-        return overordnetEnhet;
+        return getMockOrganisasjon(orgnr)?.overordnetEnhet || defaultOverordnetEnhet;
     });
+
     mockGetAndLog('begin:https://data.brreg.no/enhetsregisteret/api/underenheter/', (url) => {
         const orgnr = url.match(/[0-9]{9}/)![0];
-        const underenhetDto: UnderenhetDto = { ...underenhetMock, organisasjonsnummer: orgnr };
-        return underenhetDto;
+        const defaultUnderenhetDto: UnderenhetDto = {
+            ...underenhetMock,
+            organisasjonsnummer: orgnr,
+        };
+        return getMockOrganisasjon(orgnr)?.underenhetDto || defaultUnderenhetDto;
     });
 }
 

@@ -15,12 +15,15 @@ import {
     sykefraværsvarighetMockMedSiste4Kvartaler,
     sykefraværsvarighetMockRød,
 } from './sykefraværsvarighet';
+import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 
 export interface OrganisasjonMock {
     orgnr: string;
     bedriftsmetrikker?: VirksomhetMetadata | number;
     sykefraværshistorikkKvartalsvis?: Sykefraværshistorikk[] | number;
     sykefraværshistorikkSummert?: Sykefraværsvarighet | number;
+    overordnetEnhet?: OverordnetEnhet | number;
+    underenhetDto?: UnderenhetDto | number;
 }
 
 const bedriftsmetrikkerBarnehager: VirksomhetMetadata = {
