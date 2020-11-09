@@ -6,11 +6,24 @@ export enum ArbeidstilsynetBransje {
     SYKEHUS = 'SYKEHUS',
     SYKEHJEM = 'SYKEHJEM',
     TRANSPORT = 'TRANSPORT',
-    INGEN_BRANSJE = 'INGEN_BRANSJE',
+    BYGG = 'BYGG',
+    ANLEGG = 'ANLEGG',
+    ANDRE_BRANSJER = 'ANDRE_BRANSJER',
 }
 
 export const getArbeidstilsynetBransje = (næring: Næringskode5Siffer): ArbeidstilsynetBransje => {
-    if (næring.kode.startsWith('10')) {
+    const næringskode2siffer = næring.kode.slice(0, 2);
+
+    switch (næringskode2siffer) {
+        case '10':
+            return ArbeidstilsynetBransje.NÆRINGSMIDDELINDUSTRI;
+        case '41':
+            return ArbeidstilsynetBransje.BYGG;
+        case '42':
+            return ArbeidstilsynetBransje.ANLEGG;
+    }
+
+    if (næringskode2siffer === '10') {
         return ArbeidstilsynetBransje.NÆRINGSMIDDELINDUSTRI;
     }
 
@@ -34,7 +47,7 @@ export const getArbeidstilsynetBransje = (næring: Næringskode5Siffer): Arbeids
             return ArbeidstilsynetBransje.TRANSPORT;
     }
 
-    return ArbeidstilsynetBransje.INGEN_BRANSJE;
+    return ArbeidstilsynetBransje.ANDRE_BRANSJER;
 };
 
 export const getBransjenavn = (bransje: ArbeidstilsynetBransje): string => {
@@ -46,9 +59,13 @@ export const getBransjenavn = (bransje: ArbeidstilsynetBransje): string => {
         case ArbeidstilsynetBransje.TRANSPORT:
             return 'transportbransjen';
         case ArbeidstilsynetBransje.SYKEHJEM:
-            return 'sykehjemsbransjen';
+            return 'sykehjem';
         case ArbeidstilsynetBransje.SYKEHUS:
-            return 'sykehusbransjen';
+            return 'sykehus';
+        case ArbeidstilsynetBransje.BYGG:
+            return 'byggebransjen';
+        case ArbeidstilsynetBransje.ANLEGG:
+            return 'anleggsbransjen';
         default:
             return '';
     }

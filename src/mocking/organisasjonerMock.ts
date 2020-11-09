@@ -200,6 +200,22 @@ const forskjelligeBransjerAs = [
         ParentOrganizationNumber: '120000000',
     },
     {
+        Name: 'FEILFRIE BYGG',
+        Type: 'Business',
+        OrganizationNumber: '120000006',
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '120000000',
+    },
+    {
+        Name: 'KNUSKTØRRE ANLEGG',
+        Type: 'Business',
+        OrganizationNumber: '120000007',
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '120000000',
+    },
+    {
         Name: 'INGEN BRANSJE',
         Type: 'Business',
         OrganizationNumber: '120000009',

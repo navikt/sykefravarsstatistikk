@@ -1,4 +1,4 @@
-import { Bransjetype, VirksomhetMetadata } from '../api/virksomhetMetadata';
+import { VirksomhetMetadata } from '../api/virksomhetMetadata';
 import { Sykefraværshistorikk } from '../api/sykefraværshistorikk';
 import {
     lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet,
@@ -17,6 +17,7 @@ import {
 } from './sykefraværsvarighet';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { getVirksomhetMetadataMock } from './virksomhet-metadata';
+import { ArbeidstilsynetBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
 
 export interface OrganisasjonMock {
     orgnr: string;
@@ -45,48 +46,48 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '888888881',
-        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         sykefraværshistorikkSummert: sykefraværsvarighetMockRød,
     },
     {
         orgnr: '888888882',
-        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         sykefraværshistorikkSummert: sykefraværsvarighetMockGul,
     },
     {
         orgnr: '888888883',
-        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         sykefraværshistorikkSummert: sykefraværsvarighetMockGrønn,
     },
     {
         orgnr: '888888884',
-        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         sykefraværshistorikkSummert: 500,
     },
     {
         orgnr: '888888885',
-        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
     },
     {
         orgnr: '888888886',
-        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         sykefraværshistorikkSummert: sykefraværsvarighetMockMedBare2Kvartaler,
     },
     {
         orgnr: '888888887',
-        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         sykefraværshistorikkSummert: sykefraværsvarighetMockMaskert,
     },
     {
         orgnr: '888888888',
-        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         sykefraværshistorikkSummert: sykefraværsvarighetMockMedSiste4Kvartaler,
     },
@@ -104,26 +105,34 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '120000001',
-        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
     },
     {
         orgnr: '120000002',
-        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.SYKEHJEM),
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.SYKEHJEM),
     },
     {
         orgnr: '120000003',
-        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.SYKEHUS),
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.SYKEHUS),
     },
     {
         orgnr: '120000004',
-        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.NÆRINGSMIDDELINDUSTRI),
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.NÆRINGSMIDDELINDUSTRI),
     },
     {
         orgnr: '120000005',
-        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.TRANSPORT),
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.TRANSPORT),
+    },
+    {
+        orgnr: '120000006',
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BYGG),
+    },
+    {
+        orgnr: '120000007',
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.ANLEGG),
     },
     {
         orgnr: '120000009',
-        bedriftsmetrikker: getVirksomhetMetadataMock(),
+        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.ANDRE_BRANSJER),
     },
 ];

@@ -1,4 +1,5 @@
 import { Bransjetype, VirksomhetMetadata } from '../api/virksomhetMetadata';
+import { ArbeidstilsynetBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
 
 export const defaultBedriftsmetrikker: VirksomhetMetadata = {
     antallAnsatte: 99,
@@ -8,11 +9,9 @@ export const defaultBedriftsmetrikker: VirksomhetMetadata = {
     },
 };
 
-export const getVirksomhetMetadataMock = (bransje?: Bransjetype): VirksomhetMetadata => {
-    if (!bransje) return defaultBedriftsmetrikker;
-
+export const getVirksomhetMetadataMock = (bransje: ArbeidstilsynetBransje): VirksomhetMetadata => {
     switch (bransje) {
-        case Bransjetype.BARNEHAGER:
+        case ArbeidstilsynetBransje.BARNEHAGER:
             return {
                 antallAnsatte: 99,
                 næringskode5Siffer: {
@@ -21,7 +20,7 @@ export const getVirksomhetMetadataMock = (bransje?: Bransjetype): VirksomhetMeta
                 },
                 bransje: Bransjetype.BARNEHAGER,
             };
-        case Bransjetype.NÆRINGSMIDDELINDUSTRI:
+        case ArbeidstilsynetBransje.NÆRINGSMIDDELINDUSTRI:
             return {
                 antallAnsatte: 99,
                 næringskode5Siffer: {
@@ -30,7 +29,7 @@ export const getVirksomhetMetadataMock = (bransje?: Bransjetype): VirksomhetMeta
                 },
                 bransje: Bransjetype.NÆRINGSMIDDELINDUSTRI,
             };
-        case Bransjetype.SYKEHJEM:
+        case ArbeidstilsynetBransje.SYKEHJEM:
             return {
                 antallAnsatte: 99,
                 næringskode5Siffer: {
@@ -39,7 +38,7 @@ export const getVirksomhetMetadataMock = (bransje?: Bransjetype): VirksomhetMeta
                 },
                 bransje: Bransjetype.SYKEHJEM,
             };
-        case Bransjetype.SYKEHUS:
+        case ArbeidstilsynetBransje.SYKEHUS:
             return {
                 antallAnsatte: 99,
                 næringskode5Siffer: {
@@ -48,7 +47,7 @@ export const getVirksomhetMetadataMock = (bransje?: Bransjetype): VirksomhetMeta
                 },
                 bransje: Bransjetype.SYKEHUS,
             };
-        case Bransjetype.TRANSPORT:
+        case ArbeidstilsynetBransje.TRANSPORT:
             return {
                 antallAnsatte: 99,
                 næringskode5Siffer: {
@@ -56,6 +55,30 @@ export const getVirksomhetMetadataMock = (bransje?: Bransjetype): VirksomhetMeta
                     beskrivelse: 'Rutebuss og persontrafikk (transport)',
                 },
                 bransje: Bransjetype.TRANSPORT,
+            };
+        case ArbeidstilsynetBransje.BYGG:
+            return {
+                antallAnsatte: 99,
+                næringskode5Siffer: {
+                    kode: '41101',
+                    beskrivelse: 'Boligbyggelag',
+                },
+            };
+        case ArbeidstilsynetBransje.ANLEGG:
+            return {
+                antallAnsatte: 99,
+                næringskode5Siffer: {
+                    kode: '42110',
+                    beskrivelse: 'Bygging av veier og motorveier',
+                },
+            };
+        case ArbeidstilsynetBransje.ANDRE_BRANSJER:
+            return {
+                antallAnsatte: 99,
+                næringskode5Siffer: {
+                    kode: '84300',
+                    beskrivelse: 'Trygdeordninger underlagt offentlig forvaltning',
+                },
             };
     }
 };
