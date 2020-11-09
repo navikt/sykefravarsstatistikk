@@ -23,10 +23,6 @@ export const getArbeidstilsynetBransje = (næring: Næringskode5Siffer): Arbeids
             return ArbeidstilsynetBransje.ANLEGG;
     }
 
-    if (næringskode2siffer === '10') {
-        return ArbeidstilsynetBransje.NÆRINGSMIDDELINDUSTRI;
-    }
-
     switch (næring.kode) {
         case '88911':
             return ArbeidstilsynetBransje.BARNEHAGER;
@@ -86,6 +82,10 @@ export const getLenkeTilBransjensSideIArbeidsmiljøportalen = (
             return 'https://www.arbeidstilsynet.no/?bransje=sykehjem';
         case ArbeidstilsynetBransje.SYKEHUS:
             return 'https://www.arbeidstilsynet.no/?bransje=sykehus';
+        case ArbeidstilsynetBransje.BYGG:
+            return 'https://www.arbeidstilsynet.no/?bransje=bygg';
+        case ArbeidstilsynetBransje.ANLEGG:
+            return 'https://www.arbeidstilsynet.no/?bransje=anlegg';
         default:
             return 'https://www.arbeidstilsynet.no/?bransje=ingen';
     }
