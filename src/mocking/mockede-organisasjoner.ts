@@ -5,7 +5,7 @@ import {
     lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet,
     lagMaskertHistorikk,
     lagMockHistorikkForBarnehage,
-} from './sykefraværshistorikk';
+} from './sykefraværshistorikk-mock';
 import { Sykefraværsvarighet } from '../api/sykefraværsvarighet';
 import {
     sykefraværsvarighetMockGrønn,
@@ -14,9 +14,9 @@ import {
     sykefraværsvarighetMockMedBare2Kvartaler,
     sykefraværsvarighetMockMedSiste4Kvartaler,
     sykefraværsvarighetMockRød,
-} from './sykefraværsvarighet';
+} from './sykefraværsvarighet-mock';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
-import { getVirksomhetMetadataMock } from './virksomhet-metadata';
+import { getVirksomhetMetadataMock } from './virksomhet-metadata-mock';
 import { ArbeidstilsynetBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
 
 export interface OrganisasjonMock {

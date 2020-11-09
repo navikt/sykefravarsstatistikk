@@ -216,7 +216,7 @@ const forskjelligeBransjerAs = [
         ParentOrganizationNumber: '120000000',
     },
     {
-        Name: 'INGEN BRANSJE',
+        Name: 'DE BRANSJELØSE',
         Type: 'Business',
         OrganizationNumber: '120000009',
         OrganizationForm: 'BEDR',
@@ -232,3 +232,10 @@ export const organisasjonerMock: AltinnOrganisasjon[] = [
     ...systemfeilAs,
     ...forskjelligeBransjerAs,
 ];
+
+export const getOrganisasjonerMock = (): AltinnOrganisasjon[] => {
+    return organisasjonerMock;
+};
+export const getOrganisasjonerBrukerHarTilgangTilMock = (): AltinnOrganisasjon[] => {
+    return organisasjonerMock.filter((org) => org.OrganizationNumber !== orgnrUtenTilgang);
+};

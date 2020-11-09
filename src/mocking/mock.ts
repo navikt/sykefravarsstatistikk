@@ -5,14 +5,16 @@ import fetchMock, {
     MockResponse,
     MockResponseFunction,
 } from 'fetch-mock';
-import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './organisasjoner';
-import { lagMockHistorikkForNæring } from './sykefraværshistorikk';
-import { sykefraværsvarighetMockUtenData } from './sykefraværsvarighet';
+import { lagMockHistorikkForNæring } from './sykefraværshistorikk-mock';
+import { sykefraværsvarighetMockUtenData } from './sykefraværsvarighet-mock';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
-import { underenhetMock } from './enhetsregisteret';
+import { underenhetMock } from './enhetsregisteret-mock';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
-import { VirksomhetMetadata } from '../api/virksomhetMetadata';
-import { defaultBedriftsmetrikker } from './virksomhet-metadata';
+import { defaultBedriftsmetrikker } from './virksomhet-metadata-mock';
+import {
+    getOrganisasjonerBrukerHarTilgangTilMock,
+    getOrganisasjonerMock,
+} from './organisasjoner-mock';
 
 const mock = {
     minSideArbeidsgiver: true,

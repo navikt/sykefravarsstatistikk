@@ -1,5 +1,5 @@
 import { Sykefraværshistorikk, SykefraværshistorikkType } from '../api/sykefraværshistorikk';
-import { genererHistorikk, genererMaskertHistorikk } from './generering-av-historikk';
+import { genererHistorikk, genererMaskertHistorikk } from './generering-av-historikk-mock';
 
 const lagHistorikkMedLandOgSektor = (): Sykefraværshistorikk[] => {
     return [
