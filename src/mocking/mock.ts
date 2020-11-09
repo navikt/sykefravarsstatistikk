@@ -11,6 +11,7 @@ import { Bransjetype } from '../api/virksomhetMetadata';
 import { sykefraværsvarighetMock } from './sykefraværsvarighet';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { underenhetMock } from './enhetsregisteret';
+import { getMockOrganisasjon } from './mockede-organisasjoner';
 
 const mock = {
     minSideArbeidsgiver: true,
@@ -94,29 +95,20 @@ if (mock.sykefraværsstatistikkApi) {
         'express:/sykefravarsstatistikk/api/:orgnr/bedriftsmetrikker',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
-            if (orgnr === '101010101') {
-                return 500;
-            }
-            if (orgnr === '100100100') {
-                return 500;
-            }
-            if (orgnr.match('88888888.')) {
+
+            const mockOrganisasjon = getMockOrganisasjon(orgnr);
+
+            if (mockOrganisasjon) {
+                return mockOrganisasjon.bedriftsmetrikker;
+            } else {
                 return {
                     antallAnsatte: 99,
                     næringskode5Siffer: {
-                        kode: '88911',
-                        beskrivelse: 'Barnehager',
+                        kode: '10300',
+                        beskrivelse: 'Trygdeordninger underlagt offentlig forvaltning',
                     },
-                    bransje: Bransjetype.BARNEHAGER,
                 };
             }
-            return {
-                antallAnsatte: 99,
-                næringskode5Siffer: {
-                    kode: '10300',
-                    beskrivelse: 'Trygdeordninger underlagt offentlig forvaltning',
-                },
-            };
         },
         {
             delay: 1000 * delayfaktor,
