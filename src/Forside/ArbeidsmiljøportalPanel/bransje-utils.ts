@@ -10,29 +10,27 @@ export enum ArbeidstilsynetBransje {
 }
 
 export const getArbeidstilsynetBransje = (næring: Næringskode5Siffer): ArbeidstilsynetBransje => {
-    const næringskode2siffer = næring.kode.split('.')[0];
-
-    if (næringskode2siffer === '10') {
+    if (næring.kode.startsWith('10')) {
         return ArbeidstilsynetBransje.NÆRINGSMIDDELINDUSTRI;
     }
 
     switch (næring.kode) {
-        case '88.911':
+        case '88911':
             return ArbeidstilsynetBransje.BARNEHAGER;
-        case '86.101':
-        case '86.102':
-        case '86.104':
-        case '86.105':
-        case '86.106':
-        case '86.107':
+        case '86101':
+        case '86102':
+        case '86104':
+        case '86105':
+        case '86106':
+        case '86107':
             return ArbeidstilsynetBransje.SYKEHUS;
-        case '87.101':
-        case '87.102':
+        case '87101':
+        case '87102':
             return ArbeidstilsynetBransje.SYKEHJEM;
-        case '49.100':
-        case '49.311':
-        case '49.391':
-        case '49.392':
+        case '49100':
+        case '49311':
+        case '49391':
+        case '49392':
             return ArbeidstilsynetBransje.TRANSPORT;
     }
 
