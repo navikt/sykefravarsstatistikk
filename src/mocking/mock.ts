@@ -12,6 +12,7 @@ import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { underenhetMock } from './enhetsregisteret';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
 import { VirksomhetMetadata } from '../api/virksomhetMetadata';
+import { defaultBedriftsmetrikker } from './virksomhet-metadata';
 
 const mock = {
     minSideArbeidsgiver: true,
@@ -91,13 +92,6 @@ if (mock.sykefraværsstatistikkApi) {
         'express:/sykefravarsstatistikk/api/:orgnr/bedriftsmetrikker',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
-            const defaultBedriftsmetrikker: VirksomhetMetadata = {
-                antallAnsatte: 99,
-                næringskode5Siffer: {
-                    kode: '10300',
-                    beskrivelse: 'Trygdeordninger underlagt offentlig forvaltning',
-                },
-            };
             return getMockOrganisasjon(orgnr)?.bedriftsmetrikker || defaultBedriftsmetrikker;
         },
         {

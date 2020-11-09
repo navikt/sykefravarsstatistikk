@@ -16,6 +16,7 @@ import {
     sykefraværsvarighetMockRød,
 } from './sykefraværsvarighet';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
+import { getVirksomhetMetadataMock } from './virksomhet-metadata';
 
 export interface OrganisasjonMock {
     orgnr: string;
@@ -25,15 +26,6 @@ export interface OrganisasjonMock {
     overordnetEnhet?: OverordnetEnhet | number;
     underenhetDto?: UnderenhetDto | number;
 }
-
-const bedriftsmetrikkerBarnehager: VirksomhetMetadata = {
-    antallAnsatte: 99,
-    næringskode5Siffer: {
-        kode: '88911',
-        beskrivelse: 'Barnehager',
-    },
-    bransje: Bransjetype.BARNEHAGER,
-};
 
 export const getMockOrganisasjon = (orgnr: string): OrganisasjonMock | undefined =>
     mockedeOrganisasjoner.find((org) => org.orgnr === orgnr);
@@ -53,48 +45,48 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '888888881',
-        bedriftsmetrikker: bedriftsmetrikkerBarnehager,
+        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         sykefraværshistorikkSummert: sykefraværsvarighetMockRød,
     },
     {
         orgnr: '888888882',
-        bedriftsmetrikker: bedriftsmetrikkerBarnehager,
+        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         sykefraværshistorikkSummert: sykefraværsvarighetMockGul,
     },
     {
         orgnr: '888888883',
-        bedriftsmetrikker: bedriftsmetrikkerBarnehager,
+        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         sykefraværshistorikkSummert: sykefraværsvarighetMockGrønn,
     },
     {
         orgnr: '888888884',
-        bedriftsmetrikker: bedriftsmetrikkerBarnehager,
+        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         sykefraværshistorikkSummert: 500,
     },
     {
         orgnr: '888888885',
-        bedriftsmetrikker: bedriftsmetrikkerBarnehager,
+        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
     },
     {
         orgnr: '888888886',
-        bedriftsmetrikker: bedriftsmetrikkerBarnehager,
+        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         sykefraværshistorikkSummert: sykefraværsvarighetMockMedBare2Kvartaler,
     },
     {
         orgnr: '888888887',
-        bedriftsmetrikker: bedriftsmetrikkerBarnehager,
+        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         sykefraværshistorikkSummert: sykefraværsvarighetMockMaskert,
     },
     {
         orgnr: '888888888',
-        bedriftsmetrikker: bedriftsmetrikkerBarnehager,
+        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         sykefraværshistorikkSummert: sykefraværsvarighetMockMedSiste4Kvartaler,
     },
@@ -109,5 +101,29 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     {
         orgnr: '666666666',
         sykefraværshistorikkKvartalsvis: lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet(),
+    },
+    {
+        orgnr: '120000001',
+        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.BARNEHAGER),
+    },
+    {
+        orgnr: '120000002',
+        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.SYKEHJEM),
+    },
+    {
+        orgnr: '120000003',
+        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.SYKEHUS),
+    },
+    {
+        orgnr: '120000004',
+        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.NÆRINGSMIDDELINDUSTRI),
+    },
+    {
+        orgnr: '120000005',
+        bedriftsmetrikker: getVirksomhetMetadataMock(Bransjetype.TRANSPORT),
+    },
+    {
+        orgnr: '120000009',
+        bedriftsmetrikker: getVirksomhetMetadataMock(),
     },
 ];

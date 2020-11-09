@@ -46,35 +46,6 @@ const ingenTilgangAs = [
         Status: 'Active',
         ParentOrganizationNumber: '',
     },
-
-    {
-        Name: 'INGEN TILGANG',
-        Type: 'Business',
-        OrganizationNumber: orgnrUtenTilgang,
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-        ParentOrganizationNumber: '900900900',
-    },
-];
-
-const olaNordmannEnk = [
-    {
-        Name: 'OLA NORDMANN ENK',
-        Type: 'Enterprise',
-        OrganizationNumber: '555555555',
-        OrganizationForm: 'AS',
-        Status: 'Active',
-        ParentOrganizationNumber: '',
-    },
-
-    {
-        Name: 'OLA NORDMANN ENK',
-        Type: 'Business',
-        OrganizationNumber: '666666666',
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-        ParentOrganizationNumber: '555555555',
-    },
 ];
 
 const heiOgHåBarnehage: AltinnOrganisasjon[] = [
@@ -161,7 +132,6 @@ const systemfeilAs = [
         Status: 'Active',
         ParentOrganizationNumber: '',
     },
-
     {
         Name: 'SYSTEMFEIL',
         Type: 'Business',
@@ -170,12 +140,79 @@ const systemfeilAs = [
         Status: 'Active',
         ParentOrganizationNumber: '999999999',
     },
+    {
+        Name: 'INGEN TILGANG',
+        Type: 'Business',
+        OrganizationNumber: orgnrUtenTilgang,
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '999999999',
+    },
+];
+
+const forskjelligeBransjerAs = [
+    {
+        Name: 'FORSKJELLIGE BRANSJER AS',
+        Type: 'Enterprise',
+        OrganizationNumber: '120000000',
+        OrganizationForm: 'AS',
+        Status: 'Active',
+        ParentOrganizationNumber: '',
+    },
+    {
+        Name: 'VISJON BARNEHAGE',
+        Type: 'Business',
+        OrganizationNumber: '120000001',
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '120000000',
+    },
+    {
+        Name: 'BRILLE SYKEHJEM',
+        Type: 'Business',
+        OrganizationNumber: '120000002',
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '120000000',
+    },
+    {
+        Name: 'DISK SYKEHUS',
+        Type: 'Business',
+        OrganizationNumber: '120000003',
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '120000000',
+    },
+    {
+        Name: 'SENTIMENTAL NÆRINGSMIDDELINDUSTRI',
+        Type: 'Business',
+        OrganizationNumber: '120000004',
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '120000000',
+    },
+    {
+        Name: 'A-B TRANSPORT',
+        Type: 'Business',
+        OrganizationNumber: '120000005',
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '120000000',
+    },
+    {
+        Name: 'INGEN BRANSJE',
+        Type: 'Business',
+        OrganizationNumber: '120000009',
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '120000000',
+    },
 ];
 
 export const organisasjonerMock: AltinnOrganisasjon[] = [
     ...fleskOgFisk,
     ...heiOgHåBarnehage,
-    ...olaNordmannEnk,
     ...ingenTilgangAs,
     ...systemfeilAs,
+    ...forskjelligeBransjerAs,
 ];
