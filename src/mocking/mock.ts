@@ -6,8 +6,7 @@ import fetchMock, {
     MockResponseFunction,
 } from 'fetch-mock';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './organisasjoner';
-import { getSykefraværshistorikkMock } from './sykefraværshistorikk';
-import { Bransjetype } from '../api/virksomhetMetadata';
+import { lagMockHistorikkForBarnehage, lagMockHistorikkForNæring } from './sykefraværshistorikk';
 import { sykefraværsvarighetMock } from './sykefraværsvarighet';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { underenhetMock } from './enhetsregisteret';
@@ -62,13 +61,11 @@ if (mock.sykefraværsstatistikkApi) {
         'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/kvartalsvis',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
-            if (orgnr === '101010101') {
-                return 500;
-            }
-            if (orgnr === '100100100') {
-                return 403;
-            }
-            return getSykefraværshistorikkMock(orgnr);
+
+            return (
+                getMockOrganisasjon(orgnr)?.sykefraværshistorikkKvartalsvis ||
+                lagMockHistorikkForNæring()
+            );
         },
         {
             delay: 1000 * delayfaktor,
@@ -96,19 +93,17 @@ if (mock.sykefraværsstatistikkApi) {
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
 
-            const mockOrganisasjon = getMockOrganisasjon(orgnr);
+            const mockBedriftsmetrikker = getMockOrganisasjon(orgnr)?.bedriftsmetrikker;
 
-            if (mockOrganisasjon) {
-                return mockOrganisasjon.bedriftsmetrikker;
-            } else {
-                return {
+            return (
+                mockBedriftsmetrikker || {
                     antallAnsatte: 99,
                     næringskode5Siffer: {
                         kode: '10300',
                         beskrivelse: 'Trygdeordninger underlagt offentlig forvaltning',
                     },
-                };
-            }
+                }
+            );
         },
         {
             delay: 1000 * delayfaktor,
