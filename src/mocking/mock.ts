@@ -6,8 +6,8 @@ import fetchMock, {
     MockResponseFunction,
 } from 'fetch-mock';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './organisasjoner';
-import { lagMockHistorikkForBarnehage, lagMockHistorikkForNæring } from './sykefraværshistorikk';
-import { sykefraværsvarighetMock } from './sykefraværsvarighet';
+import { lagMockHistorikkForNæring } from './sykefraværshistorikk';
+import { sykefraværsvarighetMockUtenData } from './sykefraværsvarighet';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { underenhetMock } from './enhetsregisteret';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
@@ -75,13 +75,11 @@ if (mock.sykefraværsstatistikkApi) {
         'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/summert',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
-            if (['101010101', '888888884'].includes(orgnr)) {
-                return 500;
-            }
-            if (orgnr === '100100100') {
-                return 403;
-            }
-            return sykefraværsvarighetMock(orgnr);
+
+            return (
+                getMockOrganisasjon(orgnr)?.sykefraværshistorikkSummert ||
+                sykefraværsvarighetMockUtenData
+            );
         },
         {
             delay: 1000 * delayfaktor,

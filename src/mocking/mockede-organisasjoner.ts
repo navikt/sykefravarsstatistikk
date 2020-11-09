@@ -6,11 +6,21 @@ import {
     lagMaskertHistorikk,
     lagMockHistorikkForBarnehage,
 } from './sykefraværshistorikk';
+import { Sykefraværsvarighet } from '../api/sykefraværsvarighet';
+import {
+    sykefraværsvarighetMockGrønn,
+    sykefraværsvarighetMockGul,
+    sykefraværsvarighetMockMaskert,
+    sykefraværsvarighetMockMedBare2Kvartaler,
+    sykefraværsvarighetMockMedSiste4Kvartaler,
+    sykefraværsvarighetMockRød,
+} from './sykefraværsvarighet';
 
 export interface OrganisasjonMock {
     orgnr: string;
     bedriftsmetrikker?: VirksomhetMetadata | number;
     sykefraværshistorikkKvartalsvis?: Sykefraværshistorikk[] | number;
+    sykefraværshistorikkSummert?: Sykefraværsvarighet | number;
 }
 
 const bedriftsmetrikkerBarnehager: VirksomhetMetadata = {
@@ -30,31 +40,37 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
         orgnr: '101010101',
         bedriftsmetrikker: 500,
         sykefraværshistorikkKvartalsvis: 500,
+        sykefraværshistorikkSummert: 500,
     },
     {
         orgnr: '100100100',
         bedriftsmetrikker: 500,
         sykefraværshistorikkKvartalsvis: 403,
+        sykefraværshistorikkSummert: 403,
     },
     {
         orgnr: '888888881',
         bedriftsmetrikker: bedriftsmetrikkerBarnehager,
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
+        sykefraværshistorikkSummert: sykefraværsvarighetMockRød,
     },
     {
         orgnr: '888888882',
         bedriftsmetrikker: bedriftsmetrikkerBarnehager,
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
+        sykefraværshistorikkSummert: sykefraværsvarighetMockGul,
     },
     {
         orgnr: '888888883',
         bedriftsmetrikker: bedriftsmetrikkerBarnehager,
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
+        sykefraværshistorikkSummert: sykefraværsvarighetMockGrønn,
     },
     {
         orgnr: '888888884',
         bedriftsmetrikker: bedriftsmetrikkerBarnehager,
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
+        sykefraværshistorikkSummert: 500,
     },
     {
         orgnr: '888888885',
@@ -65,16 +81,19 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
         orgnr: '888888886',
         bedriftsmetrikker: bedriftsmetrikkerBarnehager,
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
+        sykefraværshistorikkSummert: sykefraværsvarighetMockMedBare2Kvartaler,
     },
     {
         orgnr: '888888887',
         bedriftsmetrikker: bedriftsmetrikkerBarnehager,
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
+        sykefraværshistorikkSummert: sykefraværsvarighetMockMaskert,
     },
     {
         orgnr: '888888888',
         bedriftsmetrikker: bedriftsmetrikkerBarnehager,
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
+        sykefraværshistorikkSummert: sykefraværsvarighetMockMedSiste4Kvartaler,
     },
     {
         orgnr: '333333333',
