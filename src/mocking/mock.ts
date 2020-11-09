@@ -14,7 +14,7 @@ import { defaultBedriftsmetrikker } from './virksomhet-metadata-mock';
 import {
     getOrganisasjonerBrukerHarTilgangTilMock,
     getOrganisasjonerMock,
-} from './organisasjoner-mock';
+} from './altinn-mock';
 
 const mock = {
     minSideArbeidsgiver: true,

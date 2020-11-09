@@ -32,7 +32,7 @@ export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restVirksom
         return <Skeleton height={244} aria-label="laster inn" />;
     }
     if (restVirksomhetMetadata.status !== RestStatus.Suksess) {
-        return null; // TODO
+        return null;
     }
 
     const bransje = getArbeidstilsynetBransje(restVirksomhetMetadata.data.næringskode5Siffer);
