@@ -1,6 +1,7 @@
 import { AltinnOrganisasjon } from '../api/altinnorganisasjon-api';
 
 export const orgnrUtenTilgang = '100100100';
+
 const fleskOgFisk: AltinnOrganisasjon[] = [
     {
         Name: 'FLESK OG FISK AS',
@@ -10,7 +11,6 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
         Status: 'Active',
         ParentOrganizationNumber: '',
     },
-
     {
         Name: 'FLESK OG FISK OSLO',
         Type: 'Business',
@@ -35,6 +35,29 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
         Status: 'Active',
         ParentOrganizationNumber: '111111111',
     },
+];
+
+const ingenTilgangAs = [
+    {
+        Name: 'INGEN TILGANG AS',
+        Type: 'Enterprise',
+        OrganizationNumber: '900900900',
+        OrganizationForm: 'AS',
+        Status: 'Active',
+        ParentOrganizationNumber: '',
+    },
+
+    {
+        Name: 'INGEN TILGANG',
+        Type: 'Business',
+        OrganizationNumber: orgnrUtenTilgang,
+        OrganizationForm: 'BEDR',
+        Status: 'Active',
+        ParentOrganizationNumber: '900900900',
+    },
+];
+
+const olaNordmannEnk = [
     {
         Name: 'OLA NORDMANN ENK',
         Type: 'Enterprise',
@@ -52,6 +75,9 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
         Status: 'Active',
         ParentOrganizationNumber: '555555555',
     },
+];
+
+const heiOgHåBarnehage: AltinnOrganisasjon[] = [
     {
         Name: 'HEI OG HÅ BARNEHAGE',
         Type: 'Enterprise',
@@ -60,7 +86,6 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
         Status: 'Active',
         ParentOrganizationNumber: '',
     },
-
     {
         Name: 'HEI OG HÅ BARNEHAGE',
         Type: 'Business',
@@ -125,6 +150,9 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
         Status: 'Active',
         ParentOrganizationNumber: '777777777',
     },
+];
+
+const systemfeilAs = [
     {
         Name: 'SYSTEMFEIL AS',
         Type: 'Enterprise',
@@ -142,23 +170,12 @@ const fleskOgFisk: AltinnOrganisasjon[] = [
         Status: 'Active',
         ParentOrganizationNumber: '999999999',
     },
-    {
-        Name: 'INGEN TILGANG AS',
-        Type: 'Enterprise',
-        OrganizationNumber: '900900900',
-        OrganizationForm: 'AS',
-        Status: 'Active',
-        ParentOrganizationNumber: '',
-    },
-
-    {
-        Name: 'INGEN TILGANG',
-        Type: 'Business',
-        OrganizationNumber: orgnrUtenTilgang,
-        OrganizationForm: 'BEDR',
-        Status: 'Active',
-        ParentOrganizationNumber: '900900900',
-    },
 ];
 
-export const organisasjonerMock: AltinnOrganisasjon[] = fleskOgFisk;
+export const organisasjonerMock: AltinnOrganisasjon[] = [
+    ...fleskOgFisk,
+    ...heiOgHåBarnehage,
+    ...olaNordmannEnk,
+    ...ingenTilgangAs,
+    ...systemfeilAs,
+];
