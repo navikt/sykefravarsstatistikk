@@ -1,5 +1,5 @@
 import { Sykefraværshistorikk, SykefraværshistorikkType } from '../api/sykefraværshistorikk';
-import { genererHistorikk, genererMaskertHistorikk } from './generering-av-historikk';
+import { genererHistorikk, genererMaskertHistorikk } from './generering-av-historikk-mock';
 
 const lagHistorikkMedLandOgSektor = (): Sykefraværshistorikk[] => {
     return [
@@ -43,7 +43,7 @@ const historikkNæring = () => ({
     ),
 });
 
-const lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet = (): Sykefraværshistorikk[] => {
+export const lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet = (): Sykefraværshistorikk[] => {
     return [
         ...lagHistorikkMedLandOgSektor(),
         historikkNæring(),
@@ -60,7 +60,7 @@ const lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnder
     ];
 };
 
-const lagMaskertHistorikk = (): Sykefraværshistorikk[] => [
+export const lagMaskertHistorikk = (): Sykefraværshistorikk[] => [
     ...lagHistorikkMedLandOgSektor(),
     historikkNæring(),
     {
@@ -70,7 +70,7 @@ const lagMaskertHistorikk = (): Sykefraværshistorikk[] => [
     },
 ];
 
-const lagHistorikkUtenBransjeOgNæring = (): Sykefraværshistorikk[] => [
+export const lagHistorikkUtenBransjeOgNæring = (): Sykefraværshistorikk[] => [
     ...lagHistorikkMedLandOgSektor(),
     {
         type: SykefraværshistorikkType.VIRKSOMHET,
@@ -98,7 +98,7 @@ const lagHistorikkUtenBransjeOgNæring = (): Sykefraværshistorikk[] => [
     },
 ];
 
-const lagHistorikkNæring = () => [
+export const lagMockHistorikkForNæring = () => [
     ...lagHistorikkUtenBransjeOgNæring(),
     {
         type: SykefraværshistorikkType.NÆRING,
@@ -114,7 +114,7 @@ const lagHistorikkNæring = () => [
     },
 ];
 
-const lagHistorikkBransje = () => [
+export const lagMockHistorikkForBarnehage = () => [
     ...lagHistorikkUtenBransjeOgNæring(),
     {
         type: SykefraværshistorikkType.BRANSJE,
@@ -130,7 +130,7 @@ const lagHistorikkBransje = () => [
     },
 ];
 
-const lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet = () => {
+export const lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet = () => {
     const kvartalsvisSykefraværsprosentForBådeVirksomhetOgOverordnetEnhet = genererHistorikk(
         { årstall: 2017, kvartal: 2 },
         20,
@@ -164,23 +164,4 @@ const lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet = () => {
             kvartalsvisSykefraværsprosent: kvartalsvisSykefraværsprosentForBådeVirksomhetOgOverordnetEnhet,
         },
     ];
-};
-
-export const getSykefraværshistorikkMock = (orgnr: String): Sykefraværshistorikk[] => {
-    switch (orgnr) {
-        case '333333333':
-            return lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet();
-        case '444444444':
-            return lagMaskertHistorikk();
-        case '666666666':
-            return lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet();
-        case '888888888':
-            return lagHistorikkBransje();
-        case '888888887':
-            return lagHistorikkBransje();
-        case '888888886':
-            return lagHistorikkBransje();
-        default:
-            return lagHistorikkNæring();
-    }
 };

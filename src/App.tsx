@@ -163,7 +163,9 @@ const AppContent: FunctionComponent = () => {
                             <KalkulatorPanel liten />
                             <Historikkpanel />
                             <Lenkeressurser />
-                            <ArbeidsmiljøportalPanel />
+                            <ArbeidsmiljøportalPanel
+                                restVirksomhetMetadata={restVirksomhetMetadata}
+                            />
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>
@@ -204,7 +206,9 @@ const AppContent: FunctionComponent = () => {
                             <KalkulatorPanel liten />
                             <Historikkpanel />
                             <KursForBarnehager />
-                            <ArbeidsmiljøportalPanel />
+                            <ArbeidsmiljøportalPanel
+                                restVirksomhetMetadata={restVirksomhetMetadata}
+                            />
                             <RelevanteLenker />
                         </Forside>
                     </InnloggingssideWrapper>

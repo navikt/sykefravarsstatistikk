@@ -1,6 +1,6 @@
 import { Sykefraværsvarighet } from '../api/sykefraværsvarighet';
 
-const sykefraværsvarighetMockMaskert = {
+export const sykefraværsvarighetMockMaskert = {
     summertKorttidsfravær: {
         prosent: null,
         tapteDagsverk: null,
@@ -17,7 +17,7 @@ const sykefraværsvarighetMockMaskert = {
     },
 };
 
-const sykefraværsvarighetMockUtenData = {
+export const sykefraværsvarighetMockUtenData = {
     summertKorttidsfravær: {
         prosent: null,
         tapteDagsverk: null,
@@ -34,7 +34,7 @@ const sykefraværsvarighetMockUtenData = {
     },
 };
 
-const sykefraværsvarighetMockMedBare2AvKvartaler = {
+export const sykefraværsvarighetMockMedBare2Kvartaler = {
     summertKorttidsfravær: {
         prosent: 2.3,
         tapteDagsverk: 140.6,
@@ -87,7 +87,7 @@ const siste4Kvartaler = [
     },
 ];
 
-const sykefraværsvarighetMockMedSiste4Kvartaler = {
+export const sykefraværsvarighetMockMedSiste4Kvartaler = {
     summertKorttidsfravær: {
         prosent: 2.3,
         tapteDagsverk: 140.6,
@@ -103,7 +103,7 @@ const sykefraværsvarighetMockMedSiste4Kvartaler = {
         kvartaler: siste4Kvartaler,
     },
 };
-const sykefraværsvarighetMockGrønn = {
+export const sykefraværsvarighetMockGrønn = {
     summertKorttidsfravær: {
         prosent: 0.8,
         tapteDagsverk: 140.6,
@@ -119,7 +119,7 @@ const sykefraværsvarighetMockGrønn = {
         kvartaler: siste4Kvartaler,
     },
 };
-const sykefraværsvarighetMockGul = {
+export const sykefraværsvarighetMockGul = {
     summertKorttidsfravær: {
         prosent: 1.2,
         tapteDagsverk: 140.6,
@@ -135,7 +135,7 @@ const sykefraværsvarighetMockGul = {
         kvartaler: siste4Kvartaler,
     },
 };
-const sykefraværsvarighetMockRød = {
+export const sykefraværsvarighetMockRød = {
     summertKorttidsfravær: {
         prosent: 1.8,
         tapteDagsverk: 140.6,
@@ -159,7 +159,7 @@ export const sykefraværsvarighetMock = (orgnr: String): Sykefraværsvarighet =>
         case '888888887':
             return sykefraværsvarighetMockMaskert;
         case '888888886':
-            return sykefraværsvarighetMockMedBare2AvKvartaler;
+            return sykefraværsvarighetMockMedBare2Kvartaler;
         case '888888883':
             return sykefraværsvarighetMockGrønn;
         case '888888882':
