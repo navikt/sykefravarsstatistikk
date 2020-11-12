@@ -1,9 +1,10 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import './Brødsmulesti.less';
 import { BrødsmulestiConfig, defaultBrødsmulestiConfig, finnBrødsmule } from './brødsmulesti-utils';
 import TilbakeTilForrigeBrødsmule from './TilbakeTilForrigeBrødsmule/TilbakeTilForrigeBrødsmule';
 import ListeMedBrødsmuler from './ListeMedBrødsmuler/ListeMedBrødsmuler';
 import MediaQuery from 'react-responsive';
+import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler/dist';
 
 interface Props {
     gjeldendeSide: string;
@@ -18,6 +19,15 @@ const Brødsmulesti: FunctionComponent<Props> = (props) => {
 
     const gjeldendeSmule = finnBrødsmule(gjeldendeSide, config);
 
+    useEffect(() => {
+        setBreadcrumbs([
+            {
+                url: '/',
+                title: 'tittel!',
+                handleInApp: true,
+            },
+        ]);
+    }, []);
     return (
         <>
             <MediaQuery minWidth={768}>

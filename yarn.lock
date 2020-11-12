@@ -1469,6 +1469,11 @@
   resolved "https://registry.yarnpkg.com/@navikt/fnrvalidator/-/fnrvalidator-1.1.3.tgz#1bd136977a708120b6069276b0069b2a9cc9ae73"
   integrity sha512-xBwlPOI08kbByUWI4Yyd6NbIYLFs78I0h05mlHPjmrPPikyM89IQRbMac+6ovkgpi2s63OV6ryv3w4QqPubwiw==
 
+"@navikt/nav-dekoratoren-moduler@^1.0.21":
+  version "1.0.21"
+  resolved "https://registry.yarnpkg.com/@navikt/nav-dekoratoren-moduler/-/nav-dekoratoren-moduler-1.0.21.tgz#69daa78d70ef5a7ec2bc4650c41e1e15bd966e07"
+  integrity sha512-xch4Z6BxVE1L+yKXGWLwnehjJUwH1jZJLbaYeQw5uulz0JIZOH/DGbY/SQHk42EP16kuo5Nkf1qAix8ZDI66uA==
+
 "@nodelib/fs.scandir@2.1.3":
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.3.tgz#3a582bdb53804c6ba6d146579c46e52130cf4a3b"
