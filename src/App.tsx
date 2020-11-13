@@ -17,8 +17,14 @@ import { RestVirksomhetMetadata } from './api/virksomhetMetadata';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import { BASE_PATH } from './konstanter';
-import { virksomhetMetadataContext, VirksomhetMetadataProvider } from './utils/virksomhetMetadataContext';
-import { sykefraværshistorikkContext, SykefraværshistorikkProvider } from './utils/sykefraværshistorikkContext';
+import {
+    virksomhetMetadataContext,
+    VirksomhetMetadataProvider,
+} from './utils/virksomhetMetadataContext';
+import {
+    sykefraværshistorikkContext,
+    SykefraværshistorikkProvider,
+} from './utils/sykefraværshistorikkContext';
 import { sendEventDirekte, useMålingAvTidsbruk } from './amplitude/amplitude';
 import {
     altinnOrganisasjonerContext,
@@ -33,7 +39,10 @@ import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
 import { Forside } from './Forside/Forside';
 import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
-import { sykefraværsvarighetContext, SykefraværsvarighetProvider } from './utils/sykefraværsvarighetContext';
+import {
+    sykefraværsvarighetContext,
+    SykefraværsvarighetProvider,
+} from './utils/sykefraværsvarighetContext';
 import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import {
@@ -97,6 +106,7 @@ const AppContent: FunctionComponent = () => {
     const location = useLocation();
     useSetUserProperties();
     useMålingAvTidsbruk('hele appen', 5, 30, 120, 300);
+
 
     const { restUnderenhet } = useContext<EnhetsregisteretState>(enhetsregisteretContext);
 

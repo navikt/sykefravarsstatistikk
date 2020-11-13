@@ -40,7 +40,10 @@ const Brødsmulesti: FunctionComponent<Props> = (props) => {
         }))
     );
 
-    onBreadcrumbClick((breadcrumb) => history.push(breadcrumb.url));
+    onBreadcrumbClick((breadcrumb) => {
+        console.log('push', breadcrumb);
+        history.push(breadcrumb.url);
+    });
 
     return (
         <>
