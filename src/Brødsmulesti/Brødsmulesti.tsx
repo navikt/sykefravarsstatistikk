@@ -13,6 +13,7 @@ import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
 import { useOrgnr } from '../utils/orgnr-hook';
 import { useHistory } from 'react-router-dom';
 import { onBreadcrumbClick } from '@navikt/nav-dekoratoren-moduler/dist';
+import { BASE_PATH } from '../konstanter';
 
 interface Props {
     gjeldendeSide: string;
@@ -42,7 +43,7 @@ const Brødsmulesti: FunctionComponent<Props> = (props) => {
 
     onBreadcrumbClick((breadcrumb) => {
         console.log('push', breadcrumb);
-        history.push(breadcrumb.url);
+        history.push(breadcrumb.url.replace(BASE_PATH, ''));
     });
 
     return (
