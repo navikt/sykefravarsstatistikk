@@ -3,16 +3,8 @@ const request = require('request');
 
 const { JSDOM } = jsdom;
 
-const brødsmulesti = [
-    {
-        title: 'Forebygge og redusere sykefravær og frafall',
-        url: 'https://arbeidsgiver.nav.no/forebygge-sykefravaer/',
-    },
-];
-
 const url =
-    'https://www.nav.no/dekoratoren/?context=arbeidsgiver&redirectToApp=true&feedback=false&breadcrumbs=' +
-    encodeURIComponent(JSON.stringify(brødsmulesti));
+    'https://www.nav.no/dekoratoren/?context=arbeidsgiver&redirectToApp=true&feedback=false';
 
 const requestDecorator = (callback) => request(url, callback);
 
