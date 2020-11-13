@@ -21,7 +21,8 @@ const LenkeSomBeholderQuery: FunctionComponent<{ href: string }> = (props) => {
 
 export type BrødsmulestiConfig = Brødsmule[];
 
-const medOrgnrQuery = (href: string, orgnr: string | undefined): string => orgnr ? href + '?bedrift=' + orgnr : href;
+const medOrgnrQuery = (href: string, orgnr: string | undefined): string =>
+    orgnr ? href + '?bedrift=' + orgnr : href;
 
 export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
     {
@@ -29,6 +30,7 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
         lenketekst: 'Min side – arbeidsgiver',
         overordnetSide: undefined,
         href: (orgnr) => medOrgnrQuery('/min-side-arbeidsgiver/', orgnr),
+        handleMedReactRouter: false,
         lenke: (innhold: string | ReactElement) => (
             <LenkeSomBeholderQuery href={'/min-side-arbeidsgiver/'}>
                 {innhold}

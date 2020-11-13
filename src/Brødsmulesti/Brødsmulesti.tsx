@@ -37,7 +37,7 @@ const Brødsmulesti: FunctionComponent<Props> = (props) => {
         brødsmulesti.map((smule) => ({
             url: smule.href(orgnr),
             title: smule.lenketekst,
-            handleInApp: true,
+            handleInApp: smule.handleMedReactRouter,
         }))
     );
 
