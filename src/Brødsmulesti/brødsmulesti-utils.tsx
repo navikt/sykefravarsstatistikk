@@ -40,7 +40,7 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
         side: 'sykefraværsstatistikk',
         overordnetSide: 'minSideArbeidsgiver',
         lenketekst: 'Sykefraværsstatistikk',
-        href: (orgnr) => medOrgnrQuery(BASE_PATH + PATH_FORSIDE, orgnr),
+        href: (orgnr) => medOrgnrQuery(PATH_FORSIDE, orgnr),
         handleMedReactRouter: true,
         lenke: (innhold: string | ReactElement, ariaCurrentLocation?: boolean) => (
             <InternLenke pathname={PATH_FORSIDE} ariaCurrentLocation={ariaCurrentLocation}>
@@ -52,7 +52,7 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
         side: 'kalkulator',
         overordnetSide: 'sykefraværsstatistikk',
         lenketekst: 'Kostnadskalkulator',
-        href: (orgnr) => medOrgnrQuery(BASE_PATH + PATH_KALKULATOR, orgnr),
+        href: (orgnr) => medOrgnrQuery(PATH_KALKULATOR, orgnr),
         handleMedReactRouter: true,
         lenke: (innhold: string | ReactElement, ariaCurrentLocation?: boolean) => (
             <InternLenke pathname={PATH_KALKULATOR} ariaCurrentLocation={ariaCurrentLocation}>
@@ -64,7 +64,7 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
         side: 'historikk',
         overordnetSide: 'sykefraværsstatistikk',
         lenketekst: 'Sykefraværshistorikk',
-        href: (orgnr) => medOrgnrQuery(BASE_PATH + PATH_HISTORIKK, orgnr),
+        href: (orgnr) => medOrgnrQuery(PATH_HISTORIKK, orgnr),
         handleMedReactRouter: true,
         lenke: (innhold: string | ReactElement, ariaCurrentLocation?: boolean) => (
             <InternLenke pathname={PATH_HISTORIKK} ariaCurrentLocation={ariaCurrentLocation}>
