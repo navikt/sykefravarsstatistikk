@@ -6,9 +6,9 @@ import { ReactComponent as TilbakemeldingIkon } from './tilbakemeldingIkon.svg';
 import Lenkepanel from 'nav-frontend-lenkepanel';
 import Lenke from 'nav-frontend-lenker';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { PATH_FORSIDE } from '../App';
 import MediaQuery from 'react-responsive';
 import { Link } from 'react-router-dom';
+import { PATH_FORSIDE } from '../konstanter';
 
 const IAWebRedirectPanel: FunctionComponent = () => {
     return (
