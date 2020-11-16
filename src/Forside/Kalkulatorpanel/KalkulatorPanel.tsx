@@ -4,7 +4,7 @@ import kalkisSvg from './kalkis.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
 import PanelBase from 'nav-frontend-paneler';
 import './KalkulatorPanel.less';
-import { PATH_KALKULATOR } from '../../App';
+import { PATH_KALKULATOR } from '../../konstanter';
 import { Link, useLocation } from 'react-router-dom';
 import { useSendEvent } from '../../amplitude/amplitude';
 import classNames from 'classnames';

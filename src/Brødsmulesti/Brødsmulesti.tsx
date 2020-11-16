@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from 'react';
-import './Brødsmulesti.less';
+import { FunctionComponent, useEffect } from 'react';
 import {
     BrødsmulestiConfig,
     defaultBrødsmulestiConfig,
     finnBrødsmule,
-    getBrødsmulesti, medOrgnrQuery,
+    getBrødsmulesti,
+    medOrgnrQuery,
 } from './brødsmulesti-utils';
 import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
 import { useOrgnr } from '../utils/orgnr-hook';
@@ -22,25 +22,27 @@ const Brødsmulesti: FunctionComponent<Props> = (props) => {
     const history = useHistory();
     const orgnr = useOrgnr();
 
-    const config = props.config
-        ? { ...defaultBrødsmulestiConfig, ...props.config }
-        : defaultBrødsmulestiConfig;
+    useEffect(() => {
+        const config = props.config
+            ? { ...defaultBrødsmulestiConfig, ...props.config }
+            : defaultBrødsmulestiConfig;
 
-    const gjeldendeSmule = finnBrødsmule(gjeldendeSide, config);
+        const gjeldendeSmule = finnBrødsmule(gjeldendeSide, config);
 
-    const brødsmulesti = getBrødsmulesti(gjeldendeSmule, config);
+        const brødsmulesti = getBrødsmulesti(gjeldendeSmule, config);
 
-    setBreadcrumbs(
-        brødsmulesti.map((smule) => ({
-            url: medOrgnrQuery(smule.href, orgnr),
-            title: smule.lenketekst,
-            handleInApp: smule.handleMedReactRouter,
-        }))
-    );
+        setBreadcrumbs(
+            brødsmulesti.map((smule) => ({
+                url: medOrgnrQuery(smule.href, orgnr),
+                title: smule.lenketekst,
+                handleInApp: smule.handleMedReactRouter,
+            }))
+        );
 
-    onBreadcrumbClick((breadcrumb) => {
-        history.push(breadcrumb.url.replace(BASE_PATH, ''));
-    });
+        onBreadcrumbClick((breadcrumb) => {
+            history.push(breadcrumb.url.replace(BASE_PATH, ''));
+        });
+    }, [props.config, gjeldendeSide, history, orgnr]);
 
     return null;
 };

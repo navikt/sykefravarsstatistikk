@@ -16,7 +16,15 @@ import { RestSykefraværshistorikk } from './api/sykefraværshistorikk';
 import { RestVirksomhetMetadata } from './api/virksomhetMetadata';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
-import { BASE_PATH } from './konstanter';
+import {
+    BASE_PATH,
+    PATH_FORSIDE,
+    PATH_FORSIDE_BARNEHAGE,
+    PATH_FORSIDE_GENERELL,
+    PATH_HISTORIKK,
+    PATH_IAWEB_REDIRECTSIDE,
+    PATH_KALKULATOR,
+} from './konstanter';
 import {
     virksomhetMetadataContext,
     VirksomhetMetadataProvider,
@@ -57,13 +65,6 @@ import { EkspanderbareTips } from './Forside/barnehage/EkspanderbareTips/Ekspand
 import { KursForBarnehager } from './Forside/barnehage/KursForBarnehager/KursForBarnehager';
 import { RelevanteLenker } from './Forside/barnehage/RelevanteLenker/RelevanteLenker';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
-
-export const PATH_FORSIDE = '/';
-export const PATH_FORSIDE_GENERELL = '/sammenligning';
-export const PATH_FORSIDE_BARNEHAGE = PATH_FORSIDE_GENERELL + '/barnehage';
-export const PATH_KALKULATOR = '/kalkulator';
-export const PATH_HISTORIKK = '/historikk';
-export const PATH_IAWEB_REDIRECTSIDE = '/iawebredirectside';
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
@@ -106,7 +107,6 @@ const AppContent: FunctionComponent = () => {
     const location = useLocation();
     useSetUserProperties();
     useMålingAvTidsbruk('hele appen', 5, 30, 120, 300);
-
 
     const { restUnderenhet } = useContext<EnhetsregisteretState>(enhetsregisteretContext);
 

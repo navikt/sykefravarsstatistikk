@@ -1,6 +1,4 @@
-import React from 'react';
-import { PATH_FORSIDE, PATH_HISTORIKK, PATH_KALKULATOR } from '../App';
-import { BASE_PATH } from '../konstanter';
+import { BASE_PATH, PATH_FORSIDE, PATH_HISTORIKK, PATH_KALKULATOR } from '../konstanter';
 
 export interface Brødsmule {
     side: string;
