@@ -4,11 +4,8 @@ import {
     BrødsmulestiConfig,
     defaultBrødsmulestiConfig,
     finnBrødsmule,
-    getBrødsmulesti,
+    getBrødsmulesti, medOrgnrQuery,
 } from './brødsmulesti-utils';
-import TilbakeTilForrigeBrødsmule from './TilbakeTilForrigeBrødsmule/TilbakeTilForrigeBrødsmule';
-import ListeMedBrødsmuler from './ListeMedBrødsmuler/ListeMedBrødsmuler';
-import MediaQuery from 'react-responsive';
 import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
 import { useOrgnr } from '../utils/orgnr-hook';
 import { useHistory } from 'react-router-dom';
@@ -35,34 +32,17 @@ const Brødsmulesti: FunctionComponent<Props> = (props) => {
 
     setBreadcrumbs(
         brødsmulesti.map((smule) => ({
-            url: smule.href(orgnr),
+            url: medOrgnrQuery(smule.href, orgnr),
             title: smule.lenketekst,
             handleInApp: smule.handleMedReactRouter,
         }))
     );
 
     onBreadcrumbClick((breadcrumb) => {
-        console.log('push', breadcrumb);
         history.push(breadcrumb.url.replace(BASE_PATH, ''));
     });
 
-    return (
-        <>
-            <MediaQuery minWidth={768}>
-                <nav className="brødsmulesti" aria-label="brødsmulesti">
-                    <ListeMedBrødsmuler gjeldendeBrødsmule={gjeldendeSmule} config={config} />
-                </nav>
-            </MediaQuery>
-            <MediaQuery maxWidth={767}>
-                <nav className="brødsmulesti">
-                    <TilbakeTilForrigeBrødsmule
-                        gjeldendeBrødsmule={gjeldendeSmule}
-                        config={config}
-                    />
-                </nav>
-            </MediaQuery>
-        </>
-    );
+    return null;
 };
 
 export default Brødsmulesti;

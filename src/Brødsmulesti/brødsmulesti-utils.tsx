@@ -1,7 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react';
-import { useLocation } from 'react-router-dom';
-import Lenke from 'nav-frontend-lenker';
-import InternLenke from '../felleskomponenter/InternLenke/InternLenke';
+import React from 'react';
 import { PATH_FORSIDE, PATH_HISTORIKK, PATH_KALKULATOR } from '../App';
 import { BASE_PATH } from '../konstanter';
 
@@ -9,19 +6,13 @@ export interface Brødsmule {
     side: string;
     overordnetSide: string | undefined;
     lenketekst: string;
-    lenke: (innhold: string | ReactElement, ariaCurrentLocation?: boolean) => ReactElement;
-    href: (orgnr: string | undefined) => string;
+    href: string;
     handleMedReactRouter?: boolean;
 }
 
-const LenkeSomBeholderQuery: FunctionComponent<{ href: string }> = (props) => {
-    const location = useLocation();
-    return <Lenke href={props.href + location.search}>{props.children}</Lenke>;
-};
-
 export type BrødsmulestiConfig = Brødsmule[];
 
-const medOrgnrQuery = (href: string, orgnr: string | undefined): string =>
+export const medOrgnrQuery = (href: string, orgnr: string | undefined): string =>
     orgnr ? href + '?bedrift=' + orgnr : href;
 
 export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
@@ -29,49 +20,29 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
         side: 'minSideArbeidsgiver',
         lenketekst: 'Min side – arbeidsgiver',
         overordnetSide: undefined,
-        href: (orgnr) => medOrgnrQuery('/min-side-arbeidsgiver/', orgnr),
+        href: '/min-side-arbeidsgiver/',
         handleMedReactRouter: false,
-        lenke: (innhold: string | ReactElement) => (
-            <LenkeSomBeholderQuery href={'/min-side-arbeidsgiver/'}>
-                {innhold}
-            </LenkeSomBeholderQuery>
-        ),
     },
     {
         side: 'sykefraværsstatistikk',
         overordnetSide: 'minSideArbeidsgiver',
         lenketekst: 'Sykefraværsstatistikk',
-        href: (orgnr) => medOrgnrQuery(BASE_PATH + PATH_FORSIDE, orgnr),
+        href: BASE_PATH + PATH_FORSIDE,
         handleMedReactRouter: true,
-        lenke: (innhold: string | ReactElement, ariaCurrentLocation?: boolean) => (
-            <InternLenke pathname={PATH_FORSIDE} ariaCurrentLocation={ariaCurrentLocation}>
-                {innhold}
-            </InternLenke>
-        ),
     },
     {
         side: 'kalkulator',
         overordnetSide: 'sykefraværsstatistikk',
         lenketekst: 'Kostnadskalkulator',
-        href: (orgnr) => medOrgnrQuery(BASE_PATH + PATH_KALKULATOR, orgnr),
+        href: BASE_PATH + PATH_KALKULATOR,
         handleMedReactRouter: true,
-        lenke: (innhold: string | ReactElement, ariaCurrentLocation?: boolean) => (
-            <InternLenke pathname={PATH_KALKULATOR} ariaCurrentLocation={ariaCurrentLocation}>
-                {innhold}
-            </InternLenke>
-        ),
     },
     {
         side: 'historikk',
         overordnetSide: 'sykefraværsstatistikk',
         lenketekst: 'Sykefraværshistorikk',
-        href: (orgnr) => medOrgnrQuery(BASE_PATH + PATH_HISTORIKK, orgnr),
+        href: BASE_PATH + PATH_HISTORIKK,
         handleMedReactRouter: true,
-        lenke: (innhold: string | ReactElement, ariaCurrentLocation?: boolean) => (
-            <InternLenke pathname={PATH_HISTORIKK} ariaCurrentLocation={ariaCurrentLocation}>
-                {innhold}
-            </InternLenke>
-        ),
     },
 ];
 
