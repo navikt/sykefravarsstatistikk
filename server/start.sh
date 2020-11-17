@@ -11,4 +11,12 @@ then
     done
 fi
 
-exec node server.js
+if [[ "$NAIS_CLUSTER_NAME" == "labs-gcp" ]];
+then
+  echo "Vi er inne i labs-gcp, kjører mock server [NAIS_CLUSTER_NAME=$NAIS_CLUSTER_NAME]"
+  exec node herokuServer.js
+else
+  echo "Vi er ikke i labs-gcp, kjører  server [NAIS_CLUSTER_NAME=$NAIS_CLUSTER_NAME]"
+  exec node server.js
+fi
+
