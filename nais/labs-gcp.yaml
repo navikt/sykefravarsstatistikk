@@ -1,0 +1,25 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+    name: sykefravarsstatistikk
+    namespace: arbeidsgiver
+    labels:
+        team: arbeidsgiver
+spec:
+    image: { { image } }
+    team: arbeidsgiver
+    port: 3000
+    vault:
+        enabled: false
+    ingresses:
+        - https://arbeidsgiver.labs.nais.io/sykefravarsstatistikk
+    liveness:
+        path: /sykefravarsstatistikk/internal/isReady
+        initialDelay: 10
+    readiness:
+        path: /sykefravarsstatistikk/internal/isReady
+        initialDelay: 10
+    accessPolicy:
+        outbound:
+            external:
+                - host: dekoratoren.dev.nav.no

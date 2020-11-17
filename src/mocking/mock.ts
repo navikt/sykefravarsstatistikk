@@ -21,7 +21,7 @@ const mock = {
 
 let delayfaktor = 0;
 
-if (process.env.REACT_APP_HEROKU) {
+if (process.env.REACT_APP_HEROKU || process.env.NAIS_CLUSTER_NAME === 'labs-gcp') {
     // Alt skal alltid mockes på Heroku
     Object.keys(mock).forEach((skalMockes) => ((mock as any)[skalMockes] = true));
     delayfaktor = 1;
