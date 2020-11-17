@@ -6,7 +6,7 @@ metadata:
     labels:
         team: arbeidsgiver
 spec:
-    image: { { image } }
+    image: {{ image }}
     team: arbeidsgiver
     port: 3000
     vault:
