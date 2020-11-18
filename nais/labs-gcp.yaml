@@ -15,9 +15,9 @@ spec:
         - https://arbeidsgiver.labs.nais.io/sykefravarsstatistikk
     env:
         - name: REACT_APP_MOCK
-          value: true
+          value: "true"
         - name: REACT_APP_HEROKU
-          value: true
+          value: "true"
     liveness:
         path: /sykefravarsstatistikk/internal/isReady
         initialDelay: 10
