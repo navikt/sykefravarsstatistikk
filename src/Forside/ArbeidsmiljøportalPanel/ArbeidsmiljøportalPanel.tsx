@@ -11,7 +11,6 @@ import { RestVirksomhetMetadata } from '../../api/virksomhetMetadata';
 import Skeleton from 'react-loading-skeleton';
 import {
     getArbeidstilsynetBransje,
-    getBransjenavn,
     getLenkeTilBransjensSideIArbeidsmiljøportalen,
 } from './bransje-utils';
 
@@ -37,8 +36,6 @@ export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restVirksom
 
     const bransje = getArbeidstilsynetBransje(restVirksomhetMetadata.data.næringskode5Siffer);
 
-    const bransjenavn = getBransjenavn(bransje);
-
     return (
         <div className="arbeidsmiljøportal-panel">
             <div className="arbeidsmiljøportal-panel__tittel-wrapper">
@@ -50,30 +47,19 @@ export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restVirksom
                 <div className="arbeidsmiljøportal-panel__nyhet-og-tittel">
                     <Nyhet className="arbeidsmiljøportal-panel__nyhet" />
                     <Systemtittel className="arbeidsmiljøportal-panel__tittel">
-                        Dette påvirker arbeidsmiljøet i {bransjenavn}
+                        Bedre arbeidsmiljø kan forebygge sykefravær
                     </Systemtittel>
                 </div>
             </div>
-            <div className="arbeidsmiljøportal-panel__tekst-wrapper">
-                <Normaltekst className="arbeidsmiljøportal-panel__venstreblokk">
-                    Arbeidsmiljøet handler om hvordan vi planlegger, organiserer og gjennomfører
-                    selve jobben. For å forebygge arbeidsrelatert sykefravær, bør du vite hvor skoen
-                    trykker.
-                </Normaltekst>
-                <div className="arbeidsmiljøportal-panel__høyreblokk">
-                    <ul className="arbeidsmiljøportal-panel__liste">
-                        <li className="arbeidsmiljøportal-panel__listeelement">
-                            Se forebyggingspotensialet i {bransjenavn}
-                        </li>
-                        <li className="arbeidsmiljøportal-panel__listeelement">
-                            Verktøy tilpasset din bransje
-                        </li>
-                    </ul>
-                    <EksternLenke href={getLenkeTilBransjensSideIArbeidsmiljøportalen(bransje)}>
-                        Gå til Arbeidsmiljøportalen
-                    </EksternLenke>
-                </div>
-            </div>
+            <Normaltekst className="arbeidsmiljøportal-panel__tekst">
+                Bedre arbeidsmiljø styrker jobbnærværet, forebygger og reduserer sykefravær og
+                frafall. <br />
+                Finn kunnskap og digitale verktøy som hjelper dere med å forebygge arbeidsrelatert
+                sykefravær.
+            </Normaltekst>
+            <EksternLenke href={getLenkeTilBransjensSideIArbeidsmiljøportalen(bransje)}>
+                Gå til Arbeidsmiljøportalen
+            </EksternLenke>
         </div>
     );
 };
