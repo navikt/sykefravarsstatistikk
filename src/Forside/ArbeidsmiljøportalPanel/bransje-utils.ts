@@ -46,47 +46,25 @@ export const getArbeidstilsynetBransje = (næring: Næringskode5Siffer): Arbeids
     return ArbeidstilsynetBransje.ANDRE_BRANSJER;
 };
 
-export const getBransjenavn = (bransje: ArbeidstilsynetBransje): string => {
-    switch (bransje) {
-        case ArbeidstilsynetBransje.BARNEHAGER:
-            return 'barnehagebransjen';
-        case ArbeidstilsynetBransje.NÆRINGSMIDDELINDUSTRI:
-            return 'næringsmiddelindustrien';
-        case ArbeidstilsynetBransje.TRANSPORT:
-            return 'transportbransjen';
-        case ArbeidstilsynetBransje.SYKEHJEM:
-            return 'sykehjem';
-        case ArbeidstilsynetBransje.SYKEHUS:
-            return 'sykehus';
-        case ArbeidstilsynetBransje.BYGG:
-            return 'byggebransjen';
-        case ArbeidstilsynetBransje.ANLEGG:
-            return 'anleggsbransjen';
-        default:
-            return '';
-    }
-};
-
 export const getLenkeTilBransjensSideIArbeidsmiljøportalen = (
     bransje: ArbeidstilsynetBransje
 ): string => {
-    // TODO Disse lenkene er ikke riktige.
     switch (bransje) {
         case ArbeidstilsynetBransje.BARNEHAGER:
-            return 'https://www.arbeidstilsynet.no/?bransje=barnehager';
+            return 'https://www.arbeidsmiljoportalen.no/bransje/barnehage';
         case ArbeidstilsynetBransje.NÆRINGSMIDDELINDUSTRI:
-            return 'https://www.arbeidstilsynet.no/?bransje=næringsmiddelindustri';
+            return 'https://www.arbeidsmiljoportalen.no/bransje/naringsmiddelindustri';
         case ArbeidstilsynetBransje.TRANSPORT:
-            return 'https://www.arbeidstilsynet.no/?bransje=transport';
+            return 'https://www.arbeidsmiljoportalen.no/bransje/rutebuss-og-persontrafikk';
         case ArbeidstilsynetBransje.SYKEHJEM:
-            return 'https://www.arbeidstilsynet.no/?bransje=sykehjem';
+            return 'https://www.arbeidsmiljoportalen.no/bransje/sykehjem';
         case ArbeidstilsynetBransje.SYKEHUS:
-            return 'https://www.arbeidstilsynet.no/?bransje=sykehus';
+            return 'https://www.arbeidsmiljoportalen.no/bransje/sykehus';
         case ArbeidstilsynetBransje.BYGG:
-            return 'https://www.arbeidstilsynet.no/?bransje=bygg';
+            return 'https://www.arbeidsmiljoportalen.no/bransje/bygg';
         case ArbeidstilsynetBransje.ANLEGG:
-            return 'https://www.arbeidstilsynet.no/?bransje=anlegg';
+            return 'https://www.arbeidsmiljoportalen.no/bransje/anlegg';
         default:
-            return 'https://www.arbeidstilsynet.no/?bransje=ingen';
+            return 'https://www.arbeidsmiljoportalen.no';
     }
 };
