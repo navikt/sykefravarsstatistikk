@@ -2,6 +2,7 @@ const jsdom = require('jsdom');
 const request = require('request');
 
 const { JSDOM } = jsdom;
+
 const url =
     'https://www.nav.no/dekoratoren/?context=arbeidsgiver&redirectToApp=true&feedback=false';
 

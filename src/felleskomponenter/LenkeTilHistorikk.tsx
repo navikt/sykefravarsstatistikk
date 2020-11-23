@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import InternLenke from './InternLenke/InternLenke';
-import { PATH_HISTORIKK } from '../App';
+import { PATH_HISTORIKK } from '../konstanter';
 import { useSendEvent } from '../amplitude/amplitude';
 
 export const LenkeTilHistorikk: FunctionComponent<{ kildeSomSendesMedEvent: string }> = ({

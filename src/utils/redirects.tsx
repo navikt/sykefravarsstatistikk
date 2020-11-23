@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Bransjetype, RestVirksomhetMetadata } from '../api/virksomhetMetadata';
 import { Redirect, useLocation } from 'react-router-dom';
 import { RestStatus } from '../api/api-utils';
-import { PATH_FORSIDE_BARNEHAGE, PATH_FORSIDE_GENERELL } from '../App';
+import { PATH_FORSIDE_BARNEHAGE, PATH_FORSIDE_GENERELL } from '../konstanter';
 
 export const BarnehageRedirect: FunctionComponent<{
     restVirksomhetMetadata: RestVirksomhetMetadata;

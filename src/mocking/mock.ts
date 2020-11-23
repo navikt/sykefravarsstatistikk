@@ -5,12 +5,13 @@ import fetchMock, {
     MockResponse,
     MockResponseFunction,
 } from 'fetch-mock';
-import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './organisasjoner';
-import { getSykefraværshistorikkMock } from './sykefraværshistorikk';
-import { Bransjetype } from '../api/virksomhetMetadata';
-import { sykefraværsvarighetMock } from './sykefraværsvarighet';
+import { lagMockHistorikkForNæring } from './sykefraværshistorikk-mock';
+import { sykefraværsvarighetMockUtenData } from './sykefraværsvarighet-mock';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
-import { underenhetMock } from './enhetsregisteret';
+import { underenhetMock } from './enhetsregisteret-mock';
+import { getMockOrganisasjon } from './mockede-organisasjoner';
+import { defaultBedriftsmetrikker } from './virksomhet-metadata-mock';
+import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './altinn-mock';
 import { getMiljø } from '../utils/miljøUtils';
 
 const mock = {
@@ -62,13 +63,11 @@ if (mock.sykefraværsstatistikkApi) {
         'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/kvartalsvis',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
-            if (orgnr === '101010101') {
-                return 500;
-            }
-            if (orgnr === '100100100') {
-                return 403;
-            }
-            return getSykefraværshistorikkMock(orgnr);
+
+            return (
+                getMockOrganisasjon(orgnr)?.sykefraværshistorikkKvartalsvis ||
+                lagMockHistorikkForNæring()
+            );
         },
         {
             delay: 1000 * delayfaktor,
@@ -78,13 +77,11 @@ if (mock.sykefraværsstatistikkApi) {
         'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/summert',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
-            if (['101010101', '888888884'].includes(orgnr)) {
-                return 500;
-            }
-            if (orgnr === '100100100') {
-                return 403;
-            }
-            return sykefraværsvarighetMock(orgnr);
+
+            return (
+                getMockOrganisasjon(orgnr)?.sykefraværshistorikkSummert ||
+                sykefraværsvarighetMockUtenData
+            );
         },
         {
             delay: 1000 * delayfaktor,
@@ -95,29 +92,7 @@ if (mock.sykefraværsstatistikkApi) {
         'express:/sykefravarsstatistikk/api/:orgnr/bedriftsmetrikker',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
-            if (orgnr === '101010101') {
-                return 500;
-            }
-            if (orgnr === '100100100') {
-                return 500;
-            }
-            if (orgnr.match('88888888.')) {
-                return {
-                    antallAnsatte: 99,
-                    næringskode5Siffer: {
-                        kode: '88911',
-                        beskrivelse: 'Barnehager',
-                    },
-                    bransje: Bransjetype.BARNEHAGER,
-                };
-            }
-            return {
-                antallAnsatte: 99,
-                næringskode5Siffer: {
-                    kode: '10300',
-                    beskrivelse: 'Trygdeordninger underlagt offentlig forvaltning',
-                },
-            };
+            return getMockOrganisasjon(orgnr)?.bedriftsmetrikker || defaultBedriftsmetrikker;
         },
         {
             delay: 1000 * delayfaktor,
@@ -135,17 +110,20 @@ if (mock.sykefraværsstatistikkApi) {
 if (mock.enhetsregisteret) {
     mockGetAndLog('begin:https://data.brreg.no/enhetsregisteret/api/enheter/', (url) => {
         const orgnr = url.match(/[0-9]{9}/)![0];
-
-        const overordnetEnhet: OverordnetEnhet = {
+        const defaultOverordnetEnhet: OverordnetEnhet = {
             orgnr: orgnr,
             institusjonellSektorkode: { kode: '6500', beskrivelse: 'Offentlig sektor' },
         };
-        return overordnetEnhet;
+        return getMockOrganisasjon(orgnr)?.overordnetEnhet || defaultOverordnetEnhet;
     });
+
     mockGetAndLog('begin:https://data.brreg.no/enhetsregisteret/api/underenheter/', (url) => {
         const orgnr = url.match(/[0-9]{9}/)![0];
-        const underenhetDto: UnderenhetDto = { ...underenhetMock, organisasjonsnummer: orgnr };
-        return underenhetDto;
+        const defaultUnderenhetDto: UnderenhetDto = {
+            ...underenhetMock,
+            organisasjonsnummer: orgnr,
+        };
+        return getMockOrganisasjon(orgnr)?.underenhetDto || defaultUnderenhetDto;
     });
 }
 
@@ -154,7 +132,7 @@ if (mock.featureToggles) {
         'begin:/sykefravarsstatistikk/api/feature',
         {
             'sykefravarsstatistikk.ab-test.tips': false,
-            'sykefravarsstatistikk.arbeidsmiljoportal': true,
+            'sykefravarsstatistikk.arbeidsmiljoportal': process.env.REACT_APP_HEROKU ? false : true,
         },
         {
             delay: 1000 * delayfaktor,
