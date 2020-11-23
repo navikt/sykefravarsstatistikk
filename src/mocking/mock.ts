@@ -6,7 +6,6 @@ import fetchMock, {
     MockResponseFunction,
 } from 'fetch-mock';
 import { lagMockHistorikkForNæring } from './sykefraværshistorikk-mock';
-import { sykefraværsvarighetMockUtenData } from './sykefraværsvarighet-mock';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { underenhetMock } from './enhetsregisteret-mock';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
@@ -15,6 +14,7 @@ import {
     getOrganisasjonerBrukerHarTilgangTilMock,
     getOrganisasjonerMock,
 } from './altinn-mock';
+import {summertSykefraværshistorikkMockUtenData} from "./summertsykefraværshistorick-mock";
 
 const mock = {
     minSideArbeidsgiver: true,
@@ -76,13 +76,13 @@ if (mock.sykefraværsstatistikkApi) {
         }
     );
     mockGetAndLog(
-        'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/summert',
+        'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/summert/v2',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
 
             return (
-                getMockOrganisasjon(orgnr)?.sykefraværshistorikkSummert ||
-                sykefraværsvarighetMockUtenData
+                getMockOrganisasjon(orgnr)?.summertSykefraværshistorik ||
+                summertSykefraværshistorikkMockUtenData
             );
         },
         {

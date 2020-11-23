@@ -3,10 +3,7 @@ import './DetaljertSammenligning.less';
 import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import { DetaljertSammenligningPanel } from './DetaljertSammenligningPanel/DetaljertSammenligningPanel';
-import {
-    getResultatForSammenligningAvSykefravær,
-    sykefraværForBarnehagerSiste4Kvartaler,
-} from '../barnehage-utils';
+import { getResultatForSammenligningAvSykefravær } from '../barnehage-utils';
 import Skeleton from 'react-loading-skeleton';
 import { getVurderingstekstKorttid, getVurderingstekstLangtid } from '../vurderingstekster';
 import { LesMerKorttid } from './LesMer/LesMerKorttid';
@@ -34,7 +31,7 @@ export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefrav�
     const varighet = restSykefraværsvarighet.data;
 
     const korttidVirksomhet = varighet.summertKorttidsfravær;
-    const korttidBransje = sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær;
+    const korttidBransje = 0;
     const resultatKorttid = getResultatForSammenligningAvSykefravær(
         restSykefraværsvarighet.status,
         korttidVirksomhet,
@@ -42,7 +39,7 @@ export const DetaljertSammenligning: FunctionComponent<Props> = ({ restSykefrav�
     );
 
     const langtidVirksomhet = varighet.summertLangtidsfravær;
-    const langtidBransje = sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær;
+    const langtidBransje = 0;
     const resultatLangtid = getResultatForSammenligningAvSykefravær(
         restSykefraværsvarighet.status,
         langtidVirksomhet,

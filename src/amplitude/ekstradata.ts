@@ -6,19 +6,19 @@ import {
     tilSegmenteringSammenligning,
     tilSegmenteringSykefraværsprosent,
 } from './segmentering';
-import { SykefraværResultat } from '../Forside/barnehage/Speedometer/Speedometer';
-import { Bransjetype, RestVirksomhetMetadata } from '../api/virksomhetMetadata';
-import { RestStatus } from '../api/api-utils';
-import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
-import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
-import { konverterTilKvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
-import { RestOverordnetEnhet } from '../api/enhetsregisteret-api';
-import { mapTilPrivatElleOffentligSektor, Sektor } from '../utils/sektorUtils';
-import { RestSykefraværsvarighet } from '../api/sykefraværsvarighet';
+import {SykefraværResultat} from '../Forside/barnehage/Speedometer/Speedometer';
+import {Bransjetype, RestVirksomhetMetadata} from '../api/virksomhetMetadata';
+import {RestStatus} from '../api/api-utils';
+import {mapTilNæringsbeskrivelse} from './næringsbeskrivelser';
+import {RestSykefraværshistorikk} from '../api/sykefraværshistorikk';
+import {konverterTilKvartalsvisSammenligning} from '../utils/sykefraværshistorikk-utils';
+import {RestOverordnetEnhet} from '../api/enhetsregisteret-api';
+import {mapTilPrivatElleOffentligSektor, Sektor} from '../utils/sektorUtils';
+import {RestSummertSykefraværshistorikk, Statistikkategori} from '../api/sykefraværsvarighet';
 import {
     getResultatForSammenligningAvSykefravær,
+    getSykefraværsvarighet,
     getTotaltSykefraværSiste4Kvartaler,
-    sykefraværForBarnehagerSiste4Kvartaler,
 } from '../Forside/barnehage/barnehage-utils';
 
 export interface Ekstradata {
@@ -110,7 +110,7 @@ const getAntallForskjelligeFarger = (...resultater: SykefraværResultat[]): numb
 };
 
 export const getEkstraDataFraSykefraværsvarighet = (
-    restSykefraværsvarighet: RestSykefraværsvarighet,
+    restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk,
     restVirksomhetMetadata: RestVirksomhetMetadata
 ): Partial<Ekstradata> => {
     if (
@@ -121,32 +121,43 @@ export const getEkstraDataFraSykefraværsvarighet = (
     }
 
     if (
-        restSykefraværsvarighet.status !== RestStatus.Suksess &&
-        restSykefraværsvarighet.status !== RestStatus.Feil
+        restSummertSykefraværshistorikk.status !== RestStatus.Suksess &&
+        restSummertSykefraværshistorikk.status !== RestStatus.Feil
     ) {
         return {};
     }
 
     const varighet =
-        restSykefraværsvarighet.status === RestStatus.Suksess
-            ? restSykefraværsvarighet.data
+        restSummertSykefraværshistorikk.status === RestStatus.Suksess
+            ? getSykefraværsvarighet(
+                  restSummertSykefraværshistorikk.data,
+                  Statistikkategori.VIRKSOMHET
+              )
+            : undefined;
+
+    const varighetBransjeEllerNæring =
+        restSummertSykefraværshistorikk.status === RestStatus.Suksess
+            ? getSykefraværsvarighet(
+            restSummertSykefraværshistorikk.data,
+            Statistikkategori.BRANSJE, Statistikkategori.NÆRING
+            )
             : undefined;
 
     try {
         const sykefraværSiste4Kvartaler = getResultatForSammenligningAvSykefravær(
-            restSykefraværsvarighet.status,
+            restSummertSykefraværshistorikk.status,
             getTotaltSykefraværSiste4Kvartaler(varighet),
-            sykefraværForBarnehagerSiste4Kvartaler.totalt
+            getTotaltSykefraværSiste4Kvartaler(varighetBransjeEllerNæring)?.prosent
         );
         const korttidSiste4Kvartaler = getResultatForSammenligningAvSykefravær(
-            restSykefraværsvarighet.status,
+            restSummertSykefraværshistorikk.status,
             varighet?.summertKorttidsfravær,
-            sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær
+            varighetBransjeEllerNæring?.summertKorttidsfravær.prosent
         );
         const langtidSiste4Kvartaler = getResultatForSammenligningAvSykefravær(
-            restSykefraværsvarighet.status,
+            restSummertSykefraværshistorikk.status,
             varighet?.summertLangtidsfravær,
-            sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær
+            varighetBransjeEllerNæring?.summertLangtidsfravær.prosent
         );
 
         let ekstradata: Partial<Ekstradata> = {

@@ -8,7 +8,6 @@ import { RestStatus } from '../../../api/api-utils';
 import {
     getResultatForSammenligningAvSykefravær,
     getTotaltSykefraværSiste4Kvartaler,
-    sykefraværForBarnehagerSiste4Kvartaler,
 } from '../barnehage-utils';
 import { getTekstForOppdateringsdato } from '../../../utils/app-utils';
 import Skeleton from 'react-loading-skeleton';
@@ -21,6 +20,7 @@ interface Props {
     restSykefraværsvarighet: RestSykefraværsvarighet;
 }
 
+// TODO: DELETE ME if unused ????
 export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = ({
     restSykefraværsvarighet,
 }) => {
@@ -48,7 +48,7 @@ export const SammenligningSiste4KvartalerMedBransje: FunctionComponent<Props> = 
 
     const totaltSykefraværSiste4Kvartaler = getTotaltSykefraværSiste4Kvartaler(varighet);
     const sykefraværVirksomhet = totaltSykefraværSiste4Kvartaler?.prosent;
-    const sykefraværBransje = sykefraværForBarnehagerSiste4Kvartaler.totalt;
+    const sykefraværBransje = 0; // TODO
 
     const sammenligningResultat = getResultatForSammenligningAvSykefravær(
         restSykefraværsvarighet.status,

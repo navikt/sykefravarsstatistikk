@@ -6,24 +6,24 @@ import {
     lagMaskertHistorikk,
     lagMockHistorikkForBarnehage,
 } from './sykefraværshistorikk-mock';
-import { Sykefraværsvarighet } from '../api/sykefraværsvarighet';
-import {
-    sykefraværsvarighetMockGrønn,
-    sykefraværsvarighetMockGul,
-    sykefraværsvarighetMockMaskert,
-    sykefraværsvarighetMockMedBare2Kvartaler,
-    sykefraværsvarighetMockMedSiste4Kvartaler,
-    sykefraværsvarighetMockRød,
-} from './sykefraværsvarighet-mock';
+import { SummertSykefraværshistorikk } from '../api/sykefraværsvarighet';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { getVirksomhetMetadataMock } from './virksomhet-metadata-mock';
 import { ArbeidstilsynetBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
+import {
+    summertSykefraværshistorikkMockGrønn,
+    summertSykefraværshistorikkMockGul,
+    summertSykefraværshistorikkMockMaskert,
+    summertSykefraværshistorikkMockMedBare2Kvartaler,
+    summertSykefraværshistorikkMockMedSiste4Kvartaler,
+    summertSykefraværshistorikkMockRød,
+} from './summertsykefraværshistorick-mock';
 
 export interface OrganisasjonMock {
     orgnr: string;
     bedriftsmetrikker?: VirksomhetMetadata | number;
     sykefraværshistorikkKvartalsvis?: Sykefraværshistorikk[] | number;
-    sykefraværshistorikkSummert?: Sykefraværsvarighet | number;
+    summertSykefraværshistorik?: SummertSykefraværshistorikk[] | number;
     overordnetEnhet?: OverordnetEnhet | number;
     underenhetDto?: UnderenhetDto | number;
 }
@@ -36,37 +36,37 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
         orgnr: '101010101',
         bedriftsmetrikker: 500,
         sykefraværshistorikkKvartalsvis: 500,
-        sykefraværshistorikkSummert: 500,
+        summertSykefraværshistorik: 500,
     },
     {
         orgnr: '100100100',
         bedriftsmetrikker: 500,
         sykefraværshistorikkKvartalsvis: 403,
-        sykefraværshistorikkSummert: 403,
+        summertSykefraværshistorik: 403,
     },
     {
         orgnr: '888888881',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-        sykefraværshistorikkSummert: sykefraværsvarighetMockRød,
+        summertSykefraværshistorik: summertSykefraværshistorikkMockRød,
     },
     {
         orgnr: '888888882',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-        sykefraværshistorikkSummert: sykefraværsvarighetMockGul,
+        summertSykefraværshistorik: summertSykefraværshistorikkMockGul,
     },
     {
         orgnr: '888888883',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-        sykefraværshistorikkSummert: sykefraværsvarighetMockGrønn,
+        summertSykefraværshistorik: summertSykefraværshistorikkMockGrønn,
     },
     {
         orgnr: '888888884',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-        sykefraværshistorikkSummert: 500,
+        summertSykefraværshistorik: 500,
     },
     {
         orgnr: '888888885',
@@ -77,19 +77,19 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
         orgnr: '888888886',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-        sykefraværshistorikkSummert: sykefraværsvarighetMockMedBare2Kvartaler,
+        summertSykefraværshistorik: summertSykefraværshistorikkMockMedBare2Kvartaler,
     },
     {
         orgnr: '888888887',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-        sykefraværshistorikkSummert: sykefraværsvarighetMockMaskert,
+        summertSykefraværshistorik: summertSykefraværshistorikkMockMaskert,
     },
     {
         orgnr: '888888888',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-        sykefraværshistorikkSummert: sykefraværsvarighetMockMedSiste4Kvartaler,
+        summertSykefraværshistorik: summertSykefraværshistorikkMockMedSiste4Kvartaler,
     },
     {
         orgnr: '333333333',

@@ -51,7 +51,7 @@ import {
     sykefraværsvarighetContext,
     SykefraværsvarighetProvider,
 } from './utils/sykefraværsvarighetContext';
-import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
+import { RestSummertSykefraværshistorikk } from './api/sykefraværsvarighet';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import {
     enhetsregisteretContext,
@@ -98,7 +98,9 @@ const AppContent: FunctionComponent = () => {
     const restOrganisasjonerMedStatistikk = useContext<RestAltinnOrganisasjoner>(
         altinnOrganisasjonerMedTilgangTilStatistikkContext
     );
-    const restSykefraværsvarighet = useContext<RestSykefraværsvarighet>(sykefraværsvarighetContext);
+    const restSykefraværsvarighet = useContext<RestSummertSykefraværshistorikk>(
+        sykefraværsvarighetContext
+    );
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
@@ -187,18 +189,18 @@ const AppContent: FunctionComponent = () => {
                                     feature={'sykefravarsstatistikk.ab-test.tips'}
                                     versjonA={
                                         <EkspanderbarSammenligning
-                                            restSykefraværsvarighet={restSykefraværsvarighet}
+                                            restSummertSykefraværshistorikk={restSykefraværsvarighet}
                                             visTips={true}
                                         />
                                     }
                                     versjonB={
                                         <>
                                             <EkspanderbarSammenligning
-                                                restSykefraværsvarighet={restSykefraværsvarighet}
+                                                restSummertSykefraværshistorikk={restSykefraværsvarighet}
                                                 visTips={false}
                                             />
                                             <EkspanderbareTips
-                                                restSykefraværsvarighet={restSykefraværsvarighet}
+                                                restSummertSykefraværshistorikk={restSykefraværsvarighet}
                                             />
                                         </>
                                     }

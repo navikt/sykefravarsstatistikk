@@ -1,18 +1,18 @@
 import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
 import { RestStatus } from '../api/api-utils';
 import { useOrgnr } from './orgnr-hook';
-import { hentRestSykefraværsvarighet } from '../api/api';
-import { RestSykefraværsvarighet } from '../api/sykefraværsvarighet';
+import { hentRestSummertSykefraværshistorikk } from '../api/api';
+import { RestSummertSykefraværshistorikk } from '../api/sykefraværsvarighet';
 
-export const sykefraværsvarighetContext = createContext<RestSykefraværsvarighet>({
+export const sykefraværsvarighetContext = createContext<RestSummertSykefraværshistorikk>({
     status: RestStatus.IkkeLastet,
 });
 
 export const SykefraværsvarighetProvider: FunctionComponent = (props) => {
     const orgnr = useOrgnr();
-    const [restSykefraværsvarighet, setRestSykefraværsvarighet] = useState<RestSykefraværsvarighet>(
-        { status: RestStatus.IkkeLastet }
-    );
+    const [restSykefraværsvarighet, setRestSykefraværsvarighet] = useState<
+        RestSummertSykefraværshistorikk
+    >({ status: RestStatus.IkkeLastet });
 
     // TODO La være å hente varighet hvis det ikke er en barnehage?
     useEffect(() => {
@@ -21,7 +21,7 @@ export const SykefraværsvarighetProvider: FunctionComponent = (props) => {
                 status: RestStatus.IkkeLastet,
             });
             const hentRestSykefraværsvarighetOgSettState = async () => {
-                setRestSykefraværsvarighet(await hentRestSykefraværsvarighet(orgnr));
+                setRestSykefraværsvarighet(await hentRestSummertSykefraværshistorikk(orgnr));
             };
             hentRestSykefraværsvarighetOgSettState();
         }
