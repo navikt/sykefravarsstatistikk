@@ -11,7 +11,7 @@ then
     done
 fi
 
-if [[ "$REACT_APP_MOCK" == "true" ]];
+if [[ "$NAIS_CLUSTER_NAME" == "labs-gcp" ]];
 then
   echo "Vi er inne i labs-gcp, kjører mock server [NAIS_CLUSTER_NAME=$NAIS_CLUSTER_NAME]"
   exec node herokuServer.js
