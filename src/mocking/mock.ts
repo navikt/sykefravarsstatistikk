@@ -11,6 +11,7 @@ import { Bransjetype } from '../api/virksomhetMetadata';
 import { sykefraværsvarighetMock } from './sykefraværsvarighet';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { underenhetMock } from './enhetsregisteret';
+import { getMiljø } from '../utils/miljøUtils';
 
 const mock = {
     minSideArbeidsgiver: true,
@@ -21,7 +22,7 @@ const mock = {
 
 let delayfaktor = 0;
 
-if (process.env.REACT_APP_HEROKU || process.env.NAIS_CLUSTER_NAME === 'labs-gcp') {
+if (process.env.REACT_APP_HEROKU || getMiljø() === 'labs-gcp') {
     // Alt skal alltid mockes på Heroku
     Object.keys(mock).forEach((skalMockes) => ((mock as any)[skalMockes] = true));
     delayfaktor = 1;
