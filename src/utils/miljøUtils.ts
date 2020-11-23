@@ -6,7 +6,7 @@ export const getMiljø = (): string => {
     if (hostname.includes('arbeidsgiver-q.nav.no')) {
         return 'dev-sbs';
     }
-    if (hostname.includes('arbeidsgive.labs.nais.io')) {
+    if (hostname.includes('arbeidsgiver.labs.nais.io')) {
         return 'labs-gcp';
     }
     return 'local';
