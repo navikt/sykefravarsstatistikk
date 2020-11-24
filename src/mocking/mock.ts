@@ -10,11 +10,8 @@ import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { underenhetMock } from './enhetsregisteret-mock';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
 import { defaultBedriftsmetrikker } from './virksomhet-metadata-mock';
-import {
-    getOrganisasjonerBrukerHarTilgangTilMock,
-    getOrganisasjonerMock,
-} from './altinn-mock';
-import {summertSykefraværshistorikkMockUtenData} from "./summertsykefraværshistorikk-mock";
+import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './altinn-mock';
+import { summertSykefraværshistorikkMockUtenData } from './summertsykefraværshistorikk-mock';
 
 const mock = {
     minSideArbeidsgiver: true,

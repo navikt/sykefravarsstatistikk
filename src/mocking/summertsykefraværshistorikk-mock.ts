@@ -1,7 +1,4 @@
-import {
-    Statistikkategori,
-    SummertSykefraværshistorikk,
-} from '../api/sykefraværsvarighet';
+import { Statistikkategori, SummertSykefraværshistorikk } from '../api/sykefraværsvarighet';
 
 const siste4Kvartaler = [
     {
@@ -28,15 +25,15 @@ const summertSykefraværshistorikkBarnehager: SummertSykefraværshistorikk = {
 
     summertKorttidsOgLangtidsfravær: {
         summertKorttidsfravær: {
-            prosent: 7.5,
-            tapteDagsverk: 75,
+            prosent: 1.2,
+            tapteDagsverk: 12,
             muligeDagsverk: 1000,
             erMaskert: false,
             kvartaler: siste4Kvartaler,
         },
         summertLangtidsfravær: {
-            prosent: 1.2,
-            tapteDagsverk: 12,
+            prosent: 7.5,
+            tapteDagsverk: 75,
             muligeDagsverk: 1000,
             erMaskert: false,
             kvartaler: siste4Kvartaler,
@@ -73,7 +70,6 @@ export const summertSykefraværshistorikkMockUtenData: SummertSykefraværshistor
         type: Statistikkategori.VIRKSOMHET,
         label: 'En virksomhet',
         summertKorttidsOgLangtidsfravær: {
-
             summertKorttidsfravær: {
                 prosent: null,
                 tapteDagsverk: null,
@@ -88,7 +84,7 @@ export const summertSykefraværshistorikkMockUtenData: SummertSykefraværshistor
                 erMaskert: false,
                 kvartaler: [],
             },
-        }
+        },
     },
     summertSykefraværshistorikkBarnehager,
 ];
@@ -98,7 +94,6 @@ export const summertSykefraværshistorikkMockMedBare2Kvartaler: SummertSykefrav�
         type: Statistikkategori.VIRKSOMHET,
         label: 'En virksomhet',
         summertKorttidsOgLangtidsfravær: {
-
             summertKorttidsfravær: {
                 prosent: 2.3,
                 tapteDagsverk: 140.6,
@@ -131,7 +126,7 @@ export const summertSykefraværshistorikkMockMedBare2Kvartaler: SummertSykefrav�
                     },
                 ],
             },
-        }
+        },
     },
     summertSykefraværshistorikkBarnehager,
 ];
@@ -141,7 +136,6 @@ export const summertSykefraværshistorikkMockMedSiste4Kvartaler: SummertSykefrav
         type: Statistikkategori.VIRKSOMHET,
         label: 'En virksomhet',
         summertKorttidsOgLangtidsfravær: {
-
             summertKorttidsfravær: {
                 prosent: 2.3,
                 tapteDagsverk: 140.6,
@@ -156,7 +150,7 @@ export const summertSykefraværshistorikkMockMedSiste4Kvartaler: SummertSykefrav
                 erMaskert: false,
                 kvartaler: siste4Kvartaler,
             },
-        }
+        },
     },
     summertSykefraværshistorikkBarnehager,
 ];
@@ -166,7 +160,6 @@ export const summertSykefraværshistorikkMockGrønn: SummertSykefraværshistorik
         type: Statistikkategori.VIRKSOMHET,
         label: 'En virksomhet',
         summertKorttidsOgLangtidsfravær: {
-
             summertKorttidsfravær: {
                 prosent: 0.8,
                 tapteDagsverk: 140.6,
@@ -181,7 +174,7 @@ export const summertSykefraværshistorikkMockGrønn: SummertSykefraværshistorik
                 erMaskert: false,
                 kvartaler: siste4Kvartaler,
             },
-        }
+        },
     },
     summertSykefraværshistorikkBarnehager,
 ];
@@ -191,7 +184,6 @@ export const summertSykefraværshistorikkMockGul = [
         type: Statistikkategori.VIRKSOMHET,
         label: 'En virksomhet',
         summertKorttidsOgLangtidsfravær: {
-
             summertKorttidsfravær: {
                 prosent: 1.2,
                 tapteDagsverk: 140.6,
@@ -206,7 +198,7 @@ export const summertSykefraværshistorikkMockGul = [
                 erMaskert: false,
                 kvartaler: siste4Kvartaler,
             },
-        }
+        },
     },
     summertSykefraværshistorikkBarnehager,
 ];
@@ -216,7 +208,6 @@ export const summertSykefraværshistorikkMockRød = [
         type: Statistikkategori.VIRKSOMHET,
         label: 'En virksomhet',
         summertKorttidsOgLangtidsfravær: {
-
             summertKorttidsfravær: {
                 prosent: 1.8,
                 tapteDagsverk: 140.6,
@@ -231,7 +222,7 @@ export const summertSykefraværshistorikkMockRød = [
                 erMaskert: false,
                 kvartaler: siste4Kvartaler,
             },
-        }
+        },
     },
     summertSykefraværshistorikkBarnehager,
 ];
