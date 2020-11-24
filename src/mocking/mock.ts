@@ -14,7 +14,7 @@ import {
     getOrganisasjonerBrukerHarTilgangTilMock,
     getOrganisasjonerMock,
 } from './altinn-mock';
-import {summertSykefraværshistorikkMockUtenData} from "./summertsykefraværshistorick-mock";
+import {summertSykefraværshistorikkMockUtenData} from "./summertsykefraværshistorikk-mock";
 
 const mock = {
     minSideArbeidsgiver: true,
