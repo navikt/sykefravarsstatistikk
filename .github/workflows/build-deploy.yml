@@ -39,7 +39,7 @@ jobs:
 
     deploy-to-dev:
         name: Deploy to dev-sbs
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/brodsmulesti'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/hente-sf-for-bransje-eller-naring'
         needs: compile-test-and-build
         runs-on: ubuntu-latest
         steps:
