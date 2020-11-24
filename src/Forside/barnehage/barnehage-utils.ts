@@ -4,10 +4,10 @@ import {
     SummertSykefraværshistorikk,
     Sykefraværsvarighet,
 } from '../../api/sykefraværsvarighet';
-import {SykefraværResultat} from './Speedometer/Speedometer';
-import {RestStatus} from '../../api/api-utils';
-import {ÅrstallOgKvartal} from '../../utils/sykefraværshistorikk-utils';
-
+import { SykefraværResultat } from './Speedometer/Speedometer';
+import { RestStatus } from '../../api/api-utils';
+import { ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
+import { SammenligningsType } from './vurderingstekster';
 
 // TODO Hardkodede tall
 export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
@@ -34,7 +34,6 @@ export const getResultatForSammenligningAvSykefravær = (
     sykefravær: SummertSykefravær | undefined,
     bransjensProsent: number | null | undefined
 ): SykefraværResultat => {
-
     if (bransjensProsent === null || bransjensProsent === undefined) {
         return SykefraværResultat.INGEN_DATA;
     }
@@ -74,8 +73,10 @@ export const getAlleResultaterForSammenligningAvSykefravær = (
     korttidsfravær: SykefraværResultat;
     langtidsfravær: SykefraværResultat;
 } => {
-
-    const varighetVirksomhet = getSykefraværsvarighet(summertSykefraværshistorikk, Statistikkategori.VIRKSOMHET);
+    const varighetVirksomhet = getSykefraværsvarighet(
+        summertSykefraværshistorikk,
+        Statistikkategori.VIRKSOMHET
+    );
     const varighetBransjeEllerNæring = getSykefraværsvarighet(
         summertSykefraværshistorikk,
         Statistikkategori.BRANSJE,
@@ -112,8 +113,8 @@ export const getSykefraværsvarighet = (
         return undefined;
     }
 
-    return summertSykefraværshistorikkListe?.find(
-        element => statistikkategorier.includes(element.type)
+    return summertSykefraværshistorikkListe?.find((element) =>
+        statistikkategorier.includes(element.type)
     )?.summertKorttidsOgLangtidsfravær;
 };
 
@@ -163,4 +164,72 @@ export const getRødGrenseTekst = (bransjensProsent: number) =>
 const addEllerReturnerNull = (number1: number | null, number2: number | null) => {
     if (number1 === null || number2 === null) return null;
     return number1 + number2;
+};
+export const sammenligningHjelpeFunksjon = (
+    restStatus: RestStatus.Suksess | RestStatus.Feil,
+    summertSykefraværshistorikk: SummertSykefraværshistorikk[] | undefined,
+    sammenligningsType: SammenligningsType
+): {
+    sammenligningstype: SammenligningsType;
+    sammenligningResultat: SykefraværResultat;
+    sykefraværVirksomhet: number | null | undefined;
+    sykefraværBransje: number | null | undefined;
+    kvartaler: ÅrstallOgKvartal[] | undefined;
+} => {
+    const varighet =
+        restStatus === RestStatus.Suksess
+            ? getSykefraværsvarighet(summertSykefraværshistorikk, Statistikkategori.VIRKSOMHET)
+            : undefined;
+    const kvartaler = varighet?.summertKorttidsfravær.kvartaler.slice().reverse();
+
+    const varighetBransjeEllerNæring =
+        restStatus === RestStatus.Suksess
+            ? getSykefraværsvarighet(
+                  summertSykefraværshistorikk,
+                  Statistikkategori.BRANSJE,
+                  Statistikkategori.NÆRING
+              )
+            : undefined;
+
+    let sammenligningResultat: SykefraværResultat;
+    let sykefraværVirksomhet;
+    let sykefraværBransje;
+
+    switch (sammenligningsType) {
+        case SammenligningsType.TOTALT:
+            sammenligningResultat = getResultatForSammenligningAvSykefravær(
+                restStatus,
+                getTotaltSykefraværSiste4Kvartaler(varighet),
+                getTotaltSykefraværSiste4Kvartaler(varighetBransjeEllerNæring)?.prosent
+            );
+            sykefraværVirksomhet = getTotaltSykefraværSiste4Kvartaler(varighet)?.prosent;
+            sykefraværBransje = getTotaltSykefraværSiste4Kvartaler(varighetBransjeEllerNæring)
+                ?.prosent;
+            break;
+        case SammenligningsType.KORTTID:
+            sammenligningResultat = getResultatForSammenligningAvSykefravær(
+                restStatus,
+                varighet?.summertKorttidsfravær,
+                varighetBransjeEllerNæring?.summertKorttidsfravær.prosent
+            );
+            sykefraværVirksomhet = varighet?.summertKorttidsfravær.prosent;
+            sykefraværBransje = varighetBransjeEllerNæring?.summertKorttidsfravær.prosent;
+            break;
+        case SammenligningsType.LANGTID:
+            sammenligningResultat = getResultatForSammenligningAvSykefravær(
+                restStatus,
+                varighet?.summertLangtidsfravær,
+                varighetBransjeEllerNæring?.summertLangtidsfravær.prosent
+            );
+            sykefraværVirksomhet = varighet?.summertLangtidsfravær.prosent;
+            sykefraværBransje = varighetBransjeEllerNæring?.summertLangtidsfravær.prosent;
+    }
+
+    return {
+        sammenligningstype: sammenligningsType,
+        sammenligningResultat: sammenligningResultat,
+        sykefraværVirksomhet: sykefraværVirksomhet,
+        sykefraværBransje: sykefraværBransje,
+        kvartaler: kvartaler,
+    };
 };
