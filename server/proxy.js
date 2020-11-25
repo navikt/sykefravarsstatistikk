@@ -10,6 +10,7 @@ const BACKEND_API_PATH = '/sykefravarsstatistikk-api';
 const API_GATEWAY_BASEURL = `${envProperties.API_GATEWAY}`;
 
 const listeAvTillatteUrler = [
+    new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/summert'),
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/summert/v2'),
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/kvartalsvis'),
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/bedriftsmetrikker'),
