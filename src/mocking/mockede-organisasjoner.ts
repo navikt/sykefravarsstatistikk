@@ -17,7 +17,7 @@ import {
     summertSykefraværshistorikkMockMedBare2Kvartaler,
     summertSykefraværshistorikkMockMedSiste4Kvartaler,
     summertSykefraværshistorikkMockRød,
-} from './summertsykefraværshistorikk-mock';
+} from './summert-sykefraværshistorikk-mock';
 
 export interface OrganisasjonMock {
     orgnr: string;

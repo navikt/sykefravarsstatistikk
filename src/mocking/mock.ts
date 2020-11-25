@@ -11,7 +11,7 @@ import { underenhetMock } from './enhetsregisteret-mock';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
 import { defaultBedriftsmetrikker } from './virksomhet-metadata-mock';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './altinn-mock';
-import { summertSykefraværshistorikkMockUtenData } from './summertsykefraværshistorikk-mock';
+import { summertSykefraværshistorikkMockUtenData } from './summert-sykefraværshistorikk-mock';
 import { getMiljø } from '../utils/miljøUtils';
 
 
