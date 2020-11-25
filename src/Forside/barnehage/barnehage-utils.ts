@@ -2,7 +2,7 @@ import {
     Statistikkategori,
     SummertSykefravær,
     SummertSykefraværshistorikk,
-    Sykefraværsvarighet,
+    SummertKorttidsOgLangtidsfravær,
 } from '../../api/sykefraværsvarighet';
 import { SykefraværResultat } from './Speedometer/Speedometer';
 import { RestStatus } from '../../api/api-utils';
@@ -73,11 +73,11 @@ export const getAlleResultaterForSammenligningAvSykefravær = (
     korttidsfravær: SykefraværResultat;
     langtidsfravær: SykefraværResultat;
 } => {
-    const varighetVirksomhet = getSykefraværsvarighet(
+    const varighetVirksomhet = getSummertKorttidsOgLangtidsfravær(
         summertSykefraværshistorikk,
         Statistikkategori.VIRKSOMHET
     );
-    const varighetBransjeEllerNæring = getSykefraværsvarighet(
+    const varighetBransjeEllerNæring = getSummertKorttidsOgLangtidsfravær(
         summertSykefraværshistorikk,
         Statistikkategori.BRANSJE,
         Statistikkategori.NÆRING
@@ -105,10 +105,10 @@ export const getAlleResultaterForSammenligningAvSykefravær = (
     };
 };
 
-export const getSykefraværsvarighet = (
+export const getSummertKorttidsOgLangtidsfravær = (
     summertSykefraværshistorikkListe: SummertSykefraværshistorikk[] | undefined,
     ...statistikkategorier: Statistikkategori[]
-): Sykefraværsvarighet | undefined => {
+): SummertKorttidsOgLangtidsfravær | undefined => {
     if (summertSykefraværshistorikkListe === undefined) {
         return undefined;
     }
@@ -119,7 +119,7 @@ export const getSykefraværsvarighet = (
 };
 
 export const getTotaltSykefraværSiste4Kvartaler = (
-    varighet: Sykefraværsvarighet | undefined
+    varighet: SummertKorttidsOgLangtidsfravær | undefined
 ): SummertSykefravær | undefined => {
     if (varighet === undefined) return undefined;
     const korttid = varighet.summertKorttidsfravær;
@@ -179,13 +179,13 @@ export const getSammenligningResultatMedProsent = (
 } => {
     const varighet =
         restStatus === RestStatus.Suksess
-            ? getSykefraværsvarighet(summertSykefraværshistorikk, Statistikkategori.VIRKSOMHET)
+            ? getSummertKorttidsOgLangtidsfravær(summertSykefraværshistorikk, Statistikkategori.VIRKSOMHET)
             : undefined;
     const kvartaler = varighet?.summertKorttidsfravær.kvartaler.slice().reverse();
 
     const varighetBransjeEllerNæring =
         restStatus === RestStatus.Suksess
-            ? getSykefraværsvarighet(
+            ? getSummertKorttidsOgLangtidsfravær(
                   summertSykefraværshistorikk,
                   Statistikkategori.BRANSJE,
                   Statistikkategori.NÆRING

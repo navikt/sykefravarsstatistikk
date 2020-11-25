@@ -48,9 +48,9 @@ import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
 import { Forside } from './Forside/Forside';
 import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
 import {
-    sykefraværsvarighetContext,
-    SykefraværsvarighetProvider,
-} from './utils/sykefraværsvarighetContext';
+    summertSykefraværshistorikkContext,
+    SummertSykefraværshistorikkProvider,
+} from './utils/summertSykefraværshistorikkContext';
 import { RestSummertSykefraværshistorikk } from './api/sykefraværsvarighet';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import {
@@ -74,7 +74,7 @@ const App: FunctionComponent = () => {
                 <AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
                     <VirksomhetMetadataProvider>
                         <EnhetsregisteretProvider>
-                            <SykefraværsvarighetProvider>
+                            <SummertSykefraværshistorikkProvider>
                                 <SykefraværshistorikkProvider>
                                     <FeatureTogglesProvider>
                                         <TilbakemeldingContextProvider>
@@ -84,7 +84,7 @@ const App: FunctionComponent = () => {
                                         </TilbakemeldingContextProvider>
                                     </FeatureTogglesProvider>
                                 </SykefraværshistorikkProvider>
-                            </SykefraværsvarighetProvider>
+                            </SummertSykefraværshistorikkProvider>
                         </EnhetsregisteretProvider>
                     </VirksomhetMetadataProvider>
                 </AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
@@ -99,7 +99,7 @@ const AppContent: FunctionComponent = () => {
         altinnOrganisasjonerMedTilgangTilStatistikkContext
     );
     const restSykefraværsvarighet = useContext<RestSummertSykefraværshistorikk>(
-        sykefraværsvarighetContext
+        summertSykefraværshistorikkContext
     );
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext

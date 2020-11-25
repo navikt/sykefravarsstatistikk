@@ -1,4 +1,4 @@
-import { Sykefraværsvarighet } from '../api/sykefraværsvarighet';
+import { SummertKorttidsOgLangtidsfravær } from '../api/sykefraværsvarighet';
 
 export const sykefraværsvarighetMockMaskert = {
     summertKorttidsfravær: {
@@ -152,7 +152,7 @@ export const sykefraværsvarighetMockRød = {
     },
 };
 
-export const sykefraværsvarighetMock = (orgnr: String): Sykefraværsvarighet => {
+export const sykefraværsvarighetMock = (orgnr: String): SummertKorttidsOgLangtidsfravær => {
     switch (orgnr) {
         case '888888888':
             return sykefraværsvarighetMockMedSiste4Kvartaler;

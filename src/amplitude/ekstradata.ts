@@ -17,7 +17,7 @@ import {mapTilPrivatElleOffentligSektor, Sektor} from '../utils/sektorUtils';
 import {RestSummertSykefraværshistorikk, Statistikkategori} from '../api/sykefraværsvarighet';
 import {
     getResultatForSammenligningAvSykefravær,
-    getSykefraværsvarighet,
+    getSummertKorttidsOgLangtidsfravær,
     getTotaltSykefraværSiste4Kvartaler,
 } from '../Forside/barnehage/barnehage-utils';
 
@@ -129,7 +129,7 @@ export const getEkstraDataFraSykefraværsvarighet = (
 
     const varighet =
         restSummertSykefraværshistorikk.status === RestStatus.Suksess
-            ? getSykefraværsvarighet(
+            ? getSummertKorttidsOgLangtidsfravær(
                   restSummertSykefraværshistorikk.data,
                   Statistikkategori.VIRKSOMHET
               )
@@ -137,7 +137,7 @@ export const getEkstraDataFraSykefraværsvarighet = (
 
     const varighetBransjeEllerNæring =
         restSummertSykefraværshistorikk.status === RestStatus.Suksess
-            ? getSykefraværsvarighet(
+            ? getSummertKorttidsOgLangtidsfravær(
             restSummertSykefraværshistorikk.data,
             Statistikkategori.BRANSJE, Statistikkategori.NÆRING
             )

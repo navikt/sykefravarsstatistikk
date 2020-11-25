@@ -4,28 +4,28 @@ import { useOrgnr } from './orgnr-hook';
 import { hentRestSummertSykefraværshistorikk } from '../api/api';
 import { RestSummertSykefraværshistorikk } from '../api/sykefraværsvarighet';
 
-export const sykefraværsvarighetContext = createContext<RestSummertSykefraværshistorikk>({
+export const summertSykefraværshistorikkContext = createContext<RestSummertSykefraværshistorikk>({
     status: RestStatus.IkkeLastet,
 });
 
-export const SykefraværsvarighetProvider: FunctionComponent = (props) => {
+export const SummertSykefraværshistorikkProvider: FunctionComponent = (props) => {
     const orgnr = useOrgnr();
-    const [restSykefraværsvarighet, setRestSykefraværsvarighet] = useState<
+    const [restSummertSykefraværshistorikk, setRestSummertSykefraværshistorikk] = useState<
         RestSummertSykefraværshistorikk
     >({ status: RestStatus.IkkeLastet });
 
     // TODO La være å hente varighet hvis det ikke er en barnehage?
     useEffect(() => {
         if (orgnr) {
-            setRestSykefraværsvarighet({
+            setRestSummertSykefraværshistorikk({
                 status: RestStatus.IkkeLastet,
             });
             const hentRestSykefraværsvarighetOgSettState = async () => {
-                setRestSykefraværsvarighet(await hentRestSummertSykefraværshistorikk(orgnr));
+                setRestSummertSykefraværshistorikk(await hentRestSummertSykefraværshistorikk(orgnr));
             };
             hentRestSykefraværsvarighetOgSettState();
         }
     }, [orgnr]);
-    const Provider = sykefraværsvarighetContext.Provider;
-    return <Provider value={restSykefraværsvarighet}>{props.children}</Provider>;
+    const Provider = summertSykefraværshistorikkContext.Provider;
+    return <Provider value={restSummertSykefraværshistorikk}>{props.children}</Provider>;
 };

@@ -67,21 +67,14 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
         sammenligningResultatTotalt.sammenligningResultat ===
             SykefraværResultat.UFULLSTENDIG_DATA ||
         sammenligningResultatTotalt.sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
-            <>
-                <strong>
-                    {' '}
-                    {sammenligningResultatTotalt.kvartaler?.length || 0} av 4 kvartaler
-                </strong>
-            </>
+            <strong> {sammenligningResultatTotalt.kvartaler?.length || 0} av 4 kvartaler</strong>
         ) : null;
 
     const antallKvartalerBransje =
         sammenligningResultatTotalt.sammenligningResultat ===
             SykefraværResultat.UFULLSTENDIG_DATA ||
         sammenligningResultatTotalt.sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
-            <>
-                <strong>4 av 4 kvartaler</strong>
-            </>
+            <strong>4 av 4 kvartaler</strong>
         ) : null;
 
     return (

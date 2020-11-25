@@ -13,7 +13,7 @@ export enum Statistikkategori {
 export interface SummertSykefraværshistorikk {
     type: Statistikkategori;
     label: string;
-    summertKorttidsOgLangtidsfravær: Sykefraværsvarighet;
+    summertKorttidsOgLangtidsfravær: SummertKorttidsOgLangtidsfravær;
 }
 
 export interface SummertSykefravær {
@@ -24,21 +24,13 @@ export interface SummertSykefravær {
     erMaskert: boolean;
 }
 
-export interface Sykefraværsvarighet {
+export interface SummertKorttidsOgLangtidsfravær {
     summertKorttidsfravær: SummertSykefravær;
     summertLangtidsfravær: SummertSykefravær;
 }
 
-export const erMaskert = (sykefraværsvarighet: Sykefraværsvarighet) => {
+export const erMaskert = (sykefraværsvarighet: SummertKorttidsOgLangtidsfravær) => {
     return sykefraværsvarighet.summertLangtidsfravær.erMaskert;
 };
 
-export const harSykefraværEllerErMaskert = (sykefraværsvarighet: Sykefraværsvarighet) => {
-    return (
-        sykefraværsvarighet.summertLangtidsfravær.erMaskert ||
-        sykefraværsvarighet.summertLangtidsfravær.kvartaler.length !== 0
-    );
-};
-
-export type RestSykefraværsvarighet = RestRessurs<Sykefraværsvarighet>;
 export type RestSummertSykefraværshistorikk = RestRessurs<SummertSykefraværshistorikk[]>;

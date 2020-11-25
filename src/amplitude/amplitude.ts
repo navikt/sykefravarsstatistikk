@@ -5,7 +5,7 @@ import { virksomhetMetadataContext } from '../utils/virksomhetMetadataContext';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkContext';
 import { RestSummertSykefraværshistorikk } from '../api/sykefraværsvarighet';
-import { sykefraværsvarighetContext } from '../utils/sykefraværsvarighetContext';
+import { summertSykefraværshistorikkContext } from '../utils/summertSykefraværshistorikkContext';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
 import {
     Ekstradata,
@@ -113,7 +113,7 @@ const useEkstraDataRef = (): MutableRefObject<Partial<Ekstradata>> => {
         sykefraværshistorikkContext
     );
     const restSummertSykefraværshistorikk = useContext<RestSummertSykefraværshistorikk>(
-        sykefraværsvarighetContext
+        summertSykefraværshistorikkContext
     );
 
     const ekstradata = useRef<Partial<Ekstradata>>({});

@@ -1,15 +1,15 @@
-import {BASE_PATH} from '../konstanter';
-import {getRestStatus, RestStatus, Årsak} from './api-utils';
-import {RestFeatureToggles} from './featureToggles';
+import { BASE_PATH } from '../konstanter';
+import { getRestStatus, RestStatus, Årsak } from './api-utils';
+import { RestFeatureToggles } from './featureToggles';
 import {
     KvartalsvisSykefraværsprosent,
     RestSykefraværshistorikk,
     Sykefraværshistorikk,
     SykefraværshistorikkType,
 } from './sykefraværshistorikk';
-import {sendEventDirekte} from '../amplitude/amplitude';
-import {RestVirksomhetMetadata} from './virksomhetMetadata';
-import {RestSummertSykefraværshistorikk} from './sykefraværsvarighet';
+import { sendEventDirekte } from '../amplitude/amplitude';
+import { RestVirksomhetMetadata } from './virksomhetMetadata';
+import { RestSummertSykefraværshistorikk } from './sykefraværsvarighet';
 
 const sykefraværshistorikkPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/kvartalsvis`;
