@@ -165,7 +165,8 @@ const addEllerReturnerNull = (number1: number | null, number2: number | null) =>
     if (number1 === null || number2 === null) return null;
     return number1 + number2;
 };
-export const sammenligningHjelpeFunksjon = (
+
+export const getSammenligningResultatMedProsent = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,
     summertSykefraværshistorikk: SummertSykefraværshistorikk[] | undefined,
     sammenligningsType: SammenligningsType

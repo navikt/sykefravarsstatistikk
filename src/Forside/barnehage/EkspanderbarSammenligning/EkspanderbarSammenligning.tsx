@@ -3,7 +3,7 @@ import { RestSummertSykefraværshistorikk } from '../../../api/sykefraværsvarig
 import { EkspanderbartSammenligningspanel } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
 import { RestStatus } from '../../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
-import { sammenligningHjelpeFunksjon } from '../barnehage-utils';
+import { getSammenligningResultatMedProsent } from '../barnehage-utils';
 import { SykefraværResultat } from '../Speedometer/Speedometer';
 import { SammenligningsType } from '../vurderingstekster';
 import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngress';
@@ -46,18 +46,18 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             ? restSummertSykefraværshistorikk.data
             : undefined;
 
-    const sammenligningResultatTotalt = sammenligningHjelpeFunksjon(
+    const sammenligningResultatTotalt = getSammenligningResultatMedProsent(
         restSummertSykefraværshistorikk.status,
         summertSykefraværshistorikk,
         SammenligningsType.TOTALT
     );
 
-    const sammenligningResultatKorttid = sammenligningHjelpeFunksjon(
+    const sammenligningResultatKorttid = getSammenligningResultatMedProsent(
         restSummertSykefraværshistorikk.status,
         summertSykefraværshistorikk,
         SammenligningsType.KORTTID
     );
-    const sammenligningResultatLangtid = sammenligningHjelpeFunksjon(
+    const sammenligningResultatLangtid = getSammenligningResultatMedProsent(
         restSummertSykefraværshistorikk.status,
         summertSykefraværshistorikk,
         SammenligningsType.LANGTID
@@ -103,11 +103,6 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 defaultÅpen
                 visTips={visTips}
             />
-            {console.log(
-                'sammenligningResultatKorttid.sykefraværBransje' +
-                    sammenligningResultatKorttid.sykefraværBransje
-            )}
-            {console.log('restsummertdata', restSummertSykefraværshistorikk)}
             <EkspanderbartSammenligningspanel
                 sammenligningResultat={sammenligningResultatKorttid.sammenligningResultat}
                 sykefraværVirksomhet={sammenligningResultatKorttid.sykefraværVirksomhet}
