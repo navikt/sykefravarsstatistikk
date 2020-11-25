@@ -80,7 +80,7 @@ if (mock.sykefraværsstatistikkApi) {
             const orgnr = url.match(/[0-9]{9}/)![0];
 
             return (
-                getMockOrganisasjon(orgnr)?.summertSykefraværshistorik ||
+                getMockOrganisasjon(orgnr)?.summertSykefraværshistorikk ||
                 summertSykefraværshistorikkMockUtenData
             );
         },
