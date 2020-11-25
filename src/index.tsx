@@ -6,7 +6,7 @@ import * as Sentry from '@sentry/browser';
 import './index.less';
 import { getMiljø } from './utils/miljøUtils';
 
-if (process.env.REACT_APP_MOCK || process.env.REACT_APP_HEROKU) {
+if (process.env.REACT_APP_MOCK || process.env.REACT_APP_HEROKU || getMiljø() === 'labs-gcp') {
     console.log('========================================');
     console.log('=============== MED MOCK ===============');
     console.log('===DETTE SKAL DU IKKE SE I PRODUKSJON===');

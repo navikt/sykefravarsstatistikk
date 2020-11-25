@@ -51,6 +51,20 @@ jobs:
                   VAR: version=${{ env.IMAGE }}
                   RESOURCE: nais/dev-sbs.yaml
                   PRINT_PAYLOAD: true
+    deploy-to-labs-gcp:
+        name: Deploy to labs-gcp
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/legge-til-labs-nais-io'
+        needs: compile-test-and-build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - uses: nais/deploy/actions/deploy@v1
+              env:
+                  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+                  CLUSTER: labs-gcp
+                  VAR: version=${{ env.IMAGE }}
+                  RESOURCE: nais/labs-gcp.yaml
+                  PRINT_PAYLOAD: true
 
     deploy-to-prod:
         name: Deploy to prod-sbs

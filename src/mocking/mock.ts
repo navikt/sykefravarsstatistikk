@@ -12,6 +12,8 @@ import { getMockOrganisasjon } from './mockede-organisasjoner';
 import { defaultBedriftsmetrikker } from './virksomhet-metadata-mock';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './altinn-mock';
 import { summertSykefraværshistorikkMockUtenData } from './summertsykefraværshistorikk-mock';
+import { getMiljø } from '../utils/miljøUtils';
+
 
 const mock = {
     minSideArbeidsgiver: true,
@@ -22,7 +24,7 @@ const mock = {
 
 let delayfaktor = 0;
 
-if (process.env.REACT_APP_HEROKU) {
+if (process.env.REACT_APP_HEROKU || getMiljø() === 'labs-gcp') {
     // Alt skal alltid mockes på Heroku
     Object.keys(mock).forEach((skalMockes) => ((mock as any)[skalMockes] = true));
     delayfaktor = 1;
