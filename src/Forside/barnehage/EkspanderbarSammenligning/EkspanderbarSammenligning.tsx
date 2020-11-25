@@ -1,13 +1,9 @@
 import React, { FunctionComponent } from 'react';
-import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
+import { RestSummertSykefraværshistorikk } from '../../../api/sykefraværsvarighet';
 import { EkspanderbartSammenligningspanel } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
 import { RestStatus } from '../../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
-import {
-    getResultatForSammenligningAvSykefravær,
-    getTotaltSykefraværSiste4Kvartaler,
-    sykefraværForBarnehagerSiste4Kvartaler,
-} from '../barnehage-utils';
+import { getSammenligningResultatMedProsent } from '../barnehage-utils';
 import { SykefraværResultat } from '../Speedometer/Speedometer';
 import { SammenligningsType } from '../vurderingstekster';
 import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngress';
@@ -16,26 +12,26 @@ import { useSendEvent } from '../../../amplitude/amplitude';
 import './EkspanderbarSammenligning.less';
 
 interface Props {
-    restSykefraværsvarighet: RestSykefraværsvarighet;
+    restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
     visTips: boolean;
 }
 
 export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
-    restSykefraværsvarighet,
+    restSummertSykefraværshistorikk,
     visTips,
 }) => {
     const sendEvent = useSendEvent();
 
     if (
-        restSykefraværsvarighet.status === RestStatus.IngenTilgang ||
-        restSykefraværsvarighet.status === RestStatus.IkkeInnlogget
+        restSummertSykefraværshistorikk.status === RestStatus.IngenTilgang ||
+        restSummertSykefraværshistorikk.status === RestStatus.IkkeInnlogget
     ) {
         return null;
     }
 
     if (
-        restSykefraværsvarighet.status === RestStatus.LasterInn ||
-        restSykefraværsvarighet.status === RestStatus.IkkeLastet
+        restSummertSykefraværshistorikk.status === RestStatus.LasterInn ||
+        restSummertSykefraværshistorikk.status === RestStatus.IkkeLastet
     ) {
         return (
             <Skeleton
@@ -45,57 +41,55 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
         );
     }
 
-    const varighet =
-        restSykefraværsvarighet.status === RestStatus.Suksess
-            ? restSykefraværsvarighet.data
+    const summertSykefraværshistorikk =
+        restSummertSykefraværshistorikk.status === RestStatus.Suksess
+            ? restSummertSykefraværshistorikk.data
             : undefined;
-    const kvartaler = varighet?.summertKorttidsfravær.kvartaler.slice().reverse();
 
-    const sammenligningResultat = getResultatForSammenligningAvSykefravær(
-        restSykefraværsvarighet.status,
-        getTotaltSykefraværSiste4Kvartaler(varighet),
-        sykefraværForBarnehagerSiste4Kvartaler.totalt
+    const sammenligningResultatTotalt = getSammenligningResultatMedProsent(
+        restSummertSykefraværshistorikk.status,
+        summertSykefraværshistorikk,
+        SammenligningsType.TOTALT
     );
-    const sammenligningResultatKorttid = getResultatForSammenligningAvSykefravær(
-        restSykefraværsvarighet.status,
-        varighet?.summertKorttidsfravær,
-        sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær
+
+    const sammenligningResultatKorttid = getSammenligningResultatMedProsent(
+        restSummertSykefraværshistorikk.status,
+        summertSykefraværshistorikk,
+        SammenligningsType.KORTTID
     );
-    const sammenligningResultatLangtid = getResultatForSammenligningAvSykefravær(
-        restSykefraværsvarighet.status,
-        varighet?.summertLangtidsfravær,
-        sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær
+    const sammenligningResultatLangtid = getSammenligningResultatMedProsent(
+        restSummertSykefraværshistorikk.status,
+        summertSykefraværshistorikk,
+        SammenligningsType.LANGTID
     );
 
     const antallKvartalerVirksomhet =
-        sammenligningResultat === SykefraværResultat.UFULLSTENDIG_DATA ||
-        sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
-            <>
-                <strong> {kvartaler?.length || 0} av 4 kvartaler</strong>
-            </>
+        sammenligningResultatTotalt.sammenligningResultat ===
+            SykefraværResultat.UFULLSTENDIG_DATA ||
+        sammenligningResultatTotalt.sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
+            <strong> {sammenligningResultatTotalt.kvartaler?.length || 0} av 4 kvartaler</strong>
         ) : null;
 
     const antallKvartalerBransje =
-        sammenligningResultat === SykefraværResultat.UFULLSTENDIG_DATA ||
-        sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
-            <>
-                <strong>4 av 4 kvartaler</strong>
-            </>
+        sammenligningResultatTotalt.sammenligningResultat ===
+            SykefraværResultat.UFULLSTENDIG_DATA ||
+        sammenligningResultatTotalt.sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
+            <strong>4 av 4 kvartaler</strong>
         ) : null;
 
     return (
         <div className="ekspanderbar-sammenligning">
             <SammenligningIngress />
             <SlikHarViKommetFramTilDittResultat
-                resultat={sammenligningResultat}
-                kvartaler={kvartaler}
+                resultat={sammenligningResultatTotalt.sammenligningResultat}
+                kvartaler={sammenligningResultatTotalt.kvartaler}
                 onÅpne={() => sendEvent('barnehage sammenligning lesmer', 'åpne')}
             />
             <EkspanderbartSammenligningspanel
                 className="ekspanderbar-sammenligning__sammenligning-totalt"
-                sammenligningResultat={sammenligningResultat}
-                sykefraværVirksomhet={getTotaltSykefraværSiste4Kvartaler(varighet)?.prosent}
-                sykefraværBransje={sykefraværForBarnehagerSiste4Kvartaler.totalt}
+                sammenligningResultat={sammenligningResultatTotalt.sammenligningResultat}
+                sykefraværVirksomhet={sammenligningResultatTotalt.sykefraværVirksomhet}
+                sykefraværBransje={sammenligningResultatTotalt.sykefraværBransje}
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.TOTALT}
@@ -103,18 +97,18 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 visTips={visTips}
             />
             <EkspanderbartSammenligningspanel
-                sammenligningResultat={sammenligningResultatKorttid}
-                sykefraværVirksomhet={varighet?.summertKorttidsfravær.prosent}
-                sykefraværBransje={sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær}
+                sammenligningResultat={sammenligningResultatKorttid.sammenligningResultat}
+                sykefraværVirksomhet={sammenligningResultatKorttid.sykefraværVirksomhet}
+                sykefraværBransje={sammenligningResultatKorttid.sykefraværBransje}
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.KORTTID}
                 visTips={visTips}
             />
             <EkspanderbartSammenligningspanel
-                sammenligningResultat={sammenligningResultatLangtid}
-                sykefraværVirksomhet={varighet?.summertLangtidsfravær.prosent}
-                sykefraværBransje={sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær}
+                sammenligningResultat={sammenligningResultatLangtid.sammenligningResultat}
+                sykefraværVirksomhet={sammenligningResultatLangtid.sykefraværVirksomhet}
+                sykefraværBransje={sammenligningResultatLangtid.sykefraværBransje}
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.LANGTID}

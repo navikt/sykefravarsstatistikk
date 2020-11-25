@@ -19,7 +19,7 @@ import { useSendEvent } from '../../../amplitude/amplitude';
 interface Props {
     sammenligningResultat: SykefraværResultat;
     sykefraværVirksomhet: number | null | undefined;
-    sykefraværBransje: number;
+    sykefraværBransje: number | null | undefined;
     antallKvartalerVirksomhet: ReactElement | null;
     antallKvartalerBransje: ReactElement | null;
     sammenligningsType: SammenligningsType;
@@ -43,7 +43,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const sendEvent = useSendEvent();
     const periode = '01.04.2019 til 31.03.2020';
 
-    const visningAvProsentForBransje: number | null =
+    const visningAvProsentForBransje: number | null | undefined =
         sykefraværResultat === SykefraværResultat.FEIL ? null : sykefraværBransje;
 
     const getPanelEventtekst = (sammenligningsType: SammenligningsType) => {
