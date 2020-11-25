@@ -1,6 +1,6 @@
 import { BASE_PATH } from '../konstanter';
-import { getRestStatus, RestStatus, Årsak } from './api-utils';
-import { RestFeatureToggles } from './featureToggles';
+import { fetchMedFeilhåndtering, RestStatus } from './api-utils';
+import { FeatureToggles, RestFeatureToggles } from './featureToggles';
 import {
     KvartalsvisSykefraværsprosent,
     RestSykefraværshistorikk,
@@ -8,8 +8,11 @@ import {
     SykefraværshistorikkType,
 } from './sykefraværshistorikk';
 import { sendEventDirekte } from '../amplitude/amplitude';
-import { RestVirksomhetMetadata } from './virksomhetMetadata';
-import { RestSummertSykefraværshistorikk } from './sykefraværsvarighet';
+import { RestVirksomhetMetadata, VirksomhetMetadata } from './virksomhetMetadata';
+import {
+    RestSummertSykefraværshistorikk,
+    SummertSykefraværshistorikk,
+} from './sykefraværsvarighet';
 
 const sykefraværshistorikkPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/kvartalsvis`;
@@ -25,37 +28,21 @@ const virksomhetMetadataPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/bed
 export const hentRestSykefraværshistorikk = async (
     orgnr: string
 ): Promise<RestSykefraværshistorikk> => {
-    const response = await fetch(sykefraværshistorikkPath(orgnr), {
-        method: 'GET',
-        credentials: 'include',
-    });
-
-    const restStatus = getRestStatus(response.status);
-    if (restStatus === RestStatus.Suksess) {
+    const response = await fetchMedFeilhåndtering<Sykefraværshistorikk[]>(
+        sykefraværshistorikkPath(orgnr),
+        {
+            method: 'GET',
+            credentials: 'include',
+        }
+    );
+    if (response.status === RestStatus.Suksess) {
         return {
             status: RestStatus.Suksess,
-            data: await response.json().then((data) => {
-                return filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(data);
-            }),
+            data: filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(response.data),
         };
+    } else {
+        return response;
     }
-    if (restStatus === RestStatus.Feil) {
-        try {
-            const body = await response.json();
-
-            const causedBy: string = body.causedBy;
-
-            if (!!causedBy && Object.keys(Årsak).includes(causedBy)) {
-                return {
-                    status: RestStatus.Feil,
-                    causedBy: Årsak[causedBy as keyof typeof Årsak],
-                };
-            }
-        } catch (ignored) {}
-    }
-    return {
-        status: restStatus,
-    };
 };
 
 export const hentRestFeatureToggles = async (
@@ -68,78 +55,37 @@ export const hentRestFeatureToggles = async (
         };
     }
 
-    const response = await fetch(featureTogglesPath(features), {
+    const response = await fetchMedFeilhåndtering<FeatureToggles>(featureTogglesPath(features), {
         method: 'GET',
         credentials: 'include',
     });
 
-    const restStatus = getRestStatus(response.status);
-
-    if (restStatus === RestStatus.Suksess) {
+    if (response.status === RestStatus.Suksess) {
+        return response;
+    } else {
         return {
             status: RestStatus.Suksess,
-            data: await response.json(),
+            data: {},
         };
     }
-    return {
-        status: RestStatus.Suksess,
-        data: {},
-    };
 };
 
 export const hentRestVirksomhetMetadata = async (
     orgnr: string
 ): Promise<RestVirksomhetMetadata> => {
-    const response = await fetch(virksomhetMetadataPath(orgnr), {
+    return await fetchMedFeilhåndtering<VirksomhetMetadata>(virksomhetMetadataPath(orgnr), {
         method: 'GET',
         credentials: 'include',
     });
-
-    const restStatus = getRestStatus(response.status);
-    if (restStatus === RestStatus.Suksess) {
-        return {
-            status: RestStatus.Suksess,
-            data: await response.json(),
-        };
-    }
-    return {
-        status: restStatus,
-    };
 };
 
 export const hentRestSummertSykefraværshistorikk = async (
     orgnr: string
 ): Promise<RestSummertSykefraværshistorikk> => {
-    // TODO: Generaliser feilhåndteringen?
-    const response = await fetch(varighetPath(orgnr), {
+    return await fetchMedFeilhåndtering<SummertSykefraværshistorikk[]>(varighetPath(orgnr), {
         method: 'GET',
         credentials: 'include',
     });
-
-    const restStatus = getRestStatus(response.status);
-    if (restStatus === RestStatus.Suksess) {
-        return {
-            status: RestStatus.Suksess,
-            data: await response.json(),
-        };
-    }
-    if (restStatus === RestStatus.Feil) {
-        try {
-            const body = await response.json();
-
-            const causedBy: string = body.causedBy;
-
-            if (!!causedBy && Object.keys(Årsak).includes(causedBy)) {
-                return {
-                    status: RestStatus.Feil,
-                    causedBy: Årsak[causedBy as keyof typeof Årsak],
-                };
-            }
-        } catch (ignored) {}
-    }
-    return {
-        status: restStatus,
-    };
 };
 
 export const filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet = (
