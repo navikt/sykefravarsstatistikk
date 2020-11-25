@@ -38,7 +38,10 @@ export const hentAltinnOrganisasjoner = async (
             data: altinnOrganisasjoner,
         };
     } catch (error) {
-        Sentry.captureException(error);
-        return { status: error.status || RestStatus.Feil };
+        if (error.status === RestStatus.Feil || !error.status) {
+            Sentry.captureException(new Error('Feil ved kall til ' + url));
+            return { status: RestStatus.Feil };
+        }
+        return { status: error.status };
     }
 };
