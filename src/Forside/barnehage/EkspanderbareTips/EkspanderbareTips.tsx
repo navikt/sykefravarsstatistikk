@@ -5,7 +5,7 @@ import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import './EkspanderbareTips.less';
 import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import lyspæreSvg from './lyspære.svg';
-import { RestSykefraværsvarighet } from '../../../api/sykefraværsvarighet';
+import { RestSummertSykefraværshistorikk } from '../../../api/sykefraværsvarighet';
 import { RestStatus } from '../../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
 import { getAlleResultaterForSammenligningAvSykefravær } from '../barnehage-utils';
@@ -13,22 +13,22 @@ import { SammenligningsType } from '../vurderingstekster';
 import { useSendEvent } from '../../../amplitude/amplitude';
 
 interface Props {
-    restSykefraværsvarighet: RestSykefraværsvarighet;
+    restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
 }
 
-export const EkspanderbareTips: FunctionComponent<Props> = ({ restSykefraværsvarighet }) => {
+export const EkspanderbareTips: FunctionComponent<Props> = ({ restSummertSykefraværshistorikk }) => {
     const [erÅpen, setErÅpen] = useState<boolean>(false);
     const sendEvent = useSendEvent();
     if (
-        restSykefraværsvarighet.status === RestStatus.IngenTilgang ||
-        restSykefraværsvarighet.status === RestStatus.IkkeInnlogget
+        restSummertSykefraværshistorikk.status === RestStatus.IngenTilgang ||
+        restSummertSykefraværshistorikk.status === RestStatus.IkkeInnlogget
     ) {
         return null;
     }
 
     if (
-        restSykefraværsvarighet.status === RestStatus.LasterInn ||
-        restSykefraværsvarighet.status === RestStatus.IkkeLastet
+        restSummertSykefraværshistorikk.status === RestStatus.LasterInn ||
+        restSummertSykefraværshistorikk.status === RestStatus.IkkeLastet
     ) {
         return (
             <Skeleton
@@ -43,9 +43,9 @@ export const EkspanderbareTips: FunctionComponent<Props> = ({ restSykefraværsva
         korttidsfravær,
         langtidsfravær,
     } = getAlleResultaterForSammenligningAvSykefravær(
-        restSykefraværsvarighet.status,
-        restSykefraværsvarighet.status === RestStatus.Suksess
-            ? restSykefraværsvarighet.data
+        restSummertSykefraværshistorikk.status,
+        restSummertSykefraværshistorikk.status === RestStatus.Suksess
+            ? restSummertSykefraværshistorikk.data
             : undefined
     );
 

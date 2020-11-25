@@ -48,10 +48,10 @@ import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
 import { Forside } from './Forside/Forside';
 import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
 import {
-    sykefraværsvarighetContext,
-    SykefraværsvarighetProvider,
-} from './utils/sykefraværsvarighetContext';
-import { RestSykefraværsvarighet } from './api/sykefraværsvarighet';
+    summertSykefraværshistorikkContext,
+    SummertSykefraværshistorikkProvider,
+} from './utils/summertSykefraværshistorikkContext';
+import { RestSummertSykefraværshistorikk } from './api/sykefraværsvarighet';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import {
     enhetsregisteretContext,
@@ -74,7 +74,7 @@ const App: FunctionComponent = () => {
                 <AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
                     <VirksomhetMetadataProvider>
                         <EnhetsregisteretProvider>
-                            <SykefraværsvarighetProvider>
+                            <SummertSykefraværshistorikkProvider>
                                 <SykefraværshistorikkProvider>
                                     <FeatureTogglesProvider>
                                         <TilbakemeldingContextProvider>
@@ -84,7 +84,7 @@ const App: FunctionComponent = () => {
                                         </TilbakemeldingContextProvider>
                                     </FeatureTogglesProvider>
                                 </SykefraværshistorikkProvider>
-                            </SykefraværsvarighetProvider>
+                            </SummertSykefraværshistorikkProvider>
                         </EnhetsregisteretProvider>
                     </VirksomhetMetadataProvider>
                 </AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
@@ -98,7 +98,9 @@ const AppContent: FunctionComponent = () => {
     const restOrganisasjonerMedStatistikk = useContext<RestAltinnOrganisasjoner>(
         altinnOrganisasjonerMedTilgangTilStatistikkContext
     );
-    const restSykefraværsvarighet = useContext<RestSykefraværsvarighet>(sykefraværsvarighetContext);
+    const restSykefraværsvarighet = useContext<RestSummertSykefraværshistorikk>(
+        summertSykefraværshistorikkContext
+    );
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
@@ -187,18 +189,18 @@ const AppContent: FunctionComponent = () => {
                                     feature={'sykefravarsstatistikk.ab-test.tips'}
                                     versjonA={
                                         <EkspanderbarSammenligning
-                                            restSykefraværsvarighet={restSykefraværsvarighet}
+                                            restSummertSykefraværshistorikk={restSykefraværsvarighet}
                                             visTips={true}
                                         />
                                     }
                                     versjonB={
                                         <>
                                             <EkspanderbarSammenligning
-                                                restSykefraværsvarighet={restSykefraværsvarighet}
+                                                restSummertSykefraværshistorikk={restSykefraværsvarighet}
                                                 visTips={false}
                                             />
                                             <EkspanderbareTips
-                                                restSykefraværsvarighet={restSykefraværsvarighet}
+                                                restSummertSykefraværshistorikk={restSykefraværsvarighet}
                                             />
                                         </>
                                     }

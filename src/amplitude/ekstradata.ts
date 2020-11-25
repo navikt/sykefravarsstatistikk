@@ -14,12 +14,9 @@ import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { konverterTilKvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
 import { RestOverordnetEnhet } from '../api/enhetsregisteret-api';
 import { mapTilPrivatElleOffentligSektor, Sektor } from '../utils/sektorUtils';
-import { RestSykefraværsvarighet } from '../api/sykefraværsvarighet';
-import {
-    getResultatForSammenligningAvSykefravær,
-    getTotaltSykefraværSiste4Kvartaler,
-    sykefraværForBarnehagerSiste4Kvartaler,
-} from '../Forside/barnehage/barnehage-utils';
+import { RestSummertSykefraværshistorikk } from '../api/sykefraværsvarighet';
+import { getSammenligningResultatMedProsent } from '../Forside/barnehage/barnehage-utils';
+import { SammenligningsType } from '../Forside/barnehage/vurderingstekster';
 
 export interface Ekstradata {
     næring2siffer: string;
@@ -110,7 +107,7 @@ const getAntallForskjelligeFarger = (...resultater: SykefraværResultat[]): numb
 };
 
 export const getEkstraDataFraSykefraværsvarighet = (
-    restSykefraværsvarighet: RestSykefraværsvarighet,
+    restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk,
     restVirksomhetMetadata: RestVirksomhetMetadata
 ): Partial<Ekstradata> => {
     if (
@@ -121,46 +118,44 @@ export const getEkstraDataFraSykefraværsvarighet = (
     }
 
     if (
-        restSykefraværsvarighet.status !== RestStatus.Suksess &&
-        restSykefraværsvarighet.status !== RestStatus.Feil
+        restSummertSykefraværshistorikk.status !== RestStatus.Suksess &&
+        restSummertSykefraværshistorikk.status !== RestStatus.Feil
     ) {
         return {};
     }
 
-    const varighet =
-        restSykefraværsvarighet.status === RestStatus.Suksess
-            ? restSykefraværsvarighet.data
-            : undefined;
-
     try {
-        const sykefraværSiste4Kvartaler = getResultatForSammenligningAvSykefravær(
-            restSykefraværsvarighet.status,
-            getTotaltSykefraværSiste4Kvartaler(varighet),
-            sykefraværForBarnehagerSiste4Kvartaler.totalt
-        );
-        const korttidSiste4Kvartaler = getResultatForSammenligningAvSykefravær(
-            restSykefraværsvarighet.status,
-            varighet?.summertKorttidsfravær,
-            sykefraværForBarnehagerSiste4Kvartaler.korttidsfravær
-        );
-        const langtidSiste4Kvartaler = getResultatForSammenligningAvSykefravær(
-            restSykefraværsvarighet.status,
-            varighet?.summertLangtidsfravær,
-            sykefraværForBarnehagerSiste4Kvartaler.langtidsfravær
+        const summertSykefraværshistorikk =
+            restSummertSykefraværshistorikk.status === RestStatus.Suksess
+                ? restSummertSykefraværshistorikk.data
+                : undefined;
+
+        const sammenligningResultatTotalt = getSammenligningResultatMedProsent(
+            restSummertSykefraværshistorikk.status,
+            summertSykefraværshistorikk,
+            SammenligningsType.TOTALT
         );
 
-        let ekstradata: Partial<Ekstradata> = {
-            sykefraværSiste4Kvartaler,
-            korttidSiste4Kvartaler,
-            langtidSiste4Kvartaler,
+        const sammenligningResultatKorttid = getSammenligningResultatMedProsent(
+            restSummertSykefraværshistorikk.status,
+            summertSykefraværshistorikk,
+            SammenligningsType.KORTTID
+        );
+        const sammenligningResultatLangtid = getSammenligningResultatMedProsent(
+            restSummertSykefraværshistorikk.status,
+            summertSykefraværshistorikk,
+            SammenligningsType.LANGTID
+        );
+
+        const resultater = {
+            sykefraværSiste4Kvartaler: sammenligningResultatTotalt.sammenligningResultat,
+            korttidSiste4Kvartaler: sammenligningResultatKorttid.sammenligningResultat,
+            langtidSiste4Kvartaler: sammenligningResultatLangtid.sammenligningResultat,
         };
 
-        const antallFarger = getAntallForskjelligeFarger(
-            sykefraværSiste4Kvartaler,
-            korttidSiste4Kvartaler,
-            langtidSiste4Kvartaler
-        );
+        const antallFarger = getAntallForskjelligeFarger(...Object.values(resultater));
 
+        let ekstradata: Partial<Ekstradata> = { ...resultater };
         if (antallFarger !== undefined) {
             ekstradata = { ...ekstradata, antallFarger };
         }

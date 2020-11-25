@@ -4,8 +4,8 @@ import { RestVirksomhetMetadata } from '../api/virksomhetMetadata';
 import { virksomhetMetadataContext } from '../utils/virksomhetMetadataContext';
 import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkContext';
-import { RestSykefraværsvarighet } from '../api/sykefraværsvarighet';
-import { sykefraværsvarighetContext } from '../utils/sykefraværsvarighetContext';
+import { RestSummertSykefraværshistorikk } from '../api/sykefraværsvarighet';
+import { summertSykefraværshistorikkContext } from '../utils/summertSykefraværshistorikkContext';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
 import {
     Ekstradata,
@@ -112,7 +112,9 @@ const useEkstraDataRef = (): MutableRefObject<Partial<Ekstradata>> => {
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
-    const restSykefraværsvarighet = useContext<RestSykefraværsvarighet>(sykefraværsvarighetContext);
+    const restSummertSykefraværshistorikk = useContext<RestSummertSykefraværshistorikk>(
+        summertSykefraværshistorikkContext
+    );
 
     const ekstradata = useRef<Partial<Ekstradata>>({});
     const dataFraEnhetsregisteret = useContext<EnhetsregisteretState>(enhetsregisteretContext);
@@ -121,7 +123,7 @@ const useEkstraDataRef = (): MutableRefObject<Partial<Ekstradata>> => {
         ekstradata.current = {
             ...getEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
             ...getEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
-            ...getEkstraDataFraSykefraværsvarighet(restSykefraværsvarighet, restVirksomhetMetadata),
+            ...getEkstraDataFraSykefraværsvarighet(restSummertSykefraværshistorikk, restVirksomhetMetadata),
             ...getEkstraDataFraEnhetsregisteret(
                 dataFraEnhetsregisteret.restOverordnetEnhet,
                 restVirksomhetMetadata
@@ -131,7 +133,7 @@ const useEkstraDataRef = (): MutableRefObject<Partial<Ekstradata>> => {
         restVirksomhetMetadata,
         dataFraEnhetsregisteret,
         restSykefraværshistorikk,
-        restSykefraværsvarighet,
+        restSummertSykefraværshistorikk,
     ]);
     return ekstradata;
 };

@@ -145,8 +145,17 @@ export const getVurderingstekstLangtid = (resultat: SykefraværResultat) => {
 
 export const getForklaringAvVurdering = (
     resultat: SykefraværResultat,
-    bransjensProsent: number
+    bransjensProsent: number | null | undefined
 ) => {
+    if (bransjensProsent === null || bransjensProsent === undefined) {
+        return (
+            <Normaltekst>
+                Sammenligningen din er blitt markert som grå fordi vi ikke finner tall for
+                bransjen/næringen din. Vi viser dine tall når de publiseres.
+            </Normaltekst>
+        );
+    }
+
     switch (resultat) {
         case SykefraværResultat.UNDER:
             return (

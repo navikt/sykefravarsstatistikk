@@ -9,13 +9,13 @@ import {
 } from './sykefraværshistorikk';
 import { sendEventDirekte } from '../amplitude/amplitude';
 import { RestVirksomhetMetadata } from './virksomhetMetadata';
-import { RestSykefraværsvarighet } from './sykefraværsvarighet';
+import { RestSummertSykefraværshistorikk } from './sykefraværsvarighet';
 
 const sykefraværshistorikkPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/kvartalsvis`;
 
 const varighetPath = (orgnr: string) =>
-    `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/summert?antallKvartaler=4`;
+    `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/summert/v2?antallKvartaler=4`;
 
 const featureTogglesPath = (features: string[]) =>
     `${BASE_PATH}/api/feature?` + features.map((featureNavn) => `feature=${featureNavn}`).join('&');
@@ -107,9 +107,9 @@ export const hentRestVirksomhetMetadata = async (
     };
 };
 
-export const hentRestSykefraværsvarighet = async (
+export const hentRestSummertSykefraværshistorikk = async (
     orgnr: string
-): Promise<RestSykefraværsvarighet> => {
+): Promise<RestSummertSykefraværshistorikk> => {
     // TODO: Generaliser feilhåndteringen?
     const response = await fetch(varighetPath(orgnr), {
         method: 'GET',
