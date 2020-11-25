@@ -226,22 +226,3 @@ export const summertSykefraværshistorikkMockRød = [
     },
     summertSykefraværshistorikkBarnehager,
 ];
-
-export const sykefraværsvarighetMock = (orgnr: String): SummertSykefraværshistorikk[] => {
-    switch (orgnr) {
-        case '888888888':
-            return summertSykefraværshistorikkMockMedSiste4Kvartaler;
-        case '888888887':
-            return summertSykefraværshistorikkMockMaskert;
-        case '888888886':
-            return summertSykefraværshistorikkMockMedBare2Kvartaler;
-        case '888888883':
-            return summertSykefraværshistorikkMockGrønn;
-        case '888888882':
-            return summertSykefraværshistorikkMockGul;
-        case '888888881':
-            return summertSykefraværshistorikkMockRød;
-        default:
-            return summertSykefraværshistorikkMockUtenData;
-    }
-};
