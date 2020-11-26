@@ -3,7 +3,7 @@ import './Kalkulator.less';
 import Kostnad from './../Kostnad/Kostnad';
 import { RestStatus } from '../../api/api-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
-import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
+import { RestSykefraværshistorikk } from '../../api/kvartalsvisSykefraværshistorikk';
 import {
     Kalkulatorvariant,
     getAntallTapteDagsverkSiste4Kvartaler,

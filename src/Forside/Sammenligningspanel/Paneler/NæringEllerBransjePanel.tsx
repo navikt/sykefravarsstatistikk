@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import Sykefraværsprosentpanel, {
     SykefraværprosentpanelProps,
 } from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
-import { SykefraværshistorikkType } from '../../../api/sykefraværshistorikk';
+import { SykefraværshistorikkType } from '../../../api/kvartalsvisSykefraværshistorikk';
 import SammenligningsIkon from './SammenligningsIkon/SammenligningsIkon';
 
 type Props = SykefraværprosentpanelProps & {

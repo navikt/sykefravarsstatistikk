@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
+import { RestSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
 import { ToggleGruppePure } from 'nav-frontend-toggle';
 import Graf from './Graf/Graf';
 import Tabell from './Tabell/Tabell';

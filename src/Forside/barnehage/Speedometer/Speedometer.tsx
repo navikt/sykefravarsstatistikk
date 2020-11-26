@@ -5,7 +5,7 @@ import { SpeedometerGrønn } from './SpeedometerGrønn';
 import classNames from 'classnames';
 import { SpeedometerGrå } from './SpeedometerGrå';
 
-export enum SykefraværResultat {
+export enum SykefraværVurdering {
     UNDER = 'UNDER',
     MIDDELS = 'MIDDELS',
     OVER = 'OVER',
@@ -16,7 +16,7 @@ export enum SykefraværResultat {
 }
 
 interface Props {
-    resultat: SykefraværResultat;
+    resultat: SykefraværVurdering;
     stor?: boolean;
     className?: string;
     inline?: boolean;
@@ -37,20 +37,20 @@ export const Speedometer: FunctionComponent<Props> = ({ resultat, stor, classNam
 };
 
 const SpeedometerSvg: FunctionComponent<{
-    resultat: SykefraværResultat;
+    resultat: SykefraværVurdering;
     størrelsesfaktor: number;
 }> = ({ resultat, størrelsesfaktor }) => {
     switch (resultat) {
-        case SykefraværResultat.UNDER:
+        case SykefraværVurdering.UNDER:
             return <SpeedometerGrønn størrelsesfaktor={størrelsesfaktor} />;
-        case SykefraværResultat.MIDDELS:
+        case SykefraværVurdering.MIDDELS:
             return <SpeedometerGul størrelsesfaktor={størrelsesfaktor} />;
-        case SykefraværResultat.OVER:
+        case SykefraværVurdering.OVER:
             return <SpeedometerRød størrelsesfaktor={størrelsesfaktor} />;
-        case SykefraværResultat.MASKERT:
-        case SykefraværResultat.INGEN_DATA:
-        case SykefraværResultat.UFULLSTENDIG_DATA:
-        case SykefraværResultat.FEIL:
+        case SykefraværVurdering.MASKERT:
+        case SykefraværVurdering.INGEN_DATA:
+        case SykefraværVurdering.UFULLSTENDIG_DATA:
+        case SykefraværVurdering.FEIL:
             return <SpeedometerGrå størrelsesfaktor={størrelsesfaktor} />;
     }
 };

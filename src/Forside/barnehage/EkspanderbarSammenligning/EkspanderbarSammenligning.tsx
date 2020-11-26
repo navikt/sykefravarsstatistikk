@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react';
-import { RestSummertSykefraværshistorikk } from '../../../api/sykefraværsvarighet';
+import { RestSummertSykefraværshistorikk } from '../../../api/summertSykefraværshistorikk';
 import { EkspanderbartSammenligningspanel } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
 import { RestStatus } from '../../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
 import { getSammenligningResultatMedProsent } from '../barnehage-utils';
-import { SykefraværResultat } from '../Speedometer/Speedometer';
+import { SykefraværVurdering } from '../Speedometer/Speedometer';
 import { SammenligningsType } from '../vurderingstekster';
 import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngress';
 import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
@@ -64,16 +64,16 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
     );
 
     const antallKvartalerVirksomhet =
-        sammenligningResultatTotalt.sammenligningResultat ===
-            SykefraværResultat.UFULLSTENDIG_DATA ||
-        sammenligningResultatTotalt.sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
+        sammenligningResultatTotalt.sammenligningVurdering ===
+            SykefraværVurdering.UFULLSTENDIG_DATA ||
+        sammenligningResultatTotalt.sammenligningVurdering === SykefraværVurdering.INGEN_DATA ? (
             <strong> {sammenligningResultatTotalt.kvartaler?.length || 0} av 4 kvartaler</strong>
         ) : null;
 
     const antallKvartalerBransje =
-        sammenligningResultatTotalt.sammenligningResultat ===
-            SykefraværResultat.UFULLSTENDIG_DATA ||
-        sammenligningResultatTotalt.sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
+        sammenligningResultatTotalt.sammenligningVurdering ===
+            SykefraværVurdering.UFULLSTENDIG_DATA ||
+        sammenligningResultatTotalt.sammenligningVurdering === SykefraværVurdering.INGEN_DATA ? (
             <strong>4 av 4 kvartaler</strong>
         ) : null;
 
@@ -81,13 +81,13 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
         <div className="ekspanderbar-sammenligning">
             <SammenligningIngress />
             <SlikHarViKommetFramTilDittResultat
-                resultat={sammenligningResultatTotalt.sammenligningResultat}
+                resultat={sammenligningResultatTotalt.sammenligningVurdering}
                 kvartaler={sammenligningResultatTotalt.kvartaler}
                 onÅpne={() => sendEvent('barnehage sammenligning lesmer', 'åpne')}
             />
             <EkspanderbartSammenligningspanel
                 className="ekspanderbar-sammenligning__sammenligning-totalt"
-                sammenligningResultat={sammenligningResultatTotalt.sammenligningResultat}
+                sammenligningResultat={sammenligningResultatTotalt.sammenligningVurdering}
                 sykefraværVirksomhet={sammenligningResultatTotalt.sykefraværVirksomhet}
                 sykefraværBransje={sammenligningResultatTotalt.sykefraværBransje}
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
@@ -97,7 +97,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 visTips={visTips}
             />
             <EkspanderbartSammenligningspanel
-                sammenligningResultat={sammenligningResultatKorttid.sammenligningResultat}
+                sammenligningResultat={sammenligningResultatKorttid.sammenligningVurdering}
                 sykefraværVirksomhet={sammenligningResultatKorttid.sykefraværVirksomhet}
                 sykefraværBransje={sammenligningResultatKorttid.sykefraværBransje}
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
@@ -106,7 +106,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 visTips={visTips}
             />
             <EkspanderbartSammenligningspanel
-                sammenligningResultat={sammenligningResultatLangtid.sammenligningResultat}
+                sammenligningResultat={sammenligningResultatLangtid.sammenligningVurdering}
                 sykefraværVirksomhet={sammenligningResultatLangtid.sykefraværVirksomhet}
                 sykefraværBransje={sammenligningResultatLangtid.sykefraværBransje}
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}

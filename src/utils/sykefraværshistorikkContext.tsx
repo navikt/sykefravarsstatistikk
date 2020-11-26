@@ -1,5 +1,5 @@
 import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
-import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
+import { RestSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
 import { RestStatus } from '../api/api-utils';
 import { useOrgnr } from './orgnr-hook';
 import { hentRestSykefraværshistorikk } from '../api/api';

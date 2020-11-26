@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 
 import './Graf.less';
 import 'nav-frontend-tabell-style';
-import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
+import { KvartalsvisSykefraværshistorikk } from '../../api/kvartalsvisSykefraværshistorikk';
 import {
     finnesBransjeIHistorikken,
     getLabelsForLinjene,
@@ -13,7 +13,7 @@ import { LegendMedToggles } from './LegendMedToggles/LegendMedToggles';
 import GrafVisning from './GrafVisning';
 
 interface Props {
-    sykefraværshistorikk: Sykefraværshistorikk[];
+    sykefraværshistorikk: KvartalsvisSykefraværshistorikk[];
 }
 
 const Graf: FunctionComponent<Props> = (props) => {

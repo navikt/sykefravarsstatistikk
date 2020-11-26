@@ -1,5 +1,5 @@
 import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
-import { KvartalsvisSykefraværsprosent } from '../api/sykefraværshistorikk';
+import { KvartalsvisSykefraværsprosent } from '../api/kvartalsvisSykefraværshistorikk';
 
 const neste = (årstallOgKvartal: ÅrstallOgKvartal): ÅrstallOgKvartal => {
     const { årstall, kvartal } = årstallOgKvartal;

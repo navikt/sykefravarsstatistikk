@@ -2,7 +2,7 @@ import React, { FunctionComponent, useRef } from 'react';
 import './SammenligningspanelBarnehage.less';
 import ReactToPrint from 'react-to-print';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { RestSummertSykefraværshistorikk } from '../../../api/sykefraværsvarighet';
+import { RestSummertSykefraværshistorikk } from '../../../api/summertSykefraværshistorikk';
 import { RestStatus } from '../../../api/api-utils';
 import { useSendEvent } from '../../../amplitude/amplitude';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
@@ -10,12 +10,12 @@ import { RestAltinnOrganisasjoner } from '../../../api/altinnorganisasjon-api';
 import { useOrgnr } from '../../../utils/orgnr-hook';
 
 export const SammenligningspanelBarnehage: FunctionComponent<{
-    restSykefraværsvarighet: RestSummertSykefraværshistorikk;
+    restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
     restAltinnOrganisasjoner: RestAltinnOrganisasjoner;
-}> = ({ restSykefraværsvarighet, restAltinnOrganisasjoner, children }) => {
+}> = ({ restSummertSykefraværshistorikk, restAltinnOrganisasjoner, children }) => {
     const panelRef = useRef<HTMLDivElement>(null);
     const lastNedKnappRef = useRef<HTMLButtonElement>(null);
-    const harFeil = restSykefraværsvarighet.status === RestStatus.Feil;
+    const harFeil = restSummertSykefraværshistorikk.status === RestStatus.Feil;
     const sendEvent = useSendEvent();
     const orgnr = useOrgnr();
     const navnPåVirksomhet =

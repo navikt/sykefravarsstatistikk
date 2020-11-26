@@ -5,14 +5,14 @@ import grafLinjer from './grafLinjer';
 
 import './Graf.less';
 import 'nav-frontend-tabell-style';
-import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
+import { KvartalsvisSykefraværshistorikk } from '../../api/kvartalsvisSykefraværshistorikk';
 import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString, Linje } from './graf-utils';
 import XAkseTick from './XAkseTick';
 import { useInnerWidth } from '../../utils/innerWidth-hook';
 import { konverterTilKvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
 
 interface Props {
-    sykefraværshistorikk: Sykefraværshistorikk[];
+    sykefraværshistorikk: KvartalsvisSykefraværshistorikk[];
     harBransje: boolean;
     linjerSomSkalVises: Linje[];
 }

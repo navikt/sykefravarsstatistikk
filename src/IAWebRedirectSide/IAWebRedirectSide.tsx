@@ -1,6 +1,6 @@
 import * as React from 'react';
 import '../Forside/Forside.less';
-import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
+import { RestSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;

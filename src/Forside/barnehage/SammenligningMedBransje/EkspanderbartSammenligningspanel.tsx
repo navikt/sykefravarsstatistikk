@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactElement, useState } from 'react';
 import { Ingress, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
-import { Speedometer, SykefraværResultat } from '../Speedometer/Speedometer';
+import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
 import {
     getForklaringAvVurdering,
     getVurderingstekst,
@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import { useSendEvent } from '../../../amplitude/amplitude';
 
 interface Props {
-    sammenligningResultat: SykefraværResultat;
+    sammenligningResultat: SykefraværVurdering;
     sykefraværVirksomhet: number | null | undefined;
     sykefraværBransje: number | null | undefined;
     antallKvartalerVirksomhet: ReactElement | null;
@@ -44,7 +44,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const periode = '01.04.2019 til 31.03.2020';
 
     const visningAvProsentForBransje: number | null | undefined =
-        sykefraværResultat === SykefraværResultat.FEIL ? null : sykefraværBransje;
+        sykefraværResultat === SykefraværVurdering.FEIL ? null : sykefraværBransje;
 
     const getPanelEventtekst = (sammenligningsType: SammenligningsType) => {
         switch (sammenligningsType) {

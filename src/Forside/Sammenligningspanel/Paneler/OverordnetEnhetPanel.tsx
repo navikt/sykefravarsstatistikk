@@ -3,7 +3,7 @@ import Sykefraværsprosentpanel, {
     SykefraværprosentpanelProps,
 } from './Sykefraværsprosentpanel/Sykefraværsprosentpanel';
 import SammenligningsIkon from './SammenligningsIkon/SammenligningsIkon';
-import { SykefraværshistorikkType } from '../../../api/sykefraværshistorikk';
+import { SykefraværshistorikkType } from '../../../api/kvartalsvisSykefraværshistorikk';
 
 export const OverordnetEnhetPanel: FunctionComponent<SykefraværprosentpanelProps> = ({
     sykefraværsprosent,

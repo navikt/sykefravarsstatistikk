@@ -4,7 +4,7 @@ import { ReactComponent as OverordnetEnhetSvg } from './OverordnetEnhet.svg';
 import { ReactComponent as VirksomhetSvg } from './Virksomhet.svg';
 import { ReactComponent as NæringSvg } from './Næring.svg';
 import { ReactComponent as LandSvg } from './Norge.svg';
-import { SykefraværshistorikkType } from '../../../../api/sykefraværshistorikk';
+import { SykefraværshistorikkType } from '../../../../api/kvartalsvisSykefraværshistorikk';
 
 const SammenligningsIkon: FunctionComponent<{
     label: string;

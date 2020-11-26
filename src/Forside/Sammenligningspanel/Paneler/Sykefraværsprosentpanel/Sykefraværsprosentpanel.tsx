@@ -4,7 +4,7 @@ import { Element, Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import './Sykefraværsprosentpanel.less';
 import Skeleton from 'react-loading-skeleton';
 import classNames from 'classnames';
-import { Sykefraværsprosent } from '../../../../api/sykefraværshistorikk';
+import { Sykefraværsprosent } from '../../../../api/kvartalsvisSykefraværshistorikk';
 import { formaterProsent } from '../../../../utils/app-utils';
 
 export interface SykefraværprosentpanelProps {
