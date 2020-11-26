@@ -15,7 +15,7 @@ const sykefraværshistorikkPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/kvartalsvis`;
 
 const varighetPath = (orgnr: string) =>
-    `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/summert/v2?antallKvartaler=4`;
+    `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/summert?antallKvartaler=4`;
 
 const featureTogglesPath = (features: string[]) =>
     `${BASE_PATH}/api/feature?` + features.map((featureNavn) => `feature=${featureNavn}`).join('&');
