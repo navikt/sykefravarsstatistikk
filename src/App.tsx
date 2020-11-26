@@ -12,7 +12,7 @@ import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
 import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
-import { RestSykefraværshistorikk } from './api/sykefraværshistorikk';
+import { RestSykefraværshistorikk } from './api/kvartalsvisSykefraværshistorikk';
 import { RestVirksomhetMetadata } from './api/virksomhetMetadata';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
@@ -51,7 +51,7 @@ import {
     summertSykefraværshistorikkContext,
     SummertSykefraværshistorikkProvider,
 } from './utils/summertSykefraværshistorikkContext';
-import { RestSummertSykefraværshistorikk } from './api/summertSykefravær';
+import { RestSummertSykefraværshistorikk } from './api/summertSykefraværshistorikk';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import {
     enhetsregisteretContext,
@@ -98,7 +98,7 @@ const AppContent: FunctionComponent = () => {
     const restOrganisasjonerMedStatistikk = useContext<RestAltinnOrganisasjoner>(
         altinnOrganisasjonerMedTilgangTilStatistikkContext
     );
-    const restSykefraværsvarighet = useContext<RestSummertSykefraværshistorikk>(
+    const restSummertSykefraværshistorikk = useContext<RestSummertSykefraværshistorikk>(
         summertSykefraværshistorikkContext
     );
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
@@ -181,7 +181,7 @@ const AppContent: FunctionComponent = () => {
                     >
                         <Forside>
                             <SammenligningspanelBarnehage
-                                restSykefraværsvarighet={restSykefraværsvarighet}
+                                restSummertSykefraværshistorikk={restSummertSykefraværshistorikk}
                                 restAltinnOrganisasjoner={restOrganisasjoner}
                             >
                                 <ABTest
@@ -190,7 +190,7 @@ const AppContent: FunctionComponent = () => {
                                     versjonA={
                                         <EkspanderbarSammenligning
                                             restSummertSykefraværshistorikk={
-                                                restSykefraværsvarighet
+                                                restSummertSykefraværshistorikk
                                             }
                                             visTips={true}
                                         />
@@ -199,13 +199,13 @@ const AppContent: FunctionComponent = () => {
                                         <>
                                             <EkspanderbarSammenligning
                                                 restSummertSykefraværshistorikk={
-                                                    restSykefraværsvarighet
+                                                    restSummertSykefraværshistorikk
                                                 }
                                                 visTips={false}
                                             />
                                             <EkspanderbareTips
                                                 restSummertSykefraværshistorikk={
-                                                    restSykefraværsvarighet
+                                                    restSummertSykefraværshistorikk
                                                 }
                                             />
                                         </>

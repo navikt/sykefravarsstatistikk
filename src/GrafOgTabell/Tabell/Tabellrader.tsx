@@ -1,4 +1,7 @@
-import { Sykefraværshistorikk, Sykefraværsprosent } from '../../api/sykefraværshistorikk';
+import {
+    KvartalsvisSykefraværshistorikk,
+    Sykefraværsprosent,
+} from '../../api/kvartalsvisSykefraværshistorikk';
 import React, { FunctionComponent } from 'react';
 import {
     historikkHarOverordnetEnhet,
@@ -6,7 +9,7 @@ import {
 } from '../../utils/sykefraværshistorikk-utils';
 
 interface Props {
-    sykefraværshistorikk: Sykefraværshistorikk[];
+    kvartalsvisSykefraværshistorikk: KvartalsvisSykefraværshistorikk[];
 }
 
 const formaterProsent = (prosent: Sykefraværsprosent): string => {
@@ -30,7 +33,7 @@ const kolonneOverordnetEnhet = (
 
 const Tabellrader: FunctionComponent<Props> = (props) => {
     const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
-        props.sykefraværshistorikk
+        props.kvartalsvisSykefraværshistorikk
     );
     kvartalsvisSammenligning.reverse();
     return (
@@ -52,7 +55,7 @@ const Tabellrader: FunctionComponent<Props> = (props) => {
                         <td>{formaterProsent(virksomhet)}</td>
                         {kolonneOverordnetEnhet(
                             overordnetEnhet,
-                            historikkHarOverordnetEnhet(props.sykefraværshistorikk)
+                            historikkHarOverordnetEnhet(props.kvartalsvisSykefraværshistorikk)
                         )}
                         <td>{formaterProsent(næringEllerBransje)}</td>
                         <td>{formaterProsent(sektor)}</td>

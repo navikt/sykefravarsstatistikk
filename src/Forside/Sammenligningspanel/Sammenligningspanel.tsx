@@ -1,7 +1,10 @@
 import React, { FunctionComponent } from 'react';
 import PanelBase from 'nav-frontend-paneler';
 import './Sammenligningspanel.less';
-import { RestSykefraværshistorikk, Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
+import {
+    RestSykefraværshistorikk,
+    KvartalsvisSykefraværshistorikk,
+} from '../../api/kvartalsvisSykefraværshistorikk';
 import {
     getHistorikkLabels,
     historikkHarBransje,
@@ -29,7 +32,7 @@ interface Props {
 }
 
 const getSammenligningForSisteKvartal = (
-    historikkListe: Sykefraværshistorikk[]
+    historikkListe: KvartalsvisSykefraværshistorikk[]
 ): KvartalsvisSammenligning => {
     const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(historikkListe);
     kvartalsvisSammenligning.reverse();

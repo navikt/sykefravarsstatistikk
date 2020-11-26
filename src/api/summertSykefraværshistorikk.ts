@@ -29,8 +29,8 @@ export interface SummertKorttidsOgLangtidsfravær {
     summertLangtidsfravær: SummertSykefravær;
 }
 
-export const erMaskert = (sykefraværsvarighet: SummertKorttidsOgLangtidsfravær) => {
-    return sykefraværsvarighet.summertLangtidsfravær.erMaskert;
+export const erMaskert = (summertKorttidsOgLangtidsfravær: SummertKorttidsOgLangtidsfravær) => {
+    return summertKorttidsOgLangtidsfravær.summertLangtidsfravær.erMaskert;
 };
 
 export type RestSummertSykefraværshistorikk = RestRessurs<SummertSykefraværshistorikk[]>;

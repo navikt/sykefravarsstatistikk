@@ -4,17 +4,17 @@ import { RestFeatureToggles } from './featureToggles';
 import {
     KvartalsvisSykefraværsprosent,
     RestSykefraværshistorikk,
-    Sykefraværshistorikk,
+    KvartalsvisSykefraværshistorikk,
     SykefraværshistorikkType,
-} from './sykefraværshistorikk';
+} from './kvartalsvisSykefraværshistorikk';
 import { sendEventDirekte } from '../amplitude/amplitude';
 import { RestVirksomhetMetadata } from './virksomhetMetadata';
-import { RestSummertSykefraværshistorikk } from './summertSykefravær';
+import { RestSummertSykefraværshistorikk } from './summertSykefraværshistorikk';
 
 const sykefraværshistorikkPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/kvartalsvis`;
 
-const varighetPath = (orgnr: string) =>
+const summertPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/summert?antallKvartaler=4`;
 
 const featureTogglesPath = (features: string[]) =>
@@ -111,7 +111,7 @@ export const hentRestSummertSykefraværshistorikk = async (
     orgnr: string
 ): Promise<RestSummertSykefraværshistorikk> => {
     // TODO: Generaliser feilhåndteringen?
-    const response = await fetch(varighetPath(orgnr), {
+    const response = await fetch(summertPath(orgnr), {
         method: 'GET',
         credentials: 'include',
     });
@@ -143,8 +143,8 @@ export const hentRestSummertSykefraværshistorikk = async (
 };
 
 export const filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet = (
-    data: Sykefraværshistorikk[]
-): Sykefraværshistorikk[] => {
+    data: KvartalsvisSykefraværshistorikk[]
+): KvartalsvisSykefraværshistorikk[] => {
     const sykefraværshistorikkForOverordnetEnhet: KvartalsvisSykefraværsprosent[] = getSykefraværshistorikk(
         data,
         SykefraværshistorikkType.OVERORDNET_ENHET
@@ -170,7 +170,7 @@ export const filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet = (
 };
 
 const getSykefraværshistorikk = (
-    listeAvSykefraværshistorikk: Sykefraværshistorikk[],
+    listeAvSykefraværshistorikk: KvartalsvisSykefraværshistorikk[],
     sykefraværshistorikkType: SykefraværshistorikkType
 ): KvartalsvisSykefraværsprosent[] => {
     const sykefraværshistorikkForTypen = listeAvSykefraværshistorikk.find(
@@ -208,7 +208,7 @@ const harSammeSykefraværshistorikk = (
     return !harFunnetMinstEnUlikSykefraværprosent;
 };
 
-const nullstillOverordnetEnhetshistorikk = (data: Sykefraværshistorikk[]): void => {
+const nullstillOverordnetEnhetshistorikk = (data: KvartalsvisSykefraværshistorikk[]): void => {
     const sykefraværshistorikkTilOverordnetEnhet = data.find(
         (sf) => sf.type === SykefraværshistorikkType.OVERORDNET_ENHET
     );

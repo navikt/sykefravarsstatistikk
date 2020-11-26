@@ -10,11 +10,11 @@ import { SykefraværVurdering } from '../Forside/barnehage/Speedometer/Speedomet
 import { Bransjetype, RestVirksomhetMetadata } from '../api/virksomhetMetadata';
 import { RestStatus } from '../api/api-utils';
 import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
-import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
+import { RestSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
 import { konverterTilKvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
 import { RestOverordnetEnhet } from '../api/enhetsregisteret-api';
 import { mapTilPrivatElleOffentligSektor, Sektor } from '../utils/sektorUtils';
-import { RestSummertSykefraværshistorikk } from '../api/summertSykefravær';
+import { RestSummertSykefraværshistorikk } from '../api/summertSykefraværshistorikk';
 import { getSammenligningResultatMedProsent } from '../Forside/barnehage/barnehage-utils';
 import { SammenligningsType } from '../Forside/barnehage/vurderingstekster';
 
@@ -106,7 +106,7 @@ const getAntallForskjelligeFarger = (...resultater: SykefraværVurdering[]): num
         : undefined;
 };
 
-export const getEkstraDataFraSykefraværsvarighet = (
+export const getEkstraDataFraSummertSykefraværshistorikk = (
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk,
     restVirksomhetMetadata: RestVirksomhetMetadata
 ): Partial<Ekstradata> => {

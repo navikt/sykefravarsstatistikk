@@ -1,4 +1,4 @@
-import { Statistikkategori, SummertSykefraværshistorikk } from '../api/summertSykefravær';
+import { Statistikkategori, SummertSykefraværshistorikk } from '../api/summertSykefraværshistorikk';
 
 const siste4Kvartaler = [
     {

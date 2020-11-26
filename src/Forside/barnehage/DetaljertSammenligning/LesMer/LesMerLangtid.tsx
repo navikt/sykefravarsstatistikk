@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { SummertSykefravær } from '../../../../api/summertSykefravær';
+import { SummertSykefravær } from '../../../../api/summertSykefraværshistorikk';
 import { SykefraværVurdering } from '../../Speedometer/Speedometer';
 import { Prosent } from '../../Prosent';
 import './DetaljertSammenligningLesMer.less';

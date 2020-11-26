@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Sykefraværshistorikk } from '../../api/sykefraværshistorikk';
+import { KvartalsvisSykefraværshistorikk } from '../../api/kvartalsvisSykefraværshistorikk';
 import './Tabell.less';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Tabellrader from './Tabellrader';
@@ -11,7 +11,7 @@ import {
 } from '../../utils/sykefraværshistorikk-utils';
 
 interface Props {
-    sykefraværshistorikk: Sykefraværshistorikk[];
+    sykefraværshistorikk: KvartalsvisSykefraværshistorikk[];
 }
 
 const Tabell: FunctionComponent<Props> = (props) => {
@@ -53,7 +53,7 @@ const Tabell: FunctionComponent<Props> = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <Tabellrader sykefraværshistorikk={props.sykefraværshistorikk} />
+                    <Tabellrader kvartalsvisSykefraværshistorikk={props.sykefraværshistorikk} />
                 </tbody>
             </table>
         </div>

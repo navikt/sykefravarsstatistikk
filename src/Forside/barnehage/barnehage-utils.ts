@@ -3,7 +3,7 @@ import {
     SummertSykefravær,
     SummertSykefraværshistorikk,
     SummertKorttidsOgLangtidsfravær,
-} from '../../api/summertSykefravær';
+} from '../../api/summertSykefraværshistorikk';
 import { SykefraværVurdering } from './Speedometer/Speedometer';
 import { RestStatus } from '../../api/api-utils';
 import { ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
@@ -65,7 +65,7 @@ export const getVurderingForSammenligningAvSykefravær = (
     }
 };
 
-export const getAlleResultaterForSammenligningAvSykefravær = (
+export const getAlleVurderingerForSammenligningAvSykefravær = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,
     summertSykefraværshistorikk: SummertSykefraværshistorikk[] | undefined
 ): {
@@ -120,11 +120,11 @@ export const getSummertKorttidsOgLangtidsfravær = (
 };
 
 export const getTotaltSykefraværSiste4Kvartaler = (
-    varighet: SummertKorttidsOgLangtidsfravær | undefined
+    summertKorttidsOgLangtidsfravær: SummertKorttidsOgLangtidsfravær | undefined
 ): SummertSykefravær | undefined => {
-    if (varighet === undefined) return undefined;
-    const korttid = varighet.summertKorttidsfravær;
-    const langtid = varighet.summertLangtidsfravær;
+    if (summertKorttidsOgLangtidsfravær === undefined) return undefined;
+    const korttid = summertKorttidsOgLangtidsfravær.summertKorttidsfravær;
+    const langtid = summertKorttidsOgLangtidsfravær.summertLangtidsfravær;
     return {
         kvartaler: korttid.kvartaler,
         tapteDagsverk: addEllerReturnerNull(korttid.tapteDagsverk, langtid.tapteDagsverk),

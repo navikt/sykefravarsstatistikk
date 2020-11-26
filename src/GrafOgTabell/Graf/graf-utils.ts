@@ -1,5 +1,8 @@
 import { KvartalsvisSammenligning, ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
-import { Sykefraværshistorikk, SykefraværshistorikkType } from '../../api/sykefraværshistorikk';
+import {
+    KvartalsvisSykefraværshistorikk,
+    SykefraværshistorikkType,
+} from '../../api/kvartalsvisSykefraværshistorikk';
 
 export type SymbolType = 'circle' | 'cross' | 'diamond' | 'square' | 'star' | 'triangle' | 'wye';
 
@@ -73,7 +76,7 @@ export const lagTickString = (årstall: number, kvartal: number) =>
     årstall + ', ' + kvartal + '. kvartal';
 
 export const getLinjerSomHistorikkenHarDataFor = (
-    sykefraværshistorikk: Sykefraværshistorikk[]
+    sykefraværshistorikk: KvartalsvisSykefraværshistorikk[]
 ): Linje[] => {
     let linjer: Linje[] = [...grafConfig.linjer];
 
@@ -98,11 +101,13 @@ export const getLinjerSomHistorikkenHarDataFor = (
     return linjer;
 };
 
-export const finnesBransjeIHistorikken = (sykefraværshistorikk: Sykefraværshistorikk[]): boolean =>
+export const finnesBransjeIHistorikken = (
+    sykefraværshistorikk: KvartalsvisSykefraværshistorikk[]
+): boolean =>
     !!sykefraværshistorikk.find((historikk) => historikk.type === SykefraværshistorikkType.BRANSJE);
 
 export const getLabelsForLinjene = (
-    sykefraværshistorikk: Sykefraværshistorikk[]
+    sykefraværshistorikk: KvartalsvisSykefraværshistorikk[]
 ): LabelsForLinjer => {
     const labelForType = (type: SykefraværshistorikkType): string => {
         return sykefraværshistorikk.find((historikk) => historikk.type === type)!
@@ -123,7 +128,9 @@ export const getLabelsForLinjene = (
     };
 };
 
-export const getLinjerSomHarData = (sykefraværshistorikk: Sykefraværshistorikk[]): Linje[] => {
+export const getLinjerSomHarData = (
+    sykefraværshistorikk: KvartalsvisSykefraværshistorikk[]
+): Linje[] => {
     const harData = (type: SykefraværshistorikkType) => {
         const historikk = sykefraværshistorikk.find((historikk) => historikk.type === type);
         if (!historikk) {

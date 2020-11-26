@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { RestSummertSykefraværshistorikk } from '../../../api/summertSykefravær';
+import { RestSummertSykefraværshistorikk } from '../../../api/summertSykefraværshistorikk';
 import { EkspanderbartSammenligningspanel } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
 import { RestStatus } from '../../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';

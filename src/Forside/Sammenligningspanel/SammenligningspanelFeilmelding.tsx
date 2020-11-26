@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { RestStatus, Årsak } from '../../api/api-utils';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import classNames from 'classnames';
-import { RestSykefraværshistorikk } from '../../api/sykefraværshistorikk';
+import { RestSykefraværshistorikk } from '../../api/kvartalsvisSykefraværshistorikk';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;

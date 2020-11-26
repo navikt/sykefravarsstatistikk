@@ -39,7 +39,7 @@ jobs:
 
     deploy-to-dev:
         name: Deploy to dev-sbs
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/hente-sf-for-bransje-eller-naring'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/refaktorering-rydding-opp'
         needs: compile-test-and-build
         runs-on: ubuntu-latest
         steps:
@@ -53,7 +53,7 @@ jobs:
                   PRINT_PAYLOAD: true
     deploy-to-labs-gcp:
         name: Deploy to labs-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/legge-til-labs-nais-io'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/refaktorering-rydding-opp'
         needs: compile-test-and-build
         runs-on: ubuntu-latest
         steps:

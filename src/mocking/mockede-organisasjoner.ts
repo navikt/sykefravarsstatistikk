@@ -1,12 +1,12 @@
 import { VirksomhetMetadata } from '../api/virksomhetMetadata';
-import { Sykefraværshistorikk } from '../api/sykefraværshistorikk';
+import { KvartalsvisSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
 import {
     lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet,
     lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet,
     lagMaskertHistorikk,
     lagMockHistorikkForBarnehage,
 } from './sykefraværshistorikk-mock';
-import { SummertSykefraværshistorikk } from '../api/summertSykefravær';
+import { SummertSykefraværshistorikk } from '../api/summertSykefraværshistorikk';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { getVirksomhetMetadataMock } from './virksomhet-metadata-mock';
 import { ArbeidstilsynetBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
@@ -22,7 +22,7 @@ import {
 export interface OrganisasjonMock {
     orgnr: string;
     bedriftsmetrikker?: VirksomhetMetadata | number;
-    sykefraværshistorikkKvartalsvis?: Sykefraværshistorikk[] | number;
+    sykefraværshistorikkKvartalsvis?: KvartalsvisSykefraværshistorikk[] | number;
     summertSykefraværshistorikk?: SummertSykefraværshistorikk[] | number;
     overordnetEnhet?: OverordnetEnhet | number;
     underenhetDto?: UnderenhetDto | number;
