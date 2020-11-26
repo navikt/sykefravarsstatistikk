@@ -14,7 +14,6 @@ import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from 
 import { summertSykefraværshistorikkMockUtenData } from './summert-sykefraværshistorikk-mock';
 import { getMiljø } from '../utils/miljøUtils';
 
-
 const mock = {
     minSideArbeidsgiver: true,
     sykefraværsstatistikkApi: true,
@@ -75,7 +74,7 @@ if (mock.sykefraværsstatistikkApi) {
         }
     );
     mockGetAndLog(
-        'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/summert/v2',
+        'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/summert',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
 
