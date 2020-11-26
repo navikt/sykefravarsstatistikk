@@ -8,7 +8,7 @@ import {
     seKursFølgeOppSykefravær,
     stabiltToProsent,
 } from './tips-innhold';
-import { SykefraværResultat } from '../../Forside/barnehage/Speedometer/Speedometer';
+import { SykefraværVurdering } from '../../Forside/barnehage/Speedometer/Speedometer';
 import { SammenligningsType } from '../../Forside/barnehage/vurderingstekster';
 
 export interface Tips {
@@ -20,7 +20,7 @@ export interface Tips {
     img: { src: string; alt: string };
 }
 
-export const getTips = (type: SammenligningsType, resultat: SykefraværResultat): Tips | null => {
+export const getTips = (type: SammenligningsType, resultat: SykefraværVurdering): Tips | null => {
     switch (type) {
         case SammenligningsType.KORTTID:
             return getTipsKorttidsfravær(resultat);
@@ -31,39 +31,39 @@ export const getTips = (type: SammenligningsType, resultat: SykefraværResultat)
     }
 };
 
-export const getTipsKorttidsfravær = (resultat: SykefraværResultat): Tips | null => {
+export const getTipsKorttidsfravær = (resultat: SykefraværVurdering): Tips | null => {
     switch (resultat) {
-        case SykefraværResultat.UNDER:
-        case SykefraværResultat.FEIL:
+        case SykefraværVurdering.UNDER:
+        case SykefraværVurdering.FEIL:
             return null;
         default:
             return fåNedKorttidsfravær;
     }
 };
 
-export const getTipsLangtidsfravær = (resultat: SykefraværResultat): Tips | null => {
+export const getTipsLangtidsfravær = (resultat: SykefraværVurdering): Tips | null => {
     switch (resultat) {
-        case SykefraværResultat.UNDER:
-        case SykefraværResultat.FEIL:
+        case SykefraværVurdering.UNDER:
+        case SykefraværVurdering.FEIL:
             return null;
-        case SykefraværResultat.OVER:
+        case SykefraværVurdering.OVER:
             return seKursFølgeOppSykefravær;
         default:
             return seKursForebyggeSykefravær;
     }
 };
 
-export const getTipsTotaltFravær = (resultat: SykefraværResultat): Tips | null => {
+export const getTipsTotaltFravær = (resultat: SykefraværVurdering): Tips | null => {
     switch (resultat) {
-        case SykefraværResultat.INGEN_DATA:
-        case SykefraværResultat.MASKERT:
-        case SykefraværResultat.UFULLSTENDIG_DATA:
+        case SykefraværVurdering.INGEN_DATA:
+        case SykefraværVurdering.MASKERT:
+        case SykefraværVurdering.UFULLSTENDIG_DATA:
             return barnehagerKoblerErgonomiOgPedagogikk;
-        case SykefraværResultat.OVER:
+        case SykefraværVurdering.OVER:
             return deTokGrep;
-        case SykefraværResultat.MIDDELS:
+        case SykefraværVurdering.MIDDELS:
             return stabiltToProsent;
-        case SykefraværResultat.UNDER:
+        case SykefraværVurdering.UNDER:
             return aldriKjedelig;
         default:
             return null;

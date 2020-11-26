@@ -6,7 +6,7 @@ import {
     tilSegmenteringSammenligning,
     tilSegmenteringSykefraværsprosent,
 } from './segmentering';
-import { SykefraværResultat } from '../Forside/barnehage/Speedometer/Speedometer';
+import { SykefraværVurdering } from '../Forside/barnehage/Speedometer/Speedometer';
 import { Bransjetype, RestVirksomhetMetadata } from '../api/virksomhetMetadata';
 import { RestStatus } from '../api/api-utils';
 import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
@@ -14,7 +14,7 @@ import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
 import { konverterTilKvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
 import { RestOverordnetEnhet } from '../api/enhetsregisteret-api';
 import { mapTilPrivatElleOffentligSektor, Sektor } from '../utils/sektorUtils';
-import { RestSummertSykefraværshistorikk } from '../api/sykefraværsvarighet';
+import { RestSummertSykefraværshistorikk } from '../api/summertSykefravær';
 import { getSammenligningResultatMedProsent } from '../Forside/barnehage/barnehage-utils';
 import { SammenligningsType } from '../Forside/barnehage/vurderingstekster';
 
@@ -26,9 +26,9 @@ export interface Ekstradata {
     prosent: SegmenteringSykefraværsprosent;
     sammenligning: SegmenteringSammenligning;
 
-    sykefraværSiste4Kvartaler: SykefraværResultat;
-    korttidSiste4Kvartaler: SykefraværResultat;
-    langtidSiste4Kvartaler: SykefraværResultat;
+    sykefraværSiste4Kvartaler: SykefraværVurdering;
+    korttidSiste4Kvartaler: SykefraværVurdering;
+    langtidSiste4Kvartaler: SykefraværVurdering;
     antallFarger: number; // TODO Midlertidig måling. Må fjernes.
 
     sektor: Sektor;
@@ -94,9 +94,9 @@ export const getEkstraDataFraEnhetsregisteret = (
     return {};
 };
 
-const getAntallForskjelligeFarger = (...resultater: SykefraværResultat[]): number | undefined => {
+const getAntallForskjelligeFarger = (...resultater: SykefraværVurdering[]): number | undefined => {
     const resultaterMedRiktigeFarger = resultater.filter((resultat) =>
-        [SykefraværResultat.OVER, SykefraværResultat.MIDDELS, SykefraværResultat.UNDER].includes(
+        [SykefraværVurdering.OVER, SykefraværVurdering.MIDDELS, SykefraværVurdering.UNDER].includes(
             resultat
         )
     );
@@ -148,9 +148,9 @@ export const getEkstraDataFraSykefraværsvarighet = (
         );
 
         const resultater = {
-            sykefraværSiste4Kvartaler: sammenligningResultatTotalt.sammenligningResultat,
-            korttidSiste4Kvartaler: sammenligningResultatKorttid.sammenligningResultat,
-            langtidSiste4Kvartaler: sammenligningResultatLangtid.sammenligningResultat,
+            sykefraværSiste4Kvartaler: sammenligningResultatTotalt.sammenligningVurdering,
+            korttidSiste4Kvartaler: sammenligningResultatKorttid.sammenligningVurdering,
+            langtidSiste4Kvartaler: sammenligningResultatLangtid.sammenligningVurdering,
         };
 
         const antallFarger = getAntallForskjelligeFarger(...Object.values(resultater));

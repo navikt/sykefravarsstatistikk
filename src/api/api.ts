@@ -9,7 +9,7 @@ import {
 } from './sykefraværshistorikk';
 import { sendEventDirekte } from '../amplitude/amplitude';
 import { RestVirksomhetMetadata } from './virksomhetMetadata';
-import { RestSummertSykefraværshistorikk } from './sykefraværsvarighet';
+import { RestSummertSykefraværshistorikk } from './summertSykefravær';
 
 const sykefraværshistorikkPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/kvartalsvis`;

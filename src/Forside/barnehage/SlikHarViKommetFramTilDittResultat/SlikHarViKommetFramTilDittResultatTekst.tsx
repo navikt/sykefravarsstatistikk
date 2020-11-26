@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { SykefraværResultat } from '../Speedometer/Speedometer';
+import { SykefraværVurdering } from '../Speedometer/Speedometer';
 import { ÅrstallOgKvartal } from '../../../utils/sykefraværshistorikk-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import './SlikHarViKommetFramTilDittResultatTekst.less';
@@ -7,7 +7,7 @@ import { siste4PubliserteKvartaler } from '../barnehage-utils';
 import { LenkeTilHistorikk } from '../../../felleskomponenter/LenkeTilHistorikk';
 
 interface Props {
-    resultat: SykefraværResultat;
+    resultat: SykefraværVurdering;
     kvartaler?: ÅrstallOgKvartal[];
 }
 
@@ -16,9 +16,9 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
     kvartaler,
 }) => {
     switch (resultat) {
-        case SykefraværResultat.OVER:
-        case SykefraværResultat.MIDDELS:
-        case SykefraværResultat.UNDER:
+        case SykefraværVurdering.OVER:
+        case SykefraværVurdering.MIDDELS:
+        case SykefraværVurdering.UNDER:
             return (
                 <>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__paragraf">
@@ -33,7 +33,7 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                     <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
-        case SykefraværResultat.MASKERT:
+        case SykefraværVurdering.MASKERT:
             return (
                 <>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__paragraf">
@@ -50,7 +50,7 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                     <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
-        case SykefraværResultat.UFULLSTENDIG_DATA:
+        case SykefraværVurdering.UFULLSTENDIG_DATA:
             return (
                 <>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__paragraf">
@@ -66,7 +66,7 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                     <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
-        case SykefraværResultat.INGEN_DATA:
+        case SykefraværVurdering.INGEN_DATA:
             return (
                 <>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__paragraf">
@@ -79,7 +79,7 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                     <Kvartalsliste kvartaler={siste4PubliserteKvartaler} />
                 </>
             );
-        case SykefraværResultat.FEIL:
+        case SykefraværVurdering.FEIL:
             return (
                 <>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__paragraf">

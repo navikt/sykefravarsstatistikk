@@ -6,7 +6,7 @@ import {
     lagMaskertHistorikk,
     lagMockHistorikkForBarnehage,
 } from './sykefraværshistorikk-mock';
-import { SummertSykefraværshistorikk } from '../api/sykefraværsvarighet';
+import { SummertSykefraværshistorikk } from '../api/summertSykefravær';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { getVirksomhetMetadataMock } from './virksomhet-metadata-mock';
 import { ArbeidstilsynetBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';

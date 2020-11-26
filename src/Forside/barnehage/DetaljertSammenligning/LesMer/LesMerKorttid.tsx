@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { SummertSykefravær } from '../../../../api/sykefraværsvarighet';
-import { SykefraværResultat } from '../../Speedometer/Speedometer';
+import { SummertSykefravær } from '../../../../api/summertSykefravær';
+import { SykefraværVurdering } from '../../Speedometer/Speedometer';
 import { Prosent } from '../../Prosent';
 import './DetaljertSammenligningLesMer.less';
 import { getGrønnGrenseTekst, getRødGrenseTekst } from '../../barnehage-utils';
@@ -9,7 +9,7 @@ import { getGrønnGrenseTekst, getRødGrenseTekst } from '../../barnehage-utils'
 interface Props {
     korttidsfraværSiste4KvartalerVirksomhet: SummertSykefravær;
     korttidsfraværSiste4KvartalerBransje: number;
-    resultat: SykefraværResultat;
+    resultat: SykefraværVurdering;
 }
 
 export const LesMerKorttid: FunctionComponent<Props> = ({
@@ -22,7 +22,7 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
     const rødGrense = getRødGrenseTekst(korttidsfraværSiste4KvartalerBransje);
 
     switch (resultat) {
-        case SykefraværResultat.UNDER:
+        case SykefraværVurdering.UNDER:
             return (
                 <>
                     <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
@@ -41,7 +41,7 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
                     </Normaltekst>
                 </>
             );
-        case SykefraværResultat.MIDDELS:
+        case SykefraværVurdering.MIDDELS:
             return (
                 <>
                     <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
@@ -60,7 +60,7 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
                     </Normaltekst>
                 </>
             );
-        case SykefraværResultat.OVER:
+        case SykefraværVurdering.OVER:
             return (
                 <>
                     <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
@@ -79,7 +79,7 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
                     </Normaltekst>
                 </>
             );
-        case SykefraværResultat.UFULLSTENDIG_DATA:
+        case SykefraværVurdering.UFULLSTENDIG_DATA:
             return (
                 <>
                     <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
@@ -94,7 +94,7 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
                     </Normaltekst>
                 </>
             );
-        case SykefraværResultat.MASKERT:
+        case SykefraværVurdering.MASKERT:
             return (
                 <>
                     <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">
@@ -109,7 +109,7 @@ export const LesMerKorttid: FunctionComponent<Props> = ({
                     </Normaltekst>
                 </>
             );
-        case SykefraværResultat.INGEN_DATA:
+        case SykefraværVurdering.INGEN_DATA:
             return (
                 <>
                     <Normaltekst className="detaljert-sammenligning-les-mer__paragraf">

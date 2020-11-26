@@ -1,12 +1,12 @@
 import React, { FunctionComponent, ReactElement } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { Speedometer, SykefraværResultat } from '../../Speedometer/Speedometer';
+import { Speedometer, SykefraværVurdering } from '../../Speedometer/Speedometer';
 import LesMerPanel from '../../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import Panel from 'nav-frontend-paneler';
 import './DetaljertSammenligningPanel.less';
 
 interface Props {
-    resultat: SykefraværResultat;
+    resultat: SykefraværVurdering;
     vurderingstekst: ReactElement | string;
     onÅpne?: () => void;
 }

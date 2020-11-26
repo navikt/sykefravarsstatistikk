@@ -2,7 +2,7 @@ import React, { FunctionComponent, useRef } from 'react';
 import './SammenligningspanelBarnehage.less';
 import ReactToPrint from 'react-to-print';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { RestSummertSykefraværshistorikk } from '../../../api/sykefraværsvarighet';
+import { RestSummertSykefraværshistorikk } from '../../../api/summertSykefravær';
 import { RestStatus } from '../../../api/api-utils';
 import { useSendEvent } from '../../../amplitude/amplitude';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';

@@ -51,7 +51,7 @@ import {
     summertSykefraværshistorikkContext,
     SummertSykefraværshistorikkProvider,
 } from './utils/summertSykefraværshistorikkContext';
-import { RestSummertSykefraværshistorikk } from './api/sykefraværsvarighet';
+import { RestSummertSykefraværshistorikk } from './api/summertSykefravær';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import {
     enhetsregisteretContext,
@@ -189,18 +189,24 @@ const AppContent: FunctionComponent = () => {
                                     feature={'sykefravarsstatistikk.ab-test.tips'}
                                     versjonA={
                                         <EkspanderbarSammenligning
-                                            restSummertSykefraværshistorikk={restSykefraværsvarighet}
+                                            restSummertSykefraværshistorikk={
+                                                restSykefraværsvarighet
+                                            }
                                             visTips={true}
                                         />
                                     }
                                     versjonB={
                                         <>
                                             <EkspanderbarSammenligning
-                                                restSummertSykefraværshistorikk={restSykefraværsvarighet}
+                                                restSummertSykefraværshistorikk={
+                                                    restSykefraværsvarighet
+                                                }
                                                 visTips={false}
                                             />
                                             <EkspanderbareTips
-                                                restSummertSykefraværshistorikk={restSykefraværsvarighet}
+                                                restSummertSykefraværshistorikk={
+                                                    restSykefraværsvarighet
+                                                }
                                             />
                                         </>
                                     }

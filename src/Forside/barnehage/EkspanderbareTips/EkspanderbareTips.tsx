@@ -5,7 +5,7 @@ import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import './EkspanderbareTips.less';
 import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import lyspæreSvg from './lyspære.svg';
-import { RestSummertSykefraværshistorikk } from '../../../api/sykefraværsvarighet';
+import { RestSummertSykefraværshistorikk } from '../../../api/summertSykefravær';
 import { RestStatus } from '../../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
 import { getAlleResultaterForSammenligningAvSykefravær } from '../barnehage-utils';
@@ -16,7 +16,9 @@ interface Props {
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
 }
 
-export const EkspanderbareTips: FunctionComponent<Props> = ({ restSummertSykefraværshistorikk }) => {
+export const EkspanderbareTips: FunctionComponent<Props> = ({
+    restSummertSykefraværshistorikk,
+}) => {
     const [erÅpen, setErÅpen] = useState<boolean>(false);
     const sendEvent = useSendEvent();
     if (

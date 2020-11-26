@@ -7,7 +7,7 @@ export enum Statistikkategori {
     NÆRING = 'NÆRING',
     BRANSJE = 'BRANSJE',
     VIRKSOMHET = 'VIRKSOMHET',
-    OVERORDNET_ENHET = 'OVERORDNET_ENHET'
+    OVERORDNET_ENHET = 'OVERORDNET_ENHET',
 }
 
 export interface SummertSykefraværshistorikk {
