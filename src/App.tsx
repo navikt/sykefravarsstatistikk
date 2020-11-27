@@ -158,31 +158,6 @@ const AppContent: FunctionComponent = () => {
         innhold = (
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
-                    <BarnehageRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
-                    <GenerellForsideRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
-                </Route>
-                <Route path={PATH_FORSIDE_GENERELL} exact={true}>
-                    <BarnehageRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
-                    <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                    <InnloggingssideWrapper
-                        restSykefraværshistorikk={restSykefraværshistorikk}
-                        restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
-                    >
-                        <Forside>
-                            <Sammenligningspanel
-                                restSykefraværshistorikk={restSykefraværshistorikk}
-                            />
-                            <KalkulatorPanel liten />
-                            <Historikkpanel />
-                            <Lenkeressurser />
-                            <ArbeidsmiljøportalPanel
-                                restVirksomhetMetadata={restVirksomhetMetadata}
-                            />
-                        </Forside>
-                    </InnloggingssideWrapper>
-                </Route>
-                <Route path={PATH_FORSIDE_BARNEHAGE} exact={true}>
-                    <GenerellForsideRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <InnloggingssideWrapper
                         restSykefraværshistorikk={restSykefraværshistorikk}
