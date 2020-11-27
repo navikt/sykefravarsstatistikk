@@ -24,7 +24,6 @@ interface Props {
     antallKvartalerBransje: ReactElement | null;
     sammenligningsType: SammenligningsType;
     defaultÅpen?: boolean;
-    visTips: boolean;
     className?: string;
 }
 
@@ -36,7 +35,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     antallKvartalerBransje,
     sammenligningsType,
     defaultÅpen,
-    visTips,
     className,
 }) => {
     const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
@@ -109,7 +107,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             >
                 <div className="ekspanderbart-sammenligningspanel__innhold">
                     {innhold}
-                    {visTips && getTips(sammenligningsType, sykefraværResultat) && (
+                    {getTips(sammenligningsType, sykefraværResultat) && (
                         <div className="ekspanderbart-sammenligningspanel__tips-tittel">
                             <img
                                 className="ekspanderbart-sammenligningspanel__bilde"
@@ -123,12 +121,10 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                             </Ingress>
                         </div>
                     )}
-                    {visTips && (
-                        <TipsVisning
-                            tips={getTips(sammenligningsType, sykefraværResultat)}
-                            className={'ekspanderbart-sammenligningspanel__tips'}
-                        />
-                    )}
+                    <TipsVisning
+                        tips={getTips(sammenligningsType, sykefraværResultat)}
+                        className={'ekspanderbart-sammenligningspanel__tips'}
+                    />
                 </div>
             </EkspanderbartpanelBase>
             <div className="ekspanderbart-sammenligningspanel__print-innhold">{innhold}</div>

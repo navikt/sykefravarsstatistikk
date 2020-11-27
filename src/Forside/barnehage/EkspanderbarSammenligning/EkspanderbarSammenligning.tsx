@@ -13,12 +13,10 @@ import './EkspanderbarSammenligning.less';
 
 interface Props {
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
-    visTips: boolean;
 }
 
 export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
     restSummertSykefraværshistorikk,
-    visTips,
 }) => {
     const sendEvent = useSendEvent();
 
@@ -94,7 +92,6 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.TOTALT}
                 defaultÅpen
-                visTips={visTips}
             />
             <EkspanderbartSammenligningspanel
                 sammenligningResultat={sammenligningResultatKorttid.sammenligningVurdering}
@@ -103,7 +100,6 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.KORTTID}
-                visTips={visTips}
             />
             <EkspanderbartSammenligningspanel
                 sammenligningResultat={sammenligningResultatLangtid.sammenligningVurdering}
@@ -112,7 +108,6 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.LANGTID}
-                visTips={visTips}
             />
         </div>
     );

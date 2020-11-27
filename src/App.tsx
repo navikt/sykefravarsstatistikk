@@ -60,8 +60,6 @@ import {
 } from './utils/enhetsregisteretContext';
 import { RestFeatureToggles } from './api/featureToggles';
 import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSammenligning/EkspanderbarSammenligning';
-import { ABTest } from './felleskomponenter/ABTest/ABTest';
-import { EkspanderbareTips } from './Forside/barnehage/EkspanderbareTips/EkspanderbareTips';
 import { KursForBarnehager } from './Forside/barnehage/KursForBarnehager/KursForBarnehager';
 import { RelevanteLenker } from './Forside/barnehage/RelevanteLenker/RelevanteLenker';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
@@ -195,31 +193,9 @@ const AppContent: FunctionComponent = () => {
                                 restSummertSykefraværshistorikk={restSummertSykefraværshistorikk}
                                 restAltinnOrganisasjoner={restOrganisasjoner}
                             >
-                                <ABTest
-                                    restFeatureToggles={restFeatureToggles}
-                                    feature={'sykefravarsstatistikk.ab-test.tips'}
-                                    versjonA={
-                                        <EkspanderbarSammenligning
-                                            restSummertSykefraværshistorikk={
-                                                restSummertSykefraværshistorikk
-                                            }
-                                            visTips={true}
-                                        />
-                                    }
-                                    versjonB={
-                                        <>
-                                            <EkspanderbarSammenligning
-                                                restSummertSykefraværshistorikk={
-                                                    restSummertSykefraværshistorikk
-                                                }
-                                                visTips={false}
-                                            />
-                                            <EkspanderbareTips
-                                                restSummertSykefraværshistorikk={
-                                                    restSummertSykefraværshistorikk
-                                                }
-                                            />
-                                        </>
+                                <EkspanderbarSammenligning
+                                    restSummertSykefraværshistorikk={
+                                        restSummertSykefraværshistorikk
                                     }
                                 />
                             </SammenligningspanelBarnehage>
