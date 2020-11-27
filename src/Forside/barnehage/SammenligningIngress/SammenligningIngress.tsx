@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningIngress.less';
-import KoronaInfotekst from '../../Sammenligningspanel/KoronaInfotekst/KoronaInfotekst';
+import KoronaInfotekst from './KoronaInfotekst/KoronaInfotekst';
 
 export const SammenligningIngress: FunctionComponent = () => {
     return (

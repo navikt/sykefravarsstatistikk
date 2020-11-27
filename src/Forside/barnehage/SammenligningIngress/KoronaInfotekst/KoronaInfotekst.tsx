@@ -1,7 +1,7 @@
 import { ReactComponent as InfoCircle } from './InfoCircle.svg';
-import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
+import LesMerPanel from '../../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { Normaltekst } from 'nav-frontend-typografi';
-import EksternLenke from '../../../felleskomponenter/EksternLenke/EksternLenke';
+import EksternLenke from '../../../../felleskomponenter/EksternLenke/EksternLenke';
 import React, { FunctionComponent } from 'react';
 import './KoronaInfotekst.less';
 import classNames from 'classnames';

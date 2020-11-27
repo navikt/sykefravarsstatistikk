@@ -2,7 +2,6 @@ import React, { FunctionComponent, useContext, useEffect, useState } from 'react
 import Banner from './Banner/Banner';
 import { BrowserRouter, Route, useLocation } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
-import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
 import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
 import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
