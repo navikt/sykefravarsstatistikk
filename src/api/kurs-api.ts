@@ -1,6 +1,6 @@
 import { getRestStatus, RestRessurs, RestStatus } from './api-utils';
 
-export const KURSOVERSIKT_API_PATH = 'https://arbeidsgiver.nav.no/kursoversikt/api/kurs';
+export const KURSOVERSIKT_API_PATH = '/kursoversikt/api/kurs';
 
 interface KursDto {
     RegistrationID: number;

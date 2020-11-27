@@ -66,7 +66,6 @@ import { KursForBarnehager } from './Forside/barnehage/KursForBarnehager/KursFor
 import { RelevanteLenker } from './Forside/barnehage/RelevanteLenker/RelevanteLenker';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import { hentRestKurs, RestKursliste } from './api/kurs-api';
-import { getNesteNettkurs } from './api/kurs-utils';
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
@@ -135,9 +134,6 @@ const AppContent: FunctionComponent = () => {
         };
         hentOgSetRestKurs();
     }, [setRestKursliste]);
-    const nesteNettkurs = getNesteNettkurs(
-        restKursliste.status === RestStatus.Suksess ? restKursliste.data : []
-    );
 
     const brukerHarIkkeTilgangTilNoenOrganisasjoner =
         restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
@@ -229,7 +225,7 @@ const AppContent: FunctionComponent = () => {
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />
-                            <KursForBarnehager nesteNettKurs={nesteNettkurs} />
+                            <KursForBarnehager restKursliste={restKursliste} />
                             <ArbeidsmiljøportalPanel
                                 restVirksomhetMetadata={restVirksomhetMetadata}
                             />
