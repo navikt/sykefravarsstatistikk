@@ -10,13 +10,16 @@ import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngre
 import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
 import { useSendEvent } from '../../../amplitude/amplitude';
 import './EkspanderbarSammenligning.less';
+import { Bransjetype, RestVirksomhetMetadata } from '../../../api/virksomhetMetadata';
 
 interface Props {
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
+    restVirksomhetMetadata: RestVirksomhetMetadata;
 }
 
 export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
     restSummertSykefraværshistorikk,
+    restVirksomhetMetadata,
 }) => {
     const sendEvent = useSendEvent();
 
@@ -38,6 +41,10 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             />
         );
     }
+
+    const erBarnehage =
+        restVirksomhetMetadata.status === RestStatus.Suksess &&
+        restVirksomhetMetadata.data.bransje === Bransjetype.BARNEHAGER;
 
     const summertSykefraværshistorikk =
         restSummertSykefraværshistorikk.status === RestStatus.Suksess
@@ -77,7 +84,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
 
     return (
         <div className="ekspanderbar-sammenligning">
-            <SammenligningIngress />
+            <SammenligningIngress erBarnehage={erBarnehage} />
             <SlikHarViKommetFramTilDittResultat
                 resultat={sammenligningResultatTotalt.sammenligningVurdering}
                 kvartaler={sammenligningResultatTotalt.kvartaler}

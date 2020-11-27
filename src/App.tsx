@@ -12,26 +12,12 @@ import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { RestSykefraværshistorikk } from './api/kvartalsvisSykefraværshistorikk';
-import { RestVirksomhetMetadata } from './api/virksomhetMetadata';
+import { Bransjetype, RestVirksomhetMetadata } from './api/virksomhetMetadata';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
-import {
-    BASE_PATH,
-    PATH_FORSIDE,
-    PATH_FORSIDE_BARNEHAGE,
-    PATH_FORSIDE_GENERELL,
-    PATH_HISTORIKK,
-    PATH_IAWEB_REDIRECTSIDE,
-    PATH_KALKULATOR,
-} from './konstanter';
-import {
-    virksomhetMetadataContext,
-    VirksomhetMetadataProvider,
-} from './utils/virksomhetMetadataContext';
-import {
-    sykefraværshistorikkContext,
-    SykefraværshistorikkProvider,
-} from './utils/sykefraværshistorikkContext';
+import { BASE_PATH, PATH_FORSIDE, PATH_HISTORIKK, PATH_IAWEB_REDIRECTSIDE, PATH_KALKULATOR } from './konstanter';
+import { virksomhetMetadataContext, VirksomhetMetadataProvider } from './utils/virksomhetMetadataContext';
+import { sykefraværshistorikkContext, SykefraværshistorikkProvider } from './utils/sykefraværshistorikkContext';
 import { sendEventDirekte, useMålingAvTidsbruk } from './amplitude/amplitude';
 import {
     altinnOrganisasjonerContext,
@@ -41,9 +27,7 @@ import {
 } from './utils/altinnOrganisasjonerContext';
 import { useSetUserProperties } from './amplitude/userProperties';
 import { featureTogglesContext, FeatureTogglesProvider } from './utils/FeatureTogglesContext';
-import Lenkeressurser from './Forside/Lenkeressurser/Lenkeressurser';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
-import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
 import { Forside } from './Forside/Forside';
 import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
 import {
@@ -171,6 +155,7 @@ const AppContent: FunctionComponent = () => {
                                     restSummertSykefraværshistorikk={
                                         restSummertSykefraværshistorikk
                                     }
+                                    restVirksomhetMetadata={restVirksomhetMetadata}
                                 />
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
