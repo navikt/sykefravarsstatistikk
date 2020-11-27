@@ -31,22 +31,19 @@ export const getVurderingstekstTotalt = (
         case SykefraværVurdering.UNDER:
             return (
                 <>
-                    Markert grønn: Du har <strong>lavere sykefravær</strong> enn andre barnehager i
-                    Norge
+                    Markert grønn: Du har <strong>lavere sykefravær</strong> enn bransjen
                 </>
             );
         case SykefraværVurdering.MIDDELS:
             return (
                 <>
-                    Markert gul: Du har <strong>omtrent likt sykefravær</strong> som andre
-                    barnehager i Norge
+                    Markert gul: Du har <strong>omtrent likt sykefravær</strong> som bransjen
                 </>
             );
         case SykefraværVurdering.OVER:
             return (
                 <>
-                    Markert rød: Du har <strong>høyere sykefravær</strong> enn andre barnehager i
-                    Norge
+                    Markert rød: Du har <strong>høyere sykefravær</strong> enn bransjen
                 </>
             );
         case SykefraværVurdering.UFULLSTENDIG_DATA:
