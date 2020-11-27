@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect } from 'react';
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import Banner from './Banner/Banner';
 import { BrowserRouter, Route, useLocation } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
@@ -65,6 +65,7 @@ import { EkspanderbareTips } from './Forside/barnehage/EkspanderbareTips/Ekspand
 import { KursForBarnehager } from './Forside/barnehage/KursForBarnehager/KursForBarnehager';
 import { RelevanteLenker } from './Forside/barnehage/RelevanteLenker/RelevanteLenker';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
+import { hentRestKurs, RestKursliste } from './api/kurs-api';
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
@@ -123,6 +124,16 @@ const AppContent: FunctionComponent = () => {
             });
         }
     }, [restUnderenhet]);
+    const [restKursliste, setRestKursliste] = useState<RestKursliste>({
+        status: RestStatus.IkkeLastet,
+    });
+
+    useEffect(() => {
+        const hentOgSetRestKurs = async () => {
+            setRestKursliste(await hentRestKurs());
+        };
+        hentOgSetRestKurs();
+    }, [setRestKursliste]);
 
     const brukerHarIkkeTilgangTilNoenOrganisasjoner =
         restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
@@ -214,7 +225,7 @@ const AppContent: FunctionComponent = () => {
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />
-                            <KursForBarnehager />
+                            <KursForBarnehager restKursliste={restKursliste} />
                             <ArbeidsmiljøportalPanel
                                 restVirksomhetMetadata={restVirksomhetMetadata}
                             />
