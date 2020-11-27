@@ -98,6 +98,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.TOTALT}
+                erBarnehage={erBarnehage}
                 defaultÅpen
             />
             <EkspanderbartSammenligningspanel
@@ -107,6 +108,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.KORTTID}
+                erBarnehage={erBarnehage}
             />
             <EkspanderbartSammenligningspanel
                 sammenligningResultat={sammenligningResultatLangtid.sammenligningVurdering}
@@ -115,6 +117,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.LANGTID}
+                erBarnehage={erBarnehage}
             />
         </div>
     );

@@ -23,6 +23,7 @@ interface Props {
     antallKvartalerVirksomhet: ReactElement | null;
     antallKvartalerBransje: ReactElement | null;
     sammenligningsType: SammenligningsType;
+    erBarnehage: boolean;
     defaultÅpen?: boolean;
     className?: string;
 }
@@ -34,6 +35,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     antallKvartalerVirksomhet,
     antallKvartalerBransje,
     sammenligningsType,
+    erBarnehage,
     defaultÅpen,
     className,
 }) => {
@@ -70,7 +72,9 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 />
                 <DetaljertVisningSykefravær
                     className="ekspanderbart-sammenligningspanel__detaljert-visning"
-                    overskrift="Barnehager i Norge:"
+                    overskrift={
+                        erBarnehage ? 'Barnehager i Norge:' : 'Andre relevante virksomheter:'
+                    }
                     prosent={visningAvProsentForBransje}
                     visingAntallKvartaller={antallKvartalerBransje}
                 />
@@ -80,6 +84,15 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             </div>
         </>
     );
+
+    let overskriftForTips;
+    if (sammenligningsType === SammenligningsType.TOTALT) {
+        overskriftForTips = erBarnehage
+            ? 'Tips fra andre barnehager i lignende situasjon som deg'
+            : 'Tips fra andre virksomheter i lignende situasjon som deg';
+    } else {
+        overskriftForTips = 'Dette kan du gjøre';
+    }
 
     return (
         <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
@@ -114,11 +127,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                                 src={lyspære}
                                 alt=""
                             />
-                            <Ingress>
-                                {sammenligningsType === SammenligningsType.TOTALT
-                                    ? 'Tips fra andre barnehager i lignende situasjon som deg'
-                                    : 'Dette kan du gjøre'}
-                            </Ingress>
+                            <Ingress>{overskriftForTips}</Ingress>
                         </div>
                     )}
                     <TipsVisning
