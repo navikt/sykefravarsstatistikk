@@ -13,7 +13,7 @@ import { defaultBedriftsmetrikker } from './virksomhet-metadata-mock';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './altinn-mock';
 import { summertSykefraværshistorikkMockUtenData } from './summert-sykefraværshistorikk-mock';
 import { getMiljø } from '../utils/miljøUtils';
-import { kurslisteMock } from './kursliste';
+import { kurslisteMock } from './kursliste-mock';
 import { KURSOVERSIKT_API_PATH } from '../api/kurs-api';
 
 const mock = {
