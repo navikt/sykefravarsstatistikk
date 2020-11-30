@@ -12,12 +12,24 @@ import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { RestSykefraværshistorikk } from './api/kvartalsvisSykefraværshistorikk';
-import { Bransjetype, RestVirksomhetMetadata } from './api/virksomhetMetadata';
+import { RestVirksomhetMetadata } from './api/virksomhetMetadata';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
-import { BASE_PATH, PATH_FORSIDE, PATH_HISTORIKK, PATH_IAWEB_REDIRECTSIDE, PATH_KALKULATOR } from './konstanter';
-import { virksomhetMetadataContext, VirksomhetMetadataProvider } from './utils/virksomhetMetadataContext';
-import { sykefraværshistorikkContext, SykefraværshistorikkProvider } from './utils/sykefraværshistorikkContext';
+import {
+    BASE_PATH,
+    PATH_FORSIDE,
+    PATH_HISTORIKK,
+    PATH_IAWEB_REDIRECTSIDE,
+    PATH_KALKULATOR,
+} from './konstanter';
+import {
+    virksomhetMetadataContext,
+    VirksomhetMetadataProvider,
+} from './utils/virksomhetMetadataContext';
+import {
+    sykefraværshistorikkContext,
+    SykefraværshistorikkProvider,
+} from './utils/sykefraværshistorikkContext';
 import { sendEventDirekte, useMålingAvTidsbruk } from './amplitude/amplitude';
 import {
     altinnOrganisasjonerContext,
@@ -44,7 +56,6 @@ import {
 import { RestFeatureToggles } from './api/featureToggles';
 import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { KursForBarnehager } from './Forside/barnehage/KursForBarnehager/KursForBarnehager';
-import { RelevanteLenker } from './Forside/barnehage/RelevanteLenker/RelevanteLenker';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import { hentRestKurs, RestKursliste } from './api/kurs-api';
 
@@ -164,7 +175,6 @@ const AppContent: FunctionComponent = () => {
                             <ArbeidsmiljøportalPanel
                                 restVirksomhetMetadata={restVirksomhetMetadata}
                             />
-                            <RelevanteLenker />
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>
