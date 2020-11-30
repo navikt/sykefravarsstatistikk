@@ -23,7 +23,7 @@ export const DinNæringEllerBransje: FunctionComponent<Props> = ({
         (data) => data.type === Statistikkategori.BRANSJE
     );
     const dataForNæring = restSummertSykefraværshistorikk.data.find(
-        (data) => data.type === Statistikkategori.BRANSJE
+        (data) => data.type === Statistikkategori.NÆRING
     );
 
     let tekst;
@@ -32,6 +32,7 @@ export const DinNæringEllerBransje: FunctionComponent<Props> = ({
     } else if (dataForNæring) {
         tekst = 'Du tilhører næringen: ' + dataForNæring.label;
     } else {
+        console.log('ingenting...', restSummertSykefraværshistorikk);
         return null;
     }
 
