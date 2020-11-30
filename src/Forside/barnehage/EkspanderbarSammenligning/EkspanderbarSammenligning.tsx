@@ -11,6 +11,7 @@ import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDit
 import { useSendEvent } from '../../../amplitude/amplitude';
 import './EkspanderbarSammenligning.less';
 import { Bransjetype, RestVirksomhetMetadata } from '../../../api/virksomhetMetadata';
+import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
 
 interface Props {
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
@@ -90,6 +91,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 kvartaler={sammenligningResultatTotalt.kvartaler}
                 onÅpne={() => sendEvent('barnehage sammenligning lesmer', 'åpne')}
             />
+            <DinNæringEllerBransje restSummertSykefraværshistorikk={restSummertSykefraværshistorikk} />
             <EkspanderbartSammenligningspanel
                 className="ekspanderbar-sammenligning__sammenligning-totalt"
                 sammenligningResultat={sammenligningResultatTotalt.sammenligningVurdering}

@@ -120,7 +120,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             >
                 <div className="ekspanderbart-sammenligningspanel__innhold">
                     {innhold}
-                    {getTips(sammenligningsType, sykefraværResultat) && (
+                    {erBarnehage && getTips(sammenligningsType, sykefraværResultat) && (
                         <div className="ekspanderbart-sammenligningspanel__tips-tittel">
                             <img
                                 className="ekspanderbart-sammenligningspanel__bilde"
@@ -130,10 +130,12 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                             <Ingress>{overskriftForTips}</Ingress>
                         </div>
                     )}
-                    <TipsVisning
-                        tips={getTips(sammenligningsType, sykefraværResultat)}
-                        className={'ekspanderbart-sammenligningspanel__tips'}
-                    />
+                    {erBarnehage && (
+                        <TipsVisning
+                            tips={getTips(sammenligningsType, sykefraværResultat)}
+                            className={'ekspanderbart-sammenligningspanel__tips'}
+                        />
+                    )}
                 </div>
             </EkspanderbartpanelBase>
             <div className="ekspanderbart-sammenligningspanel__print-innhold">{innhold}</div>
