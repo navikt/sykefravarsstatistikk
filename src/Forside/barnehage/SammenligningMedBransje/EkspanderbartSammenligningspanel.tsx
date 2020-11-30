@@ -72,9 +72,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 />
                 <DetaljertVisningSykefravær
                     className="ekspanderbart-sammenligningspanel__detaljert-visning"
-                    overskrift={
-                        erBarnehage ? 'Barnehager i Norge:' : 'Andre relevante virksomheter:'
-                    }
+                    overskrift={erBarnehage ? 'Barnehager i Norge:' : 'Din næring/bransje:'}
                     prosent={visningAvProsentForBransje}
                     visingAntallKvartaller={antallKvartalerBransje}
                 />

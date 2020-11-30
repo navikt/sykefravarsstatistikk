@@ -6,11 +6,12 @@ import {
     lagMaskertHistorikk,
     lagMockHistorikkForBarnehage,
 } from './sykefraværshistorikk-mock';
-import { SummertSykefraværshistorikk } from '../api/summertSykefraværshistorikk';
+import { Statistikkategori, SummertSykefraværshistorikk } from '../api/summertSykefraværshistorikk';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { getVirksomhetMetadataMock } from './virksomhet-metadata-mock';
 import { ArbeidstilsynetBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
 import {
+    getSummertSykefraværshistorikkMock,
     summertSykefraværshistorikkMockGrønn,
     summertSykefraværshistorikkMockGul,
     summertSykefraværshistorikkMockMaskert,
@@ -27,8 +28,6 @@ export interface OrganisasjonMock {
     overordnetEnhet?: OverordnetEnhet | number;
     underenhetDto?: UnderenhetDto | number;
 }
-
-// TODO Nå sammenlignes alle mot barnehage-tall.
 
 export const getMockOrganisasjon = (orgnr: string): OrganisasjonMock | undefined =>
     mockedeOrganisasjoner.find((org) => org.orgnr === orgnr);
@@ -48,7 +47,10 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '910969439',
-        summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
+        summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+            Statistikkategori.NÆRING,
+            'Produksjon av nærings- og nytelsesmidler'
+        ),
     },
     {
         orgnr: '888888881',
@@ -101,57 +103,79 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     {
         orgnr: '333333333',
         sykefraværshistorikkKvartalsvis: lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet(),
-        summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
+        summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+            Statistikkategori.NÆRING,
+            'Produksjon av nærings- og nytelsesmidler'
+        ),
     },
     {
         orgnr: '444444444',
         sykefraværshistorikkKvartalsvis: lagMaskertHistorikk(),
-        summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
-    },
-    {
-        orgnr: '666666666',
-        sykefraværshistorikkKvartalsvis: lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet(),
-        summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
+        summertSykefraværshistorikk: summertSykefraværshistorikkMockMaskert,
     },
     {
         orgnr: '120000001',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-        summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
+        summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+            Statistikkategori.BRANSJE,
+            'Barnehager'
+        ),
     },
     {
         orgnr: '120000002',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.SYKEHJEM),
-        summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
+        summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+            Statistikkategori.BRANSJE,
+            'Sykehjem'
+        ),
     },
     {
         orgnr: '120000003',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.SYKEHUS),
-        summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
+        summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+            Statistikkategori.BRANSJE,
+            'Sykehus'
+        ),
     },
     {
         orgnr: '120000004',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.NÆRINGSMIDDELINDUSTRI),
-        summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
+        summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+            Statistikkategori.BRANSJE,
+            'Næringsmiddelindustrien'
+        ),
     },
     {
         orgnr: '120000005',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.TRANSPORT),
-        summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
+        summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+            Statistikkategori.BRANSJE,
+            'Transport'
+        ),
     },
     {
         orgnr: '120000006',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BYGG),
-        summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
+        summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+            Statistikkategori.BRANSJE,
+            'Byggebransjen'
+        ),
     },
     {
         orgnr: '120000007',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.ANLEGG),
-        summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
+        summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+            Statistikkategori.BRANSJE,
+            'Anleggsbransjen'
+        ),
     },
     {
         orgnr: '120000009',
         bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.ANDRE_BRANSJER),
-        summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
+        summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+            Statistikkategori.NÆRING,
+            'Produksjon av nærings- og nytelsesmidler'
+        ),
     },
 ];
