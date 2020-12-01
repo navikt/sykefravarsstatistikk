@@ -3,9 +3,11 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningIngress.less';
 import KoronaInfotekst from './KoronaInfotekst/KoronaInfotekst';
 
-export const SammenligningIngress: FunctionComponent<{ erBarnehage: boolean }> = ({
-    erBarnehage,
-}) => {
+export const SammenligningIngress: FunctionComponent<{
+    erBarnehage: boolean;
+    harBransje: boolean;
+}> = ({ erBarnehage, harBransje }) => {
+    const bransjeEllerNæringTekst = harBransje ? 'bransje' : 'næring';
     if (erBarnehage) {
         return (
             <div className="sammenligning-ingress">
@@ -31,8 +33,8 @@ export const SammenligningIngress: FunctionComponent<{ erBarnehage: boolean }> =
                     Hvor er ditt potensial?
                 </Systemtittel>
                 <Normaltekst>
-                    Du kan få hjelp til å forstå det ved å sammenligne deg med andre relevante
-                    virksomheter i Norge. Vi har laget en oversikt for deg.
+                    Du kan få hjelp til å forstå det ved å sammenligne deg med andre i din{' '}
+                    {bransjeEllerNæringTekst}. Vi har laget en oversikt for deg.
                 </Normaltekst>
                 <Normaltekst className="sammenligning-ingress__tilbakemelding-tekst">
                     Vi bruker tilbakemeldingsfunksjoner på siden for å gjøre tjenestene bedre.

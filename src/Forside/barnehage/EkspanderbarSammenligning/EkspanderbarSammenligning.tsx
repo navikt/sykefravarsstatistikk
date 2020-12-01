@@ -3,7 +3,7 @@ import { RestSummertSykefraværshistorikk } from '../../../api/summertSykefravæ
 import { EkspanderbartSammenligningspanel } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
 import { RestStatus } from '../../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
-import { getSammenligningResultatMedProsent } from '../barnehage-utils';
+import { getSammenligningResultatMedProsent, summertHistorikkHarBransje } from '../barnehage-utils';
 import { SykefraværVurdering } from '../Speedometer/Speedometer';
 import { SammenligningsType } from '../vurderingstekster';
 import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngress';
@@ -52,6 +52,10 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             ? restSummertSykefraværshistorikk.data
             : undefined;
 
+    const harBransje =
+        restSummertSykefraværshistorikk.status === RestStatus.Suksess &&
+        summertHistorikkHarBransje(restSummertSykefraværshistorikk.data);
+
     const sammenligningResultatTotalt = getSammenligningResultatMedProsent(
         restSummertSykefraværshistorikk.status,
         summertSykefraværshistorikk,
@@ -85,13 +89,15 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
 
     return (
         <div className="ekspanderbar-sammenligning">
-            <SammenligningIngress erBarnehage={erBarnehage} />
+            <SammenligningIngress erBarnehage={erBarnehage} harBransje={harBransje} />
             <SlikHarViKommetFramTilDittResultat
                 resultat={sammenligningResultatTotalt.sammenligningVurdering}
                 kvartaler={sammenligningResultatTotalt.kvartaler}
                 onÅpne={() => sendEvent('barnehage sammenligning lesmer', 'åpne')}
             />
-            <DinNæringEllerBransje restSummertSykefraværshistorikk={restSummertSykefraværshistorikk} />
+            <DinNæringEllerBransje
+                restSummertSykefraværshistorikk={restSummertSykefraværshistorikk}
+            />
             <EkspanderbartSammenligningspanel
                 className="ekspanderbar-sammenligning__sammenligning-totalt"
                 sammenligningResultat={sammenligningResultatTotalt.sammenligningVurdering}
@@ -101,6 +107,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.TOTALT}
                 erBarnehage={erBarnehage}
+                harBransje={harBransje}
                 defaultÅpen
             />
             <EkspanderbartSammenligningspanel
@@ -111,6 +118,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.KORTTID}
                 erBarnehage={erBarnehage}
+                harBransje={harBransje}
             />
             <EkspanderbartSammenligningspanel
                 sammenligningResultat={sammenligningResultatLangtid.sammenligningVurdering}
@@ -120,6 +128,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.LANGTID}
                 erBarnehage={erBarnehage}
+                harBransje={harBransje}
             />
         </div>
     );

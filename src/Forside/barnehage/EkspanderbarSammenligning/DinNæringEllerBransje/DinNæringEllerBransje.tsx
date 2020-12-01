@@ -32,7 +32,6 @@ export const DinNæringEllerBransje: FunctionComponent<Props> = ({
     } else if (dataForNæring) {
         tekst = 'Du tilhører næringen: ' + dataForNæring.label;
     } else {
-        console.log('ingenting...', restSummertSykefraværshistorikk);
         return null;
     }
 

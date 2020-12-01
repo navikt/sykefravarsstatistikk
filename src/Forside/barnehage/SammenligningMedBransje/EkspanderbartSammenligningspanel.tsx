@@ -24,6 +24,7 @@ interface Props {
     antallKvartalerBransje: ReactElement | null;
     sammenligningsType: SammenligningsType;
     erBarnehage: boolean;
+    harBransje: boolean;
     defaultÅpen?: boolean;
     className?: string;
 }
@@ -36,6 +37,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     antallKvartalerBransje,
     sammenligningsType,
     erBarnehage,
+    harBransje,
     defaultÅpen,
     className,
 }) => {
@@ -110,7 +112,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                             tag="h2"
                             className="ekspanderbart-sammenligningspanel__tittel"
                         >
-                            {getVurderingstekst(sykefraværResultat, sammenligningsType)}
+                            {getVurderingstekst(sykefraværResultat, sammenligningsType, harBransje)}
                         </Systemtittel>
                     </span>
                 }

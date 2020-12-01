@@ -2,7 +2,6 @@ import { VirksomhetMetadata } from '../api/virksomhetMetadata';
 import { KvartalsvisSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
 import {
     lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet,
-    lagHistorikkMedLikHistorikkForUnderenhetOgOverordnetEnhet,
     lagMaskertHistorikk,
     lagMockHistorikkForBarnehage,
 } from './sykefraværshistorikk-mock';

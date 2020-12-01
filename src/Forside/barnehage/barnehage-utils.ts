@@ -1,8 +1,8 @@
 import {
     Statistikkategori,
+    SummertKorttidsOgLangtidsfravær,
     SummertSykefravær,
     SummertSykefraværshistorikk,
-    SummertKorttidsOgLangtidsfravær,
 } from '../../api/summertSykefraværshistorikk';
 import { SykefraværVurdering } from './Speedometer/Speedometer';
 import { RestStatus } from '../../api/api-utils';
@@ -63,47 +63,6 @@ export const getVurderingForSammenligningAvSykefravær = (
         case RestStatus.Feil:
             return SykefraværVurdering.FEIL;
     }
-};
-
-export const getAlleVurderingerForSammenligningAvSykefravær = (
-    restStatus: RestStatus.Suksess | RestStatus.Feil,
-    summertSykefraværshistorikk: SummertSykefraværshistorikk[] | undefined
-): {
-    totaltFravær: SykefraværVurdering;
-    korttidsfravær: SykefraværVurdering;
-    langtidsfravær: SykefraværVurdering;
-} => {
-    const summertKorttidsOgLangtidsfraværVirksomhet = getSummertKorttidsOgLangtidsfravær(
-        summertSykefraværshistorikk,
-        Statistikkategori.VIRKSOMHET
-    );
-    const summertKorttidsOgLangtidsfraværBransjeEllerNæring = getSummertKorttidsOgLangtidsfravær(
-        summertSykefraværshistorikk,
-        Statistikkategori.BRANSJE,
-        Statistikkategori.NÆRING
-    );
-
-    const resultatTotaltFravær = getVurderingForSammenligningAvSykefravær(
-        restStatus,
-        getTotaltSykefraværSiste4Kvartaler(summertKorttidsOgLangtidsfraværVirksomhet),
-        getTotaltSykefraværSiste4Kvartaler(summertKorttidsOgLangtidsfraværBransjeEllerNæring)
-            ?.prosent
-    );
-    const resultatKorttidsfravær = getVurderingForSammenligningAvSykefravær(
-        restStatus,
-        summertKorttidsOgLangtidsfraværVirksomhet?.summertKorttidsfravær,
-        summertKorttidsOgLangtidsfraværBransjeEllerNæring?.summertKorttidsfravær.prosent
-    );
-    const resultatLangtidsfravær = getVurderingForSammenligningAvSykefravær(
-        restStatus,
-        summertKorttidsOgLangtidsfraværVirksomhet?.summertLangtidsfravær,
-        summertKorttidsOgLangtidsfraværBransjeEllerNæring?.summertLangtidsfravær.prosent
-    );
-    return {
-        totaltFravær: resultatTotaltFravær,
-        korttidsfravær: resultatKorttidsfravær,
-        langtidsfravær: resultatLangtidsfravær,
-    };
 };
 
 export const getSummertKorttidsOgLangtidsfravær = (
@@ -244,4 +203,8 @@ export const getSammenligningResultatMedProsent = (
         sykefraværBransje: sykefraværBransje,
         kvartaler: kvartaler,
     };
+};
+
+export const summertHistorikkHarBransje = (historikk: SummertSykefraværshistorikk[]): boolean => {
+    return !!historikk.find((data) => data.type === Statistikkategori.BRANSJE);
 };
