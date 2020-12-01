@@ -58,6 +58,13 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 return 'langtidsfravær';
         }
     };
+    let overskriftForTallForNæringEllerBransje;
+    if (erBarnehage) {
+        overskriftForTallForNæringEllerBransje = 'Barnehager i Norge:';
+    } else {
+        overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
+    }
+
     const innhold = (
         <>
             <div className="ekspanderbart-sammenligningspanel__metadata-og-detaljert-visning-sykefravær">
@@ -74,7 +81,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 />
                 <DetaljertVisningSykefravær
                     className="ekspanderbart-sammenligningspanel__detaljert-visning"
-                    overskrift={erBarnehage ? 'Barnehager i Norge:' : 'Din næring/bransje:'}
+                    overskrift={overskriftForTallForNæringEllerBransje}
                     prosent={visningAvProsentForBransje}
                     visingAntallKvartaller={antallKvartalerBransje}
                 />
