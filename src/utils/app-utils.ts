@@ -1,6 +1,28 @@
+import { ÅrstallOgKvartal } from './sykefraværshistorikk-utils';
+
 const sistOppdatert = new Date('2020.12.02');
 const nesteOppdatering = new Date('2021.03.02');
-export const periodeFraOgTil = "01.10.2019 til 30.09.2020";
+export const periodeFraOgTil = '01.10.2019 til 30.09.2020';
+
+// TODO Hardkodede tall
+export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
+    {
+        årstall: 2020,
+        kvartal: 3,
+    },
+    {
+        årstall: 2020,
+        kvartal: 2,
+    },
+    {
+        årstall: 2020,
+        kvartal: 1,
+    },
+    {
+        årstall: 2019,
+        kvartal: 4,
+    },
+];
 
 const ANTALL_DAGER_HVOR_VI_VISER_SIST_OPPDATERT = 45;
 

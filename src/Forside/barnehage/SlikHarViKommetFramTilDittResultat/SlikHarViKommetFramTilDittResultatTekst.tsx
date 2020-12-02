@@ -3,8 +3,8 @@ import { SykefraværVurdering } from '../Speedometer/Speedometer';
 import { ÅrstallOgKvartal } from '../../../utils/sykefraværshistorikk-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import './SlikHarViKommetFramTilDittResultatTekst.less';
-import { siste4PubliserteKvartaler } from '../barnehage-utils';
 import { LenkeTilHistorikk } from '../../../felleskomponenter/LenkeTilHistorikk';
+import { siste4PubliserteKvartaler } from '../../../utils/app-utils';
 
 interface Props {
     resultat: SykefraværVurdering;

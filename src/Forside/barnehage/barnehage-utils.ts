@@ -9,26 +9,6 @@ import { RestStatus } from '../../api/api-utils';
 import { ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
 import { SammenligningsType } from './vurderingstekster';
 
-// TODO Hardkodede tall
-export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
-    {
-        årstall: 2020,
-        kvartal: 2,
-    },
-    {
-        årstall: 2020,
-        kvartal: 1,
-    },
-    {
-        årstall: 2019,
-        kvartal: 4,
-    },
-    {
-        årstall: 2019,
-        kvartal: 3,
-    },
-];
-
 export const getVurderingForSammenligningAvSykefravær = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,
     sykefravær: SummertSykefravær | undefined,
