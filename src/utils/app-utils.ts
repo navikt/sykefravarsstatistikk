@@ -1,5 +1,5 @@
-const sistOppdatert = new Date('2020.09.02');
-const nesteOppdatering = new Date('2020.12.02');
+const sistOppdatert = new Date('2020.12.02');
+const nesteOppdatering = new Date('2021.03.02');
 const ANTALL_DAGER_HVOR_VI_VISER_SIST_OPPDATERT = 45;
 
 export const getTekstForOppdateringsdato = (
