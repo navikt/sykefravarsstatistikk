@@ -35,8 +35,15 @@ export const fåNedKorttidsfravær: Tips = {
 export const seKursForebyggeSykefravær: Tips = {
     id: 'se-kurs-forebygge',
     tittel: 'Se kurs om hvordan forebygge sykefravær',
-    ingress:
-        'Her får du korte nettkurs som tar for seg lovkrav og hvordan du gjennomfører sykefraværsoppfølging i praksis.',
+    ingress: (
+        <>
+            Du kan redusere og forebygge sykefravær når du ser arbeidsmiljø og faglig utvikling i
+            sammenheng.
+            <br />
+            Her får du korte nettkurs som blandt annet tar for seg hvordan du samarbeider med
+            tillitsvalgte og verneombud og hvordan dere utvikler arbeidsmiljøet.
+        </>
+    ),
     tidsbruk: 'Kurs fra: 12 min – 22 min',
     href: 'https://vimeo.com/showcase/6728594',
     img: { src: seKursForebyggeSykefraværBilde, alt: '' },

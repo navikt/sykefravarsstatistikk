@@ -14,7 +14,7 @@ import { Bransjetype } from '../../api/virksomhetMetadata';
 export interface Tips {
     id: string;
     tittel: string;
-    ingress: string;
+    ingress: ReactElement | string;
     tidsbruk?: ReactElement | string;
     href: string;
     img: { src: string; alt: string };
