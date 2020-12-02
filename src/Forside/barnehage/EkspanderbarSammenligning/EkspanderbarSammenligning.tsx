@@ -12,6 +12,7 @@ import { useSendEvent } from '../../../amplitude/amplitude';
 import './EkspanderbarSammenligning.less';
 import { Bransjetype, RestVirksomhetMetadata } from '../../../api/virksomhetMetadata';
 import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
+import { TipsTabell } from '../../../TipsTabell/TipsTabell';
 
 interface Props {
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
