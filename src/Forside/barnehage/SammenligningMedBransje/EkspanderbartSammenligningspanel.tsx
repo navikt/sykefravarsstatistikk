@@ -11,7 +11,7 @@ import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import { SykefraværMetadata } from './SykefraværMetadata';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
 import { TipsVisning } from '../../../felleskomponenter/tips/TipsVisning';
-import { getTips } from '../../../felleskomponenter/tips/tips';
+import { getTips, Tips } from '../../../felleskomponenter/tips/tips';
 import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
 import { useSendEvent } from '../../../amplitude/amplitude';
@@ -101,6 +101,9 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
         overskriftForTips = 'Dette kan du gjøre';
     }
 
+    const tipsliste: Tips[] = getTips(sammenligningsType, sykefraværResultat);
+    const harTips = tipsliste.length > 0;
+
     return (
         <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
             <EkspanderbartpanelBase
@@ -127,7 +130,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             >
                 <div className="ekspanderbart-sammenligningspanel__innhold">
                     {innhold}
-                    {erBarnehage && getTips(sammenligningsType, sykefraværResultat) && (
+                    {erBarnehage && harTips && (
                         <div className="ekspanderbart-sammenligningspanel__tips-tittel">
                             <img
                                 className="ekspanderbart-sammenligningspanel__bilde"
@@ -137,12 +140,14 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                             <Ingress>{overskriftForTips}</Ingress>
                         </div>
                     )}
-                    {erBarnehage && (
-                        <TipsVisning
-                            tips={getTips(sammenligningsType, sykefraværResultat)}
-                            className={'ekspanderbart-sammenligningspanel__tips'}
-                        />
-                    )}
+                    {erBarnehage &&
+                        tipsliste.map((tips) => (
+                            <TipsVisning
+                                key={tips.id}
+                                tips={tips}
+                                className={'ekspanderbart-sammenligningspanel__tips'}
+                            />
+                        ))}
                 </div>
             </EkspanderbartpanelBase>
             <div className="ekspanderbart-sammenligningspanel__print-innhold">{innhold}</div>

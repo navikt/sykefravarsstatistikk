@@ -20,7 +20,7 @@ export interface Tips {
     img: { src: string; alt: string };
 }
 
-export const getTips = (type: SammenligningsType, resultat: SykefraværVurdering): Tips | null => {
+export const getTips = (type: SammenligningsType, resultat: SykefraværVurdering): Tips[] => {
     switch (type) {
         case SammenligningsType.KORTTID:
             return getTipsKorttidsfravær(resultat);
@@ -31,41 +31,41 @@ export const getTips = (type: SammenligningsType, resultat: SykefraværVurdering
     }
 };
 
-export const getTipsKorttidsfravær = (resultat: SykefraværVurdering): Tips | null => {
+const getTipsKorttidsfravær = (resultat: SykefraværVurdering): Tips[] => {
     switch (resultat) {
         case SykefraværVurdering.UNDER:
         case SykefraværVurdering.FEIL:
-            return null;
+            return [];
         default:
-            return fåNedKorttidsfravær;
+            return [fåNedKorttidsfravær];
     }
 };
 
-export const getTipsLangtidsfravær = (resultat: SykefraværVurdering): Tips | null => {
+const getTipsLangtidsfravær = (resultat: SykefraværVurdering): Tips[] => {
     switch (resultat) {
         case SykefraværVurdering.UNDER:
         case SykefraværVurdering.FEIL:
-            return null;
+            return [];
         case SykefraværVurdering.OVER:
-            return seKursFølgeOppSykefravær;
+            return [seKursFølgeOppSykefravær];
         default:
-            return seKursForebyggeSykefravær;
+            return [seKursForebyggeSykefravær];
     }
 };
 
-export const getTipsTotaltFravær = (resultat: SykefraværVurdering): Tips | null => {
+const getTipsTotaltFravær = (resultat: SykefraværVurdering): Tips[] => {
     switch (resultat) {
         case SykefraværVurdering.INGEN_DATA:
         case SykefraværVurdering.MASKERT:
         case SykefraværVurdering.UFULLSTENDIG_DATA:
-            return barnehagerKoblerErgonomiOgPedagogikk;
+            return [barnehagerKoblerErgonomiOgPedagogikk];
         case SykefraværVurdering.OVER:
-            return deTokGrep;
+            return [deTokGrep];
         case SykefraværVurdering.MIDDELS:
-            return stabiltToProsent;
+            return [stabiltToProsent];
         case SykefraværVurdering.UNDER:
-            return aldriKjedelig;
+            return [aldriKjedelig];
         default:
-            return null;
+            return [];
     }
 };
