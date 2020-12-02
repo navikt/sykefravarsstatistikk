@@ -39,6 +39,7 @@ export const TipsTabell: FunctionComponent = () => {
                 <option value={Bransjetype.SYKEHJEM}>SYKEHJEM</option>
                 <option value={Bransjetype.TRANSPORT}>TRANSPORT</option>
             </Select>
+            <h1 style={{fontSize: '5rem'}}>Bransje: {bransje || 'ingen bransje'}</h1>
             <table className="graf-tabell tabell tabell--stripet tabell--border">
                 <thead>
                     <tr>

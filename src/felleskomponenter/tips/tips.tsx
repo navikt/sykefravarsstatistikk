@@ -6,6 +6,7 @@ import {
     fåNedKorttidsfravær,
     seKursForebyggeSykefravær,
     seKursFølgeOppSykefravær,
+    seKursFølgeOppSykefraværBarnehager,
     stabiltToProsent,
     tipsOgRådArbeidsmiljøSykefravær,
 } from './tips-innhold';
@@ -47,7 +48,10 @@ const getTipsKorttidsfravær = (resultat: SykefraværVurdering): Tips[] => {
     }
 };
 
-const getTipsLangtidsfravær = (resultat: SykefraværVurdering, bransje: Bransjetype | undefined): Tips[] => {
+const getTipsLangtidsfravær = (
+    resultat: SykefraværVurdering,
+    bransje: Bransjetype | undefined
+): Tips[] => {
     if (bransje !== Bransjetype.BARNEHAGER) {
         return [];
     }
@@ -62,21 +66,20 @@ const getTipsLangtidsfravær = (resultat: SykefraværVurdering, bransje: Bransje
     }
 };
 
-const getTipsTotaltFravær = (resultat: SykefraværVurdering, bransje: Bransjetype | undefined): Tips[] => {
+const getTipsTotaltFravær = (
+    resultat: SykefraværVurdering,
+    bransje: Bransjetype | undefined
+): Tips[] => {
     if (bransje === Bransjetype.BARNEHAGER) {
         switch (resultat) {
+            case SykefraværVurdering.OVER:
             case SykefraværVurdering.INGEN_DATA:
             case SykefraværVurdering.MASKERT:
             case SykefraværVurdering.UFULLSTENDIG_DATA:
-                return [barnehagerKoblerErgonomiOgPedagogikk];
-            case SykefraværVurdering.OVER:
-                return [deTokGrep];
             case SykefraværVurdering.MIDDELS:
-                return [stabiltToProsent];
             case SykefraværVurdering.UNDER:
-                return [aldriKjedelig];
             default:
-                return [];
+                return [seKursFølgeOppSykefraværBarnehager, tipsOgRådArbeidsmiljøSykefravær];
         }
     } else {
         switch (resultat) {
