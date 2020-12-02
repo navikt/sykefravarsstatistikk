@@ -3,6 +3,7 @@ import fåNedKorttidsfraværBilde from './bilder/få-ned-korttidsfravær.png';
 import seKursForebyggeSykefraværBilde from './bilder/se-kurs-forebygge_sykefravær.png';
 import seKursFølgeOppSykefraværBilde from './bilder/se-kurs-følge-opp-sykefravær.png';
 import seKursFølgeOppSykefraværBarnehagerBilde from './bilder/se-kurs-følge-opp-sykefravær-barnehager.png';
+import seKursFølgeOppSykehjemBarnehagerBilde from './bilder/se-kurs-følge-opp-sykefravær-sykehjem.png';
 import barnehagerKoblerErgonomiOgPedagogikkBilde from './bilder/bhg-kobler-ergonomi-og-pedagogikk.jpeg';
 import { Normaltekst } from 'nav-frontend-typografi';
 import stabiltToProsentBilde from './bilder/stabilt-to-prosent.png';
@@ -58,6 +59,16 @@ export const seKursFølgeOppSykefraværBarnehager: Tips = {
     tidsbruk: 'Kurs fra: 12 min – 22 min',
     href: 'https://vimeo.com/showcase/7671659',
     img: { src: seKursFølgeOppSykefraværBarnehagerBilde, alt: '' },
+};
+export const seKursFølgeOppSykefraværSykehjem: Tips = {
+    // TODO Sjekke tekster med Monica
+    id: 'se-kurs-følge-opp-barnehager-sykehjem',
+    tittel: 'Se kurs om å følge opp sykefravær',
+    ingress:
+        'Her får du korte nettkurs som tar for seg lovkrav og hvordan du gjennomfører sykefraværsoppfølging i praksis.',
+    tidsbruk: 'Kurs fra: 12 min – 22 min',
+    href: 'https://vimeo.com/showcase/7733192',
+    img: { src: seKursFølgeOppSykehjemBarnehagerBilde, alt: '' },
 };
 export const stabiltToProsent: Tips = {
     id: 'stabilt-to-prosent',

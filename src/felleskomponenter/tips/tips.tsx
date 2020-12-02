@@ -1,13 +1,10 @@
 import { ReactElement } from 'react';
 import {
-    aldriKjedelig,
-    barnehagerKoblerErgonomiOgPedagogikk,
-    deTokGrep,
     fåNedKorttidsfravær,
     seKursForebyggeSykefravær,
     seKursFølgeOppSykefravær,
     seKursFølgeOppSykefraværBarnehager,
-    stabiltToProsent,
+    seKursFølgeOppSykefraværSykehjem,
     tipsOgRådArbeidsmiljøSykefravær,
 } from './tips-innhold';
 import { SykefraværVurdering } from '../../Forside/barnehage/Speedometer/Speedometer';
@@ -71,16 +68,9 @@ const getTipsTotaltFravær = (
     bransje: Bransjetype | undefined
 ): Tips[] => {
     if (bransje === Bransjetype.BARNEHAGER) {
-        switch (resultat) {
-            case SykefraværVurdering.OVER:
-            case SykefraværVurdering.INGEN_DATA:
-            case SykefraværVurdering.MASKERT:
-            case SykefraværVurdering.UFULLSTENDIG_DATA:
-            case SykefraværVurdering.MIDDELS:
-            case SykefraværVurdering.UNDER:
-            default:
-                return [seKursFølgeOppSykefraværBarnehager, tipsOgRådArbeidsmiljøSykefravær];
-        }
+        return [seKursFølgeOppSykefraværBarnehager, tipsOgRådArbeidsmiljøSykefravær];
+    } else if (bransje === Bransjetype.SYKEHJEM) {
+        return [seKursFølgeOppSykefraværSykehjem, tipsOgRådArbeidsmiljøSykefravær];
     } else {
         switch (resultat) {
             case SykefraværVurdering.OVER:
