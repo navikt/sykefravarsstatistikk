@@ -1,4 +1,4 @@
-@import '../../../variables';
+@import 'src/variables';
 
 .korona-infotekst {
     display: flex;
@@ -15,5 +15,9 @@
 
     .infoToggler {
         text-align: left;
+    }
+
+    @media print {
+        display: none;
     }
 }

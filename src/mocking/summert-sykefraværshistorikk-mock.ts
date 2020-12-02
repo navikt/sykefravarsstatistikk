@@ -131,7 +131,10 @@ export const summertSykefraværshistorikkMockMedBare2Kvartaler: SummertSykefrav�
     summertSykefraværshistorikkBarnehager,
 ];
 
-export const summertSykefraværshistorikkMockMedSiste4Kvartaler: SummertSykefraværshistorikk[] = [
+export const getSummertSykefraværshistorikkMock = (
+    type: Statistikkategori.BRANSJE | Statistikkategori.NÆRING,
+    label: string
+): SummertSykefraværshistorikk[] => [
     {
         type: Statistikkategori.VIRKSOMHET,
         label: 'En virksomhet',
@@ -152,8 +155,13 @@ export const summertSykefraværshistorikkMockMedSiste4Kvartaler: SummertSykefrav
             },
         },
     },
-    summertSykefraværshistorikkBarnehager,
+    { ...summertSykefraværshistorikkBarnehager, type, label },
 ];
+
+export const summertSykefraværshistorikkMockMedSiste4Kvartaler: SummertSykefraværshistorikk[] = getSummertSykefraværshistorikkMock(
+    Statistikkategori.BRANSJE,
+    'Barnehager'
+);
 
 export const summertSykefraværshistorikkMockGrønn: SummertSykefraværshistorikk[] = [
     {

@@ -2,7 +2,6 @@ import React, { FunctionComponent, useContext, useEffect, useState } from 'react
 import Banner from './Banner/Banner';
 import { BrowserRouter, Route, useLocation } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
-import Sammenligningspanel from './Forside/Sammenligningspanel/Sammenligningspanel';
 import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
 import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
@@ -19,8 +18,6 @@ import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import {
     BASE_PATH,
     PATH_FORSIDE,
-    PATH_FORSIDE_BARNEHAGE,
-    PATH_FORSIDE_GENERELL,
     PATH_HISTORIKK,
     PATH_IAWEB_REDIRECTSIDE,
     PATH_KALKULATOR,
@@ -41,10 +38,8 @@ import {
     AltinnOrganisasjonerProvider,
 } from './utils/altinnOrganisasjonerContext';
 import { useSetUserProperties } from './amplitude/userProperties';
-import { featureTogglesContext, FeatureTogglesProvider } from './utils/FeatureTogglesContext';
-import Lenkeressurser from './Forside/Lenkeressurser/Lenkeressurser';
+import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
-import { BarnehageRedirect, GenerellForsideRedirect } from './utils/redirects';
 import { Forside } from './Forside/Forside';
 import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
 import {
@@ -58,12 +53,8 @@ import {
     EnhetsregisteretProvider,
     EnhetsregisteretState,
 } from './utils/enhetsregisteretContext';
-import { RestFeatureToggles } from './api/featureToggles';
 import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSammenligning/EkspanderbarSammenligning';
-import { ABTest } from './felleskomponenter/ABTest/ABTest';
-import { EkspanderbareTips } from './Forside/barnehage/EkspanderbareTips/EkspanderbareTips';
 import { KursForBarnehager } from './Forside/barnehage/KursForBarnehager/KursForBarnehager';
-import { RelevanteLenker } from './Forside/barnehage/RelevanteLenker/RelevanteLenker';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import { hentRestKurs, RestKursliste } from './api/kurs-api';
 
@@ -106,7 +97,6 @@ const AppContent: FunctionComponent = () => {
         sykefraværshistorikkContext
     );
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
-    const restFeatureToggles = useContext<RestFeatureToggles>(featureTogglesContext);
     const location = useLocation();
     useSetUserProperties();
     useMålingAvTidsbruk('hele appen', 5, 30, 120, 300);
@@ -160,31 +150,6 @@ const AppContent: FunctionComponent = () => {
         innhold = (
             <>
                 <Route path={PATH_FORSIDE} exact={true}>
-                    <BarnehageRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
-                    <GenerellForsideRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
-                </Route>
-                <Route path={PATH_FORSIDE_GENERELL} exact={true}>
-                    <BarnehageRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
-                    <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                    <InnloggingssideWrapper
-                        restSykefraværshistorikk={restSykefraværshistorikk}
-                        restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
-                    >
-                        <Forside>
-                            <Sammenligningspanel
-                                restSykefraværshistorikk={restSykefraværshistorikk}
-                            />
-                            <KalkulatorPanel liten />
-                            <Historikkpanel />
-                            <Lenkeressurser />
-                            <ArbeidsmiljøportalPanel
-                                restVirksomhetMetadata={restVirksomhetMetadata}
-                            />
-                        </Forside>
-                    </InnloggingssideWrapper>
-                </Route>
-                <Route path={PATH_FORSIDE_BARNEHAGE} exact={true}>
-                    <GenerellForsideRedirect restVirksomhetMetadata={restVirksomhetMetadata} />
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <InnloggingssideWrapper
                         restSykefraværshistorikk={restSykefraværshistorikk}
@@ -195,32 +160,11 @@ const AppContent: FunctionComponent = () => {
                                 restSummertSykefraværshistorikk={restSummertSykefraværshistorikk}
                                 restAltinnOrganisasjoner={restOrganisasjoner}
                             >
-                                <ABTest
-                                    restFeatureToggles={restFeatureToggles}
-                                    feature={'sykefravarsstatistikk.ab-test.tips'}
-                                    versjonA={
-                                        <EkspanderbarSammenligning
-                                            restSummertSykefraværshistorikk={
-                                                restSummertSykefraværshistorikk
-                                            }
-                                            visTips={true}
-                                        />
+                                <EkspanderbarSammenligning
+                                    restSummertSykefraværshistorikk={
+                                        restSummertSykefraværshistorikk
                                     }
-                                    versjonB={
-                                        <>
-                                            <EkspanderbarSammenligning
-                                                restSummertSykefraværshistorikk={
-                                                    restSummertSykefraværshistorikk
-                                                }
-                                                visTips={false}
-                                            />
-                                            <EkspanderbareTips
-                                                restSummertSykefraværshistorikk={
-                                                    restSummertSykefraværshistorikk
-                                                }
-                                            />
-                                        </>
-                                    }
+                                    restVirksomhetMetadata={restVirksomhetMetadata}
                                 />
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
@@ -229,7 +173,6 @@ const AppContent: FunctionComponent = () => {
                             <ArbeidsmiljøportalPanel
                                 restVirksomhetMetadata={restVirksomhetMetadata}
                             />
-                            <RelevanteLenker />
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>
