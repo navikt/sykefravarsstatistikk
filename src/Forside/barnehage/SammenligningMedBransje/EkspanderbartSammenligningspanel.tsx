@@ -15,6 +15,7 @@ import { getTips } from '../../../felleskomponenter/tips/tips';
 import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
 import { useSendEvent } from '../../../amplitude/amplitude';
+import { periodeFraOgTil } from '../../../utils/app-utils';
 
 interface Props {
     sammenligningResultat: SykefraværVurdering;
@@ -43,7 +44,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
 }) => {
     const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
     const sendEvent = useSendEvent();
-    const periode = '01.07.2019 til 30.06.2020';
 
     const visningAvProsentForBransje: number | null | undefined =
         sykefraværResultat === SykefraværVurdering.FEIL ? null : sykefraværBransje;
@@ -71,7 +71,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 <SykefraværMetadata
                     className="ekspanderbart-sammenligningspanel__sykefravær-metadata"
                     sammenligningsType={sammenligningsType}
-                    periode={periode}
+                    periode={periodeFraOgTil}
                 />
                 <DetaljertVisningSykefravær
                     className="ekspanderbart-sammenligningspanel__detaljert-visning"
