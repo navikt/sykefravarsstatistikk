@@ -16,6 +16,7 @@ import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
 import { useSendEvent } from '../../../amplitude/amplitude';
 import { periodeFraOgTil } from '../../../utils/app-utils';
+import { Bransjetype } from '../../../api/virksomhetMetadata';
 
 interface Props {
     sammenligningResultat: SykefraværVurdering;
@@ -100,8 +101,12 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     } else {
         overskriftForTips = 'Dette kan du gjøre';
     }
-
-    const tipsliste: Tips[] = getTips(sammenligningsType, sykefraværResultat);
+    console.log(erBarnehage);
+    const tipsliste: Tips[] = getTips(
+        sammenligningsType,
+        sykefraværResultat,
+        erBarnehage ? Bransjetype.BARNEHAGER : undefined
+    );
     const harTips = tipsliste.length > 0;
 
     return (

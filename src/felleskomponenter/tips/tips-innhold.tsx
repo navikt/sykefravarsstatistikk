@@ -5,6 +5,7 @@ import seKursFølgeOppSykefraværBilde from './bilder/se-kurs-følge-opp-sykefra
 import barnehagerKoblerErgonomiOgPedagogikkBilde from './bilder/bhg-kobler-ergonomi-og-pedagogikk.jpeg';
 import { Normaltekst } from 'nav-frontend-typografi';
 import stabiltToProsentBilde from './bilder/stabilt-to-prosent.png';
+import tipsOgRådArbeidsmiljøSykefraværBilde from './bilder/tips-og-råd-arbeidsmiljø-sykefravær.png';
 import aldriKjedeligBilde from './bilder/aldri-kjedelig.png';
 import React from 'react';
 import { Tips } from './tips';
@@ -83,4 +84,16 @@ export const barnehagerKoblerErgonomiOgPedagogikk: Tips = {
     href:
         'https://www.idebanken.org/inspirasjon/artikler/filmer/video-barnehage-med-nyskapende-kobling-mellom-ergonomi-og-pedagogikk',
     img: { src: barnehagerKoblerErgonomiOgPedagogikkBilde, alt: '' },
+};
+export const tipsOgRådArbeidsmiljøSykefravær: Tips = {
+    // todo må fylles ut ordentlig
+    id: 'tips-og-råd-arbeidsmiljø-sykefravær',
+    tittel: 'Tips og råd om arbeidsmiljø og sykefravær',
+    ingress:
+        'Les mer om hvordan barnehagen reduserte sykefraværet og fikk mer tid til faglig utvikling.',
+    href: '/',
+    img: {
+        src: tipsOgRådArbeidsmiljøSykefraværBilde,
+        alt: '',
+    },
 };
