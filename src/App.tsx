@@ -63,7 +63,6 @@ import {
     LegacyBarnehageSammenligningRedirect,
     LegacySammenligningRedirect,
 } from './utils/redirects';
-import { TipsTabell } from './TipsTabell/TipsTabell';
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
@@ -204,9 +203,6 @@ const AppContent: FunctionComponent = () => {
                     <IAWebRedirectSide restSykefraværshistorikk={restSykefraværshistorikk}>
                         <IAWebRedirectPanel />
                     </IAWebRedirectSide>
-                </Route>
-                <Route path="/tips-tabell" exact={true}>
-                    <TipsTabell />
                 </Route>
             </>
         );

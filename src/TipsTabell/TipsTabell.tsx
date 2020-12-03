@@ -15,6 +15,13 @@ const mapTilTipsliste = (tips: Tips[]) => {
     }
 };
 
+/*
+* Dette er en komponent som KUN skal brukes til test.
+* Den viser en oversikt over hvilke tips vi gir i de forskjellige tilfellene.
+* Aktiveres ved å legge inn som route i App.tsx:
+* <Route path="/tips-tabell" exact={true}><TipsTabell /></Route>
+* */
+
 export const TipsTabell: FunctionComponent = () => {
     const [bransje, setBransje] = useState<Bransjetype | undefined>();
 
