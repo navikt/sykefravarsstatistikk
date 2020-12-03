@@ -25,7 +25,7 @@ interface Props {
     antallKvartalerVirksomhet: ReactElement | null;
     antallKvartalerBransje: ReactElement | null;
     sammenligningsType: SammenligningsType;
-    erBarnehage: boolean;
+    bransje: Bransjetype | undefined;
     harBransje: boolean;
     defaultÅpen?: boolean;
     className?: string;
@@ -38,7 +38,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     antallKvartalerVirksomhet,
     antallKvartalerBransje,
     sammenligningsType,
-    erBarnehage,
+    bransje,
     harBransje,
     defaultÅpen,
     className,
@@ -60,7 +60,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
         }
     };
     let overskriftForTallForNæringEllerBransje;
-    if (erBarnehage) {
+    if (bransje === Bransjetype.BARNEHAGER) {
         overskriftForTallForNæringEllerBransje = 'Barnehager i Norge:';
     } else {
         overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
@@ -95,18 +95,15 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
 
     let overskriftForTips;
     if (sammenligningsType === SammenligningsType.TOTALT) {
-        overskriftForTips = erBarnehage
-            ? 'Tips fra andre barnehager i lignende situasjon som deg'
-            : 'Tips fra andre virksomheter i lignende situasjon som deg';
+        overskriftForTips =
+            bransje === Bransjetype.BARNEHAGER
+                ? 'Tips fra andre barnehager i lignende situasjon som deg'
+                : 'Tips fra andre virksomheter i lignende situasjon som deg';
     } else {
         overskriftForTips = 'Dette kan du gjøre';
     }
-    console.log(erBarnehage);
-    const tipsliste: Tips[] = getTips(
-        sammenligningsType,
-        sykefraværResultat,
-        erBarnehage ? Bransjetype.BARNEHAGER : undefined
-    );
+
+    const tipsliste: Tips[] = getTips(sammenligningsType, sykefraværResultat, bransje);
     const harTips = tipsliste.length > 0;
 
     return (
@@ -135,7 +132,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             >
                 <div className="ekspanderbart-sammenligningspanel__innhold">
                     {innhold}
-                    {erBarnehage && harTips && (
+                    {harTips && (
                         <div className="ekspanderbart-sammenligningspanel__tips-tittel">
                             <img
                                 className="ekspanderbart-sammenligningspanel__bilde"
@@ -145,14 +142,13 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                             <Ingress>{overskriftForTips}</Ingress>
                         </div>
                     )}
-                    {erBarnehage &&
-                        tipsliste.map((tips) => (
-                            <TipsVisning
-                                key={tips.id}
-                                tips={tips}
-                                className={'ekspanderbart-sammenligningspanel__tips'}
-                            />
-                        ))}
+                    {tipsliste.map((tips) => (
+                        <TipsVisning
+                            key={tips.id}
+                            tips={tips}
+                            className={'ekspanderbart-sammenligningspanel__tips'}
+                        />
+                    ))}
                 </div>
             </EkspanderbartpanelBase>
             <div className="ekspanderbart-sammenligningspanel__print-innhold">{innhold}</div>
