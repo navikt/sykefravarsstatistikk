@@ -44,7 +44,7 @@ export const seKursForebyggeSykefravær: Tips = {
             tillitsvalgte og verneombud og hvordan dere utvikler arbeidsmiljøet.
         </>
     ),
-    tidsbruk: 'Kurs fra: 12 min – 22 min',
+    tidsbruk: 'Kurs fra: 12 min – 16 min',
     href: 'https://vimeo.com/showcase/6728594',
     img: { src: seKursForebyggeSykefraværBilde, alt: '' },
 };
@@ -63,7 +63,7 @@ export const seKursFølgeOppSykefraværBarnehager: Tips = {
     tittel: 'Se kurs om å følge opp sykefravær',
     ingress:
         'Her får du korte nettkurs som tar for seg lovkrav og hvordan du gjennomfører sykefraværsoppfølging i praksis.',
-    tidsbruk: 'Kurs fra: 12 min – 22 min',
+    tidsbruk: 'Kurs fra: 10 min – 18 min',
     href: 'https://vimeo.com/showcase/7671659',
     img: { src: seKursFølgeOppSykefraværBarnehagerBilde, alt: '' },
 };
@@ -73,7 +73,7 @@ export const seKursFølgeOppSykefraværSykehjem: Tips = {
     tittel: 'Se kurs om å følge opp sykefravær',
     ingress:
         'Her får du korte nettkurs som tar for seg lovkrav og hvordan du gjennomfører sykefraværsoppfølging i praksis.',
-    tidsbruk: 'Kurs fra: 12 min – 22 min',
+    tidsbruk: 'Kurs fra: 10 min – 18 min',
     href: 'https://vimeo.com/showcase/7733192',
     img: { src: seKursFølgeOppSykehjemBarnehagerBilde, alt: '' },
 };
