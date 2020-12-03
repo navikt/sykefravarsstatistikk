@@ -61,7 +61,7 @@ export const seKursFølgeOppSykefraværBarnehager: Tips = {
     id: 'se-kurs-følge-opp-barnehager',
     tittel: 'Se kurs for barnehager',
     ingress:
-        'Her får du korte nettkurs som tar for seg lovkrav og hvordan du gjennomfører sykefraværsoppfølging i praksis.',
+        'Her får du korte nettkurs om oppfølging og forebygging av sykefravær. Kursene tar for seg lovkrav og praktiske grep, og er tilpasset din bransje.',
     tidsbruk: 'Kurs fra: 10 min – 18 min',
     href: 'https://vimeo.com/showcase/7671659',
     img: { src: seKursFølgeOppSykefraværBarnehagerBilde, alt: '' },
@@ -70,7 +70,7 @@ export const seKursFølgeOppSykefraværSykehjem: Tips = {
     id: 'se-kurs-følge-opp-barnehager-sykehjem',
     tittel: 'Se kurs for sykehjem',
     ingress:
-        'Her får du korte nettkurs som tar for seg lovkrav og hvordan du gjennomfører sykefraværsoppfølging i praksis.',
+        'Her får du korte nettkurs om oppfølging og forebygging av sykefravær. Kursene tar for seg lovkrav og praktiske grep, og er tilpasset din bransje.',
     tidsbruk: 'Kurs fra: 10 min – 18 min',
     href: 'https://vimeo.com/showcase/7733192',
     img: { src: seKursFølgeOppSykehjemBarnehagerBilde, alt: '' },
