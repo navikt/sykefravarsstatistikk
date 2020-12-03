@@ -58,7 +58,6 @@ export const seKursFølgeOppSykefravær: Tips = {
     img: { src: seKursFølgeOppSykefraværBilde, alt: '' },
 };
 export const seKursFølgeOppSykefraværBarnehager: Tips = {
-    // TODO Sjekke tekster med Monica
     id: 'se-kurs-følge-opp-barnehager',
     tittel: 'Se kurs om å følge opp sykefravær',
     ingress:
@@ -68,7 +67,6 @@ export const seKursFølgeOppSykefraværBarnehager: Tips = {
     img: { src: seKursFølgeOppSykefraværBarnehagerBilde, alt: '' },
 };
 export const seKursFølgeOppSykefraværSykehjem: Tips = {
-    // TODO Sjekke tekster med Monica
     id: 'se-kurs-følge-opp-barnehager-sykehjem',
     tittel: 'Se kurs om å følge opp sykefravær',
     ingress:
@@ -115,7 +113,6 @@ export const barnehagerKoblerErgonomiOgPedagogikk: Tips = {
     img: { src: barnehagerKoblerErgonomiOgPedagogikkBilde, alt: '' },
 };
 export const tipsOgRådArbeidsmiljøSykefravær: Tips = {
-    // todo må bli enige om at dette er riktig tekst
     id: 'tips-og-råd-arbeidsmiljø-sykefravær',
     tittel: 'Tips og råd om arbeidsmiljø og sykefravær',
     ingress: (
