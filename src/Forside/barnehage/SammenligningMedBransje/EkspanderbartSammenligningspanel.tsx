@@ -93,16 +93,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
         </>
     );
 
-    let overskriftForTips;
-    if (sammenligningsType === SammenligningsType.TOTALT) {
-        overskriftForTips =
-            bransje === Bransjetype.BARNEHAGER
-                ? 'Tips fra andre barnehager i lignende situasjon som deg'
-                : 'Tips fra andre virksomheter i lignende situasjon som deg';
-    } else {
-        overskriftForTips = 'Dette kan du gjøre';
-    }
-
     const tipsliste: Tips[] = getTips(sammenligningsType, sykefraværResultat, bransje);
     const harTips = tipsliste.length > 0;
 
@@ -139,7 +129,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                                 src={lyspære}
                                 alt=""
                             />
-                            <Ingress>{overskriftForTips}</Ingress>
+                            <Ingress>Dette kan du gjøre</Ingress>
                         </div>
                     )}
                     {tipsliste.map((tips) => (

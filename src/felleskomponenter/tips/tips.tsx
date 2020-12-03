@@ -49,18 +49,7 @@ const getTipsLangtidsfravær = (
     resultat: SykefraværVurdering,
     bransje: Bransjetype | undefined
 ): Tips[] => {
-    if (bransje !== Bransjetype.BARNEHAGER) {
-        return [];
-    }
-    switch (resultat) {
-        case SykefraværVurdering.UNDER:
-        case SykefraværVurdering.FEIL:
-            return [];
-        case SykefraværVurdering.OVER:
-            return [seKursFølgeOppSykefravær];
-        default:
-            return [seKursForebyggeSykefravær];
-    }
+    return [];
 };
 
 const getTipsTotaltFravær = (

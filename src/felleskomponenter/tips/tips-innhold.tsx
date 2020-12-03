@@ -59,7 +59,7 @@ export const seKursFølgeOppSykefravær: Tips = {
 };
 export const seKursFølgeOppSykefraværBarnehager: Tips = {
     id: 'se-kurs-følge-opp-barnehager',
-    tittel: 'Se kurs om å følge opp sykefravær',
+    tittel: 'Se kurs for barnehager',
     ingress:
         'Her får du korte nettkurs som tar for seg lovkrav og hvordan du gjennomfører sykefraværsoppfølging i praksis.',
     tidsbruk: 'Kurs fra: 10 min – 18 min',
@@ -68,7 +68,7 @@ export const seKursFølgeOppSykefraværBarnehager: Tips = {
 };
 export const seKursFølgeOppSykefraværSykehjem: Tips = {
     id: 'se-kurs-følge-opp-barnehager-sykehjem',
-    tittel: 'Se kurs om å følge opp sykefravær',
+    tittel: 'Se kurs for sykehjem',
     ingress:
         'Her får du korte nettkurs som tar for seg lovkrav og hvordan du gjennomfører sykefraværsoppfølging i praksis.',
     tidsbruk: 'Kurs fra: 10 min – 18 min',
@@ -119,7 +119,7 @@ export const tipsOgRådArbeidsmiljøSykefravær: Tips = {
         <>
             Les mer om hvordan du kan:
             <ul style={{ marginBottom: 0, marginTop: '0.5rem' }}>
-                <li>bli bedre til å føle opp sykmeldte</li>
+                <li>bli bedre til å følge opp sykmeldte</li>
                 <li>få ned et høyt sykefravær</li>
                 <li>utvikle arbeidsmiljøet</li>
             </ul>
