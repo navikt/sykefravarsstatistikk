@@ -115,11 +115,19 @@ export const barnehagerKoblerErgonomiOgPedagogikk: Tips = {
     img: { src: barnehagerKoblerErgonomiOgPedagogikkBilde, alt: '' },
 };
 export const tipsOgRådArbeidsmiljøSykefravær: Tips = {
-    // todo må fylles ut ordentlig
+    // todo må bli enige om at dette er riktig tekst
     id: 'tips-og-råd-arbeidsmiljø-sykefravær',
     tittel: 'Tips og råd om arbeidsmiljø og sykefravær',
-    ingress:
-        'Les mer om hvordan barnehagen reduserte sykefraværet og fikk mer tid til faglig utvikling.',
+    ingress: (
+        <>
+            Les mer om hvordan du kan:
+            <ul style={{ marginBottom: 0, marginTop: '0.5rem' }}>
+                <li>bli bedre til å føle opp sykmeldte</li>
+                <li>få ned et høyt sykefravær</li>
+                <li>utvikle arbeidsmiljøet</li>
+            </ul>
+        </>
+    ),
     href: '/',
     img: {
         src: tipsOgRådArbeidsmiljøSykefraværBilde,
