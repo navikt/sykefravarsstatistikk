@@ -11,11 +11,12 @@ import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import { SykefraværMetadata } from './SykefraværMetadata';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
 import { TipsVisning } from '../../../felleskomponenter/tips/TipsVisning';
-import { getTips } from '../../../felleskomponenter/tips/tips';
+import { getTips, Tips } from '../../../felleskomponenter/tips/tips';
 import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
 import { useSendEvent } from '../../../amplitude/amplitude';
 import { periodeFraOgTil } from '../../../utils/app-utils';
+import { Bransjetype } from '../../../api/virksomhetMetadata';
 
 interface Props {
     sammenligningResultat: SykefraværVurdering;
@@ -24,7 +25,7 @@ interface Props {
     antallKvartalerVirksomhet: ReactElement | null;
     antallKvartalerBransje: ReactElement | null;
     sammenligningsType: SammenligningsType;
-    erBarnehage: boolean;
+    bransje: Bransjetype | undefined;
     harBransje: boolean;
     defaultÅpen?: boolean;
     className?: string;
@@ -37,7 +38,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     antallKvartalerVirksomhet,
     antallKvartalerBransje,
     sammenligningsType,
-    erBarnehage,
+    bransje,
     harBransje,
     defaultÅpen,
     className,
@@ -59,7 +60,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
         }
     };
     let overskriftForTallForNæringEllerBransje;
-    if (erBarnehage) {
+    if (bransje === Bransjetype.BARNEHAGER) {
         overskriftForTallForNæringEllerBransje = 'Barnehager i Norge:';
     } else {
         overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
@@ -92,14 +93,8 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
         </>
     );
 
-    let overskriftForTips;
-    if (sammenligningsType === SammenligningsType.TOTALT) {
-        overskriftForTips = erBarnehage
-            ? 'Tips fra andre barnehager i lignende situasjon som deg'
-            : 'Tips fra andre virksomheter i lignende situasjon som deg';
-    } else {
-        overskriftForTips = 'Dette kan du gjøre';
-    }
+    const tipsliste: Tips[] = getTips(sammenligningsType, sykefraværResultat, bransje);
+    const harTips = tipsliste.length > 0;
 
     return (
         <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
@@ -127,22 +122,23 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             >
                 <div className="ekspanderbart-sammenligningspanel__innhold">
                     {innhold}
-                    {erBarnehage && getTips(sammenligningsType, sykefraværResultat) && (
+                    {harTips && (
                         <div className="ekspanderbart-sammenligningspanel__tips-tittel">
                             <img
                                 className="ekspanderbart-sammenligningspanel__bilde"
                                 src={lyspære}
                                 alt=""
                             />
-                            <Ingress>{overskriftForTips}</Ingress>
+                            <Ingress>Dette kan du gjøre</Ingress>
                         </div>
                     )}
-                    {erBarnehage && (
+                    {tipsliste.map((tips) => (
                         <TipsVisning
-                            tips={getTips(sammenligningsType, sykefraværResultat)}
+                            key={tips.id}
+                            tips={tips}
                             className={'ekspanderbart-sammenligningspanel__tips'}
                         />
-                    )}
+                    ))}
                 </div>
             </EkspanderbartpanelBase>
             <div className="ekspanderbart-sammenligningspanel__print-innhold">{innhold}</div>

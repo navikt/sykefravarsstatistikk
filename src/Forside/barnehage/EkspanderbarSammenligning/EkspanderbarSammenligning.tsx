@@ -43,9 +43,10 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
         );
     }
 
-    const erBarnehage =
-        restVirksomhetMetadata.status === RestStatus.Suksess &&
-        restVirksomhetMetadata.data.bransje === Bransjetype.BARNEHAGER;
+    const bransje: Bransjetype | undefined =
+        restVirksomhetMetadata.status === RestStatus.Suksess
+            ? restVirksomhetMetadata.data.bransje
+            : undefined;
 
     const summertSykefraværshistorikk =
         restSummertSykefraværshistorikk.status === RestStatus.Suksess
@@ -89,7 +90,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
 
     return (
         <div className="ekspanderbar-sammenligning">
-            <SammenligningIngress erBarnehage={erBarnehage} harBransje={harBransje} />
+            <SammenligningIngress bransje={bransje} harBransje={harBransje} />
             <SlikHarViKommetFramTilDittResultat
                 resultat={sammenligningResultatTotalt.sammenligningVurdering}
                 kvartaler={sammenligningResultatTotalt.kvartaler}
@@ -106,7 +107,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.TOTALT}
-                erBarnehage={erBarnehage}
+                bransje={bransje}
                 harBransje={harBransje}
                 defaultÅpen
             />
@@ -117,7 +118,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.KORTTID}
-                erBarnehage={erBarnehage}
+                bransje={bransje}
                 harBransje={harBransje}
             />
             <EkspanderbartSammenligningspanel
@@ -127,7 +128,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.LANGTID}
-                erBarnehage={erBarnehage}
+                bransje={bransje}
                 harBransje={harBransje}
             />
         </div>

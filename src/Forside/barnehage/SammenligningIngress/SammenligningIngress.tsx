@@ -2,13 +2,14 @@ import React, { FunctionComponent } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningIngress.less';
 import KoronaInfotekst from './KoronaInfotekst/KoronaInfotekst';
+import { Bransjetype } from '../../../api/virksomhetMetadata';
 
 export const SammenligningIngress: FunctionComponent<{
-    erBarnehage: boolean;
+    bransje?: Bransjetype;
     harBransje: boolean;
-}> = ({ erBarnehage, harBransje }) => {
+}> = ({ bransje, harBransje }) => {
     const bransjeEllerNæringTekst = harBransje ? 'bransje' : 'næring';
-    if (erBarnehage) {
+    if (bransje === Bransjetype.BARNEHAGER) {
         return (
             <div className="sammenligning-ingress">
                 <KoronaInfotekst className="sammenligning-ingress__koronainfo" />

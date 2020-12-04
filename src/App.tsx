@@ -17,7 +17,9 @@ import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import {
     BASE_PATH,
-    PATH_FORSIDE, PATH_FORSIDE_BARNEHAGE, PATH_FORSIDE_GENERELL,
+    PATH_FORSIDE,
+    PATH_FORSIDE_BARNEHAGE,
+    PATH_FORSIDE_GENERELL,
     PATH_HISTORIKK,
     PATH_IAWEB_REDIRECTSIDE,
     PATH_KALKULATOR,
@@ -57,7 +59,10 @@ import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSamme
 import { KursForBarnehager } from './Forside/barnehage/KursForBarnehager/KursForBarnehager';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import { hentRestKurs, RestKursliste } from './api/kurs-api';
-import {LegacyBarnehageSammenligningRedirect, LegacySammenligningRedirect} from "./utils/redirects";
+import {
+    LegacyBarnehageSammenligningRedirect,
+    LegacySammenligningRedirect,
+} from './utils/redirects';
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
@@ -151,10 +156,10 @@ const AppContent: FunctionComponent = () => {
         innhold = (
             <>
                 <Route path={PATH_FORSIDE_BARNEHAGE}>
-                    <LegacyBarnehageSammenligningRedirect/>
+                    <LegacyBarnehageSammenligningRedirect />
                 </Route>
                 <Route path={PATH_FORSIDE_GENERELL}>
-                    <LegacySammenligningRedirect/>
+                    <LegacySammenligningRedirect />
                 </Route>
                 <Route path={PATH_FORSIDE} exact={true}>
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
