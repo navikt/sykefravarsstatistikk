@@ -6,7 +6,6 @@ import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import arbeidsmiljøportalLogoSvg from './arbeidsmiljøportal-logo.svg';
 import { RestStatus } from '../../api/api-utils';
 import { RestVirksomhetMetadata } from '../../api/virksomhetMetadata';
-import Skeleton from 'react-loading-skeleton';
 import {
     ArbeidstilsynetBransje,
     getArbeidstilsynetBransje,
