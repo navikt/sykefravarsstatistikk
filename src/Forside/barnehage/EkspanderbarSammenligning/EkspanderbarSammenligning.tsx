@@ -109,7 +109,6 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 sammenligningsType={SammenligningsType.TOTALT}
                 bransje={bransje}
                 harBransje={harBransje}
-                defaultÅpen
             />
             <EkspanderbartSammenligningspanel
                 sammenligningResultat={sammenligningResultatKorttid.sammenligningVurdering}

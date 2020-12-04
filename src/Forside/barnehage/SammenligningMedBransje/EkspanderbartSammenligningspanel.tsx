@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactElement, useState } from 'react';
-import { Ingress, Systemtittel } from 'nav-frontend-typografi';
+import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
 import {
@@ -96,6 +96,19 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const tipsliste: Tips[] = getTips(sammenligningsType, sykefraværResultat, bransje);
     const harTips = tipsliste.length > 0;
 
+    const vurderingstekst = getVurderingstekst(sykefraværResultat, sammenligningsType, harBransje);
+
+    const getPaneltittel = (): ReactElement | string => {
+        switch (sammenligningsType) {
+            case SammenligningsType.TOTALT:
+                return vurderingstekst;
+            case SammenligningsType.KORTTID:
+                return 'Legemeldt korttidsfravær:';
+            case SammenligningsType.LANGTID:
+                return 'Legemeldt langtidsfravær:';
+        }
+    };
+
     return (
         <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
             <EkspanderbartpanelBase
@@ -110,12 +123,14 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 tittel={
                     <span className="ekspanderbart-sammenligningspanel__tittel-wrapper">
                         <Speedometer resultat={sykefraværResultat} inline />
-                        <Systemtittel
-                            tag="h2"
-                            className="ekspanderbart-sammenligningspanel__tittel"
-                        >
-                            {getVurderingstekst(sykefraværResultat, sammenligningsType, harBransje)}
-                        </Systemtittel>
+                        <div className="ekspanderbart-sammenligningspanel__tittel-tekst">
+                            <Systemtittel tag="h2">{getPaneltittel()}</Systemtittel>
+                            {sammenligningsType !== SammenligningsType.TOTALT && (
+                                <Normaltekst className="ekspanderbart-sammenligningspanel__tittel-forklaring">
+                                    {vurderingstekst}
+                                </Normaltekst>
+                            )}
+                        </div>
                     </span>
                 }
                 className="ekspanderbart-sammenligningspanel__panel"
