@@ -168,7 +168,10 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                             className={'ekspanderbart-sammenligningspanel__tips'}
                         />
                     ))}
-                    <button className="ekspanderbart-sammenligningspanel__lukk-knapp">
+                    <button
+                        className="ekspanderbart-sammenligningspanel__lukk-knapp"
+                        onClick={() => setErÅpen(false)}
+                    >
                         <span className="typo-normal ">Lukk</span>
                         <OppChevron className="ekspanderbart-sammenligningspanel__lukk-chevron" />
                     </button>
