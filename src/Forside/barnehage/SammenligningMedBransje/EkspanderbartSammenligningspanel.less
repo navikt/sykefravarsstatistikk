@@ -1,8 +1,9 @@
 @import '../../../variables';
 
 .ekspanderbart-sammenligningspanel {
-    margin-top: 2rem;
-
+    + .ekspanderbart-sammenligningspanel {
+        margin-top: 2rem;
+    }
     &__loading-skeleton {
         margin-top: 2rem;
     }

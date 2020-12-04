@@ -12,6 +12,7 @@ import { useSendEvent } from '../../../amplitude/amplitude';
 import './EkspanderbarSammenligning.less';
 import { Bransjetype, RestVirksomhetMetadata } from '../../../api/virksomhetMetadata';
 import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
+import { Element } from 'nav-frontend-typografi';
 
 interface Props {
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
@@ -99,6 +100,9 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             <DinNæringEllerBransje
                 restSummertSykefraværshistorikk={restSummertSykefraværshistorikk}
             />
+            <Element className="ekspanderbar-sammenligning__undertittel">
+                Overordnet sammenligning:
+            </Element>
             <EkspanderbartSammenligningspanel
                 className="ekspanderbar-sammenligning__sammenligning-totalt"
                 sammenligningResultat={sammenligningResultatTotalt.sammenligningVurdering}
@@ -110,6 +114,9 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 bransje={bransje}
                 harBransje={harBransje}
             />
+            <Element className="ekspanderbar-sammenligning__undertittel">
+                Detaljert sammenligning:
+            </Element>
             <EkspanderbartSammenligningspanel
                 sammenligningResultat={sammenligningResultatKorttid.sammenligningVurdering}
                 sykefraværVirksomhet={sammenligningResultatKorttid.sykefraværVirksomhet}
