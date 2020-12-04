@@ -38,7 +38,6 @@ export const getTips = (
 const getTipsKorttidsfravær = (resultat: SykefraværVurdering): Tips[] => {
     switch (resultat) {
         case SykefraværVurdering.UNDER:
-        case SykefraværVurdering.FEIL:
             return [];
         default:
             return [fåNedKorttidsfravær];
@@ -69,6 +68,7 @@ const getTipsTotaltFravær = (
             case SykefraværVurdering.UFULLSTENDIG_DATA:
             case SykefraværVurdering.MIDDELS:
             case SykefraværVurdering.UNDER:
+            case SykefraværVurdering.FEIL:
             default:
                 return [seKursForebyggeSykefravær, tipsOgRådArbeidsmiljøSykefravær];
         }
