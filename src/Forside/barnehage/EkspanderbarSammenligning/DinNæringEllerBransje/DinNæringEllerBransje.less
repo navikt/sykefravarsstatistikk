@@ -1,0 +1,22 @@
+@import '../../../../variables';
+
+.din-næring-eller-bransje {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid #0067c5;
+    padding: 1rem;
+
+    &__ikon {
+        margin-bottom: 1rem;
+    }
+
+    @media print, (min-width: @screen-sm-min) {
+        flex-direction: row;
+
+        &__ikon {
+            margin-bottom: 0;
+            margin-right: 1rem;
+        }
+    }
+}

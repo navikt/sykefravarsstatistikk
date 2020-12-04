@@ -4,21 +4,21 @@ import { FeatureToggles, RestFeatureToggles } from './featureToggles';
 import {
     KvartalsvisSykefraværsprosent,
     RestSykefraværshistorikk,
-    Sykefraværshistorikk,
+    KvartalsvisSykefraværshistorikk,
     SykefraværshistorikkType,
-} from './sykefraværshistorikk';
+} from './kvartalsvisSykefraværshistorikk';
 import { sendEventDirekte } from '../amplitude/amplitude';
 import { RestVirksomhetMetadata, VirksomhetMetadata } from './virksomhetMetadata';
 import {
     RestSummertSykefraværshistorikk,
     SummertSykefraværshistorikk,
-} from './sykefraværsvarighet';
+} from './summertSykefraværshistorikk';
 
 const sykefraværshistorikkPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/kvartalsvis`;
 
-const varighetPath = (orgnr: string) =>
-    `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/summert/v2?antallKvartaler=4`;
+const summertPath = (orgnr: string) =>
+    `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/summert?antallKvartaler=4`;
 
 const featureTogglesPath = (features: string[]) =>
     `${BASE_PATH}/api/feature?` + features.map((featureNavn) => `feature=${featureNavn}`).join('&');
@@ -28,7 +28,7 @@ const virksomhetMetadataPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/bed
 export const hentRestSykefraværshistorikk = async (
     orgnr: string
 ): Promise<RestSykefraværshistorikk> => {
-    const response = await fetchMedFeilhåndtering<Sykefraværshistorikk[]>(
+    const response = await fetchMedFeilhåndtering<KvartalsvisSykefraværshistorikk[]>(
         sykefraværshistorikkPath(orgnr),
         {
             method: 'GET',
@@ -82,15 +82,15 @@ export const hentRestVirksomhetMetadata = async (
 export const hentRestSummertSykefraværshistorikk = async (
     orgnr: string
 ): Promise<RestSummertSykefraværshistorikk> => {
-    return await fetchMedFeilhåndtering<SummertSykefraværshistorikk[]>(varighetPath(orgnr), {
+    return await fetchMedFeilhåndtering<SummertSykefraværshistorikk[]>(summertPath(orgnr), {
         method: 'GET',
         credentials: 'include',
     });
 };
 
 export const filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet = (
-    data: Sykefraværshistorikk[]
-): Sykefraværshistorikk[] => {
+    data: KvartalsvisSykefraværshistorikk[]
+): KvartalsvisSykefraværshistorikk[] => {
     const sykefraværshistorikkForOverordnetEnhet: KvartalsvisSykefraværsprosent[] = getSykefraværshistorikk(
         data,
         SykefraværshistorikkType.OVERORDNET_ENHET
@@ -116,7 +116,7 @@ export const filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet = (
 };
 
 const getSykefraværshistorikk = (
-    listeAvSykefraværshistorikk: Sykefraværshistorikk[],
+    listeAvSykefraværshistorikk: KvartalsvisSykefraværshistorikk[],
     sykefraværshistorikkType: SykefraværshistorikkType
 ): KvartalsvisSykefraværsprosent[] => {
     const sykefraværshistorikkForTypen = listeAvSykefraværshistorikk.find(
@@ -154,7 +154,7 @@ const harSammeSykefraværshistorikk = (
     return !harFunnetMinstEnUlikSykefraværprosent;
 };
 
-const nullstillOverordnetEnhetshistorikk = (data: Sykefraværshistorikk[]): void => {
+const nullstillOverordnetEnhetshistorikk = (data: KvartalsvisSykefraværshistorikk[]): void => {
     const sykefraværshistorikkTilOverordnetEnhet = data.find(
         (sf) => sf.type === SykefraværshistorikkType.OVERORDNET_ENHET
     );

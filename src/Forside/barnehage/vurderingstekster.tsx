@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { SykefraværResultat } from './Speedometer/Speedometer';
+import { SykefraværVurdering } from './Speedometer/Speedometer';
 import { getGrønnGrense, getRødGrense } from './barnehage-utils';
 import { formaterProsent } from '../../utils/app-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -11,140 +11,148 @@ export enum SammenligningsType {
 }
 
 export const getVurderingstekst = (
-    sykefraværResultat: SykefraværResultat,
-    sammenligningsType: SammenligningsType
+    sykefraværResultat: SykefraværVurdering,
+    sammenligningsType: SammenligningsType,
+    harBransje: boolean
 ): ReactElement | string => {
     switch (sammenligningsType) {
         case SammenligningsType.TOTALT:
-            return getVurderingstekstTotalt(sykefraværResultat);
+            return getVurderingstekstTotalt(sykefraværResultat, harBransje);
         case SammenligningsType.LANGTID:
-            return getVurderingstekstLangtid(sykefraværResultat);
+            return getVurderingstekstLangtid(sykefraværResultat, harBransje);
         case SammenligningsType.KORTTID:
-            return getVurderingstekstKorttid(sykefraværResultat);
+            return getVurderingstekstKorttid(sykefraværResultat, harBransje);
     }
 };
 
 export const getVurderingstekstTotalt = (
-    sykefraværResultat: SykefraværResultat
+    sykefraværResultat: SykefraværVurdering,
+    harBransje: boolean
 ): ReactElement | string => {
+    const bransjeEllerNæringTekst = harBransje ? 'bransjen' : 'næringen';
     switch (sykefraværResultat) {
-        case SykefraværResultat.UNDER:
+        case SykefraværVurdering.UNDER:
             return (
                 <>
-                    Markert grønn: Du har <strong>lavere sykefravær</strong> enn andre barnehager i
-                    Norge
+                    Markert grønn: Du har <strong>lavere sykefravær</strong> enn{' '}
+                    {bransjeEllerNæringTekst}
                 </>
             );
-        case SykefraværResultat.MIDDELS:
+        case SykefraværVurdering.MIDDELS:
             return (
                 <>
-                    Markert gul: Du har <strong>omtrent likt sykefravær</strong> som andre
-                    barnehager i Norge
+                    Markert gul: Du har <strong>omtrent likt sykefravær</strong> som{' '}
+                    {bransjeEllerNæringTekst}
                 </>
             );
-        case SykefraværResultat.OVER:
+        case SykefraværVurdering.OVER:
             return (
                 <>
-                    Markert rød: Du har <strong>høyere sykefravær</strong> enn andre barnehager i
-                    Norge
+                    Markert rød: Du har <strong>høyere sykefravær</strong> enn{' '}
+                    {bransjeEllerNæringTekst}
                 </>
             );
-        case SykefraværResultat.UFULLSTENDIG_DATA:
+        case SykefraværVurdering.UFULLSTENDIG_DATA:
             return (
                 <>
                     Markert grå: <strong>Vi mangler dine tall for deler av perioden</strong> med
                     sammenligning.
                 </>
             );
-        case SykefraværResultat.MASKERT:
+        case SykefraværVurdering.MASKERT:
             return (
                 <>
                     Markert grå: Du har <strong>for lave tall</strong> til at vi kan vise
                     statistikken din.
                 </>
             );
-        case SykefraværResultat.INGEN_DATA:
+        case SykefraværVurdering.INGEN_DATA:
             return (
                 <>
                     Markert grå: Vi <strong>finner ikke tall</strong> for virksomheten din.
                 </>
             );
-        case SykefraværResultat.FEIL:
+        case SykefraværVurdering.FEIL:
             return <></>;
     }
 };
 
-export const getVurderingstekstKorttid = (resultat: SykefraværResultat) => {
+export const getVurderingstekstKorttid = (resultat: SykefraværVurdering, harBransje: boolean) => {
+    const bransjeEllerNæringTekst = harBransje ? 'bransjen' : 'næringen';
     switch (resultat) {
-        case SykefraværResultat.UNDER:
+        case SykefraværVurdering.UNDER:
             return (
                 <>
-                    Markert grønn: Du har et <strong>lavere legemeldt korttidsfravær</strong> enn
-                    bransjen
+                    Markert grønn: Du har et <strong>lavere legemeldt korttidsfravær</strong> enn{' '}
+                    {bransjeEllerNæringTekst}
                 </>
             );
-        case SykefraværResultat.MIDDELS:
+        case SykefraværVurdering.MIDDELS:
             return (
                 <>
-                    Markert gul: Du har <strong>omtrent likt legemeldt korttidsfravær</strong> som
-                    bransjen
+                    Markert gul: Du har <strong>omtrent likt legemeldt korttidsfravær</strong> som{' '}
+                    {bransjeEllerNæringTekst}
                 </>
             );
-        case SykefraværResultat.OVER:
+        case SykefraværVurdering.OVER:
             return (
                 <>
-                    Markert rød: Du har et <strong>høyere legemeldt korttidsfravær</strong> enn
-                    bransjen
+                    Markert rød: Du har et <strong>høyere legemeldt korttidsfravær</strong> enn{' '}
+                    {bransjeEllerNæringTekst}
                 </>
             );
-        case SykefraværResultat.UFULLSTENDIG_DATA:
-        case SykefraværResultat.MASKERT:
-        case SykefraværResultat.INGEN_DATA:
+        case SykefraværVurdering.UFULLSTENDIG_DATA:
+        case SykefraværVurdering.MASKERT:
+        case SykefraværVurdering.INGEN_DATA:
             return (
                 <>
                     Markert grå: Andel <strong>legemeldt korttidsfravær</strong> fra 1. til 16. dag:
                 </>
             );
-        case SykefraværResultat.FEIL:
+        case SykefraværVurdering.FEIL:
             return <>—</>;
     }
 };
 
-export const getVurderingstekstLangtid = (resultat: SykefraværResultat) => {
+export const getVurderingstekstLangtid = (resultat: SykefraværVurdering, harBransje: boolean) => {
+    const bransjeEllerNæringTekst = harBransje ? 'bransjen' : 'næringen';
     switch (resultat) {
-        case SykefraværResultat.UNDER:
+        case SykefraværVurdering.UNDER:
             return (
                 <>
-                    Markert grønn: Du har et <strong>lavere langtidsfravær</strong> enn bransjen
+                    Markert grønn: Du har et <strong>lavere langtidsfravær</strong> enn{' '}
+                    {bransjeEllerNæringTekst}
                 </>
             );
-        case SykefraværResultat.MIDDELS:
+        case SykefraværVurdering.MIDDELS:
             return (
                 <>
-                    Markert gul: Du har <strong>omtrent likt langtidsfravær</strong> som bransjen
+                    Markert gul: Du har <strong>omtrent likt langtidsfravær</strong> som{' '}
+                    {bransjeEllerNæringTekst}
                 </>
             );
-        case SykefraværResultat.OVER:
+        case SykefraværVurdering.OVER:
             return (
                 <>
-                    Markert rød: Du har et <strong>høyere langtidsfravær</strong> enn bransjen
+                    Markert rød: Du har et <strong>høyere langtidsfravær</strong> enn{' '}
+                    {bransjeEllerNæringTekst}
                 </>
             );
-        case SykefraværResultat.UFULLSTENDIG_DATA:
-        case SykefraværResultat.MASKERT:
-        case SykefraværResultat.INGEN_DATA:
+        case SykefraværVurdering.UFULLSTENDIG_DATA:
+        case SykefraværVurdering.MASKERT:
+        case SykefraværVurdering.INGEN_DATA:
             return (
                 <>
                     Markert grå: Andel <strong>langtidsfravær</strong> fra 17. dag:
                 </>
             );
-        case SykefraværResultat.FEIL:
+        case SykefraværVurdering.FEIL:
             return <>—</>;
     }
 };
 
 export const getForklaringAvVurdering = (
-    resultat: SykefraværResultat,
+    resultat: SykefraværVurdering,
     bransjensProsent: number | null | undefined
 ) => {
     if (bransjensProsent === null || bransjensProsent === undefined) {
@@ -157,56 +165,56 @@ export const getForklaringAvVurdering = (
     }
 
     switch (resultat) {
-        case SykefraværResultat.UNDER:
+        case SykefraværVurdering.UNDER:
             return (
                 <Normaltekst>
-                    Sammenligningen din er blitt markert som grønn på en skala grønn, gul og rød
+                    Sammenligningen din er blitt markert som grønn på en skala grønn, gul og rød.
                     <br />
                     Dette skjer når ditt sykefravær er lavere enn{' '}
                     {formaterProsent(getGrønnGrense(bransjensProsent))} prosent.
                 </Normaltekst>
             );
-        case SykefraværResultat.MIDDELS:
+        case SykefraværVurdering.MIDDELS:
             return (
                 <Normaltekst>
-                    Sammenligningen din er blitt markert som gul på en skala grønn, gul og rød
+                    Sammenligningen din er blitt markert som gul på en skala grønn, gul og rød.
                     <br />
                     Dette skjer når ditt sykefravær er mellom{' '}
                     {formaterProsent(getGrønnGrense(bransjensProsent))} og{' '}
                     {formaterProsent(getRødGrense(bransjensProsent))} prosent.
                 </Normaltekst>
             );
-        case SykefraværResultat.OVER:
+        case SykefraværVurdering.OVER:
             return (
                 <Normaltekst>
-                    Sammenligningen din er blitt markert som rød på en skala grønn, gul og rød
+                    Sammenligningen din er blitt markert som rød på en skala grønn, gul og rød.
                     <br />
                     Dette skjer når ditt sykefravær er høyere enn{' '}
                     {formaterProsent(getRødGrense(bransjensProsent))} prosent.
                 </Normaltekst>
             );
-        case SykefraværResultat.UFULLSTENDIG_DATA:
+        case SykefraværVurdering.UFULLSTENDIG_DATA:
             return (
                 <Normaltekst>
                     Sammenligningen blir markert grå fordi vi mangler dine tall for deler av
                     perioden. Sammenligningen lages når vi har tall for alle perioder.
                 </Normaltekst>
             );
-        case SykefraværResultat.MASKERT:
+        case SykefraværVurdering.MASKERT:
             return (
                 <Normaltekst>
                     Sammenligningen din er blitt markert som grå fordi du har for lave tall til at
                     vi kan vise statistikken din.
                 </Normaltekst>
             );
-        case SykefraværResultat.INGEN_DATA:
+        case SykefraværVurdering.INGEN_DATA:
             return (
                 <Normaltekst>
                     Sammenligningen din er blitt markert som grå fordi vi ikke finner tall for
                     virksomheten din. Vi viser dine tall når de publiseres.
                 </Normaltekst>
             );
-        case SykefraværResultat.FEIL:
+        case SykefraværVurdering.FEIL:
             return <></>;
     }
 };

@@ -2,16 +2,16 @@ import amplitude from 'amplitude-js';
 import { MutableRefObject, useContext, useEffect, useRef } from 'react';
 import { RestVirksomhetMetadata } from '../api/virksomhetMetadata';
 import { virksomhetMetadataContext } from '../utils/virksomhetMetadataContext';
-import { RestSykefraværshistorikk } from '../api/sykefraværshistorikk';
+import { RestSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
 import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkContext';
-import { RestSummertSykefraværshistorikk } from '../api/sykefraværsvarighet';
+import { RestSummertSykefraværshistorikk } from '../api/summertSykefraværshistorikk';
 import { summertSykefraværshistorikkContext } from '../utils/summertSykefraværshistorikkContext';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
 import {
     Ekstradata,
     getEkstraDataFraEnhetsregisteret,
     getEkstraDataFraSykefraværshistorikk,
-    getEkstraDataFraSykefraværsvarighet,
+    getEkstraDataFraSummertSykefraværshistorikk,
     getEkstraDataFraVirksomhetMetadata,
 } from './ekstradata';
 
@@ -123,7 +123,10 @@ const useEkstraDataRef = (): MutableRefObject<Partial<Ekstradata>> => {
         ekstradata.current = {
             ...getEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
             ...getEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
-            ...getEkstraDataFraSykefraværsvarighet(restSummertSykefraværshistorikk, restVirksomhetMetadata),
+            ...getEkstraDataFraSummertSykefraværshistorikk(
+                restSummertSykefraværshistorikk,
+                restVirksomhetMetadata
+            ),
             ...getEkstraDataFraEnhetsregisteret(
                 dataFraEnhetsregisteret.restOverordnetEnhet,
                 restVirksomhetMetadata

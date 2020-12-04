@@ -1,8 +1,11 @@
 import { filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet } from './api';
-import { Sykefraværshistorikk, SykefraværshistorikkType } from './sykefraværshistorikk';
+import {
+    KvartalsvisSykefraværshistorikk,
+    SykefraværshistorikkType,
+} from './kvartalsvisSykefraværshistorikk';
 
 describe('Tester for utils funksjoner', () => {
-    const historikkUnderenhet: Sykefraværshistorikk = {
+    const historikkUnderenhet: KvartalsvisSykefraværshistorikk = {
         type: SykefraværshistorikkType.VIRKSOMHET,
         label: 'Underenhet AS',
         kvartalsvisSykefraværsprosent: [
@@ -24,7 +27,7 @@ describe('Tester for utils funksjoner', () => {
             },
         ],
     };
-    const historikkOverordnetEnhet: Sykefraværshistorikk = {
+    const historikkOverordnetEnhet: KvartalsvisSykefraværshistorikk = {
         type: SykefraværshistorikkType.OVERORDNET_ENHET,
         label: 'Underenhet AS',
         kvartalsvisSykefraværsprosent: [
@@ -48,14 +51,14 @@ describe('Tester for utils funksjoner', () => {
     };
 
     test('filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet håndterer tom historikk for overordnet enhet', () => {
-        const result: Sykefraværshistorikk[] = filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(
+        const result: KvartalsvisSykefraværshistorikk[] = filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(
             [historikkUnderenhet]
         );
         expect(result.length).toBe(1);
     });
 
     test('filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet håndterer tom historikk for underenhet', () => {
-        const result: Sykefraværshistorikk[] = filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(
+        const result: KvartalsvisSykefraværshistorikk[] = filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(
             [historikkOverordnetEnhet]
         );
         expect(result.length).toBe(1);
@@ -69,7 +72,7 @@ describe('Tester for utils funksjoner', () => {
     });
 
     test('filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet filtrerer bort historikk for overordnet enhet', () => {
-        const result: Sykefraværshistorikk[] = filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(
+        const result: KvartalsvisSykefraværshistorikk[] = filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet(
             [historikkUnderenhet, historikkOverordnetEnhet]
         );
         expect(result.length).toBe(2);

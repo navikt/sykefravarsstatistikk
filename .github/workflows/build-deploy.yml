@@ -8,7 +8,7 @@ env:
 jobs:
     compile-test-and-build:
         name: Build and run tests
-        runs-on: ubuntu-latest
+        runs-on: Ubuntu-20.04
         steps:
             - uses: actions/checkout@v1
             - uses: actions/setup-node@v1
@@ -39,9 +39,9 @@ jobs:
 
     deploy-to-dev:
         name: Deploy to dev-sbs
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/hente-sf-for-bransje-eller-naring'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/refaktorering-rydding-opp'
         needs: compile-test-and-build
-        runs-on: ubuntu-latest
+        runs-on: Ubuntu-20.04
         steps:
             - uses: actions/checkout@v1
             - uses: nais/deploy/actions/deploy@v1
@@ -53,9 +53,9 @@ jobs:
                   PRINT_PAYLOAD: true
     deploy-to-labs-gcp:
         name: Deploy to labs-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/legge-til-labs-nais-io'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/refaktorering-rydding-opp'
         needs: compile-test-and-build
-        runs-on: ubuntu-latest
+        runs-on: Ubuntu-20.04
         steps:
             - uses: actions/checkout@v1
             - uses: nais/deploy/actions/deploy@v1
@@ -70,7 +70,7 @@ jobs:
         name: Deploy to prod-sbs
         if: github.ref == 'refs/heads/master'
         needs: compile-test-and-build
-        runs-on: ubuntu-latest
+        runs-on: Ubuntu-20.04
         steps:
             - uses: actions/checkout@v1
             - uses: nais/deploy/actions/deploy@v1

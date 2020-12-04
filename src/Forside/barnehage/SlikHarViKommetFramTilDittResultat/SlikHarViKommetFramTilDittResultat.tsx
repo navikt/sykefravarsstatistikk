@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react';
-import { SykefraværResultat } from '../Speedometer/Speedometer';
+import { SykefraværVurdering } from '../Speedometer/Speedometer';
 import { ÅrstallOgKvartal } from '../../../utils/sykefraværshistorikk-utils';
 import { SlikHarViKommetFramTilDittResultatTekst } from './SlikHarViKommetFramTilDittResultatTekst';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import './SlikHarViKommetFramTilDittResultat.less';
 
 interface Props {
-    resultat: SykefraværResultat;
+    resultat: SykefraværVurdering;
     kvartaler?: ÅrstallOgKvartal[];
     onÅpne?: () => void;
 }

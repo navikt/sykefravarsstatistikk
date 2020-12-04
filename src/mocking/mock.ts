@@ -13,13 +13,15 @@ import { defaultBedriftsmetrikker } from './virksomhet-metadata-mock';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './altinn-mock';
 import { summertSykefraværshistorikkMockUtenData } from './summert-sykefraværshistorikk-mock';
 import { getMiljø } from '../utils/miljøUtils';
-
+import { kurslisteMock } from './kursliste-mock';
+import { KURSOVERSIKT_API_PATH } from '../api/kurs-api';
 
 const mock = {
     minSideArbeidsgiver: true,
     sykefraværsstatistikkApi: true,
     enhetsregisteret: true,
     featureToggles: true,
+    kursliste: true,
 };
 
 let delayfaktor = 0;
@@ -75,7 +77,7 @@ if (mock.sykefraværsstatistikkApi) {
         }
     );
     mockGetAndLog(
-        'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/summert/v2',
+        'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/summert',
         (url) => {
             const orgnr = url.match(/[0-9]{9}/)![0];
 
@@ -139,6 +141,10 @@ if (mock.featureToggles) {
             delay: 1000 * delayfaktor,
         }
     );
+}
+
+if (mock.kursliste) {
+    mockGetAndLog(KURSOVERSIKT_API_PATH, kurslisteMock);
 }
 
 fetchMock.spy();

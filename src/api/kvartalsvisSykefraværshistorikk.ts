@@ -28,10 +28,10 @@ export type Sykefraværsprosent =
           muligeDagsverk: number | undefined;
       };
 
-export interface Sykefraværshistorikk {
+export interface KvartalsvisSykefraværshistorikk {
     type: SykefraværshistorikkType;
     label: string;
     kvartalsvisSykefraværsprosent: KvartalsvisSykefraværsprosent[];
 }
 
-export type RestSykefraværshistorikk = RestRessurs<Sykefraværshistorikk[]>;
+export type RestSykefraværshistorikk = RestRessurs<KvartalsvisSykefraværshistorikk[]>;

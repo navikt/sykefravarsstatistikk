@@ -1,8 +1,8 @@
 import {
     KvartalsvisSykefraværsprosent,
-    Sykefraværshistorikk,
+    KvartalsvisSykefraværshistorikk,
     SykefraværshistorikkType,
-} from '../api/sykefraværshistorikk';
+} from '../api/kvartalsvisSykefraværshistorikk';
 
 const summerTall = (tall: number[]) => tall.reduce((a, b) => a + b);
 
@@ -16,7 +16,7 @@ export enum Maskering {
     ErMaskertEllerHarIkkeNokData = 'erMaskertEllerHarIkkeNokData',
 }
 export const getSiste4KvartalsvisSykefraværshistorikk = (
-    historikkListe: Sykefraværshistorikk[]
+    historikkListe: KvartalsvisSykefraværshistorikk[]
 ): KvartalsvisSykefraværsprosent[] => {
     const alleProsenter = [
         ...historikkListe.find(
@@ -31,7 +31,7 @@ export const getSiste4KvartalsvisSykefraværshistorikk = (
 };
 
 export const getAntallTapteDagsverkSiste4Kvartaler = (
-    historikkListe: Sykefraværshistorikk[]
+    historikkListe: KvartalsvisSykefraværshistorikk[]
 ): number | 'erMaskertEllerHarIkkeNokData' => {
     const prosenterForSiste4Kvartaler = getSiste4KvartalsvisSykefraværshistorikk(historikkListe);
     if (prosenterForSiste4Kvartaler.length !== 4) {
@@ -44,7 +44,7 @@ export const getAntallTapteDagsverkSiste4Kvartaler = (
 };
 
 export const getAntallMuligeDagsverkSiste4Kvartaler = (
-    historikkListe: Sykefraværshistorikk[]
+    historikkListe: KvartalsvisSykefraværshistorikk[]
 ): number | Maskering.ErMaskertEllerHarIkkeNokData => {
     const prosenterForSiste4Kvartaler = getSiste4KvartalsvisSykefraværshistorikk(historikkListe);
     if (prosenterForSiste4Kvartaler.length !== 4) {
@@ -57,7 +57,7 @@ export const getAntallMuligeDagsverkSiste4Kvartaler = (
 };
 
 export const getSykefraværsprosentSiste4Kvartaler = (
-    historikkListe: Sykefraværshistorikk[]
+    historikkListe: KvartalsvisSykefraværshistorikk[]
 ): number | Maskering.ErMaskertEllerHarIkkeNokData => {
     const antallTapteDagsverSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(historikkListe);
     const antallMuligeDagsverkSiste4Kvartaler = getAntallMuligeDagsverkSiste4Kvartaler(

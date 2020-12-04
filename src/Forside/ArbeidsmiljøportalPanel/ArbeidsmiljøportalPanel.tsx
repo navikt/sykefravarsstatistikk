@@ -1,15 +1,13 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, { FunctionComponent } from 'react';
 import './ArbeidsmiljøportalPanel.less';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { Nyhet } from '../../felleskomponenter/Nyhet/Nyhet';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import arbeidsmiljøportalLogoSvg from './arbeidsmiljøportal-logo.svg';
-import { featureTogglesContext } from '../../utils/FeatureTogglesContext';
-import { RestFeatureToggles } from '../../api/featureToggles';
 import { RestStatus } from '../../api/api-utils';
 import { RestVirksomhetMetadata } from '../../api/virksomhetMetadata';
-import Skeleton from 'react-loading-skeleton';
 import {
+    ArbeidstilsynetBransje,
     getArbeidstilsynetBransje,
     getLenkeTilBransjensSideIArbeidsmiljøportalen,
 } from './bransje-utils';
@@ -19,22 +17,10 @@ interface Props {
 }
 
 export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restVirksomhetMetadata }) => {
-    const restFeatureToggles = useContext<RestFeatureToggles>(featureTogglesContext);
-    if (
-        restFeatureToggles.status === RestStatus.LasterInn ||
-        !restFeatureToggles.data['sykefravarsstatistikk.arbeidsmiljoportal']
-    ) {
-        return null;
-    }
-
-    if (restVirksomhetMetadata.status === RestStatus.LasterInn) {
-        return <Skeleton height={244} aria-label="laster inn" />;
-    }
-    if (restVirksomhetMetadata.status !== RestStatus.Suksess) {
-        return null;
-    }
-
-    const bransje = getArbeidstilsynetBransje(restVirksomhetMetadata.data.næringskode5Siffer);
+    const bransje =
+        restVirksomhetMetadata.status === RestStatus.Suksess
+            ? getArbeidstilsynetBransje(restVirksomhetMetadata.data.næringskode5Siffer)
+            : ArbeidstilsynetBransje.ANDRE_BRANSJER;
 
     return (
         <div className="arbeidsmiljøportal-panel">

@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactElement, useState } from 'react';
 import { Ingress, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
-import { Speedometer, SykefraværResultat } from '../Speedometer/Speedometer';
+import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
 import {
     getForklaringAvVurdering,
     getVurderingstekst,
@@ -11,20 +11,23 @@ import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import { SykefraværMetadata } from './SykefraværMetadata';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
 import { TipsVisning } from '../../../felleskomponenter/tips/TipsVisning';
-import { getTips } from '../../../felleskomponenter/tips/tips';
+import { getTips, Tips } from '../../../felleskomponenter/tips/tips';
 import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
 import { useSendEvent } from '../../../amplitude/amplitude';
+import { periodeFraOgTil } from '../../../utils/app-utils';
+import { Bransjetype } from '../../../api/virksomhetMetadata';
 
 interface Props {
-    sammenligningResultat: SykefraværResultat;
+    sammenligningResultat: SykefraværVurdering;
     sykefraværVirksomhet: number | null | undefined;
     sykefraværBransje: number | null | undefined;
     antallKvartalerVirksomhet: ReactElement | null;
     antallKvartalerBransje: ReactElement | null;
     sammenligningsType: SammenligningsType;
+    bransje: Bransjetype | undefined;
+    harBransje: boolean;
     defaultÅpen?: boolean;
-    visTips: boolean;
     className?: string;
 }
 
@@ -35,16 +38,16 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     antallKvartalerVirksomhet,
     antallKvartalerBransje,
     sammenligningsType,
+    bransje,
+    harBransje,
     defaultÅpen,
-    visTips,
     className,
 }) => {
     const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
     const sendEvent = useSendEvent();
-    const periode = '01.04.2019 til 31.03.2020';
 
     const visningAvProsentForBransje: number | null | undefined =
-        sykefraværResultat === SykefraværResultat.FEIL ? null : sykefraværBransje;
+        sykefraværResultat === SykefraværVurdering.FEIL ? null : sykefraværBransje;
 
     const getPanelEventtekst = (sammenligningsType: SammenligningsType) => {
         switch (sammenligningsType) {
@@ -56,13 +59,20 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 return 'langtidsfravær';
         }
     };
+    let overskriftForTallForNæringEllerBransje;
+    if (bransje === Bransjetype.BARNEHAGER) {
+        overskriftForTallForNæringEllerBransje = 'Barnehager i Norge:';
+    } else {
+        overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
+    }
+
     const innhold = (
         <>
             <div className="ekspanderbart-sammenligningspanel__metadata-og-detaljert-visning-sykefravær">
                 <SykefraværMetadata
                     className="ekspanderbart-sammenligningspanel__sykefravær-metadata"
                     sammenligningsType={sammenligningsType}
-                    periode={periode}
+                    periode={periodeFraOgTil}
                 />
                 <DetaljertVisningSykefravær
                     className="ekspanderbart-sammenligningspanel__detaljert-visning"
@@ -72,7 +82,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 />
                 <DetaljertVisningSykefravær
                     className="ekspanderbart-sammenligningspanel__detaljert-visning"
-                    overskrift="Barnehager i Norge:"
+                    overskrift={overskriftForTallForNæringEllerBransje}
                     prosent={visningAvProsentForBransje}
                     visingAntallKvartaller={antallKvartalerBransje}
                 />
@@ -82,6 +92,9 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             </div>
         </>
     );
+
+    const tipsliste: Tips[] = getTips(sammenligningsType, sykefraværResultat, bransje);
+    const harTips = tipsliste.length > 0;
 
     return (
         <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
@@ -101,7 +114,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                             tag="h2"
                             className="ekspanderbart-sammenligningspanel__tittel"
                         >
-                            {getVurderingstekst(sykefraværResultat, sammenligningsType)}
+                            {getVurderingstekst(sykefraværResultat, sammenligningsType, harBransje)}
                         </Systemtittel>
                     </span>
                 }
@@ -109,26 +122,23 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             >
                 <div className="ekspanderbart-sammenligningspanel__innhold">
                     {innhold}
-                    {visTips && getTips(sammenligningsType, sykefraværResultat) && (
+                    {harTips && (
                         <div className="ekspanderbart-sammenligningspanel__tips-tittel">
                             <img
                                 className="ekspanderbart-sammenligningspanel__bilde"
                                 src={lyspære}
                                 alt=""
                             />
-                            <Ingress>
-                                {sammenligningsType === SammenligningsType.TOTALT
-                                    ? 'Tips fra andre barnehager i lignende situasjon som deg'
-                                    : 'Dette kan du gjøre'}
-                            </Ingress>
+                            <Ingress>Dette kan du gjøre</Ingress>
                         </div>
                     )}
-                    {visTips && (
+                    {tipsliste.map((tips) => (
                         <TipsVisning
-                            tips={getTips(sammenligningsType, sykefraværResultat)}
+                            key={tips.id}
+                            tips={tips}
                             className={'ekspanderbart-sammenligningspanel__tips'}
                         />
-                    )}
+                    ))}
                 </div>
             </EkspanderbartpanelBase>
             <div className="ekspanderbart-sammenligningspanel__print-innhold">{innhold}</div>

@@ -1,9 +1,9 @@
 import { getAntallTapteDagsverkSiste4Kvartaler } from './kalkulator-utils';
 import {
     KvartalsvisSykefraværsprosent,
-    Sykefraværshistorikk,
+    KvartalsvisSykefraværshistorikk,
     SykefraværshistorikkType,
-} from '../api/sykefraværshistorikk';
+} from '../api/kvartalsvisSykefraværshistorikk';
 
 describe('Tester for kalkulator-utils', () => {
     test('getAntallTapteDagsverkSiste4Kvartaler skal returnere antall tapte dagsverk for virksomhet de siste 4 kvartaler', () => {
@@ -72,7 +72,7 @@ describe('Tester for kalkulator-utils', () => {
     });
 
     test('getAntallTapteDagsverkSiste4Kvartaler skal ikke mutere innsendt data', () => {
-        const historikkVirksomhet: Sykefraværshistorikk = {
+        const historikkVirksomhet: KvartalsvisSykefraværshistorikk = {
             type: SykefraværshistorikkType.VIRKSOMHET,
             label: '',
             kvartalsvisSykefraværsprosent: [

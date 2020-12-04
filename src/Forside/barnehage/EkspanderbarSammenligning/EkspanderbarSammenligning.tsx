@@ -1,24 +1,26 @@
 import React, { FunctionComponent } from 'react';
-import { RestSummertSykefraværshistorikk } from '../../../api/sykefraværsvarighet';
+import { RestSummertSykefraværshistorikk } from '../../../api/summertSykefraværshistorikk';
 import { EkspanderbartSammenligningspanel } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
 import { RestStatus } from '../../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
-import { getSammenligningResultatMedProsent } from '../barnehage-utils';
-import { SykefraværResultat } from '../Speedometer/Speedometer';
+import { getSammenligningResultatMedProsent, summertHistorikkHarBransje } from '../barnehage-utils';
+import { SykefraværVurdering } from '../Speedometer/Speedometer';
 import { SammenligningsType } from '../vurderingstekster';
 import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngress';
 import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
 import { useSendEvent } from '../../../amplitude/amplitude';
 import './EkspanderbarSammenligning.less';
+import { Bransjetype, RestVirksomhetMetadata } from '../../../api/virksomhetMetadata';
+import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
 
 interface Props {
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
-    visTips: boolean;
+    restVirksomhetMetadata: RestVirksomhetMetadata;
 }
 
 export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
     restSummertSykefraværshistorikk,
-    visTips,
+    restVirksomhetMetadata,
 }) => {
     const sendEvent = useSendEvent();
 
@@ -41,10 +43,19 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
         );
     }
 
+    const bransje: Bransjetype | undefined =
+        restVirksomhetMetadata.status === RestStatus.Suksess
+            ? restVirksomhetMetadata.data.bransje
+            : undefined;
+
     const summertSykefraværshistorikk =
         restSummertSykefraværshistorikk.status === RestStatus.Suksess
             ? restSummertSykefraværshistorikk.data
             : undefined;
+
+    const harBransje =
+        restSummertSykefraværshistorikk.status === RestStatus.Suksess &&
+        summertHistorikkHarBransje(restSummertSykefraværshistorikk.data);
 
     const sammenligningResultatTotalt = getSammenligningResultatMedProsent(
         restSummertSykefraværshistorikk.status,
@@ -64,55 +75,61 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
     );
 
     const antallKvartalerVirksomhet =
-        sammenligningResultatTotalt.sammenligningResultat ===
-            SykefraværResultat.UFULLSTENDIG_DATA ||
-        sammenligningResultatTotalt.sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
+        sammenligningResultatTotalt.sammenligningVurdering ===
+            SykefraværVurdering.UFULLSTENDIG_DATA ||
+        sammenligningResultatTotalt.sammenligningVurdering === SykefraværVurdering.INGEN_DATA ? (
             <strong> {sammenligningResultatTotalt.kvartaler?.length || 0} av 4 kvartaler</strong>
         ) : null;
 
     const antallKvartalerBransje =
-        sammenligningResultatTotalt.sammenligningResultat ===
-            SykefraværResultat.UFULLSTENDIG_DATA ||
-        sammenligningResultatTotalt.sammenligningResultat === SykefraværResultat.INGEN_DATA ? (
+        sammenligningResultatTotalt.sammenligningVurdering ===
+            SykefraværVurdering.UFULLSTENDIG_DATA ||
+        sammenligningResultatTotalt.sammenligningVurdering === SykefraværVurdering.INGEN_DATA ? (
             <strong>4 av 4 kvartaler</strong>
         ) : null;
 
     return (
         <div className="ekspanderbar-sammenligning">
-            <SammenligningIngress />
+            <SammenligningIngress bransje={bransje} harBransje={harBransje} />
             <SlikHarViKommetFramTilDittResultat
-                resultat={sammenligningResultatTotalt.sammenligningResultat}
+                resultat={sammenligningResultatTotalt.sammenligningVurdering}
                 kvartaler={sammenligningResultatTotalt.kvartaler}
                 onÅpne={() => sendEvent('barnehage sammenligning lesmer', 'åpne')}
             />
+            <DinNæringEllerBransje
+                restSummertSykefraværshistorikk={restSummertSykefraværshistorikk}
+            />
             <EkspanderbartSammenligningspanel
                 className="ekspanderbar-sammenligning__sammenligning-totalt"
-                sammenligningResultat={sammenligningResultatTotalt.sammenligningResultat}
+                sammenligningResultat={sammenligningResultatTotalt.sammenligningVurdering}
                 sykefraværVirksomhet={sammenligningResultatTotalt.sykefraværVirksomhet}
                 sykefraværBransje={sammenligningResultatTotalt.sykefraværBransje}
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.TOTALT}
+                bransje={bransje}
+                harBransje={harBransje}
                 defaultÅpen
-                visTips={visTips}
             />
             <EkspanderbartSammenligningspanel
-                sammenligningResultat={sammenligningResultatKorttid.sammenligningResultat}
+                sammenligningResultat={sammenligningResultatKorttid.sammenligningVurdering}
                 sykefraværVirksomhet={sammenligningResultatKorttid.sykefraværVirksomhet}
                 sykefraværBransje={sammenligningResultatKorttid.sykefraværBransje}
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.KORTTID}
-                visTips={visTips}
+                bransje={bransje}
+                harBransje={harBransje}
             />
             <EkspanderbartSammenligningspanel
-                sammenligningResultat={sammenligningResultatLangtid.sammenligningResultat}
+                sammenligningResultat={sammenligningResultatLangtid.sammenligningVurdering}
                 sykefraværVirksomhet={sammenligningResultatLangtid.sykefraværVirksomhet}
                 sykefraværBransje={sammenligningResultatLangtid.sykefraværBransje}
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.LANGTID}
-                visTips={visTips}
+                bransje={bransje}
+                harBransje={harBransje}
             />
         </div>
     );

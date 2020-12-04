@@ -1,37 +1,13 @@
 import React, { FunctionComponent } from 'react';
-import { Bransjetype, RestVirksomhetMetadata } from '../api/virksomhetMetadata';
 import { Redirect, useLocation } from 'react-router-dom';
-import { RestStatus } from '../api/api-utils';
-import { PATH_FORSIDE_BARNEHAGE, PATH_FORSIDE_GENERELL } from '../konstanter';
+import {PATH_FORSIDE, PATH_FORSIDE_BARNEHAGE, PATH_FORSIDE_GENERELL} from '../konstanter';
 
-export const BarnehageRedirect: FunctionComponent<{
-    restVirksomhetMetadata: RestVirksomhetMetadata;
-}> = ({ restVirksomhetMetadata }) => {
+export const LegacyBarnehageSammenligningRedirect: FunctionComponent = () => {
     const location = useLocation();
-    if (restVirksomhetMetadata.status !== RestStatus.Suksess) {
-        return null;
-    }
-    if (restVirksomhetMetadata.data.bransje !== Bransjetype.BARNEHAGER) {
-        return null;
-    }
-    return <Redirect to={PATH_FORSIDE_BARNEHAGE + location.search} />;
+    return <Redirect from={PATH_FORSIDE_BARNEHAGE} to={PATH_FORSIDE + location.search} />;
 };
 
-export const GenerellForsideRedirect: FunctionComponent<{
-    restVirksomhetMetadata: RestVirksomhetMetadata;
-}> = ({ restVirksomhetMetadata }) => {
+export const LegacySammenligningRedirect: FunctionComponent = () => {
     const location = useLocation();
-    if (
-        restVirksomhetMetadata.status !== RestStatus.Suksess &&
-        restVirksomhetMetadata.status !== RestStatus.Feil
-    ) {
-        return null;
-    }
-    if (
-        restVirksomhetMetadata.status === RestStatus.Suksess &&
-        restVirksomhetMetadata.data.bransje === Bransjetype.BARNEHAGER
-    ) {
-        return null;
-    }
-    return <Redirect to={PATH_FORSIDE_GENERELL + location.search} />;
+    return <Redirect from={PATH_FORSIDE_GENERELL} to={PATH_FORSIDE + location.search} />;
 };

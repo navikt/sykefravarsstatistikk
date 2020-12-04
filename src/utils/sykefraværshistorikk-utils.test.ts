@@ -1,4 +1,7 @@
-import { Sykefraværshistorikk, SykefraværshistorikkType } from '../api/sykefraværshistorikk';
+import {
+    KvartalsvisSykefraværshistorikk,
+    SykefraværshistorikkType,
+} from '../api/kvartalsvisSykefraværshistorikk';
 import {
     getHistorikkLabels,
     konverterTilKvartalsvisSammenligning,
@@ -127,7 +130,7 @@ describe('Tester for graf-og-tabell-utils', () => {
 const lagHistorikkMedEttInnslag = (
     type: SykefraværshistorikkType,
     prosent: number
-): Sykefraværshistorikk => {
+): KvartalsvisSykefraværshistorikk => {
     return {
         type,
         label: '',
@@ -147,7 +150,7 @@ const lagHistorikkMedEttInnslag = (
 const lagHistorikkMedÅrstallOgKvartal = (
     type: SykefraværshistorikkType,
     årstallOgKvartalListe: ÅrstallOgKvartal[]
-): Sykefraværshistorikk => {
+): KvartalsvisSykefraværshistorikk => {
     return {
         type,
         label: '',
