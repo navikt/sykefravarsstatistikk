@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import { useSendEvent } from '../../../amplitude/amplitude';
 import { periodeFraOgTil } from '../../../utils/app-utils';
 import { Bransjetype } from '../../../api/virksomhetMetadata';
+import { OppChevron } from 'nav-frontend-chevron';
 
 interface Props {
     sammenligningResultat: SykefraværVurdering;
@@ -167,6 +168,10 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                             className={'ekspanderbart-sammenligningspanel__tips'}
                         />
                     ))}
+                    <button className="ekspanderbart-sammenligningspanel__lukk-knapp">
+                        <span className="typo-normal ">Lukk</span>
+                        <OppChevron className="ekspanderbart-sammenligningspanel__lukk-chevron" />
+                    </button>
                 </div>
             </EkspanderbartpanelBase>
             <div className="ekspanderbart-sammenligningspanel__print-innhold">{innhold}</div>
