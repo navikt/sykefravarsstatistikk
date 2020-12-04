@@ -46,6 +46,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
 }) => {
     const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
     const sendEvent = useSendEvent();
+    const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
 
     const visningAvProsentForBransje: number | null | undefined =
         sykefraværResultat === SykefraværVurdering.FEIL ? null : sykefraværBransje;
@@ -131,8 +132,9 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     setErÅpen(!erÅpen);
                 }}
                 apen={erÅpen}
+                id={panelknappID}
                 tittel={
-                    <span className="ekspanderbart-sammenligningspanel__tittel-wrapper">
+                    <div className="ekspanderbart-sammenligningspanel__tittel-wrapper">
                         <Speedometer resultat={sykefraværResultat} inline />
                         <div className="ekspanderbart-sammenligningspanel__tittel-tekst">
                             <Systemtittel tag="h2">{getPaneltittel()}</Systemtittel>
@@ -145,7 +147,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                                 {getLesMerTekst()}
                             </Normaltekst>
                         </div>
-                    </span>
+                    </div>
                 }
                 className="ekspanderbart-sammenligningspanel__panel"
             >
@@ -170,7 +172,11 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     ))}
                     <button
                         className="ekspanderbart-sammenligningspanel__lukk-knapp"
-                        onClick={() => setErÅpen(false)}
+                        onClick={() => {
+                            setErÅpen(false);
+                            const panelknapp = document.getElementById(panelknappID);
+                            panelknapp && panelknapp.scrollIntoView({ behavior: 'smooth' });
+                        }}
                     >
                         <span className="typo-normal ">Lukk</span>
                         <OppChevron className="ekspanderbart-sammenligningspanel__lukk-chevron" />
