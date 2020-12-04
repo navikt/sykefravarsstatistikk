@@ -7,6 +7,7 @@ import {
     Statistikkategori,
 } from '../../../../api/summertSykefraværshistorikk';
 import { RestStatus } from '../../../../api/api-utils';
+import EksternLenke from '../../../../felleskomponenter/EksternLenke/EksternLenke';
 
 interface Props {
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
@@ -45,12 +46,22 @@ export const DinNæringEllerBransje: FunctionComponent<Props> = ({
 
     return (
         <div className="din-næring-eller-bransje">
-            <img
-                className="din-næring-eller-bransje__ikon"
-                src={næringEllerBransjeIkonSvg}
-                alt=""
-            />
-            <Normaltekst>{tekst}</Normaltekst>
+            <div className="din-næring-eller-bransje__ikon-og-tekst">
+                <img
+                    className="din-næring-eller-bransje__ikon"
+                    src={næringEllerBransjeIkonSvg}
+                    alt=""
+                />
+                <Normaltekst>{tekst}</Normaltekst>
+            </div>
+            <div className="din-næring-eller-bransje__lenke-wrapper">
+                <EksternLenke href="https://www.altinn.no/skjemaoversikt/bronnoysundregistrene/samordnet-registermelding---registrering-av-nye-og-endring-av-eksisterende-foretak-og-enheter/">
+                    Endre (Altinn)
+                </EksternLenke>
+                <EksternLenke href="https://www.brreg.no/bedrift/naeringskoder/">
+                    Om næringskoder (Brreg)
+                </EksternLenke>
+            </div>
         </div>
     );
 };
