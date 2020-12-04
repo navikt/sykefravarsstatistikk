@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactElement, useState } from 'react';
-import { Ingress, Systemtittel } from 'nav-frontend-typografi';
+import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
 import {
@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import { useSendEvent } from '../../../amplitude/amplitude';
 import { periodeFraOgTil } from '../../../utils/app-utils';
 import { Bransjetype } from '../../../api/virksomhetMetadata';
+import { OppChevron } from 'nav-frontend-chevron';
 
 interface Props {
     sammenligningResultat: SykefraværVurdering;
@@ -45,6 +46,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
 }) => {
     const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
     const sendEvent = useSendEvent();
+    const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
 
     const visningAvProsentForBransje: number | null | undefined =
         sykefraværResultat === SykefraværVurdering.FEIL ? null : sykefraværBransje;
@@ -96,6 +98,29 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const tipsliste: Tips[] = getTips(sammenligningsType, sykefraværResultat, bransje);
     const harTips = tipsliste.length > 0;
 
+    const vurderingstekst = getVurderingstekst(sykefraværResultat, sammenligningsType, harBransje);
+
+    const getPaneltittel = (): ReactElement | string => {
+        switch (sammenligningsType) {
+            case SammenligningsType.TOTALT:
+                return vurderingstekst;
+            case SammenligningsType.KORTTID:
+                return 'Legemeldt korttidsfravær:';
+            case SammenligningsType.LANGTID:
+                return 'Legemeldt langtidsfravær:';
+        }
+    };
+
+    const getLesMerTekst = (): string => {
+        switch (sammenligningsType) {
+            case SammenligningsType.TOTALT:
+            case SammenligningsType.KORTTID:
+                return 'Les mer om tallene og få tips til hva du kan gjøre';
+            case SammenligningsType.LANGTID:
+                return 'Les mer om tallene';
+        }
+    };
+
     return (
         <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
             <EkspanderbartpanelBase
@@ -107,16 +132,22 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     setErÅpen(!erÅpen);
                 }}
                 apen={erÅpen}
+                id={panelknappID}
                 tittel={
-                    <span className="ekspanderbart-sammenligningspanel__tittel-wrapper">
+                    <div className="ekspanderbart-sammenligningspanel__tittel-wrapper">
                         <Speedometer resultat={sykefraværResultat} inline />
-                        <Systemtittel
-                            tag="h2"
-                            className="ekspanderbart-sammenligningspanel__tittel"
-                        >
-                            {getVurderingstekst(sykefraværResultat, sammenligningsType, harBransje)}
-                        </Systemtittel>
-                    </span>
+                        <div className="ekspanderbart-sammenligningspanel__tittel-tekst">
+                            <Systemtittel tag="h2">{getPaneltittel()}</Systemtittel>
+                            {sammenligningsType !== SammenligningsType.TOTALT && (
+                                <Normaltekst className="ekspanderbart-sammenligningspanel__tittel-forklaring">
+                                    {vurderingstekst}
+                                </Normaltekst>
+                            )}
+                            <Normaltekst className="ekspanderbart-sammenligningspanel__les-mer">
+                                {getLesMerTekst()}
+                            </Normaltekst>
+                        </div>
+                    </div>
                 }
                 className="ekspanderbart-sammenligningspanel__panel"
             >
@@ -139,6 +170,17 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                             className={'ekspanderbart-sammenligningspanel__tips'}
                         />
                     ))}
+                    <button
+                        className="ekspanderbart-sammenligningspanel__lukk-knapp"
+                        onClick={() => {
+                            setErÅpen(false);
+                            const panelknapp = document.getElementById(panelknappID);
+                            panelknapp && panelknapp.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                    >
+                        <span className="typo-normal ">Lukk</span>
+                        <OppChevron className="ekspanderbart-sammenligningspanel__lukk-chevron" />
+                    </button>
                 </div>
             </EkspanderbartpanelBase>
             <div className="ekspanderbart-sammenligningspanel__print-innhold">{innhold}</div>
