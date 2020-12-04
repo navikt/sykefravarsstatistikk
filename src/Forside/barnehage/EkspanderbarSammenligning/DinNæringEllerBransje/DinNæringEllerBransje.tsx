@@ -28,9 +28,17 @@ export const DinNæringEllerBransje: FunctionComponent<Props> = ({
 
     let tekst;
     if (dataForBransje) {
-        tekst = 'Du tilhører bransjen: ' + dataForBransje.label;
+        tekst = (
+            <>
+                <strong>Du tilhører bransjen:</strong> {dataForBransje.label}
+            </>
+        );
     } else if (dataForNæring) {
-        tekst = 'Du tilhører næringen: ' + dataForNæring.label;
+        tekst = (
+            <>
+                <strong>Du tilhører næringen:</strong> {dataForNæring.label}
+            </>
+        );
     } else {
         return null;
     }
