@@ -59,7 +59,7 @@ export const DinNæringEllerBransje: FunctionComponent<Props> = ({
                     Endre (Altinn)
                 </EksternLenke>
                 <EksternLenke href="https://www.brreg.no/bedrift/naeringskoder/">
-                    Om næringskoder (Brreg)
+                    Om næringskoder (Brønnøysundregistrene)
                 </EksternLenke>
             </div>
         </div>
