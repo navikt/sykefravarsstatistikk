@@ -143,7 +143,13 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                                     {vurderingstekst}
                                 </Normaltekst>
                             )}
-                            <Normaltekst className="ekspanderbart-sammenligningspanel__les-mer">
+                            <Normaltekst
+                                className={classNames(
+                                    'ekspanderbart-sammenligningspanel__les-mer',
+                                    'ekspanderbart-sammenligningspanel__les-mer--' +
+                                        (erÅpen ? 'åpen' : 'lukket')
+                                )}
+                            >
                                 {getLesMerTekst()}
                             </Normaltekst>
                         </div>
