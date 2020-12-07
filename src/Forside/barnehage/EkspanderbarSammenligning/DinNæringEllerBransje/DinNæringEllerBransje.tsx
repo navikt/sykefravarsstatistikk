@@ -54,18 +54,20 @@ export const DinNæringEllerBransje: FunctionComponent<Props> = ({
                 />
                 <Normaltekst>{tekst}</Normaltekst>
             </div>
-            <EksternLenke
-                href="https://www.altinn.no/skjemaoversikt/bronnoysundregistrene/samordnet-registermelding---registrering-av-nye-og-endring-av-eksisterende-foretak-og-enheter/"
-                className="din-næring-eller-bransje__lenke"
+            <div
+                className="din-næring-eller-bransje__lenke-wrapper"
             >
-                Endre næringskode i Altinn
-            </EksternLenke>
-            <EksternLenke
-                href="https://www.brreg.no/bedrift/naeringskoder/"
-                className="din-næring-eller-bransje__lenke"
-            >
-                Om næringskoder i Brønnøysundregistrene
-            </EksternLenke>
+                <EksternLenke
+                    href="https://www.altinn.no/skjemaoversikt/bronnoysundregistrene/samordnet-registermelding---registrering-av-nye-og-endring-av-eksisterende-foretak-og-enheter/"
+                >
+                    Endre næringskode i Altinn
+                </EksternLenke>
+                <EksternLenke
+                    href="https://www.brreg.no/bedrift/naeringskoder/"
+                >
+                    Om næringskoder i Brønnøysundregistrene
+                </EksternLenke>
+            </div>
         </div>
     );
 };

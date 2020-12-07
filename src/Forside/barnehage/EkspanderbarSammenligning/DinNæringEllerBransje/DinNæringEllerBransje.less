@@ -10,16 +10,15 @@
         flex-direction: column;
     }
 
-    &__ikon-og-tekst + &__lenke {
-        padding-top: 1rem;
+    &__lenke-wrapper {
+        margin-top: 1rem;
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
     }
 
     &__ikon {
         margin-bottom: 1rem;
-    }
-
-    &__lenke {
-        display: block;
     }
 
     @media print, (min-width: @screen-sm-min) {
@@ -34,13 +33,13 @@
             margin-right: 1rem;
         }
 
-        &__lenke {
-            padding-left: 3.5rem;
+        &__lenke-wrapper {
+            margin-left: 3.5rem;
         }
     }
 
     @media print {
-        &__lenke {
+        &__lenke-wrapper {
             display: none;
         }
     }
