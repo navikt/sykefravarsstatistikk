@@ -41,16 +41,18 @@ type SendEvent = (område: string, hendelse: string, data?: Object) => void;
 
 export const amplitudeInstance = instance;
 
+export type EventData ={[key:string]: any}
+
 export const setUserProperties = (properties: Object) => instance.setUserProperties(properties);
 
-export const sendEventDirekte = (område: string, hendelse: string, data?: Object): void => {
+export const sendEventDirekte = (område: string, hendelse: string, data?: EventData): void => {
     instance.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
 };
 
 export const useSendNavigereEvent = (): SendNavigereEvent => {
     const ekstradata = useEkstraDataRef();
 
-    return (navigereEventProperties: NavigereEventProperties & Object) => {
+    return (navigereEventProperties: NavigereEventProperties & EventData) => {
         const metadata = {
             app: 'sykefravarsstatistikk',
         };
@@ -66,7 +68,7 @@ export const useSendNavigereEvent = (): SendNavigereEvent => {
 export const useSendEvent = (): SendEvent => {
     const ekstradata = useEkstraDataRef();
 
-    return (område: string, hendelse: string, data?: Object) =>
+    return (område: string, hendelse: string, data?: EventData) =>
         sendEventDirekte(område, hendelse, { ...ekstradata.current, ...data });
 };
 

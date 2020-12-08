@@ -3,11 +3,11 @@ import Lenke, { Props } from 'nav-frontend-lenker';
 import { ReactComponent as EksternLenkeIkon } from './EksternLenkeIkon.svg';
 import './EksternLenke.less';
 import classNames from 'classnames';
-import { useSendNavigereEvent } from '../../amplitude/amplitude';
+import { EventData, useSendNavigereEvent } from '../../amplitude/amplitude';
 
 interface ExtendedProps {
     children: string;
-    eventProperties?: Object;
+    eventProperties?: EventData;
 }
 
 const EksternLenke: FunctionComponent<Props & ExtendedProps> = ({
@@ -29,7 +29,7 @@ const EksternLenke: FunctionComponent<Props & ExtendedProps> = ({
                     lenketekst: children,
                     destinasjon: lenkeProperties.href,
                     url: window.location.href,
-                    ...eventProperties,
+                    ...eventProperties
                 });
             }}
         >
