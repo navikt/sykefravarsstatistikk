@@ -5,7 +5,7 @@ COPY build/ build/
 COPY server/ server/
 
 WORKDIR /usr/src/app/server
-RUN yarn install --frozen-lockfile
+RUN yarn install
 
 EXPOSE 3000
 ENTRYPOINT ["/bin/sh", "start.sh"]
