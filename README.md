@@ -7,8 +7,7 @@ Hensikten er å gjøre arbeidsgivere mer engasjerte i eget sykefravær.
 
 -   https://arbeidsgiver.labs.nais.io/sykefravarsstatistikk/ -- Funker direkte fra nettleser med Mock data uten tilkobling til backend/preprod data
 -   https://sykefravarsstatistikk.herokuapp.com/sykefravarsstatistikk/ -- Funker direkte fra nettleser men "deprecated"
--   https://arbeidsgiver-q.nav.no/sykefravarsstatistikk/?bedrift=910562452 -- Funker fra `utviklerimage` med innlogget bruker og test FnR
-
+-   https://arbeidsgiver-q.nav.no/sykefravarsstatistikk/ -- Funker fra `utviklerimage` med innlogget bruker og test FnR
 
 # Komme i gang
 
