@@ -25,7 +25,6 @@ export const getVurderingstekst = (
             return getVurderingstekstKorttid(sykefraværResultat, harBransje);
         case SammenligningsType.GRADERT: // TODO skriv riktig tekst vurdering
             return getVurderingstekstGradert(sykefraværResultat, harBransje);
-            'vurdering tekst for gradert';
     }
 };
 const getVurderingstekstGradert = (
