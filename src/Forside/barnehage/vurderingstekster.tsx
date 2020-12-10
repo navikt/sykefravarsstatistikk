@@ -8,6 +8,7 @@ export enum SammenligningsType {
     TOTALT = 'TOTALT',
     LANGTID = 'LANGTID',
     KORTTID = 'KORTTID',
+    GRADERT = 'GRADERT',
 }
 
 export const getVurderingstekst = (
@@ -22,6 +23,8 @@ export const getVurderingstekst = (
             return getVurderingstekstLangtid(sykefraværResultat, harBransje);
         case SammenligningsType.KORTTID:
             return getVurderingstekstKorttid(sykefraværResultat, harBransje);
+        case SammenligningsType.GRADERT: // TODO skriv riktig tekst vurdering
+            return  "vurdering tekst for gradert";
     }
 };
 

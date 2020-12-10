@@ -174,6 +174,17 @@ export const getSammenligningResultatMedProsent = (
             sykefraværVirksomhet = summertSykefraværVirksomhet?.summertLangtidsfravær.prosent;
             sykefraværBransje =
                 summertSykefraværVirksomhetNæringEllerBransje?.summertLangtidsfravær.prosent;
+            break;
+        case SammenligningsType.GRADERT: // TODO sette riktig vurderinger for gradert
+            sammenligningVurdering = getVurderingForSammenligningAvSykefravær(
+                restStatus,
+                summertSykefraværVirksomhet?.summertLangtidsfravær,
+                summertSykefraværVirksomhetNæringEllerBransje?.summertLangtidsfravær.prosent
+            );
+            sykefraværVirksomhet = summertSykefraværVirksomhet?.summertLangtidsfravær.prosent;
+            sykefraværBransje =
+                summertSykefraværVirksomhetNæringEllerBransje?.summertLangtidsfravær.prosent;
+            break;
     }
 
     return {

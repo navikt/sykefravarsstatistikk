@@ -74,6 +74,11 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
         summertSykefraværshistorikk,
         SammenligningsType.LANGTID
     );
+    const sammenligningResultatGradert = getSammenligningResultatMedProsent(
+        restSummertSykefraværshistorikk.status,
+        summertSykefraværshistorikk,
+        SammenligningsType.GRADERT
+    );
 
     const antallKvartalerVirksomhet =
         sammenligningResultatTotalt.sammenligningVurdering ===
@@ -134,6 +139,16 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.LANGTID}
+                bransje={bransje}
+                harBransje={harBransje}
+            />
+            <EkspanderbartSammenligningspanel
+                sammenligningResultat={sammenligningResultatGradert.sammenligningVurdering}
+                sykefraværVirksomhet={sammenligningResultatGradert.sykefraværVirksomhet}
+                sykefraværBransje={sammenligningResultatGradert.sykefraværBransje}
+                antallKvartalerVirksomhet={antallKvartalerVirksomhet}
+                antallKvartalerBransje={antallKvartalerBransje}
+                sammenligningsType={SammenligningsType.GRADERT}
                 bransje={bransje}
                 harBransje={harBransje}
             />

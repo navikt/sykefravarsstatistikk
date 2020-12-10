@@ -108,6 +108,8 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 return 'Legemeldt korttidsfravær:';
             case SammenligningsType.LANGTID:
                 return 'Legemeldt langtidsfravær:';
+            case SammenligningsType.GRADERT:
+                return 'Gradert sykemelding:';
         }
     };
 
@@ -116,6 +118,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             case SammenligningsType.TOTALT:
             case SammenligningsType.KORTTID:
                 return 'Les mer om tallene og få tips til hva du kan gjøre';
+            case SammenligningsType.GRADERT:
             case SammenligningsType.LANGTID:
                 return 'Les mer om tallene';
         }

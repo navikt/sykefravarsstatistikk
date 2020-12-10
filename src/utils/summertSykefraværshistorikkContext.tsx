@@ -14,7 +14,6 @@ export const SummertSykefraværshistorikkProvider: FunctionComponent = (props) =
         RestSummertSykefraværshistorikk
     >({ status: RestStatus.IkkeLastet });
 
-    // TODO La være å hente summert hvis det ikke er en barnehage?
     useEffect(() => {
         if (orgnr) {
             setRestSummertSykefraværshistorikk({

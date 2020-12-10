@@ -39,6 +39,13 @@ const summertSykefraværshistorikkBarnehager: SummertSykefraværshistorikk = {
             kvartaler: siste4Kvartaler,
         },
     },
+    summertGradertFravær: {
+        prosent: 1.0,
+        tapteDagsverk: 39.9,
+        muligeDagsverk: 3990.4,
+        erMaskert: false,
+        kvartaler: siste4Kvartaler,
+    },
 };
 
 export const summertSykefraværshistorikkMockMaskert: SummertSykefraværshistorikk[] = [
@@ -60,6 +67,13 @@ export const summertSykefraværshistorikkMockMaskert: SummertSykefraværshistori
                 erMaskert: true,
                 kvartaler: [],
             },
+        },
+        summertGradertFravær: {
+            prosent: 1.0,
+            tapteDagsverk: 39.9,
+            muligeDagsverk: 3990.4,
+            erMaskert: false,
+            kvartaler: siste4Kvartaler,
         },
     },
     summertSykefraværshistorikkBarnehager,
@@ -84,6 +98,13 @@ export const summertSykefraværshistorikkMockUtenData: SummertSykefraværshistor
                 erMaskert: false,
                 kvartaler: [],
             },
+        },
+        summertGradertFravær: {
+            prosent: 1.0,
+            tapteDagsverk: 39.9,
+            muligeDagsverk: 3990.4,
+            erMaskert: false,
+            kvartaler: siste4Kvartaler,
         },
     },
     summertSykefraværshistorikkBarnehager,
@@ -127,6 +148,13 @@ export const summertSykefraværshistorikkMockMedBare2Kvartaler: SummertSykefrav�
                 ],
             },
         },
+        summertGradertFravær: {
+            prosent: 1.0,
+            tapteDagsverk: 39.9,
+            muligeDagsverk: 3990.4,
+            erMaskert: false,
+            kvartaler: siste4Kvartaler,
+        },
     },
     summertSykefraværshistorikkBarnehager,
 ];
@@ -153,6 +181,13 @@ export const getSummertSykefraværshistorikkMock = (
                 erMaskert: false,
                 kvartaler: siste4Kvartaler,
             },
+        },
+        summertGradertFravær: {
+            prosent: 1.0,
+            tapteDagsverk: 39.9,
+            muligeDagsverk: 3990.4,
+            erMaskert: false,
+            kvartaler: siste4Kvartaler,
         },
     },
     { ...summertSykefraværshistorikkBarnehager, type, label },
@@ -183,11 +218,18 @@ export const summertSykefraværshistorikkMockGrønn: SummertSykefraværshistorik
                 kvartaler: siste4Kvartaler,
             },
         },
+        summertGradertFravær: {
+            prosent: 1.0,
+            tapteDagsverk: 39.9,
+            muligeDagsverk: 3990.4,
+            erMaskert: false,
+            kvartaler: siste4Kvartaler,
+        },
     },
     summertSykefraværshistorikkBarnehager,
 ];
 
-export const summertSykefraværshistorikkMockGul = [
+export const summertSykefraværshistorikkMockGul: SummertSykefraværshistorikk[] = [
     {
         type: Statistikkategori.VIRKSOMHET,
         label: 'En virksomhet',
@@ -207,11 +249,18 @@ export const summertSykefraværshistorikkMockGul = [
                 kvartaler: siste4Kvartaler,
             },
         },
+        summertGradertFravær: {
+            prosent: 1.0,
+            tapteDagsverk: 39.9,
+            muligeDagsverk: 3990.4,
+            erMaskert: false,
+            kvartaler: siste4Kvartaler,
+        },
     },
     summertSykefraværshistorikkBarnehager,
 ];
 
-export const summertSykefraværshistorikkMockRød = [
+export const summertSykefraværshistorikkMockRød: SummertSykefraværshistorikk[] = [
     {
         type: Statistikkategori.VIRKSOMHET,
         label: 'En virksomhet',
@@ -230,6 +279,13 @@ export const summertSykefraværshistorikkMockRød = [
                 erMaskert: false,
                 kvartaler: siste4Kvartaler,
             },
+        },
+        summertGradertFravær: {
+            prosent: 1.0,
+            tapteDagsverk: 39.9,
+            muligeDagsverk: 3990.4,
+            erMaskert: false,
+            kvartaler: siste4Kvartaler,
         },
     },
     summertSykefraværshistorikkBarnehager,
