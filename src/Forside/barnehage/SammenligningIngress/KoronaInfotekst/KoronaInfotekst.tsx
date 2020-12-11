@@ -14,10 +14,9 @@ const KoronaInfotekst: FunctionComponent<{ className?: string }> = ({ className 
             </div>
             <LesMerPanel åpneLabel="Koronaepidemien og sykefraværsstatistikken">
                 <Normaltekst>
-                    Opplever du høyere sykefravær enn normalt i første kvartal? Økning i
-                    korttidssykefraværet skyldes sannsynligvis koronaepidemien. Når din
-                    sykefraværsprosent beregnes, telles permitterte med som ansatte de tre første
-                    månedene av permitteringen.
+                    Opplever du høyere sykefravær enn normalt? Økning i korttidssykefraværet skyldes
+                    sannsynligvis koronaepidemien. Når din sykefraværsprosent beregnes, telles
+                    permitterte med som ansatte de tre første månedene av permitteringen.
                 </Normaltekst>
                 <Normaltekst className="korona-infotekst__lenke">
                     <EksternLenke href="https://www.nav.no/no/nav-og-samfunn/statistikk/sykefravar-statistikk/sykefravar">
