@@ -40,7 +40,12 @@ export const SykefraværMetadata: FunctionComponent<Props> = ({
             <Ingress tag="h3" className="sykefravær-metadata__tittel">
                 <strong>{getTittel(sammenligningsType)}</strong>
             </Ingress>
-            <Normaltekst>Periode: {periode}</Normaltekst>
+            <Normaltekst>
+                Periode:{' '}
+                <div aria-label={new Date(periode.substr(0, 10)).toLocaleDateString()}>
+                    {periode}
+                </div>
+            </Normaltekst>
             <Normaltekst>{getTekstForOppdateringsdato()}</Normaltekst>
         </div>
     );
