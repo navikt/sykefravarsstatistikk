@@ -89,3 +89,9 @@ export const formatterDatoMedMånedNavn = (dato: Date): string => {
         month: 'long',
     })} ${year}`;
 };
+
+export const periodeAriaLabe =
+    'Periode: ' +
+    formatterDatoMedMånedNavn(periodeFra) +
+    ' til ' +
+    formatterDatoMedMånedNavn(periodeTil);
