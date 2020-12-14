@@ -30,7 +30,8 @@ const ANTALL_DAGER_HVOR_VI_VISER_SIST_OPPDATERT = 45;
 export const getTekstForOppdateringsdato = (
     dagensDato: Date = new Date(),
     sistOppdatertDato: Date = sistOppdatert,
-    nesteOppdateringDato: Date = nesteOppdatering
+    nesteOppdateringDato: Date = nesteOppdatering,
+    brukSomAriaLabel: boolean = false
 ): string => {
     let sistOppdatertPlussAntallDagerHvorViViserSistOppdatert = new Date(sistOppdatertDato);
     sistOppdatertPlussAntallDagerHvorViViserSistOppdatert.setDate(
@@ -41,12 +42,23 @@ export const getTekstForOppdateringsdato = (
     const erOver45Dager = dagensDato > sistOppdatertPlussAntallDagerHvorViViserSistOppdatert;
 
     if (erOver45Dager) {
-        return `Neste oppdatering: ${formatterDato(nesteOppdateringDato)}`;
+        return `Neste oppdatering: ${
+            brukSomAriaLabel
+                ? formatterDatoMedMånedNavn(nesteOppdateringDato)
+                : formatterDato(nesteOppdateringDato)
+        }`;
     } else {
-        return `Sist oppdatert: ${formatterDato(sistOppdatertDato)}`;
+        return `Sist oppdatert: ${
+            brukSomAriaLabel
+                ? formatterDatoMedMånedNavn(sistOppdatertDato)
+                : formatterDato(sistOppdatertDato)
+        }`;
     }
 };
 
+export const getAriaLabelTekstForOppdateringsdato = () => {
+    return getTekstForOppdateringsdato(new Date(), sistOppdatert, nesteOppdatering, true);
+};
 export const formaterProsent = (prosent: number | null | undefined): string => {
     if (prosent === undefined || prosent === null) {
         return '';
