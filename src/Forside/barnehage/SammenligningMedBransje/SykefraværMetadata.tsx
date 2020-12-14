@@ -4,7 +4,7 @@ import {
     getTekstForOppdateringsdato,
     formatterDatoMedMånedNavn,
     periodeFra,
-    periodeTil, getAriaLabelTekstForOppdateringsdato, periodeAriaLabe,
+    periodeTil, getAriaLabelTekstForOppdateringsdato, periodeAriaLabelFraOgTil,
 } from '../../../utils/app-utils';
 import './SykefraværMetadata.less';
 import { SammenligningsType } from '../vurderingstekster';
@@ -45,7 +45,7 @@ export const SykefraværMetadata: FunctionComponent<Props> = ({
             <Ingress tag="h3" className="sykefravær-metadata__tittel">
                 <strong>{getTittel(sammenligningsType)}</strong>
             </Ingress>
-            <Normaltekst aria-label={periodeAriaLabe}>Periode: {periode}</Normaltekst>
+            <Normaltekst aria-label={periodeAriaLabelFraOgTil}>Periode: {periode}</Normaltekst>
             <Normaltekst aria-label={getAriaLabelTekstForOppdateringsdato()}>
                 {getTekstForOppdateringsdato()}
             </Normaltekst>

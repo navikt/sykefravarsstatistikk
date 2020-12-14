@@ -78,7 +78,6 @@ const formatterDato = (dato: Date): string => {
     })}.${year}`;
 };
 
-export const periodeFraOgTil = formatterDato(periodeFra) + ' til ' + formatterDato(periodeTil);
 
 export const formatterDatoMedMånedNavn = (dato: Date): string => {
     const year = dato.getFullYear();
@@ -90,7 +89,8 @@ export const formatterDatoMedMånedNavn = (dato: Date): string => {
     })} ${year}`;
 };
 
-export const periodeAriaLabe =
+export const periodeFraOgTil = formatterDato(periodeFra) + ' til ' + formatterDato(periodeTil);
+export const periodeAriaLabelFraOgTil =
     'Periode: ' +
     formatterDatoMedMånedNavn(periodeFra) +
     ' til ' +
