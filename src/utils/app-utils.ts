@@ -2,7 +2,8 @@ import { ÅrstallOgKvartal } from './sykefraværshistorikk-utils';
 
 const sistOppdatert = new Date('2020.12.02');
 const nesteOppdatering = new Date('2021.03.02');
-export const periodeFraOgTil = '01.10.2019 til 30.09.2020';
+export const periodeFra = new Date('2019.10.01');
+export const periodeTil = new Date('2020.09.30');
 
 // TODO Hardkodede tall
 export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
@@ -63,4 +64,16 @@ const formatterDato = (dato: Date): string => {
     })}.${month.toLocaleString('nb', {
         minimumIntegerDigits: 2,
     })}.${year}`;
+};
+
+export const periodeFraOgTil = formatterDato(periodeFra) + ' til ' + formatterDato(periodeTil);
+
+export const formatterDatoMedMånedNavn = (dato: Date): string => {
+    const year = dato.getFullYear();
+
+    return `${dato.toLocaleString('nb', {
+        day: 'numeric',
+    })} ${dato.toLocaleString('nb', {
+        month: 'long',
+    })} ${year}`;
 };
