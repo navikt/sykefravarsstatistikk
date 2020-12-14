@@ -53,7 +53,6 @@ export const SykefraværMetadata: FunctionComponent<Props> = ({
             <Normaltekst aria-label={periodeAriaLabe}>Periode: {periode}</Normaltekst>
             <Normaltekst aria-label={getAriaLabelTekstForOppdateringsdato()}>
                 {getTekstForOppdateringsdato()}
-                {console.log(getTekstForOppdateringsdato())}
             </Normaltekst>
         </div>
     );
