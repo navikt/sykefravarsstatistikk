@@ -2,7 +2,8 @@ import { ÅrstallOgKvartal } from './sykefraværshistorikk-utils';
 
 const sistOppdatert = new Date('2020.12.02');
 const nesteOppdatering = new Date('2021.03.02');
-export const periodeFraOgTil = '01.10.2019 til 30.09.2020';
+export const periodeFra = new Date('2019.10.01');
+export const periodeTil = new Date('2020.09.30');
 
 // TODO Hardkodede tall
 export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
@@ -29,7 +30,8 @@ const ANTALL_DAGER_HVOR_VI_VISER_SIST_OPPDATERT = 45;
 export const getTekstForOppdateringsdato = (
     dagensDato: Date = new Date(),
     sistOppdatertDato: Date = sistOppdatert,
-    nesteOppdateringDato: Date = nesteOppdatering
+    nesteOppdateringDato: Date = nesteOppdatering,
+    brukSomAriaLabel: boolean = false
 ): string => {
     let sistOppdatertPlussAntallDagerHvorViViserSistOppdatert = new Date(sistOppdatertDato);
     sistOppdatertPlussAntallDagerHvorViViserSistOppdatert.setDate(
@@ -40,12 +42,23 @@ export const getTekstForOppdateringsdato = (
     const erOver45Dager = dagensDato > sistOppdatertPlussAntallDagerHvorViViserSistOppdatert;
 
     if (erOver45Dager) {
-        return `Neste oppdatering: ${formatterDato(nesteOppdateringDato)}`;
+        return `Neste oppdatering: ${
+            brukSomAriaLabel
+                ? formatterDatoMedMånedNavn(nesteOppdateringDato)
+                : formatterDato(nesteOppdateringDato)
+        }`;
     } else {
-        return `Sist oppdatert: ${formatterDato(sistOppdatertDato)}`;
+        return `Sist oppdatert: ${
+            brukSomAriaLabel
+                ? formatterDatoMedMånedNavn(sistOppdatertDato)
+                : formatterDato(sistOppdatertDato)
+        }`;
     }
 };
 
+export const getAriaLabelTekstForOppdateringsdato = () => {
+    return getTekstForOppdateringsdato(new Date(), sistOppdatert, nesteOppdatering, true);
+};
 export const formaterProsent = (prosent: number | null | undefined): string => {
     if (prosent === undefined || prosent === null) {
         return '';
@@ -64,3 +77,15 @@ const formatterDato = (dato: Date): string => {
         minimumIntegerDigits: 2,
     })}.${year}`;
 };
+
+export const formatterDatoMedMånedNavn = (dato: Date): string => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return dato.toLocaleDateString('nb', options);
+};
+
+export const periodeFraOgTil = formatterDato(periodeFra) + ' til ' + formatterDato(periodeTil);
+export const periodeAriaLabelFraOgTil =
+    'Periode: ' +
+    formatterDatoMedMånedNavn(periodeFra) +
+    ' til ' +
+    formatterDatoMedMånedNavn(periodeTil);
