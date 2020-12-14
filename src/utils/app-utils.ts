@@ -78,15 +78,9 @@ const formatterDato = (dato: Date): string => {
     })}.${year}`;
 };
 
-
 export const formatterDatoMedMånedNavn = (dato: Date): string => {
-    const year = dato.getFullYear();
-
-    return `${dato.toLocaleString('nb', {
-        day: 'numeric',
-    })} ${dato.toLocaleString('nb', {
-        month: 'long',
-    })} ${year}`;
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return dato.toLocaleDateString('nb', options);
 };
 
 export const periodeFraOgTil = formatterDato(periodeFra) + ' til ' + formatterDato(periodeTil);

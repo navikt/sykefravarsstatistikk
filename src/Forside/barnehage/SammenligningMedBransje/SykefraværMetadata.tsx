@@ -1,11 +1,6 @@
 import React, { FunctionComponent, ReactElement } from 'react';
 import { Ingress, Normaltekst } from 'nav-frontend-typografi';
-import {
-    getTekstForOppdateringsdato,
-    formatterDatoMedMånedNavn,
-    periodeFra,
-    periodeTil, getAriaLabelTekstForOppdateringsdato, periodeAriaLabelFraOgTil,
-} from '../../../utils/app-utils';
+import { getAriaLabelTekstForOppdateringsdato, periodeAriaLabelFraOgTil } from '../../../utils/app-utils';
 import './SykefraværMetadata.less';
 import { SammenligningsType } from '../vurderingstekster';
 import classNames from 'classnames';
@@ -45,10 +40,8 @@ export const SykefraværMetadata: FunctionComponent<Props> = ({
             <Ingress tag="h3" className="sykefravær-metadata__tittel">
                 <strong>{getTittel(sammenligningsType)}</strong>
             </Ingress>
-            <Normaltekst aria-label={periodeAriaLabelFraOgTil}>Periode: {periode}</Normaltekst>
-            <Normaltekst aria-label={getAriaLabelTekstForOppdateringsdato()}>
-                {getTekstForOppdateringsdato()}
-            </Normaltekst>
+            <Normaltekst>{periodeAriaLabelFraOgTil}</Normaltekst>
+            <Normaltekst>{getAriaLabelTekstForOppdateringsdato()}</Normaltekst>
         </div>
     );
 };
