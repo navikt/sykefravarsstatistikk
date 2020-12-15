@@ -79,7 +79,7 @@ const formatterDato = (dato: Date): string => {
 };
 
 export const formatterDatoMedMånedNavn = (dato: Date): string => {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return dato.toLocaleDateString('nb', options);
 };
 
