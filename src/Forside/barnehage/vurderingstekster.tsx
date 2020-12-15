@@ -36,21 +36,22 @@ const getVurderingstekstGradert = (
         case SykefraværVurdering.UNDER:
             return (
                 <>
-                    Markert grønn: Du bruker <strong>mer gradert sykemelding</strong> enn{' '}
-                    {bransjeEllerNæringTekst}
+                    Markert grønn: Du bruker <strong>mer gradert sykemelding</strong> enn andre i
+                    din {bransjeEllerNæringTekst}
                 </>
             );
         case SykefraværVurdering.MIDDELS:
             return (
                 <>
-                    Markert gul: Du bruker <strong>omtrent likt gradert sykemelding</strong> som{' '}
-                    {bransjeEllerNæringTekst}
+                    Markert gul: Du bruker <strong>omtrent like mye gradert sykemelding</strong> som
+                    andre i din {bransjeEllerNæringTekst}
                 </>
             );
         case SykefraværVurdering.OVER:
             return (
                 <>
-                    Markert rød: Du bruker <strong>mindre gradert sykemelding</strong> enn{' '}
+                    Markert rød: Du bruker <strong>mindre gradert sykemelding</strong> enn andre i
+                    din
                     {bransjeEllerNæringTekst}
                 </>
             );
