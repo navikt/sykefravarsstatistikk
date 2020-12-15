@@ -2,11 +2,7 @@ import React, { FunctionComponent, ReactElement, useState } from 'react';
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
-import {
-    getForklaringAvVurdering,
-    getVurderingstekst,
-    SammenligningsType,
-} from '../vurderingstekster';
+import { getForklaringAvVurdering, getVurderingstekst, SammenligningsType } from '../vurderingstekster';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import { SykefraværMetadata } from './SykefraværMetadata';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
@@ -15,7 +11,6 @@ import { getTips, Tips } from '../../../felleskomponenter/tips/tips';
 import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
 import { useSendEvent } from '../../../amplitude/amplitude';
-import { periodeFraOgTil } from '../../../utils/app-utils';
 import { Bransjetype } from '../../../api/virksomhetMetadata';
 import { OppChevron } from 'nav-frontend-chevron';
 
@@ -74,7 +69,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 <SykefraværMetadata
                     className="ekspanderbart-sammenligningspanel__sykefravær-metadata"
                     sammenligningsType={sammenligningsType}
-                    periode={periodeFraOgTil}
                 />
                 <DetaljertVisningSykefravær
                     className="ekspanderbart-sammenligningspanel__detaljert-visning"
