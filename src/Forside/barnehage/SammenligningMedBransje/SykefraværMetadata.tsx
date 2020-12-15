@@ -7,13 +7,11 @@ import classNames from 'classnames';
 
 interface Props {
     sammenligningsType: SammenligningsType;
-    periode: string;
     className?: string;
 }
 
 export const SykefraværMetadata: FunctionComponent<Props> = ({
     sammenligningsType,
-    periode,
     className,
 }) => {
     const getTittel = (sammenligningsType: SammenligningsType): ReactElement => {
