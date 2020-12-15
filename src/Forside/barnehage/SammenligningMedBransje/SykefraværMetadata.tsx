@@ -30,8 +30,8 @@ export const SykefraværMetadata: FunctionComponent<Props> = ({
                         Andel legemeldt langtidsfravær <br /> fra 17. dag
                     </>
                 );
-            case SammenligningsType.GRADERT:// TODO sjekke teksten
-                return <>Gradert sykefravær</>;
+            case SammenligningsType.GRADERT:
+                return <>Gradert sykemelding</>;
         }
     };
 

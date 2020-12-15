@@ -58,6 +58,19 @@ export const getSummertKorttidsOgLangtidsfravær = (
     )?.summertKorttidsOgLangtidsfravær;
 };
 
+export const getSummertGradertfravær = (
+    summertSykefraværshistorikkListe: SummertSykefraværshistorikk[] | undefined,
+    ...statistikkategorier: Statistikkategori[]
+): SummertSykefravær | undefined => {
+    if (summertSykefraværshistorikkListe === undefined) {
+        return undefined;
+    }
+
+    return summertSykefraværshistorikkListe?.find((element) =>
+        statistikkategorier.includes(element.type)
+    )?.summertGradertFravær;
+};
+
 export const getTotaltSykefraværSiste4Kvartaler = (
     summertKorttidsOgLangtidsfravær: SummertKorttidsOgLangtidsfravær | undefined
 ): SummertSykefravær | undefined => {
@@ -124,6 +137,10 @@ export const getSammenligningResultatMedProsent = (
                   Statistikkategori.VIRKSOMHET
               )
             : undefined;
+    const summertGradertSykefraværVirksomhet =
+        restStatus === RestStatus.Suksess
+            ? getSummertGradertfravær(summertSykefraværshistorikk, Statistikkategori.VIRKSOMHET)
+            : undefined;
     const kvartaler = summertSykefraværVirksomhet?.summertKorttidsfravær.kvartaler
         .slice()
         .reverse();
@@ -131,6 +148,14 @@ export const getSammenligningResultatMedProsent = (
     const summertSykefraværVirksomhetNæringEllerBransje =
         restStatus === RestStatus.Suksess
             ? getSummertKorttidsOgLangtidsfravær(
+                  summertSykefraværshistorikk,
+                  Statistikkategori.BRANSJE,
+                  Statistikkategori.NÆRING
+              )
+            : undefined;
+    const summertGradertSykefraværVirksomhetNæringEllerBransje =
+        restStatus === RestStatus.Suksess
+            ? getSummertGradertfravær(
                   summertSykefraværshistorikk,
                   Statistikkategori.BRANSJE,
                   Statistikkategori.NÆRING
@@ -178,12 +203,12 @@ export const getSammenligningResultatMedProsent = (
         case SammenligningsType.GRADERT: // TODO sette riktig vurderinger for gradert
             sammenligningVurdering = getVurderingForSammenligningAvSykefravær(
                 restStatus,
-                summertSykefraværVirksomhet?.summertLangtidsfravær,
-                summertSykefraværVirksomhetNæringEllerBransje?.summertLangtidsfravær.prosent
+                summertGradertSykefraværVirksomhet,
+                summertGradertSykefraværVirksomhetNæringEllerBransje?.prosent
             );
-            sykefraværVirksomhet = summertSykefraværVirksomhet?.summertLangtidsfravær.prosent;
+            sykefraværVirksomhet = summertGradertSykefraværVirksomhet?.prosent;
             sykefraværBransje =
-                summertSykefraværVirksomhetNæringEllerBransje?.summertLangtidsfravær.prosent;
+                summertGradertSykefraværVirksomhetNæringEllerBransje?.prosent;
             break;
     }
 
