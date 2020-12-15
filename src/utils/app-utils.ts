@@ -83,8 +83,7 @@ export const formatterDatoMedMånedNavn = (dato: Date): string => {
     return dato.toLocaleDateString('nb', options);
 };
 
-export const periodeFraOgTil = formatterDato(periodeFra) + ' til ' + formatterDato(periodeTil);
-export const periodeAriaLabelFraOgTil =
+export const periodeFraOgTil =
     'Periode: ' +
     formatterDatoMedMånedNavn(periodeFra) +
     ' til ' +
