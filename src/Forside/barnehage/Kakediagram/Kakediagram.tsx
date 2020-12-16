@@ -1,10 +1,9 @@
 import React, { FunctionComponent } from 'react';
-import { SpeedometerRød } from './SpeedometerRød';
-import { SpeedometerGul } from './SpeedometerGul';
-import { SpeedometerGrønn } from './SpeedometerGrønn';
 import classNames from 'classnames';
-import { SpeedometerGrå } from './SpeedometerGrå';
-import { KakediagramGrønn } from '../Kakediagram/KakediagramGrønn';
+import { KakediagramGrønn } from './KakediagramGrønn';
+import { KakediagramGrå } from './KakediagramGrå';
+import { KakediagramGul } from './KakediagramGul';
+import { KakediagramRød } from './KakediagramRød';
 
 export enum SykefraværVurdering {
     UNDER = 'UNDER',
@@ -24,7 +23,7 @@ interface Props {
     erGradert?: boolean;
 }
 
-export const Speedometer: FunctionComponent<Props> = ({
+export const Kakediagram: FunctionComponent<Props> = ({
     resultat,
     stor,
     className,
@@ -59,17 +58,15 @@ const SpeedometerSvg: FunctionComponent<{
 }> = ({ resultat, størrelsesfaktor, erGradert }) => {
     switch (resultat) {
         case SykefraværVurdering.UNDER:
-            return <SpeedometerGrønn størrelsesfaktor={størrelsesfaktor} />;
+            return <KakediagramRød størrelsesfaktor={størrelsesfaktor} />;
         case SykefraværVurdering.MIDDELS:
-            return <SpeedometerGul størrelsesfaktor={størrelsesfaktor} />;
+            return <KakediagramGul størrelsesfaktor={størrelsesfaktor} />;
         case SykefraværVurdering.OVER:
-            if (erGradert && erGradert === true)
-                return <KakediagramGrønn størrelsesfaktor={størrelsesfaktor} />;
-            else return <SpeedometerRød størrelsesfaktor={størrelsesfaktor} />;
+            return <KakediagramGrønn størrelsesfaktor={størrelsesfaktor} />;
         case SykefraværVurdering.MASKERT:
         case SykefraværVurdering.INGEN_DATA:
         case SykefraværVurdering.UFULLSTENDIG_DATA:
         case SykefraværVurdering.FEIL:
-            return <SpeedometerGrå størrelsesfaktor={størrelsesfaktor} />;
+            return <KakediagramGrå størrelsesfaktor={størrelsesfaktor} />;
     }
 };

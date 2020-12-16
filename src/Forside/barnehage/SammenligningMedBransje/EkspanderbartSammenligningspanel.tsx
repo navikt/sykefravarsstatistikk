@@ -2,7 +2,11 @@ import React, { FunctionComponent, ReactElement, useState } from 'react';
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
-import { getForklaringAvVurdering, getVurderingstekst, SammenligningsType } from '../vurderingstekster';
+import {
+    getForklaringAvVurdering,
+    getVurderingstekst,
+    SammenligningsType,
+} from '../vurderingstekster';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import { SykefraværMetadata } from './SykefraværMetadata';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
@@ -13,6 +17,7 @@ import classNames from 'classnames';
 import { useSendEvent } from '../../../amplitude/amplitude';
 import { Bransjetype } from '../../../api/virksomhetMetadata';
 import { OppChevron } from 'nav-frontend-chevron';
+import { Kakediagram } from '../Kakediagram/Kakediagram';
 
 interface Props {
     sammenligningResultat: SykefraværVurdering;
@@ -65,8 +70,9 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
 
     const innhold = (
         <>
-                {// TODO sett inn "slik regner vi ut gradert sm"
-                }
+            {
+                // TODO sett inn "slik regner vi ut gradert sm"
+            }
             <div className="ekspanderbart-sammenligningspanel__metadata-og-detaljert-visning-sykefravær">
                 <SykefraværMetadata
                     className="ekspanderbart-sammenligningspanel__sykefravær-metadata"
@@ -134,7 +140,11 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 id={panelknappID}
                 tittel={
                     <div className="ekspanderbart-sammenligningspanel__tittel-wrapper">
-                        <Speedometer resultat={sykefraværResultat} inline />
+                        {SammenligningsType.GRADERT === sammenligningsType ? (
+                            <Kakediagram resultat={sykefraværResultat} inline />
+                        ) : (
+                            <Speedometer resultat={sykefraværResultat} inline />
+                        )}
                         <div className="ekspanderbart-sammenligningspanel__tittel-tekst">
                             <Systemtittel tag="h2">{getPaneltittel()}</Systemtittel>
                             {sammenligningsType !== SammenligningsType.TOTALT && (
