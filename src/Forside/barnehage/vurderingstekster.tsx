@@ -23,7 +23,7 @@ export const getVurderingstekst = (
             return getVurderingstekstLangtid(sykefraværResultat, harBransje);
         case SammenligningsType.KORTTID:
             return getVurderingstekstKorttid(sykefraværResultat, harBransje);
-        case SammenligningsType.GRADERT: // TODO skriv riktig tekst vurdering
+        case SammenligningsType.GRADERT: // TODO nesten ferdig, sjekk om ufullstendig data tekst er ok ?
             return getVurderingstekstGradert(sykefraværResultat, harBransje);
     }
 };
@@ -33,7 +33,7 @@ const getVurderingstekstGradert = (
 ): ReactElement | string => {
     const bransjeEllerNæringTekst = harBransje ? 'bransjen' : 'næringen';
     switch (sykefraværResultat) {
-        case SykefraværVurdering.UNDER:
+        case SykefraværVurdering.OVER:
             return (
                 <>
                     Markert grønn: Du bruker <strong>mer gradert sykemelding</strong> enn andre i
@@ -47,7 +47,7 @@ const getVurderingstekstGradert = (
                     andre i din {bransjeEllerNæringTekst}
                 </>
             );
-        case SykefraværVurdering.OVER:
+        case SykefraværVurdering.UNDER:
             return (
                 <>
                     Markert rød: Du bruker <strong>mindre gradert sykemelding</strong> enn andre i

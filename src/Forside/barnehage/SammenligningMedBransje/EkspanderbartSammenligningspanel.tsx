@@ -65,8 +65,9 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
 
     const innhold = (
         <>
+                {// TODO sett inn "slik regner vi ut gradert sm"
+                }
             <div className="ekspanderbart-sammenligningspanel__metadata-og-detaljert-visning-sykefravær">
-                //TODO sett inn "slik regner vi ut gradert sm"
                 <SykefraværMetadata
                     className="ekspanderbart-sammenligningspanel__sykefravær-metadata"
                     sammenligningsType={sammenligningsType}
