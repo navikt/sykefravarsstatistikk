@@ -8,6 +8,7 @@ import { SykefraværVurdering } from './Speedometer/Speedometer';
 import { RestStatus } from '../../api/api-utils';
 import { ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
 import { SammenligningsType } from './vurderingstekster';
+import { number } from 'prop-types';
 
 export const getVurderingForSammenligningAvSykefravær = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,
@@ -201,7 +202,6 @@ export const getSammenligningResultatMedProsent = (
                 summertSykefraværVirksomhetNæringEllerBransje?.summertLangtidsfravær.prosent;
             break;
 
-
         case SammenligningsType.GRADERT:
             sammenligningVurdering = getVurderingForSammenligningAvSykefravær(
                 restStatus,
@@ -210,9 +210,12 @@ export const getSammenligningResultatMedProsent = (
             );
 
             // For VIRKSOMHET: summertGradertSykefraværVirksomhet?.tapteDagsverk / (summertSykefraværVirksomhet?.summertLangtidsfravær.tapteDagsverk)
-            sykefraværVirksomhet = summertGradertSykefraværVirksomhet?.prosent;
-            sykefraværBransje =
-                summertGradertSykefraværVirksomhetNæringEllerBransje?.prosent;
+            sykefraværVirksomhet = getSummertGradertProsent(
+                summertGradertSykefraværVirksomhet?.prosent,
+                summertSykefraværVirksomhet?.summertKorttidsfravær?.tapteDagsverk,
+                summertSykefraværVirksomhet?.summertLangtidsfravær?.tapteDagsverk
+            ); //summertGradertSykefraværVirksomhet?.prosent;
+            sykefraværBransje = summertGradertSykefraværVirksomhetNæringEllerBransje?.prosent;
             break;
     }
 
@@ -224,7 +227,14 @@ export const getSammenligningResultatMedProsent = (
         kvartaler: kvartaler,
     };
 };
-
+const getSummertGradertProsent = (
+    gradertTapteDagsverk: number | null | undefined,
+    kortTidTapteDagsverk: number | null | undefined,
+    langtidTapteDagsverk: number | null | undefined
+): number | undefined => {
+    if (!kortTidTapteDagsverk || !langtidTapteDagsverk || !gradertTapteDagsverk) return undefined;
+    else return (gradertTapteDagsverk * 100) / (kortTidTapteDagsverk + langtidTapteDagsverk);
+};
 export const summertHistorikkHarBransje = (historikk: SummertSykefraværshistorikk[]): boolean => {
     return !!historikk.find((data) => data.type === Statistikkategori.BRANSJE);
 };
