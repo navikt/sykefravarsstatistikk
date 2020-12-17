@@ -40,9 +40,9 @@ const summertSykefraværshistorikkBarnehager: SummertSykefraværshistorikk = {
         },
     },
     summertGradertFravær: {
-        prosent: 50.0,
-        tapteDagsverk: 1995.2,
-        muligeDagsverk: 3990.4,
+        prosent: 4.4,
+        tapteDagsverk: 44,
+        muligeDagsverk: 1000,
         erMaskert: false,
         kvartaler: siste4Kvartaler,
     },
@@ -149,8 +149,8 @@ export const summertSykefraværshistorikkMockMedBare2Kvartaler: SummertSykefrav�
             },
         },
         summertGradertFravær: {
-            prosent: 10.0,
-            tapteDagsverk: 399.4,
+            prosent: 0.36,
+            tapteDagsverk: 15,
             muligeDagsverk: 3990.4,
             erMaskert: false,
             kvartaler: [
@@ -192,8 +192,8 @@ export const getSummertSykefraværshistorikkMock = (
             },
         },
         summertGradertFravær: {
-            prosent: 10.0,
-            tapteDagsverk: 399.0,
+            prosent: 1,
+            tapteDagsverk: 39.9,
             muligeDagsverk: 3990.4,
             erMaskert: false,
             kvartaler: siste4Kvartaler,
@@ -229,7 +229,7 @@ export const summertSykefraværshistorikkMockGrønn: SummertSykefraværshistorik
         },
         summertGradertFravær: {
             prosent: 56.0,
-            tapteDagsverk: 2234.6,
+            tapteDagsverk: 100,
             muligeDagsverk: 3990.4,
             erMaskert: false,
             kvartaler: siste4Kvartaler,
@@ -244,14 +244,14 @@ export const summertSykefraværshistorikkMockGul: SummertSykefraværshistorikk[]
         label: 'En virksomhet',
         summertKorttidsOgLangtidsfravær: {
             summertKorttidsfravær: {
-                prosent: 1.2,
+                prosent: 3.5,
                 tapteDagsverk: 140.6,
                 muligeDagsverk: 3990.4,
                 erMaskert: false,
                 kvartaler: siste4Kvartaler,
             },
             summertLangtidsfravær: {
-                prosent: 7.3,
+                prosent: 2.9,
                 tapteDagsverk: 116.7,
                 muligeDagsverk: 3990.4,
                 erMaskert: false,
@@ -259,8 +259,8 @@ export const summertSykefraværshistorikkMockGul: SummertSykefraværshistorikk[]
             },
         },
         summertGradertFravær: {
-            prosent: 50.0,
-            tapteDagsverk: 1995.2,
+            prosent: 0.2,
+            tapteDagsverk: 7.98,
             muligeDagsverk: 3990.4,
             erMaskert: false,
             kvartaler: siste4Kvartaler,

@@ -58,7 +58,7 @@ export const getSummertKorttidsOgLangtidsfravær = (
     )?.summertKorttidsOgLangtidsfravær;
 };
 
-export const getSummertGradertfravær = (
+export const getSummertGradertFravær = (
     summertSykefraværshistorikkListe: SummertSykefraværshistorikk[] | undefined,
     ...statistikkategorier: Statistikkategori[]
 ): SummertSykefravær | undefined => {
@@ -139,7 +139,7 @@ export const getSammenligningResultatMedProsent = (
             : undefined;
     const summertGradertSykefraværVirksomhet =
         restStatus === RestStatus.Suksess
-            ? getSummertGradertfravær(summertSykefraværshistorikk, Statistikkategori.VIRKSOMHET)
+            ? getSummertGradertFravær(summertSykefraværshistorikk, Statistikkategori.VIRKSOMHET)
             : undefined;
     const kvartaler = summertSykefraværVirksomhet?.summertKorttidsfravær.kvartaler
         .slice()
@@ -155,7 +155,7 @@ export const getSammenligningResultatMedProsent = (
             : undefined;
     const summertGradertSykefraværVirksomhetNæringEllerBransje =
         restStatus === RestStatus.Suksess
-            ? getSummertGradertfravær(
+            ? getSummertGradertFravær(
                   summertSykefraværshistorikk,
                   Statistikkategori.BRANSJE,
                   Statistikkategori.NÆRING
@@ -200,12 +200,16 @@ export const getSammenligningResultatMedProsent = (
             sykefraværBransje =
                 summertSykefraværVirksomhetNæringEllerBransje?.summertLangtidsfravær.prosent;
             break;
-        case SammenligningsType.GRADERT: // TODO sette riktig vurderinger for gradert
+
+
+        case SammenligningsType.GRADERT:
             sammenligningVurdering = getVurderingForSammenligningAvSykefravær(
                 restStatus,
                 summertGradertSykefraværVirksomhet,
                 summertGradertSykefraværVirksomhetNæringEllerBransje?.prosent
             );
+
+            // For VIRKSOMHET: summertGradertSykefraværVirksomhet?.tapteDagsverk / (summertSykefraværVirksomhet?.summertLangtidsfravær.tapteDagsverk)
             sykefraværVirksomhet = summertGradertSykefraværVirksomhet?.prosent;
             sykefraværBransje =
                 summertGradertSykefraværVirksomhetNæringEllerBransje?.prosent;
