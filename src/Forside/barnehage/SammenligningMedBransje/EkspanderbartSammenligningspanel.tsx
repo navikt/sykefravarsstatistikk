@@ -141,7 +141,12 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 tittel={
                     <div className="ekspanderbart-sammenligningspanel__tittel-wrapper">
                         {SammenligningsType.GRADERT === sammenligningsType ? (
-                            <Kakediagram resultat={sykefraværResultat} inline />
+                            <Kakediagram
+                                resultat={sykefraværResultat}
+                                inline
+                                stor={false}
+                                className={'ekspanderbart-sammenligningspanel__kakediagram'}
+                            />
                         ) : (
                             <Speedometer resultat={sykefraværResultat} inline />
                         )}

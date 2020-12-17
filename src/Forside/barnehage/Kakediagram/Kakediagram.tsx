@@ -34,7 +34,7 @@ export const Kakediagram: FunctionComponent<Props> = ({
 
     return inline ? (
         <span className={classNames(className, 'kakediagram')}>
-            <SpeedometerSvg
+            <KakediagramSvg
                 resultat={resultat}
                 størrelsesfaktor={størrelsesfaktor}
                 erGradert={erGradert}
@@ -42,7 +42,7 @@ export const Kakediagram: FunctionComponent<Props> = ({
         </span>
     ) : (
         <div className={classNames(className, 'kakediagram')}>
-            <SpeedometerSvg
+            <KakediagramSvg
                 resultat={resultat}
                 størrelsesfaktor={størrelsesfaktor}
                 erGradert={erGradert}
@@ -51,7 +51,7 @@ export const Kakediagram: FunctionComponent<Props> = ({
     );
 };
 
-const SpeedometerSvg: FunctionComponent<{
+const KakediagramSvg: FunctionComponent<{
     resultat: SykefraværVurdering;
     størrelsesfaktor: number;
     erGradert?: boolean;
