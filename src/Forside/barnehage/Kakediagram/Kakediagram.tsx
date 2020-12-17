@@ -33,7 +33,7 @@ export const Kakediagram: FunctionComponent<Props> = ({
     const størrelsesfaktor = stor ? 1.2 : 0.7;
 
     return inline ? (
-        <span className={classNames(className, 'speedometer')}>
+        <span className={classNames(className, 'kakediagram')}>
             <SpeedometerSvg
                 resultat={resultat}
                 størrelsesfaktor={størrelsesfaktor}
@@ -41,7 +41,7 @@ export const Kakediagram: FunctionComponent<Props> = ({
             />
         </span>
     ) : (
-        <div className={classNames(className, 'speedometer')}>
+        <div className={classNames(className, 'kakediagram')}>
             <SpeedometerSvg
                 resultat={resultat}
                 størrelsesfaktor={størrelsesfaktor}
