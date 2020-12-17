@@ -1,10 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-export interface SpeedometerSvgProps {
-    størrelsesfaktor: number;
-}
-
-export const KakediagramGul: FunctionComponent<SpeedometerSvgProps> = ({ størrelsesfaktor }) => (
+export const KakediagramGul: FunctionComponent = () => (
     <svg
         width="122"
         height="123"
@@ -19,7 +15,7 @@ export const KakediagramGul: FunctionComponent<SpeedometerSvgProps> = ({ større
             d="M36.9892 117.076C49.1686 122.291 62.7147 123.399 75.5796 120.232C88.4446 117.065 99.9288 109.796 108.296 99.5239C116.663 89.2514 121.458 76.534 121.957 63.2945C122.455 50.055 118.63 37.0131 111.058 26.1407C103.487 15.2683 92.5817 7.15643 79.9912 3.03162C67.4008 -1.09319 53.8097 -1.00672 41.2727 3.27796C28.7357 7.56264 17.9346 15.8126 10.5023 26.7804C3.06993 37.7483 -0.589477 50.8378 0.0772992 64.0699L61 61L36.9892 117.076Z"
             fill="#F9D91B"
             stroke="black"
-            stroke-width="2"
+            strokeWidth="2"
             mask="url(#path-1-inside-1)"
         />
         <mask id="path-2-inside-2" fill="white">
@@ -29,7 +25,7 @@ export const KakediagramGul: FunctionComponent<SpeedometerSvgProps> = ({ større
             d="M61 122.176C44.8218 122.176 29.3062 115.749 17.8665 104.309C6.42677 92.8696 -4.50047e-07 77.354 0 61.1758C4.50048e-07 44.9976 6.42677 29.482 17.8665 18.0423C29.3062 6.60255 44.8218 0.175781 61 0.175781L61 61.1758L61 122.176Z"
             fill="#D8D8D8"
             stroke="black"
-            stroke-width="2"
+            strokeWidth="2"
             mask="url(#path-2-inside-2)"
         />
         <circle cx="61" cy="61.1758" r="38.5" fill="white" stroke="black" />

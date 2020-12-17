@@ -17,56 +17,32 @@ export enum SykefraværVurdering {
 
 interface Props {
     resultat: SykefraværVurdering;
-    stor?: boolean;
     className?: string;
-    inline?: boolean;
-    erGradert?: boolean;
 }
 
-export const Kakediagram: FunctionComponent<Props> = ({
-    resultat,
-    stor,
-    className,
-    inline,
-    erGradert,
-}) => {
-    const størrelsesfaktor = stor ? 1.2 : 0.7;
+export const Kakediagram: FunctionComponent<Props> = ({ resultat, className }) => {
 
-    return inline ? (
+    return (
         <span className={classNames(className, 'kakediagram')}>
-            <KakediagramSvg
-                resultat={resultat}
-                størrelsesfaktor={størrelsesfaktor}
-                erGradert={erGradert}
-            />
+            <KakediagramSvg resultat={resultat} />
         </span>
-    ) : (
-        <div className={classNames(className, 'kakediagram')}>
-            <KakediagramSvg
-                resultat={resultat}
-                størrelsesfaktor={størrelsesfaktor}
-                erGradert={erGradert}
-            />
-        </div>
     );
 };
 
 const KakediagramSvg: FunctionComponent<{
     resultat: SykefraværVurdering;
-    størrelsesfaktor: number;
-    erGradert?: boolean;
-}> = ({ resultat, størrelsesfaktor, erGradert }) => {
+}> = ({ resultat }) => {
     switch (resultat) {
         case SykefraværVurdering.UNDER:
-            return <KakediagramRød størrelsesfaktor={størrelsesfaktor} />;
+            return <KakediagramRød />;
         case SykefraværVurdering.MIDDELS:
-            return <KakediagramGul størrelsesfaktor={størrelsesfaktor} />;
+            return <KakediagramGul />;
         case SykefraværVurdering.OVER:
-            return <KakediagramGrønn størrelsesfaktor={størrelsesfaktor} />;
+            return <KakediagramGrønn />;
         case SykefraværVurdering.MASKERT:
         case SykefraværVurdering.INGEN_DATA:
         case SykefraværVurdering.UFULLSTENDIG_DATA:
         case SykefraværVurdering.FEIL:
-            return <KakediagramGrå størrelsesfaktor={størrelsesfaktor} />;
+            return <KakediagramGrå />;
     }
 };

@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import { SpeedometerSvgProps } from '../Speedometer/SpeedometerGul';
 
-export const KakediagramGrå: FunctionComponent<SpeedometerSvgProps> = ({ størrelsesfaktor }) => (
+export const KakediagramGrå: FunctionComponent = () => (
     <svg
         width="122"
         height="123"

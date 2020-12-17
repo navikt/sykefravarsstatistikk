@@ -3,8 +3,8 @@ import { SpeedometerSvgProps } from './SpeedometerGul';
 
 export const SpeedometerGrønn: FunctionComponent<SpeedometerSvgProps> = ({ størrelsesfaktor }) => (
     <svg
-        width={140 * størrelsesfaktor}
-        height={80 * størrelsesfaktor}
+        width={215 * størrelsesfaktor}
+        height={118 * størrelsesfaktor}
         viewBox="0 0 215 118"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

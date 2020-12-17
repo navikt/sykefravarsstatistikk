@@ -4,7 +4,6 @@ import { SpeedometerGul } from './SpeedometerGul';
 import { SpeedometerGrønn } from './SpeedometerGrønn';
 import classNames from 'classnames';
 import { SpeedometerGrå } from './SpeedometerGrå';
-import { KakediagramGrønn } from '../Kakediagram/KakediagramGrønn';
 
 export enum SykefraværVurdering {
     UNDER = 'UNDER',
@@ -21,7 +20,6 @@ interface Props {
     stor?: boolean;
     className?: string;
     inline?: boolean;
-    erGradert?: boolean;
 }
 
 export const Speedometer: FunctionComponent<Props> = ({
@@ -29,7 +27,6 @@ export const Speedometer: FunctionComponent<Props> = ({
     stor,
     className,
     inline,
-    erGradert,
 }) => {
     const størrelsesfaktor = stor ? 1.2 : 0.7;
 
@@ -38,7 +35,6 @@ export const Speedometer: FunctionComponent<Props> = ({
             <SpeedometerSvg
                 resultat={resultat}
                 størrelsesfaktor={størrelsesfaktor}
-                erGradert={erGradert}
             />
         </span>
     ) : (
@@ -46,7 +42,6 @@ export const Speedometer: FunctionComponent<Props> = ({
             <SpeedometerSvg
                 resultat={resultat}
                 størrelsesfaktor={størrelsesfaktor}
-                erGradert={erGradert}
             />
         </div>
     );
@@ -55,17 +50,14 @@ export const Speedometer: FunctionComponent<Props> = ({
 const SpeedometerSvg: FunctionComponent<{
     resultat: SykefraværVurdering;
     størrelsesfaktor: number;
-    erGradert?: boolean;
-}> = ({ resultat, størrelsesfaktor, erGradert }) => {
+}> = ({ resultat, størrelsesfaktor}) => {
     switch (resultat) {
         case SykefraværVurdering.UNDER:
             return <SpeedometerGrønn størrelsesfaktor={størrelsesfaktor} />;
         case SykefraværVurdering.MIDDELS:
             return <SpeedometerGul størrelsesfaktor={størrelsesfaktor} />;
         case SykefraværVurdering.OVER:
-            if (erGradert && erGradert === true)
-                return <KakediagramGrønn størrelsesfaktor={størrelsesfaktor} />;
-            else return <SpeedometerRød størrelsesfaktor={størrelsesfaktor} />;
+            return <SpeedometerRød størrelsesfaktor={størrelsesfaktor} />;
         case SykefraværVurdering.MASKERT:
         case SykefraværVurdering.INGEN_DATA:
         case SykefraværVurdering.UFULLSTENDIG_DATA:
