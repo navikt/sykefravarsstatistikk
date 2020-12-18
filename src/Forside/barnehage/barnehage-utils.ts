@@ -234,6 +234,37 @@ export const getSammenligningResultatMedProsent = (
               )
             : undefined;
 
+    return getSammmenligningVruderingProsenterOgKvartaler(
+        sammenligningsType,
+        restStatus,
+        summertSykefraværVirksomhet,
+        summertSykefraværVirksomhetNæringEllerBransje,
+        summertGradertSykefraværVirksomhet,
+        summertGradertSykefraværVirksomhetNæringEllerBransje,
+        kvartaler
+    );
+
+    /*return {
+        sammenligningVurdering: sammenligningVurdering,
+        sykefraværVirksomhet: sykefraværVirksomhet,
+        sykefraværBransje: sykefraværBransje,
+        kvartaler: kvartaler,
+    };*/
+};
+const getSammmenligningVruderingProsenterOgKvartaler = (
+    sammenligningsType: SammenligningsType,
+    restStatus: RestStatus.Suksess | RestStatus.Feil,
+    summertSykefraværVirksomhet: SummertKorttidsOgLangtidsfravær | undefined,
+    summertSykefraværVirksomhetNæringEllerBransje: SummertKorttidsOgLangtidsfravær | undefined,
+    summertGradertSykefraværVirksomhet: SummertSykefravær | undefined,
+    summertGradertSykefraværVirksomhetNæringEllerBransje: SummertSykefravær | undefined,
+    kvartaler: ÅrstallOgKvartal[] | undefined
+): {
+    sammenligningVurdering: SykefraværVurdering;
+    sykefraværVirksomhet: number | null | undefined;
+    sykefraværBransje: number | null | undefined;
+    kvartaler: ÅrstallOgKvartal[] | undefined;
+} => {
     let sammenligningVurdering: SykefraværVurdering;
     let sykefraværVirksomhet;
     let sykefraværBransje;
@@ -292,7 +323,6 @@ export const getSammenligningResultatMedProsent = (
             );
             break;
     }
-
     return {
         sammenligningVurdering: sammenligningVurdering,
         sykefraværVirksomhet: sykefraværVirksomhet,
