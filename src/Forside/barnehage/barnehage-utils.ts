@@ -8,12 +8,13 @@ import { SykefraværVurdering } from './Speedometer/Speedometer';
 import { RestStatus } from '../../api/api-utils';
 import { ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
 import { SammenligningsType } from './vurderingstekster';
-import { number } from 'prop-types';
 
 export const getVurderingForSammenligningAvSykefravær = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,
     sykefravær: SummertSykefravær | undefined,
-    bransjensProsent: number | null | undefined
+    bransjensProsent: number | null | undefined,
+    sammenligningsType?: SammenligningsType,
+    gradertProsent?: number
 ): SykefraværVurdering => {
     if (bransjensProsent === null || bransjensProsent === undefined) {
         return SykefraværVurdering.INGEN_DATA;
@@ -36,10 +37,17 @@ export const getVurderingForSammenligningAvSykefravær = (
                 return SykefraværVurdering.UFULLSTENDIG_DATA;
             }
 
-            if (sykefravær.prosent === null) {
+            if (
+                sykefravær.prosent === null ||
+                sykefravær.tapteDagsverk === undefined ||
+                sykefravær.tapteDagsverk === null
+            ) {
                 return SykefraværVurdering.INGEN_DATA;
             }
-            return getVurdering(sykefravær.prosent, bransjensProsent);
+
+            if (sammenligningsType !== SammenligningsType.GRADERT)
+                return getVurdering(sykefravær.prosent, bransjensProsent);
+            else return getVurdering(gradertProsent, bransjensProsent);
 
         case RestStatus.Feil:
             return SykefraværVurdering.FEIL;
@@ -88,10 +96,10 @@ export const getTotaltSykefraværSiste4Kvartaler = (
 };
 
 export const getVurdering = (
-    virksomhetensProsent: number | null,
+    virksomhetensProsent: number | null | undefined,
     bransjensProsent: number
 ): SykefraværVurdering => {
-    if (virksomhetensProsent === null) {
+    if (virksomhetensProsent === null || virksomhetensProsent === undefined) {
         throw new Error('virksomhetens eller bransjens tall er null');
     }
 
@@ -120,12 +128,15 @@ const addEllerReturnerNull = (number1: number | null, number2: number | null) =>
     return number1 + number2;
 };
 
+export const getSummertHistorikkTMP = (): { sammenligningsVurdering: number } => {
+
+    return { sammenligningsVurdering: 0 };
+};
 export const getSammenligningResultatMedProsent = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,
     summertSykefraværshistorikk: SummertSykefraværshistorikk[] | undefined,
     sammenligningsType: SammenligningsType
 ): {
-    sammenligningstype: SammenligningsType;
     sammenligningVurdering: SykefraværVurdering;
     sykefraværVirksomhet: number | null | undefined;
     sykefraværBransje: number | null | undefined;
@@ -203,37 +214,38 @@ export const getSammenligningResultatMedProsent = (
             break;
 
         case SammenligningsType.GRADERT:
+            sykefraværVirksomhet = getGradertProsent(
+                summertGradertSykefraværVirksomhet?.tapteDagsverk,
+                getTotaltSykefraværSiste4Kvartaler(summertSykefraværVirksomhet)?.tapteDagsverk
+            );
+            sykefraværBransje = getGradertProsent(
+                summertGradertSykefraværVirksomhetNæringEllerBransje?.tapteDagsverk,
+                getTotaltSykefraværSiste4Kvartaler(summertSykefraværVirksomhetNæringEllerBransje)
+                    ?.tapteDagsverk
+            );
             sammenligningVurdering = getVurderingForSammenligningAvSykefravær(
                 restStatus,
                 summertGradertSykefraværVirksomhet,
-                summertGradertSykefraværVirksomhetNæringEllerBransje?.prosent
+                sykefraværBransje,
+                sammenligningsType,
+                sykefraværVirksomhet
             );
-
-            // For VIRKSOMHET: summertGradertSykefraværVirksomhet?.tapteDagsverk / (summertSykefraværVirksomhet?.summertLangtidsfravær.tapteDagsverk)
-            sykefraværVirksomhet = getSummertGradertProsent(
-                summertGradertSykefraværVirksomhet?.prosent,
-                summertSykefraværVirksomhet?.summertKorttidsfravær?.tapteDagsverk,
-                summertSykefraværVirksomhet?.summertLangtidsfravær?.tapteDagsverk
-            ); //summertGradertSykefraværVirksomhet?.prosent;
-            sykefraværBransje = summertGradertSykefraværVirksomhetNæringEllerBransje?.prosent;
             break;
     }
 
     return {
-        sammenligningstype: sammenligningsType,
         sammenligningVurdering: sammenligningVurdering,
         sykefraværVirksomhet: sykefraværVirksomhet,
         sykefraværBransje: sykefraværBransje,
         kvartaler: kvartaler,
     };
 };
-const getSummertGradertProsent = (
+const getGradertProsent = (
     gradertTapteDagsverk: number | null | undefined,
-    kortTidTapteDagsverk: number | null | undefined,
-    langtidTapteDagsverk: number | null | undefined
+    totaltTapteDagsverk: number | null | undefined
 ): number | undefined => {
-    if (!kortTidTapteDagsverk || !langtidTapteDagsverk || !gradertTapteDagsverk) return undefined;
-    else return (gradertTapteDagsverk * 100) / (kortTidTapteDagsverk + langtidTapteDagsverk);
+    if (!totaltTapteDagsverk || !gradertTapteDagsverk) return undefined;
+    else return (gradertTapteDagsverk * 100) / totaltTapteDagsverk;
 };
 export const summertHistorikkHarBransje = (historikk: SummertSykefraværshistorikk[]): boolean => {
     return !!historikk.find((data) => data.type === Statistikkategori.BRANSJE);
