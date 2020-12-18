@@ -1,4 +1,5 @@
 import {
+    RestSummertSykefraværshistorikk,
     Statistikkategori,
     SummertKorttidsOgLangtidsfravær,
     SummertSykefravær,
@@ -127,10 +128,69 @@ const addEllerReturnerNull = (number1: number | null, number2: number | null) =>
     if (number1 === null || number2 === null) return null;
     return number1 + number2;
 };
+interface SammenligningResultatReturnObjekt {
+    sammenligningVurdering: SykefraværVurdering;
+    sykefraværVirksomhet: number | null | undefined;
+    sykefraværBransje: number | null | undefined;
+    kvartaler: ÅrstallOgKvartal[] | undefined;
+}
+const undefinedSammenligningResultatReturnObjekt: SammenligningResultatReturnObjekt = {
+    sammenligningVurdering: SykefraværVurdering.INGEN_DATA,
+    sykefraværVirksomhet: undefined,
+    sykefraværBransje: undefined,
+    kvartaler: undefined,
+};
+export const getSammenligningResultat = (
+    restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk
+): {
+    sammenligningResultatTotalt: SammenligningResultatReturnObjekt;
+    sammenligningResultatKorttid: SammenligningResultatReturnObjekt;
+    sammenligningResultatLangtid: SammenligningResultatReturnObjekt;
+    sammenligningResultatGradert: SammenligningResultatReturnObjekt;
+} => {
+    if (
+        restSummertSykefraværshistorikk.status !== RestStatus.Suksess &&
+        restSummertSykefraværshistorikk.status !== RestStatus.Feil
+    )
+        return {
+            sammenligningResultatTotalt: undefinedSammenligningResultatReturnObjekt,
+            sammenligningResultatKorttid: undefinedSammenligningResultatReturnObjekt,
+            sammenligningResultatLangtid: undefinedSammenligningResultatReturnObjekt,
+            sammenligningResultatGradert: undefinedSammenligningResultatReturnObjekt,
+        };
+    const summertSykefraværshistorikk =
+        restSummertSykefraværshistorikk.status === RestStatus.Suksess
+            ? restSummertSykefraværshistorikk.data
+            : undefined;
 
-export const getSummertHistorikkTMP = (): { sammenligningsVurdering: number } => {
+    const sammenligningResultatTotalt = getSammenligningResultatMedProsent(
+        restSummertSykefraværshistorikk.status,
+        summertSykefraværshistorikk,
+        SammenligningsType.TOTALT
+    );
 
-    return { sammenligningsVurdering: 0 };
+    const sammenligningResultatKorttid = getSammenligningResultatMedProsent(
+        restSummertSykefraværshistorikk.status,
+        summertSykefraværshistorikk,
+        SammenligningsType.KORTTID
+    );
+    const sammenligningResultatLangtid = getSammenligningResultatMedProsent(
+        restSummertSykefraværshistorikk.status,
+        summertSykefraværshistorikk,
+        SammenligningsType.LANGTID
+    );
+
+    const sammenligningResultatGradert = getSammenligningResultatMedProsent(
+        restSummertSykefraværshistorikk.status,
+        summertSykefraværshistorikk,
+        SammenligningsType.GRADERT
+    );
+    return {
+        sammenligningResultatTotalt,
+        sammenligningResultatKorttid,
+        sammenligningResultatLangtid,
+        sammenligningResultatGradert,
+    };
 };
 export const getSammenligningResultatMedProsent = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,

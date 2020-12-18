@@ -3,7 +3,7 @@ import { RestSummertSykefraværshistorikk } from '../../../api/summertSykefravæ
 import { EkspanderbartSammenligningspanel } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
 import { RestStatus } from '../../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
-import { getSammenligningResultatMedProsent, summertHistorikkHarBransje } from '../barnehage-utils';
+import { getSammenligningResultat, summertHistorikkHarBransje } from '../barnehage-utils';
 import { SykefraværVurdering } from '../Speedometer/Speedometer';
 import { SammenligningsType } from '../vurderingstekster';
 import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngress';
@@ -49,36 +49,18 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             ? restVirksomhetMetadata.data.bransje
             : undefined;
 
-    const summertSykefraværshistorikk =
-        restSummertSykefraværshistorikk.status === RestStatus.Suksess
-            ? restSummertSykefraværshistorikk.data
-            : undefined;
+
 
     const harBransje =
         restSummertSykefraværshistorikk.status === RestStatus.Suksess &&
         summertHistorikkHarBransje(restSummertSykefraværshistorikk.data);
-
-    const sammenligningResultatTotalt = getSammenligningResultatMedProsent(
-        restSummertSykefraværshistorikk.status,
-        summertSykefraværshistorikk,
-        SammenligningsType.TOTALT
-    );
-
-    const sammenligningResultatKorttid = getSammenligningResultatMedProsent(
-        restSummertSykefraværshistorikk.status,
-        summertSykefraværshistorikk,
-        SammenligningsType.KORTTID
-    );
-    const sammenligningResultatLangtid = getSammenligningResultatMedProsent(
-        restSummertSykefraværshistorikk.status,
-        summertSykefraværshistorikk,
-        SammenligningsType.LANGTID
-    );
-
-    const sammenligningResultatGradert = getSammenligningResultatMedProsent(
-        restSummertSykefraværshistorikk.status,
-        summertSykefraværshistorikk,
-        SammenligningsType.GRADERT
+    const {
+        sammenligningResultatTotalt,
+        sammenligningResultatKorttid,
+        sammenligningResultatLangtid,
+        sammenligningResultatGradert
+    } = getSammenligningResultat(
+        restSummertSykefraværshistorikk
     );
 
     const antallKvartalerVirksomhet =
