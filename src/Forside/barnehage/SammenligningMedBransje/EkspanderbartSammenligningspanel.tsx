@@ -18,6 +18,8 @@ import { useSendEvent } from '../../../amplitude/amplitude';
 import { Bransjetype } from '../../../api/virksomhetMetadata';
 import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
+import Lenke from 'nav-frontend-lenker';
+import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 
 interface Props {
     sammenligningResultat: SykefraværVurdering;
@@ -71,6 +73,19 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const innhold = (
         <>
             {
+                sammenligningsType === SammenligningsType.GRADERT && (
+                    <div>
+                        <Ingress>Slik regner vi ut prosenten på gradert sykemelding:</Ingress>
+                        <Normaltekst className="ekspanderbart-sammenligningspanel__utregningsforklring-tekst">
+                            {' '}
+                            Vi teller antall fraværsdager med bruk av gradert sykmelding. Så
+                            beregner vi hvor stor andel disse utgjør av alle legemeldte fraværsdager
+                            i din virksomhet. Du kan finne antallet legemeldte fraværsdager for din
+                            virksomhet under tapte dagsverk i{' '}
+                            <Lenke href={'/kalkulator'}>kostnadskalkulatoren.</Lenke>
+                        </Normaltekst>
+                    </div>
+                )
                 // TODO sett inn "slik regner vi ut gradert sm"
             }
             <div className="ekspanderbart-sammenligningspanel__metadata-og-detaljert-visning-sykefravær">
