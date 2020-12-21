@@ -77,16 +77,24 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     <div>
                         <Ingress>Slik regner vi ut prosenten på gradert sykemelding:</Ingress>
                         <Normaltekst className="ekspanderbart-sammenligningspanel__utregningsforklring-tekst">
-                            {' '}
                             Vi teller antall fraværsdager med bruk av gradert sykmelding. Så
                             beregner vi hvor stor andel disse utgjør av alle legemeldte fraværsdager
                             i din virksomhet. Du kan finne antallet legemeldte fraværsdager for din
                             virksomhet under tapte dagsverk i{' '}
                             <Lenke href={'/kalkulator'}>kostnadskalkulatoren.</Lenke>
                         </Normaltekst>
+                        <LesMerPanel
+                            åpneLabel={'Se eksempel'}
+                            className="ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel"
+                        >
+                            <Normaltekst className="ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel__innhold">
+                                La oss si du har 7,5% sykefravær, dette utgjør 100 tapte dagsverk i
+                                din virksomhet. Det ble benyttet gradert sykmelding i 20 dager, da
+                                får du 20% gradert sykemelding.
+                            </Normaltekst>
+                        </LesMerPanel>
                     </div>
                 )
-                // TODO sett inn "slik regner vi ut gradert sm"
             }
             <div className="ekspanderbart-sammenligningspanel__metadata-og-detaljert-visning-sykefravær">
                 <SykefraværMetadata
