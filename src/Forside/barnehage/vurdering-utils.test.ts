@@ -11,8 +11,13 @@ import {
 } from '../../api/summertSykefraværshistorikk';
 import { RestStatus } from '../../api/api-utils';
 import {
+    getSummertSykefraværshistorikkMock,
     summertSykefraværshistorikkMockGrønn,
-    summertSykefraværshistorikkMockGul, summertSykefraværshistorikkMockRød,
+    summertSykefraværshistorikkMockGul,
+    summertSykefraværshistorikkMockMaskert,
+    summertSykefraværshistorikkMockMedBare2Kvartaler,
+    summertSykefraværshistorikkMockRød,
+    summertSykefraværshistorikkMockUtenData,
 } from '../../mocking/summert-sykefraværshistorikk-mock';
 
 it('getVurdering skal gi riktig vurdering', () => {
@@ -46,6 +51,15 @@ describe('Tester for getSammenligningResultat', () => {
         );
 
         expect(resultater.sammenligningResultatTotalt.sammenligningVurdering).toEqual(
+            SykefraværVurdering.FEIL
+        );
+        expect(resultater.sammenligningResultatKorttid.sammenligningVurdering).toEqual(
+            SykefraværVurdering.FEIL
+        );
+        expect(resultater.sammenligningResultatLangtid.sammenligningVurdering).toEqual(
+            SykefraværVurdering.FEIL
+        );
+        expect(resultater.sammenligningResultatGradert.sammenligningVurdering).toEqual(
             SykefraværVurdering.FEIL
         );
     });
@@ -107,6 +121,89 @@ describe('Tester for getSammenligningResultat', () => {
         );
         expect(resultater.sammenligningResultatGradert.sammenligningVurdering).toEqual(
             SykefraværVurdering.OVER
+        );
+    });
+
+    it('getSammenligningResultat - skal gi vurdering INGEN_DATA hvis data tilsier det', () => {
+        const resultater: Sammenligningsresultater = getSammenligningResultat({
+            status: RestStatus.Suksess,
+            data: summertSykefraværshistorikkMockUtenData,
+        });
+
+        expect(resultater.sammenligningResultatTotalt.sammenligningVurdering).toEqual(
+            SykefraværVurdering.INGEN_DATA
+        );
+        expect(resultater.sammenligningResultatKorttid.sammenligningVurdering).toEqual(
+            SykefraværVurdering.INGEN_DATA
+        );
+        expect(resultater.sammenligningResultatLangtid.sammenligningVurdering).toEqual(
+            SykefraværVurdering.INGEN_DATA
+        );
+        expect(resultater.sammenligningResultatGradert.sammenligningVurdering).toEqual(
+            SykefraværVurdering.INGEN_DATA
+        );
+    });
+
+    it('getSammenligningResultat - skal gi vurdering UFULLSTENDIG_DATA hvis data tilsier det', () => {
+        const resultater: Sammenligningsresultater = getSammenligningResultat({
+            status: RestStatus.Suksess,
+            data: summertSykefraværshistorikkMockMedBare2Kvartaler,
+        });
+
+        expect(resultater.sammenligningResultatTotalt.sammenligningVurdering).toEqual(
+            SykefraværVurdering.UFULLSTENDIG_DATA
+        );
+        expect(resultater.sammenligningResultatKorttid.sammenligningVurdering).toEqual(
+            SykefraværVurdering.UFULLSTENDIG_DATA
+        );
+        expect(resultater.sammenligningResultatLangtid.sammenligningVurdering).toEqual(
+            SykefraværVurdering.UFULLSTENDIG_DATA
+        );
+        expect(resultater.sammenligningResultatGradert.sammenligningVurdering).toEqual(
+            SykefraværVurdering.UFULLSTENDIG_DATA
+        );
+    });
+
+    it('getSammenligningResultat - skal gi vurdering MASKERT hvis data tilsier det', () => {
+        const resultater: Sammenligningsresultater = getSammenligningResultat({
+            status: RestStatus.Suksess,
+            data: summertSykefraværshistorikkMockMaskert,
+        });
+
+        expect(resultater.sammenligningResultatTotalt.sammenligningVurdering).toEqual(
+            SykefraværVurdering.MASKERT
+        );
+        expect(resultater.sammenligningResultatKorttid.sammenligningVurdering).toEqual(
+            SykefraværVurdering.MASKERT
+        );
+        expect(resultater.sammenligningResultatLangtid.sammenligningVurdering).toEqual(
+            SykefraværVurdering.MASKERT
+        );
+        expect(resultater.sammenligningResultatGradert.sammenligningVurdering).toEqual(
+            SykefraværVurdering.MASKERT
+        );
+    });
+
+    it('getSammenligningResultat - skal gi riktig vurdering for virksomhet uten bransje', () => {
+        const resultater: Sammenligningsresultater = getSammenligningResultat({
+            status: RestStatus.Suksess,
+            data: getSummertSykefraværshistorikkMock(
+                Statistikkategori.NÆRING,
+                'Produksjon av nærings- og nytelsesmidler'
+            ),
+        });
+
+        expect(resultater.sammenligningResultatTotalt.sammenligningVurdering).toEqual(
+            SykefraværVurdering.MIDDELS
+        );
+        expect(resultater.sammenligningResultatKorttid.sammenligningVurdering).toEqual(
+            SykefraværVurdering.OVER
+        );
+        expect(resultater.sammenligningResultatLangtid.sammenligningVurdering).toEqual(
+            SykefraværVurdering.UNDER
+        );
+        expect(resultater.sammenligningResultatGradert.sammenligningVurdering).toEqual(
+            SykefraværVurdering.UNDER
         );
     });
 });
