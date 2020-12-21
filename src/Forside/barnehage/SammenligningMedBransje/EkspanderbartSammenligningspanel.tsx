@@ -20,6 +20,7 @@ import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
 import Lenke from 'nav-frontend-lenker';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
+import { InfoTekst } from '../../../felleskomponenter/InfoTekst/InfoTekst';
 
 interface Props {
     sammenligningResultat: SykefraværVurdering;
@@ -72,30 +73,28 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
 
     const innhold = (
         <>
-            {
-                sammenligningsType === SammenligningsType.GRADERT && (
-                    <div>
-                        <Ingress>Slik regner vi ut prosenten på gradert sykemelding:</Ingress>
-                        <Normaltekst className="ekspanderbart-sammenligningspanel__utregningsforklring-tekst">
-                            Vi teller antall fraværsdager med bruk av gradert sykmelding. Så
-                            beregner vi hvor stor andel disse utgjør av alle legemeldte fraværsdager
-                            i din virksomhet. Du kan finne antallet legemeldte fraværsdager for din
-                            virksomhet under tapte dagsverk i{' '}
-                            <Lenke href={'/kalkulator'}>kostnadskalkulatoren.</Lenke>
+            {sammenligningsType === SammenligningsType.GRADERT && (
+                <div>
+                    <Ingress>Slik regner vi ut prosenten på gradert sykemelding:</Ingress>
+                    <Normaltekst className="ekspanderbart-sammenligningspanel__utregningsforklring-tekst">
+                        Vi teller antall fraværsdager med bruk av gradert sykmelding. Så beregner vi
+                        hvor stor andel disse utgjør av alle legemeldte fraværsdager i din
+                        virksomhet. Du kan finne antallet legemeldte fraværsdager for din virksomhet
+                        under tapte dagsverk i{' '}
+                        <Lenke href={'/kalkulator'}>kostnadskalkulatoren.</Lenke>
+                    </Normaltekst>
+                    <LesMerPanel
+                        åpneLabel={'Se eksempel'}
+                        className="ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel"
+                    >
+                        <Normaltekst className="ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel__innhold">
+                            La oss si du har 7,5% sykefravær, dette utgjør 100 tapte dagsverk i din
+                            virksomhet. Det ble benyttet gradert sykmelding i 20 dager, da får du
+                            20% gradert sykemelding.
                         </Normaltekst>
-                        <LesMerPanel
-                            åpneLabel={'Se eksempel'}
-                            className="ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel"
-                        >
-                            <Normaltekst className="ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel__innhold">
-                                La oss si du har 7,5% sykefravær, dette utgjør 100 tapte dagsverk i
-                                din virksomhet. Det ble benyttet gradert sykmelding i 20 dager, da
-                                får du 20% gradert sykemelding.
-                            </Normaltekst>
-                        </LesMerPanel>
-                    </div>
-                )
-            }
+                    </LesMerPanel>
+                </div>
+            )}
             <div className="ekspanderbart-sammenligningspanel__metadata-og-detaljert-visning-sykefravær">
                 <SykefraværMetadata
                     className="ekspanderbart-sammenligningspanel__sykefravær-metadata"
@@ -114,9 +113,13 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     visingAntallKvartaller={antallKvartalerBransje}
                 />
             </div>
-            <div className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering">
-                {getForklaringAvVurdering(sykefraværResultat, sykefraværBransje)}
-            </div>
+            {sammenligningsType === SammenligningsType.GRADERT ? (
+                <InfoTekst />
+            ) : (
+                <div className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering">
+                    {getForklaringAvVurdering(sykefraværResultat, sykefraværBransje)}
+                </div>
+            )}
         </>
     );
 
