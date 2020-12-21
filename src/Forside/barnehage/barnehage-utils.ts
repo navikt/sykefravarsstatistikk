@@ -17,15 +17,16 @@ export const getVurderingForSammenligningAvSykefravær = (
     sammenligningsType?: SammenligningsType,
     gradertProsent?: number
 ): SykefraværVurdering => {
-    if (bransjensProsent === null || bransjensProsent === undefined) {
-        return SykefraværVurdering.INGEN_DATA;
-    }
-
     switch (restStatus) {
         case RestStatus.Suksess:
-            if (sykefravær === undefined) {
+            if (
+                bransjensProsent === null ||
+                bransjensProsent === undefined ||
+                sykefravær === undefined
+            ) {
                 return SykefraværVurdering.INGEN_DATA;
             }
+
             if (sykefravær.erMaskert) {
                 return SykefraværVurdering.MASKERT;
             }
@@ -140,14 +141,17 @@ const undefinedSammenligningResultatReturnObjekt: SammenligningResultatReturnObj
     sykefraværBransje: undefined,
     kvartaler: undefined,
 };
-export const getSammenligningResultat = (
-    restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk
-): {
+
+export interface Sammenligningsresultater {
     sammenligningResultatTotalt: SammenligningResultatReturnObjekt;
     sammenligningResultatKorttid: SammenligningResultatReturnObjekt;
     sammenligningResultatLangtid: SammenligningResultatReturnObjekt;
     sammenligningResultatGradert: SammenligningResultatReturnObjekt;
-} => {
+}
+
+export const getSammenligningResultat = (
+    restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk
+): Sammenligningsresultater => {
     if (
         restSummertSykefraværshistorikk.status !== RestStatus.Suksess &&
         restSummertSykefraværshistorikk.status !== RestStatus.Feil
@@ -192,6 +196,7 @@ export const getSammenligningResultat = (
         sammenligningResultatGradert,
     };
 };
+
 export const getSammenligningResultatMedProsent = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,
     summertSykefraværshistorikk: SummertSykefraværshistorikk[] | undefined,
