@@ -289,12 +289,12 @@ describe('Tester for getSammenligningResultat', () => {
                 },
             ],
         });
-        expect(resultater.sammenligningResultatTotalt.sykefraværBransje).toEqual(8.7);
-        expect(resultater.sammenligningResultatKorttid.sykefraværBransje).toEqual(1.2);
-        expect(resultater.sammenligningResultatLangtid.sykefraværBransje).toEqual(7.5);
-        expect(resultater.sammenligningResultatGradert.sykefraværBransje! - 50.6).toBeLessThan(
-            0.01
-        );
+        expect(resultater.sammenligningResultatTotalt.sykefraværNæringEllerBransje).toEqual(8.7);
+        expect(resultater.sammenligningResultatKorttid.sykefraværNæringEllerBransje).toEqual(1.2);
+        expect(resultater.sammenligningResultatLangtid.sykefraværNæringEllerBransje).toEqual(7.5);
+        expect(
+            resultater.sammenligningResultatGradert.sykefraværNæringEllerBransje! - 50.6
+        ).toBeLessThan(0.01);
     });
 
     it('getSammenligningResultat skal returnere riktig sykefraværsprosent for næring', () => {
@@ -330,13 +330,99 @@ describe('Tester for getSammenligningResultat', () => {
                 },
             ],
         });
-        expect(resultater.sammenligningResultatTotalt.sykefraværBransje! - 8.4).toBeLessThan(
-            0.01
-        );
-        expect(resultater.sammenligningResultatKorttid.sykefraværBransje).toEqual(2.3);
-        expect(resultater.sammenligningResultatLangtid.sykefraværBransje).toEqual(6.1);
-        expect(resultater.sammenligningResultatGradert.sykefraværBransje! - 15.51).toBeLessThan(
-            0.01
-        );
+        expect(
+            resultater.sammenligningResultatTotalt.sykefraværNæringEllerBransje! - 8.4
+        ).toBeLessThan(0.01);
+        expect(resultater.sammenligningResultatKorttid.sykefraværNæringEllerBransje).toEqual(2.3);
+        expect(resultater.sammenligningResultatLangtid.sykefraværNæringEllerBransje).toEqual(6.1);
+        expect(
+            resultater.sammenligningResultatGradert.sykefraværNæringEllerBransje! - 15.51
+        ).toBeLessThan(0.01);
+    });
+
+    it('getSammenligningResultat skal returnere riktige kvartaler', () => {
+        const resultater: Sammenligningsresultater = getSammenligningResultat({
+            status: RestStatus.Suksess,
+            data: [
+                {
+                    type: Statistikkategori.VIRKSOMHET,
+                    label: 'En virksomhet',
+                    summertKorttidsOgLangtidsfravær: {
+                        summertKorttidsfravær: {
+                            prosent: 2.3,
+                            tapteDagsverk: 140.6,
+                            muligeDagsverk: 3990.4,
+                            erMaskert: false,
+                            kvartaler: siste4Kvartaler,
+                        },
+                        summertLangtidsfravær: {
+                            prosent: 6.1,
+                            tapteDagsverk: 116.7,
+                            muligeDagsverk: 3990.4,
+                            erMaskert: false,
+                            kvartaler: siste4Kvartaler,
+                        },
+                    },
+                    summertGradertFravær: {
+                        prosent: 1,
+                        tapteDagsverk: 39.9,
+                        muligeDagsverk: 3990.4,
+                        erMaskert: false,
+                        kvartaler: siste4Kvartaler,
+                    },
+                },
+                {
+                    type: Statistikkategori.NÆRING,
+                    label: 'En virksomhet',
+                    summertKorttidsOgLangtidsfravær: {
+                        summertKorttidsfravær: {
+                            prosent: 2.3,
+                            tapteDagsverk: 140.6,
+                            muligeDagsverk: 3990.4,
+                            erMaskert: false,
+                            kvartaler: siste4Kvartaler,
+                        },
+                        summertLangtidsfravær: {
+                            prosent: 6.1,
+                            tapteDagsverk: 116.7,
+                            muligeDagsverk: 3990.4,
+                            erMaskert: false,
+                            kvartaler: siste4Kvartaler,
+                        },
+                    },
+                    summertGradertFravær: {
+                        prosent: 1,
+                        tapteDagsverk: 39.9,
+                        muligeDagsverk: 3990.4,
+                        erMaskert: false,
+                        kvartaler: siste4Kvartaler,
+                    },
+                },
+            ],
+        });
+        expect(resultater.sammenligningResultatTotalt.kvartaler).toEqual([
+            { årstall: 2020, kvartal: 1 },
+            { årstall: 2019, kvartal: 4 },
+            { årstall: 2019, kvartal: 3 },
+            { årstall: 2019, kvartal: 2 },
+        ]);
+        expect(resultater.sammenligningResultatKorttid.kvartaler).toEqual([
+            { årstall: 2020, kvartal: 1 },
+            { årstall: 2019, kvartal: 4 },
+            { årstall: 2019, kvartal: 3 },
+            { årstall: 2019, kvartal: 2 },
+        ]);
+        expect(resultater.sammenligningResultatLangtid.kvartaler).toEqual([
+            { årstall: 2020, kvartal: 1 },
+            { årstall: 2019, kvartal: 4 },
+            { årstall: 2019, kvartal: 3 },
+            { årstall: 2019, kvartal: 2 },
+        ]);
+        expect(resultater.sammenligningResultatGradert.kvartaler).toEqual([
+            { årstall: 2020, kvartal: 1 },
+            { årstall: 2019, kvartal: 4 },
+            { årstall: 2019, kvartal: 3 },
+            { årstall: 2019, kvartal: 2 },
+        ]);
     });
 });

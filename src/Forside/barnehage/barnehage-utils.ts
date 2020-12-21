@@ -132,13 +132,13 @@ const addEllerReturnerNull = (number1: number | null, number2: number | null) =>
 interface SammenligningResultatReturnObjekt {
     sammenligningVurdering: SykefraværVurdering;
     sykefraværVirksomhet: number | null | undefined;
-    sykefraværBransje: number | null | undefined;
+    sykefraværNæringEllerBransje: number | null | undefined;
     kvartaler: ÅrstallOgKvartal[] | undefined;
 }
 const undefinedSammenligningResultatReturnObjekt: SammenligningResultatReturnObjekt = {
     sammenligningVurdering: SykefraværVurdering.INGEN_DATA,
     sykefraværVirksomhet: undefined,
-    sykefraværBransje: undefined,
+    sykefraværNæringEllerBransje: undefined,
     kvartaler: undefined,
 };
 
@@ -201,12 +201,7 @@ export const getSammenligningResultatMedProsent = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,
     summertSykefraværshistorikk: SummertSykefraværshistorikk[] | undefined,
     sammenligningsType: SammenligningsType
-): {
-    sammenligningVurdering: SykefraværVurdering;
-    sykefraværVirksomhet: number | null | undefined;
-    sykefraværBransje: number | null | undefined;
-    kvartaler: ÅrstallOgKvartal[] | undefined;
-} => {
+):SammenligningResultatReturnObjekt => {
     const summertSykefraværVirksomhet =
         restStatus === RestStatus.Suksess
             ? getSummertKorttidsOgLangtidsfravær(
@@ -264,15 +259,10 @@ const getSammmenligningVruderingProsenterOgKvartaler = (
     summertGradertSykefraværVirksomhet: SummertSykefravær | undefined,
     summertGradertSykefraværVirksomhetNæringEllerBransje: SummertSykefravær | undefined,
     kvartaler: ÅrstallOgKvartal[] | undefined
-): {
-    sammenligningVurdering: SykefraværVurdering;
-    sykefraværVirksomhet: number | null | undefined;
-    sykefraværBransje: number | null | undefined;
-    kvartaler: ÅrstallOgKvartal[] | undefined;
-} => {
+): SammenligningResultatReturnObjekt => {
     let sammenligningVurdering: SykefraværVurdering;
     let sykefraværVirksomhet;
-    let sykefraværBransje;
+    let sykefraværNæringEllerBransje;
 
     switch (sammenligningsType) {
         case SammenligningsType.TOTALT:
@@ -284,7 +274,7 @@ const getSammmenligningVruderingProsenterOgKvartaler = (
             );
             sykefraværVirksomhet = getTotaltSykefraværSiste4Kvartaler(summertSykefraværVirksomhet)
                 ?.prosent;
-            sykefraværBransje = getTotaltSykefraværSiste4Kvartaler(
+            sykefraværNæringEllerBransje = getTotaltSykefraværSiste4Kvartaler(
                 summertSykefraværVirksomhetNæringEllerBransje
             )?.prosent;
             break;
@@ -295,7 +285,7 @@ const getSammmenligningVruderingProsenterOgKvartaler = (
                 summertSykefraværVirksomhetNæringEllerBransje?.summertKorttidsfravær.prosent
             );
             sykefraværVirksomhet = summertSykefraværVirksomhet?.summertKorttidsfravær.prosent;
-            sykefraværBransje =
+            sykefraværNæringEllerBransje =
                 summertSykefraværVirksomhetNæringEllerBransje?.summertKorttidsfravær.prosent;
             break;
         case SammenligningsType.LANGTID:
@@ -305,7 +295,7 @@ const getSammmenligningVruderingProsenterOgKvartaler = (
                 summertSykefraværVirksomhetNæringEllerBransje?.summertLangtidsfravær.prosent
             );
             sykefraværVirksomhet = summertSykefraværVirksomhet?.summertLangtidsfravær.prosent;
-            sykefraværBransje =
+            sykefraværNæringEllerBransje =
                 summertSykefraværVirksomhetNæringEllerBransje?.summertLangtidsfravær.prosent;
             break;
 
@@ -314,7 +304,7 @@ const getSammmenligningVruderingProsenterOgKvartaler = (
                 summertGradertSykefraværVirksomhet?.tapteDagsverk,
                 getTotaltSykefraværSiste4Kvartaler(summertSykefraværVirksomhet)?.tapteDagsverk
             );
-            sykefraværBransje = getGradertProsent(
+            sykefraværNæringEllerBransje = getGradertProsent(
                 summertGradertSykefraværVirksomhetNæringEllerBransje?.tapteDagsverk,
                 getTotaltSykefraværSiste4Kvartaler(summertSykefraværVirksomhetNæringEllerBransje)
                     ?.tapteDagsverk
@@ -322,7 +312,7 @@ const getSammmenligningVruderingProsenterOgKvartaler = (
             sammenligningVurdering = getVurderingForSammenligningAvSykefravær(
                 restStatus,
                 summertGradertSykefraværVirksomhet,
-                sykefraværBransje,
+                sykefraværNæringEllerBransje,
                 sammenligningsType,
                 sykefraværVirksomhet
             );
@@ -331,7 +321,7 @@ const getSammmenligningVruderingProsenterOgKvartaler = (
     return {
         sammenligningVurdering: sammenligningVurdering,
         sykefraværVirksomhet: sykefraværVirksomhet,
-        sykefraværBransje: sykefraværBransje,
+        sykefraværNæringEllerBransje: sykefraværNæringEllerBransje,
         kvartaler: kvartaler,
     };
 };

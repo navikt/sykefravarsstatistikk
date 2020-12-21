@@ -95,7 +95,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 className="ekspanderbar-sammenligning__sammenligning-totalt"
                 sammenligningResultat={sammenligningResultatTotalt.sammenligningVurdering}
                 sykefraværVirksomhet={sammenligningResultatTotalt.sykefraværVirksomhet}
-                sykefraværBransje={sammenligningResultatTotalt.sykefraværBransje}
+                sykefraværBransje={sammenligningResultatTotalt.sykefraværNæringEllerBransje}
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.TOTALT}
@@ -105,7 +105,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             <EkspanderbartSammenligningspanel
                 sammenligningResultat={sammenligningResultatGradert.sammenligningVurdering}
                 sykefraværVirksomhet={sammenligningResultatGradert.sykefraværVirksomhet}
-                sykefraværBransje={sammenligningResultatGradert.sykefraværBransje}
+                sykefraværBransje={sammenligningResultatGradert.sykefraværNæringEllerBransje}
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.GRADERT}
@@ -118,7 +118,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             <EkspanderbartSammenligningspanel
                 sammenligningResultat={sammenligningResultatKorttid.sammenligningVurdering}
                 sykefraværVirksomhet={sammenligningResultatKorttid.sykefraværVirksomhet}
-                sykefraværBransje={sammenligningResultatKorttid.sykefraværBransje}
+                sykefraværBransje={sammenligningResultatKorttid.sykefraværNæringEllerBransje}
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.KORTTID}
@@ -128,7 +128,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             <EkspanderbartSammenligningspanel
                 sammenligningResultat={sammenligningResultatLangtid.sammenligningVurdering}
                 sykefraværVirksomhet={sammenligningResultatLangtid.sykefraværVirksomhet}
-                sykefraværBransje={sammenligningResultatLangtid.sykefraværBransje}
+                sykefraværBransje={sammenligningResultatLangtid.sykefraværNæringEllerBransje}
                 antallKvartalerVirksomhet={antallKvartalerVirksomhet}
                 antallKvartalerBransje={antallKvartalerBransje}
                 sammenligningsType={SammenligningsType.LANGTID}
