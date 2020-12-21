@@ -206,4 +206,47 @@ describe('Tester for getSammenligningResultat', () => {
             SykefraværVurdering.UNDER
         );
     });
+
+    it('getSammenligningResultat skal returnere riktig sykefraværsprosent for virksomhet', () => {
+        const siste4Kvartaler = [
+            { årstall: 2019, kvartal: 2, },
+            { årstall: 2019, kvartal: 3, },
+            { årstall: 2019, kvartal: 4, },
+            { årstall: 2020, kvartal: 1, },
+        ];
+        const resultater: Sammenligningsresultater = getSammenligningResultat({
+            status: RestStatus.Suksess,
+            data: [{
+                type: Statistikkategori.VIRKSOMHET,
+                label: 'En virksomhet',
+                summertKorttidsOgLangtidsfravær: {
+                    summertKorttidsfravær: {
+                        prosent: 2.3,
+                        tapteDagsverk: 140.6,
+                        muligeDagsverk: 3990.4,
+                        erMaskert: false,
+                        kvartaler: siste4Kvartaler,
+                    },
+                    summertLangtidsfravær: {
+                        prosent: 6.1,
+                        tapteDagsverk: 116.7,
+                        muligeDagsverk: 3990.4,
+                        erMaskert: false,
+                        kvartaler: siste4Kvartaler,
+                    },
+                },
+                summertGradertFravær: {
+                    prosent: 1,
+                    tapteDagsverk: 39.9,
+                    muligeDagsverk: 3990.4,
+                    erMaskert: false,
+                    kvartaler: siste4Kvartaler,
+                },
+            },],
+        });
+        expect(resultater.sammenligningResultatTotalt.sykefraværVirksomhet! - 8.4).toBeLessThan(0.01);
+        expect(resultater.sammenligningResultatKorttid.sykefraværVirksomhet).toEqual(2.3);
+        expect(resultater.sammenligningResultatLangtid.sykefraværVirksomhet).toEqual(6.1);
+        expect(resultater.sammenligningResultatGradert.sykefraværVirksomhet! - 15.51).toBeLessThan(0.01);
+    });
 });
