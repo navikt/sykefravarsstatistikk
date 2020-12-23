@@ -76,7 +76,7 @@ const getVurderingstekstGradert = (
                 </>
             );
         case SykefraværVurdering.FEIL:
-            return <></>;
+            return <>Markert grå: Vi kan ikke vise dine tall.</>;
     }
 };
 
@@ -271,5 +271,44 @@ export const getForklaringAvVurdering = (
             );
         case SykefraværVurdering.FEIL:
             return <></>;
+    }
+};
+
+export const getTilpassetTittelOgTekstOmGradertSykemelding = (
+    resultat: SykefraværVurdering
+): { tittel: String; tekst: String } => {
+    console.log('Resultat: ', resultat);
+    switch (resultat) {
+        case SykefraværVurdering.OVER:
+            return {
+                tittel: 'Du bruker mer gradert sykmelding enn andre i din næring',
+                tekst:
+                    'Det er positivt å bruke gradert sykmelding. Vurder bruken av gradert sykmelding sammen med det langtidsfraværet. Er fraværet høyt eller lavt totalt sett? ',
+            };
+        case SykefraværVurdering.UNDER:
+            return {
+                tittel: 'Du bruker mindre gradert sykmelding enn andre i din næring',
+                tekst:
+                    'Vurder bruken av gradert sykmelding sammen med langtidsfraværet. Er fraværet høyt eller lavt? Økt bruk av gradert sykmelding er et av flere virkemidler for å forebygge og redusere langtidsfravær. ',
+            };
+        case SykefraværVurdering.MIDDELS:
+            return {
+                tittel:
+                    'Du bruker omtrent like mye gradert sykmelding som andre i din bransje/næring',
+                tekst:
+                    'Vurder bruken av gradert sykmelding sammen med langtidsfraværet. Er fraværet høyt eller lavt? Økt bruk av gradert sykmelding er et av flere virkemidler for å forebygge og redusere langtidsfravær.',
+            };
+        case SykefraværVurdering.UFULLSTENDIG_DATA:
+        case SykefraværVurdering.MASKERT:
+        case SykefraværVurdering.INGEN_DATA:
+        case SykefraværVurdering.FEIL:
+            return {
+                tittel: 'Vurder bruken av gradert sykemelding sammen med langtidsfraværet',
+                tekst:
+                    'Vi kan ikke sammenligne deg med andre, bruk gjerne egen erfaring. Er fraværet høyt eller lavt? Økt bruk av gradert sykmelding er et av flere virkemidler for å forebygge og redusere langtidsfravær.',
+            };
+
+        default:
+            return { tittel: '', tekst: '' };
     }
 };

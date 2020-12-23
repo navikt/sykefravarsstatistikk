@@ -20,7 +20,7 @@ import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
 import Lenke from 'nav-frontend-lenker';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
-import { InfoTekst } from '../../../felleskomponenter/InfoTekst/InfoTekst';
+import { OmGradertSykemelding } from '../../../felleskomponenter/OmGradertSykemelding/OmGradertSykemelding';
 
 interface Props {
     sammenligningResultat: SykefraværVurdering;
@@ -36,7 +36,7 @@ interface Props {
 }
 
 export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
-    sammenligningResultat: sykefraværResultat,
+    sammenligningResultat: sykefraværVurdering,
     sykefraværVirksomhet,
     sykefraværBransje,
     antallKvartalerVirksomhet,
@@ -52,7 +52,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
 
     const visningAvProsentForBransje: number | null | undefined =
-        sykefraværResultat === SykefraværVurdering.FEIL ? null : sykefraværBransje;
+        sykefraværVurdering === SykefraværVurdering.FEIL ? null : sykefraværBransje;
 
     const getPanelEventtekst = (sammenligningsType: SammenligningsType) => {
         switch (sammenligningsType) {
@@ -114,19 +114,19 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 />
             </div>
             {sammenligningsType === SammenligningsType.GRADERT ? (
-                <InfoTekst />
+                <OmGradertSykemelding vurdering={sykefraværVurdering}/>
             ) : (
                 <div className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering">
-                    {getForklaringAvVurdering(sykefraværResultat, sykefraværBransje)}
+                    {getForklaringAvVurdering(sykefraværVurdering, sykefraværBransje)}
                 </div>
             )}
         </>
     );
 
-    const tipsliste: Tips[] = getTips(sammenligningsType, sykefraværResultat, bransje);
+    const tipsliste: Tips[] = getTips(sammenligningsType, sykefraværVurdering, bransje);
     const harTips = tipsliste.length > 0;
 
-    const vurderingstekst = getVurderingstekst(sykefraværResultat, sammenligningsType, harBransje);
+    const vurderingstekst = getVurderingstekst(sykefraværVurdering, sammenligningsType, harBransje);
 
     const getPaneltittel = (): ReactElement | string => {
         switch (sammenligningsType) {
@@ -168,11 +168,11 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     <div className="ekspanderbart-sammenligningspanel__tittel-wrapper">
                         {SammenligningsType.GRADERT === sammenligningsType ? (
                             <Kakediagram
-                                resultat={sykefraværResultat}
+                                resultat={sykefraværVurdering}
                                 className={'ekspanderbart-sammenligningspanel__kakediagram'}
                             />
                         ) : (
-                            <Speedometer resultat={sykefraværResultat} inline />
+                            <Speedometer resultat={sykefraværVurdering} inline />
                         )}
                         <div className="ekspanderbart-sammenligningspanel__tittel-tekst">
                             <Systemtittel tag="h2">{getPaneltittel()}</Systemtittel>
