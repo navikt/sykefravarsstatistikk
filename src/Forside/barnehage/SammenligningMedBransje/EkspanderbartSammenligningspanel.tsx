@@ -23,7 +23,7 @@ import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { OmGradertSykemelding } from '../../../felleskomponenter/OmGradertSykemelding/OmGradertSykemelding';
 
 interface Props {
-    sammenligningResultat: SykefraværVurdering;
+    sykefraværVurdering: SykefraværVurdering;
     sykefraværVirksomhet: number | null | undefined;
     sykefraværBransje: number | null | undefined;
     antallKvartalerVirksomhet: ReactElement | null;
@@ -36,7 +36,7 @@ interface Props {
 }
 
 export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
-    sammenligningResultat: sykefraværVurdering,
+    sykefraværVurdering,
     sykefraværVirksomhet,
     sykefraværBransje,
     antallKvartalerVirksomhet,
@@ -114,7 +114,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 />
             </div>
             {sammenligningsType === SammenligningsType.GRADERT ? (
-                <OmGradertSykemelding vurdering={sykefraværVurdering}/>
+                <OmGradertSykemelding vurdering={sykefraværVurdering} />
             ) : (
                 <div className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering">
                     {getForklaringAvVurdering(sykefraværVurdering, sykefraværBransje)}

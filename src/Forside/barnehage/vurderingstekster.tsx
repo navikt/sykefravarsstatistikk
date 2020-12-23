@@ -277,7 +277,6 @@ export const getForklaringAvVurdering = (
 export const getTilpassetTittelOgTekstOmGradertSykemelding = (
     resultat: SykefraværVurdering
 ): { tittel: String; tekst: String } => {
-    console.log('Resultat: ', resultat);
     switch (resultat) {
         case SykefraværVurdering.OVER:
             return {
