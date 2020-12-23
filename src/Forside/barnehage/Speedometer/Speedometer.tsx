@@ -22,16 +22,27 @@ interface Props {
     inline?: boolean;
 }
 
-export const Speedometer: FunctionComponent<Props> = ({ resultat, stor, className, inline }) => {
+export const Speedometer: FunctionComponent<Props> = ({
+    resultat,
+    stor,
+    className,
+    inline,
+}) => {
     const størrelsesfaktor = stor ? 1.2 : 0.7;
 
     return inline ? (
         <span className={classNames(className, 'speedometer')}>
-            <SpeedometerSvg resultat={resultat} størrelsesfaktor={størrelsesfaktor} />
+            <SpeedometerSvg
+                resultat={resultat}
+                størrelsesfaktor={størrelsesfaktor}
+            />
         </span>
     ) : (
         <div className={classNames(className, 'speedometer')}>
-            <SpeedometerSvg resultat={resultat} størrelsesfaktor={størrelsesfaktor} />
+            <SpeedometerSvg
+                resultat={resultat}
+                størrelsesfaktor={størrelsesfaktor}
+            />
         </div>
     );
 };
@@ -39,7 +50,7 @@ export const Speedometer: FunctionComponent<Props> = ({ resultat, stor, classNam
 const SpeedometerSvg: FunctionComponent<{
     resultat: SykefraværVurdering;
     størrelsesfaktor: number;
-}> = ({ resultat, størrelsesfaktor }) => {
+}> = ({ resultat, størrelsesfaktor}) => {
     switch (resultat) {
         case SykefraværVurdering.UNDER:
             return <SpeedometerGrønn størrelsesfaktor={størrelsesfaktor} />;

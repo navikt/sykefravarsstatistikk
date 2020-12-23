@@ -8,6 +8,7 @@ export enum SammenligningsType {
     TOTALT = 'TOTALT',
     LANGTID = 'LANGTID',
     KORTTID = 'KORTTID',
+    GRADERT = 'GRADERT',
 }
 
 export const getVurderingstekst = (
@@ -22,10 +23,64 @@ export const getVurderingstekst = (
             return getVurderingstekstLangtid(sykefraværResultat, harBransje);
         case SammenligningsType.KORTTID:
             return getVurderingstekstKorttid(sykefraværResultat, harBransje);
+        case SammenligningsType.GRADERT: // TODO nesten ferdig, sjekk om ufullstendig data tekst er ok ?
+            return getVurderingstekstGradert(sykefraværResultat, harBransje);
+    }
+};
+const getVurderingstekstGradert = (
+    sykefraværResultat: SykefraværVurdering,
+    harBransje: boolean
+): ReactElement | string => {
+    const bransjeEllerNæringTekst = harBransje ? 'bransjen' : 'næringen';
+    switch (sykefraværResultat) {
+        case SykefraværVurdering.OVER:
+            return (
+                <>
+                    Markert grønn: Du bruker <strong>mer gradert sykemelding</strong> enn andre i
+                    din {bransjeEllerNæringTekst}
+                </>
+            );
+        case SykefraværVurdering.MIDDELS:
+            return (
+                <>
+                    Markert gul: Du bruker <strong>omtrent like mye gradert sykemelding</strong> som
+                    andre i din {bransjeEllerNæringTekst}
+                </>
+            );
+        case SykefraværVurdering.UNDER:
+            return (
+                <>
+                    Markert rød: Du bruker <strong>mindre gradert sykemelding</strong> enn andre i
+                    din
+                    {bransjeEllerNæringTekst}
+                </>
+            );
+        case SykefraværVurdering.UFULLSTENDIG_DATA:
+            return (
+                <>
+                    Markert grå: <strong>Vi mangler dine tall for deler av perioden</strong> med
+                    sammenligning.
+                </>
+            );
+        case SykefraværVurdering.MASKERT:
+            return (
+                <>
+                    Markert grå: Du har <strong>for lave tall</strong> til at vi kan vise
+                    statistikken din.
+                </>
+            );
+        case SykefraværVurdering.INGEN_DATA:
+            return (
+                <>
+                    Markert grå: Vi <strong>finner ikke tall</strong> for virksomheten din.
+                </>
+            );
+        case SykefraværVurdering.FEIL:
+            return <>Markert grå: Vi kan ikke vise dine tall.</>;
     }
 };
 
-export const getVurderingstekstTotalt = (
+const getVurderingstekstTotalt = (
     sykefraværResultat: SykefraværVurdering,
     harBransje: boolean
 ): ReactElement | string => {
@@ -77,7 +132,7 @@ export const getVurderingstekstTotalt = (
     }
 };
 
-export const getVurderingstekstKorttid = (resultat: SykefraværVurdering, harBransje: boolean) => {
+const getVurderingstekstKorttid = (resultat: SykefraværVurdering, harBransje: boolean) => {
     const bransjeEllerNæringTekst = harBransje ? 'bransjen' : 'næringen';
     switch (resultat) {
         case SykefraværVurdering.UNDER:
@@ -216,5 +271,43 @@ export const getForklaringAvVurdering = (
             );
         case SykefraværVurdering.FEIL:
             return <></>;
+    }
+};
+
+export const getTilpassetTittelOgTekstOmGradertSykemelding = (
+    resultat: SykefraværVurdering
+): { tittel: String; tekst: String } => {
+    switch (resultat) {
+        case SykefraværVurdering.OVER:
+            return {
+                tittel: 'Du bruker mer gradert sykmelding enn andre i din næring',
+                tekst:
+                    'Det er positivt å bruke gradert sykmelding. Vurder bruken av gradert sykmelding sammen med det langtidsfraværet. Er fraværet høyt eller lavt totalt sett? ',
+            };
+        case SykefraværVurdering.UNDER:
+            return {
+                tittel: 'Du bruker mindre gradert sykmelding enn andre i din næring',
+                tekst:
+                    'Vurder bruken av gradert sykmelding sammen med langtidsfraværet. Er fraværet høyt eller lavt? Økt bruk av gradert sykmelding er et av flere virkemidler for å forebygge og redusere langtidsfravær. ',
+            };
+        case SykefraværVurdering.MIDDELS:
+            return {
+                tittel:
+                    'Du bruker omtrent like mye gradert sykmelding som andre i din bransje/næring',
+                tekst:
+                    'Vurder bruken av gradert sykmelding sammen med langtidsfraværet. Er fraværet høyt eller lavt? Økt bruk av gradert sykmelding er et av flere virkemidler for å forebygge og redusere langtidsfravær.',
+            };
+        case SykefraværVurdering.UFULLSTENDIG_DATA:
+        case SykefraværVurdering.MASKERT:
+        case SykefraværVurdering.INGEN_DATA:
+        case SykefraværVurdering.FEIL:
+            return {
+                tittel: 'Vurder bruken av gradert sykemelding sammen med langtidsfraværet',
+                tekst:
+                    'Vi kan ikke sammenligne deg med andre, bruk gjerne egen erfaring. Er fraværet høyt eller lavt? Økt bruk av gradert sykmelding er et av flere virkemidler for å forebygge og redusere langtidsfravær.',
+            };
+
+        default:
+            return { tittel: '', tekst: '' };
     }
 };

@@ -1,4 +1,5 @@
 import {
+    RestSummertSykefraværshistorikk,
     Statistikkategori,
     SummertKorttidsOgLangtidsfravær,
     SummertSykefravær,
@@ -12,17 +13,20 @@ import { SammenligningsType } from './vurderingstekster';
 export const getVurderingForSammenligningAvSykefravær = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,
     sykefravær: SummertSykefravær | undefined,
-    bransjensProsent: number | null | undefined
+    bransjensProsent: number | null | undefined,
+    sammenligningsType?: SammenligningsType,
+    gradertProsent?: number
 ): SykefraværVurdering => {
-    if (bransjensProsent === null || bransjensProsent === undefined) {
-        return SykefraværVurdering.INGEN_DATA;
-    }
-
     switch (restStatus) {
         case RestStatus.Suksess:
-            if (sykefravær === undefined) {
+            if (
+                bransjensProsent === null ||
+                bransjensProsent === undefined ||
+                sykefravær === undefined
+            ) {
                 return SykefraværVurdering.INGEN_DATA;
             }
+
             if (sykefravær.erMaskert) {
                 return SykefraværVurdering.MASKERT;
             }
@@ -35,10 +39,17 @@ export const getVurderingForSammenligningAvSykefravær = (
                 return SykefraværVurdering.UFULLSTENDIG_DATA;
             }
 
-            if (sykefravær.prosent === null) {
+            if (
+                sykefravær.prosent === null ||
+                sykefravær.tapteDagsverk === undefined ||
+                sykefravær.tapteDagsverk === null
+            ) {
                 return SykefraværVurdering.INGEN_DATA;
             }
-            return getVurdering(sykefravær.prosent, bransjensProsent);
+
+            if (sammenligningsType !== SammenligningsType.GRADERT)
+                return getVurdering(sykefravær.prosent, bransjensProsent);
+            else return getVurdering(gradertProsent, bransjensProsent);
 
         case RestStatus.Feil:
             return SykefraværVurdering.FEIL;
@@ -58,6 +69,19 @@ export const getSummertKorttidsOgLangtidsfravær = (
     )?.summertKorttidsOgLangtidsfravær;
 };
 
+export const getSummertGradertFravær = (
+    summertSykefraværshistorikkListe: SummertSykefraværshistorikk[] | undefined,
+    ...statistikkategorier: Statistikkategori[]
+): SummertSykefravær | undefined => {
+    if (summertSykefraværshistorikkListe === undefined) {
+        return undefined;
+    }
+
+    return summertSykefraværshistorikkListe?.find((element) =>
+        statistikkategorier.includes(element.type)
+    )?.summertGradertFravær;
+};
+
 export const getTotaltSykefraværSiste4Kvartaler = (
     summertKorttidsOgLangtidsfravær: SummertKorttidsOgLangtidsfravær | undefined
 ): SummertSykefravær | undefined => {
@@ -74,10 +98,10 @@ export const getTotaltSykefraværSiste4Kvartaler = (
 };
 
 export const getVurdering = (
-    virksomhetensProsent: number | null,
+    virksomhetensProsent: number | null | undefined,
     bransjensProsent: number
 ): SykefraværVurdering => {
-    if (virksomhetensProsent === null) {
+    if (virksomhetensProsent === null || virksomhetensProsent === undefined) {
         throw new Error('virksomhetens eller bransjens tall er null');
     }
 
@@ -105,24 +129,89 @@ const addEllerReturnerNull = (number1: number | null, number2: number | null) =>
     if (number1 === null || number2 === null) return null;
     return number1 + number2;
 };
+interface SammenligningResultatReturnObjekt {
+    sammenligningVurdering: SykefraværVurdering;
+    sykefraværVirksomhet: number | null | undefined;
+    sykefraværNæringEllerBransje: number | null | undefined;
+    kvartaler: ÅrstallOgKvartal[] | undefined;
+}
+const undefinedSammenligningResultatReturnObjekt: SammenligningResultatReturnObjekt = {
+    sammenligningVurdering: SykefraværVurdering.INGEN_DATA,
+    sykefraværVirksomhet: undefined,
+    sykefraværNæringEllerBransje: undefined,
+    kvartaler: undefined,
+};
+
+export interface Sammenligningsresultater {
+    sammenligningResultatTotalt: SammenligningResultatReturnObjekt;
+    sammenligningResultatKorttid: SammenligningResultatReturnObjekt;
+    sammenligningResultatLangtid: SammenligningResultatReturnObjekt;
+    sammenligningResultatGradert: SammenligningResultatReturnObjekt;
+}
+
+export const getSammenligningResultat = (
+    restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk
+): Sammenligningsresultater => {
+    if (
+        restSummertSykefraværshistorikk.status !== RestStatus.Suksess &&
+        restSummertSykefraværshistorikk.status !== RestStatus.Feil
+    )
+        return {
+            sammenligningResultatTotalt: undefinedSammenligningResultatReturnObjekt,
+            sammenligningResultatKorttid: undefinedSammenligningResultatReturnObjekt,
+            sammenligningResultatLangtid: undefinedSammenligningResultatReturnObjekt,
+            sammenligningResultatGradert: undefinedSammenligningResultatReturnObjekt,
+        };
+    const summertSykefraværshistorikk =
+        restSummertSykefraværshistorikk.status === RestStatus.Suksess
+            ? restSummertSykefraværshistorikk.data
+            : undefined;
+
+    const sammenligningResultatTotalt = getSammenligningResultatMedProsent(
+        restSummertSykefraværshistorikk.status,
+        summertSykefraværshistorikk,
+        SammenligningsType.TOTALT
+    );
+
+    const sammenligningResultatKorttid = getSammenligningResultatMedProsent(
+        restSummertSykefraværshistorikk.status,
+        summertSykefraværshistorikk,
+        SammenligningsType.KORTTID
+    );
+    const sammenligningResultatLangtid = getSammenligningResultatMedProsent(
+        restSummertSykefraværshistorikk.status,
+        summertSykefraværshistorikk,
+        SammenligningsType.LANGTID
+    );
+
+    const sammenligningResultatGradert = getSammenligningResultatMedProsent(
+        restSummertSykefraværshistorikk.status,
+        summertSykefraværshistorikk,
+        SammenligningsType.GRADERT
+    );
+    return {
+        sammenligningResultatTotalt,
+        sammenligningResultatKorttid,
+        sammenligningResultatLangtid,
+        sammenligningResultatGradert,
+    };
+};
 
 export const getSammenligningResultatMedProsent = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,
     summertSykefraværshistorikk: SummertSykefraværshistorikk[] | undefined,
     sammenligningsType: SammenligningsType
-): {
-    sammenligningstype: SammenligningsType;
-    sammenligningVurdering: SykefraværVurdering;
-    sykefraværVirksomhet: number | null | undefined;
-    sykefraværBransje: number | null | undefined;
-    kvartaler: ÅrstallOgKvartal[] | undefined;
-} => {
+):SammenligningResultatReturnObjekt => {
     const summertSykefraværVirksomhet =
         restStatus === RestStatus.Suksess
             ? getSummertKorttidsOgLangtidsfravær(
                   summertSykefraværshistorikk,
                   Statistikkategori.VIRKSOMHET
               )
+            : undefined;
+    const summertGradertSykefraværVirksomhet =
+        restStatus === RestStatus.Suksess
+            ? getSummertGradertFravær(summertSykefraværshistorikk, Statistikkategori.VIRKSOMHET)
             : undefined;
     const kvartaler = summertSykefraværVirksomhet?.summertKorttidsfravær.kvartaler
         .slice()
@@ -136,10 +225,44 @@ export const getSammenligningResultatMedProsent = (
                   Statistikkategori.NÆRING
               )
             : undefined;
+    const summertGradertSykefraværVirksomhetNæringEllerBransje =
+        restStatus === RestStatus.Suksess
+            ? getSummertGradertFravær(
+                  summertSykefraværshistorikk,
+                  Statistikkategori.BRANSJE,
+                  Statistikkategori.NÆRING
+              )
+            : undefined;
 
+    return getSammmenligningVruderingProsenterOgKvartaler(
+        sammenligningsType,
+        restStatus,
+        summertSykefraværVirksomhet,
+        summertSykefraværVirksomhetNæringEllerBransje,
+        summertGradertSykefraværVirksomhet,
+        summertGradertSykefraværVirksomhetNæringEllerBransje,
+        kvartaler
+    );
+
+    /*return {
+        sammenligningVurdering: sammenligningVurdering,
+        sykefraværVirksomhet: sykefraværVirksomhet,
+        sykefraværBransje: sykefraværBransje,
+        kvartaler: kvartaler,
+    };*/
+};
+const getSammmenligningVruderingProsenterOgKvartaler = (
+    sammenligningsType: SammenligningsType,
+    restStatus: RestStatus.Suksess | RestStatus.Feil,
+    summertSykefraværVirksomhet: SummertKorttidsOgLangtidsfravær | undefined,
+    summertSykefraværVirksomhetNæringEllerBransje: SummertKorttidsOgLangtidsfravær | undefined,
+    summertGradertSykefraværVirksomhet: SummertSykefravær | undefined,
+    summertGradertSykefraværVirksomhetNæringEllerBransje: SummertSykefravær | undefined,
+    kvartaler: ÅrstallOgKvartal[] | undefined
+): SammenligningResultatReturnObjekt => {
     let sammenligningVurdering: SykefraværVurdering;
     let sykefraværVirksomhet;
-    let sykefraværBransje;
+    let sykefraværNæringEllerBransje;
 
     switch (sammenligningsType) {
         case SammenligningsType.TOTALT:
@@ -151,7 +274,7 @@ export const getSammenligningResultatMedProsent = (
             );
             sykefraværVirksomhet = getTotaltSykefraværSiste4Kvartaler(summertSykefraværVirksomhet)
                 ?.prosent;
-            sykefraværBransje = getTotaltSykefraværSiste4Kvartaler(
+            sykefraværNæringEllerBransje = getTotaltSykefraværSiste4Kvartaler(
                 summertSykefraværVirksomhetNæringEllerBransje
             )?.prosent;
             break;
@@ -162,7 +285,7 @@ export const getSammenligningResultatMedProsent = (
                 summertSykefraværVirksomhetNæringEllerBransje?.summertKorttidsfravær.prosent
             );
             sykefraværVirksomhet = summertSykefraværVirksomhet?.summertKorttidsfravær.prosent;
-            sykefraværBransje =
+            sykefraværNæringEllerBransje =
                 summertSykefraværVirksomhetNæringEllerBransje?.summertKorttidsfravær.prosent;
             break;
         case SammenligningsType.LANGTID:
@@ -172,19 +295,43 @@ export const getSammenligningResultatMedProsent = (
                 summertSykefraværVirksomhetNæringEllerBransje?.summertLangtidsfravær.prosent
             );
             sykefraværVirksomhet = summertSykefraværVirksomhet?.summertLangtidsfravær.prosent;
-            sykefraværBransje =
+            sykefraværNæringEllerBransje =
                 summertSykefraværVirksomhetNæringEllerBransje?.summertLangtidsfravær.prosent;
-    }
+            break;
 
+        case SammenligningsType.GRADERT:
+            sykefraværVirksomhet = getGradertProsent(
+                summertGradertSykefraværVirksomhet?.tapteDagsverk,
+                getTotaltSykefraværSiste4Kvartaler(summertSykefraværVirksomhet)?.tapteDagsverk
+            );
+            sykefraværNæringEllerBransje = getGradertProsent(
+                summertGradertSykefraværVirksomhetNæringEllerBransje?.tapteDagsverk,
+                getTotaltSykefraværSiste4Kvartaler(summertSykefraværVirksomhetNæringEllerBransje)
+                    ?.tapteDagsverk
+            );
+            sammenligningVurdering = getVurderingForSammenligningAvSykefravær(
+                restStatus,
+                summertGradertSykefraværVirksomhet,
+                sykefraværNæringEllerBransje,
+                sammenligningsType,
+                sykefraværVirksomhet
+            );
+            break;
+    }
     return {
-        sammenligningstype: sammenligningsType,
         sammenligningVurdering: sammenligningVurdering,
         sykefraværVirksomhet: sykefraværVirksomhet,
-        sykefraværBransje: sykefraværBransje,
+        sykefraværNæringEllerBransje: sykefraværNæringEllerBransje,
         kvartaler: kvartaler,
     };
 };
-
+const getGradertProsent = (
+    gradertTapteDagsverk: number | null | undefined,
+    totaltTapteDagsverk: number | null | undefined
+): number | undefined => {
+    if (!totaltTapteDagsverk || !gradertTapteDagsverk) return undefined;
+    else return (gradertTapteDagsverk * 100) / totaltTapteDagsverk;
+};
 export const summertHistorikkHarBransje = (historikk: SummertSykefraværshistorikk[]): boolean => {
     return !!historikk.find((data) => data.type === Statistikkategori.BRANSJE);
 };

@@ -2,7 +2,11 @@ import React, { FunctionComponent, ReactElement, useState } from 'react';
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
-import { getForklaringAvVurdering, getVurderingstekst, SammenligningsType } from '../vurderingstekster';
+import {
+    getForklaringAvVurdering,
+    getVurderingstekst,
+    SammenligningsType,
+} from '../vurderingstekster';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import { SykefraværMetadata } from './SykefraværMetadata';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
@@ -13,9 +17,13 @@ import classNames from 'classnames';
 import { useSendEvent } from '../../../amplitude/amplitude';
 import { Bransjetype } from '../../../api/virksomhetMetadata';
 import { OppChevron } from 'nav-frontend-chevron';
+import { Kakediagram } from '../Kakediagram/Kakediagram';
+import Lenke from 'nav-frontend-lenker';
+import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
+import { OmGradertSykemelding } from '../../../felleskomponenter/OmGradertSykemelding/OmGradertSykemelding';
 
 interface Props {
-    sammenligningResultat: SykefraværVurdering;
+    sykefraværVurdering: SykefraværVurdering;
     sykefraværVirksomhet: number | null | undefined;
     sykefraværBransje: number | null | undefined;
     antallKvartalerVirksomhet: ReactElement | null;
@@ -28,7 +36,7 @@ interface Props {
 }
 
 export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
-    sammenligningResultat: sykefraværResultat,
+    sykefraværVurdering,
     sykefraværVirksomhet,
     sykefraværBransje,
     antallKvartalerVirksomhet,
@@ -44,7 +52,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
 
     const visningAvProsentForBransje: number | null | undefined =
-        sykefraværResultat === SykefraværVurdering.FEIL ? null : sykefraværBransje;
+        sykefraværVurdering === SykefraværVurdering.FEIL ? null : sykefraværBransje;
 
     const getPanelEventtekst = (sammenligningsType: SammenligningsType) => {
         switch (sammenligningsType) {
@@ -65,6 +73,28 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
 
     const innhold = (
         <>
+            {sammenligningsType === SammenligningsType.GRADERT && (
+                <div>
+                    <Ingress>Slik regner vi ut prosenten på gradert sykemelding:</Ingress>
+                    <Normaltekst className="ekspanderbart-sammenligningspanel__utregningsforklring-tekst">
+                        Vi teller antall fraværsdager med bruk av gradert sykmelding. Så beregner vi
+                        hvor stor andel disse utgjør av alle legemeldte fraværsdager i din
+                        virksomhet. Du kan finne antallet legemeldte fraværsdager for din virksomhet
+                        under tapte dagsverk i{' '}
+                        <Lenke href={'/kalkulator'}>kostnadskalkulatoren.</Lenke>
+                    </Normaltekst>
+                    <LesMerPanel
+                        åpneLabel={'Se eksempel'}
+                        className="ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel"
+                    >
+                        <Normaltekst className="ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel__innhold">
+                            La oss si du har 7,5% sykefravær, dette utgjør 100 tapte dagsverk i din
+                            virksomhet. Det ble benyttet gradert sykmelding i 20 dager, da får du
+                            20% gradert sykemelding.
+                        </Normaltekst>
+                    </LesMerPanel>
+                </div>
+            )}
             <div className="ekspanderbart-sammenligningspanel__metadata-og-detaljert-visning-sykefravær">
                 <SykefraværMetadata
                     className="ekspanderbart-sammenligningspanel__sykefravær-metadata"
@@ -83,16 +113,20 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     visingAntallKvartaller={antallKvartalerBransje}
                 />
             </div>
-            <div className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering">
-                {getForklaringAvVurdering(sykefraværResultat, sykefraværBransje)}
-            </div>
+            {sammenligningsType === SammenligningsType.GRADERT ? (
+                <OmGradertSykemelding vurdering={sykefraværVurdering} />
+            ) : (
+                <div className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering">
+                    {getForklaringAvVurdering(sykefraværVurdering, sykefraværBransje)}
+                </div>
+            )}
         </>
     );
 
-    const tipsliste: Tips[] = getTips(sammenligningsType, sykefraværResultat, bransje);
+    const tipsliste: Tips[] = getTips(sammenligningsType, sykefraværVurdering, bransje);
     const harTips = tipsliste.length > 0;
 
-    const vurderingstekst = getVurderingstekst(sykefraværResultat, sammenligningsType, harBransje);
+    const vurderingstekst = getVurderingstekst(sykefraværVurdering, sammenligningsType, harBransje);
 
     const getPaneltittel = (): ReactElement | string => {
         switch (sammenligningsType) {
@@ -102,6 +136,8 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 return 'Legemeldt korttidsfravær:';
             case SammenligningsType.LANGTID:
                 return 'Legemeldt langtidsfravær:';
+            case SammenligningsType.GRADERT:
+                return 'Gradert sykemelding:';
         }
     };
 
@@ -110,6 +146,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             case SammenligningsType.TOTALT:
             case SammenligningsType.KORTTID:
                 return 'Les mer om tallene og få tips til hva du kan gjøre';
+            case SammenligningsType.GRADERT:
             case SammenligningsType.LANGTID:
                 return 'Les mer om tallene';
         }
@@ -129,7 +166,14 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 id={panelknappID}
                 tittel={
                     <div className="ekspanderbart-sammenligningspanel__tittel-wrapper">
-                        <Speedometer resultat={sykefraværResultat} inline />
+                        {SammenligningsType.GRADERT === sammenligningsType ? (
+                            <Kakediagram
+                                resultat={sykefraværVurdering}
+                                className={'ekspanderbart-sammenligningspanel__kakediagram'}
+                            />
+                        ) : (
+                            <Speedometer resultat={sykefraværVurdering} inline />
+                        )}
                         <div className="ekspanderbart-sammenligningspanel__tittel-tekst">
                             <Systemtittel tag="h2">{getPaneltittel()}</Systemtittel>
                             {sammenligningsType !== SammenligningsType.TOTALT && (

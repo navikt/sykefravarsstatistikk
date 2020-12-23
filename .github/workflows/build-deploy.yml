@@ -39,7 +39,7 @@ jobs:
 
     deploy-to-dev:
         name: Deploy to dev-sbs
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/refaktorering-rydding-opp'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/gradering'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:

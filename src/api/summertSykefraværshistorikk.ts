@@ -14,6 +14,7 @@ export interface SummertSykefraværshistorikk {
     type: Statistikkategori;
     label: string;
     summertKorttidsOgLangtidsfravær: SummertKorttidsOgLangtidsfravær;
+    summertGradertFravær: SummertSykefravær;
 }
 
 export interface SummertSykefravær {
