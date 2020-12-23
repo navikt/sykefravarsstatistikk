@@ -79,7 +79,7 @@ describe('Tester for getSammenligningResultat', () => {
             SykefraværVurdering.UNDER
         );
         expect(resultater.sammenligningResultatGradert.sammenligningVurdering).toEqual(
-            SykefraværVurdering.UNDER
+            SykefraværVurdering.OVER
         );
     });
 
@@ -119,7 +119,7 @@ describe('Tester for getSammenligningResultat', () => {
             SykefraværVurdering.OVER
         );
         expect(resultater.sammenligningResultatGradert.sammenligningVurdering).toEqual(
-            SykefraværVurdering.OVER
+            SykefraværVurdering.UNDER
         );
     });
 
