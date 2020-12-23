@@ -32,7 +32,7 @@ export const getTips = (
             return getTipsLangtidsfravær(resultat, bransje);
         case SammenligningsType.TOTALT:
             return getTipsTotaltFravær(resultat, bransje);
-        case SammenligningsType.GRADERT://TODO get Tips for gradert fravær
+        case SammenligningsType.GRADERT:
             return [];
     }
 };

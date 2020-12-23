@@ -23,7 +23,7 @@ export const getVurderingstekst = (
             return getVurderingstekstLangtid(sykefraværResultat, harBransje);
         case SammenligningsType.KORTTID:
             return getVurderingstekstKorttid(sykefraværResultat, harBransje);
-        case SammenligningsType.GRADERT: // TODO nesten ferdig, sjekk om ufullstendig data tekst er ok ?
+        case SammenligningsType.GRADERT:
             return getVurderingstekstGradert(sykefraværResultat, harBransje);
     }
 };
