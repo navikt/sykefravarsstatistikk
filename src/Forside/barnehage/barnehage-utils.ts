@@ -47,9 +47,11 @@ export const getVurderingForSammenligningAvSykefravær = (
                 return SykefraværVurdering.INGEN_DATA;
             }
 
-            if (sammenligningsType !== SammenligningsType.GRADERT)
+            if (sammenligningsType !== SammenligningsType.GRADERT) {
                 return getVurdering(sykefravær.prosent, bransjensProsent);
-            else return getVurdering(gradertProsent, bransjensProsent);
+            } else {
+                return getVurdering(gradertProsent, bransjensProsent);
+            }
 
         case RestStatus.Feil:
             return SykefraværVurdering.FEIL;
@@ -102,7 +104,7 @@ export const getVurdering = (
     bransjensProsent: number
 ): SykefraværVurdering => {
     if (virksomhetensProsent === null || virksomhetensProsent === undefined) {
-        throw new Error('virksomhetens eller bransjens tall er null');
+        return SykefraværVurdering.INGEN_DATA;
     }
 
     if (virksomhetensProsent < getGrønnGrense(bransjensProsent)) {
@@ -201,7 +203,7 @@ export const getSammenligningResultatMedProsent = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,
     summertSykefraværshistorikk: SummertSykefraværshistorikk[] | undefined,
     sammenligningsType: SammenligningsType
-):SammenligningResultatReturnObjekt => {
+): SammenligningResultatReturnObjekt => {
     const summertSykefraværVirksomhet =
         restStatus === RestStatus.Suksess
             ? getSummertKorttidsOgLangtidsfravær(
