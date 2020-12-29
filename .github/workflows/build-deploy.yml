@@ -39,7 +39,7 @@ jobs:
 
     deploy-to-dev:
         name: Deploy to dev-sbs
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/fiks-unodvendig-throw-naar-gradert-prosent-er-null-for-en-virksomhet'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/flytte-til-namespace-arbeidsgiver'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
