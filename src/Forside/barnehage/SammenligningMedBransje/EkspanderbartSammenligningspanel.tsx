@@ -65,17 +65,13 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
         }
     };
     let overskriftForTallForNæringEllerBransje;
-    if (bransje === Bransjetype.BARNEHAGER) {
-        overskriftForTallForNæringEllerBransje = 'Barnehager i Norge:';
-    } else {
         overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
-    }
 
     const innhold = (
         <>
             {sammenligningsType === SammenligningsType.GRADERT && (
                 <div>
-                    <Ingress>Slik regner vi ut prosenten på gradert sykemelding:</Ingress>
+                    <Ingress>Slik regner vi ut prosenten på gradert sykmelding:</Ingress>
                     <Normaltekst className="ekspanderbart-sammenligningspanel__utregningsforklring-tekst">
                         Vi teller antall fraværsdager med bruk av gradert sykmelding. Så beregner vi
                         hvor stor andel disse utgjør av alle legemeldte fraværsdager i din
@@ -90,7 +86,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         <Normaltekst className="ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel__innhold">
                             La oss si du har 7,5% sykefravær, dette utgjør 100 tapte dagsverk i din
                             virksomhet. Det ble benyttet gradert sykmelding i 20 dager, da får du
-                            20% gradert sykemelding.
+                            20% gradert sykmelding.
                         </Normaltekst>
                     </LesMerPanel>
                 </div>
@@ -137,7 +133,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             case SammenligningsType.LANGTID:
                 return 'Legemeldt langtidsfravær:';
             case SammenligningsType.GRADERT:
-                return 'Gradert sykemelding:';
+                return 'Gradert sykmelding:';
         }
     };
 

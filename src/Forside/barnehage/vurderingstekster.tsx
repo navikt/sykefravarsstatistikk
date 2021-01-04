@@ -31,28 +31,27 @@ const getVurderingstekstGradert = (
     sykefraværResultat: SykefraværVurdering,
     harBransje: boolean
 ): ReactElement | string => {
-    const bransjeEllerNæringTekst = harBransje ? 'bransjen' : 'næringen';
+    const bransjeEllerNæringTekst = harBransje ? 'bransje' : 'næring';
     switch (sykefraværResultat) {
         case SykefraværVurdering.OVER:
             return (
                 <>
-                    Markert grønn: Du bruker <strong>mer gradert sykemelding</strong> enn andre i
+                    Markert grønn: Du bruker <strong>mer gradert sykmelding</strong> enn andre i
                     din {bransjeEllerNæringTekst}
                 </>
             );
         case SykefraværVurdering.MIDDELS:
             return (
                 <>
-                    Markert gul: Du bruker <strong>omtrent like mye gradert sykemelding</strong> som
+                    Markert gul: Du bruker <strong>omtrent like mye gradert sykmelding</strong> som
                     andre i din {bransjeEllerNæringTekst}
                 </>
             );
         case SykefraværVurdering.UNDER:
             return (
                 <>
-                    Markert rød: Du bruker <strong>mindre gradert sykemelding</strong> enn andre i
-                    din
-                    {bransjeEllerNæringTekst}
+                    Markert rød: Du bruker <strong>mindre gradert sykmelding</strong> enn andre i
+                    din {bransjeEllerNæringTekst}
                 </>
             );
         case SykefraværVurdering.UFULLSTENDIG_DATA:
@@ -282,7 +281,7 @@ export const getTilpassetTittelOgTekstOmGradertSykemelding = (
             return {
                 tittel: 'Du bruker mer gradert sykmelding enn andre i din næring',
                 tekst:
-                    'Det er positivt å bruke gradert sykmelding. Vurder bruken av gradert sykmelding sammen med det langtidsfraværet. Er fraværet høyt eller lavt totalt sett? ',
+                    'Det er positivt å bruke gradert sykmelding. Vurder bruken av gradert sykmelding sammen med langtidsfraværet. Er fraværet høyt eller lavt totalt sett? ',
             };
         case SykefraværVurdering.UNDER:
             return {
@@ -302,7 +301,7 @@ export const getTilpassetTittelOgTekstOmGradertSykemelding = (
         case SykefraværVurdering.INGEN_DATA:
         case SykefraværVurdering.FEIL:
             return {
-                tittel: 'Vurder bruken av gradert sykemelding sammen med langtidsfraværet',
+                tittel: 'Vurder bruken av gradert sykmelding sammen med langtidsfraværet',
                 tekst:
                     'Vi kan ikke sammenligne deg med andre, bruk gjerne egen erfaring. Er fraværet høyt eller lavt? Økt bruk av gradert sykmelding er et av flere virkemidler for å forebygge og redusere langtidsfravær.',
             };

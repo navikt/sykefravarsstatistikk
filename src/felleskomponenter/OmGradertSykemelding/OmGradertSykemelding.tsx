@@ -46,7 +46,7 @@ export const OmGradertSykemelding = (props: Props) => {
                     'https://www.nav.no/no/person/arbeid/sykmeldt-arbeidsavklaringspenger-og-yrkesskade/sykmelding-ulike-former/gradertsykemelding'
                 }
             >
-                Les mer om gradert sykemelding her
+                Les mer om gradert sykmelding her
             </EksternLenke>
         </div>
     );
