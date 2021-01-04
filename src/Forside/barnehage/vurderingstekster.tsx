@@ -273,7 +273,7 @@ export const getForklaringAvVurdering = (
     }
 };
 
-export const getTilpassetTittelOgTekstOmGradertSykemelding = (
+export const getTilpassetTittelOgTekstOmGradertSykmelding = (
     resultat: SykefraværVurdering
 ): { tittel: String; tekst: String } => {
     switch (resultat) {

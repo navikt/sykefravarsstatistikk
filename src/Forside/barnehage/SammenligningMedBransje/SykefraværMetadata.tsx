@@ -31,7 +31,7 @@ export const SykefraværMetadata: FunctionComponent<Props> = ({
                     </>
                 );
             case SammenligningsType.GRADERT:
-                return <>Gradert sykemelding</>;
+                return <>Gradert sykmelding</>;
         }
     };
 

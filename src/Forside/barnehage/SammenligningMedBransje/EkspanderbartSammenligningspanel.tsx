@@ -20,7 +20,7 @@ import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
 import Lenke from 'nav-frontend-lenker';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
-import { OmGradertSykemelding } from '../../../felleskomponenter/OmGradertSykemelding/OmGradertSykemelding';
+import { OmGradertSykmelding } from '../../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -64,8 +64,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 return 'langtidsfravær';
         }
     };
-    let overskriftForTallForNæringEllerBransje;
-        overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
+    const overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
 
     const innhold = (
         <>
@@ -110,7 +109,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 />
             </div>
             {sammenligningsType === SammenligningsType.GRADERT ? (
-                <OmGradertSykemelding vurdering={sykefraværVurdering} />
+                <OmGradertSykmelding vurdering={sykefraværVurdering} />
             ) : (
                 <div className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering">
                     {getForklaringAvVurdering(sykefraværVurdering, sykefraværBransje)}
