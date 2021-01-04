@@ -21,6 +21,7 @@ import { Kakediagram } from '../Kakediagram/Kakediagram';
 import Lenke from 'nav-frontend-lenker';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { OmGradertSykmelding } from '../../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
+import { BASE_PATH } from '../../../konstanter';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -76,7 +77,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         hvor stor andel disse utgjør av alle legemeldte fraværsdager i din
                         virksomhet. Du kan finne antallet legemeldte fraværsdager for din virksomhet
                         under tapte dagsverk i{' '}
-                        <Lenke href={'/kalkulator'}>kostnadskalkulatoren.</Lenke>
+                        <Lenke href={`${BASE_PATH}/kalkulator`}>kostnadskalkulatoren.</Lenke>
                     </Normaltekst>
                     <LesMerPanel
                         åpneLabel={'Se eksempel'}
