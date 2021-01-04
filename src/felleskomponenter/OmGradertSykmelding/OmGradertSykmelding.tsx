@@ -1,9 +1,9 @@
 import React from 'react';
-import './OmGradertSykemelding.less';
+import './OmGradertSykmelding.less';
 import { Normaltekst } from 'nav-frontend-typografi';
 import EksternLenke from '../EksternLenke/EksternLenke';
 import { SykefraværVurdering } from '../../Forside/barnehage/Speedometer/Speedometer';
-import { getTilpassetTittelOgTekstOmGradertSykemelding } from '../../Forside/barnehage/vurderingstekster';
+import { getTilpassetTittelOgTekstOmGradertSykmelding } from '../../Forside/barnehage/vurderingstekster';
 
 interface Props {
     vurdering: SykefraværVurdering;
@@ -14,13 +14,13 @@ interface AvsnittProps {
     tekst: String;
 }
 
-export const OmGradertSykemelding = (props: Props) => {
-    const tilpassetTittelOgTekstOmGradertSykemelding = getTilpassetTittelOgTekstOmGradertSykemelding(
+export const OmGradertSykmelding = (props: Props) => {
+    const tilpassetTittelOgTekstOmGradertSykmelding = getTilpassetTittelOgTekstOmGradertSykmelding(
         props.vurdering
     );
 
     const Avsnitt = (props: AvsnittProps) => (
-        <div className="om-gradert-sykemelding__avsnitt">
+        <div className="om-gradert-sykmelding__avsnitt">
             <Normaltekst>
                 <strong>{props.tittel}</strong>
             </Normaltekst>
@@ -28,10 +28,10 @@ export const OmGradertSykemelding = (props: Props) => {
         </div>
     );
     return (
-        <div className="om-gradert-sykemelding">
+        <div className="om-gradert-sykmelding">
             <Avsnitt
-                tittel={tilpassetTittelOgTekstOmGradertSykemelding.tittel}
-                tekst={tilpassetTittelOgTekstOmGradertSykemelding.tekst}
+                tittel={tilpassetTittelOgTekstOmGradertSykmelding.tittel}
+                tekst={tilpassetTittelOgTekstOmGradertSykmelding.tekst}
             />
             <Avsnitt
                 tittel={'Du kan påvirke bruken av gradert sykmelding '}
@@ -46,7 +46,7 @@ export const OmGradertSykemelding = (props: Props) => {
                     'https://www.nav.no/no/person/arbeid/sykmeldt-arbeidsavklaringspenger-og-yrkesskade/sykmelding-ulike-former/gradertsykemelding'
                 }
             >
-                Les mer om gradert sykemelding her
+                Les mer om gradert sykmelding her
             </EksternLenke>
         </div>
     );

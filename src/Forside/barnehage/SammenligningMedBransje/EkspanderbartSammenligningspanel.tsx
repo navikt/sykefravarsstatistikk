@@ -20,7 +20,8 @@ import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
 import Lenke from 'nav-frontend-lenker';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
-import { OmGradertSykemelding } from '../../../felleskomponenter/OmGradertSykemelding/OmGradertSykemelding';
+import { OmGradertSykmelding } from '../../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
+import { BASE_PATH } from '../../../konstanter';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -64,24 +65,19 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 return 'langtidsfravær';
         }
     };
-    let overskriftForTallForNæringEllerBransje;
-    if (bransje === Bransjetype.BARNEHAGER) {
-        overskriftForTallForNæringEllerBransje = 'Barnehager i Norge:';
-    } else {
-        overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
-    }
+    const overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
 
     const innhold = (
         <>
             {sammenligningsType === SammenligningsType.GRADERT && (
                 <div>
-                    <Ingress>Slik regner vi ut prosenten på gradert sykemelding:</Ingress>
+                    <Ingress>Slik regner vi ut prosenten på gradert sykmelding:</Ingress>
                     <Normaltekst className="ekspanderbart-sammenligningspanel__utregningsforklring-tekst">
                         Vi teller antall fraværsdager med bruk av gradert sykmelding. Så beregner vi
                         hvor stor andel disse utgjør av alle legemeldte fraværsdager i din
                         virksomhet. Du kan finne antallet legemeldte fraværsdager for din virksomhet
                         under tapte dagsverk i{' '}
-                        <Lenke href={'/kalkulator'}>kostnadskalkulatoren.</Lenke>
+                        <Lenke href={`${BASE_PATH}/kalkulator`}>kostnadskalkulatoren.</Lenke>
                     </Normaltekst>
                     <LesMerPanel
                         åpneLabel={'Se eksempel'}
@@ -90,7 +86,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         <Normaltekst className="ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel__innhold">
                             La oss si du har 7,5% sykefravær, dette utgjør 100 tapte dagsverk i din
                             virksomhet. Det ble benyttet gradert sykmelding i 20 dager, da får du
-                            20% gradert sykemelding.
+                            20% gradert sykmelding.
                         </Normaltekst>
                     </LesMerPanel>
                 </div>
@@ -114,7 +110,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 />
             </div>
             {sammenligningsType === SammenligningsType.GRADERT ? (
-                <OmGradertSykemelding vurdering={sykefraværVurdering} />
+                <OmGradertSykmelding vurdering={sykefraværVurdering} />
             ) : (
                 <div className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering">
                     {getForklaringAvVurdering(sykefraværVurdering, sykefraværBransje)}
@@ -137,7 +133,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             case SammenligningsType.LANGTID:
                 return 'Legemeldt langtidsfravær:';
             case SammenligningsType.GRADERT:
-                return 'Gradert sykemelding:';
+                return 'Gradert sykmelding:';
         }
     };
 
