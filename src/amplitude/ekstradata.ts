@@ -111,8 +111,7 @@ export const getEkstraDataFraSummertSykefraværshistorikk = (
     restVirksomhetMetadata: RestVirksomhetMetadata
 ): Partial<Ekstradata> => {
     if (
-        restVirksomhetMetadata.status !== RestStatus.Suksess ||
-        restVirksomhetMetadata.data.bransje !== Bransjetype.BARNEHAGER
+        restVirksomhetMetadata.status !== RestStatus.Suksess
     ) {
         return {};
     }
