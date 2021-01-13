@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import './ArbeidsmiljøportalPanel.less';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { Nyhet } from '../../felleskomponenter/Nyhet/Nyhet';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import arbeidsmiljøportalLogoSvg from './arbeidsmiljøportal-logo.svg';
 import { RestStatus } from '../../api/api-utils';
@@ -31,7 +30,6 @@ export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restVirksom
                     alt="Logo for Arbeidsmiljøportalen"
                 />
                 <div className="arbeidsmiljøportal-panel__nyhet-og-tittel">
-                    <Nyhet className="arbeidsmiljøportal-panel__nyhet" />
                     <Systemtittel className="arbeidsmiljøportal-panel__tittel">
                         Bedre arbeidsmiljø kan forebygge sykefravær
                     </Systemtittel>
