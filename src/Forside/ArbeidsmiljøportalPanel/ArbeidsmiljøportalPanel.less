@@ -9,9 +9,6 @@
         left: 1.5rem;
         top: 2rem;
     }
-    &__nyhet-og-tittel {
-        width: 100%;
-    }
     &__tittel-wrapper {
         display: flex;
         flex-direction: column;
@@ -28,15 +25,15 @@
     }
 
     @media (min-width: @screen-sm-min) {
-        &__nyhet {
-            position: static;
-        }
         &__logo {
             margin-right: 1.5rem;
         }
         &__tittel-wrapper {
             margin-bottom: 1.5rem;
             flex-direction: row;
+        }
+        &__tittel {
+            padding-top: 0rem;
         }
     }
 }
