@@ -29,11 +29,9 @@ export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restVirksom
                     className="arbeidsmiljøportal-panel__logo"
                     alt="Logo for Arbeidsmiljøportalen"
                 />
-
-                    <Systemtittel className="arbeidsmiljøportal-panel__tittel">
-                        Bedre arbeidsmiljø kan forebygge sykefravær
-                    </Systemtittel>
-
+                <Systemtittel className="arbeidsmiljøportal-panel__tittel">
+                    Bedre arbeidsmiljø kan forebygge sykefravær
+                </Systemtittel>
             </div>
             <Normaltekst className="arbeidsmiljøportal-panel__tekst">
                 Bedre arbeidsmiljø styrker jobbnærværet, forebygger og reduserer sykefravær og
