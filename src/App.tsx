@@ -105,7 +105,7 @@ const AppContent: FunctionComponent = () => {
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
     const location = useLocation();
     useSetUserProperties();
-    useMålingAvTidsbruk('hele appen', 5, 30, 120, 300);
+    useMålingAvTidsbruk('hele appen', 5, 30, 60, 120, 300);
 
     const { restUnderenhet } = useContext<EnhetsregisteretState>(enhetsregisteretContext);
 
