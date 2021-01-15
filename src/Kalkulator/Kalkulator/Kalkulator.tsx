@@ -26,7 +26,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     const sendEvent = useSendEvent();
 
     // kalkulator2 fordi det opprinnelige eventnavnet er merget med en annen event i Amplitude
-    useMålingAvTidsbruk('kalkulator2', 5, 30, 120);
+    useMålingAvTidsbruk('kalkulator2', 5, 30, 60, 120);
     useSendSidevisningEvent('kalkulator', orgnr);
 
     useEffect(() => {

@@ -26,7 +26,7 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
     useEffect(() => {
         scrollToBanner();
     }, []);
-    useMålingAvTidsbruk('historikk', 5, 30, 120);
+    useMålingAvTidsbruk('historikk', 5, 30, 60, 120);
     useSendSidevisningEvent('historikk', orgnr);
 
     const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
