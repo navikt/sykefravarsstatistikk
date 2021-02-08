@@ -1487,10 +1487,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@navikt/bedriftsmeny@^2.2.3":
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/@navikt/bedriftsmeny/-/bedriftsmeny-2.2.5.tgz#2de3cf83af823b8b07e007bf864392e34a2c5e0a"
-  integrity sha512-tuQFl3HdDC6IM7qn7ohpo8kTj0Dzh3bKDCEfW5FKHqI5gnVM0YwzkZXj7tCUtsnWqnx0KHM87LgjFxBnQEYMkg==
+"@navikt/bedriftsmeny@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@navikt/bedriftsmeny/-/bedriftsmeny-3.0.0.tgz#a92e9e689b547c5f2a1f69c5d6f751ff8ca24fca"
+  integrity sha512-XOfsVsd3eqPy+x+dvx8fmYfRTJlwa3QOFExwHuGHIn3TcZN6+Lkns7spl9PjyQLieBUm+mHtNrRwFKXclVw5Rw==
   dependencies:
     classnames "^2.2.6"
     fuzzysort "^1.1.4"
@@ -1499,7 +1499,7 @@
     postcss-prefix-selector "^1.7.2"
     prop-types "^15.7.2"
     react-motion "^0.5.2"
-    whatwg-fetch "^3.3.1"
+    whatwg-fetch "^3.5.0"
 
 "@navikt/fnrvalidator@^1.1.3":
   version "1.1.3"
@@ -12302,7 +12302,7 @@ whatwg-encoding@^1.0.5:
   dependencies:
     iconv-lite "0.4.24"
 
-whatwg-fetch@^3.3.1, whatwg-fetch@^3.4.1:
+whatwg-fetch@^3.4.1, whatwg-fetch@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.5.0.tgz#605a2cd0a7146e5db141e29d1c62ab84c0c4c868"
   integrity sha512-jXkLtsR42xhXg7akoDKvKWE40eJeI+2KZqcp2h3NsOrRnDvtWX36KcKl30dy+hxECivdk2BVUHVNrPtoMBUx6A==
