@@ -1,7 +1,7 @@
 import { ÅrstallOgKvartal } from './sykefraværshistorikk-utils';
 
 const sistOppdatert = new Date('2020.12.02');
-const nesteOppdatering = new Date('2021.03.02');
+const nesteOppdatering = new Date('2021.03.04');
 export const periodeFra = new Date('2019.10.01');
 export const periodeTil = new Date('2020.09.30');
 
