@@ -1,7 +1,7 @@
 import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
 import { RestStatus } from '../api/api-utils';
 import { useOrgnr } from './orgnr-hook';
-import { hentRestSummertSykefraværshistorikk } from '../api/api';
+import { hentRestSummertSykefraværshistorikk, sendIATjenesteMetrikker } from '../api/api';
 import { RestSummertSykefraværshistorikk } from '../api/summertSykefraværshistorikk';
 
 export const summertSykefraværshistorikkContext = createContext<RestSummertSykefraværshistorikk>({
@@ -10,9 +10,10 @@ export const summertSykefraværshistorikkContext = createContext<RestSummertSyke
 
 export const SummertSykefraværshistorikkProvider: FunctionComponent = (props) => {
     const orgnr = useOrgnr();
-    const [restSummertSykefraværshistorikk, setRestSummertSykefraværshistorikk] = useState<
-        RestSummertSykefraværshistorikk
-    >({ status: RestStatus.IkkeLastet });
+    const [
+        restSummertSykefraværshistorikk,
+        setRestSummertSykefraværshistorikk,
+    ] = useState<RestSummertSykefraværshistorikk>({ status: RestStatus.IkkeLastet });
 
     useEffect(() => {
         if (orgnr) {
@@ -25,6 +26,8 @@ export const SummertSykefraværshistorikkProvider: FunctionComponent = (props) =
                 );
             };
             hentRestSummertSykefraværshistorikkOgSettState();
+
+            console.log('status', sendIATjenesteMetrikker());
         }
     }, [orgnr]);
     const Provider = summertSykefraværshistorikkContext.Provider;

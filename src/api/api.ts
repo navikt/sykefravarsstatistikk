@@ -25,6 +25,8 @@ const featureTogglesPath = (features: string[]) =>
 
 const virksomhetMetadataPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/bedriftsmetrikker`;
 
+const iaTjenesterMetrikkerAPI = 'ia-tjenester-metrikker.dev.intern.nav.no/metrikker/';
+
 export const hentRestSykefraværshistorikk = async (
     orgnr: string
 ): Promise<RestSykefraværshistorikk> => {
@@ -84,6 +86,31 @@ export const hentRestSummertSykefraværshistorikk = async (
 ): Promise<RestSummertSykefraværshistorikk> => {
     return await fetchMedFeilhåndtering<SummertSykefraværshistorikk[]>(summertPath(orgnr), {
         method: 'GET',
+        credentials: 'include',
+    });
+};
+
+export const sendIATjenesteMetrikker = async () => {
+    return await fetchMedFeilhåndtering<VirksomhetMetadata>(virksomhetMetadataPath('999999999'), {
+        method: 'POST',
+        body:
+            '{\n' +
+            '  "orgnr": "999999",\n' +
+            '  "næringKode5Siffer": "næringe5sifferdata",\n' +
+            '  "type": "DIGITAL_IA_TJENESTE",\n' +
+            '  "kilde": "SYKKEFRAVÆRSSTATISTIKK",\n' +
+            '  "tjenesteMottakkelsesdato": "2007-12-03T10:15:30Z",\n' +
+            '  "antallAnsatte": "23",\n' +
+            '  "næringskode5SifferBeskrivelse": "String",\n' +
+            '  "næring2SifferBeskrivelse": "String",\n' +
+            '  "ssbSektorKode": "String",\n' +
+            '  "ssbSektorKodeBeskrivelse": "String",\n' +
+            '  "fylkesnummer": "String",\n' +
+            '  "fylke": "String",\n' +
+            '  "kommunenummer": "0234",\n' +
+            '  "kommune": "Gjerdrum"' +
+            '}',
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
     });
 };
