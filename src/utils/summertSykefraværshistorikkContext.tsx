@@ -1,7 +1,7 @@
 import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
 import { RestStatus } from '../api/api-utils';
 import { useOrgnr } from './orgnr-hook';
-import { hentRestSummertSykefraværshistorikk, sendIATjenesteMetrikker } from '../api/api';
+import { hentRestSummertSykefraværshistorikk } from '../api/api';
 import { RestSummertSykefraværshistorikk } from '../api/summertSykefraværshistorikk';
 
 export const summertSykefraværshistorikkContext = createContext<RestSummertSykefraværshistorikk>({
@@ -26,8 +26,6 @@ export const SummertSykefraværshistorikkProvider: FunctionComponent = (props) =
                 );
             };
             hentRestSummertSykefraværshistorikkOgSettState();
-
-            console.log('status', sendIATjenesteMetrikker());
         }
     }, [orgnr]);
     const Provider = summertSykefraværshistorikkContext.Provider;

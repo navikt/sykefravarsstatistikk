@@ -25,7 +25,7 @@ const featureTogglesPath = (features: string[]) =>
 
 const virksomhetMetadataPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/bedriftsmetrikker`;
 
-const iaTjenesterMetrikkerAPI = 'ia-tjenester-metrikker.dev.intern.nav.no/metrikker/';
+const iaTjenesterMetrikkerAPI = `${BASE_PATH}/api/mottat-iatjeneste`;
 
 export const hentRestSykefraværshistorikk = async (
     orgnr: string
@@ -91,7 +91,7 @@ export const hentRestSummertSykefraværshistorikk = async (
 };
 
 export const sendIATjenesteMetrikker = async () => {
-    return await fetchMedFeilhåndtering<VirksomhetMetadata>(iaTjenesterMetrikkerAPI, {
+   /* return await fetchMedFeilhåndtering<VirksomhetMetadata>(iaTjenesterMetrikkerAPI, {
         method: 'POST',
         body:
             '{\n' +
@@ -112,7 +112,39 @@ export const sendIATjenesteMetrikker = async () => {
             '}',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-    });
+    });*/
+    const settings = {
+        method: 'POST',
+        body:
+            '{\n' +
+            '  "orgnr": "999999",\n' +
+            '  "næringKode5Siffer": "næringe5sifferdata",\n' +
+            '  "type": "DIGITAL_IA_TJENESTE",\n' +
+            '  "kilde": "SYKKEFRAVÆRSSTATISTIKK",\n' +
+            '  "tjenesteMottakkelsesdato": "2007-12-03T10:15:30Z",\n' +
+            '  "antallAnsatte": "23",\n' +
+            '  "næringskode5SifferBeskrivelse": "String",\n' +
+            '  "næring2SifferBeskrivelse": "String",\n' +
+            '  "ssbSektorKode": "String",\n' +
+            '  "ssbSektorKodeBeskrivelse": "String",\n' +
+            '  "fylkesnummer": "String",\n' +
+            '  "fylke": "String",\n' +
+            '  "kommunenummer": "0234",\n' +
+            '  "kommune": "Gjerdrum"' +
+            '}',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        }
+    };
+    try {
+        //const fetchResponse = await fetch(`https://${location}:9000/api/sensors/`, settings);
+        const fetchResponse = await fetch(`${iaTjenesterMetrikkerAPI}`, settings);
+        const data = await fetchResponse.json();
+        return data;
+    } catch (e) {
+        return e;
+    }
 };
 
 export const filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet = (
