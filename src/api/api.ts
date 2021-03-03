@@ -91,7 +91,7 @@ export const hentRestSummertSykefraværshistorikk = async (
 };
 
 export const sendIATjenesteMetrikker = async () => {
-    return await fetchMedFeilhåndtering<VirksomhetMetadata>(virksomhetMetadataPath('999999999'), {
+    return await fetchMedFeilhåndtering<VirksomhetMetadata>(iaTjenesterMetrikkerAPI, {
         method: 'POST',
         body:
             '{\n' +

@@ -22,6 +22,7 @@ import Lenke from 'nav-frontend-lenker';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { OmGradertSykmelding } from '../../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
 import { BASE_PATH } from '../../../konstanter';
+import { sendIATjenesteMetrikker } from '../../../api/api';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -156,6 +157,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         panel: getPanelEventtekst(sammenligningsType),
                         action: erÅpen ? 'lukk' : 'åpne',
                     });
+                    sendIATjenesteMetrikker();
                     setErÅpen(!erÅpen);
                 }}
                 apen={erÅpen}
