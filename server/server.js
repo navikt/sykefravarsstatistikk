@@ -39,8 +39,8 @@ const startServer = (html) => {
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
 
-    app.use(proxy);
     app.use(getIATjenesterMetrikkerProxy());
+    app.use(proxy);
 
     app.get(BASE_PATH, (req, res) => {
         res.send(html);

@@ -1,18 +1,21 @@
-const { FRONTEND_API_PATH } = require('./konstanter');
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const {METRIKKER_API_PATH} = require('./konstanter');
+const {createProxyMiddleware} = require('http-proxy-middleware');
 
-const listeAvTillatteUrler = [new RegExp('^' + FRONTEND_API_PATH + '/mottatt-iatjeneste')];
-
+const listeAvTillatteUrler = [new RegExp('^' + METRIKKER_API_PATH + '/mottatt-iatjeneste')];
 const proxyServer = process.env.HTTPS_PROXY || process.env.HTTP_PROXY;
 
 const proxyConfig = {
+    // TODO: convert to env variable
+    //target: 'http://localhost:8080',
     target: 'https://ia-tjenester-metrikker.dev.intern.nav.no',
     changeOrigin: true,
     pathRewrite: (path, req) => {
         const urlErTillatt = listeAvTillatteUrler.filter((regexp) => regexp.test(path)).length > 0;
 
         if (urlErTillatt) {
-            const nyPath = path.replace(FRONTEND_API_PATH + '/mottatt-iatjeneste', '/metrikker');
+            // Dette er den fremtidige URL-en: TODO: bruk denne når PR #10 er i dev-gcp eller merget
+            //const nyPath = path.replace(METRIKKER_API_PATH + '/mottatt-iatjeneste', '/innlogget/mottatt-iatjeneste');
+            const nyPath = path.replace(METRIKKER_API_PATH + '/mottatt-iatjeneste', '/metrikker/');
             console.log("Proxy path til", nyPath)
             return nyPath;
         } else {
@@ -36,7 +39,7 @@ const getIATjenesterMetrikkerProxy = () => {
             'Ingen proxy server funnet. Oppretter proxyMiddleware uten HttpsProxyAgent (default)'
         );
     }
-    return createProxyMiddleware('/mottatt-iatjeneste', proxyConfig);
+    return createProxyMiddleware(METRIKKER_API_PATH, proxyConfig);
 };
 
-module.exports = { getIATjenesterMetrikkerProxy };
+module.exports = {getIATjenesterMetrikkerProxy};

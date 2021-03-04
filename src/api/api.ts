@@ -25,7 +25,7 @@ const featureTogglesPath = (features: string[]) =>
 
 const virksomhetMetadataPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/bedriftsmetrikker`;
 
-const iaTjenesterMetrikkerAPI = `${BASE_PATH}/api/mottatt-iatjeneste`;
+const iaTjenesterMetrikkerAPI = `${BASE_PATH}/metrikker/mottatt-iatjeneste`;
 
 export const hentRestSykefraværshistorikk = async (
     orgnr: string
