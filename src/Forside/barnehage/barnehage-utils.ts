@@ -196,7 +196,7 @@ export const getSammenligningResultat = (
         sammenligningResultatKorttid,
         sammenligningResultatLangtid,
         sammenligningResultatGradert,
-    };
+    }
 };
 
 export const getSammenligningResultatMedProsent = (
