@@ -27,3 +27,8 @@ spec:
           value: /etc/ssl/ca-bundle.pem
         - name: LOGIN_URL
           value: https://loginservice-q.nav.no/login?redirect=https://arbeidsgiver-q.nav.no/sykefravarsstatistikk/
+    accessPolicy:
+        outbound:
+            external:
+                - host: ia-tjenester-metrikker.dev.intern.nav.no
+
