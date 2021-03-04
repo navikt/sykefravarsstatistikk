@@ -157,7 +157,8 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         panel: getPanelEventtekst(sammenligningsType),
                         action: erÅpen ? 'lukk' : 'åpne',
                     });
-                    console.log("sendIATjenesteMetrikker",sendIATjenesteMetrikker());
+                    console.log("sendIATjenesteMetrikker");
+                    sendIATjenesteMetrikker();
                     setErÅpen(!erÅpen);
                 }}
                 apen={erÅpen}

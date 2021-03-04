@@ -12,9 +12,11 @@ const proxyConfig = {
         const urlErTillatt = listeAvTillatteUrler.filter((regexp) => regexp.test(path)).length > 0;
 
         if (urlErTillatt) {
-            return path.replace('mottatt-iatjeneste', 'metrikker');
+            const nyPath = path.replace(FRONTEND_API_PATH + '/mottatt-iatjeneste', '/metrikker');
+            console.log("Proxy path til", nyPath)
+            return nyPath;
         } else {
-            throw Error('Path er ikke tillatt, request er ikke videresendt til Vimeo: ' + path);
+            throw Error('Path er ikke tillatt, request er ikke videresendt til ia-tjenester-metrikker: ' + path);
         }
     },
     secure: true,
