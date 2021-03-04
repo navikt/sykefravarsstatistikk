@@ -37,10 +37,7 @@ const proxyConfig = {
         );
         if (path.includes('/mottat-iatjeneste')) {
             console.log('path for mottat-iatjeneste', path);
-            return path.replace(
-                FRONTEND_API_PATH,
-                'https://ia-tjenester-metrikker.dev.intern.nav.no/metrikker/'
-            );
+            return 'https://ia-tjenester-metrikker.dev.intern.nav.no/metrikker/';
         }
 
         if (urlErTillatt) {
