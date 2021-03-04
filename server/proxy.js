@@ -28,16 +28,14 @@ const proxyConfig = {
         console.log(
             `path er ${path} ${
                 path.includes('/mottat-iatjeneste')
-                    ? `det er inklude, ny path vil bli laget, ny path er : ${path.replace(
-                          FRONTEND_API_PATH,
-                          'https://ia-tjenester-metrikker.dev.intern.nav.no/metrikker/'
-                      )}`
+                    ? `det er inklude, ny path vil bli laget, ny path er :https://ia-tjenester-metrikker.dev.intern.nav.no/metrikker/`
                     : 'ikke inkluderer'
             }`
         );
         if (path.includes('/mottat-iatjeneste')) {
+            path = 'ia-tjenester-metrikker.dev.intern.nav.no/metrikker/';
             console.log('path for mottat-iatjeneste', path);
-            return 'https://ia-tjenester-metrikker.dev.intern.nav.no/metrikker/';
+            return path;
         }
 
         if (urlErTillatt) {
