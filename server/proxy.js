@@ -15,8 +15,6 @@ const listeAvTillatteUrler = [
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/bedriftsmetrikker'),
     new RegExp('^' + FRONTEND_API_PATH + '/organisasjoner/statistikk'),
     new RegExp('^' + FRONTEND_API_PATH + '/feature'),
-    new RegExp('^' + FRONTEND_API_PATH + '/mottat-iatjeneste'),
-    new RegExp('https://ia-tjenester-metrikker.dev.intern.nav.no/metrikker/'),
 ];
 
 const proxyConfig = {
@@ -25,18 +23,6 @@ const proxyConfig = {
     pathRewrite: (path, req) => {
         const urlErTillatt = listeAvTillatteUrler.filter((regexp) => regexp.test(path)).length > 0;
 
-        console.log(
-            `path er ${path} ${
-                path.includes('/mottat-iatjeneste')
-                    ? `det er inklude, ny path vil bli laget, ny path er :https://ia-tjenester-metrikker.dev.intern.nav.no/metrikker/`
-                    : 'ikke inkluderer'
-            }`
-        );
-        if (path.includes('/mottat-iatjeneste')) {
-            path = 'ia-tjenester-metrikker.dev.intern.nav.no/metrikker/';
-            console.log('path for mottat-iatjeneste', path);
-            return path;
-        }
 
         if (urlErTillatt) {
             return path.replace(FRONTEND_API_PATH, BACKEND_API_PATH);
