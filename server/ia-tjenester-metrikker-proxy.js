@@ -8,6 +8,7 @@ const proxyConfig = {
     // TODO: convert to env variable
     //target: 'http://localhost:8080',
     target: 'https://ia-tjenester-metrikker.dev.intern.nav.no',
+    logLevel: 'debug',
     changeOrigin: true,
     pathRewrite: (path, req) => {
         const urlErTillatt = listeAvTillatteUrler.filter((regexp) => regexp.test(path)).length > 0;
@@ -24,7 +25,6 @@ const proxyConfig = {
     },
     secure: true,
     xfwd: true,
-    logLevel: 'info',
     preserveHeaderKeyCase: true,
 };
 
