@@ -14,8 +14,8 @@ const proxyConfig = {
 
         if (urlErTillatt) {
             // Dette er den fremtidige URL-en: TODO: bruk denne når PR #10 er i dev-gcp eller merget
-            //const nyPath = path.replace(METRIKKER_API_PATH + '/mottatt-iatjeneste', '/innlogget/mottatt-iatjeneste');
-            const nyPath = path.replace(METRIKKER_API_PATH + '/mottatt-iatjeneste', '/metrikker/');
+            const nyPath = path.replace(METRIKKER_API_PATH + '/mottatt-iatjeneste', '/uinnlogget/mottatt-iatjeneste');
+            //const nyPath = path.replace(METRIKKER_API_PATH + '/mottatt-iatjeneste', '/metrikker/');
             console.log("Proxy path til", nyPath)
             return nyPath;
         } else {
