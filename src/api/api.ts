@@ -25,7 +25,9 @@ const featureTogglesPath = (features: string[]) =>
 
 const virksomhetMetadataPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/bedriftsmetrikker`;
 
-const iaTjenesterMetrikkerAPI = `${BASE_PATH}/metrikker/mottatt-iatjeneste`;
+//const iaTjenesterMetrikkerAPI = `${BASE_PATH}/metrikker/mottatt-iatjeneste`;
+const METRIKKER_API_BASE_HOST="https://ia-tjenester-metrikker.dev.intern.nav.no";
+const iaTjenesterMetrikkerAPI = `${METRIKKER_API_BASE_HOST}/uinnlogget/mottatt-iatjeneste`;
 
 export const hentRestSykefraværshistorikk = async (
     orgnr: string
@@ -112,6 +114,7 @@ export const sendIATjenesteMetrikker = async () => {
             '  "kommune": "Gjerdrum"' +
             '}',
         headers: {
+
             Accept: 'application/json',
             'Content-Type': 'application/json',
         }
