@@ -30,12 +30,12 @@ interface IatjenesteMetrikk {
     næringKode5Siffer: String;
     type: String;
     kilde: String;
-    tjenesteMottakkelsesdato: Date;
+    tjenesteMottakkelsesdato: String;
     antallAnsatte: number;
     næringskode5SifferBeskrivelse: String;
     næring2SifferBeskrivelse: String;
-    SSBSektorKode: String;
-    SSBSektorKodeBeskrivelse: String;
+    ssbSektorKode: String;
+    ssbSektorKodeBeskrivelse: String;
     fylkesnummer: String;
     fylke: String;
     kommunenummer: String;
@@ -79,13 +79,14 @@ export const useSendIaTjenesteMetrikkEvent = (): SendIaTjenesteMetrikk => {
         næringskode5SifferBeskrivelse: ekstradata.current.næringskode5SifferBeskrivelse
             ? ekstradata.current.næringskode5SifferBeskrivelse
             : '',
-        SSBSektorKode: ekstradata.current.institusjonellSektorKode
+        ssbSektorKode: ekstradata.current.institusjonellSektorKode
             ? ekstradata.current.institusjonellSektorKode.kode
             : '',
-        SSBSektorKodeBeskrivelse: ekstradata.current.institusjonellSektorKode
+        ssbSektorKodeBeskrivelse: ekstradata.current.institusjonellSektorKode
             ? ekstradata.current.institusjonellSektorKode.beskrivelse
             : '',
-        tjenesteMottakkelsesdato: new Date(),
+        // Vi vil ikke ha millis i den ISO-8601 dato: 2021-03-11T18:48:38.489Z
+        tjenesteMottakkelsesdato: new Date().toISOString().split('.')[0]+"Z",
     };
 
     return () => sendIATjenesteMetrikk(iaTjenesteMetrikk);
@@ -135,7 +136,7 @@ export const sendIATjenesteMetrikk = async (iatjeneste: IatjenesteMetrikk) => {
     const settings = {
         method: 'POST',
         credentials: 'include',
-        body: iatjeneste,
+        body: JSON.stringify(iatjeneste),
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
