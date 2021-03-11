@@ -4,9 +4,14 @@ import { virksomhetMetadataContext } from '../utils/virksomhetMetadataContext';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
 import { RestStatus } from '../api/api-utils';
 import { mapTilNæringsbeskrivelse } from '../amplitude/næringsbeskrivelser';
-import { InstitusjonellSektorkode, RestOverordnetEnhet } from '../api/enhetsregisteret-api';
+import {
+    InstitusjonellSektorkode,
+    RestOverordnetEnhet,
+    RestUnderenhet,
+} from '../api/enhetsregisteret-api';
 
 interface IaTjenesteMetrikkerEkstraData {
+    orgnr: String;
     bransje: string;
     antallAnsatte: number;
     næring2siffer: string;
@@ -14,8 +19,6 @@ interface IaTjenesteMetrikkerEkstraData {
     næringKode5Siffer: string;
     næringskode5SifferBeskrivelse: String;
     institusjonellSektorKode: InstitusjonellSektorkode;
-
-    // TODO
     fylkesnummer: String;
     fylke: String;
     kommunenummer: String;
@@ -42,11 +45,11 @@ interface IatjenesteMetrikk {
 const getIaTjenesterMetrikkerUrl = () => {
     switch (window.location.hostname) {
         case 'localhost':
-            return 'http://localhost:8080/'
+            return 'http://localhost:8080/ia-tjenester-metrikker';
         case 'arbeidsgiver.nav.no':
-            return 'https://arbeidsgiver.nav.no/ia-tjenester-metrikker/'
+            return 'https://arbeidsgiver.nav.no/ia-tjenester-metrikker';
         default:
-            return 'https://ia-tjenester-metrikker.dev.intern.nav.no/'
+            return 'https://ia-tjenester-metrikker.dev.intern.nav.no';
     }
 };
 
@@ -57,8 +60,9 @@ export type EventData = { [key: string]: any };
 
 export const useSendIaTjenesteMetrikkEvent = (): SendIaTjenesteMetrikk => {
     const ekstradata = useIaTjenesteMetrikkerEkstraDataRef();
+
     const iaTjenesteMetrikk: IatjenesteMetrikk = {
-        orgnr: '',
+        orgnr: ekstradata.current.orgnr ? ekstradata.current.orgnr : '',
         antallAnsatte: ekstradata.current.antallAnsatte ? ekstradata.current.antallAnsatte : 0,
         kilde: 'SYKEFRAVÆRSSTATISTIKK',
         type: 'DIGITAL_IA_TJENESTE',
@@ -87,8 +91,7 @@ export const useSendIaTjenesteMetrikkEvent = (): SendIaTjenesteMetrikk => {
     return () => sendIATjenesteMetrikk(iaTjenesteMetrikk);
 };
 
-
- // Method to be called when rendering component
+// Method to be called when rendering component
 
 export const useSendMottattIatjenesteEvent = (orgnr: string | undefined) => {
     const sendIaTjenesteMetrikk = useSendIaTjenesteMetrikkEvent();
@@ -106,7 +109,6 @@ export const useSendMottattIatjenesteEvent = (orgnr: string | undefined) => {
     }, [orgnr, sendIaTjenesteMetrikk]);
 };
 
-
 const useIaTjenesteMetrikkerEkstraDataRef = (): MutableRefObject<
     Partial<IaTjenesteMetrikkerEkstraData>
 > => {
@@ -120,6 +122,7 @@ const useIaTjenesteMetrikkerEkstraDataRef = (): MutableRefObject<
             ...getIaTjenesteMetrikkerEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
             ...getIaTjenesteMetrikkerEkstraDataFraEnhetsregisteret(
                 dataFraEnhetsregisteret.restOverordnetEnhet,
+                dataFraEnhetsregisteret.restUnderenhet,
                 restVirksomhetMetadata
             ),
         };
@@ -128,6 +131,7 @@ const useIaTjenesteMetrikkerEkstraDataRef = (): MutableRefObject<
 };
 
 export const sendIATjenesteMetrikk = async (iatjeneste: IatjenesteMetrikk) => {
+    console.log('Skal sende følgende metrikk', iatjeneste);
     const settings = {
         method: 'POST',
         credentials: 'include',
@@ -171,14 +175,21 @@ export const getIaTjenesteMetrikkerEkstraDataFraVirksomhetMetadata = (
 
 export const getIaTjenesteMetrikkerEkstraDataFraEnhetsregisteret = (
     restOverordnetEnhet: RestOverordnetEnhet,
+    restUnderenhet: RestUnderenhet,
     restVirksomhetMetadata: RestVirksomhetMetadata
 ): Partial<IaTjenesteMetrikkerEkstraData> => {
     if (
         restVirksomhetMetadata.status === RestStatus.Suksess &&
-        restOverordnetEnhet.status === RestStatus.Suksess
+        restOverordnetEnhet.status === RestStatus.Suksess &&
+        restUnderenhet.status === RestStatus.Suksess
     ) {
         return {
+            orgnr: restUnderenhet.data.orgnr,
             institusjonellSektorKode: restOverordnetEnhet.data.institusjonellSektorkode,
+            fylkesnummer: 'IKKE_TILGJENGELIG',
+            fylke: 'IKKE_TILGJENGELIG',
+            kommunenummer: restUnderenhet.data.beliggenhetsadresse.kommunenummer,
+            kommune: restUnderenhet.data.beliggenhetsadresse.kommune,
         };
     }
     return {};
