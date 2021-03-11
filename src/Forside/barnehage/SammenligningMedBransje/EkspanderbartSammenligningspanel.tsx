@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, useState } from 'react';
+import React, { FunctionComponent, ReactElement, useEffect, useRef, useState } from 'react';
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
@@ -22,7 +22,7 @@ import Lenke from 'nav-frontend-lenker';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { OmGradertSykmelding } from '../../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
 import { BASE_PATH } from '../../../konstanter';
-import { sendIATjenesteMetrikker } from '../../../api/api';
+import { useSendIaTjenesteMetrikkEvent } from '../../../metrikker/iatjenester';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -52,6 +52,22 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
     const sendEvent = useSendEvent();
     const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
+
+    const sendIaTjenesteMetrikkEvent = useSendIaTjenesteMetrikkEvent();
+    const skalSendeEvent = useRef(false);
+
+    useEffect(() => {
+        if (erÅpen) {
+            skalSendeEvent.current = true;
+        }
+    }, [erÅpen]);
+
+    useEffect(() => {
+        if (skalSendeEvent.current && erÅpen) {
+            skalSendeEvent.current = false;
+            sendIaTjenesteMetrikkEvent();
+        }
+    }, [erÅpen]);
 
     const visningAvProsentForBransje: number | null | undefined =
         sykefraværVurdering === SykefraværVurdering.FEIL ? null : sykefraværBransje;
@@ -157,9 +173,11 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         panel: getPanelEventtekst(sammenligningsType),
                         action: erÅpen ? 'lukk' : 'åpne',
                     });
-                    console.log("sendIATjenesteMetrikker");
-                    sendIATjenesteMetrikker();
                     setErÅpen(!erÅpen);
+                    /*                    if (skalSendeEvent.current === true) {
+                        sendIaTjenesteMetrikkEvent()
+                    }
+*/
                 }}
                 apen={erÅpen}
                 id={panelknappID}
