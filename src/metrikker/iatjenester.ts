@@ -9,6 +9,7 @@ import {
     RestOverordnetEnhet,
     RestUnderenhet,
 } from '../api/enhetsregisteret-api';
+import {useOrgnr} from "../utils/orgnr-hook";
 
 interface IaTjenesteMetrikkerEkstraData {
     orgnr: String;
@@ -60,9 +61,10 @@ export type EventData = { [key: string]: any };
 
 export const useSendIaTjenesteMetrikkEvent = (): SendIaTjenesteMetrikk => {
     const ekstradata = useIaTjenesteMetrikkerEkstraDataRef();
+    const nåværendeOrgnr = useOrgnr();
 
     const iaTjenesteMetrikk: IatjenesteMetrikk = {
-        orgnr: ekstradata.current.orgnr ? ekstradata.current.orgnr : '',
+        orgnr: nåværendeOrgnr? nåværendeOrgnr : '',
         antallAnsatte: ekstradata.current.antallAnsatte ? ekstradata.current.antallAnsatte : 0,
         kilde: 'SYKEFRAVÆRSSTATISTIKK',
         type: 'DIGITAL_IA_TJENESTE',
