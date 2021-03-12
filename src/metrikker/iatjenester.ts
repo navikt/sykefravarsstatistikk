@@ -56,11 +56,9 @@ const getIaTjenesterMetrikkerUrl = () => {
 };
 
 const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
-
-type SendIaTjenesteMetrikk = () => void;
 export type EventData = { [key: string]: any };
 
-export const useSendIaTjenesteMetrikkEvent = (): SendIaTjenesteMetrikk => {
+export const useSendIaTjenesteMetrikkEvent = (): () => Promise<boolean> => {
     const ekstradata = useIaTjenesteMetrikkerEkstraDataRef();
     const nåværendeOrgnr = useOrgnr();
 
@@ -94,27 +92,33 @@ export const useSendIaTjenesteMetrikkEvent = (): SendIaTjenesteMetrikk => {
     return () => sendIATjenesteMetrikk(iaTjenesteMetrikk);
 };
 
-// Method to be called when rendering component
-
-export const useSendMottattIatjenesteEvent = (orgnr: string | undefined) => {
-    const sendIaTjenesteMetrikk = useSendIaTjenesteMetrikkEvent();
-    const skalSendeEvent = useRef(true);
-
-    useEffect(() => {
-        skalSendeEvent.current = true;
-    }, [orgnr]);
-
-    useEffect(() => {
-        if (skalSendeEvent.current) {
-            skalSendeEvent.current = false;
-            sendIaTjenesteMetrikk();
-        }
-    }, [orgnr, sendIaTjenesteMetrikk]);
+export const sendIATjenesteMetrikk = async (iatjeneste: IatjenesteMetrikk) => {
+    const settings = {
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify(iatjeneste),
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    };
+    try {
+        // @ts-ignore
+        const fetchResponse = await fetch(`${iaTjenesterMetrikkerAPI}`, settings);
+        const data = await fetchResponse.json();
+        return data.status === "created";
+    } catch (e) {
+        return false;
+    }
 };
+
+
+// Assembling the data:
+// --------------------
 
 const useIaTjenesteMetrikkerEkstraDataRef = (): MutableRefObject<
     Partial<IaTjenesteMetrikkerEkstraData>
-> => {
+    > => {
     const iaTjenesterMetrikkerEkstraData = useRef<Partial<IaTjenesteMetrikkerEkstraData>>({});
 
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
@@ -133,31 +137,7 @@ const useIaTjenesteMetrikkerEkstraDataRef = (): MutableRefObject<
     return iaTjenesterMetrikkerEkstraData;
 };
 
-export const sendIATjenesteMetrikk = async (iatjeneste: IatjenesteMetrikk) => {
-    console.log('Skal sende følgende metrikk', iatjeneste);
-    const settings = {
-        method: 'POST',
-        credentials: 'include',
-        body: JSON.stringify(iatjeneste),
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-    };
-    try {
-        // @ts-ignore
-        const fetchResponse = await fetch(`${iaTjenesterMetrikkerAPI}`, settings);
-        const data = await fetchResponse.json();
-        return data;
-    } catch (e) {
-        return e;
-    }
-};
-
-// Collecting the data:
-// --------------------
-
-export const getIaTjenesteMetrikkerEkstraDataFraVirksomhetMetadata = (
+const getIaTjenesteMetrikkerEkstraDataFraVirksomhetMetadata = (
     restVirksomhetMetadata: RestVirksomhetMetadata
 ): Partial<IaTjenesteMetrikkerEkstraData> => {
     if (restVirksomhetMetadata.status === RestStatus.Suksess) {
@@ -176,7 +156,7 @@ export const getIaTjenesteMetrikkerEkstraDataFraVirksomhetMetadata = (
     return {};
 };
 
-export const getIaTjenesteMetrikkerEkstraDataFraEnhetsregisteret = (
+const getIaTjenesteMetrikkerEkstraDataFraEnhetsregisteret = (
     restOverordnetEnhet: RestOverordnetEnhet,
     restUnderenhet: RestUnderenhet,
     restVirksomhetMetadata: RestVirksomhetMetadata

@@ -63,6 +63,7 @@ import {
     LegacyBarnehageSammenligningRedirect,
     LegacySammenligningRedirect,
 } from './utils/redirects';
+import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
@@ -76,9 +77,11 @@ const App: FunctionComponent = () => {
                                 <SykefraværshistorikkProvider>
                                     <FeatureTogglesProvider>
                                         <TilbakemeldingContextProvider>
-                                            <main id="maincontent">
-                                                <AppContent />
-                                            </main>
+                                            <IaTjenesterMetrikkerContextProvider>
+                                                <main id="maincontent">
+                                                    <AppContent />
+                                                </main>
+                                            </IaTjenesterMetrikkerContextProvider>
                                         </TilbakemeldingContextProvider>
                                     </FeatureTogglesProvider>
                                 </SykefraværshistorikkProvider>
