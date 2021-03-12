@@ -1,22 +1,22 @@
 import React, { createContext, FunctionComponent, useState } from 'react';
 
 export const iaTjenesterMetrikkerContext = createContext<{
-    harSendtMetrikk: boolean;
-    setHarSendtMetrikk: (sendt: boolean) => void;
+    bedrifterSomHarSendtMetrikker: [string];
+    setBedrifterSomHarSendtMetrikker: (bedrifter: [string]) => void;
 }>({
-    harSendtMetrikk: false,
-    setHarSendtMetrikk: (sendt) => {},
+    bedrifterSomHarSendtMetrikker: [''],
+    setBedrifterSomHarSendtMetrikker: (bedrifter) => {},
 });
 
 export const IaTjenesterMetrikkerContextProvider: FunctionComponent = (props) => {
-    const [harSendtMetrikk, setHarSendtMetrikk] = useState<boolean>(false);
+    const [bedrifterSomHarSendtMetrikker, setBedrifterSomHarSendtMetrikker] = useState<[string]>(['']);
 
     const Provider = iaTjenesterMetrikkerContext.Provider;
     return (
         <Provider
             value={{
-                harSendtMetrikk,
-                setHarSendtMetrikk,
+                bedrifterSomHarSendtMetrikker,
+                setBedrifterSomHarSendtMetrikker,
             }}
         >
             {props.children}

@@ -22,8 +22,13 @@ import Lenke from 'nav-frontend-lenker';
 import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { OmGradertSykmelding } from '../../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
 import { BASE_PATH } from '../../../konstanter';
-import { useSendIaTjenesteMetrikkEvent } from '../../../metrikker/iatjenester';
+import {
+    erIaTjenesterMetrikkerSendtForBedrift,
+    iaTjenesterMetrikkerErSendtForBedrift,
+    useSendIaTjenesteMetrikkEvent,
+} from '../../../metrikker/iatjenester';
 import { iaTjenesterMetrikkerContext } from '../../../metrikker/IaTjenesterMetrikkerContext';
+import { useOrgnr } from '../../../utils/orgnr-hook';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -54,14 +59,23 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const sendEvent = useSendEvent();
     const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
 
+    const orgnr = useOrgnr();
     const sendIaTjenesteMetrikkEvent = useSendIaTjenesteMetrikkEvent();
     const context = useContext(iaTjenesterMetrikkerContext);
 
     useEffect(() => {
-        if (!context.harSendtMetrikk && erÅpen) {
+        if (
+            !erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker) &&
+            erÅpen
+        ) {
             sendIaTjenesteMetrikkEvent().then((isSent) => {
                 if (isSent) {
-                    context.setHarSendtMetrikk(true);
+                    context.setBedrifterSomHarSendtMetrikker(
+                        iaTjenesterMetrikkerErSendtForBedrift(
+                            orgnr,
+                            context.bedrifterSomHarSendtMetrikker
+                        )
+                    );
                 }
             });
         }

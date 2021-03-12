@@ -9,8 +9,8 @@ import {
     RestOverordnetEnhet,
     RestUnderenhet,
 } from '../api/enhetsregisteret-api';
-import {useOrgnr} from "../utils/orgnr-hook";
-import {tilIsoDatoMedUtcTimezoneUtenMillis} from "../utils/app-utils";
+import { useOrgnr } from '../utils/orgnr-hook';
+import { tilIsoDatoMedUtcTimezoneUtenMillis } from '../utils/app-utils';
 
 interface IaTjenesteMetrikkerEkstraData {
     orgnr: String;
@@ -44,6 +44,27 @@ interface IatjenesteMetrikk {
     kommune: String;
 }
 
+export const erIaTjenesterMetrikkerSendtForBedrift = (
+    orgnr: string | undefined,
+    sendteMetrikker: [string]
+): boolean => {
+    if (orgnr === undefined) {
+        return true;
+    } else {
+        return sendteMetrikker.includes(orgnr);
+    }
+};
+
+export const iaTjenesterMetrikkerErSendtForBedrift = (
+    orgnr: string | undefined,
+    sendteMetrikker: [string]
+): [string] => {
+    if (orgnr !== undefined) {
+        sendteMetrikker.push(orgnr);
+    }
+    return sendteMetrikker;
+};
+
 const getIaTjenesterMetrikkerUrl = () => {
     switch (window.location.hostname) {
         case 'localhost':
@@ -58,12 +79,12 @@ const getIaTjenesterMetrikkerUrl = () => {
 const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
 export type EventData = { [key: string]: any };
 
-export const useSendIaTjenesteMetrikkEvent = (): () => Promise<boolean> => {
+export const useSendIaTjenesteMetrikkEvent = (): (() => Promise<boolean>) => {
     const ekstradata = useIaTjenesteMetrikkerEkstraDataRef();
     const nåværendeOrgnr = useOrgnr();
 
     const iaTjenesteMetrikk: IatjenesteMetrikk = {
-        orgnr: nåværendeOrgnr? nåværendeOrgnr : '',
+        orgnr: nåværendeOrgnr ? nåværendeOrgnr : '',
         antallAnsatte: ekstradata.current.antallAnsatte ? ekstradata.current.antallAnsatte : 0,
         kilde: 'SYKEFRAVÆRSSTATISTIKK',
         type: 'DIGITAL_IA_TJENESTE',
@@ -106,19 +127,18 @@ export const sendIATjenesteMetrikk = async (iatjeneste: IatjenesteMetrikk) => {
         // @ts-ignore
         const fetchResponse = await fetch(`${iaTjenesterMetrikkerAPI}`, settings);
         const data = await fetchResponse.json();
-        return data.status === "created";
+        return data.status === 'created';
     } catch (e) {
         return false;
     }
 };
-
 
 // Assembling the data:
 // --------------------
 
 const useIaTjenesteMetrikkerEkstraDataRef = (): MutableRefObject<
     Partial<IaTjenesteMetrikkerEkstraData>
-    > => {
+> => {
     const iaTjenesterMetrikkerEkstraData = useRef<Partial<IaTjenesteMetrikkerEkstraData>>({});
 
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
