@@ -10,6 +10,7 @@ import {
     RestUnderenhet,
 } from '../api/enhetsregisteret-api';
 import {useOrgnr} from "../utils/orgnr-hook";
+import {tilIsoDatoMedUtcTimezoneUtenMillis} from "../utils/app-utils";
 
 interface IaTjenesteMetrikkerEkstraData {
     orgnr: String;
@@ -87,8 +88,7 @@ export const useSendIaTjenesteMetrikkEvent = (): SendIaTjenesteMetrikk => {
         ssbSektorKodeBeskrivelse: ekstradata.current.institusjonellSektorKode
             ? ekstradata.current.institusjonellSektorKode.beskrivelse
             : '',
-        // Vi vil ikke ha millis i den ISO-8601 dato: 2021-03-11T18:48:38.489Z
-        tjenesteMottakkelsesdato: new Date().toISOString().split('.')[0]+"Z",
+        tjenesteMottakkelsesdato: tilIsoDatoMedUtcTimezoneUtenMillis(new Date()),
     };
 
     return () => sendIATjenesteMetrikk(iaTjenesteMetrikk);
