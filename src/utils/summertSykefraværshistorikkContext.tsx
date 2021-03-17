@@ -10,9 +10,10 @@ export const summertSykefraværshistorikkContext = createContext<RestSummertSyke
 
 export const SummertSykefraværshistorikkProvider: FunctionComponent = (props) => {
     const orgnr = useOrgnr();
-    const [restSummertSykefraværshistorikk, setRestSummertSykefraværshistorikk] = useState<
-        RestSummertSykefraværshistorikk
-    >({ status: RestStatus.IkkeLastet });
+    const [
+        restSummertSykefraværshistorikk,
+        setRestSummertSykefraværshistorikk,
+    ] = useState<RestSummertSykefraværshistorikk>({ status: RestStatus.IkkeLastet });
 
     useEffect(() => {
         if (orgnr) {

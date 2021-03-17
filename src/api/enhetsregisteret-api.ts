@@ -56,6 +56,12 @@ export interface Underenhet {
     orgnr: string;
     overordnetEnhet: string;
     næringer: Næring[];
+    beliggenhetsadresse: Beliggenhetsadresse;
+}
+
+export interface Beliggenhetsadresse {
+    kommune: string;
+    kommunenummer: string;
 }
 
 export interface InstitusjonellSektorkode {
@@ -82,6 +88,10 @@ export const mapTilUnderenhet = (underenhetDto: UnderenhetDto): Underenhet => {
         orgnr: underenhetDto.organisasjonsnummer,
         overordnetEnhet: underenhetDto.overordnetEnhet,
         næringer,
+        beliggenhetsadresse: {
+            kommune: underenhetDto.beliggenhetsadresse.kommune,
+            kommunenummer: underenhetDto.beliggenhetsadresse.kommunenummer
+        }
     };
 };
 

@@ -1,4 +1,4 @@
-import { mapTilUnderenhet, UnderenhetDto } from './enhetsregisteret-api';
+import {mapTilUnderenhet, UnderenhetDto} from './enhetsregisteret-api';
 
 describe('tester for enhetsregisteret-api', () => {
     test('Mapping fra UnderenhetDto skal håndtere flere næringer', () => {
@@ -23,6 +23,10 @@ describe('tester for enhetsregisteret-api', () => {
                     kode: '88.911',
                 },
             ],
+            beliggenhetsadresse: {
+                kommune: "OSLO",
+                kommunenummer: "9999"
+            },
         });
     });
 

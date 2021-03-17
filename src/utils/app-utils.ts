@@ -78,6 +78,10 @@ const formatterDato = (dato: Date): string => {
     })}.${year}`;
 };
 
+export const tilIsoDatoMedUtcTimezoneUtenMillis = (dato: Date): String => {
+    return dato.toISOString().split('.')[0] + "Z";
+}
+
 export const formatterDatoMedMånedNavn = (dato: Date): string => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return dato.toLocaleDateString('nb', options);

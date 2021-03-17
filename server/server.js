@@ -4,6 +4,7 @@ const app = express();
 const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
 const proxy = require('./proxy');
+const { getIATjenesterMetrikkerProxy } = require('./ia-tjenester-metrikker-proxy');
 const { BASE_PATH } = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
 
@@ -38,6 +39,7 @@ const startServer = (html) => {
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
 
+    app.use(getIATjenesterMetrikkerProxy());
     app.use(proxy);
 
     app.get(BASE_PATH, (req, res) => {
