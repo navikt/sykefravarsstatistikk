@@ -3,7 +3,7 @@
 Denne appen gir arbeidsgivere muligheten til å sammenligne sykefraværet i egen virksomhet, med sykefraværet i bransjen, sektoren og i hele landet.
 Hensikten er å gjøre arbeidsgivere mer engasjerte i eget sykefravær.
 
-# Test miløer
+# Testmiljø
 
 -   https://arbeidsgiver.labs.nais.io/sykefravarsstatistikk/ -- Funker direkte fra nettleser med Mock data uten tilkobling til backend/preprod data
 -   https://sykefravarsstatistikk.herokuapp.com/sykefravarsstatistikk/ -- Funker direkte fra nettleser men "deprecated"
