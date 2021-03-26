@@ -6,10 +6,9 @@ import {
     getBrødsmulesti,
     medOrgnrQuery,
 } from './brødsmulesti-utils';
-import { setBreadcrumbs } from '@navikt/nav-dekoratoren-moduler';
+import { setBreadcrumbs, onBreadcrumbClick } from '@navikt/nav-dekoratoren-moduler';
 import { useOrgnr } from '../utils/orgnr-hook';
 import { useHistory } from 'react-router-dom';
-import { onBreadcrumbClick } from '@navikt/nav-dekoratoren-moduler/dist';
 import { BASE_PATH } from '../konstanter';
 
 interface Props {
