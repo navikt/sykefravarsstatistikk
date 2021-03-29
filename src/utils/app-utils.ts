@@ -84,6 +84,7 @@ export const tilIsoDatoMedUtcTimezoneUtenMillis = (dato: Date): String => {
 
 export const formatterDatoMedMånedNavn = (dato: Date): string => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    // @ts-ignore
     return dato.toLocaleDateString('nb', options);
 };
 
