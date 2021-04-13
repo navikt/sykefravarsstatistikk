@@ -1522,7 +1522,7 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@navikt/bedriftsmeny@^3.0.0":
+"@navikt/bedriftsmeny@^3.0.3":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@navikt/bedriftsmeny/-/bedriftsmeny-3.0.3.tgz#dee2151823e2b455b0e7cabfead592c2490c4847"
   integrity sha512-l83TA2faIhGKKuuPEj0jD+On8OVlDUFO5H+XqkjNv0lrXF14dFLWP0L2B3Oc1PrrcKEq0+2sPwVkjjrYV/1l1A==
