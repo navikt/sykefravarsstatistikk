@@ -15,8 +15,6 @@ export const AltinnOrganisasjonerProvider: FunctionComponent = (props) => {
         status: RestStatus.LasterInn,
     });
 
-    //const host = 'dev-sbs' === getMiljø() ? 'https://min-side-arbeidsgiver.dev.nav.no' : '';
-
     useEffect(() => {
         hentAltinnOrganisasjoner(
             `${BASE_PATH}/api/organisasjoner`
