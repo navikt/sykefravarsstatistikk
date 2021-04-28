@@ -19,7 +19,7 @@ export const AltinnOrganisasjonerProvider: FunctionComponent = (props) => {
 
     useEffect(() => {
         hentAltinnOrganisasjoner(
-            '/api/organisasjoner'
+            `${BASE_PATH}/api/organisasjoner`
         ).then((altinnOrganisasjoner) => setRestAltinnOrganisasjoner(altinnOrganisasjoner));
     }, []);
 
