@@ -14,6 +14,7 @@ const listeAvTillatteUrler = [
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/kvartalsvis'),
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/bedriftsmetrikker'),
     new RegExp('^' + FRONTEND_API_PATH + '/organisasjoner/statistikk'),
+    new RegExp('^' + FRONTEND_API_PATH + '/organisasjoner'),
     new RegExp('^' + FRONTEND_API_PATH + '/feature'),
 ];
 
