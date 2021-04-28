@@ -15,11 +15,11 @@ export const AltinnOrganisasjonerProvider: FunctionComponent = (props) => {
         status: RestStatus.LasterInn,
     });
 
-    const host = 'dev-sbs' === getMiljø() ? 'https://min-side-arbeidsgiver.dev.nav.no' : '';
+    //const host = 'dev-sbs' === getMiljø() ? 'https://min-side-arbeidsgiver.dev.nav.no' : '';
 
     useEffect(() => {
         hentAltinnOrganisasjoner(
-            host+'/min-side-arbeidsgiver/api/organisasjoner'
+            '/api/organisasjoner'
         ).then((altinnOrganisasjoner) => setRestAltinnOrganisasjoner(altinnOrganisasjoner));
     }, []);
 
