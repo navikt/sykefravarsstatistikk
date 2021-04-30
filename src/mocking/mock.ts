@@ -56,7 +56,7 @@ const mockGetAndLog = (
 };
 
 if (mock.minSideArbeidsgiver) {
-    mockGetAndLog('/min-side-arbeidsgiver/api/organisasjoner', getOrganisasjonerMock(), {
+    mockGetAndLog('/sykefravarsstatistikk/api/organisasjoner', getOrganisasjonerMock(), {
         delay: 1000 * delayfaktor,
     });
 }
