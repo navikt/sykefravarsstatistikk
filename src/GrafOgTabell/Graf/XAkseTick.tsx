@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-const XAkseTick: FunctionComponent<any> = (props) => {
+const XAkseTick = (props: { x: any, y: any, payload: any }) => {
     // Denne komponenten overskriver recharts default Tick-komponent. Dette er gjort som en workaround:
     // Ved endring av skjermstørrelse (f.eks. hvis man roterer mobilen) ble ikke default-ticks rendret.
     const { x, y, payload } = props;
