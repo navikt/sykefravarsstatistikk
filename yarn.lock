@@ -1557,16 +1557,14 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@navikt/bedriftsmeny@^3.0.3":
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/@navikt/bedriftsmeny/-/bedriftsmeny-3.0.4.tgz#a5a9ee52daaa992ff0240c7a687abfdcf2089b29"
-  integrity sha512-8mw4ojFjEpif/cOtZg5/GlLkHVEFOlFOvldKm9APAq3eSNNoAtCbXyzilck37g5CX5sIU+RJMFsu2ucaRZs8xQ==
+"@navikt/bedriftsmeny@^3.0.5":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@navikt/bedriftsmeny/-/bedriftsmeny-3.0.6.tgz#3bbf5e5c129ae0ada7d7e3ca0d063d16619b5c7c"
+  integrity sha512-VvCRkZePsU1W6Yriq+pPi+7bl9yRFnCIgA8uUFeUxsKrBFtMtlZyYEodD8K5YB5gaOBzYLQ6TKSfOVxgLe9iAw==
   dependencies:
-    classnames "^2.2.6"
+    classnames "^2.3.1"
     fuzzysort "^1.1.4"
     lodash.throttle "^4.1.1"
-    postcss-loader "^3.0.0"
-    postcss-prefix-selector "^1.9.0"
     prop-types "^15.7.2"
     whatwg-fetch "^3.6.2"
 
@@ -3666,7 +3664,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@*, classnames@^2.2.5, classnames@^2.2.6:
+classnames@*, classnames@^2.2.5, classnames@^2.2.6, classnames@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
   integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
@@ -9338,7 +9336,7 @@ postcss-load-config@^2.0.0:
     cosmiconfig "^5.0.0"
     import-cwd "^2.0.0"
 
-postcss-loader@3.0.0, postcss-loader@^3.0.0:
+postcss-loader@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/postcss-loader/-/postcss-loader-3.0.0.tgz#6b97943e47c72d845fa9e03f273773d4e8dd6c2d"
   integrity sha512-cLWoDEY5OwHcAjDnkyRQzAXfs2jrKjXpO/HQFcc5b5u/r7aa471wdmChmwfnv7x2u840iat/wi0lQ5nbRgSkUA==
@@ -9586,13 +9584,6 @@ postcss-place@^4.0.1:
   dependencies:
     postcss "^7.0.2"
     postcss-values-parser "^2.0.0"
-
-postcss-prefix-selector@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/postcss-prefix-selector/-/postcss-prefix-selector-1.9.0.tgz#db549802b79f9f91f7419c8c1f86d31d974aff5e"
-  integrity sha512-tTUHUNP+/Qfgg+fvbljUIeLs1ijICWb8+CT3bZM2joE2pkd+EnuBzSfZNHY2RMmozNRp44yEFv+I+6IIiLcoCg==
-  dependencies:
-    postcss "^7.0.0"
 
 postcss-preset-env@6.7.0:
   version "6.7.0"
