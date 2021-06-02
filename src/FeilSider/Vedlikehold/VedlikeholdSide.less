@@ -1,0 +1,55 @@
+@import '../../variables';
+
+.vedlikehold-side {
+    max-width: 50rem;
+    margin: 0 auto 2rem;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0.25rem;
+
+    &__wrapper {
+        padding-top: 2rem;
+        padding-bottom: 5rem;
+        min-height: 40rem;
+        background-color: @navLysGra;
+    }
+
+    &__tekst_og_ikon {
+        display: flex;
+        padding-bottom: 2rem;
+        justify-content: center;
+
+        &__ikon {
+            margin-right: 1rem;
+        }
+    }
+
+    .vedlikehold-side {
+        &__overskrift {
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+        }
+    }
+    &__tekst-wrapper {
+        justify-content: center;
+    }
+
+    &__list-wrapper {
+        margin-bottom: 2rem;
+    }
+
+    &__lenke {
+        .typo-normal-mixin();
+        margin-bottom: 1.5rem;
+        display: block;
+    }
+
+    &__mer-info {
+        padding-top: 2rem;
+        padding-bottom: 0.5rem;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        padding: 3rem;
+    }
+}

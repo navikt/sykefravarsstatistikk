@@ -17,6 +17,7 @@ import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import {
     BASE_PATH,
+    ER_VEDLIKEHOLD_AKTIVERT,
     PATH_FORSIDE,
     PATH_FORSIDE_BARNEHAGE,
     PATH_FORSIDE_GENERELL,
@@ -64,6 +65,7 @@ import {
     LegacySammenligningRedirect,
 } from './utils/redirects';
 import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
+import VedlikeholdSide from "./FeilSider/Vedlikehold/VedlikeholdSide";
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
@@ -138,7 +140,9 @@ const AppContent: FunctionComponent = () => {
         restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
 
     let innhold;
-    if (
+    if (ER_VEDLIKEHOLD_AKTIVERT) {
+        return <VedlikeholdSide/>
+    } else if (
         restOrganisasjoner.status === RestStatus.LasterInn ||
         restVirksomhetMetadata.status === RestStatus.LasterInn
     ) {
