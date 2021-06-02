@@ -1,5 +1,5 @@
 import React from 'react';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import Alertstripe from 'nav-frontend-alertstriper';
 import './VedlikeholdSide.less';
 import Lenke from 'nav-frontend-lenker';

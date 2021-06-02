@@ -7,7 +7,7 @@
     border-radius: 0.25rem;
     position: relative;
 
-    &__feilmelding {
+    &__info-eller-feilmelding {
         width: 100%;
         margin-bottom: 1.5rem;
     }
@@ -32,6 +32,10 @@
 
     @media print {
         &__knapp {
+            display: none;
+        }
+
+        &__info-eller-feilmelding {
             display: none;
         }
 
