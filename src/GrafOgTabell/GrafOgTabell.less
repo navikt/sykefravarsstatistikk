@@ -25,6 +25,10 @@
         max-width: 40rem;
     }
 
+    &__endring-i-sykefraværsstatistikken {
+        padding: 1rem;
+    }
+
     &__innhold {
         margin-top: 1rem;
         overflow: hidden;
@@ -66,6 +70,12 @@
 
         &__innhold {
             width: 100%;
+        }
+    }
+
+    @media print {
+        &__endring-i-sykefraværsstatistikken {
+            display: none;
         }
     }
 }

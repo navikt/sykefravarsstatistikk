@@ -13,6 +13,8 @@ import { useMålingAvTidsbruk, useSendEvent, useSendSidevisningEvent } from '../
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { useOrgnr } from '../utils/orgnr-hook';
+import EndringISykefravRsstatistikkenInfotekst
+    from "../felleskomponenter/EndringISykefraværsstatistikkenInfotekst/EndringISykefraværsstatistikkenInfotekst";
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -68,6 +70,7 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
     return (
         <div className="graf-og-tabell__wrapper">
             <div className="graf-og-tabell">
+                <EndringISykefravRsstatistikkenInfotekst className="graf-og-tabell__endring-i-sykefraværsstatistikken" />
                 {restSykefraværsstatistikk.status !== RestStatus.IngenTilgang ? (
                     <div className="graf-og-tabell__overdel-wrapper">
                         <div className="graf-og-tabell__tekst-wrapper">
