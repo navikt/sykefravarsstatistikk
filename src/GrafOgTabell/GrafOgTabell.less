@@ -8,6 +8,12 @@
     max-width: 60rem;
     min-height: 30rem;
 
+    &__info-eller-feilmelding {
+        width: 100%;
+        margin: 0 auto 1.5rem;
+        max-width: 60rem;
+    }
+
     &__wrapper {
         .sidewrapper-mixin();
         padding-top: 1.5rem;
@@ -23,6 +29,10 @@
 
     &__ingress {
         max-width: 40rem;
+    }
+
+    &__endring-i-sykefraværsstatistikken {
+        padding: 1rem;
     }
 
     &__innhold {
@@ -67,5 +77,16 @@
         &__innhold {
             width: 100%;
         }
+    }
+
+    @media print {
+        &__endring-i-sykefraværsstatistikken {
+            display: none;
+        }
+
+        &__info-eller-feilmelding {
+            display: none;
+        }
+
     }
 }

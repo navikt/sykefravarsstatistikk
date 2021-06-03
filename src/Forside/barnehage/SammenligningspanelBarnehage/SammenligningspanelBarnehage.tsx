@@ -1,13 +1,14 @@
 import React, { FunctionComponent, useRef } from 'react';
 import './SammenligningspanelBarnehage.less';
 import ReactToPrint from 'react-to-print';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import Alertstripe, {AlertStripeFeil, AlertStripeInfo} from 'nav-frontend-alertstriper';
 import { RestSummertSykefraværshistorikk } from '../../../api/summertSykefraværshistorikk';
 import { RestStatus } from '../../../api/api-utils';
 import { useSendEvent } from '../../../amplitude/amplitude';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestAltinnOrganisasjoner } from '../../../api/altinnorganisasjon-api';
 import { useOrgnr } from '../../../utils/orgnr-hook';
+import Lenke from "nav-frontend-lenker";
 
 export const SammenligningspanelBarnehage: FunctionComponent<{
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
@@ -26,8 +27,16 @@ export const SammenligningspanelBarnehage: FunctionComponent<{
 
     return (
         <>
+            {!harFeil && (<AlertStripeInfo className="sammenligningspanel-barnehage__info-eller-feilmelding">
+                    <Lenke
+                        href="https://www.nav.no/no/nav-og-samfunn/statistikk/sykefravar-statistikk/relatert-informasjon/endringer-i-sykefravaersstatistikken-fra-og-med-1.kvartal-2021">
+                        Endringer i sykefraværsstatistikken
+                    </Lenke>
+                </AlertStripeInfo>
+            )}
+
             {harFeil && (
-                <AlertStripeFeil className="sammenligningspanel-barnehage__feilmelding">
+                <AlertStripeFeil className="sammenligningspanel-barnehage__info-eller-feilmelding">
                     Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen senere.
                 </AlertStripeFeil>
             )}
@@ -60,5 +69,5 @@ export const SammenligningspanelBarnehage: FunctionComponent<{
                 {children}
             </div>
         </>
-    );
+    )
 };
