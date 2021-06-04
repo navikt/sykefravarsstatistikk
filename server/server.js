@@ -6,6 +6,7 @@ const mustacheExpress = require('mustache-express');
 const proxy = require('./proxy');
 const { getIATjenesterMetrikkerProxy } = require('./ia-tjenester-metrikker-proxy');
 const { BASE_PATH } = require('./konstanter');
+const { KALKULATOR_PATH } = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
 
 const PORT = process.env.PORT || 3000;
@@ -39,7 +40,7 @@ const startServer = (html) => {
     app.get(`${KALKULATOR_PATH}/redirect-til-login`, (req, res) => {
         const loginUrl =
             process.env.LOGIN_URL_KALKULATOR ||
-            'http://localhost:8080/sykefravarsstatistikk-api/local/cookie?subject=01065500791&cookiename=selvbetjening-idtoken&redirect=http://localhost:3000/sykefravarsstatistikk';
+            'http://localhost:8080/sykefravarsstatistikk-api/local/cookie?subject=01065500791&cookiename=selvbetjening-idtoken&redirect=http://localhost:3000/sykefravarsstatistikk/kalkulator';
         res.redirect(loginUrl);
     });
 
