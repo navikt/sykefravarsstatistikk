@@ -65,7 +65,7 @@ import {
     LegacySammenligningRedirect,
 } from './utils/redirects';
 import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
-import VedlikeholdSide from "./FeilSider/Vedlikehold/VedlikeholdSide";
+import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
@@ -141,7 +141,7 @@ const AppContent: FunctionComponent = () => {
 
     let innhold;
     if (ER_VEDLIKEHOLD_AKTIVERT) {
-        return <VedlikeholdSide/>
+        return <VedlikeholdSide />;
     } else if (
         restOrganisasjoner.status === RestStatus.LasterInn ||
         restVirksomhetMetadata.status === RestStatus.LasterInn
@@ -197,7 +197,12 @@ const AppContent: FunctionComponent = () => {
                 </Route>
                 <Route path={PATH_KALKULATOR} exact={true}>
                     <Brødsmulesti gjeldendeSide="kalkulator" />
-                    <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk} />
+                    <InnloggingssideWrapper
+                        restSykefraværshistorikk={restSykefraværshistorikk}
+                        restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
+                    >
+                        <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk} />
+                    </InnloggingssideWrapper>
                 </Route>
                 <Route path={PATH_HISTORIKK} exact={true}>
                     <Brødsmulesti gjeldendeSide="historikk" />

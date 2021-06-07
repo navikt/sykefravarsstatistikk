@@ -26,6 +26,7 @@ const InnloggingssideWrapper: React.FunctionComponent<Props> = ({
             );
         }
         case RestStatus.IkkeInnlogget: {
+            console.log('inside innlogginssidewrapper:');
             return <Innloggingsside />;
         }
         default: {

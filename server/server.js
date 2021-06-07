@@ -28,6 +28,8 @@ const renderAppMedDecorator = (decoratorFragments) => {
 };
 
 const startServer = (html) => {
+    console.log('kalkPath:' + KALKULATOR_PATH);
+
     app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
@@ -41,6 +43,9 @@ const startServer = (html) => {
         const loginUrl =
             process.env.LOGIN_URL_KALKULATOR ||
             'http://localhost:8080/sykefravarsstatistikk-api/local/cookie?subject=01065500791&cookiename=selvbetjening-idtoken&redirect=http://localhost:3000/sykefravarsstatistikk/kalkulator';
+        console.log(
+            'kalkulator url ble requested, forsøker å gå tilbake til kalkulator:' + loginUrl
+        );
         res.redirect(loginUrl);
     });
 

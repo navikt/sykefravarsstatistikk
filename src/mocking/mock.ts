@@ -18,7 +18,7 @@ import { KURSOVERSIKT_API_PATH } from '../api/kurs-api';
 
 const mock = {
     minSideArbeidsgiver: true,
-    sykefraværsstatistikkApi: true,
+    sykefraværsstatistikkApi: false,
     enhetsregisteret: true,
     featureToggles: true,
     kursliste: true,
