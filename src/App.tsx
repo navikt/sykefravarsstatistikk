@@ -200,6 +200,7 @@ const AppContent: FunctionComponent = () => {
                     <InnloggingssideWrapper
                         restSykefraværshistorikk={restSykefraværshistorikk}
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
+                        redirectPath={PATH_KALKULATOR}
                     >
                         <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk} />
                     </InnloggingssideWrapper>
