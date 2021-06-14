@@ -39,7 +39,8 @@ const startServer = (html) => {
         res.redirect(loginUrl);
     });
 
-    app.get(`${KALKULATOR_PATH}/redirect-til-login`, (req, res) => {
+    //app.get(`${KALKULATOR_PATH}/redirect-til-login`, (req, res) => {
+    app.get('/sykefravarsstatistikk/kalkulator/redirect-til-login', (req, res) => {
         const loginUrl =
             process.env.LOGIN_URL_KALKULATOR ||
             'http://localhost:8080/sykefravarsstatistikk-api/local/cookie?subject=01065500791&cookiename=selvbetjening-idtoken&redirect=http://localhost:3000/sykefravarsstatistikk/kalkulator';
@@ -48,7 +49,7 @@ const startServer = (html) => {
         );
         res.redirect(loginUrl);
     });
-
+    console.log(window.location.href);
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
 
