@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useContext, useEffect, useState} from 'react';
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
@@ -15,9 +15,10 @@ import { ToggleKnappPure } from 'nav-frontend-toggle';
 import { useOrgnr } from '../../utils/orgnr-hook';
 import {
     erIaTjenesterMetrikkerSendtForBedrift,
-    iaTjenesterMetrikkerErSendtForBedrift, useSendIaTjenesteMetrikkEvent
-} from "../../metrikker/iatjenester";
-import {iaTjenesterMetrikkerContext} from "../../metrikker/IaTjenesterMetrikkerContext";
+    iaTjenesterMetrikkerErSendtForBedrift,
+    useSendIaTjenesteMetrikkEvent,
+} from '../../metrikker/iatjenester';
+import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;

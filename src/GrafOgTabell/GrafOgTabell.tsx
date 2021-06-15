@@ -1,21 +1,26 @@
-import React, {FunctionComponent, useEffect, useState} from 'react';
-import {RestSykefraværshistorikk} from '../api/kvartalsvisSykefraværshistorikk';
-import {ToggleGruppePure} from 'nav-frontend-toggle';
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
+import { RestSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
+import { ToggleGruppePure } from 'nav-frontend-toggle';
 import Graf from './Graf/Graf';
 import Tabell from './Tabell/Tabell';
 import './GrafOgTabell.less';
-import {Normaltekst, Systemtittel} from 'nav-frontend-typografi';
-import {RestStatus} from '../api/api-utils';
+import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import AlertStripe, {AlertStripeInfo} from 'nav-frontend-alertstriper';
-import {scrollToBanner} from '../utils/scrollUtils';
-import {useMålingAvTidsbruk, useSendEvent, useSendSidevisningEvent} from '../amplitude/amplitude';
+import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import { scrollToBanner } from '../utils/scrollUtils';
+import { useMålingAvTidsbruk, useSendEvent, useSendSidevisningEvent } from '../amplitude/amplitude';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
-import {RestAltinnOrganisasjoner} from '../api/altinnorganisasjon-api';
-import {useOrgnr} from '../utils/orgnr-hook';
-import EndringISykefravRsstatistikkenInfotekst
-    from "../felleskomponenter/EndringISykefraværsstatistikkenInfotekst/EndringISykefraværsstatistikkenInfotekst";
-import Lenke from "nav-frontend-lenker";
+import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
+import { useOrgnr } from '../utils/orgnr-hook';
+import EndringISykefravRsstatistikkenInfotekst from '../felleskomponenter/EndringISykefraværsstatistikkenInfotekst/EndringISykefraværsstatistikkenInfotekst';
+import Lenke from 'nav-frontend-lenker';
+import {
+    erIaTjenesterMetrikkerSendtForBedrift,
+    iaTjenesterMetrikkerErSendtForBedrift,
+    useSendIaTjenesteMetrikkEvent,
+} from '../metrikker/iatjenester';
+import { iaTjenesterMetrikkerContext } from '../metrikker/IaTjenesterMetrikkerContext';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -25,6 +30,8 @@ interface Props {
 const GrafOgTabell: FunctionComponent<Props> = (props) => {
     const sendEvent = useSendEvent();
     const orgnr = useOrgnr();
+    const sendIaTjenesteMetrikkEvent = useSendIaTjenesteMetrikkEvent();
+    const context = useContext(iaTjenesterMetrikkerContext);
 
     useEffect(() => {
         scrollToBanner();
@@ -32,9 +39,24 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
     useMålingAvTidsbruk('historikk', 5, 30, 60, 120);
     useSendSidevisningEvent('historikk', orgnr);
 
+    useEffect(() => {
+        if (!erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker)) {
+            sendIaTjenesteMetrikkEvent().then((isSent) => {
+                if (isSent) {
+                    context.setBedrifterSomHarSendtMetrikker(
+                        iaTjenesterMetrikkerErSendtForBedrift(
+                            orgnr,
+                            context.bedrifterSomHarSendtMetrikker
+                        )
+                    );
+                }
+            });
+        }
+    }, []);
+
     const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
 
-    const {restSykefraværsstatistikk} = props;
+    const { restSykefraværsstatistikk } = props;
 
     let innhold;
 
@@ -44,7 +66,7 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
     ) {
         innhold = (
             <div className="graf-og-tabell__spinner">
-                <NavFrontendSpinner type={'XXL'}/>
+                <NavFrontendSpinner type={'XXL'} />
             </div>
         );
     } else if (restSykefraværsstatistikk.status === RestStatus.IngenTilgang) {
@@ -62,24 +84,23 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
     } else {
         innhold =
             grafEllerTabell === 'graf' ? (
-                <Graf sykefraværshistorikk={restSykefraværsstatistikk.data}/>
+                <Graf sykefraværshistorikk={restSykefraværsstatistikk.data} />
             ) : (
-                <Tabell sykefraværshistorikk={restSykefraværsstatistikk.data}/>
+                <Tabell sykefraværshistorikk={restSykefraværsstatistikk.data} />
             );
     }
 
     return (
         <div className="graf-og-tabell__wrapper">
             <AlertStripeInfo className="graf-og-tabell__info-eller-feilmelding">
-                <Lenke
-                    href="https://www.nav.no/no/nav-og-samfunn/statistikk/sykefravar-statistikk/relatert-informasjon/endringer-i-sykefravaersstatistikken-fra-og-med-1.kvartal-2021">
+                <Lenke href="https://www.nav.no/no/nav-og-samfunn/statistikk/sykefravar-statistikk/relatert-informasjon/endringer-i-sykefravaersstatistikken-fra-og-med-1.kvartal-2021">
                     Endringer i sykefraværsstatistikken
-                </Lenke>.
+                </Lenke>
+                .
             </AlertStripeInfo>
 
             <div className="graf-og-tabell">
-                <EndringISykefravRsstatistikkenInfotekst
-                    className="graf-og-tabell__endring-i-sykefraværsstatistikken"/>
+                <EndringISykefravRsstatistikkenInfotekst className="graf-og-tabell__endring-i-sykefraværsstatistikken" />
                 {restSykefraværsstatistikk.status !== RestStatus.IngenTilgang ? (
                     <div className="graf-og-tabell__overdel-wrapper">
                         <div className="graf-og-tabell__tekst-wrapper">
