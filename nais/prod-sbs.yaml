@@ -26,3 +26,5 @@ spec:
       value: /etc/ssl/ca-bundle.pem
     - name: LOGIN_URL
       value: https://loginservice.nav.no/login?redirect=https://arbeidsgiver.nav.no/sykefravarsstatistikk/
+    - name: LOGIN_URL_KALKULATOR
+      value: https://loginservice.nav.no/login?redirect=https://arbeidsgiver.nav.no/sykefravarsstatistikk/kalkulator/

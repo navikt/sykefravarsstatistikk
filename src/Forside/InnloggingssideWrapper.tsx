@@ -9,11 +9,13 @@ import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
     restOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
+    redirectPath?: string;
 }
 
 const InnloggingssideWrapper: React.FunctionComponent<Props> = ({
     restSykefraværshistorikk,
     restOrganisasjonerMedStatistikk,
+    redirectPath,
     children,
 }) => {
     const status = restSykefraværshistorikk.status;
@@ -26,8 +28,7 @@ const InnloggingssideWrapper: React.FunctionComponent<Props> = ({
             );
         }
         case RestStatus.IkkeInnlogget: {
-            return <Innloggingsside />;
-        }
+            return <Innloggingsside redirectPath={redirectPath} />;        }
         default: {
             return <>{children}</>;
         }

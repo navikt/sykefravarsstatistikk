@@ -197,7 +197,13 @@ const AppContent: FunctionComponent = () => {
                 </Route>
                 <Route path={PATH_KALKULATOR} exact={true}>
                     <Brødsmulesti gjeldendeSide="kalkulator" />
-                    <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk} />
+                    <InnloggingssideWrapper
+                        restSykefraværshistorikk={restSykefraværshistorikk}
+                        restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
+                        redirectPath={PATH_KALKULATOR}
+                    >
+                        <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk} />
+                    </InnloggingssideWrapper>
                 </Route>
                 <Route path={PATH_HISTORIKK} exact={true}>
                     <Brødsmulesti gjeldendeSide="historikk" />
