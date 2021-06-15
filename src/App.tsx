@@ -65,7 +65,7 @@ import {
     LegacySammenligningRedirect,
 } from './utils/redirects';
 import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
-import VedlikeholdSide from "./FeilSider/Vedlikehold/VedlikeholdSide";
+import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
@@ -141,7 +141,7 @@ const AppContent: FunctionComponent = () => {
 
     let innhold;
     if (ER_VEDLIKEHOLD_AKTIVERT) {
-        return <VedlikeholdSide/>
+        return <VedlikeholdSide />;
     } else if (
         restOrganisasjoner.status === RestStatus.LasterInn ||
         restVirksomhetMetadata.status === RestStatus.LasterInn
@@ -151,7 +151,7 @@ const AppContent: FunctionComponent = () => {
         restOrganisasjoner.status === RestStatus.IkkeInnlogget &&
         !location.pathname.includes('iawebredirectside')
     ) {
-        return <Innloggingsside />;
+        return <Innloggingsside redirectPath={PATH_KALKULATOR} />;
     } else if (
         restOrganisasjoner.status !== RestStatus.Suksess &&
         !location.pathname.includes('iawebredirectside')
