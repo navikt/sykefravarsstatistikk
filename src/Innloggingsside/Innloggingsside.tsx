@@ -10,7 +10,6 @@ interface Props {
     redirectPath: string;
 }
 export const Innloggingsside: React.FunctionComponent<Props> = ({ redirectPath }) => {
-    console.log(`redirectPath:${redirectPath}`);
     const redirectTilLogin = () => {
         window.location.href = `/sykefravarsstatistikk/redirect-til-login?redirect=${redirectPath}`;
     };
