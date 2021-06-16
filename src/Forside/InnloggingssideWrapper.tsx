@@ -26,7 +26,7 @@ const InnloggingssideWrapper: React.FunctionComponent<Props> = ({
             );
         }
         case RestStatus.IkkeInnlogget: {
-            return <Innloggingsside redirectPath={window.location.href} />;        }
+            return <Innloggingsside redirectUrl={window.location.href} />;        }
         default: {
             return <>{children}</>;
         }
