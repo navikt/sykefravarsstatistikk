@@ -6,9 +6,12 @@ import Lenke from 'nav-frontend-lenker';
 import './Innloggingsside.less';
 import Sidetittel from 'nav-frontend-typografi/lib/sidetittel';
 
-export const Innloggingsside: React.FunctionComponent = () => {
+interface Props {
+    redirectUrl: string;
+}
+export const Innloggingsside: React.FunctionComponent<Props> = ({ redirectUrl }) => {
     const redirectTilLogin = () => {
-        window.location.href = '/sykefravarsstatistikk/redirect-til-login';
+        window.location.href = `/sykefravarsstatistikk/redirect-til-login?redirect=${redirectUrl}`;
     };
 
     return (
