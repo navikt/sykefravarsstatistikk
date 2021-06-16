@@ -151,7 +151,7 @@ const AppContent: FunctionComponent = () => {
         restOrganisasjoner.status === RestStatus.IkkeInnlogget &&
         !location.pathname.includes('iawebredirectside')
     ) {
-        return <Innloggingsside redirectPath={PATH_KALKULATOR} />;
+        return <Innloggingsside redirectPath={window.location.href} />;
     } else if (
         restOrganisasjoner.status !== RestStatus.Suksess &&
         !location.pathname.includes('iawebredirectside')

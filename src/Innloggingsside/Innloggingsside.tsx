@@ -7,14 +7,12 @@ import './Innloggingsside.less';
 import Sidetittel from 'nav-frontend-typografi/lib/sidetittel';
 
 interface Props {
-    redirectPath?: string;
+    redirectPath: string;
 }
 export const Innloggingsside: React.FunctionComponent<Props> = ({ redirectPath }) => {
     console.log(`redirectPath:${redirectPath}`);
     const redirectTilLogin = () => {
-        redirectPath
-            ? (window.location.href = `/sykefravarsstatistikk${redirectPath}/redirect-til-login`)
-            : (window.location.href = '/sykefravarsstatistikk/redirect-til-login');
+        window.location.href = `/sykefravarsstatistikk/redirect-til-login?redirect=${redirectPath}`;
     };
 
     return (
