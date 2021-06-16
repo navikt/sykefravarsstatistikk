@@ -32,8 +32,8 @@ const startServer = (html) => {
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
         const loginUrl =
             process.env.LOGIN_URL ||
-            'http://localhost:8080/sykefravarsstatistikk-api/local/cookie?subject=01065500791&cookiename=selvbetjening-idtoken&redirect=http://localhost:3000/sykefravarsstatistikk';
-        res.redirect(loginUrl);
+            'http://localhost:8080/sykefravarsstatistikk-api/local/cookie?subject=01065500791&cookiename=selvbetjening-idtoken&redirect=';
+        res.redirect(loginUrl + req.query.redirect);
     });
 
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));

@@ -26,7 +26,7 @@ spec:
         - name: NODE_EXTRA_CA_CERTS
           value: /etc/ssl/ca-bundle.pem
         - name: LOGIN_URL
-          value: https://loginservice-q.nav.no/login?redirect=https://arbeidsgiver-q.nav.no/sykefravarsstatistikk/
+          value: https://loginservice-q.nav.no/login?redirect=
     accessPolicy:
         outbound:
             external:
