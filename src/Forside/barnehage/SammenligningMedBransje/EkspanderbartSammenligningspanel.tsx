@@ -99,7 +99,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const innhold = (
         <>
             {sammenligningsType === SammenligningsType.GRADERT && (
-                <div>
+                <div className="ekspanderbart-sammenligningspanel__gradert_intro">
                     <Ingress>Slik regner vi ut prosenten på gradert sykmelding:</Ingress>
                     <Normaltekst className="ekspanderbart-sammenligningspanel__utregningsforklring-tekst">
                         Vi teller antall fraværsdager med bruk av gradert sykmelding. Så beregner vi
