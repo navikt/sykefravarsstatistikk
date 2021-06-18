@@ -39,7 +39,7 @@ jobs:
 
     deploy-to-dev:
         name: Deploy to dev-sbs
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/redirect-til-onskede-side-v2'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/sende-ia-tjeneste-mottatt-ved-klikk-paa-kalkulator-og-historikk'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
