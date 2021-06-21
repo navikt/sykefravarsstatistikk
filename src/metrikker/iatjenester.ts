@@ -222,13 +222,11 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
         const eriaTjenesteMetrikkKlarTilUtsending = iaTjenesteMetrikk.fylkesnummer !== '';
 
         if (eriaTjenesteMetrikkKlarTilUtsending) {
-            console.log("[DEBUG] entering useEffect, eriaTjenesteMetrikkKlarTilUtsending?", eriaTjenesteMetrikkKlarTilUtsending);
             let timerFunc = setTimeout(() => {
                 const erIaTjenesterMetrikkerSendtForDenneBedrift = erIaTjenesterMetrikkerSendtForBedrift(
                     orgnr,
                     context.bedrifterSomHarSendtMetrikker
                 );
-                console.log("[DEBUG] erIaTjenesterMetrikkerSendtForDenneBedrift?", erIaTjenesterMetrikkerSendtForDenneBedrift);
                 if (
                     !erIaTjenesterMetrikkerSendtForDenneBedrift
                 ) {
@@ -245,8 +243,6 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
                 }
             }, 5000);
             return () => clearTimeout(timerFunc);
-        } else {
-            console.log("[DEBUG] NOT entering useEffect, eriaTjenesteMetrikkKlarTilUtsending?", eriaTjenesteMetrikkKlarTilUtsending);
         }
     }, [useOrgnr(), useContext<EnhetsregisteretState>(enhetsregisteretContext)]);
 };
