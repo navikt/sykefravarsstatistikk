@@ -41,7 +41,7 @@ type SendEvent = (område: string, hendelse: string, data?: Object) => void;
 
 export const amplitudeInstance = instance;
 
-export type EventData ={[key:string]: any}
+export type EventData = { [key: string]: any };
 
 export const setUserProperties = (properties: Object) => instance.setUserProperties(properties);
 
@@ -110,16 +110,15 @@ export const useMålingAvTidsbruk = (
 
 const useEkstraDataRef = (): MutableRefObject<Partial<Ekstradata>> => {
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
-
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
         sykefraværshistorikkContext
     );
     const restSummertSykefraværshistorikk = useContext<RestSummertSykefraværshistorikk>(
         summertSykefraværshistorikkContext
     );
+    const dataFraEnhetsregisteret = useContext<EnhetsregisteretState>(enhetsregisteretContext);
 
     const ekstradata = useRef<Partial<Ekstradata>>({});
-    const dataFraEnhetsregisteret = useContext<EnhetsregisteretState>(enhetsregisteretContext);
 
     useEffect(() => {
         ekstradata.current = {

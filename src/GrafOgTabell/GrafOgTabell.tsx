@@ -15,12 +15,7 @@ import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { useOrgnr } from '../utils/orgnr-hook';
 import EndringISykefravRsstatistikkenInfotekst from '../felleskomponenter/EndringISykefraværsstatistikkenInfotekst/EndringISykefraværsstatistikkenInfotekst';
 import Lenke from 'nav-frontend-lenker';
-import {
-    erIaTjenesterMetrikkerSendtForBedrift,
-    iaTjenesterMetrikkerErSendtForBedrift,
-    useSendIaTjenesteMetrikkEvent,
-} from '../metrikker/iatjenester';
-import { iaTjenesterMetrikkerContext } from '../metrikker/IaTjenesterMetrikkerContext';
+import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../metrikker/iatjenester';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -30,33 +25,17 @@ interface Props {
 const GrafOgTabell: FunctionComponent<Props> = (props) => {
     const sendEvent = useSendEvent();
     const orgnr = useOrgnr();
-    const sendIaTjenesteMetrikkEvent = useSendIaTjenesteMetrikkEvent();
-    const context = useContext(iaTjenesterMetrikkerContext);
 
     useEffect(() => {
         scrollToBanner();
     }, []);
+
     useMålingAvTidsbruk('historikk', 5, 30, 60, 120);
     useSendSidevisningEvent('historikk', orgnr);
-
-    useEffect(() => {
-        if (!erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker)) {
-            sendIaTjenesteMetrikkEvent().then((isSent) => {
-                if (isSent) {
-                    context.setBedrifterSomHarSendtMetrikker(
-                        iaTjenesterMetrikkerErSendtForBedrift(
-                            orgnr,
-                            context.bedrifterSomHarSendtMetrikker
-                        )
-                    );
-                }
-            });
-        }
-    }, []);
-
-    const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
+    useSendIaTjenesteMetrikkMottattVedSidevisningEvent();
 
     const { restSykefraværsstatistikk } = props;
+    const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
 
     let innhold;
 

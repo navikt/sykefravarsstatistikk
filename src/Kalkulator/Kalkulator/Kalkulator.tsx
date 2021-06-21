@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
@@ -13,12 +13,7 @@ import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
 import { useOrgnr } from '../../utils/orgnr-hook';
-import {
-    erIaTjenesterMetrikkerSendtForBedrift,
-    iaTjenesterMetrikkerErSendtForBedrift,
-    useSendIaTjenesteMetrikkEvent,
-} from '../../metrikker/iatjenester';
-import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
+import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../../metrikker/iatjenester';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -30,30 +25,14 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     );
     const orgnr = useOrgnr();
     const sendEvent = useSendEvent();
-    const sendIaTjenesteMetrikkEvent = useSendIaTjenesteMetrikkEvent();
-    const context = useContext(iaTjenesterMetrikkerContext);
 
     // kalkulator2 fordi det opprinnelige eventnavnet er merget med en annen event i Amplitude
     useMålingAvTidsbruk('kalkulator2', 5, 30, 60, 120);
     useSendSidevisningEvent('kalkulator', orgnr);
+    useSendIaTjenesteMetrikkMottattVedSidevisningEvent();
 
     useEffect(() => {
         scrollToBanner();
-    }, []);
-
-    useEffect(() => {
-        if (!erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker)) {
-            sendIaTjenesteMetrikkEvent().then((isSent) => {
-                if (isSent) {
-                    context.setBedrifterSomHarSendtMetrikker(
-                        iaTjenesterMetrikkerErSendtForBedrift(
-                            orgnr,
-                            context.bedrifterSomHarSendtMetrikker
-                        )
-                    );
-                }
-            });
-        }
     }, []);
 
     return (
