@@ -117,7 +117,10 @@ if (mock.enhetsregisteret) {
             orgnr: orgnr,
             institusjonellSektorkode: { kode: '6500', beskrivelse: 'Offentlig sektor' },
         };
-        return getMockOrganisasjon(orgnr)?.overordnetEnhet || defaultOverordnetEnhet;
+        const overordnetEnhet = getMockOrganisasjon(orgnr)?.overordnetEnhet;
+        console.log("MOCK ENHETREGISTERET / ENHETER, orgnr: ", orgnr)
+        console.log("MOCK ENHETREGISTERE  / ENHETERT, overordnetenhet: ", overordnetEnhet)
+        return overordnetEnhet || defaultOverordnetEnhet;
     });
 
     mockGetAndLog('begin:https://data.brreg.no/enhetsregisteret/api/underenheter/', (url) => {
@@ -126,7 +129,9 @@ if (mock.enhetsregisteret) {
             ...underenhetMock,
             organisasjonsnummer: orgnr,
         };
-        return getMockOrganisasjon(orgnr)?.underenhetDto || defaultUnderenhetDto;
+        const underenhetDto = getMockOrganisasjon(orgnr)?.underenhetDto;
+        console.log("MOCK ENHETREGISTERET  / UNDERENHETER, underenhetDto: ", underenhetDto)
+        return underenhetDto || defaultUnderenhetDto;
     });
 }
 
