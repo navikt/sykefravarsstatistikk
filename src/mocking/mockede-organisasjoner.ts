@@ -1,14 +1,14 @@
-import { VirksomhetMetadata } from '../api/virksomhetMetadata';
-import { KvartalsvisSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
+import {VirksomhetMetadata} from '../api/virksomhetMetadata';
+import {KvartalsvisSykefraværshistorikk} from '../api/kvartalsvisSykefraværshistorikk';
 import {
     lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet,
     lagMaskertHistorikk,
     lagMockHistorikkForBarnehage,
 } from './sykefraværshistorikk-mock';
-import { Statistikkategori, SummertSykefraværshistorikk } from '../api/summertSykefraværshistorikk';
-import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
-import { getVirksomhetMetadataMock } from './virksomhet-metadata-mock';
-import { ArbeidstilsynetBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
+import {Statistikkategori, SummertSykefraværshistorikk} from '../api/summertSykefraværshistorikk';
+import {OverordnetEnhet, UnderenhetDto} from '../api/enhetsregisteret-api';
+import {getVirksomhetMetadataMock} from './virksomhet-metadata-mock';
+import {ArbeidstilsynetBransje} from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
 import {
     getSummertSykefraværshistorikkMock,
     summertSykefraværshistorikkMockGrønn,
@@ -31,7 +31,61 @@ export interface OrganisasjonMock {
 export const getMockOrganisasjon = (orgnr: string): OrganisasjonMock | undefined =>
     mockedeOrganisasjoner.find((org) => org.orgnr === orgnr);
 
+export const OverordnetEnhetFiskOgFlesk: OverordnetEnhet = {
+    orgnr: "111111111",
+    institusjonellSektorkode: {kode: '2100', beskrivelse: 'Private aksjeselskaper mv.'},
+};
+
+export const underenhetFiskOgFleskMock: UnderenhetDto = {
+    organisasjonsnummer: "910969439",
+    navn: "FLESK OG FISK OSLO",
+    organisasjonsform: {
+        kode: "BEDR",
+        beskrivelse: "Bedrift",
+        _links: {
+            self: {
+                href: "https://data.brreg.no/enhetsregisteret/api/organisasjonsformer/BEDR"
+            }
+        }
+    },
+    registreringsdatoEnhetsregisteret: "1990-01-01",
+    registrertIMvaregisteret: false,
+    naeringskode1: {
+        beskrivelse: "Hav- og kystfiske",
+        kode: "03.111"
+    },
+    antallAnsatte: 38,
+    overordnetEnhet: "111111111",
+    oppstartsdato: "1990-01-01",
+    beliggenhetsadresse: {
+        land: "Norge",
+        landkode: "NO",
+        postnummer: "9392",
+        poststed: "STONGLANDSEIDET",
+        adresse: [
+            "testadresse AS"
+        ],
+        kommune: "SENJA",
+        kommunenummer: "5421"
+    },
+    _links: {
+        self: {
+            href: "https://data.brreg.no/enhetsregisteret/api/underenheter/910969439"
+        },
+        overordnetEnhet: {
+            href: "https://data.brreg.no/enhetsregisteret/api/enheter/111111111"
+        }
+    }
+}
+
 const mockedeOrganisasjoner: OrganisasjonMock[] = [
+    {
+        orgnr: '111111111',
+        bedriftsmetrikker: 500,
+        sykefraværshistorikkKvartalsvis: 500,
+        summertSykefraværshistorikk: 500,
+        overordnetEnhet: OverordnetEnhetFiskOgFlesk,
+    },
     {
         orgnr: '101010101',
         bedriftsmetrikker: 500,
@@ -50,6 +104,15 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
             Statistikkategori.NÆRING,
             'Produksjon av nærings- og nytelsesmidler'
         ),
+        overordnetEnhet: OverordnetEnhetFiskOgFlesk,
+        underenhetDto: underenhetFiskOgFleskMock,
+        bedriftsmetrikker: {
+            antallAnsatte: 132,
+            næringskode5Siffer: {
+                kode: '03111',
+                beskrivelse: 'Hav- og kystfiske',
+            },
+        }
     },
     {
         orgnr: '888888881',
