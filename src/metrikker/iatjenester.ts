@@ -11,6 +11,7 @@ import {
 } from '../api/enhetsregisteret-api';
 import { useOrgnr } from '../utils/orgnr-hook';
 import { tilIsoDatoMedUtcTimezoneUtenMillis } from '../utils/app-utils';
+import { iaTjenesterMetrikkerContext } from './IaTjenesterMetrikkerContext';
 
 interface IaTjenesteMetrikkerEkstraData {
     orgnr: String;
@@ -79,10 +80,10 @@ const getIaTjenesterMetrikkerUrl = () => {
 const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
 export type EventData = { [key: string]: any };
 
-export const useSendIaTjenesteMetrikkEvent = (): (() => Promise<boolean>) => {
-    const ekstradata = useIaTjenesteMetrikkerEkstraDataRef();
-    const nåværendeOrgnr = useOrgnr();
-
+function byggIaTjenesteMottattMetrikk(
+    nåværendeOrgnr: string | undefined,
+    ekstradata: React.MutableRefObject<Partial<IaTjenesteMetrikkerEkstraData>>
+) {
     const iaTjenesteMetrikk: IatjenesteMetrikk = {
         orgnr: nåværendeOrgnr ? nåværendeOrgnr : '',
         antallAnsatte: ekstradata.current.antallAnsatte ? ekstradata.current.antallAnsatte : 0,
@@ -109,6 +110,13 @@ export const useSendIaTjenesteMetrikkEvent = (): (() => Promise<boolean>) => {
             : '',
         tjenesteMottakkelsesdato: tilIsoDatoMedUtcTimezoneUtenMillis(new Date()),
     };
+    return iaTjenesteMetrikk;
+}
+
+export const useSendIaTjenesteMetrikkEvent = (): (() => Promise<boolean>) => {
+    const ekstradata = useIaTjenesteMetrikkerEkstraDataRef();
+    const nåværendeOrgnr = useOrgnr();
+    const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(nåværendeOrgnr, ekstradata);
 
     return () => sendIATjenesteMetrikk(iaTjenesteMetrikk);
 };
@@ -139,21 +147,27 @@ export const sendIATjenesteMetrikk = async (iatjeneste: IatjenesteMetrikk) => {
 const useIaTjenesteMetrikkerEkstraDataRef = (): MutableRefObject<
     Partial<IaTjenesteMetrikkerEkstraData>
 > => {
-    const iaTjenesterMetrikkerEkstraData = useRef<Partial<IaTjenesteMetrikkerEkstraData>>({});
-
     const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
     const dataFraEnhetsregisteret = useContext<EnhetsregisteretState>(enhetsregisteretContext);
+    const iaTjenesterMetrikkerEkstraData = useRef<Partial<IaTjenesteMetrikkerEkstraData>>({});
 
     useEffect(() => {
-        iaTjenesterMetrikkerEkstraData.current = {
-            ...getIaTjenesteMetrikkerEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
-            ...getIaTjenesteMetrikkerEkstraDataFraEnhetsregisteret(
-                dataFraEnhetsregisteret.restOverordnetEnhet,
-                dataFraEnhetsregisteret.restUnderenhet,
-                restVirksomhetMetadata
-            ),
-        };
+        if (
+            restVirksomhetMetadata.status === RestStatus.Suksess &&
+            dataFraEnhetsregisteret.restUnderenhet.status === RestStatus.Suksess &&
+            dataFraEnhetsregisteret.restOverordnetEnhet.status === RestStatus.Suksess
+        ) {
+            iaTjenesterMetrikkerEkstraData.current = {
+                ...getIaTjenesteMetrikkerEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
+                ...getIaTjenesteMetrikkerEkstraDataFraEnhetsregisteret(
+                    dataFraEnhetsregisteret.restOverordnetEnhet,
+                    dataFraEnhetsregisteret.restUnderenhet,
+                    restVirksomhetMetadata
+                ),
+            };
+        }
     }, [restVirksomhetMetadata, dataFraEnhetsregisteret]);
+
     return iaTjenesterMetrikkerEkstraData;
 };
 
@@ -196,4 +210,39 @@ const getIaTjenesteMetrikkerEkstraDataFraEnhetsregisteret = (
         };
     }
     return {};
+};
+
+export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
+    const context = useContext(iaTjenesterMetrikkerContext);
+    const ekstradata = useIaTjenesteMetrikkerEkstraDataRef();
+    const orgnr = useOrgnr();
+
+    useEffect(() => {
+        const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr, ekstradata);
+        const eriaTjenesteMetrikkKlarTilUtsending = iaTjenesteMetrikk.fylkesnummer !== '';
+
+        if (eriaTjenesteMetrikkKlarTilUtsending) {
+            let timerFunc = setTimeout(() => {
+                const erIaTjenesterMetrikkerSendtForDenneBedrift = erIaTjenesterMetrikkerSendtForBedrift(
+                    orgnr,
+                    context.bedrifterSomHarSendtMetrikker
+                );
+                if (
+                    !erIaTjenesterMetrikkerSendtForDenneBedrift
+                ) {
+                    sendIATjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
+                        if (isSent) {
+                            context.setBedrifterSomHarSendtMetrikker(
+                                iaTjenesterMetrikkerErSendtForBedrift(
+                                    orgnr,
+                                    context.bedrifterSomHarSendtMetrikker
+                                )
+                            );
+                        }
+                    });
+                }
+            }, 5000);
+            return () => clearTimeout(timerFunc);
+        }
+    }, [useOrgnr(), useContext<EnhetsregisteretState>(enhetsregisteretContext)]);
 };
