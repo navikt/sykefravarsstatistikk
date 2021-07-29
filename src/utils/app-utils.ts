@@ -100,7 +100,8 @@ const månedsnavn = [
 export const formatterDatoMedMånedNavn = (dato: Date): string => {
     const dag = dato.getDate();
     const måned = månedsnavn[dato.getMonth()];
-    return `${dag}. ${måned}`;
+    const year = dato.getFullYear();
+    return `${dag}. ${måned}. ${year}`;
     //const options = { year: 'numeric', month: 'long', day: 'numeric' };
     // @ts-ignore
     // Funker ikke alle broesere foreløpig, derfor hardkoder midlertidig
