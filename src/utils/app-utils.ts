@@ -82,10 +82,30 @@ export const tilIsoDatoMedUtcTimezoneUtenMillis = (dato: Date): String => {
     return dato.toISOString().split('.')[0] + "Z";
 }
 
+const månedsnavn = [
+    "januar",
+    "februar",
+    "mars",
+    "april",
+    "mai",
+    "juni",
+    "juli",
+    "august",
+    "september",
+    "oktober",
+    "november",
+    "desember"
+];
+
 export const formatterDatoMedMånedNavn = (dato: Date): string => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const dag = dato.getDate();
+    const måned = månedsnavn[dato.getMonth()];
+    const year = dato.getFullYear();
+    return `${dag}. ${måned}. ${year}`;
+    //const options = { year: 'numeric', month: 'long', day: 'numeric' };
     // @ts-ignore
-    return dato.toLocaleDateString('nb', options);
+    // Funker ikke alle broesere foreløpig, derfor hardkoder midlertidig
+    //return dato.toLocaleDateString('nb', options);
 };
 
 export const periodeFraOgTil =
