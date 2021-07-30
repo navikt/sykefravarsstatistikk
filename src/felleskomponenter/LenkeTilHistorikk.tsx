@@ -1,20 +1,28 @@
-import React, { FunctionComponent } from 'react';
-import InternLenke from './InternLenke/InternLenke';
-import { PATH_HISTORIKK } from '../konstanter';
-import { useSendEvent } from '../amplitude/amplitude';
+import React, { FunctionComponent } from "react";
+import InternLenke from "./InternLenke/InternLenke";
+import { useSendEvent } from "../amplitude/amplitude";
 
-export const LenkeTilHistorikk: FunctionComponent<{ kildeSomSendesMedEvent: string }> = ({
+interface Props {
+    kildeSomSendesMedEvent: string
+    pathname: string,
+    sendEventOmråde: string,
+    tekst:string
+}
+export const LenkeTilHistorikk: FunctionComponent<Props> = ({
     kildeSomSendesMedEvent,
+  pathname,
+  sendEventOmråde,
+  tekst
 }) => {
     const sendEvent = useSendEvent();
     return (
         <InternLenke
-            pathname={PATH_HISTORIKK}
+            pathname={pathname}
             onClick={() =>
-                sendEvent('forside historikk', 'klikk', { kilde: kildeSomSendesMedEvent })
+                sendEvent(sendEventOmråde, 'klikk', { kilde: kildeSomSendesMedEvent })
             }
         >
-            Gå til sykefravær over tid
+            {tekst}
         </InternLenke>
     );
 };

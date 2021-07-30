@@ -5,6 +5,7 @@ import grafSvg from './graf.svg';
 import './Historikkpanel.less';
 import { LenkeTilHistorikk } from '../../felleskomponenter/LenkeTilHistorikk';
 import { PaneltittelMedIkon } from '../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
+import { PATH_HISTORIKK } from '../../konstanter';
 
 const Historikkpanel: FunctionComponent = () => {
     return (
@@ -16,7 +17,12 @@ const Historikkpanel: FunctionComponent = () => {
                 Se hvordan det legemeldte sykefraværet har endret seg de siste årene og se
                 statistikken kvartalsvis.
             </Normaltekst>
-            <LenkeTilHistorikk kildeSomSendesMedEvent="panel" />
+            <LenkeTilHistorikk
+                kildeSomSendesMedEvent="panel"
+                pathname={PATH_HISTORIKK}
+                sendEventOmråde={'forside historikk'}
+                tekst={'Gå til sykefravær over tid'}
+            />
         </PanelBase>
     );
 };

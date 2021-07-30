@@ -8,4 +8,6 @@ export const PATH_KALKULATOR = '/kalkulator';
 export const PATH_HISTORIKK = '/historikk';
 export const PATH_IAWEB_REDIRECTSIDE = '/iawebredirectside';
 
+export const PATH_SAMTALESTØTTE = 'arbeidsgiver.labs.nais.io/samtalestotte';
+
 export const ER_VEDLIKEHOLD_AKTIVERT = false;
