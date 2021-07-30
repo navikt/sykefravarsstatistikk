@@ -3,11 +3,17 @@ import PanelBase from "nav-frontend-paneler";
 import { Normaltekst } from "nav-frontend-typografi";
 import lampeSvg from "./lampe.svg";
 import "./Samtalestøttepanel.less";
-import { LenkeTilHistorikk } from "../../felleskomponenter/LenkeTilHistorikk";
 import { PaneltittelMedIkon } from "../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon";
 import { PATH_SAMTALESTØTTE } from "../../konstanter";
+import classNames from "classnames";
+import Lenke from "nav-frontend-lenker";
+import { useSendNavigereEvent } from "../../amplitude/amplitude";
+import "../../felleskomponenter/InternLenke/InternLenke.less";
 
 const Samtalestøttepanel: FunctionComponent = () => {
+    const sendNavigereEvent = useSendNavigereEvent();
+    const lenkeTekst="Gå til samtalestøtten";
+
     return (
         <PanelBase className="samtalestøttepanel">
             <PaneltittelMedIkon src={lampeSvg} alt="lampeikon">
@@ -17,12 +23,21 @@ const Samtalestøttepanel: FunctionComponent = () => {
                 Samtaler rundt sykefravær kan være vanskelige. Vi har laget et verktøy for
                 arbeidsgivere for å gjøre det lettere å forberede seg.
             </Normaltekst>
-            <LenkeTilHistorikk kildeSomSendesMedEvent="panel"
-            pathname={PATH_SAMTALESTØTTE}
-            sendEventOmråde={'forside samtalestøtte'}
-            tekst={'Gå til samtalestøtten'}/>
+            <Lenke
+                href={PATH_SAMTALESTØTTE}
+                className={classNames('intern-lenke')}
+                onClick={() => {
+                    sendNavigereEvent({
+                        lenketekst: lenkeTekst,
+                        destinasjon: PATH_SAMTALESTØTTE,
+                        url: window.location.href,
+                    });
+                }}
+            >
+              {lenkeTekst}
+            </Lenke>
         </PanelBase>
     );
-}
+};
 
 export default Samtalestøttepanel;
