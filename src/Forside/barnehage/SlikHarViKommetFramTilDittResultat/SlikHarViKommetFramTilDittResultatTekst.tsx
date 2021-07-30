@@ -5,7 +5,6 @@ import { Normaltekst } from "nav-frontend-typografi";
 import "./SlikHarViKommetFramTilDittResultatTekst.less";
 import { LenkeTilHistorikk } from "../../../felleskomponenter/LenkeTilHistorikk";
 import { siste4PubliserteKvartaler } from "../../../utils/app-utils";
-import { PATH_HISTORIKK } from "../../../konstanter";
 
 interface Props {
     resultat: SykefraværVurdering;
@@ -31,12 +30,7 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                     </Normaltekst>
                     <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={kvartaler} />
-                    <LenkeTilHistorikk
-                        kildeSomSendesMedEvent="les mer total"
-                        pathname={PATH_HISTORIKK}
-                        sendEventOmråde={'forisde historikk'}
-                        tekst={'Gå til sykefravær over tid'}
-                    />
+                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
         case SykefraværVurdering.MASKERT:
@@ -53,12 +47,7 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                         Bransjens tall er beregnet på sykefraværsstatistikk fra:
                     </Normaltekst>
                     <Kvartalsliste kvartaler={siste4PubliserteKvartaler} />
-                    <LenkeTilHistorikk
-                        kildeSomSendesMedEvent="les mer total"
-                        pathname={PATH_HISTORIKK}
-                        sendEventOmråde={'forisde historikk'}
-                        tekst={'Gå til sykefravær over tid'}
-                    />
+                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
         case SykefraværVurdering.UFULLSTENDIG_DATA:
@@ -74,12 +63,7 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                         Bransjens tall er beregnet på sykefraværsstatistikk fra:
                     </Normaltekst>
                     <Kvartalsliste kvartaler={siste4PubliserteKvartaler} />
-                    <LenkeTilHistorikk
-                        kildeSomSendesMedEvent="les mer total"
-                        pathname={PATH_HISTORIKK}
-                        sendEventOmråde={'forisde historikk'}
-                        tekst={'Gå til sykefravær over tid'}
-                    />
+                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
         case SykefraværVurdering.INGEN_DATA:

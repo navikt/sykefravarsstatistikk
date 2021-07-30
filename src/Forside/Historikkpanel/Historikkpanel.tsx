@@ -17,12 +17,7 @@ const Historikkpanel: FunctionComponent = () => {
                 Se hvordan det legemeldte sykefraværet har endret seg de siste årene og se
                 statistikken kvartalsvis.
             </Normaltekst>
-            <LenkeTilHistorikk
-                kildeSomSendesMedEvent="panel"
-                pathname={PATH_HISTORIKK}
-                sendEventOmråde={'forside historikk'}
-                tekst={'Gå til sykefravær over tid'}
-            />
+            <LenkeTilHistorikk kildeSomSendesMedEvent="panel" />
         </PanelBase>
     );
 };
