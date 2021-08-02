@@ -1,6 +1,6 @@
 import { getRestStatus, RestRessurs, RestStatus } from './api-utils';
 
-export const KURSOVERSIKT_API_PATH = '/kursoversikt/api/kurs';
+export const KURSOVERSIKT_API_PATH = '/kursoversikt/api/sfkurs';
 
 interface KursDto {
     RegistrationID: number;
