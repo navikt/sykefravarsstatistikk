@@ -5,7 +5,6 @@ import grafSvg from './graf.svg';
 import './Historikkpanel.less';
 import { LenkeTilHistorikk } from '../../felleskomponenter/LenkeTilHistorikk';
 import { PaneltittelMedIkon } from '../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
-import { PATH_HISTORIKK } from '../../konstanter';
 
 const Historikkpanel: FunctionComponent = () => {
     return (
