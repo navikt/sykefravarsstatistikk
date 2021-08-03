@@ -1,6 +1,10 @@
 import { getRestStatus, RestRessurs, RestStatus } from './api-utils';
+import { getMiljø } from '../utils/miljøUtils';
 
-export const KURSOVERSIKT_API_PATH = '/kursoversikt/api/sfkurs';
+export const KURSOVERSIKT_API_PATH =
+    getMiljø() !== 'dev-sbs'
+        ? '/kursoversikt/api/sfkurs'
+        : 'https://kursoversikt.dev.nav.no/kursoversikt/api/sfkurs';
 
 interface KursDto {
     Title: string;
