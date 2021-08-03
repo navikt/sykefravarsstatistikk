@@ -66,7 +66,7 @@ import {
 } from './utils/redirects';
 import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
-import Samtalestøttepanel from "./Forside/Samtalestøttepanel/Samtalestøttepanel";
+import Samtalestøttepanel from './Forside/Samtalestøttepanel/Samtalestøttepanel';
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
@@ -190,7 +190,7 @@ const AppContent: FunctionComponent = () => {
                             <KalkulatorPanel liten />
                             <Historikkpanel />
                             <KursForBarnehager restKursliste={restKursliste} liten={true} />
-                            <Samtalestøttepanel/>
+                            <Samtalestøttepanel />
                             <ArbeidsmiljøportalPanel
                                 restVirksomhetMetadata={restVirksomhetMetadata}
                             />
