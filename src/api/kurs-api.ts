@@ -24,31 +24,6 @@ interface KursDto {
     AvailableSeats: number;
 }
 
-/* {
-    RegistrationID: number;
-    Title: string;
-    RegistrationUrl: string;
-    RegistrationImageMediaStorageID: number;
-    FrontImageMediaStorageID: number;
-    CatalogListMediaStorageID: number | null;
-    RegistrationFromDateTime: string;
-    RegistrationToDateTime: string;
-    RegistrationDeadline: string;
-    RegistrationPlaceName: string;
-    DescriptionInternal: string;
-    CatalogText: string;
-    Description: string;
-    FrontPageDescription: string;
-    ActiveWeb: number;
-    ShowRegistrationForm: number;
-    ShowInActivityList: number;
-    configurable_custom: null | {
-        Fylke: string;
-        'Type kurs': string;
-        Tema: string;
-    };
-}*/
-
 export interface Kurs {
     id: string;
     tittel: string;
@@ -81,7 +56,6 @@ export const hentRestKurs = async (): Promise<RestKursliste> => {
             const kursliste: Kurs[] = ((await response.json()) as KursDto[]).map((kursDto) =>
                 mapTilKurs(kursDto)
             );
-            console.log('her er kurliste', kursliste);
             return {
                 status: RestStatus.Suksess,
                 data: kursliste,
