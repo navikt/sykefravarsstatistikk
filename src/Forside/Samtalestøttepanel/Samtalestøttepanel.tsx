@@ -24,7 +24,7 @@ const Samtalestøttepanel: FunctionComponent = () => {
                 arbeidsgivere for å gjøre det lettere å forberede seg.
             </Normaltekst>
             <Lenke
-                href={PATH_SAMTALESTØTTE + '?ref=' + window.location.href}
+                href={PATH_SAMTALESTØTTE + '?referer=' + window.location.href}
                 className={classNames('intern-lenke')}
                 onClick={() => {
                     sendNavigereEvent({
