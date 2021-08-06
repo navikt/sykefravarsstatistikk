@@ -39,7 +39,7 @@ jobs:
 
     deploy-to-dev:
         name: Deploy to dev-sbs
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/revert-to-opprinelig-endepunkt-for-kursoversikt-api'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/sende-med-url-til-samtalestotte'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
@@ -53,7 +53,7 @@ jobs:
                   PRINT_PAYLOAD: true
     deploy-to-labs-gcp:
         name: Deploy to labs-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/revert-to-opprinelig-endepunkt-for-kursoversikt-api'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/sende-med-url-til-samtalestotte'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
