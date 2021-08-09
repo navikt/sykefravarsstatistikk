@@ -87,6 +87,9 @@
         "request": "^2.88.0",
         "typescript": "^4.0.2"
     },
+    "resolutions": {
+        "react-scripts/**/tar": "^6.1.4"
+    },
     "scripts": {
         "start": "craco start",
         "mock": "REACT_APP_MOCK=true yarn start",
