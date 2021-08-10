@@ -7,9 +7,11 @@ import { PaneltittelMedIkon } from '../../../felleskomponenter/PaneltittelMedIko
 import { RestKursliste } from '../../../api/kurs-api';
 import { RestStatus } from '../../../api/api-utils';
 import { getNesteIANettkurs } from '../../../api/kurs-utils';
+import classNames from 'classnames';
 
 interface Props {
     restKursliste: RestKursliste;
+    liten?: boolean;
 }
 export const KursForBarnehager: FunctionComponent<Props> = (props) => {
     const nesteIANettkurs = getNesteIANettkurs(
@@ -17,7 +19,12 @@ export const KursForBarnehager: FunctionComponent<Props> = (props) => {
     );
 
     return nesteIANettkurs ? (
-        <div className="kurs-for-barnehager">
+        <div
+            className={classNames(
+                'kurs-for-barnehager',
+                props.liten && 'kurs-for-barnehager--liten'
+            )}
+        >
             <PaneltittelMedIkon src={kalenderSvg} alt="Kalenderikon">
                 Kurskalender
             </PaneltittelMedIkon>

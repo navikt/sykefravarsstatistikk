@@ -9,4 +9,6 @@ export const PATH_HISTORIKK = '/historikk';
 export const PATH_IAWEB_REDIRECTSIDE = '/iawebredirectside';
 export const PATH_SAMTALESTOTTE_PODLET = '/samtalestotte-podlet';
 
+export const PATH_SAMTALESTØTTE = '/samtalestotte';
+
 export const ER_VEDLIKEHOLD_AKTIVERT = false;

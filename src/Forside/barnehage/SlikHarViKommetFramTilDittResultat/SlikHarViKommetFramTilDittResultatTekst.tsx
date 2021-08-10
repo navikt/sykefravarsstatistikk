@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from 'react';
-import { SykefraværVurdering } from '../Speedometer/Speedometer';
-import { ÅrstallOgKvartal } from '../../../utils/sykefraværshistorikk-utils';
-import { Normaltekst } from 'nav-frontend-typografi';
-import './SlikHarViKommetFramTilDittResultatTekst.less';
-import { LenkeTilHistorikk } from '../../../felleskomponenter/LenkeTilHistorikk';
-import { siste4PubliserteKvartaler } from '../../../utils/app-utils';
+import React, { FunctionComponent } from "react";
+import { SykefraværVurdering } from "../Speedometer/Speedometer";
+import { ÅrstallOgKvartal } from "../../../utils/sykefraværshistorikk-utils";
+import { Normaltekst } from "nav-frontend-typografi";
+import "./SlikHarViKommetFramTilDittResultatTekst.less";
+import { LenkeTilHistorikk } from "../../../felleskomponenter/LenkeTilHistorikk";
+import { siste4PubliserteKvartaler } from "../../../utils/app-utils";
 
 interface Props {
     resultat: SykefraværVurdering;
