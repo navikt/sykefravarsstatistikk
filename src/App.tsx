@@ -191,6 +191,7 @@ const AppContent: FunctionComponent = () => {
                             <ArbeidsmiljøportalPanel
                                 restVirksomhetMetadata={restVirksomhetMetadata}
                             />
+                            <SamtalestøttePodlet/>
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>
@@ -210,9 +211,7 @@ const AppContent: FunctionComponent = () => {
                         <IAWebRedirectPanel />
                     </IAWebRedirectSide>
                 </Route>
-                <Route path={PATH_SAMTALESTOTTE_PODLET} exact={true}>
-                    <SamtalestøttePodlet navKontor="test-samtalstotte" history={history}/>
-                </Route>
+
             </>
         );
     }
