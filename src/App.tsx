@@ -64,6 +64,7 @@ import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 import Samtalestøttepanel from './Forside/Samtalestøttepanel/Samtalestøttepanel';
 import { SamtalestøttePodlet } from './microfrontends/microfrontends';
 import history from './history';
+import SamtalestøttePodletpanel from "./Forside/Samtalestøttepanel/SamtalestøttePodletpanel";
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
@@ -187,11 +188,11 @@ const AppContent: FunctionComponent = () => {
                             <KalkulatorPanel liten />
                             <Historikkpanel />
                             <KursForBarnehager restKursliste={restKursliste} liten={true} />
+                            <SamtalestøttePodletpanel/>
                             <Samtalestøttepanel />
                             <ArbeidsmiljøportalPanel
                                 restVirksomhetMetadata={restVirksomhetMetadata}
                             />
-                            <SamtalestøttePodlet/>
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>
