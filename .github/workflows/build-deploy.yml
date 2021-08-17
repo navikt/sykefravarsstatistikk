@@ -53,7 +53,7 @@ jobs:
                   PRINT_PAYLOAD: true
     deploy-to-labs-gcp:
         name: Deploy to labs-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/ikke-deploy-til-labs-bruk-navspa-for-microfrontend'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/bruk-navspa-for-microfrontend'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
