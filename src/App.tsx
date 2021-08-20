@@ -1,20 +1,20 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from "react";
-import Banner from "./Banner/Banner";
-import { BrowserRouter, Route, useLocation } from "react-router-dom";
-import InnloggingssideWrapper from "./Forside/InnloggingssideWrapper";
-import { RestAltinnOrganisasjoner } from "./api/altinnorganisasjon-api";
-import { RestStatus } from "./api/api-utils";
-import Lasteside from "./Lasteside/Lasteside";
-import Innloggingsside from "./Innloggingsside/Innloggingsside";
-import Brødsmulesti from "./Brødsmulesti/Brødsmulesti";
-import KalkulatorPanel from "./Forside/Kalkulatorpanel/KalkulatorPanel";
-import Historikkpanel from "./Forside/Historikkpanel/Historikkpanel";
-import FeilFraAltinnSide from "./FeilSider/FeilFraAltinnSide/FeilFraAltinnSide";
-import GrafOgTabell from "./GrafOgTabell/GrafOgTabell";
-import { RestSykefraværshistorikk } from "./api/kvartalsvisSykefraværshistorikk";
-import { RestVirksomhetMetadata } from "./api/virksomhetMetadata";
-import IAWebRedirectPanel from "./IAWebRedirectSide/IAWebRedirectPanel";
-import IAWebRedirectSide from "./IAWebRedirectSide/IAWebRedirectSide";
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
+import Banner from './Banner/Banner';
+import { BrowserRouter, Route, useLocation } from 'react-router-dom';
+import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
+import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
+import { RestStatus } from './api/api-utils';
+import Lasteside from './Lasteside/Lasteside';
+import Innloggingsside from './Innloggingsside/Innloggingsside';
+import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
+import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
+import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
+import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
+import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
+import { RestSykefraværshistorikk } from './api/kvartalsvisSykefraværshistorikk';
+import { RestVirksomhetMetadata } from './api/virksomhetMetadata';
+import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
+import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import {
     BASE_PATH,
     ER_VEDLIKEHOLD_AKTIVERT,
@@ -23,41 +23,50 @@ import {
     PATH_FORSIDE_GENERELL,
     PATH_HISTORIKK,
     PATH_IAWEB_REDIRECTSIDE,
-    PATH_KALKULATOR
-} from "./konstanter";
-import { virksomhetMetadataContext, VirksomhetMetadataProvider } from "./utils/virksomhetMetadataContext";
-import { sykefraværshistorikkContext, SykefraværshistorikkProvider } from "./utils/sykefraværshistorikkContext";
-import { sendEventDirekte, useMålingAvTidsbruk } from "./amplitude/amplitude";
+    PATH_KALKULATOR,
+} from './konstanter';
+import {
+    virksomhetMetadataContext,
+    VirksomhetMetadataProvider,
+} from './utils/virksomhetMetadataContext';
+import {
+    sykefraværshistorikkContext,
+    SykefraværshistorikkProvider,
+} from './utils/sykefraværshistorikkContext';
+import { sendEventDirekte, useMålingAvTidsbruk } from './amplitude/amplitude';
 import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
     AltinnOrganisasjonerMedTilgangTilStatistikkProvider,
-    AltinnOrganisasjonerProvider
-} from "./utils/altinnOrganisasjonerContext";
-import { useSetUserProperties } from "./amplitude/userProperties";
-import { FeatureTogglesProvider } from "./utils/FeatureTogglesContext";
-import Kalkulator from "./Kalkulator/Kalkulator/Kalkulator";
-import { Forside } from "./Forside/Forside";
-import { SammenligningspanelBarnehage } from "./Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage";
+    AltinnOrganisasjonerProvider,
+} from './utils/altinnOrganisasjonerContext';
+import { useSetUserProperties } from './amplitude/userProperties';
+import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
+import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
+import { Forside } from './Forside/Forside';
+import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
 import {
     summertSykefraværshistorikkContext,
-    SummertSykefraværshistorikkProvider
-} from "./utils/summertSykefraværshistorikkContext";
-import { RestSummertSykefraværshistorikk } from "./api/summertSykefraværshistorikk";
-import { TilbakemeldingContextProvider } from "./utils/TilbakemeldingContext";
+    SummertSykefraværshistorikkProvider,
+} from './utils/summertSykefraværshistorikkContext';
+import { RestSummertSykefraværshistorikk } from './api/summertSykefraværshistorikk';
+import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import {
     enhetsregisteretContext,
     EnhetsregisteretProvider,
-    EnhetsregisteretState
-} from "./utils/enhetsregisteretContext";
-import { EkspanderbarSammenligning } from "./Forside/barnehage/EkspanderbarSammenligning/EkspanderbarSammenligning";
-import { KursForBarnehager } from "./Forside/barnehage/KursForBarnehager/KursForBarnehager";
-import { ArbeidsmiljøportalPanel } from "./Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel";
-import { hentRestKurs, RestKursliste } from "./api/kurs-api";
-import { LegacyBarnehageSammenligningRedirect, LegacySammenligningRedirect } from "./utils/redirects";
-import { IaTjenesterMetrikkerContextProvider } from "./metrikker/IaTjenesterMetrikkerContext";
-import VedlikeholdSide from "./FeilSider/Vedlikehold/VedlikeholdSide";
-import SamtalestøttePodletpanel from "./Forside/Samtalestøttepanel/SamtalestøttePodletpanel";
+    EnhetsregisteretState,
+} from './utils/enhetsregisteretContext';
+import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSammenligning/EkspanderbarSammenligning';
+import { KursForBarnehager } from './Forside/barnehage/KursForBarnehager/KursForBarnehager';
+import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
+import { hentRestKurs, RestKursliste } from './api/kurs-api';
+import {
+    LegacyBarnehageSammenligningRedirect,
+    LegacySammenligningRedirect,
+} from './utils/redirects';
+import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
+import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
+import SamtalestøttePodletpanel from './Forside/Samtalestøttepanel/SamtalestøttePodletpanel';
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
@@ -181,7 +190,7 @@ const AppContent: FunctionComponent = () => {
                             <KalkulatorPanel liten />
                             <Historikkpanel />
                             <KursForBarnehager restKursliste={restKursliste} liten={true} />
-                            <SamtalestøttePodletpanel/>
+                            <SamtalestøttePodletpanel />
                             <ArbeidsmiljøportalPanel
                                 restVirksomhetMetadata={restVirksomhetMetadata}
                             />
@@ -204,7 +213,6 @@ const AppContent: FunctionComponent = () => {
                         <IAWebRedirectPanel />
                     </IAWebRedirectSide>
                 </Route>
-
             </>
         );
     }
