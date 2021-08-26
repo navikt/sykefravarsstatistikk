@@ -4,8 +4,9 @@ const app = express();
 const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
 const proxy = require('./proxy');
+const mikrofrontend_proxy = require('./mikrofrontend-proxy');
 const { getIATjenesterMetrikkerProxy } = require('./ia-tjenester-metrikker-proxy');
-const { BASE_PATH } = require('./konstanter');
+const { BASE_PATH,SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH } = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
 
 const PORT = process.env.PORT || 3000;
@@ -40,9 +41,13 @@ const startServer = (html) => {
     app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
 
     app.use(getIATjenesterMetrikkerProxy());
+    app.use(mikrofrontend_proxy);
     app.use(proxy);
 
     app.get(BASE_PATH, (req, res) => {
+        res.send(html);
+    });
+    app.get(SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH, (req, res) => {
         res.send(html);
     });
 

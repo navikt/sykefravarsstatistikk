@@ -1,4 +1,5 @@
 import { ManifestObject } from '@navikt/navspa/dist/async/async-navspa';
+import { BASE_PATH } from '../konstanter';
 
 export type AssetManifest = {
     files: Record<string, string>;
@@ -30,7 +31,13 @@ const assetManifestParser = (manifestObject: ManifestObject): string[] => {
     if (environmentFile) {
         pathsToLoad.push(environmentFile.path);
     }
-
+    console.log('pathstolLoad Før =', pathsToLoad);
+    pathsToLoad.forEach((path, index) => {
+        pathsToLoad[index] = BASE_PATH + path;
+    });
+    console.log('pathstolLoad Etter=', pathsToLoad);
+    //http://localhost:3000/samtalestotte-podlet/static/media/lampe.c9551f16.svg
+    pathsToLoad.push(BASE_PATH + '/samtalestotte-podlet/static/media/lampe.c9551f16.svg');
     return pathsToLoad;
 };
 

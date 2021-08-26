@@ -1,28 +1,29 @@
-const { SAMTALESTØTTE_MIKROFRONTEND_PATH } = require('./konstanter');
+const { SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH } = require('./konstanter');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-/*const envProperties = {
+const envProperties = {
     API_GATEWAY: process.env.API_GATEWAY || 'http://localhost:8080',
     APIGW_HEADER: process.env.APIGW_HEADER,
-};*/
+};
 
-const DOMENE = 'http://localhost:3001/'
-const SAMTALESTØTTE_PODLET_PATH = '/samtalestotte-podlet';
+const ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_DOMENE = 'http://localhost:3001/';
+const ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_PATH = '/samtalestotte-podlet';
+console.log('inside mikrofrontend-proxt, før proxy-confog', ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_PATH);
 
-const listeAvTillatteUrler = [
-    new RegExp('^' + SAMTALESTØTTE_MIKROFRONTEND_PATH + '/*'),
-];
+const listeAvTillatteUrler = [new RegExp('^' + SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH + '/*')];
 
 const proxyConfig = {
-    target: DOMENE,
+    target: ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_DOMENE,
     changeOrigin: true,
     pathRewrite: (path, req) => {
         const urlErTillatt = listeAvTillatteUrler.filter((regexp) => regexp.test(path)).length > 0;
 
         if (urlErTillatt) {
-            return path.replace(SAMTALESTØTTE_MIKROFRONTEND_PATH, SAMTALESTØTTE_PODLET_PATH);
+            return path.replace(SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH, ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_PATH);
         }
-        return SAMTALESTØTTE_PODLET_PATH + '/not-found';
+        console.log('DETTE ER PATH:', path);
+        console.log('DETTE ER SAmtaleSTØTTEPodletPATH:', ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_PATH);
+        return ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_PATH + '/not-found';
     },
     secure: true,
     xfwd: true,
@@ -34,7 +35,7 @@ if (envProperties.APIGW_HEADER) {
         'x-nav-apiKey': envProperties.APIGW_HEADER,
     };
 }
-
-const mikrofrontend_proxy = createProxyMiddleware(SAMTALESTØTTE_MIKROFRONTEND_PATH, proxyConfig);
+console.log('inside mikrofrontend-proxt, etter proxy-confog', ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_PATH);
+const mikrofrontend_proxy = createProxyMiddleware(SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH, proxyConfig);
 
 module.exports = mikrofrontend_proxy;
