@@ -18,7 +18,7 @@ const LasterInn: FunctionComponent = () => (
 
 const samtalestottePodletConfig = {
     appName: SAMTALESTØTTE_MIKROFONTEND,
-    appBaseUrl: SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH,
+    appBaseUrl: 'https://arbeidsgiver-gcp.dev.nav.no/samtalestotte-podlet',
     assetManifestParser,
     loader: <LasterInn />,
 };
