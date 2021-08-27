@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent } from 'react';
 
-import assetManifestParser from "./assetManifestUtils";
-import NavFrontendSpinner from "nav-frontend-spinner";
-import { AsyncNavspa } from "@navikt/navspa";
-import "./microfrontends.less";
-import { SAMTALESTØTTE_MIKROFONTEND, SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH } from "../konstanter";
+import NavFrontendSpinner from 'nav-frontend-spinner';
+import { AsyncNavspa } from '@navikt/navspa';
+import './microfrontends.less';
+import { SAMTALESTØTTE_MIKROFONTEND, SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH } from '../konstanter';
+import assetManifestParser from './assetManifestUtils';
 
 type PodletProps = {
     visning: string | undefined;
@@ -18,10 +18,9 @@ const LasterInn: FunctionComponent = () => (
 
 const samtalestottePodletConfig = {
     appName: SAMTALESTØTTE_MIKROFONTEND,
-    appBaseUrl: 'https://arbeidsgiver-gcp.dev.nav.no/samtalestotte-podlet',
+    appBaseUrl: SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH,
     assetManifestParser,
     loader: <LasterInn />,
 };
 
-export const SamtalestøttePodlet =
-    AsyncNavspa.importer<PodletProps>(samtalestottePodletConfig);
+export const SamtalestøttePodlet = AsyncNavspa.importer<PodletProps>(samtalestottePodletConfig);
