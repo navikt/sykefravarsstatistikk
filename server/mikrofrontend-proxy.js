@@ -2,8 +2,8 @@ const { SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH } = require('./konstanter');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const envProperties = {
-    API_GATEWAY: process.env.API_GATEWAY || 'http://localhost:8080',
-    APIGW_HEADER: process.env.APIGW_HEADER,
+//    API_GATEWAY: process.env.API_GATEWAY || 'http://localhost:8080',
+ //   APIGW_HEADER: process.env.APIGW_HEADER,
     ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_DOMENE:
         process.env.ARBEIDSGIVER_SAMTALESTOTTE_MIKROFRONTEND_DOMENE || 'http://localhost:3001',
 };
@@ -28,14 +28,15 @@ const proxyConfig = {
     },
     secure: true,
     xfwd: true,
-    logLevel: 'info',
+    logLevel: 'debug',
 };
 
+/*
 if (envProperties.APIGW_HEADER) {
     proxyConfig.headers = {
         'x-nav-apiKey': envProperties.APIGW_HEADER,
     };
-}
+}*/
 
 const mikrofrontend_proxy = createProxyMiddleware(
     SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH,
