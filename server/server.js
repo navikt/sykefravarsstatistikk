@@ -42,9 +42,7 @@ const startServer = (html) => {
 
     app.use(getIATjenesterMetrikkerProxy());
 
-    // Enable mikrofrontend_proxy hvor proxy er spesifisert (env variabel 'ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_DOMENE')
-    console.log("ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_DOMENE?", process.env.ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_DOMENE);
-
+    // Enable mikrofrontend_proxy hvor den er nødvendig (ikke samme domene)
     if (process.env.NAIS_CLUSTER_NAME === 'dev-sbs' || process.env.IS_LOCALHOST) {
         console.log("Aktiverer mikrofrontend_proxy");
         app.use(mikrofrontend_proxy);

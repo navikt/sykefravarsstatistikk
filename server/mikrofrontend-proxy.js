@@ -5,7 +5,7 @@ const envProperties = {
     API_GATEWAY: process.env.API_GATEWAY || 'http://localhost:8080',
     APIGW_HEADER: process.env.APIGW_HEADER,
     ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_DOMENE:
-        process.env.ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_DOMENE || 'http://localhost:3001',
+        process.env.ARBEIDSGIVER_SAMTALESTOTTE_MIKROFRONTEND_DOMENE || 'http://localhost:3001',
 };
 
 const ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_PATH = '/samtalestotte-podlet';
