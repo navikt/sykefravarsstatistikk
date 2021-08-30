@@ -5,8 +5,8 @@ const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
 const proxy = require('./proxy');
 const mikrofrontend_proxy = require('./mikrofrontend-proxy');
-const { getIATjenesterMetrikkerProxy } = require('./ia-tjenester-metrikker-proxy');
-const { BASE_PATH } = require('./konstanter');
+const {getIATjenesterMetrikkerProxy} = require('./ia-tjenester-metrikker-proxy');
+const {BASE_PATH} = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
 
 const PORT = process.env.PORT || 3000;
@@ -28,7 +28,7 @@ const renderAppMedDecorator = (decoratorFragments) => {
 };
 
 const startServer = (html) => {
-    app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
+    app.use(BASE_PATH + '/', express.static(buildPath, {index: false}));
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
         const loginUrl =
@@ -41,8 +41,18 @@ const startServer = (html) => {
     app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
 
     app.use(getIATjenesterMetrikkerProxy());
-    app.use(mikrofrontend_proxy);
-    app.use(proxy);     
+
+    // Enable mikrofrontend_proxy hvor proxy er spesifisert (env variabel 'ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_DOMENE')
+    console.log("ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_DOMENE?", process.env.ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_DOMENE);
+
+    if (process.env.NAIS_CLUSTER_NAME === 'dev-sbs' || process.env.IS_LOCALHOST) {
+        console.log("Aktiverer mikrofrontend_proxy");
+        app.use(mikrofrontend_proxy);
+    } else {
+        console.log("Aktiverer mikrofrontend_proxy, ingen env miljø variabel for ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_DOMENE");
+    }
+
+    app.use(proxy);
 
     app.get(BASE_PATH, (req, res) => {
         res.send(html);
