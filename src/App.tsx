@@ -57,7 +57,7 @@ import {
     EnhetsregisteretState,
 } from './utils/enhetsregisteretContext';
 import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/EkspanderbarSammenligning';
-import { KursForBarnehager } from './Forside/KursForBarnehager/KursForBarnehager';
+import { Kurskalender } from './Forside/Kurskalender/Kurskalender';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import { hentRestKurs, RestKursliste } from './api/kurs-api';
 import {
@@ -189,7 +189,7 @@ const AppContent: FunctionComponent = () => {
                             </SammenligningspanelBarnehage>
                             <KalkulatorPanel liten />
                             <Historikkpanel />
-                            <KursForBarnehager restKursliste={restKursliste} liten={true} />
+                            <Kurskalender restKursliste={restKursliste} liten={true} />
                             <SamtalestøttePodletpanel />
                             <ArbeidsmiljøportalPanel
                                 restVirksomhetMetadata={restVirksomhetMetadata}

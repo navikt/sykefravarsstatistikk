@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import kalenderSvg from './kalender.svg';
-import './KursForBarnehager.less';
+import './Kurskalender.less';
 import { PaneltittelMedIkon } from '../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
 import { RestKursliste } from '../../api/kurs-api';
 import { RestStatus } from '../../api/api-utils';
@@ -13,7 +13,7 @@ interface Props {
     restKursliste: RestKursliste;
     liten?: boolean;
 }
-export const KursForBarnehager: FunctionComponent<Props> = (props) => {
+export const Kurskalender: FunctionComponent<Props> = (props) => {
     const nesteIANettkurs = getNesteIANettkurs(
         props.restKursliste.status === RestStatus.Suksess ? props.restKursliste.data : []
     );
