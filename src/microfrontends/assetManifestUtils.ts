@@ -1,5 +1,8 @@
 import { AssetManifestParser, ManifestObject } from "@navikt/navspa/dist/async/async-navspa";
 
+// TODO: koden i denne filen kommer i en senere versjon av NavSpa
+//  -- koden kan da slettes når @navikt/navspa til v4.x blir tilgjengelig
+
 export type AssetManifest = {
     files: Record<string, string>;
     entrypoints: string[];
@@ -36,14 +39,12 @@ export function createAssetManifestParser(appBaseUrl: string): AssetManifestPars
     return (manifestObject: ManifestObject) => {
         const pathsToLoad = extractPathsFromCRAManifest(manifestObject);
         const debugPaths= pathsToLoad.map(path => makeAbsolute(appBaseUrl, path));
-        console.log("These arr debugpaths to load: ",debugPaths)
         return debugPaths;
     };
 }
 
 export function makeAbsolute(baseUrl: string, maybeAbsolutePath: string): string {
     if (maybeAbsolutePath.startsWith('http')) {
-        console.log("maybeAbsolutePath: ",maybeAbsolutePath);
         return maybeAbsolutePath;
     }
     const url = new URL(baseUrl);
