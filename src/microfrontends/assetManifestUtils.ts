@@ -1,23 +1,27 @@
-import { ManifestObject } from '@navikt/navspa/dist/async/async-navspa';
+import { AssetManifestParser, ManifestObject } from "@navikt/navspa/dist/async/async-navspa";
 
 export type AssetManifest = {
     files: Record<string, string>;
     entrypoints: string[];
 };
 
-const assetManifestParser = (manifestObject: ManifestObject): string[] => {
+/**
+ * Extracts paths to load from a Create React App asset manifest.
+ * @param manifestObject parsed json from the asset manifest
+ */
+function extractPathsFromCRAManifest(manifestObject: ManifestObject): string[] {
     const pathsToLoad: string[] = [];
 
-    const { files, entrypoints } = manifestObject as AssetManifest;
+    const { files, entrypoints } = manifestObject as { files: {[name: string]: string}, entrypoints: string[] };
 
-    if (files == null || typeof files !== 'object' || !Array.isArray(entrypoints)) {
+    if ((files == null || typeof files !== 'object') || !Array.isArray(entrypoints)) {
         throw new Error('Invalid manifest: ' + JSON.stringify(manifestObject));
     }
 
-    const fileList = Object.entries(files).map(([name, path]) => ({ name, path }));
+    const fileList = Object.entries(files).map(([name, path]) => ({name, path})) as {name: string, path: string}[];
 
     entrypoints.forEach((entrypoint) => {
-        const matchingFile = fileList.find((file) => file.path.endsWith(entrypoint));
+        const matchingFile = fileList.find(file => file.path.endsWith(entrypoint));
 
         if (matchingFile) {
             pathsToLoad.push(matchingFile.path);
@@ -26,11 +30,23 @@ const assetManifestParser = (manifestObject: ManifestObject): string[] => {
         }
     });
 
-    const environmentFile = fileList.find((file) => file.name === 'env.js');
-    if (environmentFile) {
-        pathsToLoad.push(environmentFile.path);
-    }
     return pathsToLoad;
-};
+}
+export function createAssetManifestParser(appBaseUrl: string): AssetManifestParser {
+    return (manifestObject: ManifestObject) => {
+        const pathsToLoad = extractPathsFromCRAManifest(manifestObject);
+        const debugPaths= pathsToLoad.map(path => makeAbsolute(appBaseUrl, path));
+        console.log("These arr debugpaths to load: ",debugPaths)
+        return debugPaths;
+    };
+}
 
-export default assetManifestParser;
+export function makeAbsolute(baseUrl: string, maybeAbsolutePath: string): string {
+    if (maybeAbsolutePath.startsWith('http')) {
+        console.log("maybeAbsolutePath: ",maybeAbsolutePath);
+        return maybeAbsolutePath;
+    }
+    const url = new URL(baseUrl);
+    return `${url.origin}${maybeAbsolutePath}`;
+}
+export default createAssetManifestParser;

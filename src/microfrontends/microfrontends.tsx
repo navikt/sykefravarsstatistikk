@@ -4,7 +4,7 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import { AsyncNavspa } from '@navikt/navspa';
 import './microfrontends.less';
 import { SAMTALESTØTTE_MIKROFONTEND, SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH } from '../konstanter';
-import assetManifestParser from './assetManifestUtils';
+import assetManifestParser, { createAssetManifestParser } from "./assetManifestUtils";
 
 type PodletProps = {
     visning: string | undefined;
@@ -18,8 +18,8 @@ const LasterInn: FunctionComponent = () => (
 
 const samtalestottePodletConfig = {
     appName: SAMTALESTØTTE_MIKROFONTEND,
-    appBaseUrl: SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH,
-    assetManifestParser,
+    appBaseUrl: 'http://localhost:3001/samtalestotte-podlet',
+    assetManifestParser: createAssetManifestParser('http://localhost:3001/samtalestotte-podlet'),
     loader: <LasterInn />,
 };
 

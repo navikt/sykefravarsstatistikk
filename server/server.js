@@ -4,7 +4,6 @@ const app = express();
 const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
 const proxy = require('./proxy');
-const mikrofrontend_proxy = require('./mikrofrontend-proxy');
 const {getIATjenesterMetrikkerProxy} = require('./ia-tjenester-metrikker-proxy');
 const {BASE_PATH} = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
@@ -41,14 +40,6 @@ const startServer = (html) => {
     app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
 
     app.use(getIATjenesterMetrikkerProxy());
-
-    // Enable mikrofrontend_proxy hvor den er nødvendig (ikke samme domene)
-    if (process.env.NAIS_CLUSTER_NAME === 'dev-sbs' || process.env.IS_LOCALHOST) {
-        console.log("Aktiverer mikrofrontend_proxy");
-        app.use(mikrofrontend_proxy);
-    } else {
-        console.log("Aktiverer mikrofrontend_proxy, ingen env miljø variabel for ARBEIDSGIVER_SAMTALESTØTTE_MIKROFRONTEND_DOMENE");
-    }
 
     app.use(proxy);
 

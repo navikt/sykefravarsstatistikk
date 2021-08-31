@@ -27,8 +27,6 @@ spec:
           value: /etc/ssl/ca-bundle.pem
         - name: LOGIN_URL
           value: https://loginservice-q.nav.no/login?redirect=
-        - name: ARBEIDSGIVER_SAMTALESTOTTE_MIKROFRONTEND_DOMENE
-          value: https://arbeidsgiver-gcp.dev.nav.no
     accessPolicy:
         outbound:
             external:
