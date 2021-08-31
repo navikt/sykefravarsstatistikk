@@ -18,6 +18,7 @@ const LasterInn: FunctionComponent = () => (
 );
 const getAppBaseURLMikrofrontend = () => {
     const miljø = getMiljø();
+
     switch (miljø) {
         case 'dev-sbs':
             return 'https://arbeidsgiver-gcp.dev.nav.no/samtalestotte-podlet';
@@ -30,7 +31,7 @@ const getAppBaseURLMikrofrontend = () => {
 const samtalestottePodletConfig = {
     appName: SAMTALESTØTTE_MIKROFONTEND,
     appBaseUrl: getAppBaseURLMikrofrontend(),
-    assetManifestParser: createAssetManifestParser('http://localhost:3001/samtalestotte-podlet'),
+    assetManifestParser: createAssetManifestParser(getAppBaseURLMikrofrontend()),
     loader: <LasterInn />,
 };
 
