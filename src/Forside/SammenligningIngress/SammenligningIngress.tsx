@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningIngress.less';
-import EndringISykefravRsstatistikkenInfotekst from '../../../felleskomponenter/EndringISykefraværsstatistikkenInfotekst/EndringISykefraværsstatistikkenInfotekst';
-import { Bransjetype } from '../../../api/virksomhetMetadata';
+import EndringISykefravRsstatistikkenInfotekst from '../../felleskomponenter/EndringISykefraværsstatistikkenInfotekst/EndringISykefraværsstatistikkenInfotekst';
+import { Bransjetype } from '../../api/virksomhetMetadata';
 
 export const SammenligningIngress: FunctionComponent<{
     bransje?: Bransjetype;

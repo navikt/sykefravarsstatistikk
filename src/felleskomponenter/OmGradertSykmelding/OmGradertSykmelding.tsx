@@ -2,8 +2,8 @@ import React from 'react';
 import './OmGradertSykmelding.less';
 import { Normaltekst } from 'nav-frontend-typografi';
 import EksternLenke from '../EksternLenke/EksternLenke';
-import { SykefraværVurdering } from '../../Forside/barnehage/Speedometer/Speedometer';
-import { getTilpassetTittelOgTekstOmGradertSykmelding } from '../../Forside/barnehage/vurderingstekster';
+import { SykefraværVurdering } from '../../Forside/Speedometer/Speedometer';
+import { getTilpassetTittelOgTekstOmGradertSykmelding } from '../../Forside/vurderingstekster';
 
 interface Props {
     vurdering: SykefraværVurdering;

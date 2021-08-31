@@ -1,16 +1,16 @@
 import React, { FunctionComponent } from 'react';
-import { RestSummertSykefraværshistorikk } from '../../../api/summertSykefraværshistorikk';
+import { RestSummertSykefraværshistorikk } from '../../api/summertSykefraværshistorikk';
 import { EkspanderbartSammenligningspanel } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
-import { RestStatus } from '../../../api/api-utils';
+import { RestStatus } from '../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
-import { getSammenligningResultat, summertHistorikkHarBransje } from '../barnehage-utils';
+import { getSammenligningResultat, summertHistorikkHarBransje } from '../vurdering-utils';
 import { SykefraværVurdering } from '../Speedometer/Speedometer';
 import { SammenligningsType } from '../vurderingstekster';
 import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngress';
 import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
-import { useSendEvent } from '../../../amplitude/amplitude';
+import { useSendEvent } from '../../amplitude/amplitude';
 import './EkspanderbarSammenligning.less';
-import { Bransjetype, RestVirksomhetMetadata } from '../../../api/virksomhetMetadata';
+import { Bransjetype, RestVirksomhetMetadata } from '../../api/virksomhetMetadata';
 import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
 import { Element } from 'nav-frontend-typografi';
 

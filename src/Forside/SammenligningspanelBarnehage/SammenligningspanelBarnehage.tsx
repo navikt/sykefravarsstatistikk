@@ -2,12 +2,12 @@ import React, { FunctionComponent, useRef } from 'react';
 import './SammenligningspanelBarnehage.less';
 import ReactToPrint from 'react-to-print';
 import Alertstripe, {AlertStripeFeil, AlertStripeInfo} from 'nav-frontend-alertstriper';
-import { RestSummertSykefraværshistorikk } from '../../../api/summertSykefraværshistorikk';
-import { RestStatus } from '../../../api/api-utils';
-import { useSendEvent } from '../../../amplitude/amplitude';
+import { RestSummertSykefraværshistorikk } from '../../api/summertSykefraværshistorikk';
+import { RestStatus } from '../../api/api-utils';
+import { useSendEvent } from '../../amplitude/amplitude';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { RestAltinnOrganisasjoner } from '../../../api/altinnorganisasjon-api';
-import { useOrgnr } from '../../../utils/orgnr-hook';
+import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
+import { useOrgnr } from '../../utils/orgnr-hook';
 import Lenke from "nav-frontend-lenker";
 
 export const SammenligningspanelBarnehage: FunctionComponent<{

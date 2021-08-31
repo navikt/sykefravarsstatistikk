@@ -44,7 +44,7 @@ import { useSetUserProperties } from './amplitude/userProperties';
 import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { Forside } from './Forside/Forside';
-import { SammenligningspanelBarnehage } from './Forside/barnehage/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
+import { SammenligningspanelBarnehage } from './Forside/SammenligningspanelBarnehage/SammenligningspanelBarnehage';
 import {
     summertSykefraværshistorikkContext,
     SummertSykefraværshistorikkProvider,
@@ -56,8 +56,8 @@ import {
     EnhetsregisteretProvider,
     EnhetsregisteretState,
 } from './utils/enhetsregisteretContext';
-import { EkspanderbarSammenligning } from './Forside/barnehage/EkspanderbarSammenligning/EkspanderbarSammenligning';
-import { KursForBarnehager } from './Forside/barnehage/KursForBarnehager/KursForBarnehager';
+import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/EkspanderbarSammenligning';
+import { KursForBarnehager } from './Forside/KursForBarnehager/KursForBarnehager';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import { hentRestKurs, RestKursliste } from './api/kurs-api';
 import {

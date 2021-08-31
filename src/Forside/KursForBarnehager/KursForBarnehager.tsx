@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import EksternLenke from '../../../felleskomponenter/EksternLenke/EksternLenke';
+import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import kalenderSvg from './kalender.svg';
 import './KursForBarnehager.less';
-import { PaneltittelMedIkon } from '../../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
-import { RestKursliste } from '../../../api/kurs-api';
-import { RestStatus } from '../../../api/api-utils';
-import { getNesteIANettkurs } from '../../../api/kurs-utils';
+import { PaneltittelMedIkon } from '../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
+import { RestKursliste } from '../../api/kurs-api';
+import { RestStatus } from '../../api/api-utils';
+import { getNesteIANettkurs } from '../../api/kurs-utils';
 import classNames from 'classnames';
 
 interface Props {
