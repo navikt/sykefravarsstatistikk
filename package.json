@@ -93,7 +93,7 @@
     "resolutions": {
         "react-scripts/**/tar": "^6.1.9",
         "react-scripts/**/url-parse": "^1.5.3",
-        "react-scripts/**/browserslist": "^4.14.6",
+        "react-scripts/**/browserslist": "^4.16.8",
         "react-scripts/**/glob-parent": "^5.1.2"
     },
     "scripts": {
