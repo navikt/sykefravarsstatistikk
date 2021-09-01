@@ -4,8 +4,8 @@ const app = express();
 const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
 const proxy = require('./proxy');
-const {getIATjenesterMetrikkerProxy} = require('./ia-tjenester-metrikker-proxy');
-const {BASE_PATH} = require('./konstanter');
+const { getIATjenesterMetrikkerProxy } = require('./ia-tjenester-metrikker-proxy');
+const { BASE_PATH } = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
 
 const PORT = process.env.PORT || 3000;
@@ -27,7 +27,7 @@ const renderAppMedDecorator = (decoratorFragments) => {
 };
 
 const startServer = (html) => {
-    app.use(BASE_PATH + '/', express.static(buildPath, {index: false}));
+    app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
         const loginUrl =

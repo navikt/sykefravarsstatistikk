@@ -1,6 +1,5 @@
 import { AssetManifestParser, ManifestObject } from '@navikt/navspa/dist/async/async-navspa';
 import * as http from 'http';
-import { MikrofrontendConfig } from './microfrontends';
 
 // TODO: koden i denne filen kommer i en senere versjon av NavSpa
 //  -- koden kan da slettes når @navikt/navspa til v4.x blir tilgjengelig
@@ -8,6 +7,11 @@ import { MikrofrontendConfig } from './microfrontends';
 export type AssetManifest = {
     files: Record<string, string>;
     entrypoints: string[];
+};
+
+export type MikrofrontendConfig = {
+    appBaseUrl: string;
+    isSameDomain: boolean;
 };
 
 /**
@@ -43,6 +47,7 @@ function extractPathsFromCRAManifest(manifestObject: ManifestObject): string[] {
 
     return pathsToLoad;
 }
+
 export function createAssetManifestParser(
     mikrofrontendConfig: MikrofrontendConfig
 ): AssetManifestParser {
@@ -66,4 +71,3 @@ export function makeAbsolute(
     const url = new URL(baseUrl);
     return `${url.origin}${maybeAbsolutePath}`;
 }
-export default createAssetManifestParser;
