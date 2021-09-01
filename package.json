@@ -66,7 +66,7 @@
         "@types/enzyme-adapter-react-16": "^1.0.5",
         "@types/fetch-mock": "^7.3.2",
         "@types/jest": "^26.0.17",
-        "@types/node": "^16.6.1",
+        "@types/node": "^16.7.10",
         "@types/react": "^17.0.18",
         "@types/react-collapse": "^5.0.0",
         "@types/react-dom": "^17.0.7",
