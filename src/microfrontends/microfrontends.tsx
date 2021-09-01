@@ -18,14 +18,14 @@ const LasterInn: FunctionComponent = () => (
 );
 const getAppBaseURLMikrofrontend = () => {
     const miljø = getMiljø();
-
+    console.log(miljø);
     switch (miljø) {
         case 'dev-sbs':
             return 'https://arbeidsgiver-gcp.dev.nav.no/samtalestotte-podlet';
         case 'local':
             return 'http://localhost:3001/samtalestotte-podlet';
         default:
-            return '/' + SAMTALESTØTTE_MIKROFONTEND;
+            return 'https://arbeidsgiver.labs.nais.io/' + SAMTALESTØTTE_MIKROFONTEND;
     }
 };
 const samtalestottePodletConfig = {
