@@ -88,7 +88,7 @@
         "mustache-express": "^1.3.0",
         "prettier": "^2.0.5",
         "request": "^2.88.0",
-        "typescript": "^4.0.2"
+        "typescript": "^4.4.2"
     },
     "resolutions": {
         "react-scripts/**/tar": "^6.1.9",
