@@ -25,7 +25,7 @@ nav-frontend-toggle-style        2.0.2   2.1.1   2.1.1        dependencies
 react-responsive                 8.2.0   8.2.0   9.0.0-beta.3 dependencies           http://github.com/contra/react-responsive                                  
 react-router-dom                 5.2.0   5.2.1   5.2.1        dependencies           https://github.com/ReactTraining/react-router#readme                       
 recharts                         2.1.0   2.1.2   2.1.2        dependencies           https://github.com/recharts/recharts                                       
-tar                              6.1.6   6.1.11  6.1.11       resolutionDependencies https://github.com/npm/node-tar#readme                                     
+Done tar                              6.1.6   6.1.11  6.1.11       resolutionDependencies https://github.com/npm/node-tar#readme                                     
 typescript                       4.3.5   4.4.2   4.4.2        devDependencies        https://www.typescriptlang.org/                                            
 webpack                          4.44.2  4.44.2  5.51.1       dependencies           https://github.com/webpack/webpack                                         
 Done in 10.64s.

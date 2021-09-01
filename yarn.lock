@@ -1599,10 +1599,10 @@
   resolved "https://registry.yarnpkg.com/@navikt/fnrvalidator/-/fnrvalidator-1.1.4.tgz#22a776ba05a90c1ba5316a4f7567f9a45abcda04"
   integrity sha512-IroYFqa8PpzVxtIk6ifeEQBFzsI2QJX/FSIQyBtJvpp2D8Cb5Z9+hGNFppCILWR+QYbY8Dkk48la7K5fPGXeWQ==
 
-"@navikt/nav-dekoratoren-moduler@^1.0.21":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@navikt/nav-dekoratoren-moduler/-/nav-dekoratoren-moduler-1.4.0.tgz#198cef988edc81e38625795f4abd0901ab45d077"
-  integrity sha512-EE0BosDFNV9r3WexwRJht2azalABLh2MjsVBJ2HC9ZalxIM62Ru2qt8VQUYH12qyAkvdyfWEKd3Ed0H1jS9Z4A==
+"@navikt/nav-dekoratoren-moduler@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@navikt/nav-dekoratoren-moduler/-/nav-dekoratoren-moduler-1.5.0.tgz#27783fa6fd8f73666242f0907237b43df3bdb666"
+  integrity sha512-PbSeSbX8sXeKD3AVqsF71AG7o7WqjoC7PjPaPyzDNYZBJgpIISXCWzFAIuR/EryRniJ4Srf4SjM55n18Ebh0+Q==
 
 "@navikt/navspa@^3.0.2":
   version "3.0.2"
