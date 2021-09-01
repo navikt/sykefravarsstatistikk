@@ -67,7 +67,7 @@
         "@types/fetch-mock": "^7.3.2",
         "@types/jest": "^26.0.17",
         "@types/node": "^16.7.10",
-        "@types/react": "^17.0.18",
+        "@types/react": "^17.0.19",
         "@types/react-collapse": "^5.0.0",
         "@types/react-dom": "^17.0.7",
         "@types/react-responsive": "^8.0.2",

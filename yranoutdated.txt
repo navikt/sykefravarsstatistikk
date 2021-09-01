@@ -29,3 +29,6 @@ Done tar                              6.1.6   6.1.11  6.1.11       resolutionDep
 typescript                       4.3.5   4.4.2   4.4.2        devDependencies        https://www.typescriptlang.org/                                            
 webpack                          4.44.2  4.44.2  5.51.1       dependencies           https://github.com/webpack/webpack                                         
 Done in 10.64s.
+
+
+Yarn upgrade 
