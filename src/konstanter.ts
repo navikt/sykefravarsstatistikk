@@ -10,6 +10,6 @@ export const PATH_HISTORIKK = '/historikk';
 export const PATH_IAWEB_REDIRECTSIDE = '/iawebredirectside';
 
 export const SAMTALESTØTTE_MIKROFONTEND = 'samtalestotte-podlet';
-export const SAMTALESTØTTE_MIKROFRONTEND_PROXY_PATH = '/' + SAMTALESTØTTE_MIKROFONTEND;
+export const SAMTALESTØTTE_MIKROFRONTEND_PATH = '/' + SAMTALESTØTTE_MIKROFONTEND;
 
 export const ER_VEDLIKEHOLD_AKTIVERT = false;
