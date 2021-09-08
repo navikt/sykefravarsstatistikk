@@ -21,14 +21,14 @@ export const Kurskalender: FunctionComponent<Props> = (props) => {
     return nesteIANettkurs ? (
         <div
             className={classNames(
-                'kurs-for-barnehager',
-                props.liten && 'kurs-for-barnehager--liten'
+                'kurskalender',
+                props.liten && 'kurskalender--liten'
             )}
         >
             <PaneltittelMedIkon src={kalenderSvg} alt="Kalenderikon">
                 Kurskalender
             </PaneltittelMedIkon>
-            <Normaltekst className="kurs-for-barnehager__tekst">
+            <Normaltekst className="kurskalender__tekst">
                 NAV tilbyr nettkurs, med temaer som forebygging og oppfølging av sykefravær
             </Normaltekst>
 

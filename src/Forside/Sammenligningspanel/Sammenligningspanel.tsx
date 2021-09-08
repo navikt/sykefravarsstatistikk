@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useRef } from 'react';
-import './SammenligningspanelBarnehage.less';
+import './Sammenligningspanel.less';
 import ReactToPrint from 'react-to-print';
-import Alertstripe, {AlertStripeFeil, AlertStripeInfo} from 'nav-frontend-alertstriper';
+import {AlertStripeFeil, AlertStripeInfo} from 'nav-frontend-alertstriper';
 import { RestSummertSykefraværshistorikk } from '../../api/summertSykefraværshistorikk';
 import { RestStatus } from '../../api/api-utils';
 import { useSendEvent } from '../../amplitude/amplitude';
@@ -10,7 +10,7 @@ import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import { useOrgnr } from '../../utils/orgnr-hook';
 import Lenke from "nav-frontend-lenker";
 
-export const SammenligningspanelBarnehage: FunctionComponent<{
+export const Sammenligningspanel: FunctionComponent<{
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
     restAltinnOrganisasjoner: RestAltinnOrganisasjoner;
 }> = ({ restSummertSykefraværshistorikk, restAltinnOrganisasjoner, children }) => {
@@ -27,7 +27,7 @@ export const SammenligningspanelBarnehage: FunctionComponent<{
 
     return (
         <>
-            {!harFeil && (<AlertStripeInfo className="sammenligningspanel-barnehage__info-eller-feilmelding">
+            {!harFeil && (<AlertStripeInfo className="sammenligningspanel__info-eller-feilmelding">
                     <Lenke
                         href="https://www.nav.no/no/nav-og-samfunn/statistikk/sykefravar-statistikk/relatert-informasjon/endringer-i-sykefravaersstatistikken-fra-og-med-1.kvartal-2021">
                         Endringer i sykefraværsstatistikken
@@ -36,16 +36,16 @@ export const SammenligningspanelBarnehage: FunctionComponent<{
             )}
 
             {harFeil && (
-                <AlertStripeFeil className="sammenligningspanel-barnehage__info-eller-feilmelding">
+                <AlertStripeFeil className="sammenligningspanel__info-eller-feilmelding">
                     Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen senere.
                 </AlertStripeFeil>
             )}
-            <div className="sammenligningspanel-barnehage" ref={panelRef}>
-                <div className="sammenligningspanel-barnehage__print-header">
-                    <Normaltekst className="sammenligningspanel-barnehage__href">
+            <div className="sammenligningspanel" ref={panelRef}>
+                <div className="sammenligningspanel__print-header">
+                    <Normaltekst className="sammenligningspanel__href">
                         {window.location.href}
                     </Normaltekst>
-                    <Systemtittel tag="h1" className="sammenligningspanel-barnehage__print-tittel">
+                    <Systemtittel tag="h1" className="sammenligningspanel__print-tittel">
                         Sykefraværsstatistikk for {navnPåVirksomhet} ({orgnr})
                     </Systemtittel>
                 </div>
@@ -60,7 +60,7 @@ export const SammenligningspanelBarnehage: FunctionComponent<{
                     trigger={() => (
                         <button
                             ref={lastNedKnappRef}
-                            className="sammenligningspanel-barnehage__knapp knapp"
+                            className="sammenligningspanel__knapp knapp"
                         >
                             Last ned
                         </button>
