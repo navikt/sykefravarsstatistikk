@@ -7,14 +7,12 @@ import './GrafOgTabell.less';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import AlertStripe, { AlertStripeInfo } from 'nav-frontend-alertstriper';
+import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
 import { useMålingAvTidsbruk, useSendEvent, useSendSidevisningEvent } from '../amplitude/amplitude';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { useOrgnr } from '../utils/orgnr-hook';
-import EndringISykefravRsstatistikkenInfotekst from '../felleskomponenter/EndringISykefraværsstatistikkenInfotekst/EndringISykefraværsstatistikkenInfotekst';
-import Lenke from 'nav-frontend-lenker';
 import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../metrikker/iatjenester';
 
 interface Props {
@@ -71,15 +69,8 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
 
     return (
         <div className="graf-og-tabell__wrapper">
-            <AlertStripeInfo className="graf-og-tabell__info-eller-feilmelding">
-                <Lenke href="https://www.nav.no/no/nav-og-samfunn/statistikk/sykefravar-statistikk/relatert-informasjon/endringer-i-sykefravaersstatistikken-fra-og-med-1.kvartal-2021">
-                    Endringer i sykefraværsstatistikken
-                </Lenke>
-                .
-            </AlertStripeInfo>
 
             <div className="graf-og-tabell">
-                <EndringISykefravRsstatistikkenInfotekst className="graf-og-tabell__endring-i-sykefraværsstatistikken" />
                 {restSykefraværsstatistikk.status !== RestStatus.IngenTilgang ? (
                     <div className="graf-og-tabell__overdel-wrapper">
                         <div className="graf-og-tabell__tekst-wrapper">

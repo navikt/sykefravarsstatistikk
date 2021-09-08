@@ -27,14 +27,6 @@ export const SammenligningspanelBarnehage: FunctionComponent<{
 
     return (
         <>
-            {!harFeil && (<AlertStripeInfo className="sammenligningspanel-barnehage__info-eller-feilmelding">
-                    <Lenke
-                        href="https://www.nav.no/no/nav-og-samfunn/statistikk/sykefravar-statistikk/relatert-informasjon/endringer-i-sykefravaersstatistikken-fra-og-med-1.kvartal-2021">
-                        Endringer i sykefraværsstatistikken
-                    </Lenke>
-                </AlertStripeInfo>
-            )}
-
             {harFeil && (
                 <AlertStripeFeil className="sammenligningspanel-barnehage__info-eller-feilmelding">
                     Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen senere.
