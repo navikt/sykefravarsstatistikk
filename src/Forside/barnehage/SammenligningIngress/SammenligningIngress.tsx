@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningIngress.less';
-import EndringISykefravRsstatistikkenInfotekst from '../../../felleskomponenter/EndringISykefraværsstatistikkenInfotekst/EndringISykefraværsstatistikkenInfotekst';
 import { Bransjetype } from '../../../api/virksomhetMetadata';
 
 export const SammenligningIngress: FunctionComponent<{
@@ -12,7 +11,6 @@ export const SammenligningIngress: FunctionComponent<{
     if (bransje === Bransjetype.BARNEHAGER) {
         return (
             <div className="sammenligning-ingress">
-                <EndringISykefravRsstatistikkenInfotekst className="sammenligning-ingress__endring-i-sykefraværsstatistikken" />
                 <Systemtittel tag="h2" className="sammenligning-ingress__tittel">
                     Hvor er ditt potensial?
                 </Systemtittel>
@@ -29,7 +27,6 @@ export const SammenligningIngress: FunctionComponent<{
     } else {
         return (
             <div className="sammenligning-ingress">
-                <EndringISykefravRsstatistikkenInfotekst className="sammenligning-ingress__endring-i-sykefraværsstatistikken" />
                 <Systemtittel tag="h2" className="sammenligning-ingress__tittel">
                     Hvor er ditt potensial?
                 </Systemtittel>

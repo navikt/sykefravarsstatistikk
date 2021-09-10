@@ -140,9 +140,9 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '888888885',
-        bedriftsmetrikker: getVirksomhetMetadataMock(ArbeidstilsynetBransje.BARNEHAGER),
-        sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-        summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
+        bedriftsmetrikker: undefined,
+        sykefraværshistorikkKvartalsvis: undefined,
+        summertSykefraværshistorikk: undefined,
     },
     {
         orgnr: '888888886',

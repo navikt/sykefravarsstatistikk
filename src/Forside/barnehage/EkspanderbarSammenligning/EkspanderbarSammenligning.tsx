@@ -98,6 +98,9 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 bransje={bransje}
                 harBransje={harBransje}
             />
+            <Element className="ekspanderbar-sammenligning__undertittel">
+                Detaljert sammenligning:
+            </Element>
             <EkspanderbartSammenligningspanel
                 sykefraværVurdering={sammenligningResultatGradert.sammenligningVurdering}
                 sykefraværVirksomhet={sammenligningResultatGradert.sykefraværVirksomhet}
@@ -108,9 +111,6 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 bransje={bransje}
                 harBransje={harBransje}
             />
-            <Element className="ekspanderbar-sammenligning__undertittel">
-                Detaljert sammenligning:
-            </Element>
             <EkspanderbartSammenligningspanel
                 sykefraværVurdering={sammenligningResultatKorttid.sammenligningVurdering}
                 sykefraværVirksomhet={sammenligningResultatKorttid.sykefraværVirksomhet}

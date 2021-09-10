@@ -1,10 +1,10 @@
 import { Statistikkategori, SummertSykefraværshistorikk } from '../api/summertSykefraværshistorikk';
 
 const siste4Kvartaler = [
-    { årstall: 2019, kvartal: 2, },
-    { årstall: 2019, kvartal: 3, },
-    { årstall: 2019, kvartal: 4, },
-    { årstall: 2020, kvartal: 1, },
+    { årstall: 2020, kvartal: 3, },
+    { årstall: 2020, kvartal: 4, },
+    { årstall: 2021, kvartal: 1, },
+    { årstall: 2021, kvartal: 2, },
 ];
 
 const summertSykefraværshistorikkBarnehager: SummertSykefraværshistorikk = {
