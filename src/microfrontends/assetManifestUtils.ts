@@ -11,7 +11,6 @@ export type AssetManifest = {
 
 export type MikrofrontendConfig = {
     appBaseUrl: string;
-    isSameDomain: boolean;
 };
 
 /**
@@ -54,20 +53,19 @@ export function createAssetManifestParser(
     return (manifestObject: ManifestObject) => {
         const pathsToLoad = extractPathsFromCRAManifest(manifestObject);
         const debugPaths = pathsToLoad.map((path) =>
-            makeAbsolute(mikrofrontendConfig.appBaseUrl, path, mikrofrontendConfig.isSameDomain)
+            makeAbsolute(mikrofrontendConfig.appBaseUrl, path)
         );
         return debugPaths;
     };
 }
 
-export function makeAbsolute(
-    baseUrl: string,
-    maybeAbsolutePath: string,
-    isSameDomain: boolean
-): string {
-    if (maybeAbsolutePath.startsWith('http') || isSameDomain) {
+export function makeAbsolute(baseUrl: string, maybeAbsolutePath: string): string {
+    if (maybeAbsolutePath.startsWith('http')) {
         return maybeAbsolutePath;
+    } else if (baseUrl.startsWith('http')) {
+        const url = new URL(baseUrl);
+        return `${url.origin}${maybeAbsolutePath}`;
+    } else {
+        return `${window.location.origin}${maybeAbsolutePath}`;
     }
-    const url = new URL(baseUrl);
-    return `${url.origin}${maybeAbsolutePath}`;
 }
