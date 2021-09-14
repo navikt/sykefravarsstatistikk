@@ -181,7 +181,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
         <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
             <EkspanderbartpanelBase
                 onClick={() => {
-                    //TODO finn ut av hvor dette blir brukt i amplitude
                     sendEvent('barnehage ekspanderbart sammenligning', 'klikk', {
                         panel: getPanelEventtekst(sammenligningsType),
                         action: erÅpen ? 'lukk' : 'åpne',
