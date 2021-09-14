@@ -79,7 +79,6 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             <SlikHarViKommetFramTilDittResultat
                 resultat={sammenligningResultatTotalt.sammenligningVurdering}
                 kvartaler={sammenligningResultatTotalt.kvartaler}
-                //TODO finn ut hvor dette blir brukt i amplitude før vi endrer
                 onÅpne={() => sendEvent('barnehage sammenligning lesmer', 'åpne')}
             />
             <DinNæringEllerBransje
