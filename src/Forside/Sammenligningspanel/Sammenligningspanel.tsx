@@ -50,6 +50,7 @@ export const Sammenligningspanel: FunctionComponent<{
                     </Systemtittel>
                 </div>
                 <ReactToPrint
+                    //TODO finn ut av hvor dette blir brukt i amplitude
                     onBeforePrint={() => sendEvent('forside barnehage', 'print')}
                     onAfterPrint={() => {
                         if (lastNedKnappRef.current) {

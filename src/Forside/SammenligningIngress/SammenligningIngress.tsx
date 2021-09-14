@@ -9,39 +9,21 @@ export const SammenligningIngress: FunctionComponent<{
     harBransje: boolean;
 }> = ({ bransje, harBransje }) => {
     const bransjeEllerNæringTekst = harBransje ? 'bransje' : 'næring';
-    if (bransje === Bransjetype.BARNEHAGER) {
-        return (
-            <div className="sammenligning-ingress">
-                <EndringISykefravRsstatistikkenInfotekst className="sammenligning-ingress__endring-i-sykefraværsstatistikken" />
-                <Systemtittel tag="h2" className="sammenligning-ingress__tittel">
-                    Hvor er ditt potensial?
-                </Systemtittel>
-                <Normaltekst>
-                    Du kan få hjelp til å forstå det ved å sammenligne deg med andre barnehager i
-                    Norge. Vi har laget en oversikt for deg.
-                </Normaltekst>
-                <Normaltekst className="sammenligning-ingress__tilbakemelding-tekst">
-                    Vi bruker tilbakemeldingsfunksjoner på siden for å gjøre tjenestene bedre.
-                    Tilbakemeldingene kan ikke knyttes til deg eller din virksomhet.
-                </Normaltekst>
-            </div>
-        );
-    } else {
-        return (
-            <div className="sammenligning-ingress">
-                <EndringISykefravRsstatistikkenInfotekst className="sammenligning-ingress__endring-i-sykefraværsstatistikken" />
-                <Systemtittel tag="h2" className="sammenligning-ingress__tittel">
-                    Hvor er ditt potensial?
-                </Systemtittel>
-                <Normaltekst>
-                    Du kan få hjelp til å forstå det ved å sammenligne deg med andre i din{' '}
-                    {bransjeEllerNæringTekst}. Vi har laget en oversikt for deg.
-                </Normaltekst>
-                <Normaltekst className="sammenligning-ingress__tilbakemelding-tekst">
-                    Vi bruker tilbakemeldingsfunksjoner på siden for å gjøre tjenestene bedre.
-                    Tilbakemeldingene kan ikke knyttes til deg eller din virksomhet.
-                </Normaltekst>
-            </div>
-        );
-    }
+    return (
+        <div className="sammenligning-ingress">
+            <EndringISykefravRsstatistikkenInfotekst className="sammenligning-ingress__endring-i-sykefraværsstatistikken" />
+            <Systemtittel tag="h2" className="sammenligning-ingress__tittel">
+                Hvor er ditt potensial?
+            </Systemtittel>
+            <Normaltekst>
+                Du kan få hjelp til å forstå det ved å sammenligne deg med andre i din{' '}
+                {bransjeEllerNæringTekst}. Vi har laget en oversikt for deg.
+            </Normaltekst>
+            <Normaltekst className="sammenligning-ingress__tilbakemelding-tekst">
+                Vi bruker tilbakemeldingsfunksjoner på siden for å gjøre tjenestene bedre.
+                Tilbakemeldingene kan ikke knyttes til deg eller din virksomhet.
+            </Normaltekst>
+        </div>
+    );
+
 };
