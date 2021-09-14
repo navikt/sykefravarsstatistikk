@@ -169,8 +169,8 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const getLesMerTekst = (): string => {
         switch (sammenligningsType) {
             case SammenligningsType.TOTALT:
-            case SammenligningsType.KORTTID:
                 return 'Les mer om tallene og få tips til hva du kan gjøre';
+            case SammenligningsType.KORTTID:
             case SammenligningsType.GRADERT:
             case SammenligningsType.LANGTID:
                 return 'Les mer om tallene';
