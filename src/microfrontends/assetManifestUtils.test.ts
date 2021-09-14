@@ -10,7 +10,7 @@ describe('makeAbsolute oppdaterer path til ressurser fra asset-manifest avhengig
                     '/samtalestotte-podlet',
                     '/samtalestotte-podlet/static/css/main.a617e044.chunk.css'
                 )
-            ).toBe('http://localhost/samtalestotte-podlet/static/css/main.a617e044.chunk.css');
+            ).toBe('http://dummy.io/samtalestotte-podlet/static/css/main.a617e044.chunk.css');
         });
     });
 
