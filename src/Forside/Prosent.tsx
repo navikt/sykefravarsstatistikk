@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { formaterProsent } from '../../utils/app-utils';
+import { formaterProsent } from '../utils/app-utils';
 
 interface Props {
     prosent: number | null | undefined;

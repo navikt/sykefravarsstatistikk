@@ -7,8 +7,8 @@ import {
     seKursFølgeOppSykefraværSykehjem,
     tipsOgRådArbeidsmiljøSykefravær,
 } from './tips-innhold';
-import { SykefraværVurdering } from '../../Forside/barnehage/Speedometer/Speedometer';
-import { SammenligningsType } from '../../Forside/barnehage/vurderingstekster';
+import { SykefraværVurdering } from '../../Forside/Speedometer/Speedometer';
+import { SammenligningsType } from '../../Forside/vurderingstekster';
 import { Bransjetype } from '../../api/virksomhetMetadata';
 
 export interface Tips {

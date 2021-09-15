@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Bransjetype } from '../api/virksomhetMetadata';
 import { getTips, Tips } from '../felleskomponenter/tips/tips';
-import { SammenligningsType } from '../Forside/barnehage/vurderingstekster';
-import { Speedometer, SykefraværVurdering } from '../Forside/barnehage/Speedometer/Speedometer';
+import { SammenligningsType } from '../Forside/vurderingstekster';
+import { Speedometer, SykefraværVurdering } from '../Forside/Speedometer/Speedometer';
 import { TipsVisning } from '../felleskomponenter/tips/TipsVisning';
 import { Select } from 'nav-frontend-skjema';
 import { Sidetittel } from 'nav-frontend-typografi';

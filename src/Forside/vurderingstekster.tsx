@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { SykefraværVurdering } from './Speedometer/Speedometer';
-import { getGrønnGrense, getRødGrense } from './barnehage-utils';
-import { formaterProsent } from '../../utils/app-utils';
+import { getGrønnGrense, getRødGrense } from './vurdering-utils';
+import { formaterProsent } from '../utils/app-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 export enum SammenligningsType {
