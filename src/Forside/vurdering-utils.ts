@@ -4,10 +4,10 @@ import {
     SummertKorttidsOgLangtidsfravær,
     SummertSykefravær,
     SummertSykefraværshistorikk,
-} from '../../api/summertSykefraværshistorikk';
+} from '../api/summertSykefraværshistorikk';
 import { SykefraværVurdering } from './Speedometer/Speedometer';
-import { RestStatus } from '../../api/api-utils';
-import { ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
+import { RestStatus } from '../api/api-utils';
+import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
 import { SammenligningsType } from './vurderingstekster';
 
 export const getVurderingForSammenligningAvSykefravær = (

@@ -5,9 +5,9 @@ import './DinNæringEllerBransje.less';
 import {
     RestSummertSykefraværshistorikk,
     Statistikkategori,
-} from '../../../../api/summertSykefraværshistorikk';
-import { RestStatus } from '../../../../api/api-utils';
-import EksternLenke from '../../../../felleskomponenter/EksternLenke/EksternLenke';
+} from '../../../api/summertSykefraværshistorikk';
+import { RestStatus } from '../../../api/api-utils';
+import EksternLenke from '../../../felleskomponenter/EksternLenke/EksternLenke';
 
 interface Props {
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;

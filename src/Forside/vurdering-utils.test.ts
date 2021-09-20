@@ -2,13 +2,13 @@ import {
     getSammenligningResultat,
     getVurdering,
     Sammenligningsresultater,
-} from './barnehage-utils';
+} from './vurdering-utils';
 import { SykefraværVurdering } from './Speedometer/Speedometer';
 import {
     RestSummertSykefraværshistorikk,
     Statistikkategori,
-} from '../../api/summertSykefraværshistorikk';
-import { RestStatus } from '../../api/api-utils';
+} from '../api/summertSykefraværshistorikk';
+import { RestStatus } from '../api/api-utils';
 import {
     getSummertSykefraværshistorikkMock,
     summertSykefraværshistorikkMockGrønn,
@@ -17,7 +17,7 @@ import {
     summertSykefraværshistorikkMockMedBare2Kvartaler,
     summertSykefraværshistorikkMockRød,
     summertSykefraværshistorikkMockUtenData,
-} from '../../mocking/summert-sykefraværshistorikk-mock';
+} from '../mocking/summert-sykefraværshistorikk-mock';
 
 it('getVurdering skal gi riktig vurdering', () => {
     expect(getVurdering(5.5, 5)).toEqual(SykefraværVurdering.OVER);

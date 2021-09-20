@@ -10,25 +10,25 @@ import {
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import { SykefraværMetadata } from './SykefraværMetadata';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
-import { TipsVisning } from '../../../felleskomponenter/tips/TipsVisning';
-import { getTips, Tips } from '../../../felleskomponenter/tips/tips';
+import { TipsVisning } from '../../felleskomponenter/tips/TipsVisning';
+import { getTips, Tips } from '../../felleskomponenter/tips/tips';
 import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
-import { useSendEvent } from '../../../amplitude/amplitude';
-import { Bransjetype } from '../../../api/virksomhetMetadata';
+import { useSendEvent } from '../../amplitude/amplitude';
+import { Bransjetype } from '../../api/virksomhetMetadata';
 import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
 import Lenke from 'nav-frontend-lenker';
-import LesMerPanel from '../../../felleskomponenter/LesMerPanel/LesMerPanel';
-import { OmGradertSykmelding } from '../../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
-import { BASE_PATH } from '../../../konstanter';
+import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
+import { OmGradertSykmelding } from '../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
+import { BASE_PATH } from '../../konstanter';
 import {
     erIaTjenesterMetrikkerSendtForBedrift,
     iaTjenesterMetrikkerErSendtForBedrift,
     useSendIaTjenesteMetrikkEvent,
-} from '../../../metrikker/iatjenester';
-import { iaTjenesterMetrikkerContext } from '../../../metrikker/IaTjenesterMetrikkerContext';
-import { useOrgnr } from '../../../utils/orgnr-hook';
+} from '../../metrikker/iatjenester';
+import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
+import { useOrgnr } from '../../utils/orgnr-hook';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
