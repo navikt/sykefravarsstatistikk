@@ -94,7 +94,8 @@
         "react-scripts/**/tar": "^6.1.9",
         "react-scripts/**/url-parse": "^1.5.3",
         "react-scripts/**/browserslist": "^4.16.8",
-        "react-scripts/**/glob-parent": "^6.0.1"
+        "react-scripts/**/glob-parent": "^6.0.1",
+        "immer": "^9.0.6"
     },
     "scripts": {
         "start": "craco start",
