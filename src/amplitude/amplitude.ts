@@ -10,8 +10,8 @@ import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsr
 import {
     Ekstradata,
     getEkstraDataFraEnhetsregisteret,
-    getEkstraDataFraSykefraværshistorikk,
     getEkstraDataFraSummertSykefraværshistorikk,
+    getEkstraDataFraSykefraværshistorikk,
     getEkstraDataFraVirksomhetMetadata,
 } from './ekstradata';
 
@@ -83,7 +83,9 @@ export const useSendSidevisningEvent = (område: string, orgnr: string | undefin
     useEffect(() => {
         if (skalSendeEvent.current) {
             skalSendeEvent.current = false;
-            sendEvent(område, 'vist');
+
+            // Setter timeout på eventet, slik at alle dataene fra "ekstradata" rekker å laste inn før eventet sendes.
+            setTimeout(() => sendEvent(område, 'vist'), 2000);
         }
     }, [orgnr, område, sendEvent]);
 };
