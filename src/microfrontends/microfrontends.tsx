@@ -9,6 +9,7 @@ import { getMiljø } from '../utils/miljøUtils';
 
 type PodletProps = {
     visning: string | undefined;
+    orgnr?: string;
 };
 
 const LasterInn: FunctionComponent = () => (
