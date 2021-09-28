@@ -13,10 +13,10 @@ export enum Bransjetype {
     TRANSPORT = 'TRANSPORT',
 }
 
-export interface VirksomhetMetadata {
+export interface Virksomhetsdata {
     næringskode5Siffer: Næringskode5Siffer;
     bransje?: Bransjetype;
     antallAnsatte: number;
 }
 
-export type RestVirksomhetMetadata = RestRessurs<VirksomhetMetadata>;
+export type RestVirksomhetsdata = RestRessurs<Virksomhetsdata>;

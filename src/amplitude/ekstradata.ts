@@ -7,7 +7,7 @@ import {
     tilSegmenteringSykefraværsprosent,
 } from './segmentering';
 import { SykefraværVurdering } from '../Forside/Speedometer/Speedometer';
-import { Bransjetype, RestVirksomhetMetadata } from '../api/virksomhetMetadata';
+import { Bransjetype, RestVirksomhetsdata } from '../api/virksomhetsdata';
 import { RestStatus } from '../api/api-utils';
 import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
 import { RestSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
@@ -34,11 +34,11 @@ export interface Ekstradata {
     sektor: Sektor;
 }
 
-export const getEkstraDataFraVirksomhetMetadata = (
-    restVirksomhetMetadata: RestVirksomhetMetadata
+export const getEkstraDataFraVirksomhetsdata = (
+    restVirksomhetsdata: RestVirksomhetsdata,
 ): Partial<Ekstradata> => {
-    if (restVirksomhetMetadata.status === RestStatus.Suksess) {
-        const metrikker = restVirksomhetMetadata.data;
+    if (restVirksomhetsdata.status === RestStatus.Suksess) {
+        const metrikker = restVirksomhetsdata.data;
         const næringskode2siffer = metrikker.næringskode5Siffer.kode.substring(0, 2);
         const næring2siffer =
             næringskode2siffer + ' ' + mapTilNæringsbeskrivelse(næringskode2siffer);
@@ -78,16 +78,16 @@ export const getEkstraDataFraSykefraværshistorikk = (
 
 export const getEkstraDataFraEnhetsregisteret = (
     restOverordnetEnhet: RestOverordnetEnhet,
-    restVirksomhetMetadata: RestVirksomhetMetadata
+    restvirksomhetsdata: RestVirksomhetsdata,
 ): Partial<Ekstradata> => {
     if (
-        restVirksomhetMetadata.status === RestStatus.Suksess &&
-        restVirksomhetMetadata.data.bransje === Bransjetype.BARNEHAGER &&
+        restvirksomhetsdata.status === RestStatus.Suksess &&
+        restvirksomhetsdata.data.bransje === Bransjetype.BARNEHAGER &&
         restOverordnetEnhet.status === RestStatus.Suksess
     ) {
         return {
             sektor: mapTilPrivatElleOffentligSektor(
-                restOverordnetEnhet.data.institusjonellSektorkode
+                restOverordnetEnhet.data.institusjonellSektorkode,
             ),
         };
     }
@@ -108,10 +108,10 @@ const getAntallForskjelligeFarger = (...resultater: SykefraværVurdering[]): num
 
 export const getEkstraDataFraSummertSykefraværshistorikk = (
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk,
-    restVirksomhetMetadata: RestVirksomhetMetadata
+    restvirksomhetsdata: RestVirksomhetsdata,
 ): Partial<Ekstradata> => {
     if (
-        restVirksomhetMetadata.status !== RestStatus.Suksess
+        restvirksomhetsdata.status !== RestStatus.Suksess
     ) {
         return {};
     }

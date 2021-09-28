@@ -1,6 +1,6 @@
 import { default as React, FunctionComponent } from 'react';
 import { useOrgnr } from '../utils/orgnr-hook';
-import { useSendSidevisningEvent } from '../amplitude/amplitude';
+import { useSendSidevisningEvent } from '../amplitude/events/sidevisning';
 
 export const Forside: FunctionComponent = (props) => {
     const orgnr = useOrgnr();

@@ -2,17 +2,14 @@ import { BASE_PATH } from '../konstanter';
 import { fetchMedFeilhåndtering, RestStatus } from './api-utils';
 import { FeatureToggles, RestFeatureToggles } from './featureToggles';
 import {
+    KvartalsvisSykefraværshistorikk,
     KvartalsvisSykefraværsprosent,
     RestSykefraværshistorikk,
-    KvartalsvisSykefraværshistorikk,
     SykefraværshistorikkType,
 } from './kvartalsvisSykefraværshistorikk';
 import { sendEventDirekte } from '../amplitude/amplitude';
-import { RestVirksomhetMetadata, VirksomhetMetadata } from './virksomhetMetadata';
-import {
-    RestSummertSykefraværshistorikk,
-    SummertSykefraværshistorikk,
-} from './summertSykefraværshistorikk';
+import { RestVirksomhetsdata, Virksomhetsdata } from './virksomhetsdata';
+import { RestSummertSykefraværshistorikk, SummertSykefraværshistorikk } from './summertSykefraværshistorikk';
 
 const sykefraværshistorikkPath = (orgnr: string) =>
     `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/kvartalsvis`;
@@ -23,7 +20,7 @@ const summertPath = (orgnr: string) =>
 const featureTogglesPath = (features: string[]) =>
     `${BASE_PATH}/api/feature?` + features.map((featureNavn) => `feature=${featureNavn}`).join('&');
 
-const virksomhetMetadataPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/bedriftsmetrikker`;
+const virksomhetsdataPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/bedriftsmetrikker`;
 
 export const hentRestSykefraværshistorikk = async (
     orgnr: string
@@ -70,10 +67,10 @@ export const hentRestFeatureToggles = async (
     }
 };
 
-export const hentRestVirksomhetMetadata = async (
-    orgnr: string
-): Promise<RestVirksomhetMetadata> => {
-    return await fetchMedFeilhåndtering<VirksomhetMetadata>(virksomhetMetadataPath(orgnr), {
+export const hentRestvirksomhetsdata = async (
+    orgnr: string,
+): Promise<RestVirksomhetsdata> => {
+    return await fetchMedFeilhåndtering<Virksomhetsdata>(virksomhetsdataPath(orgnr), {
         method: 'GET',
         credentials: 'include',
     });

@@ -12,7 +12,7 @@ import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { RestSykefraværshistorikk } from './api/kvartalsvisSykefraværshistorikk';
-import { RestVirksomhetMetadata } from './api/virksomhetMetadata';
+import { RestVirksomhetsdata } from './api/virksomhetsdata';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import {
@@ -25,15 +25,9 @@ import {
     PATH_IAWEB_REDIRECTSIDE,
     PATH_KALKULATOR,
 } from './konstanter';
-import {
-    virksomhetMetadataContext,
-    VirksomhetMetadataProvider,
-} from './utils/virksomhetMetadataContext';
-import {
-    sykefraværshistorikkContext,
-    SykefraværshistorikkProvider,
-} from './utils/sykefraværshistorikkContext';
-import { sendEventDirekte, useMålingAvTidsbruk } from './amplitude/amplitude';
+import { virksomhetsdataContext, VirksomhetsdataProvider } from './utils/virksomhetsdataContext';
+import { sykefraværshistorikkContext, SykefraværshistorikkProvider } from './utils/sykefraværshistorikkContext';
+import { sendEventDirekte } from './amplitude/amplitude';
 import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
@@ -60,13 +54,11 @@ import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/E
 import { Kurskalender } from './Forside/Kurskalender/Kurskalender';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import { hentRestKurs, RestKursliste } from './api/kurs-api';
-import {
-    LegacyBarnehageSammenligningRedirect,
-    LegacySammenligningRedirect,
-} from './utils/redirects';
+import { LegacyBarnehageSammenligningRedirect, LegacySammenligningRedirect } from './utils/redirects';
 import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 import SamtalestøttePodletpanel from './Forside/Samtalestøttepanel/SamtalestøttePodletpanel';
+import { useTidsbrukEvent } from './amplitude/events/tidsbruk';
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
@@ -74,14 +66,14 @@ const App: FunctionComponent = () => {
         <BrowserRouter basename={BASE_PATH}>
             <AltinnOrganisasjonerProvider>
                 <AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
-                    <VirksomhetMetadataProvider>
+                    <VirksomhetsdataProvider>
                         <EnhetsregisteretProvider>
                             <SummertSykefraværshistorikkProvider>
                                 <SykefraværshistorikkProvider>
                                     <FeatureTogglesProvider>
                                         <TilbakemeldingContextProvider>
                                             <IaTjenesterMetrikkerContextProvider>
-                                                <main id="maincontent">
+                                                <main id='maincontent'>
                                                     <AppContent />
                                                 </main>
                                             </IaTjenesterMetrikkerContextProvider>
@@ -90,7 +82,7 @@ const App: FunctionComponent = () => {
                                 </SykefraværshistorikkProvider>
                             </SummertSykefraværshistorikkProvider>
                         </EnhetsregisteretProvider>
-                    </VirksomhetMetadataProvider>
+                    </VirksomhetsdataProvider>
                 </AltinnOrganisasjonerMedTilgangTilStatistikkProvider>
             </AltinnOrganisasjonerProvider>
         </BrowserRouter>
@@ -98,20 +90,22 @@ const App: FunctionComponent = () => {
 };
 
 const AppContent: FunctionComponent = () => {
+    console.log('Laster inn AppContent');
+
     const restOrganisasjoner = useContext<RestAltinnOrganisasjoner>(altinnOrganisasjonerContext);
     const restOrganisasjonerMedStatistikk = useContext<RestAltinnOrganisasjoner>(
-        altinnOrganisasjonerMedTilgangTilStatistikkContext
+        altinnOrganisasjonerMedTilgangTilStatistikkContext,
     );
     const restSummertSykefraværshistorikk = useContext<RestSummertSykefraværshistorikk>(
-        summertSykefraværshistorikkContext
+        summertSykefraværshistorikkContext,
     );
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
-        sykefraværshistorikkContext
+        sykefraværshistorikkContext,
     );
-    const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
+    const restvirksomhetsdata = useContext<RestVirksomhetsdata>(virksomhetsdataContext);
     const location = useLocation();
     useSetUserProperties();
-    useMålingAvTidsbruk('hele appen', 5, 30, 60, 120, 300);
+    useTidsbrukEvent('hele appen', 5, 30, 60, 120, 300);
 
     const { restUnderenhet } = useContext<EnhetsregisteretState>(enhetsregisteretContext);
 
@@ -145,7 +139,7 @@ const AppContent: FunctionComponent = () => {
         return <VedlikeholdSide />;
     } else if (
         restOrganisasjoner.status === RestStatus.LasterInn ||
-        restVirksomhetMetadata.status === RestStatus.LasterInn
+        restvirksomhetsdata.status === RestStatus.LasterInn
     ) {
         innhold = <Lasteside />;
     } else if (
@@ -184,7 +178,7 @@ const AppContent: FunctionComponent = () => {
                                     restSummertSykefraværshistorikk={
                                         restSummertSykefraværshistorikk
                                     }
-                                    restVirksomhetMetadata={restVirksomhetMetadata}
+                                    restVirksomhetsdata={restvirksomhetsdata}
                                 />
                             </Sammenligningspanel>
                             <KalkulatorPanel liten />
@@ -192,7 +186,7 @@ const AppContent: FunctionComponent = () => {
                             <Kurskalender restKursliste={restKursliste} liten={true} />
                             <SamtalestøttePodletpanel />
                             <ArbeidsmiljøportalPanel
-                                restVirksomhetMetadata={restVirksomhetMetadata}
+                                restvirksomhetsdata={restvirksomhetsdata}
                             />
                         </Forside>
                     </InnloggingssideWrapper>

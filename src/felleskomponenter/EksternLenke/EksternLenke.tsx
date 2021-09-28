@@ -3,7 +3,8 @@ import Lenke, { Props } from 'nav-frontend-lenker';
 import { ReactComponent as EksternLenkeIkon } from './EksternLenkeIkon.svg';
 import './EksternLenke.less';
 import classNames from 'classnames';
-import { EventData, useSendNavigereEvent } from '../../amplitude/amplitude';
+import { EventData } from '../../amplitude/amplitude';
+import { useSendNavigereEvent } from '../../amplitude/events/navigere';
 
 interface ExtendedProps {
     children: string;
@@ -11,9 +12,9 @@ interface ExtendedProps {
 }
 
 const EksternLenke: FunctionComponent<Props & ExtendedProps> = ({
-    children,
-    eventProperties,
-    className,
+                                                                    children,
+                                                                    eventProperties,
+                                                                    className,
     ...lenkeProperties
 }) => {
     const sendNavigereEvent = useSendNavigereEvent();

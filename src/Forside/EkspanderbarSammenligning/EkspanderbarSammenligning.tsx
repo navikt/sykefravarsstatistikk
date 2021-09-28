@@ -10,19 +10,19 @@ import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngre
 import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
 import { useSendEvent } from '../../amplitude/amplitude';
 import './EkspanderbarSammenligning.less';
-import { Bransjetype, RestVirksomhetMetadata } from '../../api/virksomhetMetadata';
+import { Bransjetype, RestVirksomhetsdata } from '../../api/virksomhetsdata';
 import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
 import { Element } from 'nav-frontend-typografi';
 
 interface Props {
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
-    restVirksomhetMetadata: RestVirksomhetMetadata;
+    restVirksomhetsdata: RestVirksomhetsdata;
 }
 
 export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
-    restSummertSykefraværshistorikk,
-    restVirksomhetMetadata,
-}) => {
+                                                                        restSummertSykefraværshistorikk,
+                                                                        restVirksomhetsdata,
+                                                                    }) => {
     const sendEvent = useSendEvent();
 
     if (
@@ -45,8 +45,8 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
     }
 
     const bransje: Bransjetype | undefined =
-        restVirksomhetMetadata.status === RestStatus.Suksess
-            ? restVirksomhetMetadata.data.bransje
+        restVirksomhetsdata.status === RestStatus.Suksess
+            ? restVirksomhetsdata.data.bransje
             : undefined;
 
     const harBransje =

@@ -4,16 +4,14 @@ import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/kvartalsvisSykefraværshistorikk';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import {
-    useMålingAvTidsbruk,
-    useSendEvent,
-    useSendSidevisningEvent,
-} from '../../amplitude/amplitude';
+import { useSendEvent } from '../../amplitude/amplitude';
 import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
 import { useOrgnr } from '../../utils/orgnr-hook';
 import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../../metrikker/iatjenester';
+import { useTidsbrukEvent } from '../../amplitude/events/tidsbruk';
+import { useSendSidevisningEvent } from '../../amplitude/events/sidevisning';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -21,13 +19,13 @@ interface Props {
 
 const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
     const [kalkulatorvariant, setKalkulatorvariant] = useState<Kalkulatorvariant>(
-        Kalkulatorvariant.Prosent
+        Kalkulatorvariant.Prosent,
     );
     const orgnr = useOrgnr();
     const sendEvent = useSendEvent();
 
     // kalkulator2 fordi det opprinnelige eventnavnet er merget med en annen event i Amplitude
-    useMålingAvTidsbruk('kalkulator2', 5, 30, 60, 120);
+    useTidsbrukEvent('kalkulator2', 5, 30, 60, 120);
     useSendSidevisningEvent('kalkulator', orgnr);
     useSendIaTjenesteMetrikkMottattVedSidevisningEvent();
 

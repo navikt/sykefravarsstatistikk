@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningIngress.less';
-import { Bransjetype } from '../../api/virksomhetMetadata';
+import { Bransjetype } from '../../api/virksomhetsdata';
 
 export const SammenligningIngress: FunctionComponent<{
     bransje?: Bransjetype;
