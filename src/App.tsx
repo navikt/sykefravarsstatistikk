@@ -11,8 +11,8 @@ import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
 import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
-import { RestSykefraværshistorikk } from './api/kvartalsvisSykefraværshistorikk';
-import { RestVirksomhetsdata } from './api/virksomhetsdata';
+import { RestSykefraværshistorikk } from './api/kvartalsvis-sykefraværshistorikk-api';
+import { RestVirksomhetsdata } from './api/virksomhetsdata-api';
 import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
 import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import {
@@ -43,7 +43,7 @@ import {
     summertSykefraværshistorikkContext,
     SummertSykefraværshistorikkProvider,
 } from './utils/summertSykefraværshistorikkContext';
-import { RestSummertSykefraværshistorikk } from './api/summertSykefraværshistorikk';
+import { RestSummertSykefraværshistorikk } from './api/summert-sykefraværshistorikk-api';
 import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import {
     enhetsregisteretContext,

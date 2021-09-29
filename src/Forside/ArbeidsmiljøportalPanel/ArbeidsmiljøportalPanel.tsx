@@ -4,7 +4,7 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import arbeidsmiljøportalLogoSvg from './arbeidsmiljøportal-logo.svg';
 import { RestStatus } from '../../api/api-utils';
-import { RestVirksomhetsdata } from '../../api/virksomhetsdata';
+import { RestVirksomhetsdata } from '../../api/virksomhetsdata-api';
 import {
     ArbeidstilsynetBransje,
     getArbeidstilsynetBransje,

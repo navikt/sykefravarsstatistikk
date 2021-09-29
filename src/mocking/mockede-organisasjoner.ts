@@ -1,11 +1,11 @@
-import { Virksomhetsdata } from '../api/virksomhetsdata';
-import { KvartalsvisSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
+import { Virksomhetsdata } from '../api/virksomhetsdata-api';
+import { KvartalsvisSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import {
     lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet,
     lagMaskertHistorikk,
     lagMockHistorikkForBarnehage,
 } from './sykefraværshistorikk-mock';
-import { Statistikkategori, SummertSykefraværshistorikk } from '../api/summertSykefraværshistorikk';
+import { Statistikkategori, SummertSykefraværshistorikk } from '../api/summert-sykefraværshistorikk-api';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { getvirksomhetsdataMock } from './virksomhetsdata-mock';
 import { ArbeidstilsynetBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';

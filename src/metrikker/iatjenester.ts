@@ -1,5 +1,5 @@
 import { MutableRefObject, useContext, useEffect, useRef } from 'react';
-import { RestVirksomhetsdata, Virksomhetsdata } from '../api/virksomhetsdata';
+import { RestVirksomhetsdata, Virksomhetsdata } from '../api/virksomhetsdata-api';
 import { virksomhetsdataContext } from '../utils/virksomhetsdataContext';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
 import { RestStatus } from '../api/api-utils';

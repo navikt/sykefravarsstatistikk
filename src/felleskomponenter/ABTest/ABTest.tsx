@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactElement, useEffect } from 'react';
 import { RestStatus } from '../../api/api-utils';
 import { ABTestVersjon, getABTestVersjon, sendABTestEvent } from './ab-test-utils';
-import { RestFeatureToggles } from '../../api/featureToggles';
+import { RestFeatureToggles } from '../../api/feature-toggles-api';
 import Lasteside from '../../Lasteside/Lasteside';
 
 interface Props {

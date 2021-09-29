@@ -1,4 +1,4 @@
-import { Bransjetype, Virksomhetsdata } from '../api/virksomhetsdata';
+import { Bransjetype, Virksomhetsdata } from '../api/virksomhetsdata-api';
 import { ArbeidstilsynetBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
 
 export const defaultBedriftsmetrikker: Virksomhetsdata = {

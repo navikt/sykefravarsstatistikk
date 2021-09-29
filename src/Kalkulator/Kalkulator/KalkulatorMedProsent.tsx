@@ -3,7 +3,7 @@ import './Kalkulator.less';
 import Kostnad from './../Kostnad/Kostnad';
 import { RestStatus } from '../../api/api-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
-import { RestSykefraværshistorikk } from '../../api/kvartalsvisSykefraværshistorikk';
+import { RestSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import {
     getAntallMuligeDagsverkSiste4Kvartaler,
     getKostnadForSykefraværsprosent,
@@ -11,7 +11,7 @@ import {
     Kalkulatorvariant,
     Maskering,
     rundAvTilEnDesimal,
-} from './../kalkulator-utils';
+} from '../kalkulator-utils';
 import { useSendEvent } from '../../amplitude/events';
 import { Kalkulatorrad } from './Kalkulatorrad/Kalkulatorrad';
 

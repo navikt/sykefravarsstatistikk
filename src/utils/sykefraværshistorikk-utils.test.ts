@@ -1,7 +1,7 @@
 import {
     KvartalsvisSykefraværshistorikk,
     SykefraværshistorikkType,
-} from '../api/kvartalsvisSykefraværshistorikk';
+} from '../api/kvartalsvis-sykefraværshistorikk-api';
 import {
     getHistorikkLabels,
     konverterTilKvartalsvisSammenligning,

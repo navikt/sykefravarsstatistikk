@@ -7,14 +7,14 @@ import {
     tilSegmenteringSykefraværsprosent,
 } from './segmentering';
 import { SykefraværVurdering } from '../Forside/Speedometer/Speedometer';
-import { Bransjetype, RestVirksomhetsdata } from '../api/virksomhetsdata';
+import { Bransjetype, RestVirksomhetsdata } from '../api/virksomhetsdata-api';
 import { RestStatus } from '../api/api-utils';
 import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
-import { RestSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
+import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import { konverterTilKvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
 import { RestOverordnetEnhet } from '../api/enhetsregisteret-api';
 import { mapTilPrivatElleOffentligSektor, Sektor } from '../utils/sektorUtils';
-import { RestSummertSykefraværshistorikk } from '../api/summertSykefraværshistorikk';
+import { RestSummertSykefraværshistorikk } from '../api/summert-sykefraværshistorikk-api';
 import { getSammenligningResultatMedProsent } from '../Forside/vurdering-utils';
 import { SammenligningsType } from '../Forside/vurderingstekster';
 import { MutableRefObject, useContext, useEffect, useRef } from 'react';

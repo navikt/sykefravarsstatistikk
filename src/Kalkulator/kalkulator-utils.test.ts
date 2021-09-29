@@ -1,9 +1,9 @@
 import { getAntallTapteDagsverkSiste4Kvartaler } from './kalkulator-utils';
 import {
-    KvartalsvisSykefraværsprosent,
     KvartalsvisSykefraværshistorikk,
+    KvartalsvisSykefraværsprosent,
     SykefraværshistorikkType,
-} from '../api/kvartalsvisSykefraværshistorikk';
+} from '../api/kvartalsvis-sykefraværshistorikk-api';
 
 describe('Tester for kalkulator-utils', () => {
     test('getAntallTapteDagsverkSiste4Kvartaler skal returnere antall tapte dagsverk for virksomhet de siste 4 kvartaler', () => {

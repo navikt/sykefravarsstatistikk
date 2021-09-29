@@ -1,4 +1,4 @@
-import { Statistikkategori, SummertSykefraværshistorikk } from '../api/summertSykefraværshistorikk';
+import { Statistikkategori, SummertSykefraværshistorikk } from '../api/summert-sykefraværshistorikk-api';
 
 const siste4Kvartaler = [
     { årstall: 2020, kvartal: 3, },

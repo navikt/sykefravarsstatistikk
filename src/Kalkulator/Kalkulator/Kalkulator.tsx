@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
-import { RestSykefraværshistorikk } from '../../api/kvartalsvisSykefraværshistorikk';
+import { RestSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import { Kalkulatorvariant } from '../kalkulator-utils';
 import { useSendEvent, useSendSidevisningEvent, useTidsbrukEvent } from '../../amplitude/events';
 import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';

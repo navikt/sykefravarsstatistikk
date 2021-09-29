@@ -4,7 +4,7 @@ import {
     SummertKorttidsOgLangtidsfravær,
     SummertSykefravær,
     SummertSykefraværshistorikk,
-} from '../api/summertSykefraværshistorikk';
+} from '../api/summert-sykefraværshistorikk-api';
 import { SykefraværVurdering } from './Speedometer/Speedometer';
 import { RestStatus } from '../api/api-utils';
 import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';

@@ -11,7 +11,7 @@ import { getTips, Tips } from '../../felleskomponenter/tips/tips';
 import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
 import { useSendEvent } from '../../amplitude/events';
-import { Bransjetype } from '../../api/virksomhetsdata';
+import { Bransjetype } from '../../api/virksomhetsdata-api';
 import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
 import Lenke from 'nav-frontend-lenker';

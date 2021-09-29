@@ -1,7 +1,6 @@
 import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
 import { RestStatus } from '../api/api-utils';
-import { RestVirksomhetsdata } from '../api/virksomhetsdata';
-import { hentRestvirksomhetsdata } from '../api/api';
+import { hentRestvirksomhetsdata, RestVirksomhetsdata } from '../api/virksomhetsdata-api';
 import { useOrgnr } from './orgnr-hook';
 
 export const virksomhetsdataContext = createContext<RestVirksomhetsdata>({

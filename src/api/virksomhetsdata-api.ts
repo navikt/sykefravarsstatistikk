@@ -1,4 +1,5 @@
-import { RestRessurs } from './api-utils';
+import { fetchMedFeilhåndtering, RestRessurs } from './api-utils';
+import { BASE_PATH } from '../konstanter';
 
 export type Næringskode5Siffer = {
     kode: string;
@@ -20,3 +21,14 @@ export interface Virksomhetsdata {
 }
 
 export type RestVirksomhetsdata = RestRessurs<Virksomhetsdata>;
+
+const virksomhetsdataPath = (orgnr: string) => `${BASE_PATH}/api/${orgnr}/bedriftsmetrikker`;
+
+export const hentRestvirksomhetsdata = async (
+    orgnr: string,
+): Promise<RestVirksomhetsdata> => {
+    return await fetchMedFeilhåndtering<Virksomhetsdata>(virksomhetsdataPath(orgnr), {
+        method: 'GET',
+        credentials: 'include',
+    });
+};

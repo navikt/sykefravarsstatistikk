@@ -1,8 +1,8 @@
 import {
-    KvartalsvisSykefraværsprosent,
     KvartalsvisSykefraværshistorikk,
+    KvartalsvisSykefraværsprosent,
     SykefraværshistorikkType,
-} from '../api/kvartalsvisSykefraværshistorikk';
+} from '../api/kvartalsvis-sykefraværshistorikk-api';
 
 const summerTall = (tall: number[]) => tall.reduce((a, b) => a + b);
 

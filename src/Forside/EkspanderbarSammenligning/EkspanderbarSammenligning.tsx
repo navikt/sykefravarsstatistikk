@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { RestSummertSykefraværshistorikk } from '../../api/summertSykefraværshistorikk';
+import { RestSummertSykefraværshistorikk } from '../../api/summert-sykefraværshistorikk-api';
 import { EkspanderbartSammenligningspanel } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
 import { RestStatus } from '../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
@@ -10,7 +10,7 @@ import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngre
 import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
 import { useSendEvent } from '../../amplitude/events';
 import './EkspanderbarSammenligning.less';
-import { Bransjetype, RestVirksomhetsdata } from '../../api/virksomhetsdata';
+import { Bransjetype, RestVirksomhetsdata } from '../../api/virksomhetsdata-api';
 import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
 import { Element } from 'nav-frontend-typografi';
 

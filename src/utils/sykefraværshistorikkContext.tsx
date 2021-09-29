@@ -1,8 +1,7 @@
 import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
-import { RestSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
+import { hentRestSykefraværshistorikk, RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import { RestStatus } from '../api/api-utils';
 import { useOrgnr } from './orgnr-hook';
-import { hentRestSykefraværshistorikk } from '../api/api';
 
 export const sykefraværshistorikkContext = createContext<RestSykefraværshistorikk>({
     status: RestStatus.IkkeLastet,
