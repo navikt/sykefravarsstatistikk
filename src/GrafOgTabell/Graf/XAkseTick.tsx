@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
 const XAkseTick = (props: { x: any, y: any, payload: any }) => {
     // Denne komponenten overskriver recharts default Tick-komponent. Dette er gjort som en workaround:

@@ -1,6 +1,5 @@
 import { makeAbsolute } from './assetManifestUtils';
 import { SAMTALESTØTTE_MIKROFRONTEND_PATH } from '../konstanter';
-import { withCurrentLocation } from '../utils/test-utils';
 
 describe('makeAbsolute oppdaterer path til ressurser fra asset-manifest avhengig av domene child app og parent app kjører i', () => {
     it('returnerer samme path når begge kjører på samme domene', () => {

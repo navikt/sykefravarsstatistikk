@@ -2,7 +2,6 @@ import React, { createContext, FunctionComponent, useEffect, useState } from 're
 import { hentAltinnOrganisasjoner, RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { RestStatus } from '../api/api-utils';
 import { BASE_PATH } from '../konstanter';
-import {getMiljø} from "./miljøUtils";
 
 export const altinnOrganisasjonerContext = createContext<RestAltinnOrganisasjoner>({
     status: RestStatus.IkkeLastet,

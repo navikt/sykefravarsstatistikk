@@ -120,13 +120,6 @@ export const getVurdering = (
 export const getGrønnGrense = (bransjensProsent: number) => bransjensProsent * 0.9;
 export const getRødGrense = (bransjensProsent: number) => bransjensProsent * 1.1;
 
-const byttPunktumMedKomma = (tall: number): string => `${tall}`.replace('.', ',');
-
-export const getGrønnGrenseTekst = (bransjensProsent: number) =>
-    byttPunktumMedKomma(Math.ceil(getGrønnGrense(bransjensProsent) * 10) / 10);
-export const getRødGrenseTekst = (bransjensProsent: number) =>
-    byttPunktumMedKomma(Math.floor(getRødGrense(bransjensProsent) * 10) / 10);
-
 const addEllerReturnerNull = (number1: number | null, number2: number | null) => {
     if (number1 === null || number2 === null) return null;
     return number1 + number2;
@@ -246,12 +239,6 @@ export const getSammenligningResultatMedProsent = (
         kvartaler
     );
 
-    /*return {
-        sammenligningVurdering: sammenligningVurdering,
-        sykefraværVirksomhet: sykefraværVirksomhet,
-        sykefraværBransje: sykefraværBransje,
-        kvartaler: kvartaler,
-    };*/
 };
 const getSammmenligningVruderingProsenterOgKvartaler = (
     sammenligningsType: SammenligningsType,

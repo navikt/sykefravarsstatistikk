@@ -8,16 +8,16 @@ import './Lenkeressurser.less';
 import { useSendEvent } from '../../amplitude/events';
 import { PaneltittelMedIkon } from '../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
 
-const Lenkeressurser: FunctionComponent = () => {
+export const Lenkeressurser: FunctionComponent = () => {
     const sendEvent = useSendEvent();
 
     return (
-        <PanelBase className="lenkeressurser">
-            <PaneltittelMedIkon src={videoSvg} alt="Videoikon">
+        <PanelBase className='lenkeressurser'>
+            <PaneltittelMedIkon src={videoSvg} alt='Videoikon'>
                 Hva kan du gjøre med sykefraværet?
             </PaneltittelMedIkon>
-            <div className="lenkeressurser__videolenker">
-                <Normaltekst className="lenkeressurser__tekst">
+            <div className='lenkeressurser__videolenker'>
+                <Normaltekst className='lenkeressurser__tekst'>
                     Se NAVs informasjonsvideoer om hvordan du kan jobbe med sykefravær og
                     arbeidsmiljø.
                 </Normaltekst>
@@ -52,4 +52,3 @@ const Lenkeressurser: FunctionComponent = () => {
         </PanelBase>
     );
 };
-export default Lenkeressurser;
