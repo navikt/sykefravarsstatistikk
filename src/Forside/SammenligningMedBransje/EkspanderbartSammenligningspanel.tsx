@@ -4,7 +4,7 @@ import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
 import { getForklaringAvVurdering, getVurderingstekst, SammenligningsType } from '../vurderingstekster';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
-import { Sykefraværsdata } from './Sykefraværsdata';
+import { ForklaringAvPeriode } from './ForklaringAvPeriode';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
 import { TipsVisning } from '../../felleskomponenter/tips/TipsVisning';
 import { getTips, Tips } from '../../felleskomponenter/tips/tips';
@@ -117,8 +117,8 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 </div>
             )}
             <div className='ekspanderbart-sammenligningspanel__data-og-detaljert-visning-sykefravær'>
-                <Sykefraværsdata
-                    className='ekspanderbart-sammenligningspanel__sykefraværsdata'
+                <ForklaringAvPeriode
+                    className='ekspanderbart-sammenligningspanel__forklaring-av-periode'
                     sammenligningsType={sammenligningsType}
                 />
                 <DetaljertVisningSykefravær

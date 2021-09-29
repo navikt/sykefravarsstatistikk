@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactElement } from 'react';
 import { Ingress, Normaltekst } from 'nav-frontend-typografi';
 import { getAriaLabelTekstForOppdateringsdato, periodeFraOgTil } from '../../utils/app-utils';
-import './Sykefraværsdata.less';
+import './ForklaringAvPeriode.less';
 import { SammenligningsType } from '../vurderingstekster';
 import classNames from 'classnames';
 
@@ -10,10 +10,11 @@ interface Props {
     className?: string;
 }
 
-export const Sykefraværsdata: FunctionComponent<Props> = ({
-                                                              sammenligningsType,
-                                                              className,
-                                                          }) => {
+export const ForklaringAvPeriode: FunctionComponent<Props> = (
+    {
+        sammenligningsType,
+        className,
+    }) => {
     const getTittel = (sammenligningsType: SammenligningsType): ReactElement => {
         switch (sammenligningsType) {
             case SammenligningsType.TOTALT:
@@ -36,8 +37,8 @@ export const Sykefraværsdata: FunctionComponent<Props> = ({
     };
 
     return (
-        <div className={classNames('sykefraværsdata', className)}>
-            <Ingress tag='h3' className='sykefraværsdata__tittel'>
+        <div className={classNames('forklaring-av-periode', className)}>
+            <Ingress tag='h3' className='forklaring-av-periode__tittel'>
                 <strong>{getTittel(sammenligningsType)}</strong>
             </Ingress>
             <Normaltekst>{periodeFraOgTil}</Normaltekst>
