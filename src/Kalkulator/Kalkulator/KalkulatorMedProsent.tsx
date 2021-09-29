@@ -5,14 +5,14 @@ import { RestStatus } from '../../api/api-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import { RestSykefraværshistorikk } from '../../api/kvartalsvisSykefraværshistorikk';
 import {
-    Kalkulatorvariant,
     getAntallMuligeDagsverkSiste4Kvartaler,
     getKostnadForSykefraværsprosent,
     getSykefraværsprosentSiste4Kvartaler,
+    Kalkulatorvariant,
     Maskering,
     rundAvTilEnDesimal,
 } from './../kalkulator-utils';
-import { useSendEvent } from '../../amplitude/amplitude';
+import { useSendEvent } from '../../amplitude/events';
 import { Kalkulatorrad } from './Kalkulatorrad/Kalkulatorrad';
 
 interface Props {

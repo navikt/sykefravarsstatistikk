@@ -5,7 +5,7 @@ import Bedriftsmeny from '@navikt/bedriftsmeny';
 import '@navikt/bedriftsmeny/lib/bedriftsmeny.css';
 import { RestStatus } from '../api/api-utils';
 import { AltinnOrganisasjon, RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
-import { useSendEvent } from '../amplitude/amplitude';
+import { useSendEvent } from '../amplitude/events';
 
 interface Props {
     tittel: string;

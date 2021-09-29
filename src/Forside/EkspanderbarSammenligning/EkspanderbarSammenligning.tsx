@@ -8,7 +8,7 @@ import { SykefraværVurdering } from '../Speedometer/Speedometer';
 import { SammenligningsType } from '../vurderingstekster';
 import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngress';
 import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
-import { useSendEvent } from '../../amplitude/amplitude';
+import { useSendEvent } from '../../amplitude/events';
 import './EkspanderbarSammenligning.less';
 import { Bransjetype, RestVirksomhetsdata } from '../../api/virksomhetsdata';
 import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';

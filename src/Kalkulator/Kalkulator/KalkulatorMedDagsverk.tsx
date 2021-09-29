@@ -5,11 +5,11 @@ import { RestStatus } from '../../api/api-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import { RestSykefraværshistorikk } from '../../api/kvartalsvisSykefraværshistorikk';
 import {
-    Kalkulatorvariant,
     getAntallTapteDagsverkSiste4Kvartaler,
     getKostnadForAntallDagsverk,
+    Kalkulatorvariant,
 } from './../kalkulator-utils';
-import { useSendEvent } from '../../amplitude/amplitude';
+import { useSendEvent } from '../../amplitude/events';
 import { Kalkulatorrad } from './Kalkulatorrad/Kalkulatorrad';
 
 interface Props {

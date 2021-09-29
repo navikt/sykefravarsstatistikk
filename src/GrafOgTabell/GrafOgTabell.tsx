@@ -13,9 +13,7 @@ import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltin
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { useOrgnr } from '../utils/orgnr-hook';
 import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../metrikker/iatjenester';
-import { useTidsbrukEvent } from '../amplitude/events/tidsbruk';
-import { useSendSidevisningEvent } from '../amplitude/events/sidevisning';
-import { useSendEvent } from '../amplitude/amplitude';
+import { useSendEvent, useSendSidevisningEvent, useTidsbrukEvent } from '../amplitude/events';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;

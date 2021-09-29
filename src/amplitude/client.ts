@@ -17,4 +17,6 @@ function initializeAmplitudeClient() {
     return amplitudeInstance;
 }
 
+export const setUserProperties = (properties: Object) => amplitudeClient.setUserProperties(properties);
+
 export const amplitudeClient = initializeAmplitudeClient();

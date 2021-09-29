@@ -7,7 +7,7 @@ import {
     RestSykefraværshistorikk,
     SykefraværshistorikkType,
 } from './kvartalsvisSykefraværshistorikk';
-import { sendEventDirekte } from '../amplitude/amplitude';
+import { sendEventDirekte } from '../amplitude/events';
 import { RestVirksomhetsdata, Virksomhetsdata } from './virksomhetsdata';
 import { RestSummertSykefraværshistorikk, SummertSykefraværshistorikk } from './summertSykefraværshistorikk';
 

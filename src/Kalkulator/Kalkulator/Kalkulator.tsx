@@ -4,14 +4,12 @@ import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/kvartalsvisSykefraværshistorikk';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import { useSendEvent } from '../../amplitude/amplitude';
+import { useSendEvent, useSendSidevisningEvent, useTidsbrukEvent } from '../../amplitude/events';
 import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
 import { useOrgnr } from '../../utils/orgnr-hook';
 import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../../metrikker/iatjenester';
-import { useTidsbrukEvent } from '../../amplitude/events/tidsbruk';
-import { useSendSidevisningEvent } from '../../amplitude/events/sidevisning';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;

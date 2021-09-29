@@ -27,7 +27,7 @@ import {
 } from './konstanter';
 import { virksomhetsdataContext, VirksomhetsdataProvider } from './utils/virksomhetsdataContext';
 import { sykefraværshistorikkContext, SykefraværshistorikkProvider } from './utils/sykefraværshistorikkContext';
-import { sendEventDirekte } from './amplitude/amplitude';
+import { sendEventDirekte, useTidsbrukEvent } from './amplitude/events';
 import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
@@ -58,7 +58,6 @@ import { LegacyBarnehageSammenligningRedirect, LegacySammenligningRedirect } fro
 import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 import SamtalestøttePodletpanel from './Forside/Samtalestøttepanel/SamtalestøttePodletpanel';
-import { useTidsbrukEvent } from './amplitude/events/tidsbruk';
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');

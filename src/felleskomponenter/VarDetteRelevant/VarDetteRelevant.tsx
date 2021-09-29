@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FunctionComponent, useState } from 'react';
 import './VarDetteRelevant.less';
 import { TommelOppToggleKnapp } from './TommelOppToggleKnapp';
-import { useSendEvent } from '../../amplitude/amplitude';
+import { useSendEvent } from '../../amplitude/events';
 
 interface Props {
     tipsID: string;

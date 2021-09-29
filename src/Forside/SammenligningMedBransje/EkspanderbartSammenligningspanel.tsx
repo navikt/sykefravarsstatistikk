@@ -10,7 +10,7 @@ import { TipsVisning } from '../../felleskomponenter/tips/TipsVisning';
 import { getTips, Tips } from '../../felleskomponenter/tips/tips';
 import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
-import { useSendEvent } from '../../amplitude/amplitude';
+import { useSendEvent } from '../../amplitude/events';
 import { Bransjetype } from '../../api/virksomhetsdata';
 import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
