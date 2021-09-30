@@ -1,7 +1,4 @@
-import {
-    KvartalsvisSykefraværshistorikk,
-    Sykefraværsprosent,
-} from '../../api/kvartalsvisSykefraværshistorikk';
+import { KvartalsvisSykefraværshistorikk, Sykefraværsprosent } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import React, { FunctionComponent } from 'react';
 import {
     historikkHarOverordnetEnhet,

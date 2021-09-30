@@ -4,7 +4,7 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import arbeidsmiljøportalLogoSvg from './arbeidsmiljøportal-logo.svg';
 import { RestStatus } from '../../api/api-utils';
-import { RestVirksomhetMetadata } from '../../api/virksomhetMetadata';
+import { RestVirksomhetsdata } from '../../api/virksomhetsdata-api';
 import {
     ArbeidstilsynetBransje,
     getArbeidstilsynetBransje,
@@ -12,18 +12,18 @@ import {
 } from './bransje-utils';
 
 interface Props {
-    restVirksomhetMetadata: RestVirksomhetMetadata;
+    restvirksomhetsdata: RestVirksomhetsdata;
 }
 
-export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restVirksomhetMetadata }) => {
+export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restvirksomhetsdata }) => {
     const bransje =
-        restVirksomhetMetadata.status === RestStatus.Suksess
-            ? getArbeidstilsynetBransje(restVirksomhetMetadata.data.næringskode5Siffer)
+        restvirksomhetsdata.status === RestStatus.Suksess
+            ? getArbeidstilsynetBransje(restvirksomhetsdata.data.næringskode5Siffer)
             : ArbeidstilsynetBransje.ANDRE_BRANSJER;
 
     return (
-        <div className="arbeidsmiljøportal-panel">
-            <div className="arbeidsmiljøportal-panel__tittel-wrapper">
+        <div className='arbeidsmiljøportal-panel'>
+            <div className='arbeidsmiljøportal-panel__tittel-wrapper'>
                 <img
                     src={arbeidsmiljøportalLogoSvg}
                     className="arbeidsmiljøportal-panel__logo"

@@ -1,6 +1,6 @@
 import { MutableRefObject, useContext, useEffect, useRef } from 'react';
-import { RestVirksomhetMetadata, VirksomhetMetadata } from '../api/virksomhetMetadata';
-import { virksomhetMetadataContext } from '../utils/virksomhetMetadataContext';
+import { RestVirksomhetsdata, Virksomhetsdata } from '../api/virksomhetsdata-api';
+import { virksomhetsdataContext } from '../utils/virksomhetsdataContext';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
 import { RestStatus } from '../api/api-utils';
 import { mapTilNæringsbeskrivelse } from '../amplitude/næringsbeskrivelser';
@@ -180,46 +180,46 @@ export const sendIATjenesteMetrikk = async (iatjeneste: IatjenesteMetrikk) => {
 const useIaTjenesteMetrikkerEkstraDataRef = (): MutableRefObject<
     Partial<IaTjenesteMetrikkerEkstraData>
 > => {
-    const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
+    const restvirksomhetsdata = useContext<RestVirksomhetsdata>(virksomhetsdataContext);
     const dataFraEnhetsregisteret = useContext<EnhetsregisteretState>(enhetsregisteretContext);
     const iaTjenesterMetrikkerEkstraData = useRef<Partial<IaTjenesteMetrikkerEkstraData>>({});
 
     useEffect(() => {
         if (
-            restVirksomhetMetadata.status === RestStatus.Suksess &&
+            restvirksomhetsdata.status === RestStatus.Suksess &&
             dataFraEnhetsregisteret.restUnderenhet.status === RestStatus.Suksess &&
             dataFraEnhetsregisteret.restOverordnetEnhet.status === RestStatus.Suksess
         ) {
             iaTjenesterMetrikkerEkstraData.current = {
-                ...getIaTjenesteMetrikkerEkstraDataFraVirksomhetMetadata(restVirksomhetMetadata),
+                ...getIaTjenesteMetrikkerEkstraDataFravirksomhetsdata(restvirksomhetsdata),
                 ...getIaTjenesteMetrikkerEkstraDataFraEnhetsregisteret(
                     dataFraEnhetsregisteret.restOverordnetEnhet,
                     dataFraEnhetsregisteret.restUnderenhet,
-                    restVirksomhetMetadata
+                    restvirksomhetsdata,
                 ),
             };
         }
-    }, [restVirksomhetMetadata, dataFraEnhetsregisteret]);
+    }, [restvirksomhetsdata, dataFraEnhetsregisteret]);
 
     return iaTjenesterMetrikkerEkstraData;
 };
 
 const byggIaTjenesteMetrikkerEkstraData = (
-    virksomhetMetadata: VirksomhetMetadata,
+    virksomhetsdata: Virksomhetsdata,
     underenhet: Underenhet,
-    overordnetEnhet: OverordnetEnhet
+    overordnetEnhet: OverordnetEnhet,
 ): IaTjenesteMetrikkerEkstraData => {
-    const næringskode2siffer = virksomhetMetadata.næringskode5Siffer.kode.substring(0, 2);
+    const næringskode2siffer = virksomhetsdata.næringskode5Siffer.kode.substring(0, 2);
     const næringsBeskrivelse = mapTilNæringsbeskrivelse(næringskode2siffer);
     return {
-        antallAnsatte: virksomhetMetadata.antallAnsatte,
+        antallAnsatte: virksomhetsdata.antallAnsatte,
         næring2siffer: næringskode2siffer,
         næring2SifferBeskrivelse:
             næringsBeskrivelse === undefined ? 'INGEN_NÆRING' : næringsBeskrivelse,
-        næringKode5Siffer: virksomhetMetadata.næringskode5Siffer.kode,
-        næringskode5SifferBeskrivelse: virksomhetMetadata.næringskode5Siffer.beskrivelse,
+        næringKode5Siffer: virksomhetsdata.næringskode5Siffer.kode,
+        næringskode5SifferBeskrivelse: virksomhetsdata.næringskode5Siffer.beskrivelse,
         bransje:
-            virksomhetMetadata.bransje === undefined ? 'INGEN_BRANSJE' : virksomhetMetadata.bransje,
+            virksomhetsdata.bransje === undefined ? 'INGEN_BRANSJE' : virksomhetsdata.bransje,
         orgnr: underenhet.orgnr,
         institusjonellSektorKode: overordnetEnhet.institusjonellSektorkode,
         fylkesnummer: 'IKKE_TILGJENGELIG',
@@ -229,11 +229,11 @@ const byggIaTjenesteMetrikkerEkstraData = (
     };
 };
 
-const getIaTjenesteMetrikkerEkstraDataFraVirksomhetMetadata = (
-    restVirksomhetMetadata: RestVirksomhetMetadata
+const getIaTjenesteMetrikkerEkstraDataFravirksomhetsdata = (
+    restvirksomhetsdata: RestVirksomhetsdata,
 ): Partial<IaTjenesteMetrikkerEkstraData> => {
-    if (restVirksomhetMetadata.status === RestStatus.Suksess) {
-        const metrikker = restVirksomhetMetadata.data;
+    if (restvirksomhetsdata.status === RestStatus.Suksess) {
+        const metrikker = restvirksomhetsdata.data;
         const næringskode2siffer = metrikker.næringskode5Siffer.kode.substring(0, 2);
 
         return {
@@ -251,10 +251,10 @@ const getIaTjenesteMetrikkerEkstraDataFraVirksomhetMetadata = (
 const getIaTjenesteMetrikkerEkstraDataFraEnhetsregisteret = (
     restOverordnetEnhet: RestOverordnetEnhet,
     restUnderenhet: RestUnderenhet,
-    restVirksomhetMetadata: RestVirksomhetMetadata
+    restvirksomhetsdata: RestVirksomhetsdata,
 ): Partial<IaTjenesteMetrikkerEkstraData> => {
     if (
-        restVirksomhetMetadata.status === RestStatus.Suksess &&
+        restvirksomhetsdata.status === RestStatus.Suksess &&
         restOverordnetEnhet.status === RestStatus.Suksess &&
         restUnderenhet.status === RestStatus.Suksess
     ) {
@@ -272,23 +272,23 @@ const getIaTjenesteMetrikkerEkstraDataFraEnhetsregisteret = (
 
 export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
     const context = useContext(iaTjenesterMetrikkerContext);
-    const restVirksomhetMetadata = useContext<RestVirksomhetMetadata>(virksomhetMetadataContext);
+    const restvirksomhetsdata = useContext<RestVirksomhetsdata>(virksomhetsdataContext);
     const enhetsregisteretState = useContext<EnhetsregisteretState>(enhetsregisteretContext);
     const orgnr = useOrgnr();
 
     useEffect(() => {
         if (
-            restVirksomhetMetadata.status === RestStatus.Suksess &&
+            restvirksomhetsdata.status === RestStatus.Suksess &&
             enhetsregisteretState.restUnderenhet.status === RestStatus.Suksess &&
             enhetsregisteretState.restOverordnetEnhet.status === RestStatus.Suksess
         ) {
-            const virksomhetMetadata = restVirksomhetMetadata.data;
+            const virksomhetsdata = restvirksomhetsdata.data;
             const overordnetEnhet = enhetsregisteretState.restOverordnetEnhet.data;
             const underenhet = enhetsregisteretState.restUnderenhet.data;
             const ekstradata = byggIaTjenesteMetrikkerEkstraData(
-                virksomhetMetadata,
+                virksomhetsdata,
                 underenhet,
-                overordnetEnhet
+                overordnetEnhet,
             );
             const iaTjenesteMetrikk = byggDirekteIaTjenesteMottattMetrikk(orgnr, ekstradata);
             const eriaTjenesteMetrikkKlarTilUtsending = iaTjenesteMetrikk.fylkesnummer !== '';
@@ -319,6 +319,6 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
     }, [
         useOrgnr(),
         useContext<EnhetsregisteretState>(enhetsregisteretContext),
-        useContext<RestVirksomhetMetadata>(virksomhetMetadataContext),
+        useContext<RestVirksomhetsdata>(virksomhetsdataContext),
     ]);
 };

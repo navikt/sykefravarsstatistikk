@@ -2,13 +2,8 @@ import React, { FunctionComponent, useState } from 'react';
 
 import './Graf.less';
 import 'nav-frontend-tabell-style';
-import { KvartalsvisSykefraværshistorikk } from '../../api/kvartalsvisSykefraværshistorikk';
-import {
-    finnesBransjeIHistorikken,
-    getLabelsForLinjene,
-    getLinjerSomHarData,
-    Linje,
-} from './graf-utils';
+import { KvartalsvisSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
+import { finnesBransjeIHistorikken, getLabelsForLinjene, getLinjerSomHarData, Linje } from './graf-utils';
 import { LegendMedToggles } from './LegendMedToggles/LegendMedToggles';
 import GrafVisning from './GrafVisning';
 

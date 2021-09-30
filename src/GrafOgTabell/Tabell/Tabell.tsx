@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { KvartalsvisSykefraværshistorikk } from '../../api/kvartalsvisSykefraværshistorikk';
+import { KvartalsvisSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import './Tabell.less';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Tabellrader from './Tabellrader';

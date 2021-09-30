@@ -2,7 +2,7 @@ import {
     KvartalsvisSykefraværshistorikk,
     SykefraværshistorikkType,
     Sykefraværsprosent,
-} from '../api/kvartalsvisSykefraværshistorikk';
+} from '../api/kvartalsvis-sykefraværshistorikk-api';
 
 export interface KvartalsvisSammenligning {
     årstall: number;

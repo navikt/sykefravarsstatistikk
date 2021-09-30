@@ -6,7 +6,7 @@ import PanelBase from 'nav-frontend-paneler';
 import './KalkulatorPanel.less';
 import { PATH_KALKULATOR } from '../../konstanter';
 import { Link, useLocation } from 'react-router-dom';
-import { useSendEvent } from '../../amplitude/amplitude';
+import { useSendEvent } from '../../amplitude/events';
 import classNames from 'classnames';
 import { PaneltittelMedIkon } from '../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
 

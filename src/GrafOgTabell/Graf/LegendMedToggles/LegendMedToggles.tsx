@@ -3,7 +3,7 @@ import { CheckboxGruppe } from 'nav-frontend-skjema';
 import { LabelsForLinjer, Linje } from '../graf-utils';
 import { LegendCheckbox } from './LegendChechbox/LegendCheckbox';
 import './LegendMedToggles.less';
-import { useSendEvent } from '../../../amplitude/amplitude';
+import { useSendEvent } from '../../../amplitude/events';
 
 interface Props {
     labels: LabelsForLinjer;

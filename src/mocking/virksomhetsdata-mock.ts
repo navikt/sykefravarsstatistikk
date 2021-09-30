@@ -1,7 +1,7 @@
-import { Bransjetype, VirksomhetMetadata } from '../api/virksomhetMetadata';
+import { Bransjetype, Virksomhetsdata } from '../api/virksomhetsdata-api';
 import { ArbeidstilsynetBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
 
-export const defaultBedriftsmetrikker: VirksomhetMetadata = {
+export const defaultBedriftsmetrikker: Virksomhetsdata = {
     antallAnsatte: 99,
     næringskode5Siffer: {
         kode: '84300',
@@ -9,7 +9,7 @@ export const defaultBedriftsmetrikker: VirksomhetMetadata = {
     },
 };
 
-export const getVirksomhetMetadataMock = (bransje: ArbeidstilsynetBransje): VirksomhetMetadata => {
+export const getvirksomhetsdataMock = (bransje: ArbeidstilsynetBransje): Virksomhetsdata => {
     switch (bransje) {
         case ArbeidstilsynetBransje.BARNEHAGER:
             return {

@@ -1,4 +1,4 @@
-import { Næringskode5Siffer } from '../../api/virksomhetMetadata';
+import { Næringskode5Siffer } from '../../api/virksomhetsdata-api';
 
 export enum ArbeidstilsynetBransje {
     BARNEHAGER = 'BARNEHAGER',

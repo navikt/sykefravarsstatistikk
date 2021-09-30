@@ -2,7 +2,7 @@ import { KvartalsvisSammenligning, ÅrstallOgKvartal } from '../../utils/sykefra
 import {
     KvartalsvisSykefraværshistorikk,
     SykefraværshistorikkType,
-} from '../../api/kvartalsvisSykefraværshistorikk';
+} from '../../api/kvartalsvis-sykefraværshistorikk-api';
 
 export type SymbolType = 'circle' | 'cross' | 'diamond' | 'square' | 'star' | 'triangle' | 'wye';
 

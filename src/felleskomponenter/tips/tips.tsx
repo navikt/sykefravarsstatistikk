@@ -9,7 +9,7 @@ import {
 } from './tips-innhold';
 import { SykefraværVurdering } from '../../Forside/Speedometer/Speedometer';
 import { SammenligningsType } from '../../Forside/vurderingstekster';
-import { Bransjetype } from '../../api/virksomhetMetadata';
+import { Bransjetype } from '../../api/virksomhetsdata-api';
 
 export interface Tips {
     id: string;

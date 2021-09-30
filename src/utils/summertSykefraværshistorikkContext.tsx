@@ -1,8 +1,10 @@
 import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
 import { RestStatus } from '../api/api-utils';
 import { useOrgnr } from './orgnr-hook';
-import { hentRestSummertSykefraværshistorikk } from '../api/api';
-import { RestSummertSykefraværshistorikk } from '../api/summertSykefraværshistorikk';
+import {
+    hentRestSummertSykefraværshistorikk,
+    RestSummertSykefraværshistorikk,
+} from '../api/summert-sykefraværshistorikk-api';
 
 export const summertSykefraværshistorikkContext = createContext<RestSummertSykefraværshistorikk>({
     status: RestStatus.IkkeLastet,
@@ -22,7 +24,7 @@ export const SummertSykefraværshistorikkProvider: FunctionComponent = (props) =
             });
             const hentRestSummertSykefraværshistorikkOgSettState = async () => {
                 setRestSummertSykefraværshistorikk(
-                    await hentRestSummertSykefraværshistorikk(orgnr)
+                    await hentRestSummertSykefraværshistorikk(orgnr),
                 );
             };
             hentRestSummertSykefraværshistorikkOgSettState();

@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import InternLenke from './InternLenke/InternLenke';
-import { useSendEvent } from '../amplitude/amplitude';
+import { useSendEvent } from '../amplitude/events';
 import { PATH_HISTORIKK } from '../konstanter';
 
 interface Props {

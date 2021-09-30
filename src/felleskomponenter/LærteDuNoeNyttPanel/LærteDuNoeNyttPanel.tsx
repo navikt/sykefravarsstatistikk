@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useContext, useState } from 'react';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Knapp } from 'nav-frontend-knapper';
-import { useSendEvent } from '../../amplitude/amplitude';
+import { useSendEvent } from '../../amplitude/events';
 import './LærteDuNoeNyttPanel.less';
 import { tilbakemeldingContext } from '../../utils/TilbakemeldingContext';
 

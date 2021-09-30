@@ -4,9 +4,8 @@ import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import kalenderSvg from './kalender.svg';
 import './Kurskalender.less';
 import { PaneltittelMedIkon } from '../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
-import { RestKursliste } from '../../api/kurs-api';
+import { Kurs, RestKursliste } from '../../api/kurs-api';
 import { RestStatus } from '../../api/api-utils';
-import { getNesteIANettkurs } from '../../api/kurs-utils';
 import classNames from 'classnames';
 
 interface Props {
@@ -32,9 +31,18 @@ export const Kurskalender: FunctionComponent<Props> = (props) => {
                 NAV tilbyr nettkurs, med temaer som forebygging og oppfølging av sykefravær
             </Normaltekst>
 
-            <EksternLenke href="https://arbeidsgiver.nav.no/kursoversikt/?tema=Inkluderende%20arbeidsliv%20(IA)">
+            <EksternLenke href='https://arbeidsgiver.nav.no/kursoversikt/?tema=Inkluderende%20arbeidsliv%20(IA)'>
                 Gå til kurskalenderen
             </EksternLenke>
         </div>
     ) : null;
+};
+
+const getNesteIANettkurs = (kursliste: Kurs[]): Kurs | undefined => {
+    return kursliste
+        .filter((kurs) => kurs.tema === 'Inkluderende arbeidsliv (IA)')
+        .filter((kurs) => kurs.type === 'Webinar')
+        .sort(
+            (kurs1, kurs2) => new Date(kurs1.start).getTime() - new Date(kurs2.start).getTime(),
+        )[0];
 };

@@ -1,8 +1,8 @@
-import { filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet } from './api';
 import {
+    filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet,
     KvartalsvisSykefraværshistorikk,
     SykefraværshistorikkType,
-} from './kvartalsvisSykefraværshistorikk';
+} from './kvartalsvis-sykefraværshistorikk-api';
 
 describe('Tester for utils funksjoner', () => {
     const historikkUnderenhet: KvartalsvisSykefraværshistorikk = {
