@@ -17,6 +17,7 @@ const sendTriggerTilHotjar = (versjon: ABTestVersjon) => {
     hotjar && hotjar('trigger', 'ab-test-' + versjon);
 };
 
+// TODO: Vi tror ikke dette er i bruk lenger. Finn ut om det bare kan fjernes.
 export const ABTest: FunctionComponent<Props> = ({
     feature,
     versjonA,

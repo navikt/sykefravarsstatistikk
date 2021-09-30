@@ -61,7 +61,6 @@ import SamtalestøttePodletpanel from './Forside/Samtalestøttepanel/Samtalestø
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
-    console.log('komponent \'App\' rendret');
     return (
         <BrowserRouter basename={BASE_PATH}>
             <AltinnOrganisasjonerProvider>
@@ -90,7 +89,6 @@ const App: FunctionComponent = () => {
 };
 
 const AppContent: FunctionComponent = () => {
-    console.log('Komponent **AppContent** rendret');
 
     const restOrganisasjoner = useContext<RestAltinnOrganisasjoner>(altinnOrganisasjonerContext);
     const restOrganisasjonerMedStatistikk = useContext<RestAltinnOrganisasjoner>(
