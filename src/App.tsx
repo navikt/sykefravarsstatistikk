@@ -107,17 +107,6 @@ const AppContent: FunctionComponent = () => {
 
     const { restUnderenhet } = useContext<EnhetsregisteretState>(enhetsregisteretContext);
 
-    useEffect(() => {
-        if (
-            restUnderenhet.status === RestStatus.Suksess &&
-            restUnderenhet.data.næringer.length > 1
-        ) {
-            sendEventDirekte('app', 'flere næringer', {
-                antallNæringer: restUnderenhet.data.næringer.length,
-                næringer: restUnderenhet.data.næringer.map((næring) => næring.kode),
-            });
-        }
-    }, [restUnderenhet]);
     const [restKursliste, setRestKursliste] = useState<RestKursliste>({
         status: RestStatus.IkkeLastet,
     });
