@@ -24,7 +24,7 @@ import {
 } from './konstanter';
 import { virksomhetsdataContext, VirksomhetsdataProvider } from './utils/virksomhetsdataContext';
 import { sykefraværshistorikkContext, SykefraværshistorikkProvider } from './utils/sykefraværshistorikkContext';
-import { sendEventDirekte, useTidsbrukEvent } from './amplitude/events';
+import { sendEventDirekte } from './amplitude/events';
 import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
@@ -95,7 +95,6 @@ const AppContent: FunctionComponent = () => {
     );
     const restvirksomhetsdata = useContext<RestVirksomhetsdata>(virksomhetsdataContext);
     useSetUserProperties();
-    useTidsbrukEvent('hele appen', 5, 30, 60, 120, 300);
 
     const [restKursliste, setRestKursliste] = useState<RestKursliste>({
         status: RestStatus.IkkeLastet,

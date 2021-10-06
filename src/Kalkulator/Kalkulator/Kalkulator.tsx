@@ -4,7 +4,7 @@ import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import { useSendEvent, useSendSidevisningEvent, useTidsbrukEvent } from '../../amplitude/events';
+import { useSendEvent, useSendSidevisningEvent } from '../../amplitude/events';
 import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
@@ -22,8 +22,6 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     const orgnr = useOrgnr();
     const sendEvent = useSendEvent();
 
-    // kalkulator2 fordi det opprinnelige eventnavnet er merget med en annen event i Amplitude
-    useTidsbrukEvent('kalkulator2', 5, 30, 60, 120);
     useSendSidevisningEvent('kalkulator', orgnr);
     useSendIaTjenesteMetrikkMottattVedSidevisningEvent();
 
