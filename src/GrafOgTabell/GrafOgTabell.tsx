@@ -95,7 +95,6 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
                                     pressed: grafEllerTabell === 'tabell',
                                     onClick: () => {
                                         setGrafEllerTabell('tabell');
-                                        sendEvent('historikk toggle tabell', 'klikk');
                                     },
                                 },
                             ]}

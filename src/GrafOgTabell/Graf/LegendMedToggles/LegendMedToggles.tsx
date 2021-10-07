@@ -3,7 +3,6 @@ import { CheckboxGruppe } from 'nav-frontend-skjema';
 import { LabelsForLinjer, Linje } from '../graf-utils';
 import { LegendCheckbox } from './LegendChechbox/LegendCheckbox';
 import './LegendMedToggles.less';
-import { useSendEvent } from '../../../amplitude/events';
 
 interface Props {
     labels: LabelsForLinjer;
@@ -13,26 +12,20 @@ interface Props {
     setLinjerSomSkalVises: (linjer: Linje[]) => void;
 }
 
-export const LegendMedToggles: FunctionComponent<Props> = ({
-    labels,
-    harBransje,
-    linjerSomKanVises,
-    linjerSomSkalVises,
-    setLinjerSomSkalVises,
-}) => {
-    const sendEvent = useSendEvent();
+export const LegendMedToggles: FunctionComponent<Props> = (
+    {
+        labels,
+        harBransje,
+        linjerSomKanVises,
+        linjerSomSkalVises,
+        setLinjerSomSkalVises,
+    }) => {
 
     const onChange = (event: any) => {
         const linje = event.target.value;
         if (linjerSomSkalVises.includes(linje)) {
-            sendEvent('graf legend ' + linje, 'klikk', {
-                toggle: 'av',
-            });
             setLinjerSomSkalVises(linjerSomSkalVises.filter((enLinje) => enLinje !== linje));
         } else {
-            sendEvent('graf legend ' + linje, 'klikk', {
-                toggle: 'på',
-            });
             setLinjerSomSkalVises([...linjerSomSkalVises, linje]);
         }
     };
@@ -52,7 +45,7 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
     };
 
     return (
-        <div className="legend-med-toggles">
+        <div className='legend-med-toggles'>
             <CheckboxGruppe>
                 {linjerSomKanVises.map((linje) => (
                     <LegendCheckbox

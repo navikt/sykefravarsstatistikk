@@ -4,7 +4,7 @@ import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import { useSendEvent, useSendSidevisningEvent } from '../../amplitude/events';
+import { useSendSidevisningEvent } from '../../amplitude/events';
 import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
@@ -20,7 +20,6 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
         Kalkulatorvariant.Prosent,
     );
     const orgnr = useOrgnr();
-    const sendEvent = useSendEvent();
 
     useSendSidevisningEvent('kalkulator', orgnr);
     useSendIaTjenesteMetrikkMottattVedSidevisningEvent();
@@ -30,26 +29,25 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     }, []);
 
     return (
-        <div className="kalkulator-ny">
-            <div className="kalkulator__wrapper">
-                <div className="kalkulator">
+        <div className='kalkulator-ny'>
+            <div className='kalkulator__wrapper'>
+                <div className='kalkulator'>
                     <div>
-                        <div className="kalkulator__tittel-wrapper">
+                        <div className='kalkulator__tittel-wrapper'>
                             <div>
-                                <Systemtittel tag="h1" className="kalkulator__tittel">
+                                <Systemtittel tag='h1' className='kalkulator__tittel'>
                                     Hvor mye koster sykefraværet?
                                 </Systemtittel>
-                                <Normaltekst className="kalkulator__ingress">
+                                <Normaltekst className='kalkulator__ingress'>
                                     Her kan du beregne hvor mye sykefraværet koster og hvor mye du
                                     kan spare. Lønnskostnader og sykepengerefusjon er ikke med i
                                     regnestykket og kommer i tillegg til kostnad per dag.
                                 </Normaltekst>
                             </div>
-                            <div className="kalkulator__dagsverk-eller-prosent-toggle">
+                            <div className='kalkulator__dagsverk-eller-prosent-toggle'>
                                 <ToggleKnappPure
                                     pressed={kalkulatorvariant === Kalkulatorvariant.Prosent}
                                     onClick={() => {
-                                        sendEvent('kalkulator toggle prosent', 'klikk');
                                         setKalkulatorvariant(Kalkulatorvariant.Prosent);
                                     }}
                                 >
@@ -58,7 +56,6 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                                 <ToggleKnappPure
                                     pressed={kalkulatorvariant === Kalkulatorvariant.Dagsverk}
                                     onClick={() => {
-                                        sendEvent('kalkulator toggle dagsverk', 'klikk');
                                         setKalkulatorvariant(Kalkulatorvariant.Dagsverk);
                                     }}
                                 >
@@ -66,7 +63,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                                 </ToggleKnappPure>
                             </div>
                         </div>
-                        <Normaltekst className="kalkulator__input-overskrift">
+                        <Normaltekst className='kalkulator__input-overskrift'>
                             Fyll inn og juster tallene så de passer for deg
                         </Normaltekst>
                         {kalkulatorvariant === Kalkulatorvariant.Dagsverk ? (
