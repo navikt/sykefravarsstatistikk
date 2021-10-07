@@ -1,4 +1,4 @@
-import { MutableRefObject, useContext, useEffect, useRef } from 'react';
+import React, { MutableRefObject, useContext, useEffect, useRef } from 'react';
 import { RestVirksomhetsdata, Virksomhetsdata } from '../api/virksomhetsdata-api';
 import { virksomhetsdataContext } from '../utils/virksomhetsdataContext';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';

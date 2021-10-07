@@ -120,8 +120,6 @@ export const getVurdering = (
 export const getGrønnGrense = (bransjensProsent: number) => bransjensProsent * 0.9;
 export const getRødGrense = (bransjensProsent: number) => bransjensProsent * 1.1;
 
-const byttPunktumMedKomma = (tall: number): string => `${tall}`.replace('.', ',');
-
 
 const addEllerReturnerNull = (number1: number | null, number2: number | null) => {
     if (number1 === null || number2 === null) return null;
