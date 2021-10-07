@@ -40,7 +40,6 @@ import {
     SummertSykefraværshistorikkProvider,
 } from './utils/summertSykefraværshistorikkContext';
 import { RestSummertSykefraværshistorikk } from './api/summert-sykefraværshistorikk-api';
-import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
 import { EnhetsregisteretProvider } from './utils/enhetsregisteretContext';
 import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { Kurskalender } from './Forside/Kurskalender/Kurskalender';
@@ -62,13 +61,11 @@ const App: FunctionComponent = () => {
                             <SummertSykefraværshistorikkProvider>
                                 <SykefraværshistorikkProvider>
                                     <FeatureTogglesProvider>
-                                        <TilbakemeldingContextProvider>
-                                            <IaTjenesterMetrikkerContextProvider>
-                                                <main id='maincontent'>
-                                                    <AppContent />
-                                                </main>
-                                            </IaTjenesterMetrikkerContextProvider>
-                                        </TilbakemeldingContextProvider>
+                                        <IaTjenesterMetrikkerContextProvider>
+                                            <main id='maincontent'>
+                                                <AppContent />
+                                            </main>
+                                        </IaTjenesterMetrikkerContextProvider>
                                     </FeatureTogglesProvider>
                                 </SykefraværshistorikkProvider>
                             </SummertSykefraværshistorikkProvider>
