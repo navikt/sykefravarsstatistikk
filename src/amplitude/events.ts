@@ -52,8 +52,7 @@ export const useSendSidevisningEvent = (område: string, orgnr: string | undefin
         if (skalSendeEvent.current) {
             skalSendeEvent.current = false;
 
-            // Setter timeout på eventet, slik at alle dataene fra "ekstradata" rekker å laste inn før eventet sendes.
-            setTimeout(() => sendEvent(område, 'vist'), 2000);
+            sendEvent(område, 'vist');
         }
     }, [orgnr, område, sendEvent]);
 };
