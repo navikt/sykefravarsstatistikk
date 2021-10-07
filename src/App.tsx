@@ -31,7 +31,6 @@ import {
     AltinnOrganisasjonerMedTilgangTilStatistikkProvider,
     AltinnOrganisasjonerProvider,
 } from './utils/altinnOrganisasjonerContext';
-import { useSetUserProperties } from './amplitude/userProperties';
 import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { Forside } from './Forside/Forside';
@@ -94,7 +93,6 @@ const AppContent: FunctionComponent = () => {
         sykefraværshistorikkContext,
     );
     const restvirksomhetsdata = useContext<RestVirksomhetsdata>(virksomhetsdataContext);
-    useSetUserProperties();
 
     const [restKursliste, setRestKursliste] = useState<RestKursliste>({
         status: RestStatus.IkkeLastet,
