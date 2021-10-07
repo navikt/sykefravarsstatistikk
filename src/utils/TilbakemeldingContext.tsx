@@ -5,7 +5,8 @@ export const tilbakemeldingContext = createContext<{
     setHarSendtTilbakemelding: (sendt: boolean) => void;
 }>({
     harSendtTilbakemelding: false,
-    setHarSendtTilbakemelding: (sendt) => {},
+    setHarSendtTilbakemelding: () => {
+    },
 });
 
 export const TilbakemeldingContextProvider: FunctionComponent = (props) => {

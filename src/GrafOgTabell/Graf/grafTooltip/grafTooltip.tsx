@@ -6,12 +6,12 @@ import { GrafSymbol } from '../GrafSymbol/GrafSymbol';
 
 const grafTooltip = (harBransje: boolean) => (
     <Tooltip
-        formatter={(value: any, name: any, props: any) => [
-            <span className="tooltip__item-wrapper">
-                <GrafSymbol linje={name} className="tooltip__ikon" />
-                <div className="tooltip__item-navn-og-verdi">
-                    <span className="tooltip__item-navn">{getTooltipsnavn(name, harBransje)}</span>
-                    <span className="tooltip__item-verdi">{value + ' %'}</span>
+        formatter={(value: any, name: any) => [
+            <span className='tooltip__item-wrapper'>
+                <GrafSymbol linje={name} className='tooltip__ikon' />
+                <div className='tooltip__item-navn-og-verdi'>
+                    <span className='tooltip__item-navn'>{getTooltipsnavn(name, harBransje)}</span>
+                    <span className='tooltip__item-verdi'>{value + ' %'}</span>
                 </div>
             </span>,
         ]}

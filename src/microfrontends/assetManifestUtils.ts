@@ -52,10 +52,9 @@ export function createAssetManifestParser(
 ): AssetManifestParser {
     return (manifestObject: ManifestObject) => {
         const pathsToLoad = extractPathsFromCRAManifest(manifestObject);
-        const debugPaths = pathsToLoad.map((path) =>
-            makeAbsolute(mikrofrontendConfig.appBaseUrl, path)
+        return pathsToLoad.map((path) =>
+            makeAbsolute(mikrofrontendConfig.appBaseUrl, path),
         );
-        return debugPaths;
     };
 }
 

@@ -122,10 +122,6 @@ export const getRødGrense = (bransjensProsent: number) => bransjensProsent * 1.
 
 const byttPunktumMedKomma = (tall: number): string => `${tall}`.replace('.', ',');
 
-export const getGrønnGrenseTekst = (bransjensProsent: number) =>
-    byttPunktumMedKomma(Math.ceil(getGrønnGrense(bransjensProsent) * 10) / 10);
-export const getRødGrenseTekst = (bransjensProsent: number) =>
-    byttPunktumMedKomma(Math.floor(getRødGrense(bransjensProsent) * 10) / 10);
 
 const addEllerReturnerNull = (number1: number | null, number2: number | null) => {
     if (number1 === null || number2 === null) return null;

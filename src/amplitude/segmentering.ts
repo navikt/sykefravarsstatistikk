@@ -68,13 +68,6 @@ export const tilSegmenteringSykefraværsprosent = (
     return tilSegmenteringProsent(prosent);
 };
 
-export const tilTiendedeler = (teller: number, nevner: number): string | undefined => {
-    const tiendedeler = Math.round((teller * 10) / nevner);
-    if (tiendedeler >= 0 && tiendedeler <= 10 && !isNaN(tiendedeler)) {
-        return `${tiendedeler} av 10`;
-    }
-    return undefined;
-};
 
 export type SegmenteringSammenligning = string;
 export const tilSegmenteringSammenligning = (

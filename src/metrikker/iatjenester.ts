@@ -80,7 +80,6 @@ const getIaTjenesterMetrikkerUrl = () => {
 };
 
 const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
-export type EventData = { [key: string]: any };
 
 function byggIaTjenesteMottattMetrikk(
     nåværendeOrgnr: string | undefined,

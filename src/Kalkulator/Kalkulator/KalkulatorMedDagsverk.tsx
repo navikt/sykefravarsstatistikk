@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
-    const sendEvent = useSendEvent();
+    useSendEvent();
     const { restSykefraværshistorikk } = props;
     const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<number | undefined>();
     const [ønsketTapteDagsverk, setØnsketTapteDagsverk] = useState<number | undefined>();

@@ -5,7 +5,8 @@ export const iaTjenesterMetrikkerContext = createContext<{
     setBedrifterSomHarSendtMetrikker: (bedrifter: [string]) => void;
 }>({
     bedrifterSomHarSendtMetrikker: [''],
-    setBedrifterSomHarSendtMetrikker: (bedrifter) => {},
+    setBedrifterSomHarSendtMetrikker: () => {
+    },
 });
 
 export const IaTjenesterMetrikkerContextProvider: FunctionComponent = (props) => {
