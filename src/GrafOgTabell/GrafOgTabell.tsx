@@ -13,7 +13,7 @@ import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltin
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { useOrgnr } from '../utils/orgnr-hook';
 import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../metrikker/iatjenester';
-import { useSendEvent, useSendSidevisningEvent } from '../amplitude/events';
+import { useSendSidevisningEvent } from '../amplitude/events';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -21,7 +21,6 @@ interface Props {
 }
 
 const GrafOgTabell: FunctionComponent<Props> = (props) => {
-    useSendEvent();
     const orgnr = useOrgnr();
 
     useEffect(() => {

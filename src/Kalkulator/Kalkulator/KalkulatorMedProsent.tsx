@@ -12,7 +12,6 @@ import {
     Maskering,
     rundAvTilEnDesimal,
 } from '../kalkulator-utils';
-import { useSendEvent } from '../../amplitude/events';
 import { Kalkulatorrad } from './Kalkulatorrad/Kalkulatorrad';
 
 interface Props {
@@ -20,7 +19,6 @@ interface Props {
 }
 
 export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
-    useSendEvent();
     const [muligeDagsverk, setMuligeDagsverk] = useState<number | undefined>();
     const [nåværendeSykefraværsprosent, setNåværendeSykefraværsprosent] = useState<
         number | undefined
