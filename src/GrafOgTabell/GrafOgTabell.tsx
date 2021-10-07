@@ -21,7 +21,7 @@ interface Props {
 }
 
 const GrafOgTabell: FunctionComponent<Props> = (props) => {
-    const sendEvent = useSendEvent();
+    useSendEvent();
     const orgnr = useOrgnr();
 
     useEffect(() => {

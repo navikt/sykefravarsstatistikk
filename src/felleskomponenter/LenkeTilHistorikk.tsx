@@ -5,7 +5,7 @@ import { PATH_HISTORIKK } from '../konstanter';
 interface Props {
     kildeSomSendesMedEvent: string;
 }
-export const LenkeTilHistorikk: FunctionComponent<Props> = ({ kildeSomSendesMedEvent }) => {
+export const LenkeTilHistorikk: FunctionComponent<Props> = () => {
     return (
         <InternLenke
             pathname={PATH_HISTORIKK}
