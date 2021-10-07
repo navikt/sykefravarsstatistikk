@@ -8,7 +8,6 @@ import { SykefraværVurdering } from '../Speedometer/Speedometer';
 import { SammenligningsType } from '../vurderingstekster';
 import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngress';
 import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
-import { useSendEvent } from '../../amplitude/events';
 import './EkspanderbarSammenligning.less';
 import { Bransjetype, RestVirksomhetsdata } from '../../api/virksomhetsdata-api';
 import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
@@ -23,8 +22,6 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                                                                         restSummertSykefraværshistorikk,
                                                                         restVirksomhetsdata,
                                                                     }) => {
-    const sendEvent = useSendEvent();
-
     if (
         restSummertSykefraværshistorikk.status === RestStatus.IngenTilgang ||
         restSummertSykefraværshistorikk.status === RestStatus.IkkeInnlogget
@@ -79,7 +76,6 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             <SlikHarViKommetFramTilDittResultat
                 resultat={sammenligningResultatTotalt.sammenligningVurdering}
                 kvartaler={sammenligningResultatTotalt.kvartaler}
-                onÅpne={() => sendEvent('barnehage sammenligning lesmer', 'åpne')}
             />
             <DinNæringEllerBransje
                 restSummertSykefraværshistorikk={restSummertSykefraværshistorikk}
