@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { RestSummertSykefraværshistorikk } from '../../api/summertSykefraværshistorikk';
+import { RestSummertSykefraværshistorikk } from '../../api/summert-sykefraværshistorikk-api';
 import { EkspanderbartSammenligningspanel } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
 import { RestStatus } from '../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
@@ -8,21 +8,21 @@ import { SykefraværVurdering } from '../Speedometer/Speedometer';
 import { SammenligningsType } from '../vurderingstekster';
 import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngress';
 import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
-import { useSendEvent } from '../../amplitude/amplitude';
+import { useSendEvent } from '../../amplitude/events';
 import './EkspanderbarSammenligning.less';
-import { Bransjetype, RestVirksomhetMetadata } from '../../api/virksomhetMetadata';
+import { Bransjetype, RestVirksomhetsdata } from '../../api/virksomhetsdata-api';
 import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
 import { Element } from 'nav-frontend-typografi';
 
 interface Props {
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
-    restVirksomhetMetadata: RestVirksomhetMetadata;
+    restVirksomhetsdata: RestVirksomhetsdata;
 }
 
 export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
-    restSummertSykefraværshistorikk,
-    restVirksomhetMetadata,
-}) => {
+                                                                        restSummertSykefraværshistorikk,
+                                                                        restVirksomhetsdata,
+                                                                    }) => {
     const sendEvent = useSendEvent();
 
     if (
@@ -45,8 +45,8 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
     }
 
     const bransje: Bransjetype | undefined =
-        restVirksomhetMetadata.status === RestStatus.Suksess
-            ? restVirksomhetMetadata.data.bransje
+        restVirksomhetsdata.status === RestStatus.Suksess
+            ? restVirksomhetsdata.data.bransje
             : undefined;
 
     const harBransje =

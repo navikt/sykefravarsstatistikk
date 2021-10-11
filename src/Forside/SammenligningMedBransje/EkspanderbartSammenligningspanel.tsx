@@ -2,20 +2,16 @@ import React, { FunctionComponent, ReactElement, useContext, useEffect, useState
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
-import {
-    getForklaringAvVurdering,
-    getVurderingstekst,
-    SammenligningsType,
-} from '../vurderingstekster';
+import { getForklaringAvVurdering, getVurderingstekst, SammenligningsType } from '../vurderingstekster';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
-import { SykefraværMetadata } from './SykefraværMetadata';
+import { ForklaringAvPeriode } from './ForklaringAvPeriode';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
 import { TipsVisning } from '../../felleskomponenter/tips/TipsVisning';
 import { getTips, Tips } from '../../felleskomponenter/tips/tips';
 import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
-import { useSendEvent } from '../../amplitude/amplitude';
-import { Bransjetype } from '../../api/virksomhetMetadata';
+import { useSendEvent } from '../../amplitude/events';
+import { Bransjetype } from '../../api/virksomhetsdata-api';
 import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
 import Lenke from 'nav-frontend-lenker';
@@ -110,9 +106,9 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     </Normaltekst>
                     <LesMerPanel
                         åpneLabel={'Se eksempel'}
-                        className="ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel"
+                        className='ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel'
                     >
-                        <Normaltekst className="ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel__innhold">
+                        <Normaltekst className='ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel__innhold'>
                             La oss si du har 7,5% sykefravær, dette utgjør 100 tapte dagsverk i din
                             virksomhet. Det ble benyttet gradert sykmelding i 20 dager, da får du
                             20% gradert sykmelding.
@@ -120,19 +116,19 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     </LesMerPanel>
                 </div>
             )}
-            <div className="ekspanderbart-sammenligningspanel__metadata-og-detaljert-visning-sykefravær">
-                <SykefraværMetadata
-                    className="ekspanderbart-sammenligningspanel__sykefravær-metadata"
+            <div className='ekspanderbart-sammenligningspanel__data-og-detaljert-visning-sykefravær'>
+                <ForklaringAvPeriode
+                    className='ekspanderbart-sammenligningspanel__forklaring-av-periode'
                     sammenligningsType={sammenligningsType}
                 />
                 <DetaljertVisningSykefravær
-                    className="ekspanderbart-sammenligningspanel__detaljert-visning"
-                    overskrift="Din virksomhet:"
+                    className='ekspanderbart-sammenligningspanel__detaljert-visning'
+                    overskrift='Din virksomhet:'
                     prosent={sykefraværVirksomhet}
                     visingAntallKvartaller={antallKvartalerVirksomhet}
                 />
                 <DetaljertVisningSykefravær
-                    className="ekspanderbart-sammenligningspanel__detaljert-visning"
+                    className='ekspanderbart-sammenligningspanel__detaljert-visning'
                     overskrift={overskriftForTallForNæringEllerBransje}
                     prosent={visningAvProsentForBransje}
                     visingAntallKvartaller={antallKvartalerBransje}

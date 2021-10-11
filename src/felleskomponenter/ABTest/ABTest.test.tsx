@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { ABTest } from './ABTest';
 import { RestStatus } from '../../api/api-utils';
-import { RestFeatureToggles } from '../../api/featureToggles';
+import { RestFeatureToggles } from '../../api/feature-toggles-api';
 
 describe('Tester for ABTest', () => {
     it('Skal rendre versjon A hvis toggle er skrudd av', () => {

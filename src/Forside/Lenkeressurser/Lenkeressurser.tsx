@@ -5,7 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import PanelBase from 'nav-frontend-paneler';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import './Lenkeressurser.less';
-import { useSendEvent } from '../../amplitude/amplitude';
+import { useSendEvent } from '../../amplitude/events';
 import { PaneltittelMedIkon } from '../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
 
 const Lenkeressurser: FunctionComponent = () => {

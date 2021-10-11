@@ -1,5 +1,5 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
-import { RestSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import { ToggleGruppePure } from 'nav-frontend-toggle';
 import Graf from './Graf/Graf';
 import Tabell from './Tabell/Tabell';
@@ -9,11 +9,11 @@ import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
-import { useMålingAvTidsbruk, useSendEvent, useSendSidevisningEvent } from '../amplitude/amplitude';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { useOrgnr } from '../utils/orgnr-hook';
 import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../metrikker/iatjenester';
+import { useSendEvent, useSendSidevisningEvent, useTidsbrukEvent } from '../amplitude/events';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -28,7 +28,7 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
         scrollToBanner();
     }, []);
 
-    useMålingAvTidsbruk('historikk', 5, 30, 60, 120);
+    useTidsbrukEvent('historikk', 5, 30, 60, 120);
     useSendSidevisningEvent('historikk', orgnr);
     useSendIaTjenesteMetrikkMottattVedSidevisningEvent();
 

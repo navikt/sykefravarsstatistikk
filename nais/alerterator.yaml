@@ -2,8 +2,10 @@ apiVersion: "nais.io/v1"
 kind: "Alert"
 metadata:
   name: sykefravarsstatistikk-alert
+  namespace: arbeidsgiver
   labels:
     team: arbeidsgiver
+    created-by: teamia
 spec:
   receivers:
     slack:

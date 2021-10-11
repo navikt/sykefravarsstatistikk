@@ -1,7 +1,6 @@
 import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
-import { RestFeatureToggles } from '../api/featureToggles';
+import { hentRestFeatureToggles, RestFeatureToggles } from '../api/feature-toggles-api';
 import { RestStatus } from '../api/api-utils';
-import { hentRestFeatureToggles } from '../api/api';
 
 export const featureTogglesContext = createContext<RestFeatureToggles>({
     status: RestStatus.LasterInn,

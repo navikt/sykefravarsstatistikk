@@ -1,4 +1,4 @@
-import { Sykefraværsprosent } from '../api/kvartalsvisSykefraværshistorikk';
+import { Sykefraværsprosent } from '../api/kvartalsvis-sykefraværshistorikk-api';
 
 export type AntallAnsatteSegmentering = '0' | '1-4' | '5-19' | '20-49' | '50-99' | '100+';
 export const tilSegmenteringAntallAnsatte = (antallAnsatte: number): AntallAnsatteSegmentering => {

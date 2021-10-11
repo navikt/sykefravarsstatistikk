@@ -2,10 +2,7 @@ import React, { FunctionComponent } from 'react';
 import næringEllerBransjeIkonSvg from './næring-eller-bransje-ikon.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
 import './DinNæringEllerBransje.less';
-import {
-    RestSummertSykefraværshistorikk,
-    Statistikkategori,
-} from '../../../api/summertSykefraværshistorikk';
+import { RestSummertSykefraværshistorikk, Statistikkategori } from '../../../api/summert-sykefraværshistorikk-api';
 import { RestStatus } from '../../../api/api-utils';
 import EksternLenke from '../../../felleskomponenter/EksternLenke/EksternLenke';
 

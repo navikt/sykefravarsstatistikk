@@ -1,26 +1,22 @@
 import { AltinnOrganisasjon, RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
-import { setUserProperties } from './amplitude';
 import { useContext, useEffect } from 'react';
 import { RestStatus } from '../api/api-utils';
 import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
 } from '../utils/altinnOrganisasjonerContext';
-import {
-    AntallVirksomheterSegmentering,
-    tilSegmenteringAntallVirksomheter,
-    tilTiendedeler,
-} from './segmentering';
+import { AntallVirksomheterSegmentering, tilSegmenteringAntallVirksomheter, tilTiendedeler } from './segmentering';
+import { setUserProperties } from './client';
 
 const hentAntallUnderenheter = (organisasjoner: AltinnOrganisasjon[]): number =>
     organisasjoner.filter(
-        (org) => org.ParentOrganizationNumber && org.ParentOrganizationNumber.length > 0
+        (org) => org.ParentOrganizationNumber && org.ParentOrganizationNumber.length > 0,
     ).length;
 
 export const useSetUserProperties = () => {
     const restOrganisasjoner = useContext<RestAltinnOrganisasjoner>(altinnOrganisasjonerContext);
     const restOrganisasjonerMedStatistikk = useContext<RestAltinnOrganisasjoner>(
-        altinnOrganisasjonerMedTilgangTilStatistikkContext
+        altinnOrganisasjonerMedTilgangTilStatistikkContext,
     );
     useEffect(() => {
         if (restOrganisasjoner.status === RestStatus.Suksess) {

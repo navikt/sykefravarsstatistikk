@@ -1,13 +1,6 @@
-import {
-    getSammenligningResultat,
-    getVurdering,
-    Sammenligningsresultater,
-} from './vurdering-utils';
+import { getSammenligningResultat, getVurdering, Sammenligningsresultater } from './vurdering-utils';
 import { SykefraværVurdering } from './Speedometer/Speedometer';
-import {
-    RestSummertSykefraværshistorikk,
-    Statistikkategori,
-} from '../api/summertSykefraværshistorikk';
+import { RestSummertSykefraværshistorikk, Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
 import { RestStatus } from '../api/api-utils';
 import {
     getSummertSykefraværshistorikkMock,

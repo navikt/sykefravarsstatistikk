@@ -1,5 +1,6 @@
-import { RestRessurs } from './api-utils';
+import { fetchMedFeilhåndtering, RestRessurs } from './api-utils';
 import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
+import { BASE_PATH } from '../konstanter';
 
 export enum Statistikkategori {
     LAND = 'LAND',
@@ -35,3 +36,15 @@ export const erMaskert = (summertKorttidsOgLangtidsfravær: SummertKorttidsOgLan
 };
 
 export type RestSummertSykefraværshistorikk = RestRessurs<SummertSykefraværshistorikk[]>;
+
+const summertSykefraværshistorikkPath = (orgnr: string) =>
+    `${BASE_PATH}/api/${orgnr}/sykefravarshistorikk/summert?antallKvartaler=4`;
+
+export const hentRestSummertSykefraværshistorikk = async (
+    orgnr: string,
+): Promise<RestSummertSykefraværshistorikk> => {
+    return await fetchMedFeilhåndtering<SummertSykefraværshistorikk[]>(summertSykefraværshistorikkPath(orgnr), {
+        method: 'GET',
+        credentials: 'include',
+    });
+};

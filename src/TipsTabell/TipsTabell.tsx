@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Bransjetype } from '../api/virksomhetMetadata';
+import { Bransjetype } from '../api/virksomhetsdata-api';
 import { getTips, Tips } from '../felleskomponenter/tips/tips';
 import { SammenligningsType } from '../Forside/vurderingstekster';
 import { Speedometer, SykefraværVurdering } from '../Forside/Speedometer/Speedometer';

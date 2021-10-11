@@ -5,7 +5,7 @@ import grafLinjer from './grafLinjer';
 
 import './Graf.less';
 import 'nav-frontend-tabell-style';
-import { KvartalsvisSykefraværshistorikk } from '../../api/kvartalsvisSykefraværshistorikk';
+import { KvartalsvisSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString, Linje } from './graf-utils';
 import XAkseTick from './XAkseTick';
 import { useInnerWidth } from '../../utils/innerWidth-hook';

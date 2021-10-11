@@ -2,7 +2,7 @@ import * as React from 'react';
 import './Forside.less';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import Innloggingsside from '../Innloggingsside/Innloggingsside';
-import { RestSykefraværshistorikk } from '../api/kvartalsvisSykefraværshistorikk';
+import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import { RestStatus } from '../api/api-utils';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 
