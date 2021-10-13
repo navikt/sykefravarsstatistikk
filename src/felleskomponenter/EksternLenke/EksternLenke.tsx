@@ -10,31 +10,32 @@ interface ExtendedProps {
     eventProperties?: EventData;
 }
 
-const EksternLenke: FunctionComponent<Props & ExtendedProps> = ({
-                                                                    children,
-                                                                    eventProperties,
-                                                                    className,
-    ...lenkeProperties
-}) => {
+const EksternLenke: FunctionComponent<Props & ExtendedProps> = (
+    {
+        children,
+        eventProperties,
+        className,
+        ...lenkeProperties
+    }) => {
     const sendNavigereEvent = useSendNavigereEvent();
 
     return (
         <Lenke
             {...lenkeProperties}
             className={classNames('ekstern-lenke', className)}
-            target="_blank"
-            rel="noopener noreferrer"
+            target='_blank'
+            rel='noopener noreferrer'
             onClick={() => {
                 sendNavigereEvent({
                     lenketekst: children,
                     destinasjon: lenkeProperties.href,
                     url: window.location.href,
-                    ...eventProperties
+                    ...eventProperties,
                 });
             }}
         >
             {children}
-            <EksternLenkeIkon className="ekstern-lenke__ikon" />
+            <EksternLenkeIkon className='ekstern-lenke__ikon' />
         </Lenke>
     );
 };

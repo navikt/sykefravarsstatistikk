@@ -34,7 +34,6 @@ export interface Ekstradata {
     sykefraværSiste4Kvartaler: SykefraværVurdering;
     korttidSiste4Kvartaler: SykefraværVurdering;
     langtidSiste4Kvartaler: SykefraværVurdering;
-    antallFarger: number; // TODO Midlertidig måling. Må fjernes.
 
     sektor: Sektor;
 }
@@ -133,18 +132,6 @@ const getEkstraDataFraEnhetsregisteret = (
     return {};
 };
 
-const getAntallForskjelligeFarger = (...resultater: SykefraværVurdering[]): number | undefined => {
-    const resultaterMedRiktigeFarger = resultater.filter((resultat) =>
-        [SykefraværVurdering.OVER, SykefraværVurdering.MIDDELS, SykefraværVurdering.UNDER].includes(
-            resultat
-        )
-    );
-
-    return resultaterMedRiktigeFarger.length > 0
-        ? new Set(resultaterMedRiktigeFarger).size
-        : undefined;
-};
-
 const getEkstraDataFraSummertSykefraværshistorikk = (
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk,
     restvirksomhetsdata: RestVirksomhetsdata,
@@ -191,14 +178,10 @@ const getEkstraDataFraSummertSykefraværshistorikk = (
             langtidSiste4Kvartaler: sammenligningResultatLangtid.sammenligningVurdering,
         };
 
-        const antallFarger = getAntallForskjelligeFarger(...Object.values(resultater));
 
         let ekstradata: Partial<Ekstradata> = { ...resultater };
-        if (antallFarger !== undefined) {
-            ekstradata = { ...ekstradata, antallFarger };
-        }
+        return { ...ekstradata };
 
-        return ekstradata;
     } catch (error) {
         return {};
     }

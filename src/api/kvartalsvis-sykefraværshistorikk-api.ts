@@ -1,5 +1,4 @@
 import { fetchMedFeilhåndtering, RestRessurs, RestStatus } from './api-utils';
-import { sendEventDirekte } from '../amplitude/events';
 import { BASE_PATH } from '../konstanter';
 
 export enum SykefraværshistorikkType {
@@ -18,16 +17,16 @@ export type KvartalsvisSykefraværsprosent = {
 
 export type Sykefraværsprosent =
     | {
-          erMaskert: true;
-          prosent: null;
-          tapteDagsverk: null;
-          muligeDagsverk: null;
-      }
+    erMaskert: true;
+    prosent: null;
+    tapteDagsverk: null;
+    muligeDagsverk: null;
+}
     | {
-          erMaskert: false;
-          prosent: number | undefined;
-          tapteDagsverk: number | undefined;
-          muligeDagsverk: number | undefined;
+    erMaskert: false;
+    prosent: number | undefined;
+    tapteDagsverk: number | undefined;
+    muligeDagsverk: number | undefined;
 };
 
 export interface KvartalsvisSykefraværshistorikk {
@@ -91,10 +90,7 @@ export const filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet = (
             sykefraværshistorikkForUnderenhet,
         )
     ) {
-        sendEventDirekte('segmentering valgt underenhet er lik overordnet enhet', '');
         nullstillOverordnetEnhetshistorikk(data);
-    } else {
-        sendEventDirekte('segmentering valgt underenhet er ulik overordnet enhet', '');
     }
 
     return data;

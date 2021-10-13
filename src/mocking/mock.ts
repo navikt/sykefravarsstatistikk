@@ -140,7 +140,7 @@ if (mock.featureToggles) {
         'begin:/sykefravarsstatistikk/api/feature',
         {
             'sykefravarsstatistikk.ab-test.tips': false,
-            'sykefravarsstatistikk.arbeidsmiljoportal': process.env.REACT_APP_HEROKU ? false : true,
+            'sykefravarsstatistikk.arbeidsmiljoportal': !process.env.REACT_APP_HEROKU,
         },
         {
             delay: 1000 * delayfaktor,

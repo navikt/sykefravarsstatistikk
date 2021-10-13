@@ -1,4 +1,4 @@
-import { MutableRefObject, useContext, useEffect, useRef } from 'react';
+import React, { MutableRefObject, useContext, useEffect, useRef } from 'react';
 import { RestVirksomhetsdata, Virksomhetsdata } from '../api/virksomhetsdata-api';
 import { virksomhetsdataContext } from '../utils/virksomhetsdataContext';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
@@ -80,7 +80,6 @@ const getIaTjenesterMetrikkerUrl = () => {
 };
 
 const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
-export type EventData = { [key: string]: any };
 
 function byggIaTjenesteMottattMetrikk(
     nåværendeOrgnr: string | undefined,

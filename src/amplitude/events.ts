@@ -52,28 +52,7 @@ export const useSendSidevisningEvent = (område: string, orgnr: string | undefin
         if (skalSendeEvent.current) {
             skalSendeEvent.current = false;
 
-            // Setter timeout på eventet, slik at alle dataene fra "ekstradata" rekker å laste inn før eventet sendes.
-            setTimeout(() => sendEvent(område, 'vist'), 2000);
+            sendEvent(område, 'vist');
         }
     }, [orgnr, område, sendEvent]);
-};
-
-export const useTidsbrukEvent = (
-    område: string,
-    ...antallSekunderFørEventSendes: number[]
-): void => {
-    const sendEvent = useSendEvent();
-    const antallSekunder = useRef<number>(0);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            antallSekunder.current += 1;
-            if (antallSekunderFørEventSendes.includes(antallSekunder.current)) {
-                sendEvent(område, 'tidsbruk', {
-                    sekunder: antallSekunder.current,
-                });
-            }
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [antallSekunderFørEventSendes, område, sendEvent]);
 };

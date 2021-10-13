@@ -4,7 +4,6 @@ import ReactToPrint from 'react-to-print';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
 import { RestSummertSykefraværshistorikk } from '../../api/summert-sykefraværshistorikk-api';
 import { RestStatus } from '../../api/api-utils';
-import { useSendEvent } from '../../amplitude/events';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import { useOrgnr } from '../../utils/orgnr-hook';
@@ -16,7 +15,6 @@ export const Sammenligningspanel: FunctionComponent<{
     const panelRef = useRef<HTMLDivElement>(null);
     const lastNedKnappRef = useRef<HTMLButtonElement>(null);
     const harFeil = restSummertSykefraværshistorikk.status === RestStatus.Feil;
-    const sendEvent = useSendEvent();
     const orgnr = useOrgnr();
     const navnPåVirksomhet =
         restAltinnOrganisasjoner.status === RestStatus.Suksess &&
@@ -41,7 +39,6 @@ export const Sammenligningspanel: FunctionComponent<{
                     </Systemtittel>
                 </div>
                 <ReactToPrint
-                    onBeforePrint={() => sendEvent('forside barnehage', 'print')}
                     onAfterPrint={() => {
                         if (lastNedKnappRef.current) {
                             lastNedKnappRef.current.focus();

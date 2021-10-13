@@ -9,7 +9,6 @@ import {
     getKostnadForAntallDagsverk,
     Kalkulatorvariant,
 } from '../kalkulator-utils';
-import { useSendEvent } from '../../amplitude/events';
 import { Kalkulatorrad } from './Kalkulatorrad/Kalkulatorrad';
 
 interface Props {
@@ -17,7 +16,6 @@ interface Props {
 }
 
 export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
-    const sendEvent = useSendEvent();
     const { restSykefraværshistorikk } = props;
     const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<number | undefined>();
     const [ønsketTapteDagsverk, setØnsketTapteDagsverk] = useState<number | undefined>();
@@ -78,7 +76,6 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
             <div>
                 <Kalkulatorrad
                     onChange={(event) => {
-                        sendEvent('kalkulator dagsverk kostnad', 'endret');
                         setKostnadDagsverk(parseInt(event.target.value));
                     }}
                     value={kostnadDagsverk}
@@ -98,7 +95,6 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                 />
                 <Kalkulatorrad
                     onChange={(event) => {
-                        sendEvent('kalkulator dagsverk nåværende', 'endret');
                         validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value));
                     }}
                     value={nåværendeTapteDagsverk}
@@ -109,7 +105,6 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                 />
                 <Kalkulatorrad
                     onChange={(event) => {
-                        sendEvent('kalkulator dagsverk mål', 'endret');
                         validerOgSettØnsketTapteDagsverk(parseFloat(event.target.value));
                     }}
                     value={ønsketTapteDagsverk}

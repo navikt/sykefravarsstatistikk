@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import Banner from './Banner/Banner';
-import { BrowserRouter, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
 import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
 import { RestStatus } from './api/api-utils';
@@ -13,8 +13,6 @@ import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { RestSykefraværshistorikk } from './api/kvartalsvis-sykefraværshistorikk-api';
 import { RestVirksomhetsdata } from './api/virksomhetsdata-api';
-import IAWebRedirectPanel from './IAWebRedirectSide/IAWebRedirectPanel';
-import IAWebRedirectSide from './IAWebRedirectSide/IAWebRedirectSide';
 import {
     BASE_PATH,
     ER_VEDLIKEHOLD_AKTIVERT,
@@ -22,19 +20,17 @@ import {
     PATH_FORSIDE_BARNEHAGE,
     PATH_FORSIDE_GENERELL,
     PATH_HISTORIKK,
-    PATH_IAWEB_REDIRECTSIDE,
     PATH_KALKULATOR,
 } from './konstanter';
 import { virksomhetsdataContext, VirksomhetsdataProvider } from './utils/virksomhetsdataContext';
 import { sykefraværshistorikkContext, SykefraværshistorikkProvider } from './utils/sykefraværshistorikkContext';
-import { sendEventDirekte, useTidsbrukEvent } from './amplitude/events';
+import { sendEventDirekte } from './amplitude/events';
 import {
     altinnOrganisasjonerContext,
     altinnOrganisasjonerMedTilgangTilStatistikkContext,
     AltinnOrganisasjonerMedTilgangTilStatistikkProvider,
     AltinnOrganisasjonerProvider,
 } from './utils/altinnOrganisasjonerContext';
-import { useSetUserProperties } from './amplitude/userProperties';
 import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { Forside } from './Forside/Forside';
@@ -44,12 +40,7 @@ import {
     SummertSykefraværshistorikkProvider,
 } from './utils/summertSykefraværshistorikkContext';
 import { RestSummertSykefraværshistorikk } from './api/summert-sykefraværshistorikk-api';
-import { TilbakemeldingContextProvider } from './utils/TilbakemeldingContext';
-import {
-    enhetsregisteretContext,
-    EnhetsregisteretProvider,
-    EnhetsregisteretState,
-} from './utils/enhetsregisteretContext';
+import { EnhetsregisteretProvider } from './utils/enhetsregisteretContext';
 import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { Kurskalender } from './Forside/Kurskalender/Kurskalender';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
@@ -70,13 +61,11 @@ const App: FunctionComponent = () => {
                             <SummertSykefraværshistorikkProvider>
                                 <SykefraværshistorikkProvider>
                                     <FeatureTogglesProvider>
-                                        <TilbakemeldingContextProvider>
-                                            <IaTjenesterMetrikkerContextProvider>
-                                                <main id='maincontent'>
-                                                    <AppContent />
-                                                </main>
-                                            </IaTjenesterMetrikkerContextProvider>
-                                        </TilbakemeldingContextProvider>
+                                        <IaTjenesterMetrikkerContextProvider>
+                                            <main id='maincontent'>
+                                                <AppContent />
+                                            </main>
+                                        </IaTjenesterMetrikkerContextProvider>
                                     </FeatureTogglesProvider>
                                 </SykefraværshistorikkProvider>
                             </SummertSykefraværshistorikkProvider>
@@ -101,23 +90,7 @@ const AppContent: FunctionComponent = () => {
         sykefraværshistorikkContext,
     );
     const restvirksomhetsdata = useContext<RestVirksomhetsdata>(virksomhetsdataContext);
-    const location = useLocation();
-    useSetUserProperties();
-    useTidsbrukEvent('hele appen', 5, 30, 60, 120, 300);
 
-    const { restUnderenhet } = useContext<EnhetsregisteretState>(enhetsregisteretContext);
-
-    useEffect(() => {
-        if (
-            restUnderenhet.status === RestStatus.Suksess &&
-            restUnderenhet.data.næringer.length > 1
-        ) {
-            sendEventDirekte('app', 'flere næringer', {
-                antallNæringer: restUnderenhet.data.næringer.length,
-                næringer: restUnderenhet.data.næringer.map((næring) => næring.kode),
-            });
-        }
-    }, [restUnderenhet]);
     const [restKursliste, setRestKursliste] = useState<RestKursliste>({
         status: RestStatus.IkkeLastet,
     });
@@ -141,14 +114,11 @@ const AppContent: FunctionComponent = () => {
     ) {
         innhold = <Lasteside />;
     } else if (
-        restOrganisasjoner.status === RestStatus.IkkeInnlogget &&
-        !location.pathname.includes('iawebredirectside')
+        restOrganisasjoner.status === RestStatus.IkkeInnlogget
     ) {
         return <Innloggingsside redirectUrl={window.location.href} />;
     } else if (
-        restOrganisasjoner.status !== RestStatus.Suksess &&
-        !location.pathname.includes('iawebredirectside')
-    ) {
+        restOrganisasjoner.status !== RestStatus.Suksess) {
         innhold = <FeilFraAltinnSide />;
     } else if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
         window.location.replace('/min-side-arbeidsgiver/mangler-tilgang');
@@ -200,19 +170,14 @@ const AppContent: FunctionComponent = () => {
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                     />
                 </Route>
-                <Route path={PATH_IAWEB_REDIRECTSIDE} exact={true}>
-                    <IAWebRedirectSide restSykefraværshistorikk={restSykefraværshistorikk}>
-                        <IAWebRedirectPanel />
-                    </IAWebRedirectSide>
-                </Route>
             </>
         );
     }
 
     return (
         <>
-            {!location.pathname.includes('iawebredirectside') && (
-                <Banner tittel="Sykefraværsstatistikk" restOrganisasjoner={restOrganisasjoner} />
+            {(
+                <Banner tittel='Sykefraværsstatistikk' restOrganisasjoner={restOrganisasjoner} />
             )}
             {innhold}
         </>

@@ -29,7 +29,7 @@ export const getTips = (
         case SammenligningsType.KORTTID:
             return getTipsKorttidsfravær(resultat);
         case SammenligningsType.LANGTID:
-            return getTipsLangtidsfravær(resultat, bransje);
+            return [];
         case SammenligningsType.TOTALT:
             return getTipsTotaltFravær(resultat, bransje);
         case SammenligningsType.GRADERT:
@@ -44,13 +44,6 @@ const getTipsKorttidsfravær = (resultat: SykefraværVurdering): Tips[] => {
         default:
             return [fåNedKorttidsfravær];
     }
-};
-
-const getTipsLangtidsfravær = (
-    resultat: SykefraværVurdering,
-    bransje: Bransjetype | undefined
-): Tips[] => {
-    return [];
 };
 
 const getTipsTotaltFravær = (

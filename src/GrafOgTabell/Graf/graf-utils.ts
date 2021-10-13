@@ -136,10 +136,9 @@ export const getLinjerSomHarData = (
         if (!historikk) {
             return false;
         }
-        const historikkHarData = !!historikk.kvartalsvisSykefraværsprosent.find(
-            (prosent) => prosent !== null && prosent !== undefined
+        return !!historikk.kvartalsvisSykefraværsprosent.find(
+            (prosent) => prosent !== null && prosent !== undefined,
         );
-        return historikkHarData;
     };
 
     const linjerSomHarData: Linje[] = [];

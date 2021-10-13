@@ -10,7 +10,6 @@ import { TipsVisning } from '../../felleskomponenter/tips/TipsVisning';
 import { getTips, Tips } from '../../felleskomponenter/tips/tips';
 import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
-import { useSendEvent } from '../../amplitude/events';
 import { Bransjetype } from '../../api/virksomhetsdata-api';
 import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
@@ -52,7 +51,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     className,
 }) => {
     const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
-    const sendEvent = useSendEvent();
     const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
 
     const orgnr = useOrgnr();
@@ -80,16 +78,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const visningAvProsentForBransje: number | null | undefined =
         sykefraværVurdering === SykefraværVurdering.FEIL ? null : sykefraværBransje;
 
-    const getPanelEventtekst = (sammenligningsType: SammenligningsType) => {
-        switch (sammenligningsType) {
-            case SammenligningsType.TOTALT:
-                return 'totalfravær';
-            case SammenligningsType.KORTTID:
-                return 'korttidsfravær';
-            case SammenligningsType.LANGTID:
-                return 'langtidsfravær';
-        }
-    };
+
     const overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
 
     const innhold = (
@@ -177,10 +166,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
         <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
             <EkspanderbartpanelBase
                 onClick={() => {
-                    sendEvent('barnehage ekspanderbart sammenligning', 'klikk', {
-                        panel: getPanelEventtekst(sammenligningsType),
-                        action: erÅpen ? 'lukk' : 'åpne',
-                    });
                     setErÅpen(!erÅpen);
                 }}
                 apen={erÅpen}

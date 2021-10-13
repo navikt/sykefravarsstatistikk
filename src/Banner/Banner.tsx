@@ -13,8 +13,7 @@ interface Props {
 }
 
 const Banner: React.FunctionComponent<Props & RouteComponentProps> = (props) => {
-    const sendEvent = useSendEvent();
-
+    let sendEvent = useSendEvent();
     const { history, tittel, restOrganisasjoner } = props;
     let altinnOrganisasjoner: AltinnOrganisasjon[] =
         restOrganisasjoner.status === RestStatus.Suksess ? restOrganisasjoner.data : [];

@@ -12,7 +12,6 @@ import {
     Maskering,
     rundAvTilEnDesimal,
 } from '../kalkulator-utils';
-import { useSendEvent } from '../../amplitude/events';
 import { Kalkulatorrad } from './Kalkulatorrad/Kalkulatorrad';
 
 interface Props {
@@ -20,7 +19,6 @@ interface Props {
 }
 
 export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
-    const sendEvent = useSendEvent();
     const [muligeDagsverk, setMuligeDagsverk] = useState<number | undefined>();
     const [nåværendeSykefraværsprosent, setNåværendeSykefraværsprosent] = useState<
         number | undefined
@@ -111,7 +109,6 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
             <div>
                 <Kalkulatorrad
                     onChange={(event) => {
-                        sendEvent('kalkulator prosent kostnad', 'endret');
                         setKostnadDagsverk(parseInt(event.target.value));
                     }}
                     value={kostnadDagsverk}
@@ -133,7 +130,6 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                     <Kalkulatorrad
                         label="Antall mulige dagsverk per år"
                         onChange={(event) => {
-                            sendEvent('kalkulator prosent mulige dagsverk', 'endret');
                             validerOgSettMuligeDagsverk(parseFloat(event.target.value));
                         }}
                         value={muligeDagsverk}
@@ -143,7 +139,6 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                 )}
                 <Kalkulatorrad
                     onChange={(event) => {
-                        sendEvent('kalkulator prosent nåværende', 'endret');
                         validerOgSettNåværendeSykefraværsprosent(parseFloat(event.target.value));
                     }}
                     value={nåværendeSykefraværsprosent}
@@ -155,7 +150,6 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                 />
                 <Kalkulatorrad
                     onChange={(event) => {
-                        sendEvent('kalkulator prosent mål', 'endret');
                         validerOgSettØnsketSykefraværsprosent(parseFloat(event.target.value));
                     }}
                     value={ønsketSykefraværsprosent}

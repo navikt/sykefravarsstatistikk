@@ -6,11 +6,11 @@ import { Bransjetype } from '../../api/virksomhetsdata-api';
 export const SammenligningIngress: FunctionComponent<{
     bransje?: Bransjetype;
     harBransje: boolean;
-}> = ({ bransje, harBransje }) => {
+}> = ({ harBransje }) => {
     const bransjeEllerNæringTekst = harBransje ? 'bransje' : 'næring';
     return (
-        <div className="sammenligning-ingress">
-            <Systemtittel tag="h2" className="sammenligning-ingress__tittel">
+        <div className='sammenligning-ingress'>
+            <Systemtittel tag='h2' className='sammenligning-ingress__tittel'>
                 Hvor er ditt potensial?
             </Systemtittel>
             <Normaltekst>
@@ -23,5 +23,4 @@ export const SammenligningIngress: FunctionComponent<{
             </Normaltekst>
         </div>
     );
-
 };
