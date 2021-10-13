@@ -9,7 +9,6 @@ import {
     getKostnadForAntallDagsverk,
     Kalkulatorvariant,
 } from '../kalkulator-utils';
-import { useSendEvent } from '../../amplitude/events';
 import { Kalkulatorrad } from './Kalkulatorrad/Kalkulatorrad';
 
 interface Props {
@@ -17,7 +16,6 @@ interface Props {
 }
 
 export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
-    useSendEvent();
     const { restSykefraværshistorikk } = props;
     const [nåværendeTapteDagsverk, setNåværendeTapteDagsverk] = useState<number | undefined>();
     const [ønsketTapteDagsverk, setØnsketTapteDagsverk] = useState<number | undefined>();
