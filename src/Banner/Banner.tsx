@@ -22,7 +22,7 @@ const Banner: React.FunctionComponent<Props & RouteComponentProps> = (props) => 
             organisasjoner={altinnOrganisasjoner}
             sidetittel={tittel}
             history={history}
-            onOrganisasjonChange={() => () => sendEvent('banner', 'bedrift valgt')}
+            onOrganisasjonChange={() => sendEvent('banner', 'bedrift valgt')}
         />
     );
 };
