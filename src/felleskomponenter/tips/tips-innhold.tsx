@@ -2,7 +2,7 @@ import fåNedKorttidsfraværBilde from './bilder/få-ned-korttidsfravær.png';
 import seKursForebyggeSykefraværBilde from './bilder/se-kurs-forebygge_sykefravær.png';
 import seKursFølgeOppSykefraværBilde from './bilder/se-kurs-følge-opp-sykefravær.png';
 import seKursFølgeOppSykefraværBarnehagerBilde from './bilder/se-kurs-følge-opp-sykefravær-barnehager.png';
-import seKursFølgeOppSykehjemBarnehagerBilde from './bilder/se-kurs-følge-opp-sykefravær-sykehjem.png';
+import seKursFølgeOppSykefraværSykehjemBilde from './bilder/se-kurs-følge-opp-sykefravær-sykehjem.png';
 import tipsOgRådArbeidsmiljøSykefraværBilde from './bilder/tips-og-råd-arbeidsmiljø-sykefravær.png';
 import React from 'react';
 import { Tips } from './tips';
@@ -51,13 +51,13 @@ export const seKursFølgeOppSykefraværBarnehager: Tips = {
     img: { src: seKursFølgeOppSykefraværBarnehagerBilde, alt: 'Forhåndsvisning av nettkurs' },
 };
 export const seKursFølgeOppSykefraværSykehjem: Tips = {
-    id: 'se-kurs-følge-opp-barnehager-sykehjem',
+    id: 'se-kurs-følge-opp-sykehjem',
     tittel: 'Se kurs for sykehjem',
     ingress:
         'Her får du korte nettkurs om oppfølging og forebygging av sykefravær. Kursene tar for seg lovkrav og praktiske grep, og er tilpasset din bransje.',
     tidsbruk: 'Kurs fra: 10 min – 18 min',
     href: 'https://vimeo.com/showcase/8652020',
-    img: { src: seKursFølgeOppSykehjemBarnehagerBilde, alt: 'Forhåndsvisning av nettkurs' },
+    img: { src: seKursFølgeOppSykefraværSykehjemBilde, alt: 'Forhåndsvisning av nettkurs' },
 };
 export const tipsOgRådArbeidsmiljøSykefravær: Tips = {
     id: 'tips-og-råd-arbeidsmiljø-sykefravær',
