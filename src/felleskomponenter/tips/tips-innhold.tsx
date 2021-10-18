@@ -29,7 +29,7 @@ export const seKursForebyggeSykefravær: Tips = {
         </>
     ),
     tidsbruk: 'Kurs fra: 12 min – 16 min',
-    href: 'https://vimeo.com/showcase/6728594',
+    href: 'https://vimeo.com/showcase/8652399',
     img: { src: seKursForebyggeSykefraværBilde, alt: 'Forhåndsvisning av nettkurs' },
 };
 export const seKursFølgeOppSykefravær: Tips = {
@@ -38,7 +38,7 @@ export const seKursFølgeOppSykefravær: Tips = {
     ingress:
         'Her får du korte nettkurs som tar for seg lovkrav og hvordan du gjennomfører sykefraværsoppfølging i praksis.',
     tidsbruk: 'Kurs fra: 12 min – 22 min',
-    href: 'https://vimeo.com/showcase/6728595',
+    href: 'https://vimeo.com/showcase/8652435',
     img: { src: seKursFølgeOppSykefraværBilde, alt: 'Forhåndsvisning av nettkurs' },
 };
 export const seKursFølgeOppSykefraværBarnehager: Tips = {
@@ -47,7 +47,7 @@ export const seKursFølgeOppSykefraværBarnehager: Tips = {
     ingress:
         'Her får du korte nettkurs om oppfølging og forebygging av sykefravær. Kursene tar for seg lovkrav og praktiske grep, og er tilpasset din bransje.',
     tidsbruk: 'Kurs fra: 10 min – 18 min',
-    href: 'https://vimeo.com/showcase/7671659',
+    href: 'https://vimeo.com/showcase/8652155',
     img: { src: seKursFølgeOppSykefraværBarnehagerBilde, alt: 'Forhåndsvisning av nettkurs' },
 };
 export const seKursFølgeOppSykefraværSykehjem: Tips = {
@@ -56,7 +56,7 @@ export const seKursFølgeOppSykefraværSykehjem: Tips = {
     ingress:
         'Her får du korte nettkurs om oppfølging og forebygging av sykefravær. Kursene tar for seg lovkrav og praktiske grep, og er tilpasset din bransje.',
     tidsbruk: 'Kurs fra: 10 min – 18 min',
-    href: 'https://vimeo.com/showcase/7733192',
+    href: 'https://vimeo.com/showcase/8652020',
     img: { src: seKursFølgeOppSykehjemBarnehagerBilde, alt: 'Forhåndsvisning av nettkurs' },
 };
 export const tipsOgRådArbeidsmiljøSykefravær: Tips = {
