@@ -58,7 +58,7 @@
         "react-to-print": "^2.13.0",
         "recharts": "^2.1.2",
         "tar": "^6.1.9",
-        "webpack": "4.44.2"
+        "webpack": "4.46.0"
     },
     "devDependencies": {
         "@types/amplitude-js": "^8.0.0",
