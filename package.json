@@ -13,7 +13,7 @@
         "amplitude-js": "^8.5.0",
         "browserslist": "^4.16.8",
         "classnames": "^2.2.6",
-        "core-js": "^3.16.4",
+        "core-js": "^3.18.2",
         "craco-less": "^1.20.0",
         "is-svg": "^4.2.2",
         "lodash.throttle": "^4.1.1",
