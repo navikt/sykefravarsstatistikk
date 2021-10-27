@@ -6,10 +6,10 @@ import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import { RestSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import {
     getAntallMuligeDagsverkSiste4Kvartaler,
-    getKostnadForSykefraværsprosent,
     getSykefraværsprosentSiste4Kvartaler,
     Kalkulatorvariant,
     Maskering,
+    regnUtKostnadForSykefraværsprosent,
     rundAvTilEnDesimal,
 } from '../kalkulator-utils';
 import { Kalkulatorrad } from './Kalkulatorrad/Kalkulatorrad';
@@ -20,9 +20,7 @@ interface Props {
 
 export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
     const [muligeDagsverk, setMuligeDagsverk] = useState<number | undefined>();
-    const [nåværendeSykefraværsprosent, setNåværendeSykefraværsprosent] = useState<
-        number | undefined
-    >();
+    const [nåværendeSykefraværsprosent, setNåværendeSykefraværsprosent] = useState<number | undefined>();
     const [ønsketSykefraværsprosent, setØnsketSykefraværsprosent] = useState<number | undefined>();
 
     const [erDataMaskert, setErDataMaskert] = useState<boolean | undefined>();
@@ -72,10 +70,10 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
             !harEndretSykefraværsprosent
         ) {
             const muligeDagsverkSiste4Kvartaler = getAntallMuligeDagsverkSiste4Kvartaler(
-                restSykefraværshistorikk.data
+                restSykefraværshistorikk.data,
             );
             const prosentTapteDagsverkSiste4Kvartaler = getSykefraværsprosentSiste4Kvartaler(
-                restSykefraværshistorikk.data
+                restSykefraværshistorikk.data,
             );
             if (
                 prosentTapteDagsverkSiste4Kvartaler === Maskering.ErMaskertEllerHarIkkeNokData ||
@@ -85,7 +83,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                 setErDataMaskert(true);
             } else {
                 setNåværendeSykefraværsprosent(
-                    rundAvTilEnDesimal(prosentTapteDagsverkSiste4Kvartaler)
+                    rundAvTilEnDesimal(prosentTapteDagsverkSiste4Kvartaler),
                 );
                 setMuligeDagsverk(muligeDagsverkSiste4Kvartaler);
                 setErDataMaskert(false);
@@ -96,7 +94,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
     const nåværendeTapteDagsverkSiste12MndHjelpetekst =
         restSykefraværshistorikk.status === RestStatus.Suksess && !erDataMaskert
             ? 'Sykefraværsprosenten regnes ut fra antall tapte dagsverk delt på antall mulige dagsverk. ' +
-              'Mulige dagsverk de siste 12 månedene er hentet fra det dere har meldt inn i A-ordningen.'
+            'Mulige dagsverk de siste 12 månedene er hentet fra det dere har meldt inn i A-ordningen.'
             : undefined;
 
     const ønsketTapteDagsverkSiste12MndHjelpetekst =
@@ -112,15 +110,15 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                         setKostnadDagsverk(parseInt(event.target.value));
                     }}
                     value={kostnadDagsverk}
-                    label="Kostnad per dag per ansatt i kroner"
-                    placeholder="kr"
-                    name="kostnad-per-dagsverk-prosent"
+                    label='Kostnad per dag per ansatt i kroner'
+                    placeholder='kr'
+                    name='kostnad-per-dagsverk-prosent'
                     hjelpetekst={
                         <>
                             SINTEF har beregnet at en dags sykefravær gjennomsnittlig koster 2600
                             kroner. Beløpet uttrykker produksjonstap og økte kostnader. Lønn og
                             refusjoner knyttet til sykefravær er ikke en del av beregnet kostnad.{' '}
-                            <EksternLenke href="https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/">
+                            <EksternLenke href='https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/'>
                                 Les mer om hva som påvirker kostnader ved sykefravær.
                             </EksternLenke>
                         </>
@@ -128,13 +126,13 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                 />
                 {erDataMaskert && (
                     <Kalkulatorrad
-                        label="Antall mulige dagsverk per år"
+                        label='Antall mulige dagsverk per år'
                         onChange={(event) => {
                             validerOgSettMuligeDagsverk(parseFloat(event.target.value));
                         }}
                         value={muligeDagsverk}
-                        name="mulige-dagsverk-prosent"
-                        hjelpetekst="En ansatt som jobber full stilling i 12 måneder, utgjør 230 dagsverk."
+                        name='mulige-dagsverk-prosent'
+                        hjelpetekst='En ansatt som jobber full stilling i 12 måneder, utgjør 230 dagsverk.'
                     />
                 )}
                 <Kalkulatorrad
@@ -142,10 +140,10 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                         validerOgSettNåværendeSykefraværsprosent(parseFloat(event.target.value));
                     }}
                     value={nåværendeSykefraværsprosent}
-                    label="Sykefravær i prosent de siste 12 månedene"
+                    label='Sykefravær i prosent de siste 12 månedene'
                     step={0.1}
                     visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
-                    name="nåværende-prosent"
+                    name='nåværende-prosent'
                     hjelpetekst={nåværendeTapteDagsverkSiste12MndHjelpetekst}
                 />
                 <Kalkulatorrad
@@ -153,22 +151,22 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                         validerOgSettØnsketSykefraværsprosent(parseFloat(event.target.value));
                     }}
                     value={ønsketSykefraværsprosent}
-                    label="Mål for sykefraværet i prosent"
+                    label='Mål for sykefraværet i prosent'
                     step={0.1}
-                    name="ønsket-prosent"
+                    name='ønsket-prosent'
                     hjelpetekst={ønsketTapteDagsverkSiste12MndHjelpetekst}
                 />
             </div>
             <Kostnad
-                nåværendeKostnad={getKostnadForSykefraværsprosent(
+                nåværendeKostnad={regnUtKostnadForSykefraværsprosent(
                     kostnadDagsverk,
                     nåværendeSykefraværsprosent,
-                    muligeDagsverk
+                    muligeDagsverk,
                 )}
-                ønsketKostnad={getKostnadForSykefraværsprosent(
+                ønsketKostnad={regnUtKostnadForSykefraværsprosent(
                     kostnadDagsverk,
                     ønsketSykefraværsprosent,
-                    muligeDagsverk
+                    muligeDagsverk,
                 )}
                 ønsketRedusert={ønsketSykefraværsprosent as number}
                 antallTapteDagsverkEllerProsent={Kalkulatorvariant.Prosent}
