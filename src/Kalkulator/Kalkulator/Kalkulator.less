@@ -3,6 +3,13 @@
 .kalkulator {
     .sideinnhold-mixin();
 
+    &__inputrader_wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
     &__wrapper {
         background-color: @navLysGra;
         min-height: 50rem;
@@ -26,7 +33,7 @@
     }
 
     &__input-overskrift {
-        padding-bottom: 1rem;
+        padding-bottom: 2rem;
     }
 
     &__ingress {

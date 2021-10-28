@@ -6,10 +6,10 @@ import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import { RestSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import {
     getAntallMuligeDagsverkSiste4Kvartaler,
+    getKostnadForSykefraværsprosent,
     getSykefraværsprosentSiste4Kvartaler,
     Kalkulatorvariant,
     Maskering,
-    regnUtKostnadForSykefraværsprosent,
     rundAvTilEnDesimal,
 } from '../kalkulator-utils';
 import { Kalkulatorrad } from './Kalkulatorrad/Kalkulatorrad';
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
-    const [muligeDagsverk, setMuligeDagsverk] = useState<number | undefined>();
+    const [totaltAntallDagsverk, setTotaltAntallDagsverk] = useState<number | undefined>();
     const [nåværendeSykefraværsprosent, setNåværendeSykefraværsprosent] = useState<number | undefined>();
     const [ønsketSykefraværsprosent, setØnsketSykefraværsprosent] = useState<number | undefined>();
 
@@ -38,6 +38,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
             setNåværendeSykefraværsprosent(0);
         }
     };
+
     const validerOgSettØnsketSykefraværsprosent = (verdi: number) => {
         if (!validerSykefraværsprosent(verdi)) {
             return;
@@ -53,13 +54,13 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
 
     const validerOgSettMuligeDagsverk = (muligeDagsverk: number) => {
         if (erDataMaskert && validerTapteDagsverk(muligeDagsverk)) {
-            setMuligeDagsverk(muligeDagsverk);
+            setTotaltAntallDagsverk(muligeDagsverk);
         }
     };
 
     useEffect(() => {
         if (restSykefraværshistorikk.status === RestStatus.IkkeLastet) {
-            setMuligeDagsverk(undefined);
+            setTotaltAntallDagsverk(undefined);
             setNåværendeSykefraværsprosent(undefined);
         }
     }, [restSykefraværshistorikk]);
@@ -85,7 +86,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                 setNåværendeSykefraværsprosent(
                     rundAvTilEnDesimal(prosentTapteDagsverkSiste4Kvartaler),
                 );
-                setMuligeDagsverk(muligeDagsverkSiste4Kvartaler);
+                setTotaltAntallDagsverk(muligeDagsverkSiste4Kvartaler);
                 setErDataMaskert(false);
             }
         }
@@ -104,13 +105,28 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
 
     return (
         <>
-            <div>
+            <div className={'kalkulator__inputrader_wrapper'}>
+                <Kalkulatorrad
+                    onChange={(event) => {
+                        setTotaltAntallDagsverk(parseInt(event.target.value));
+                    }}
+                    value={totaltAntallDagsverk}
+                    label='Totalt antall dagsverk i din bedrift siste 12 mnd'
+                    name='totalt-antall-dagsverk'
+                    step={100}
+                    hjelpetekst={
+                        <>
+                            Totalt antall dagsverk i din bedrift siste 12 mnd // TODO
+                        </>
+                    }
+                />
                 <Kalkulatorrad
                     onChange={(event) => {
                         setKostnadDagsverk(parseInt(event.target.value));
                     }}
                     value={kostnadDagsverk}
                     label='Kostnad per dag per ansatt i kroner'
+                    step={10}
                     placeholder='kr'
                     name='kostnad-per-dagsverk-prosent'
                     hjelpetekst={
@@ -130,7 +146,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                         onChange={(event) => {
                             validerOgSettMuligeDagsverk(parseFloat(event.target.value));
                         }}
-                        value={muligeDagsverk}
+                        value={totaltAntallDagsverk}
                         name='mulige-dagsverk-prosent'
                         hjelpetekst='En ansatt som jobber full stilling i 12 måneder, utgjør 230 dagsverk.'
                     />
@@ -158,15 +174,15 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                 />
             </div>
             <Kostnad
-                nåværendeKostnad={regnUtKostnadForSykefraværsprosent(
+                nåværendeKostnad={getKostnadForSykefraværsprosent(
                     kostnadDagsverk,
                     nåværendeSykefraværsprosent,
-                    muligeDagsverk,
+                    totaltAntallDagsverk,
                 )}
-                ønsketKostnad={regnUtKostnadForSykefraværsprosent(
+                ønsketKostnad={getKostnadForSykefraværsprosent(
                     kostnadDagsverk,
                     ønsketSykefraværsprosent,
-                    muligeDagsverk,
+                    totaltAntallDagsverk,
                 )}
                 ønsketRedusert={ønsketSykefraværsprosent as number}
                 antallTapteDagsverkEllerProsent={Kalkulatorvariant.Prosent}
