@@ -17,7 +17,7 @@ interface Props {
 
 const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
     const [kalkulatorvariant, setKalkulatorvariant] = useState<Kalkulatorvariant>(
-        Kalkulatorvariant.Dagsverk,
+        Kalkulatorvariant.Prosent,
     );
     const orgnr = useOrgnr();
 
