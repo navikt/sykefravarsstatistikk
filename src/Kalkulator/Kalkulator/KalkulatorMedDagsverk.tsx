@@ -73,7 +73,17 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <div>
+            <div className={'kalkulator__inputrader_wrapper'}>
+                <Kalkulatorrad
+                    onChange={(event) => {
+                        validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value));
+                    }}
+                    value={nåværendeTapteDagsverk}
+                    label='Antall tapte dagsverk siste 12 måneder'
+                    visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
+                    name='nåværende-tapte-dagsverk'
+                    hjelpetekst={antallTapteDagsverkHjelpetekst}
+                />
                 <Kalkulatorrad
                     onChange={(event) => {
                         setKostnadDagsverk(parseInt(event.target.value));
@@ -92,16 +102,6 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                             </EksternLenke>
                         </>
                     }
-                />
-                <Kalkulatorrad
-                    onChange={(event) => {
-                        validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value));
-                    }}
-                    value={nåværendeTapteDagsverk}
-                    label='Antall tapte dagsverk siste 12 måneder'
-                    visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
-                    name='nåværende-tapte-dagsverk'
-                    hjelpetekst={antallTapteDagsverkHjelpetekst}
                 />
                 <Kalkulatorrad
                     onChange={(event) => {

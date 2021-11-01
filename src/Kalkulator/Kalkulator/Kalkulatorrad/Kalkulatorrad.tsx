@@ -20,7 +20,7 @@ export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
     const labelId = props.name + '-label';
     return (
         <div className='kalkulatorrad'>
-            <Element id={labelId} className='kalkulatorrad_label'>
+            <Element id={labelId}>
                 {props.label}
             </Element>
             <div className='kalkulatorrad__input-hjelpetekst-wrapper'>
