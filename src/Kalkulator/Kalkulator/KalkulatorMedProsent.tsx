@@ -116,7 +116,7 @@ export const KalkulatorMedProsent: FunctionComponent<Props> = ({ restSykefravær
                     step={100}
                     hjelpetekst={
                         <>
-                            Totalt antall dagsverk i din bedrift siste 12 mnd // TODO
+                            Her kan du justere totalt antall dagsverk i din bedrift de siste 12 månedene.
                         </>
                     }
                 />
