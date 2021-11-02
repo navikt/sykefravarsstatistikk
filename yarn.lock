@@ -1605,10 +1605,10 @@
   resolved "https://registry.yarnpkg.com/@navikt/nav-dekoratoren-moduler/-/nav-dekoratoren-moduler-1.5.0.tgz#27783fa6fd8f73666242f0907237b43df3bdb666"
   integrity sha512-PbSeSbX8sXeKD3AVqsF71AG7o7WqjoC7PjPaPyzDNYZBJgpIISXCWzFAIuR/EryRniJ4Srf4SjM55n18Ebh0+Q==
 
-"@navikt/navspa@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@navikt/navspa/-/navspa-3.0.2.tgz#7e99cc18bc037f992e12dffb654e4718a66ebe60"
-  integrity sha512-eEFF1i8SNEZQxBxwW3WY3O10ogdOhITH0rn2FNJYEhqWhiVqWut+/JQKlIB17Jo9BpwjoDYafyPUGGCS9IlVEg==
+"@navikt/navspa@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@navikt/navspa/-/navspa-4.0.0.tgz#06f6d2731740739ad0e6a61973b60afeae443839"
+  integrity sha512-XirKuJ1+etbS5Xc5Extr2N7lv1JyDrdKRRztK4sqBJzyVwL31tdB4xjVoX5TfqY+o/m81JeHCwVP3OX6lGJPdg==
   dependencies:
     loadjs "^4.2.0"
 
