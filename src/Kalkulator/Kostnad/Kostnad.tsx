@@ -21,13 +21,11 @@ let utregnetKostnadHarBlittEndret = false;
 let endringIUtregnetKostnadHarBlittLogget = false;
 
 const regnUtKostnadOgSendEventHvisTalletErEndret = (props: Props) => {
-    // Endring i utregnet kostnad impliserer at brukeren har endret noe i minst ett av inputfeltene.
     if (utregnetKostnadHarBlittEndret && !endringIUtregnetKostnadHarBlittLogget) {
+        // Endring i utregnet kostnad impliserer at brukeren har endret noe i minst ett av inputfeltene.
         sendInputfeltUtfyltEvent(window.location.href, 'any');
         endringIUtregnetKostnadHarBlittLogget = true;
-        console.log('indre hei');
     }
-    console.log('Hei');
     utregnetKostnadHarBlittEndret = true;
     return somKroneverdi(regnUtKostnad(props));
 };
