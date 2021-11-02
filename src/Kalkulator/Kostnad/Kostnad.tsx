@@ -12,6 +12,19 @@ interface Props {
     antallTapteDagsverkEllerProsent?: Kalkulatorvariant;
 }
 
+let utregnetKostnadHarBlittEndret = false;
+let utregnetKostnadEndringHarBlittLogget = false;
+
+const regnUtKostnad = (nåværendeKostnad: number, ønsketKostnad: number) => {
+    if (utregnetKostnadHarBlittEndret && !utregnetKostnadEndringHarBlittLogget) {
+        // send event her
+        console.log('Sender endringsevent');
+        utregnetKostnadEndringHarBlittLogget = true;
+    }
+    utregnetKostnadHarBlittEndret = true;
+    return somKroneverdi(nåværendeKostnad - ønsketKostnad);
+};
+
 const Kostnad: FunctionComponent<Props> = (props) => {
     const sykefraværMål =
         props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
@@ -27,17 +40,17 @@ const Kostnad: FunctionComponent<Props> = (props) => {
     const øktKostnadTekst = `Øker dere sykefraværet til ${formatertSykefraværMål} taper dere ytterligere årlig`;
 
     return (
-        <div className="kostnad">
-            <Systemtittel tag="h2" className="kostnad__tittel">
-                Resultat <SedlerIkon className="kostnad__ikon" />
+        <div className='kostnad'>
+            <Systemtittel tag='h2' className='kostnad__tittel'>
+                Resultat <SedlerIkon className='kostnad__ikon' />
             </Systemtittel>
-            <div className="kostnad__tekst">
+            <div className='kostnad__tekst'>
                 <Element>Totale kostnader per år med nåværende sykefravær</Element>
-                <Element>{formaterTall(props.nåværendeKostnad)}&nbsp;kr</Element>
+                <Element>{somKroneverdi(props.nåværendeKostnad)}</Element>
             </div>
             <div className={classNames('kostnad__tekst', 'kostnad__sisterad')}>
                 <Element>Totale kostnader per år ved målsatt sykefravær</Element>
-                <Element>{formaterTall(props.ønsketKostnad)}&nbsp;kr</Element>
+                <Element>{somKroneverdi(props.ønsketKostnad)}</Element>
             </div>
 
             <div className={classNames('kostnad__tekst', 'kostnad__resultatrad')}>
@@ -53,15 +66,15 @@ const Kostnad: FunctionComponent<Props> = (props) => {
                             : 'kostnad__sisteresultat_minus'
                     }
                 >
-                    {formaterTall(props.nåværendeKostnad - props.ønsketKostnad)}&nbsp;kr
+                    {regnUtKostnad(props.nåværendeKostnad, props.ønsketKostnad)}
                 </Element>
             </div>
         </div>
     );
 };
 
-const formaterTall = (tall: number): string => {
-    return tall.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
+const somKroneverdi = (tall: number): string => {
+    return tall.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ') + ' kr';
 };
 
 export default Kostnad;
