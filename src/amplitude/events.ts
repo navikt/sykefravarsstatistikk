@@ -33,6 +33,25 @@ export const useSendNavigereEvent = (): SendNavigereEvent => {
     };
 };
 
+export const sendKnappEvent = (pathname: string | undefined, label: string) => {
+    const metadata = {
+        app: 'sykefravarsstatistikk',
+        url: pathname,
+        label: label,
+    };
+
+    amplitudeClient.logEvent('knapp', metadata);
+};
+
+export const sendSidevisningEvent = (pathname: string | undefined) => {
+    const metadata = {
+        app: 'sykefravarsstatistikk',
+        url: pathname,
+    };
+
+    amplitudeClient.logEvent('sidevisning', metadata);
+};
+
 export const useSendEvent = (): SendEvent => {
     const ekstradata = useEkstraDataRef();
 

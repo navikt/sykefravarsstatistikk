@@ -4,7 +4,7 @@ import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import { useSendSidevisningEvent } from '../../amplitude/events';
+import { sendKnappEvent, sendSidevisningEvent, useSendSidevisningEvent } from '../../amplitude/events';
 import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
@@ -20,8 +20,12 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
         Kalkulatorvariant.Prosent,
     );
     const orgnr = useOrgnr();
-
     useSendSidevisningEvent('kalkulator', orgnr);
+    // TODO ^ useSendSidevisningEvent kan fjernes på sikt, den er erstattet av sendSidevisningEvent
+
+    const pathname = window.location.pathname;
+    sendSidevisningEvent(pathname);
+
     useSendIaTjenesteMetrikkMottattVedSidevisningEvent();
 
     useEffect(() => {
@@ -48,6 +52,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                                 pressed={kalkulatorvariant === Kalkulatorvariant.Prosent}
                                 onClick={() => {
                                     setKalkulatorvariant(Kalkulatorvariant.Prosent);
+                                    sendKnappEvent(pathname, 'Prosent');
                                 }}
                             >
                                 Prosent
@@ -56,6 +61,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                                 pressed={kalkulatorvariant === Kalkulatorvariant.Dagsverk}
                                 onClick={() => {
                                     setKalkulatorvariant(Kalkulatorvariant.Dagsverk);
+                                    sendKnappEvent(pathname, 'Dagsverk');
                                 }}
                             >
                                 Dagsverk

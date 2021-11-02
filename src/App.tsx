@@ -49,8 +49,11 @@ import { LegacyBarnehageSammenligningRedirect, LegacySammenligningRedirect } fro
 import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 import SamtalestøttePodletpanel from './Forside/Samtalestøttepanel/SamtalestøttePodletpanel';
+import { amplitudeClient } from './amplitude/client';
+import { useOrgnr } from './utils/orgnr-hook';
 
 const App: FunctionComponent = () => {
+
     sendEventDirekte('forside', 'sidelastet');
     return (
         <BrowserRouter basename={BASE_PATH}>
@@ -78,6 +81,9 @@ const App: FunctionComponent = () => {
 };
 
 const AppContent: FunctionComponent = () => {
+
+    const orgnr = useOrgnr();
+    amplitudeClient.setUserProperties({ 'orgnr: ': orgnr });
 
     const restOrganisasjoner = useContext<RestAltinnOrganisasjoner>(altinnOrganisasjonerContext);
     const restOrganisasjonerMedStatistikk = useContext<RestAltinnOrganisasjoner>(
