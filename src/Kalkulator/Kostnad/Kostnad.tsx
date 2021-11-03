@@ -23,7 +23,7 @@ let endringIUtregnetKostnadHarBlittLogget = false;
 const regnUtKostnadOgSendEventHvisTalletErEndret = (props: Props) => {
     if (utregnetKostnadHarBlittEndret && !endringIUtregnetKostnadHarBlittLogget) {
         // Endring i utregnet kostnad impliserer at brukeren har endret noe i minst ett av inputfeltene.
-        sendInputfeltUtfyltEvent(window.location.href, 'any');
+        sendInputfeltUtfyltEvent(window.location.pathname, 'kalkulatorfeltene');
         endringIUtregnetKostnadHarBlittLogget = true;
     }
     utregnetKostnadHarBlittEndret = true;
