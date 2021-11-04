@@ -1,70 +1,78 @@
 @import '../../variables';
 
-.kalkulator-ny {
-    .kalkulator {
-        .sideinnhold-mixin();
+.kalkulator {
+    .sideinnhold-mixin();
 
-        &__wrapper {
-            background-color: @navLysGra;
-            min-height: 50rem;
-            padding: 1.5rem 1rem 5rem;
-        }
+    &__inputrader_wrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
 
-        &__tittel {
-            padding-bottom: 2rem;
-        }
+    &__wrapper {
+        background-color: @navLysGra;
+        min-height: 50rem;
+        padding: 1.5rem 1rem 5rem;
+    }
 
-        &__dagsverk-eller-prosent-toggle {
-            margin-bottom: 2rem;
+    &__tittel {
+        padding-bottom: 2rem;
+    }
 
-            .toggleKnapp {
-                width: 100%;
-                + .toggleKnapp {
-                    margin-top: 0.5rem;
-                }
+    &__dagsverk-eller-prosent-toggle {
+        margin-bottom: 2rem;
+
+        .toggleKnapp {
+            width: 100%;
+
+            + .toggleKnapp {
+                margin-top: 0.5rem;
             }
         }
+    }
 
-        &__input-overskrift {
-            padding-bottom: 1rem;
-        }
+    &__input-overskrift {
+        padding-bottom: 2rem;
+    }
 
-        &__ingress {
-            padding-bottom: 2rem;
-            max-width: 32rem;
-        }
+    &__ingress {
+        padding-bottom: 2rem;
+        max-width: 32rem;
+    }
 
-        &__lesmer-kostnad-dagsverk {
-            margin-bottom: 2rem;
-        }
+    &__lesmer-kostnad-dagsverk {
+        margin-bottom: 2rem;
+    }
 
+    &__lesmer-tapte-dagsverk {
+        margin-bottom: 0;
+    }
+
+    @media (min-width: @screen-sm-min) {
         &__lesmer-tapte-dagsverk {
             margin-bottom: 0;
         }
 
-        @media (min-width: @screen-sm-min) {
-            &__lesmer-tapte-dagsverk {
-                margin-bottom: 0;
-            }
+        &__tittel-wrapper {
+            display: flex;
+            justify-content: space-between;
+        }
 
-            &__tittel-wrapper {
-                display: flex;
-                justify-content: space-between;
-            }
+        &__dagsverk-eller-prosent-toggle {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            align-items: flex-start;
 
-            &__dagsverk-eller-prosent-toggle {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: flex-end;
-                align-items: flex-start;
+            .toggleKnapp {
+                width: unset;
 
-                .toggleKnapp {
-                    width: unset;
-                    + .toggleKnapp {
-                        margin-top: 0;
-                    }
+                + .toggleKnapp {
+                    margin-top: 0;
                 }
             }
         }
     }
 }
+

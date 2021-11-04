@@ -4,6 +4,7 @@ import { ReactComponent as SedlerIkon } from '../sedlerIkon.svg';
 import './Kostnad.less';
 import classNames from 'classnames';
 import { Kalkulatorvariant } from '../kalkulator-utils';
+import { sendInputfeltUtfyltEvent } from '../../amplitude/events';
 
 interface Props {
     nåværendeKostnad: number;
@@ -12,6 +13,23 @@ interface Props {
     antallTapteDagsverkEllerProsent?: Kalkulatorvariant;
 }
 
+const regnUtKostnad = (props: Props) => {
+    return props.nåværendeKostnad - props.ønsketKostnad;
+};
+
+let utregnetKostnadHarBlittEndret = false;
+let endringIUtregnetKostnadHarBlittLogget = false;
+
+const regnUtKostnadOgSendEventHvisTalletErEndret = (props: Props) => {
+    if (utregnetKostnadHarBlittEndret && !endringIUtregnetKostnadHarBlittLogget) {
+        // Endring i utregnet kostnad impliserer at brukeren har endret noe i minst ett av inputfeltene.
+        sendInputfeltUtfyltEvent(window.location.pathname, 'kalkulatorfeltene');
+        endringIUtregnetKostnadHarBlittLogget = true;
+    }
+    utregnetKostnadHarBlittEndret = true;
+    return somKroneverdi(regnUtKostnad(props));
+};
+
 const Kostnad: FunctionComponent<Props> = (props) => {
     const sykefraværMål =
         props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
@@ -19,6 +37,7 @@ const Kostnad: FunctionComponent<Props> = (props) => {
                 ? props.ønsketRedusert.toFixed(1).replace('.', ',')
                 : props.ønsketRedusert.toFixed(0)
             : 0;
+
     const formatertSykefraværMål =
         `${sykefraværMål} ` +
         (props.antallTapteDagsverkEllerProsent === Kalkulatorvariant.Prosent ? '%' : 'dagsverk');
@@ -27,41 +46,41 @@ const Kostnad: FunctionComponent<Props> = (props) => {
     const øktKostnadTekst = `Øker dere sykefraværet til ${formatertSykefraværMål} taper dere ytterligere årlig`;
 
     return (
-        <div className="kostnad">
-            <Systemtittel tag="h2" className="kostnad__tittel">
-                Resultat <SedlerIkon className="kostnad__ikon" />
+        <div className='kostnad'>
+            <Systemtittel tag='h2' className='kostnad__tittel'>
+                Resultat <SedlerIkon className='kostnad__ikon' />
             </Systemtittel>
-            <div className="kostnad__tekst">
+            <div className='kostnad__tekst'>
                 <Element>Totale kostnader per år med nåværende sykefravær</Element>
-                <Element>{formaterTall(props.nåværendeKostnad)}&nbsp;kr</Element>
+                <Element>{somKroneverdi(props.nåværendeKostnad)}</Element>
             </div>
             <div className={classNames('kostnad__tekst', 'kostnad__sisterad')}>
                 <Element>Totale kostnader per år ved målsatt sykefravær</Element>
-                <Element>{formaterTall(props.ønsketKostnad)}&nbsp;kr</Element>
+                <Element>{somKroneverdi(props.ønsketKostnad)}</Element>
             </div>
 
             <div className={classNames('kostnad__tekst', 'kostnad__resultatrad')}>
                 <Element>
-                    {props.nåværendeKostnad - props.ønsketKostnad >= 0
+                    {regnUtKostnad(props) >= 0
                         ? redusertKostnadTekst
                         : øktKostnadTekst}
                 </Element>
                 <Element
                     className={
-                        props.nåværendeKostnad - props.ønsketKostnad >= 0
+                        regnUtKostnad(props) >= 0
                             ? 'kostnad__sisteresultat'
                             : 'kostnad__sisteresultat_minus'
                     }
                 >
-                    {formaterTall(props.nåværendeKostnad - props.ønsketKostnad)}&nbsp;kr
+                    {regnUtKostnadOgSendEventHvisTalletErEndret(props)}
                 </Element>
             </div>
         </div>
     );
 };
 
-const formaterTall = (tall: number): string => {
-    return tall.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
+const somKroneverdi = (tall: number): string => {
+    return tall.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ') + ' kr';
 };
 
 export default Kostnad;

@@ -35,7 +35,7 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
     useEffect(() => {
         if (restSykefraværshistorikk.status === RestStatus.Suksess && !harEndretTapteDagsverk) {
             const tapteDagsverkSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(
-                restSykefraværshistorikk.data
+                restSykefraværshistorikk.data,
             );
             if (tapteDagsverkSiste4Kvartaler === 'erMaskertEllerHarIkkeNokData') {
                 setNåværendeTapteDagsverk(0);
@@ -49,9 +49,9 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
 
     const antallTapteDagsverkHjelpetekst = erDataMaskert
         ? 'Et dagsverk er arbeid som utføres på en dag. ' +
-          'Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år.'
+        'Ved fulltidsstilling regnes en hel stilling som ca 230 dagsverk per år.'
         : 'NAV har legemeldt fravær tilgjengelig i sitt datagrunnlag. Vi ser på de siste 12 månedene ' +
-          'og beregner hvor mange dagsverk som er tapt. Et dagsverk er arbeid som utføres på en dag.';
+        'og beregner hvor mange dagsverk som er tapt. Et dagsverk er arbeid som utføres på en dag.';
 
     const validerTapteDagsverk = (tapteDagsverk: number): boolean => {
         return !(tapteDagsverk < 0);
@@ -73,21 +73,31 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
 
     return (
         <>
-            <div>
+            <div className={'kalkulator__inputrader_wrapper'}>
+                <Kalkulatorrad
+                    onChange={(event) => {
+                        validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value));
+                    }}
+                    value={nåværendeTapteDagsverk}
+                    label='Antall tapte dagsverk siste 12 måneder'
+                    visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
+                    name='nåværende-tapte-dagsverk'
+                    hjelpetekst={antallTapteDagsverkHjelpetekst}
+                />
                 <Kalkulatorrad
                     onChange={(event) => {
                         setKostnadDagsverk(parseInt(event.target.value));
                     }}
                     value={kostnadDagsverk}
-                    label="Kostnad per dag per ansatt i kroner"
-                    placeholder="kr"
-                    name="kostnad-per-dagsverk"
+                    label='Kostnad per dag per ansatt i kroner'
+                    placeholder='kr'
+                    name='kostnad-per-dagsverk'
                     hjelpetekst={
                         <>
                             SINTEF har beregnet at en dags sykefravær gjennomsnittlig koster 2600
                             kroner. Beløpet uttrykker produksjonstap og økte kostnader. Lønn og
                             refusjoner knyttet til sykefravær er ikke en del av beregnet kostnad.{' '}
-                            <EksternLenke href="https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/">
+                            <EksternLenke href='https://www.sintef.no/prosjekter/bedriftenes-kostnader-ved-sykefravar/'>
                                 Les mer om hva som påvirker kostnader ved sykefravær.
                             </EksternLenke>
                         </>
@@ -95,28 +105,18 @@ export const KalkulatorMedDagsverk: FunctionComponent<Props> = (props) => {
                 />
                 <Kalkulatorrad
                     onChange={(event) => {
-                        validerOgSettNåværendeTapteDagsverk(parseFloat(event.target.value));
-                    }}
-                    value={nåværendeTapteDagsverk}
-                    label="Antall tapte dagsverk siste 12 måneder"
-                    visSpinner={restSykefraværshistorikk.status === RestStatus.IkkeLastet}
-                    name="nåværende-tapte-dagsverk"
-                    hjelpetekst={antallTapteDagsverkHjelpetekst}
-                />
-                <Kalkulatorrad
-                    onChange={(event) => {
                         validerOgSettØnsketTapteDagsverk(parseFloat(event.target.value));
                     }}
                     value={ønsketTapteDagsverk}
-                    label="Mål for sykefraværet i antall tapte dagsverk over 12 måneder"
-                    name="ønsket-tapte-dagsverk"
-                    hjelpetekst="Skriv inn mål for sykefraværet i antall tapte dagsverk i en periode på 12 måneder, for å beregne hvor mye du kan spare."
+                    label='Mål for sykefraværet i antall tapte dagsverk over 12 måneder'
+                    name='ønsket-tapte-dagsverk'
+                    hjelpetekst='Skriv inn mål for sykefraværet i antall tapte dagsverk i en periode på 12 måneder, for å beregne hvor mye du kan spare.'
                 />
             </div>
             <Kostnad
                 nåværendeKostnad={getKostnadForAntallDagsverk(
                     kostnadDagsverk,
-                    nåværendeTapteDagsverk
+                    nåværendeTapteDagsverk,
                 )}
                 ønsketKostnad={getKostnadForAntallDagsverk(kostnadDagsverk, ønsketTapteDagsverk)}
                 ønsketRedusert={ønsketTapteDagsverk as number}
