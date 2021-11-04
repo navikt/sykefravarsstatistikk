@@ -7,7 +7,7 @@ import {
     tilSegmenteringSykefraværsprosent,
 } from './segmentering';
 import { SykefraværVurdering } from '../Forside/Speedometer/Speedometer';
-import { Bransjetype, RestVirksomhetsdata } from '../api/virksomhetsdata-api';
+import { RestVirksomhetsdata } from '../api/virksomhetsdata-api';
 import { RestStatus } from '../api/api-utils';
 import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
 import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
@@ -60,7 +60,6 @@ export const useEkstraDataRef = (): MutableRefObject<Partial<Ekstradata>> => {
             ),
             ...getEkstraDataFraEnhetsregisteret(
                 dataFraEnhetsregisteret.restOverordnetEnhet,
-                restVirksomhetsdata,
             ),
         };
     }, [
@@ -76,15 +75,15 @@ const getEkstraDataFraVirksomhetsdata = (
     restVirksomhetsdata: RestVirksomhetsdata,
 ): Partial<Ekstradata> => {
     if (restVirksomhetsdata.status === RestStatus.Suksess) {
-        const metrikker = restVirksomhetsdata.data;
-        const næringskode2siffer = metrikker.næringskode5Siffer.kode.substring(0, 2);
+        const virksomhetsdata = restVirksomhetsdata.data;
+        const næringskode2siffer = virksomhetsdata.næringskode5Siffer.kode.substring(0, 2);
         const næring2siffer =
             næringskode2siffer + ' ' + mapTilNæringsbeskrivelse(næringskode2siffer);
 
         return {
-            næring2siffer,
-            bransje: metrikker.bransje,
-            antallAnsatte: tilSegmenteringAntallAnsatte(metrikker.antallAnsatte),
+            næring2siffer: næring2siffer,
+            bransje: virksomhetsdata.bransje,
+            antallAnsatte: tilSegmenteringAntallAnsatte(virksomhetsdata.antallAnsatte),
         };
     }
     return {};
@@ -116,11 +115,8 @@ const getEkstraDataFraSykefraværshistorikk = (
 
 const getEkstraDataFraEnhetsregisteret = (
     restOverordnetEnhet: RestOverordnetEnhet,
-    restvirksomhetsdata: RestVirksomhetsdata,
 ): Partial<Ekstradata> => {
     if (
-        restvirksomhetsdata.status === RestStatus.Suksess &&
-        restvirksomhetsdata.data.bransje === Bransjetype.BARNEHAGER &&
         restOverordnetEnhet.status === RestStatus.Suksess
     ) {
         return {
