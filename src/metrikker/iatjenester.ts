@@ -49,7 +49,7 @@ interface IatjenesteMetrikk {
 
 export const erIaTjenesterMetrikkerSendtForBedrift = (
     orgnr: string | undefined,
-    sendteMetrikker: [string]
+    sendteMetrikker: [string],
 ): boolean => {
     if (orgnr === undefined) {
         return true;
@@ -60,7 +60,7 @@ export const erIaTjenesterMetrikkerSendtForBedrift = (
 
 export const iaTjenesterMetrikkerErSendtForBedrift = (
     orgnr: string | undefined,
-    sendteMetrikker: [string]
+    sendteMetrikker: [string],
 ): [string] => {
     if (orgnr !== undefined) {
         sendteMetrikker.push(orgnr);
@@ -83,63 +83,46 @@ const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/motta
 
 function byggIaTjenesteMottattMetrikk(
     nåværendeOrgnr: string | undefined,
-    ekstradata: React.MutableRefObject<Partial<IaTjenesteMetrikkerEkstraData>>
+    ekstradata: React.MutableRefObject<Partial<IaTjenesteMetrikkerEkstraData>>,
 ) {
     const iaTjenesteMetrikk: IatjenesteMetrikk = {
-        orgnr: nåværendeOrgnr ? nåværendeOrgnr : '',
-        antallAnsatte: ekstradata.current.antallAnsatte ? ekstradata.current.antallAnsatte : 0,
+        orgnr: nåværendeOrgnr ?? '',
+        antallAnsatte: ekstradata.current.antallAnsatte ?? 0,
         kilde: 'SYKEFRAVÆRSSTATISTIKK',
         type: 'DIGITAL_IA_TJENESTE',
-        fylke: ekstradata.current.fylke ? ekstradata.current.fylke : '',
-        fylkesnummer: ekstradata.current.fylkesnummer ? ekstradata.current.fylkesnummer : '',
-        kommune: ekstradata.current.kommune ? ekstradata.current.kommune : '',
-        kommunenummer: ekstradata.current.kommunenummer ? ekstradata.current.kommunenummer : '',
-        næring2SifferBeskrivelse: ekstradata.current.næring2SifferBeskrivelse
-            ? ekstradata.current.næring2SifferBeskrivelse
-            : '',
-        næringKode5Siffer: ekstradata.current.næringKode5Siffer
-            ? ekstradata.current.næringKode5Siffer
-            : '',
-        næringskode5SifferBeskrivelse: ekstradata.current.næringskode5SifferBeskrivelse
-            ? ekstradata.current.næringskode5SifferBeskrivelse
-            : '',
-        ssbSektorKode: ekstradata.current.institusjonellSektorKode
-            ? ekstradata.current.institusjonellSektorKode.kode
-            : '',
-        ssbSektorKodeBeskrivelse: ekstradata.current.institusjonellSektorKode
-            ? ekstradata.current.institusjonellSektorKode.beskrivelse
-            : '',
+        fylke: ekstradata.current.fylke ?? '',
+        fylkesnummer: ekstradata.current.fylkesnummer ?? '',
+        kommune: ekstradata.current.kommune ?? '',
+        kommunenummer: ekstradata.current.kommunenummer ?? '',
+        næring2SifferBeskrivelse: ekstradata.current.næring2SifferBeskrivelse ?? '',
+        næringKode5Siffer: ekstradata.current.næringKode5Siffer ?? '',
+        næringskode5SifferBeskrivelse: ekstradata.current.næringskode5SifferBeskrivelse ?? '',
+        ssbSektorKode: ekstradata.current.institusjonellSektorKode?.kode ?? '',
+        ssbSektorKodeBeskrivelse: ekstradata.current.institusjonellSektorKode?.beskrivelse ?? '',
         tjenesteMottakkelsesdato: tilIsoDatoMedUtcTimezoneUtenMillis(new Date()),
     };
     return iaTjenesteMetrikk;
 }
 
+// HVORFOR TRENGER VI BÅDE DENNE OG byggIaTjenesteMottattMetrikk ?
 function byggDirekteIaTjenesteMottattMetrikk(
     nåværendeOrgnr: string | undefined,
-    ekstradata: IaTjenesteMetrikkerEkstraData
+    ekstradata: IaTjenesteMetrikkerEkstraData,
 ) {
     const iaTjenesteMetrikk: IatjenesteMetrikk = {
-        orgnr: nåværendeOrgnr ? nåværendeOrgnr : '',
-        antallAnsatte: ekstradata.antallAnsatte ? ekstradata.antallAnsatte : 0,
+        orgnr: nåværendeOrgnr ?? '',
+        antallAnsatte: ekstradata.antallAnsatte ?? 0,
         kilde: 'SYKEFRAVÆRSSTATISTIKK',
         type: 'DIGITAL_IA_TJENESTE',
-        fylke: ekstradata.fylke ? ekstradata.fylke : '',
-        fylkesnummer: ekstradata.fylkesnummer ? ekstradata.fylkesnummer : '',
-        kommune: ekstradata.kommune ? ekstradata.kommune : '',
-        kommunenummer: ekstradata.kommunenummer ? ekstradata.kommunenummer : '',
-        næring2SifferBeskrivelse: ekstradata.næring2SifferBeskrivelse
-            ? ekstradata.næring2SifferBeskrivelse
-            : '',
-        næringKode5Siffer: ekstradata.næringKode5Siffer ? ekstradata.næringKode5Siffer : '',
-        næringskode5SifferBeskrivelse: ekstradata.næringskode5SifferBeskrivelse
-            ? ekstradata.næringskode5SifferBeskrivelse
-            : '',
-        ssbSektorKode: ekstradata.institusjonellSektorKode
-            ? ekstradata.institusjonellSektorKode.kode
-            : '',
-        ssbSektorKodeBeskrivelse: ekstradata.institusjonellSektorKode
-            ? ekstradata.institusjonellSektorKode.beskrivelse
-            : '',
+        fylke: ekstradata.fylke ?? '',
+        fylkesnummer: ekstradata.fylkesnummer ?? '',
+        kommune: ekstradata.kommune ?? '',
+        kommunenummer: ekstradata.kommunenummer ?? '',
+        næring2SifferBeskrivelse: ekstradata.næring2SifferBeskrivelse ?? '',
+        næringKode5Siffer: ekstradata.næringKode5Siffer ?? '',
+        næringskode5SifferBeskrivelse: ekstradata.næringskode5SifferBeskrivelse ?? '',
+        ssbSektorKode: ekstradata.institusjonellSektorKode?.kode ?? '',
+        ssbSektorKodeBeskrivelse: ekstradata.institusjonellSektorKode?.beskrivelse ?? '',
         tjenesteMottakkelsesdato: tilIsoDatoMedUtcTimezoneUtenMillis(new Date()),
     };
     return iaTjenesteMetrikk;
@@ -173,12 +156,7 @@ export const sendIATjenesteMetrikk = async (iatjeneste: IatjenesteMetrikk) => {
     }
 };
 
-// Assembling the data:
-// --------------------
-
-const useIaTjenesteMetrikkerEkstraDataRef = (): MutableRefObject<
-    Partial<IaTjenesteMetrikkerEkstraData>
-> => {
+const useIaTjenesteMetrikkerEkstraDataRef = (): MutableRefObject<Partial<IaTjenesteMetrikkerEkstraData>> => {
     const restvirksomhetsdata = useContext<RestVirksomhetsdata>(virksomhetsdataContext);
     const dataFraEnhetsregisteret = useContext<EnhetsregisteretState>(enhetsregisteretContext);
     const iaTjenesterMetrikkerEkstraData = useRef<Partial<IaTjenesteMetrikkerEkstraData>>({});
@@ -297,7 +275,7 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
                     const erIaTjenesterMetrikkerSendtForDenneBedrift =
                         erIaTjenesterMetrikkerSendtForBedrift(
                             orgnr,
-                            context.bedrifterSomHarSendtMetrikker
+                            context.bedrifterSomHarSendtMetrikker,
                         );
                     if (!erIaTjenesterMetrikkerSendtForDenneBedrift) {
                         sendIATjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
@@ -305,8 +283,8 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
                                 context.setBedrifterSomHarSendtMetrikker(
                                     iaTjenesterMetrikkerErSendtForBedrift(
                                         orgnr,
-                                        context.bedrifterSomHarSendtMetrikker
-                                    )
+                                        context.bedrifterSomHarSendtMetrikker,
+                                    ),
                                 );
                             }
                         });
