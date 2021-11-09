@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useContext, useEffect, useRef } from 'react';
+import { MutableRefObject, useContext, useEffect, useRef } from 'react';
 import { RestVirksomhetsdata, Virksomhetsdata } from '../api/virksomhetsdata-api';
 import { virksomhetsdataContext } from '../utils/virksomhetsdataContext';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
@@ -47,6 +47,14 @@ interface IatjenesteMetrikk {
     kommune: String;
 }
 
+interface IaTjenesteMetrikkForenklet {
+    orgnr: String;
+    altinnRettighet: String,
+    type: String;
+    kilde: String;
+    tjenesteMottakkelsesdato: String;
+}
+
 export const erIaTjenesterMetrikkerSendtForBedrift = (
     orgnr: string | undefined,
     sendteMetrikker: [string],
@@ -79,27 +87,17 @@ const getIaTjenesterMetrikkerUrl = () => {
     }
 };
 
-const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
+const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/forenklet/mottatt-iatjeneste`;
 
-function byggIaTjenesteMottattMetrikk(
+function byggForenkletIaTjenesteMottattMetrikk(
     nåværendeOrgnr: string | undefined,
-    ekstradata: React.MutableRefObject<Partial<IaTjenesteMetrikkerEkstraData>>,
 ) {
-    const iaTjenesteMetrikk: IatjenesteMetrikk = {
+    const iaTjenesteMetrikk: IaTjenesteMetrikkForenklet = {
         orgnr: nåværendeOrgnr ?? '',
-        antallAnsatte: ekstradata.current.antallAnsatte ?? 0,
         kilde: 'SYKEFRAVÆRSSTATISTIKK',
         type: 'DIGITAL_IA_TJENESTE',
-        fylke: ekstradata.current.fylke ?? '',
-        fylkesnummer: ekstradata.current.fylkesnummer ?? '',
-        kommune: ekstradata.current.kommune ?? '',
-        kommunenummer: ekstradata.current.kommunenummer ?? '',
-        næring2SifferBeskrivelse: ekstradata.current.næring2SifferBeskrivelse ?? '',
-        næringKode5Siffer: ekstradata.current.næringKode5Siffer ?? '',
-        næringskode5SifferBeskrivelse: ekstradata.current.næringskode5SifferBeskrivelse ?? '',
-        ssbSektorKode: ekstradata.current.institusjonellSektorKode?.kode ?? '',
-        ssbSektorKodeBeskrivelse: ekstradata.current.institusjonellSektorKode?.beskrivelse ?? '',
         tjenesteMottakkelsesdato: tilIsoDatoMedUtcTimezoneUtenMillis(new Date()),
+        altinnRettighet: '', // TODO: Finn ut hva dette skal være. Og på hvilket format?
     };
     return iaTjenesteMetrikk;
 }
@@ -129,14 +127,13 @@ function byggDirekteIaTjenesteMottattMetrikk(
 }
 
 export const useSendIaTjenesteMetrikkEvent = (): (() => Promise<boolean>) => {
-    const ekstradata = useIaTjenesteMetrikkerEkstraDataRef();
     const nåværendeOrgnr = useOrgnr();
-    const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(nåværendeOrgnr, ekstradata);
+    const iaTjenesteMetrikk = byggForenkletIaTjenesteMottattMetrikk(nåværendeOrgnr);
 
-    return () => sendIATjenesteMetrikk(iaTjenesteMetrikk);
+    return () => sendForenkletIATjenesteMetrikk(iaTjenesteMetrikk);
 };
 
-export const sendIATjenesteMetrikk = async (iatjeneste: IatjenesteMetrikk) => {
+export const sendForenkletIATjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikkForenklet) => {
     const settings = {
         method: 'POST',
         credentials: 'include',
@@ -249,53 +246,29 @@ const getIaTjenesteMetrikkerEkstraDataFraEnhetsregisteret = (
 
 export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
     const context = useContext(iaTjenesterMetrikkerContext);
-    const restvirksomhetsdata = useContext<RestVirksomhetsdata>(virksomhetsdataContext);
-    const enhetsregisteretState = useContext<EnhetsregisteretState>(enhetsregisteretContext);
     const orgnr = useOrgnr();
 
     useEffect(() => {
-        if (
-            restvirksomhetsdata.status === RestStatus.Suksess &&
-            enhetsregisteretState.restUnderenhet.status === RestStatus.Suksess &&
-            enhetsregisteretState.restOverordnetEnhet.status === RestStatus.Suksess
-        ) {
-            const virksomhetsdata = restvirksomhetsdata.data;
-            const overordnetEnhet = enhetsregisteretState.restOverordnetEnhet.data;
-            const underenhet = enhetsregisteretState.restUnderenhet.data;
-            const ekstradata = byggIaTjenesteMetrikkerEkstraData(
-                virksomhetsdata,
-                underenhet,
-                overordnetEnhet,
-            );
-            const iaTjenesteMetrikk = byggDirekteIaTjenesteMottattMetrikk(orgnr, ekstradata);
-            const eriaTjenesteMetrikkKlarTilUtsending = iaTjenesteMetrikk.fylkesnummer !== '';
-
-            if (eriaTjenesteMetrikkKlarTilUtsending) {
-                let timerFunc = setTimeout(() => {
-                    const erIaTjenesterMetrikkerSendtForDenneBedrift =
-                        erIaTjenesterMetrikkerSendtForBedrift(
-                            orgnr,
-                            context.bedrifterSomHarSendtMetrikker,
+        const iaTjenesteMetrikk = byggForenkletIaTjenesteMottattMetrikk(orgnr);
+        let timerFunc = setTimeout(() => {
+            const erIaTjenesterMetrikkerSendtForDenneBedrift =
+                erIaTjenesterMetrikkerSendtForBedrift(
+                    orgnr,
+                    context.bedrifterSomHarSendtMetrikker,
+                );
+            if (!erIaTjenesterMetrikkerSendtForDenneBedrift) {
+                sendForenkletIATjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
+                    if (isSent) {
+                        context.setBedrifterSomHarSendtMetrikker(
+                            iaTjenesterMetrikkerErSendtForBedrift(
+                                orgnr,
+                                context.bedrifterSomHarSendtMetrikker,
+                            ),
                         );
-                    if (!erIaTjenesterMetrikkerSendtForDenneBedrift) {
-                        sendIATjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
-                            if (isSent) {
-                                context.setBedrifterSomHarSendtMetrikker(
-                                    iaTjenesterMetrikkerErSendtForBedrift(
-                                        orgnr,
-                                        context.bedrifterSomHarSendtMetrikker,
-                                    ),
-                                );
-                            }
-                        });
                     }
-                }, 5000);
-                return () => clearTimeout(timerFunc);
+                });
             }
-        }
-    }, [
-        useOrgnr(),
-        useContext<EnhetsregisteretState>(enhetsregisteretContext),
-        useContext<RestVirksomhetsdata>(virksomhetsdataContext),
-    ]);
+        }, 5000);
+        return () => clearTimeout(timerFunc);
+    }, [useOrgnr()]);
 };
