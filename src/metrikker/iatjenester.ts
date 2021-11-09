@@ -147,8 +147,11 @@ export const sendForenkletIATjenesteMetrikk = async (iatjeneste: IaTjenesteMetri
         // @ts-ignore
         const fetchResponse = await fetch(`${iaTjenesterMetrikkerAPI}`, settings);
         const data = await fetchResponse.json();
+        // TODO: Fjern logging før prodsetting
+        console.log('Kall til ia-tjeneste-metrikker (', iaTjenesterMetrikkerAPI, ') gjennomført med data ', data);
         return data.status === 'created';
     } catch (e) {
+        console.log('kall til ia-tjeneste-metrikker feilet! ', e);
         return false;
     }
 };
@@ -250,6 +253,7 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
 
     useEffect(() => {
         const iaTjenesteMetrikk = byggForenkletIaTjenesteMottattMetrikk(orgnr);
+        // TODO: Fjern timer
         let timerFunc = setTimeout(() => {
             const erIaTjenesterMetrikkerSendtForDenneBedrift =
                 erIaTjenesterMetrikkerSendtForBedrift(
