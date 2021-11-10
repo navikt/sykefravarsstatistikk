@@ -80,7 +80,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> =
         const visningAvProsentForBransje: number | null | undefined =
             sykefraværVurdering === SykefraværVurdering.FEIL ? null : sykefraværBransje;
 
-
         const overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
 
         const innhold = (

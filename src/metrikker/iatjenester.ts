@@ -94,12 +94,10 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
 
     useEffect(() => {
         const iaTjenesteMetrikk = byggForenkletIaTjenesteMottattMetrikk(orgnr);
-        const erIaTjenesterMetrikkerSendtForDenneBedrift =
-            erIaTjenesterMetrikkerSendtForBedrift(
-                orgnr,
-                context.bedrifterSomHarSendtMetrikker,
-            );
-        if (!erIaTjenesterMetrikkerSendtForDenneBedrift) {
+        if (!erIaTjenesterMetrikkerSendtForBedrift(
+            orgnr,
+            context.bedrifterSomHarSendtMetrikker,
+        )) {
             sendForenkletIATjenesteMetrikk(iaTjenesteMetrikk)
                 .then((isSent) => {
                     if (isSent) {
