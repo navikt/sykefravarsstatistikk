@@ -107,5 +107,5 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
                     }
                 });
         }
-    }, [useOrgnr()]);
+    }, [orgnr]);
 };
