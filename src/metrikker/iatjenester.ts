@@ -3,7 +3,7 @@ import { useOrgnr } from '../utils/orgnr-hook';
 import { tilIsoDatoMedUtcTimezoneUtenMillis } from '../utils/app-utils';
 import { iaTjenesterMetrikkerContext } from './IaTjenesterMetrikkerContext';
 
-interface IaTjenesteMetrikkForenklet {
+interface IaTjenesteMetrikk {
     orgnr: String;
     altinnRettighet: String,
     type: String;
@@ -45,10 +45,10 @@ const getIaTjenesterMetrikkerUrl = () => {
 
 const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/forenklet/mottatt-iatjeneste`;
 
-function byggForenkletIaTjenesteMottattMetrikk(
+function byggIaTjenesteMottattMetrikk(
     nåværendeOrgnr: string | undefined,
 ) {
-    const iaTjenesteMetrikk: IaTjenesteMetrikkForenklet = {
+    const iaTjenesteMetrikk: IaTjenesteMetrikk = {
         orgnr: nåværendeOrgnr ?? '',
         kilde: 'SYKEFRAVÆRSSTATISTIKK',
         type: 'DIGITAL_IA_TJENESTE',
@@ -60,12 +60,12 @@ function byggForenkletIaTjenesteMottattMetrikk(
 
 export const useSendIaTjenesteMetrikkEvent = (): (() => Promise<boolean>) => {
     const nåværendeOrgnr = useOrgnr();
-    const iaTjenesteMetrikk = byggForenkletIaTjenesteMottattMetrikk(nåværendeOrgnr);
+    const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(nåværendeOrgnr);
 
-    return () => sendForenkletIATjenesteMetrikk(iaTjenesteMetrikk);
+    return () => sendIaTjenesteMetrikk(iaTjenesteMetrikk);
 };
 
-export const sendForenkletIATjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikkForenklet) => {
+export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
     const settings = {
         method: 'POST',
         credentials: 'include',
@@ -91,12 +91,12 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
     const orgnr = useOrgnr();
 
     useEffect(() => {
-        const iaTjenesteMetrikk = byggForenkletIaTjenesteMottattMetrikk(orgnr);
+        const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr);
         if (!erIaTjenesterMetrikkerSendtForBedrift(
             orgnr,
             context.bedrifterSomHarSendtMetrikker,
         )) {
-            sendForenkletIATjenesteMetrikk(iaTjenesteMetrikk)
+            sendIaTjenesteMetrikk(iaTjenesteMetrikk)
                 .then((isSent) => {
                     if (isSent) {
                         context.setBedrifterSomHarSendtMetrikker(
