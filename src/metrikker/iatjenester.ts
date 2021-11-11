@@ -53,7 +53,7 @@ function byggIaTjenesteMottattMetrikk(
         kilde: 'SYKEFRAVÆRSSTATISTIKK',
         type: 'DIGITAL_IA_TJENESTE',
         tjenesteMottakkelsesdato: tilIsoDatoMedUtcTimezoneUtenMillis(new Date()),
-        altinnRettighet: '', // TODO: Finn ut hva dette skal være. Og på hvilket format?
+        altinnRettighet: 'SYKEFRAVÆRSSTATISTIKK_FOR_VIRKSOMHETER',
     };
     return iaTjenesteMetrikk;
 }
