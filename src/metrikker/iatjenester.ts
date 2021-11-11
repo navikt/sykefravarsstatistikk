@@ -79,7 +79,6 @@ export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
         // @ts-ignore
         const fetchResponse = await fetch(`${iaTjenesterMetrikkerAPI}`, settings);
         const data = await fetchResponse.json();
-        // TODO: Fjern logging før prodsetting
         return data.status === 'created';
     } catch (e) {
         return false;
