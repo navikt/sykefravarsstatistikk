@@ -80,10 +80,8 @@ export const sendForenkletIATjenesteMetrikk = async (iatjeneste: IaTjenesteMetri
         const fetchResponse = await fetch(`${iaTjenesterMetrikkerAPI}`, settings);
         const data = await fetchResponse.json();
         // TODO: Fjern logging før prodsetting
-        console.log('Kall til ia-tjeneste-metrikker (', iaTjenesterMetrikkerAPI, ') gjennomført med data ', data);
         return data.status === 'created';
     } catch (e) {
-        console.log('kall til ia-tjeneste-metrikker ', iaTjenesterMetrikkerAPI, ' feilet! ', e);
         return false;
     }
 };
