@@ -38,18 +38,19 @@ interface Props {
     className?: string;
 }
 
-export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
-    sykefraværVurdering,
-    sykefraværVirksomhet,
-    sykefraværBransje,
-    antallKvartalerVirksomhet,
-    antallKvartalerBransje,
-    sammenligningsType,
-    bransje,
-    harBransje,
-    defaultÅpen,
-    className,
-}) => {
+export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = (
+    {
+        sykefraværVurdering,
+        sykefraværVirksomhet,
+        sykefraværBransje,
+        antallKvartalerVirksomhet,
+        antallKvartalerBransje,
+        sammenligningsType,
+        bransje,
+        harBransje,
+        defaultÅpen,
+        className,
+    }) => {
     const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
     const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
 
@@ -62,16 +63,17 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             !erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker) &&
             erÅpen
         ) {
-            sendIaTjenesteMetrikkEvent().then((isSent) => {
-                if (isSent) {
-                    context.setBedrifterSomHarSendtMetrikker(
-                        iaTjenesterMetrikkerErSendtForBedrift(
-                            orgnr,
-                            context.bedrifterSomHarSendtMetrikker
-                        )
-                    );
-                }
-            });
+            sendIaTjenesteMetrikkEvent()
+                .then((isSent) => {
+                    if (isSent) {
+                        context.setBedrifterSomHarSendtMetrikker(
+                            iaTjenesterMetrikkerErSendtForBedrift(
+                                orgnr,
+                                context.bedrifterSomHarSendtMetrikker,
+                            ),
+                        );
+                    }
+                });
         }
     }, [erÅpen]);
 
@@ -84,9 +86,9 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const innhold = (
         <>
             {sammenligningsType === SammenligningsType.GRADERT && (
-                <div className="ekspanderbart-sammenligningspanel__gradert_intro">
+                <div className='ekspanderbart-sammenligningspanel__gradert_intro'>
                     <Ingress>Slik regner vi ut prosenten på gradert sykmelding:</Ingress>
-                    <Normaltekst className="ekspanderbart-sammenligningspanel__utregningsforklring-tekst">
+                    <Normaltekst className='ekspanderbart-sammenligningspanel__utregningsforklring-tekst'>
                         Vi teller antall fraværsdager med bruk av gradert sykmelding. Så beregner vi
                         hvor stor andel disse utgjør av alle legemeldte fraværsdager i din
                         virksomhet. Du kan finne antallet legemeldte fraværsdager for din virksomhet
@@ -97,7 +99,8 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         åpneLabel={'Se eksempel'}
                         className='ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel'
                     >
-                        <Normaltekst className='ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel__innhold'>
+                        <Normaltekst
+                            className='ekspanderbart-sammenligningspanel__les-mer-gradert-eksempel__innhold'>
                             La oss si du har 7,5% sykefravær, dette utgjør 100 tapte dagsverk i din
                             virksomhet. Det ble benyttet gradert sykmelding i 20 dager, da får du
                             20% gradert sykmelding.
@@ -126,7 +129,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             {sammenligningsType === SammenligningsType.GRADERT ? (
                 <OmGradertSykmelding vurdering={sykefraværVurdering} />
             ) : (
-                <div className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering">
+                <div className='ekspanderbart-sammenligningspanel__forklaring-av-vurdering'>
                     {getForklaringAvVurdering(sykefraværVurdering, sykefraværBransje)}
                 </div>
             )}
@@ -171,7 +174,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 apen={erÅpen}
                 id={panelknappID}
                 tittel={
-                    <div className="ekspanderbart-sammenligningspanel__tittel-wrapper">
+                    <div className='ekspanderbart-sammenligningspanel__tittel-wrapper'>
                         {SammenligningsType.GRADERT === sammenligningsType ? (
                             <Kakediagram
                                 resultat={sykefraværVurdering}
@@ -180,10 +183,10 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         ) : (
                             <Speedometer resultat={sykefraværVurdering} inline />
                         )}
-                        <div className="ekspanderbart-sammenligningspanel__tittel-tekst">
-                            <Systemtittel tag="h2">{getPaneltittel()}</Systemtittel>
+                        <div className='ekspanderbart-sammenligningspanel__tittel-tekst'>
+                            <Systemtittel tag='h2'>{getPaneltittel()}</Systemtittel>
                             {sammenligningsType !== SammenligningsType.TOTALT && (
-                                <Normaltekst className="ekspanderbart-sammenligningspanel__tittel-forklaring">
+                                <Normaltekst className='ekspanderbart-sammenligningspanel__tittel-forklaring'>
                                     {vurderingstekst}
                                 </Normaltekst>
                             )}
@@ -191,7 +194,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                                 className={classNames(
                                     'ekspanderbart-sammenligningspanel__les-mer',
                                     'ekspanderbart-sammenligningspanel__les-mer--' +
-                                        (erÅpen ? 'åpen' : 'lukket')
+                                    (erÅpen ? 'åpen' : 'lukket'),
                                 )}
                             >
                                 {getLesMerTekst()}
@@ -199,16 +202,16 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         </div>
                     </div>
                 }
-                className="ekspanderbart-sammenligningspanel__panel"
+                className='ekspanderbart-sammenligningspanel__panel'
             >
-                <div className="ekspanderbart-sammenligningspanel__innhold">
+                <div className='ekspanderbart-sammenligningspanel__innhold'>
                     {innhold}
                     {harTips && (
-                        <div className="ekspanderbart-sammenligningspanel__tips-tittel">
+                        <div className='ekspanderbart-sammenligningspanel__tips-tittel'>
                             <img
-                                className="ekspanderbart-sammenligningspanel__bilde"
+                                className='ekspanderbart-sammenligningspanel__bilde'
                                 src={lyspære}
-                                alt=""
+                                alt=''
                             />
                             <Ingress>Dette kan du gjøre</Ingress>
                         </div>
@@ -221,19 +224,19 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         />
                     ))}
                     <button
-                        className="ekspanderbart-sammenligningspanel__lukk-knapp"
+                        className='ekspanderbart-sammenligningspanel__lukk-knapp'
                         onClick={() => {
                             setErÅpen(false);
                             const panelknapp = document.getElementById(panelknappID);
                             panelknapp && panelknapp.scrollIntoView({ behavior: 'smooth' });
                         }}
                     >
-                        <span className="typo-normal ">Lukk</span>
-                        <OppChevron className="ekspanderbart-sammenligningspanel__lukk-chevron" />
+                        <span className='typo-normal '>Lukk</span>
+                        <OppChevron className='ekspanderbart-sammenligningspanel__lukk-chevron' />
                     </button>
                 </div>
             </EkspanderbartpanelBase>
-            <div className="ekspanderbart-sammenligningspanel__print-innhold">{innhold}</div>
+            <div className='ekspanderbart-sammenligningspanel__print-innhold'>{innhold}</div>
         </div>
     );
 };
