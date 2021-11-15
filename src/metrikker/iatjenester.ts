@@ -43,7 +43,7 @@ const getIaTjenesterMetrikkerUrl = () => {
     }
 };
 
-const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/forenklet/mottatt-iatjeneste`;
+const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
 
 function byggIaTjenesteMottattMetrikk(
     nåværendeOrgnr: string | undefined,
