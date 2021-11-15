@@ -9,7 +9,7 @@ import {
 } from './tips-innhold';
 import { SykefraværVurdering } from '../../Forside/Speedometer/Speedometer';
 import { SammenligningsType } from '../../Forside/vurderingstekster';
-import { Bransjetype } from '../../api/virksomhetsdata-api';
+import { ArbeidsmiljøportalenBransje } from '../../Forside/ArbeidsmiljøportalPanel/bransje-utils';
 
 export interface Tips {
     id: string;
@@ -23,7 +23,7 @@ export interface Tips {
 export const getTips = (
     type: SammenligningsType,
     resultat: SykefraværVurdering,
-    bransje: Bransjetype | undefined
+    bransje: ArbeidsmiljøportalenBransje | undefined,
 ): Tips[] => {
     switch (type) {
         case SammenligningsType.KORTTID:
@@ -48,11 +48,11 @@ const getTipsKorttidsfravær = (resultat: SykefraværVurdering): Tips[] => {
 
 const getTipsTotaltFravær = (
     resultat: SykefraværVurdering,
-    bransje: Bransjetype | undefined
+    bransje: ArbeidsmiljøportalenBransje | undefined,
 ): Tips[] => {
-    if (bransje === Bransjetype.BARNEHAGER) {
+    if (bransje === ArbeidsmiljøportalenBransje.BARNEHAGER) {
         return [seKursFølgeOppSykefraværBarnehager, tipsOgRådArbeidsmiljøSykefravær];
-    } else if (bransje === Bransjetype.SYKEHJEM) {
+    } else if (bransje === ArbeidsmiljøportalenBransje.SYKEHJEM) {
         return [seKursFølgeOppSykefraværSykehjem, tipsOgRådArbeidsmiljøSykefravær];
     } else {
         switch (resultat) {

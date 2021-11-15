@@ -1,5 +1,5 @@
-import { Bransjetype, Virksomhetsdata } from '../api/virksomhetsdata-api';
-import { ArbeidstilsynetBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
+import { ArbeidsmiljøportalenBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
+import { Virksomhetsdata } from '../api/virksomhetsdata-api';
 
 export const defaultBedriftsmetrikker: Virksomhetsdata = {
     antallAnsatte: 99,
@@ -9,54 +9,54 @@ export const defaultBedriftsmetrikker: Virksomhetsdata = {
     },
 };
 
-export const getvirksomhetsdataMock = (bransje: ArbeidstilsynetBransje): Virksomhetsdata => {
+export const getvirksomhetsdataMock = (bransje: ArbeidsmiljøportalenBransje): Virksomhetsdata => {
     switch (bransje) {
-        case ArbeidstilsynetBransje.BARNEHAGER:
+        case ArbeidsmiljøportalenBransje.BARNEHAGER:
             return {
                 antallAnsatte: 99,
                 næringskode5Siffer: {
                     kode: '88911',
                     beskrivelse: 'Barnehager',
                 },
-                bransje: Bransjetype.BARNEHAGER,
+                bransje: ArbeidsmiljøportalenBransje.BARNEHAGER,
             };
-        case ArbeidstilsynetBransje.NÆRINGSMIDDELINDUSTRI:
+        case ArbeidsmiljøportalenBransje.NÆRINGSMIDDELINDUSTRI:
             return {
                 antallAnsatte: 99,
                 næringskode5Siffer: {
                     kode: '10201',
                     beskrivelse: 'Næringsmiddelindustrien',
                 },
-                bransje: Bransjetype.NÆRINGSMIDDELINDUSTRI,
+                bransje: ArbeidsmiljøportalenBransje.NÆRINGSMIDDELINDUSTRI,
             };
-        case ArbeidstilsynetBransje.SYKEHJEM:
+        case ArbeidsmiljøportalenBransje.SYKEHJEM:
             return {
                 antallAnsatte: 99,
                 næringskode5Siffer: {
                     kode: '87101',
                     beskrivelse: 'Sykehjem',
                 },
-                bransje: Bransjetype.SYKEHJEM,
+                bransje: ArbeidsmiljøportalenBransje.SYKEHJEM,
             };
-        case ArbeidstilsynetBransje.SYKEHUS:
+        case ArbeidsmiljøportalenBransje.SYKEHUS:
             return {
                 antallAnsatte: 99,
                 næringskode5Siffer: {
                     kode: '86102',
                     beskrivelse: 'Sykehus',
                 },
-                bransje: Bransjetype.SYKEHUS,
+                bransje: ArbeidsmiljøportalenBransje.SYKEHUS,
             };
-        case ArbeidstilsynetBransje.TRANSPORT:
+        case ArbeidsmiljøportalenBransje.TRANSPORT:
             return {
                 antallAnsatte: 99,
                 næringskode5Siffer: {
                     kode: '49311',
                     beskrivelse: 'Rutebuss og persontrafikk (transport)',
                 },
-                bransje: Bransjetype.TRANSPORT,
+                bransje: ArbeidsmiljøportalenBransje.TRANSPORT,
             };
-        case ArbeidstilsynetBransje.BYGG:
+        case ArbeidsmiljøportalenBransje.BYGG:
             return {
                 antallAnsatte: 99,
                 næringskode5Siffer: {
@@ -64,7 +64,7 @@ export const getvirksomhetsdataMock = (bransje: ArbeidstilsynetBransje): Virksom
                     beskrivelse: 'Boligbyggelag',
                 },
             };
-        case ArbeidstilsynetBransje.ANLEGG:
+        case ArbeidsmiljøportalenBransje.ANLEGG:
             return {
                 antallAnsatte: 99,
                 næringskode5Siffer: {
@@ -72,7 +72,7 @@ export const getvirksomhetsdataMock = (bransje: ArbeidstilsynetBransje): Virksom
                     beskrivelse: 'Bygging av veier og motorveier',
                 },
             };
-        case ArbeidstilsynetBransje.ANDRE_BRANSJER:
+        case ArbeidsmiljøportalenBransje.ANDRE_BRANSJER:
             return {
                 antallAnsatte: 99,
                 næringskode5Siffer: {

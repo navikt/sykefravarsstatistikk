@@ -10,7 +10,6 @@ import { TipsVisning } from '../../felleskomponenter/tips/TipsVisning';
 import { getTips, Tips } from '../../felleskomponenter/tips/tips';
 import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
-import { Bransjetype } from '../../api/virksomhetsdata-api';
 import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
 import Lenke from 'nav-frontend-lenker';
@@ -24,6 +23,7 @@ import {
 } from '../../metrikker/iatjenester';
 import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
 import { useOrgnr } from '../../utils/orgnr-hook';
+import { ArbeidsmiljøportalenBransje } from '../ArbeidsmiljøportalPanel/bransje-utils';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -32,7 +32,7 @@ interface Props {
     antallKvartalerVirksomhet: ReactElement | null;
     antallKvartalerBransje: ReactElement | null;
     sammenligningsType: SammenligningsType;
-    bransje: Bransjetype | undefined;
+    bransje: ArbeidsmiljøportalenBransje | undefined;
     harBransje: boolean;
     defaultÅpen?: boolean;
     className?: string;

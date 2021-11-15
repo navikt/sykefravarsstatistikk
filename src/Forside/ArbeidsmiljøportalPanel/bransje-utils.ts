@@ -1,6 +1,6 @@
 import { Næringskode5Siffer } from '../../api/virksomhetsdata-api';
 
-export enum ArbeidstilsynetBransje {
+export enum ArbeidsmiljøportalenBransje {
     BARNEHAGER = 'BARNEHAGER',
     NÆRINGSMIDDELINDUSTRI = 'NÆRINGSMIDDELINDUSTRI',
     SYKEHUS = 'SYKEHUS',
@@ -11,58 +11,58 @@ export enum ArbeidstilsynetBransje {
     ANDRE_BRANSJER = 'ANDRE_BRANSJER',
 }
 
-export const getArbeidstilsynetBransje = (næring: Næringskode5Siffer): ArbeidstilsynetBransje => {
+export const getArbeidstilsynetBransje = (næring: Næringskode5Siffer): ArbeidsmiljøportalenBransje => {
     const næringskode2siffer = næring.kode.slice(0, 2);
 
     switch (næringskode2siffer) {
         case '10':
-            return ArbeidstilsynetBransje.NÆRINGSMIDDELINDUSTRI;
+            return ArbeidsmiljøportalenBransje.NÆRINGSMIDDELINDUSTRI;
         case '41':
-            return ArbeidstilsynetBransje.BYGG;
+            return ArbeidsmiljøportalenBransje.BYGG;
         case '42':
-            return ArbeidstilsynetBransje.ANLEGG;
+            return ArbeidsmiljøportalenBransje.ANLEGG;
     }
 
     switch (næring.kode) {
         case '88911':
-            return ArbeidstilsynetBransje.BARNEHAGER;
+            return ArbeidsmiljøportalenBransje.BARNEHAGER;
         case '86101':
         case '86102':
         case '86104':
         case '86105':
         case '86106':
         case '86107':
-            return ArbeidstilsynetBransje.SYKEHUS;
+            return ArbeidsmiljøportalenBransje.SYKEHUS;
         case '87101':
         case '87102':
-            return ArbeidstilsynetBransje.SYKEHJEM;
+            return ArbeidsmiljøportalenBransje.SYKEHJEM;
         case '49100':
         case '49311':
         case '49391':
         case '49392':
-            return ArbeidstilsynetBransje.TRANSPORT;
+            return ArbeidsmiljøportalenBransje.TRANSPORT;
     }
 
-    return ArbeidstilsynetBransje.ANDRE_BRANSJER;
+    return ArbeidsmiljøportalenBransje.ANDRE_BRANSJER;
 };
 
 export const getLenkeTilBransjensSideIArbeidsmiljøportalen = (
-    bransje: ArbeidstilsynetBransje
+    bransje: ArbeidsmiljøportalenBransje,
 ): string => {
     switch (bransje) {
-        case ArbeidstilsynetBransje.BARNEHAGER:
+        case ArbeidsmiljøportalenBransje.BARNEHAGER:
             return 'https://www.arbeidsmiljoportalen.no/bransje/barnehage';
-        case ArbeidstilsynetBransje.NÆRINGSMIDDELINDUSTRI:
+        case ArbeidsmiljøportalenBransje.NÆRINGSMIDDELINDUSTRI:
             return 'https://www.arbeidsmiljoportalen.no/bransje/naringsmiddelindustri';
-        case ArbeidstilsynetBransje.TRANSPORT:
+        case ArbeidsmiljøportalenBransje.TRANSPORT:
             return 'https://www.arbeidsmiljoportalen.no/bransje/rutebuss-og-persontrafikk';
-        case ArbeidstilsynetBransje.SYKEHJEM:
+        case ArbeidsmiljøportalenBransje.SYKEHJEM:
             return 'https://www.arbeidsmiljoportalen.no/bransje/sykehjem';
-        case ArbeidstilsynetBransje.SYKEHUS:
+        case ArbeidsmiljøportalenBransje.SYKEHUS:
             return 'https://www.arbeidsmiljoportalen.no/bransje/sykehus';
-        case ArbeidstilsynetBransje.BYGG:
+        case ArbeidsmiljøportalenBransje.BYGG:
             return 'https://www.arbeidsmiljoportalen.no/bransje/bygg';
-        case ArbeidstilsynetBransje.ANLEGG:
+        case ArbeidsmiljøportalenBransje.ANLEGG:
             return 'https://www.arbeidsmiljoportalen.no/bransje/anlegg';
         default:
             return 'https://www.arbeidsmiljoportalen.no';

@@ -6,7 +6,7 @@ import arbeidsmiljøportalLogoSvg from './arbeidsmiljøportal-logo.svg';
 import { RestStatus } from '../../api/api-utils';
 import { RestVirksomhetsdata } from '../../api/virksomhetsdata-api';
 import {
-    ArbeidstilsynetBransje,
+    ArbeidsmiljøportalenBransje,
     getArbeidstilsynetBransje,
     getLenkeTilBransjensSideIArbeidsmiljøportalen,
 } from './bransje-utils';
@@ -19,7 +19,7 @@ export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restvirksom
     const bransje =
         restvirksomhetsdata.status === RestStatus.Suksess
             ? getArbeidstilsynetBransje(restvirksomhetsdata.data.næringskode5Siffer)
-            : ArbeidstilsynetBransje.ANDRE_BRANSJER;
+            : ArbeidsmiljøportalenBransje.ANDRE_BRANSJER;
 
     return (
         <div className='arbeidsmiljøportal-panel'>
