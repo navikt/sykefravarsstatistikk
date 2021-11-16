@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningIngress.less';
-import { Bransjetype } from '../../api/virksomhetsdata-api';
+import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 
 export const SammenligningIngress: FunctionComponent<{
-    bransje?: Bransjetype;
+    bransje?: ArbeidsmiljøportalenBransje;
     harBransje: boolean;
 }> = ({ harBransje }) => {
     const bransjeEllerNæringTekst = harBransje ? 'bransje' : 'næring';

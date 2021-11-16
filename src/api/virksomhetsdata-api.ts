@@ -1,22 +1,15 @@
 import { fetchMedFeilhåndtering, RestRessurs } from './api-utils';
 import { BASE_PATH } from '../konstanter';
+import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 
 export type Næringskode5Siffer = {
     kode: string;
     beskrivelse: string;
 };
 
-export enum Bransjetype {
-    BARNEHAGER = 'BARNEHAGER',
-    NÆRINGSMIDDELINDUSTRI = 'NÆRINGSMIDDELINDUSTRI',
-    SYKEHUS = 'SYKEHUS',
-    SYKEHJEM = 'SYKEHJEM',
-    TRANSPORT = 'TRANSPORT',
-}
-
 export interface Virksomhetsdata {
     næringskode5Siffer: Næringskode5Siffer;
-    bransje?: Bransjetype;
+    bransje?: ArbeidsmiljøportalenBransje;
     antallAnsatte: number;
 }
 

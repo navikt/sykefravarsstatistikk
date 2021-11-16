@@ -5,11 +5,7 @@ import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import arbeidsmiljøportalLogoSvg from './arbeidsmiljøportal-logo.svg';
 import { RestStatus } from '../../api/api-utils';
 import { RestVirksomhetsdata } from '../../api/virksomhetsdata-api';
-import {
-    ArbeidstilsynetBransje,
-    getArbeidstilsynetBransje,
-    getLenkeTilBransjensSideIArbeidsmiljøportalen,
-} from './bransje-utils';
+import { ArbeidsmiljøportalenBransje, getArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 
 interface Props {
     restvirksomhetsdata: RestVirksomhetsdata;
@@ -18,8 +14,8 @@ interface Props {
 export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restvirksomhetsdata }) => {
     const bransje =
         restvirksomhetsdata.status === RestStatus.Suksess
-            ? getArbeidstilsynetBransje(restvirksomhetsdata.data.næringskode5Siffer)
-            : ArbeidstilsynetBransje.ANDRE_BRANSJER;
+            ? getArbeidsmiljøportalenBransje(restvirksomhetsdata.data.næringskode5Siffer)
+            : ArbeidsmiljøportalenBransje.ANDRE_BRANSJER;
 
     return (
         <div className='arbeidsmiljøportal-panel'>
@@ -44,4 +40,27 @@ export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restvirksom
             </EksternLenke>
         </div>
     );
+};
+
+export const getLenkeTilBransjensSideIArbeidsmiljøportalen = (
+    bransje: ArbeidsmiljøportalenBransje,
+): string => {
+    switch (bransje) {
+        case ArbeidsmiljøportalenBransje.BARNEHAGER:
+            return 'https://www.arbeidsmiljoportalen.no/bransje/barnehage';
+        case ArbeidsmiljøportalenBransje.NÆRINGSMIDDELINDUSTRI:
+            return 'https://www.arbeidsmiljoportalen.no/bransje/naringsmiddelindustri';
+        case ArbeidsmiljøportalenBransje.TRANSPORT:
+            return 'https://www.arbeidsmiljoportalen.no/bransje/rutebuss-og-persontrafikk';
+        case ArbeidsmiljøportalenBransje.SYKEHJEM:
+            return 'https://www.arbeidsmiljoportalen.no/bransje/sykehjem';
+        case ArbeidsmiljøportalenBransje.SYKEHUS:
+            return 'https://www.arbeidsmiljoportalen.no/bransje/sykehus';
+        case ArbeidsmiljøportalenBransje.BYGG:
+            return 'https://www.arbeidsmiljoportalen.no/bransje/bygg';
+        case ArbeidsmiljøportalenBransje.ANLEGG:
+            return 'https://www.arbeidsmiljoportalen.no/bransje/anlegg';
+        default:
+            return 'https://www.arbeidsmiljoportalen.no';
+    }
 };

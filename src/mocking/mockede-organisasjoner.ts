@@ -8,7 +8,7 @@ import {
 import { Statistikkategori, SummertSykefraværshistorikk } from '../api/summert-sykefraværshistorikk-api';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { getvirksomhetsdataMock } from './virksomhetsdata-mock';
-import { ArbeidstilsynetBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
+import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 import {
     getSummertSykefraværshistorikkMock,
     summertSykefraværshistorikkMockGrønn,
@@ -116,25 +116,25 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '888888881',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.BARNEHAGER),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         summertSykefraværshistorikk: summertSykefraværshistorikkMockRød,
     },
     {
         orgnr: '888888882',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.BARNEHAGER),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         summertSykefraværshistorikk: summertSykefraværshistorikkMockGul,
     },
     {
         orgnr: '888888883',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.BARNEHAGER),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         summertSykefraværshistorikk: summertSykefraværshistorikkMockGrønn,
     },
     {
         orgnr: '888888884',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.BARNEHAGER),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         summertSykefraværshistorikk: 500,
     },
@@ -146,19 +146,19 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '888888886',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.BARNEHAGER),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         summertSykefraværshistorikk: summertSykefraværshistorikkMockMedBare2Kvartaler,
     },
     {
         orgnr: '888888887',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.BARNEHAGER),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         summertSykefraværshistorikk: summertSykefraværshistorikkMockMaskert,
     },
     {
         orgnr: '888888888',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.BARNEHAGER),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
     },
@@ -177,7 +177,7 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '120000001',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.BARNEHAGER),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
         sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
         summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
             Statistikkategori.BRANSJE,
@@ -186,7 +186,7 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '120000002',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.SYKEHJEM),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.SYKEHJEM),
         summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
             Statistikkategori.BRANSJE,
             'Sykehjem',
@@ -194,7 +194,7 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '120000003',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.SYKEHUS),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.SYKEHUS),
         summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
             Statistikkategori.BRANSJE,
             'Sykehus',
@@ -202,7 +202,7 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '120000004',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.NÆRINGSMIDDELINDUSTRI),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.NÆRINGSMIDDELINDUSTRI),
         summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
             Statistikkategori.BRANSJE,
             'Næringsmiddelindustrien',
@@ -210,7 +210,7 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '120000005',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.TRANSPORT),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.TRANSPORT),
         summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
             Statistikkategori.BRANSJE,
             'Transport',
@@ -218,7 +218,7 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '120000006',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.BYGG),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BYGG),
         summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
             Statistikkategori.BRANSJE,
             'Byggebransjen',
@@ -226,7 +226,7 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '120000007',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.ANLEGG),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.ANLEGG),
         summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
             Statistikkategori.BRANSJE,
             'Anleggsbransjen',
@@ -234,7 +234,7 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
     },
     {
         orgnr: '120000009',
-        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidstilsynetBransje.ANDRE_BRANSJER),
+        bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.ANDRE_BRANSJER),
         summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
             Statistikkategori.NÆRING,
             'Produksjon av nærings- og nytelsesmidler',

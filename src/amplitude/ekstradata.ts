@@ -7,7 +7,6 @@ import {
     tilSegmenteringSykefraværsprosent,
 } from './segmentering';
 import { SykefraværVurdering } from '../Forside/Speedometer/Speedometer';
-import { Bransjetype, RestVirksomhetsdata } from '../api/virksomhetsdata-api';
 import { RestStatus } from '../api/api-utils';
 import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
 import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
@@ -22,6 +21,8 @@ import { virksomhetsdataContext } from '../utils/virksomhetsdataContext';
 import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkContext';
 import { summertSykefraværshistorikkContext } from '../utils/summertSykefraværshistorikkContext';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
+import { RestVirksomhetsdata } from '../api/virksomhetsdata-api';
+import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 
 export interface Ekstradata {
     næring2siffer: string;
@@ -120,7 +121,7 @@ const getEkstraDataFraEnhetsregisteret = (
 ): Partial<Ekstradata> => {
     if (
         restvirksomhetsdata.status === RestStatus.Suksess &&
-        restvirksomhetsdata.data.bransje === Bransjetype.BARNEHAGER &&
+        restvirksomhetsdata.data.bransje === ArbeidsmiljøportalenBransje.BARNEHAGER &&
         restOverordnetEnhet.status === RestStatus.Suksess
     ) {
         return {
@@ -158,18 +159,18 @@ const getEkstraDataFraSummertSykefraværshistorikk = (
         const sammenligningResultatTotalt = getSammenligningResultatMedProsent(
             restSummertSykefraværshistorikk.status,
             summertSykefraværshistorikk,
-            SammenligningsType.TOTALT
+            SammenligningsType.TOTALT,
         );
 
         const sammenligningResultatKorttid = getSammenligningResultatMedProsent(
             restSummertSykefraværshistorikk.status,
             summertSykefraværshistorikk,
-            SammenligningsType.KORTTID
+            SammenligningsType.KORTTID,
         );
         const sammenligningResultatLangtid = getSammenligningResultatMedProsent(
             restSummertSykefraværshistorikk.status,
             summertSykefraværshistorikk,
-            SammenligningsType.LANGTID
+            SammenligningsType.LANGTID,
         );
 
         const resultater = {

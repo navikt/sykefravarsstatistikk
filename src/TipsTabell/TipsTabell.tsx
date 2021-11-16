@@ -1,11 +1,11 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Bransjetype } from '../api/virksomhetsdata-api';
 import { getTips, Tips } from '../felleskomponenter/tips/tips';
 import { SammenligningsType } from '../Forside/vurderingstekster';
 import { Speedometer, SykefraværVurdering } from '../Forside/Speedometer/Speedometer';
 import { TipsVisning } from '../felleskomponenter/tips/TipsVisning';
 import { Select } from 'nav-frontend-skjema';
 import { Sidetittel } from 'nav-frontend-typografi';
+import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 
 const mapTilTipsliste = (tips: Tips[]) => {
     if (tips.length > 0) {
@@ -23,7 +23,7 @@ const mapTilTipsliste = (tips: Tips[]) => {
 * */
 
 export const TipsTabell: FunctionComponent = () => {
-    const [bransje, setBransje] = useState<Bransjetype | undefined>();
+    const [bransje, setBransje] = useState<ArbeidsmiljøportalenBransje | undefined>();
 
     return (
         <div>
@@ -40,13 +40,15 @@ export const TipsTabell: FunctionComponent = () => {
                 }}
             >
                 <option value={undefined}>Ingen bransje</option>
-                <option value={Bransjetype.BARNEHAGER}>BARNEHAGER</option>
-                <option value={Bransjetype.NÆRINGSMIDDELINDUSTRI}>NÆRINGSMIDDELINDUSTRI</option>
-                <option value={Bransjetype.SYKEHUS}>SYKEHUS</option>
-                <option value={Bransjetype.SYKEHJEM}>SYKEHJEM</option>
-                <option value={Bransjetype.TRANSPORT}>TRANSPORT</option>
+                <option value={ArbeidsmiljøportalenBransje.BARNEHAGER}>BARNEHAGER</option>
+                <option value={ArbeidsmiljøportalenBransje.NÆRINGSMIDDELINDUSTRI}>NÆRINGSMIDDELINDUSTRI</option>
+                <option value={ArbeidsmiljøportalenBransje.SYKEHUS}>SYKEHUS</option>
+                <option value={ArbeidsmiljøportalenBransje.SYKEHJEM}>SYKEHJEM</option>
+                <option value={ArbeidsmiljøportalenBransje.TRANSPORT}>TRANSPORT</option>
+                <option value={ArbeidsmiljøportalenBransje.BYGG}>BYGG</option>
+                <option value={ArbeidsmiljøportalenBransje.ANLEGG}>ANLEGG</option>
             </Select>
-            <h1 style={{fontSize: '5rem'}}>Bransje: {bransje || 'ingen bransje'}</h1>
+            <h1 style={{ fontSize: '5rem' }}>Bransje: {bransje || 'ingen bransje'}</h1>
             <table className="graf-tabell tabell tabell--stripet tabell--border">
                 <thead>
                     <tr>
