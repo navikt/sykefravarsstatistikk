@@ -1,12 +1,12 @@
 export const getMiljø = (): string => {
-    const hostname = window.location.hostname;
-    if (hostname.includes('arbeidsgiver.nav.no')) {
+    const href = window.location.href;
+    if (href.includes('https://arbeidsgiver.nav.no')) {
         return 'prod-sbs';
     }
-    if (hostname.includes('arbeidsgiver-q.nav.no')) {
+    if (href.includes('https://arbeidsgiver-q.nav.no')) {
         return 'dev-sbs';
     }
-    if (hostname.includes('arbeidsgiver.labs.nais.io')) {
+    if (href.includes('https://arbeidsgiver.labs.nais.io')) {
         return 'labs-gcp';
     }
     return 'local';
