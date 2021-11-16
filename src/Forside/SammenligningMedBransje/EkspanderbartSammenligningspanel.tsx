@@ -23,7 +23,7 @@ import {
 } from '../../metrikker/iatjenester';
 import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
 import { useOrgnr } from '../../utils/orgnr-hook';
-import { ArbeidsmiljøportalenBransje } from '../ArbeidsmiljøportalPanel/bransje-utils';
+import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;

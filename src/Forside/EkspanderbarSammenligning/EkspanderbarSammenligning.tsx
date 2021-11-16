@@ -12,7 +12,7 @@ import './EkspanderbarSammenligning.less';
 import { RestVirksomhetsdata } from '../../api/virksomhetsdata-api';
 import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
 import { Element } from 'nav-frontend-typografi';
-import { ArbeidsmiljøportalenBransje } from '../ArbeidsmiljøportalPanel/bransje-utils';
+import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 
 interface Props {
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;

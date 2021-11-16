@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SammenligningIngress.less';
-import { ArbeidsmiljøportalenBransje } from '../ArbeidsmiljøportalPanel/bransje-utils';
+import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 
 export const SammenligningIngress: FunctionComponent<{
     bransje?: ArbeidsmiljøportalenBransje;

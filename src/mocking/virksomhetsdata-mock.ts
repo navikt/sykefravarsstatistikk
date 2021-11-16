@@ -1,4 +1,4 @@
-import { ArbeidsmiljøportalenBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
+import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 import { Virksomhetsdata } from '../api/virksomhetsdata-api';
 
 export const defaultBedriftsmetrikker: Virksomhetsdata = {

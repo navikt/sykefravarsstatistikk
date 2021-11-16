@@ -22,7 +22,7 @@ import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkCont
 import { summertSykefraværshistorikkContext } from '../utils/summertSykefraværshistorikkContext';
 import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
 import { RestVirksomhetsdata } from '../api/virksomhetsdata-api';
-import { ArbeidsmiljøportalenBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
+import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 
 export interface Ekstradata {
     næring2siffer: string;

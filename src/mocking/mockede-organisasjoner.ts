@@ -8,7 +8,7 @@ import {
 import { Statistikkategori, SummertSykefraværshistorikk } from '../api/summert-sykefraværshistorikk-api';
 import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
 import { getvirksomhetsdataMock } from './virksomhetsdata-mock';
-import { ArbeidsmiljøportalenBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
+import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 import {
     getSummertSykefraværshistorikkMock,
     summertSykefraværshistorikkMockGrønn,

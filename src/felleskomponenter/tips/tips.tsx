@@ -9,7 +9,7 @@ import {
 } from './tips-innhold';
 import { SykefraværVurdering } from '../../Forside/Speedometer/Speedometer';
 import { SammenligningsType } from '../../Forside/vurderingstekster';
-import { ArbeidsmiljøportalenBransje } from '../../Forside/ArbeidsmiljøportalPanel/bransje-utils';
+import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 
 export interface Tips {
     id: string;

@@ -9,7 +9,7 @@ import {
     ArbeidsmiljøportalenBransje,
     getArbeidsmiljøportalenBransje,
     getLenkeTilBransjensSideIArbeidsmiljøportalen,
-} from './bransje-utils';
+} from '../../utils/bransje-utils';
 
 interface Props {
     restvirksomhetsdata: RestVirksomhetsdata;

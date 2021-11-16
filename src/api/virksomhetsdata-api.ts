@@ -1,6 +1,6 @@
 import { fetchMedFeilhåndtering, RestRessurs } from './api-utils';
 import { BASE_PATH } from '../konstanter';
-import { ArbeidsmiljøportalenBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
+import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 
 export type Næringskode5Siffer = {
     kode: string;

@@ -5,7 +5,7 @@ import { Speedometer, SykefraværVurdering } from '../Forside/Speedometer/Speedo
 import { TipsVisning } from '../felleskomponenter/tips/TipsVisning';
 import { Select } from 'nav-frontend-skjema';
 import { Sidetittel } from 'nav-frontend-typografi';
-import { ArbeidsmiljøportalenBransje } from '../Forside/ArbeidsmiljøportalPanel/bransje-utils';
+import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 
 const mapTilTipsliste = (tips: Tips[]) => {
     if (tips.length > 0) {
