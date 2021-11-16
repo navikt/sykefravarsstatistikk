@@ -11,7 +11,7 @@ export enum ArbeidsmiljøportalenBransje {
     ANDRE_BRANSJER = 'ANDRE_BRANSJER',
 }
 
-export const getArbeidstilsynetBransje = (næring: Næringskode5Siffer): ArbeidsmiljøportalenBransje => {
+export const getArbeidsmiljøportalenBransje = (næring: Næringskode5Siffer): ArbeidsmiljøportalenBransje => {
     const næringskode2siffer = næring.kode.slice(0, 2);
 
     switch (næringskode2siffer) {

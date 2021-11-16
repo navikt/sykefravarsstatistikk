@@ -7,7 +7,7 @@ import { RestStatus } from '../../api/api-utils';
 import { RestVirksomhetsdata } from '../../api/virksomhetsdata-api';
 import {
     ArbeidsmiljøportalenBransje,
-    getArbeidstilsynetBransje,
+    getArbeidsmiljøportalenBransje,
     getLenkeTilBransjensSideIArbeidsmiljøportalen,
 } from './bransje-utils';
 
@@ -18,7 +18,7 @@ interface Props {
 export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restvirksomhetsdata }) => {
     const bransje =
         restvirksomhetsdata.status === RestStatus.Suksess
-            ? getArbeidstilsynetBransje(restvirksomhetsdata.data.næringskode5Siffer)
+            ? getArbeidsmiljøportalenBransje(restvirksomhetsdata.data.næringskode5Siffer)
             : ArbeidsmiljøportalenBransje.ANDRE_BRANSJER;
 
     return (
