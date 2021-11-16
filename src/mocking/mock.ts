@@ -26,8 +26,8 @@ const mock = {
 
 let delayfaktor = 0;
 
-if (process.env.REACT_APP_HEROKU || getMiljø() === 'labs-gcp') {
-    // Alt skal alltid mockes på Heroku
+if (getMiljø() === 'labs-gcp') {
+    // Alt skal alltid mockes på labs
     Object.keys(mock).forEach((skalMockes) => ((mock as any)[skalMockes] = true));
     delayfaktor = 1;
 }
@@ -140,7 +140,7 @@ if (mock.featureToggles) {
         'begin:/sykefravarsstatistikk/api/feature',
         {
             'sykefravarsstatistikk.ab-test.tips': false,
-            'sykefravarsstatistikk.arbeidsmiljoportal': !process.env.REACT_APP_HEROKU,
+            'sykefravarsstatistikk.arbeidsmiljoportal': !(getMiljø() === 'labs-gcp'),
         },
         {
             delay: 1000 * delayfaktor,
