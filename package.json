@@ -107,7 +107,6 @@
         "mock": "REACT_APP_MOCK=true yarn start",
         "wock": "set REACT_APP_MOCK=true && yarn start",
         "serve": "node server/server.js",
-        "heroku": "node server/herokuServer.js",
         "build": "craco build",
         "test": "craco test ./",
         "lint": "eslint --ext ts,tsx .",
