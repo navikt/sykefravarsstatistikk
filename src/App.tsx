@@ -23,7 +23,10 @@ import {
     PATH_KALKULATOR,
 } from './konstanter';
 import { virksomhetsdataContext, VirksomhetsdataProvider } from './utils/virksomhetsdataContext';
-import { sykefraværshistorikkContext, SykefraværshistorikkProvider } from './utils/sykefraværshistorikkContext';
+import {
+    sykefraværshistorikkContext,
+    SykefraværshistorikkProvider,
+} from './utils/sykefraværshistorikkContext';
 import { sendEventDirekte } from './amplitude/events';
 import {
     altinnOrganisasjonerContext,
@@ -45,15 +48,23 @@ import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/E
 import { Kurskalender } from './Forside/Kurskalender/Kurskalender';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import { hentRestKurs, RestKursliste } from './api/kurs-api';
-import { LegacyBarnehageSammenligningRedirect, LegacySammenligningRedirect } from './utils/redirects';
+import {
+    LegacyBarnehageSammenligningRedirect,
+    LegacySammenligningRedirect,
+} from './utils/redirects';
 import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 import SamtalestøttePodletpanel from './Forside/Samtalestøttepanel/SamtalestøttePodletpanel';
-import { amplitudeClient } from './amplitude/client';
+import { AnalyticsClient } from './amplitude/client';
 import { useOrgnr } from './utils/orgnr-hook';
+import { useAnalytics } from './amplitude/useAnalytics';
 
-const App: FunctionComponent = () => {
+interface Props {
+    analyticsClient: AnalyticsClient;
+}
 
+const App: FunctionComponent<Props> = ({ analyticsClient }) => {
+    useAnalytics(analyticsClient);
     sendEventDirekte('forside', 'sidelastet');
     return (
         <BrowserRouter basename={BASE_PATH}>
@@ -65,7 +76,7 @@ const App: FunctionComponent = () => {
                                 <SykefraværshistorikkProvider>
                                     <FeatureTogglesProvider>
                                         <IaTjenesterMetrikkerContextProvider>
-                                            <main id='maincontent'>
+                                            <main id="maincontent">
                                                 <AppContent />
                                             </main>
                                         </IaTjenesterMetrikkerContextProvider>
@@ -80,20 +91,23 @@ const App: FunctionComponent = () => {
     );
 };
 
-const AppContent: FunctionComponent = () => {
+interface AppContentProps {
+    analyticsClient?: AnalyticsClient;
+}
 
+const AppContent: FunctionComponent<AppContentProps> = ({ analyticsClient }) => {
     const orgnr = useOrgnr();
-    amplitudeClient.setUserProperties({ 'orgnr: ': orgnr });
+    analyticsClient?.setUserProperties({ 'orgnr: ': orgnr });
 
     const restOrganisasjoner = useContext<RestAltinnOrganisasjoner>(altinnOrganisasjonerContext);
     const restOrganisasjonerMedStatistikk = useContext<RestAltinnOrganisasjoner>(
-        altinnOrganisasjonerMedTilgangTilStatistikkContext,
+        altinnOrganisasjonerMedTilgangTilStatistikkContext
     );
     const restSummertSykefraværshistorikk = useContext<RestSummertSykefraværshistorikk>(
-        summertSykefraværshistorikkContext,
+        summertSykefraværshistorikkContext
     );
     const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
-        sykefraværshistorikkContext,
+        sykefraværshistorikkContext
     );
     const restvirksomhetsdata = useContext<RestVirksomhetsdata>(virksomhetsdataContext);
 
@@ -119,12 +133,9 @@ const AppContent: FunctionComponent = () => {
         restvirksomhetsdata.status === RestStatus.LasterInn
     ) {
         innhold = <Lasteside />;
-    } else if (
-        restOrganisasjoner.status === RestStatus.IkkeInnlogget
-    ) {
+    } else if (restOrganisasjoner.status === RestStatus.IkkeInnlogget) {
         return <Innloggingsside redirectUrl={window.location.href} />;
-    } else if (
-        restOrganisasjoner.status !== RestStatus.Suksess) {
+    } else if (restOrganisasjoner.status !== RestStatus.Suksess) {
         innhold = <FeilFraAltinnSide />;
     } else if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
         window.location.replace('/min-side-arbeidsgiver/mangler-tilgang');
@@ -159,9 +170,7 @@ const AppContent: FunctionComponent = () => {
                             <Historikkpanel />
                             <Kurskalender restKursliste={restKursliste} liten={true} />
                             <SamtalestøttePodletpanel />
-                            <ArbeidsmiljøportalPanel
-                                restvirksomhetsdata={restvirksomhetsdata}
-                            />
+                            <ArbeidsmiljøportalPanel restvirksomhetsdata={restvirksomhetsdata} />
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>
@@ -182,9 +191,7 @@ const AppContent: FunctionComponent = () => {
 
     return (
         <>
-            {(
-                <Banner tittel='Sykefraværsstatistikk' restOrganisasjoner={restOrganisasjoner} />
-            )}
+            {<Banner tittel="Sykefraværsstatistikk" restOrganisasjoner={restOrganisasjoner} />}
             {innhold}
         </>
     );

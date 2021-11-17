@@ -5,6 +5,7 @@ import App from './App';
 import * as Sentry from '@sentry/browser';
 import './index.less';
 import { getMiljø } from './utils/miljøUtils';
+import { amplitudeClient } from './amplitude/client';
 
 if (process.env.REACT_APP_MOCK || getMiljø() === 'labs-gcp') {
     console.log('========================================');
@@ -20,4 +21,4 @@ Sentry.init({
     enabled: getMiljø() !== 'local',
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App analyticsClient={amplitudeClient} />, document.getElementById('root'));
