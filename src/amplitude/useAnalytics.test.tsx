@@ -5,7 +5,7 @@ import App from '../App';
 import React from 'react';
 
 it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', () => {
-    const { debug } = render(<App analyticsClient={amplitudeMock} />);
+    render(<App analyticsClient={amplitudeMock} />);
     amplitudeMock.logEvent = jest.fn(amplitudeMock.logEvent);
     const eventDataForFirstEvent = {
         type: 'knapp',
@@ -32,5 +32,4 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', () => {
     );
 
     expect(amplitudeMock.logEvent).toHaveBeenCalledTimes(2);
-    debug();
 });
