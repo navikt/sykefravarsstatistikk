@@ -110,7 +110,8 @@
         "serve": "node server/server.js",
         "build": "craco build",
         "test": "craco test ./",
-        "lint": "eslint --ext ts,tsx .",
+        "lint": "eslint .",
+        "lint:typescript": "tsc",
         "eject": "craco eject"
     },
     "eslintConfig": {
