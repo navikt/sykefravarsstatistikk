@@ -134,6 +134,6 @@
         ]
     },
     "lint-staged": {
-        "*.js,*.ts,*.tsx,*.jsx": ["prettier --write", "eslint"]
+        "*.{js,jsx,ts,tsx}": ["prettier --write", "eslint"]
     }
 }
