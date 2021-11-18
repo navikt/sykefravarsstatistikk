@@ -91,7 +91,9 @@ export const fetchMedFeilhåndtering = async <T>(
                     causedBy: Årsak[causedBy as keyof typeof Årsak],
                 };
             }
-        } catch (ignored) {}
+        } catch (ignored) {
+            // Ignored exception
+        }
     }
     return {
         status: restStatus,

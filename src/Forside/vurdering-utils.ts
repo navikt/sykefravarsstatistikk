@@ -18,7 +18,7 @@ export const getVurderingForSammenligningAvSykefravær = (
     gradertProsent?: number
 ): SykefraværVurdering => {
     switch (restStatus) {
-        case RestStatus.Suksess:
+        case RestStatus.Suksess: {
             if (
                 bransjensProsent === null ||
                 bransjensProsent === undefined ||
@@ -52,6 +52,7 @@ export const getVurderingForSammenligningAvSykefravær = (
             } else {
                 return getVurdering(gradertProsent, bransjensProsent);
             }
+        }
 
         case RestStatus.Feil:
             return SykefraværVurdering.FEIL;
@@ -119,7 +120,6 @@ export const getVurdering = (
 
 export const getGrønnGrense = (bransjensProsent: number) => bransjensProsent * 0.9;
 export const getRødGrense = (bransjensProsent: number) => bransjensProsent * 1.1;
-
 
 const addEllerReturnerNull = (number1: number | null, number2: number | null) => {
     if (number1 === null || number2 === null) return null;
@@ -190,7 +190,7 @@ export const getSammenligningResultat = (
         sammenligningResultatKorttid,
         sammenligningResultatLangtid,
         sammenligningResultatGradert,
-    }
+    };
 };
 
 export const getSammenligningResultatMedProsent = (
@@ -268,8 +268,9 @@ const getSammmenligningVruderingProsenterOgKvartaler = (
                 getTotaltSykefraværSiste4Kvartaler(summertSykefraværVirksomhetNæringEllerBransje)
                     ?.prosent
             );
-            sykefraværVirksomhet = getTotaltSykefraværSiste4Kvartaler(summertSykefraværVirksomhet)
-                ?.prosent;
+            sykefraværVirksomhet = getTotaltSykefraværSiste4Kvartaler(
+                summertSykefraværVirksomhet
+            )?.prosent;
             sykefraværNæringEllerBransje = getTotaltSykefraværSiste4Kvartaler(
                 summertSykefraværVirksomhetNæringEllerBransje
             )?.prosent;
