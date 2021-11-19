@@ -56,7 +56,9 @@ const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
     return (
         <BrowserRouter basename={BASE_PATH}>
+            {/* TODO: Fjern når context bruken er refaktorert*/}
             <VirksomhetsdataProvider>
+                {/* TODO: Fjern når context bruken er refaktorert*/}
                 <EnhetsregisteretProvider>
                     <SummertSykefraværshistorikkProvider>
                         <SykefraværshistorikkProvider>
