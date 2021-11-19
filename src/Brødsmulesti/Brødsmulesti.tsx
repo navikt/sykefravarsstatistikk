@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect } from 'react';
+import { FunctionComponent, useContext, useEffect } from 'react';
 import {
     BrødsmulestiConfig,
     defaultBrødsmulestiConfig,
@@ -9,7 +9,7 @@ import {
 import { setBreadcrumbs, onBreadcrumbClick } from '@navikt/nav-dekoratoren-moduler';
 import { useHistory } from 'react-router-dom';
 import { BASE_PATH } from '../konstanter';
-import { useOrgnr } from '../hooks/useOrgnr';
+import { orgnrContext } from '../App';
 
 interface Props {
     gjeldendeSide: string;
@@ -19,7 +19,7 @@ interface Props {
 const Brødsmulesti: FunctionComponent<Props> = (props) => {
     const { gjeldendeSide } = props;
     const history = useHistory();
-    const orgnr = useOrgnr();
+    const orgnr = useContext(orgnrContext);
 
     useEffect(() => {
         const config = props.config

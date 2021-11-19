@@ -1,17 +1,17 @@
-import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
+import React, { createContext, FunctionComponent, useContext, useEffect, useState } from 'react';
 import { RestStatus } from '../api/api-utils';
 import {
     hentRestSummertSykefraværshistorikk,
     RestSummertSykefraværshistorikk,
 } from '../api/summert-sykefraværshistorikk-api';
-import { useOrgnr } from '../hooks/useOrgnr';
+import { orgnrContext } from '../App';
 
 export const summertSykefraværshistorikkContext = createContext<RestSummertSykefraværshistorikk>({
     status: RestStatus.IkkeLastet,
 });
 
 export const SummertSykefraværshistorikkProvider: FunctionComponent = (props) => {
-    const orgnr = useOrgnr();
+    const orgnr = useContext(orgnrContext);
     const [restSummertSykefraværshistorikk, setRestSummertSykefraværshistorikk] =
         useState<RestSummertSykefraværshistorikk>({ status: RestStatus.IkkeLastet });
 

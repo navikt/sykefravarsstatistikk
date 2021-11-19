@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useRef } from 'react';
+import React, { FunctionComponent, useContext, useRef } from 'react';
 import './Sammenligningspanel.less';
 import ReactToPrint from 'react-to-print';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
@@ -6,7 +6,7 @@ import { RestSummertSykefraværshistorikk } from '../../api/summert-sykefraværs
 import { RestStatus } from '../../api/api-utils';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
-import { useOrgnr } from '../../hooks/useOrgnr';
+import { orgnrContext } from '../../App';
 
 export const Sammenligningspanel: FunctionComponent<{
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
@@ -15,7 +15,7 @@ export const Sammenligningspanel: FunctionComponent<{
     const panelRef = useRef<HTMLDivElement>(null);
     const lastNedKnappRef = useRef<HTMLButtonElement>(null);
     const harFeil = restSummertSykefraværshistorikk.status === RestStatus.Feil;
-    const orgnr = useOrgnr();
+    const orgnr = useContext(orgnrContext);
     const navnPåVirksomhet =
         restAltinnOrganisasjoner.status === RestStatus.Suksess &&
         restAltinnOrganisasjoner.data.find(

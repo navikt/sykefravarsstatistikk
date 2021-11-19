@@ -6,9 +6,9 @@ import {
     RestUnderenhet,
     Underenhet,
 } from '../api/enhetsregisteret-api';
-import { useOrgnr } from './useOrgnr';
 import { RestRessurs, RestStatus } from '../api/api-utils';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { orgnrContext } from '../App';
 
 const useRestDataForFlereVirksomheter = <T extends Object>(
     hentData: (orgnr: string) => Promise<RestRessurs<T>>,
@@ -59,7 +59,7 @@ export interface EnhetsregisteretState {
 }
 
 export function useEnheter(): EnhetsregisteretState {
-    const underenhetOrgnr = useOrgnr();
+    const underenhetOrgnr = useContext(orgnrContext);
 
     const [gjeldendeUnderenhet] = useRestDataForFlereVirksomheter<Underenhet>(
         hentInformasjonOmUnderenhet,

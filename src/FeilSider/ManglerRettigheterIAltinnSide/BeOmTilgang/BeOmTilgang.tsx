@@ -1,15 +1,15 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 import Lenkepanel from 'nav-frontend-lenkepanel/lib';
 import { ReactComponent as AltinnLogo } from './altinn-logo.svg';
 import './BeOmTilgang.less';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { useOrgnr } from '../../../hooks/useOrgnr';
+import { orgnrContext } from '../../../App';
 
 const beOmTilgangTilSykefraværsstatistikkIAltinnLink = (orgnr: string | undefined) =>
     'https://altinn.no/ui/DelegationRequest?offeredBy=' + orgnr + '&resources=3403_2';
 
 export const BeOmTilgang: FunctionComponent = () => {
-    const orgnr = useOrgnr();
+    const orgnr = useContext(orgnrContext);
     return (
         <Lenkepanel
             border

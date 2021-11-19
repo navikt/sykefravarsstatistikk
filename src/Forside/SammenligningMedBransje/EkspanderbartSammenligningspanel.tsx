@@ -27,7 +27,7 @@ import {
 } from '../../metrikker/iatjenester';
 import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
 import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
-import { useOrgnr } from '../../hooks/useOrgnr';
+import { orgnrContext } from '../../App';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -57,7 +57,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
     const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
 
-    const orgnr = useOrgnr();
+    const orgnr = useContext(orgnrContext);
     const sendIaTjenesteMetrikkEvent = useSendIaTjenesteMetrikkEvent();
     const context = useContext(iaTjenesterMetrikkerContext);
 

@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
+import React, { createContext, FunctionComponent, useContext, useEffect, useState } from 'react';
 import Banner from './Banner/Banner';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
 import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
@@ -13,7 +13,6 @@ import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import { RestSykefraværshistorikk } from './api/kvartalsvis-sykefraværshistorikk-api';
 import { RestVirksomhetsdata } from './api/virksomhetsdata-api';
 import {
-    BASE_PATH,
     ER_VEDLIKEHOLD_AKTIVERT,
     PATH_FORSIDE,
     PATH_FORSIDE_BARNEHAGE,
@@ -54,7 +53,7 @@ import { useOrgnr } from './hooks/useOrgnr';
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
     return (
-        <BrowserRouter basename={BASE_PATH}>
+        <OrgNrProvider>
             <SummertSykefraværshistorikkProvider>
                 <SykefraværshistorikkProvider>
                     <FeatureTogglesProvider>
@@ -66,16 +65,24 @@ const App: FunctionComponent = () => {
                     </FeatureTogglesProvider>
                 </SykefraværshistorikkProvider>
             </SummertSykefraværshistorikkProvider>
-        </BrowserRouter>
+        </OrgNrProvider>
     );
 };
+
+export const orgnrContext = createContext<string>('');
+export function OrgNrProvider({ children }: { children: React.ReactNode }) {
+    const orgnr = useOrgnr();
+    return <orgnrContext.Provider value={orgnr ?? ''}>{children}</orgnrContext.Provider>;
+}
 
 const AppContent = ({
     altinnOrganisasjoner,
     altinnOrganisasjonerMedStatistikk,
 }: Sykefravarsstatistikk) => {
-    const orgnr = useOrgnr();
-    amplitudeClient.setUserProperties({ 'orgnr: ': orgnr });
+    const orgnr = useContext(orgnrContext);
+    if (orgnr) {
+        amplitudeClient.setUserProperties({ 'orgnr: ': orgnr });
+    }
 
     const restOrganisasjoner = altinnOrganisasjoner;
     const restOrganisasjonerMedStatistikk = altinnOrganisasjonerMedStatistikk;

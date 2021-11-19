@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
@@ -13,7 +13,7 @@ import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
 import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../../metrikker/iatjenester';
-import { useOrgnr } from '../../hooks/useOrgnr';
+import { orgnrContext } from '../../App';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -23,7 +23,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     const [kalkulatorvariant, setKalkulatorvariant] = useState<Kalkulatorvariant>(
         Kalkulatorvariant.Prosent
     );
-    const orgnr = useOrgnr();
+    const orgnr = useContext(orgnrContext);
     useSendSidevisningEvent('kalkulator', orgnr);
     // TODO ^ useSendSidevisningEvent kan fjernes på sikt, den er erstattet av sendSidevisningEvent
 
