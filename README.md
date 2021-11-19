@@ -12,7 +12,7 @@ Hensikten er å gjøre arbeidsgivere mer engasjerte i eget sykefravær.
 
 -   Installere avhengigheter: `yarn`
 -   Kjøre applikasjon med mock: `yarn run mock` (for Windows: `yarn run wock`)
--   Hvis du vil kjøre mot egen backend lokalt, kan du sette `MOCK_SYKEFRAVÆRSSTATISTIKK = false` i `mock.ts` før du kjører `yarn mock`. (NB! Krever at `sykefravarsstatistikk-api` kjører på port 8080.)
+-   Hvis du vil kjøre mot egen backend lokalt, kan du sette `mock.sykefraværsstatistikkApi = false` i `mock.ts` før du kjører `yarn mock`. (NB! Krever at `sykefravarsstatistikk-api` kjører på port 8080.)
 -   Kjøre applikasjonen normalt: `yarn start` (NB! Krever integrasjon med `sykefravarsstatistikk-api` og `ditt-nav-arbeidsgiver-api`)
 -   Kjøre applikasjonen med Docker:
     1. `yarn install && yarn build`

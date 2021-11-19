@@ -118,8 +118,8 @@ if (mock.enhetsregisteret) {
             institusjonellSektorkode: { kode: '6500', beskrivelse: 'Offentlig sektor' },
         };
         const overordnetEnhet = getMockOrganisasjon(orgnr)?.overordnetEnhet;
-        console.log("MOCK ENHETREGISTERET / ENHETER, orgnr: ", orgnr)
-        console.log("MOCK ENHETREGISTERE  / ENHETERT, overordnetenhet: ", overordnetEnhet)
+        console.log('MOCK ENHETREGISTERET / ENHETER, orgnr: ', orgnr);
+        console.log('MOCK ENHETREGISTERE  / ENHETERT, overordnetenhet: ', overordnetEnhet);
         return overordnetEnhet || defaultOverordnetEnhet;
     });
 
@@ -130,7 +130,7 @@ if (mock.enhetsregisteret) {
             organisasjonsnummer: orgnr,
         };
         const underenhetDto = getMockOrganisasjon(orgnr)?.underenhetDto;
-        console.log("MOCK ENHETREGISTERET  / UNDERENHETER, underenhetDto: ", underenhetDto)
+        console.log('MOCK ENHETREGISTERET  / UNDERENHETER, underenhetDto: ', underenhetDto);
         return underenhetDto || defaultUnderenhetDto;
     });
 }
