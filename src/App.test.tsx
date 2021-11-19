@@ -6,10 +6,16 @@ import { RestStatus } from './api/api-utils';
 import { getvirksomhetsdataMock } from './mocking/virksomhetsdata-mock';
 import { ArbeidsmiljøportalenBransje } from './utils/bransje-utils';
 import { RestVirksomhetsdata } from './api/virksomhetsdata-api';
+import { BASE_PATH } from './konstanter';
+import { BrowserRouter } from 'react-router-dom';
 
 // eslint-disable-next-line jest/expect-expect
 it('renders without crashing', () => {
-    render(<App />);
+    render(
+        <BrowserRouter basename={BASE_PATH}>
+            <App />
+        </BrowserRouter>
+    );
 });
 
 it('ArbeidsmiljøportalenPanel rendrer med riktig link basert på bransje', () => {

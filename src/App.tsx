@@ -21,7 +21,7 @@ import {
     PATH_HISTORIKK,
     PATH_KALKULATOR,
 } from './konstanter';
-import { virksomhetsdataContext, VirksomhetsdataProvider } from './utils/virksomhetsdataContext';
+import { virksomhetsdataContext } from './utils/virksomhetsdataContext';
 import {
     sykefraværshistorikkContext,
     SykefraværshistorikkProvider,
@@ -36,7 +36,6 @@ import {
     SummertSykefraværshistorikkProvider,
 } from './utils/summertSykefraværshistorikkContext';
 import { RestSummertSykefraværshistorikk } from './api/summert-sykefraværshistorikk-api';
-import { EnhetsregisteretProvider } from './utils/enhetsregisteretContext';
 import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { Kurskalender } from './Forside/Kurskalender/Kurskalender';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
@@ -56,23 +55,17 @@ const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
     return (
         <BrowserRouter basename={BASE_PATH}>
-            {/* TODO: Fjern når context bruken er refaktorert*/}
-            <VirksomhetsdataProvider>
-                {/* TODO: Fjern når context bruken er refaktorert*/}
-                <EnhetsregisteretProvider>
-                    <SummertSykefraværshistorikkProvider>
-                        <SykefraværshistorikkProvider>
-                            <FeatureTogglesProvider>
-                                <IaTjenesterMetrikkerContextProvider>
-                                    <main id="maincontent">
-                                        <AppContent {...useSykefravarsstatistikk()} />
-                                    </main>
-                                </IaTjenesterMetrikkerContextProvider>
-                            </FeatureTogglesProvider>
-                        </SykefraværshistorikkProvider>
-                    </SummertSykefraværshistorikkProvider>
-                </EnhetsregisteretProvider>
-            </VirksomhetsdataProvider>
+            <SummertSykefraværshistorikkProvider>
+                <SykefraværshistorikkProvider>
+                    <FeatureTogglesProvider>
+                        <IaTjenesterMetrikkerContextProvider>
+                            <main id="maincontent">
+                                <AppContent {...useSykefravarsstatistikk()} />
+                            </main>
+                        </IaTjenesterMetrikkerContextProvider>
+                    </FeatureTogglesProvider>
+                </SykefraværshistorikkProvider>
+            </SummertSykefraværshistorikkProvider>
         </BrowserRouter>
     );
 };
