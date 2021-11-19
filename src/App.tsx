@@ -10,8 +10,6 @@ import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
 import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
-import { RestSykefraværshistorikk } from './api/kvartalsvis-sykefraværshistorikk-api';
-import { RestVirksomhetsdata } from './api/virksomhetsdata-api';
 import {
     ER_VEDLIKEHOLD_AKTIVERT,
     PATH_FORSIDE,
@@ -20,14 +18,10 @@ import {
     PATH_HISTORIKK,
     PATH_KALKULATOR,
 } from './konstanter';
-import { virksomhetsdataContext } from './utils/virksomhetsdataContext';
-import { sykefraværshistorikkContext } from './utils/sykefraværshistorikkContext';
 import { sendEventDirekte } from './amplitude/events';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { Forside } from './Forside/Forside';
 import { Sammenligningspanel } from './Forside/Sammenligningspanel/Sammenligningspanel';
-import { summertSykefraværshistorikkContext } from './utils/summertSykefraværshistorikkContext';
-import { RestSummertSykefraværshistorikk } from './api/summert-sykefraværshistorikk-api';
 import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { Kurskalender } from './Forside/Kurskalender/Kurskalender';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
@@ -65,6 +59,9 @@ export function OrgNrProvider({ children }: { children: React.ReactNode }) {
 const AppContent = ({
     altinnOrganisasjoner,
     altinnOrganisasjonerMedStatistikk,
+    summertSykefravær,
+    fraværshistorikk,
+    virksomhetsdata,
 }: Sykefravarsstatistikk) => {
     const orgnr = useContext(orgnrContext);
     if (orgnr) {
@@ -74,13 +71,9 @@ const AppContent = ({
     const restOrganisasjoner = altinnOrganisasjoner;
     const restOrganisasjonerMedStatistikk = altinnOrganisasjonerMedStatistikk;
 
-    const restSummertSykefraværshistorikk = useContext<RestSummertSykefraværshistorikk>(
-        summertSykefraværshistorikkContext
-    );
-    const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
-        sykefraværshistorikkContext
-    );
-    const restvirksomhetsdata = useContext<RestVirksomhetsdata>(virksomhetsdataContext);
+    const restSummertSykefraværshistorikk = summertSykefravær;
+    const restSykefraværshistorikk = fraværshistorikk;
+    const restvirksomhetsdata = virksomhetsdata;
 
     const [restKursliste, setRestKursliste] = useState<RestKursliste>({
         status: RestStatus.IkkeLastet,
