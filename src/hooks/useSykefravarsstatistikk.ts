@@ -4,12 +4,15 @@ import { useAltinnOrganisasjonerMedStatistikk } from './useAltinnOrganisasjonerM
 import { RestVirksomhetsdata } from '../api/virksomhetsdata-api';
 import { useVirksomhetsdata } from './useVirksomhetsdata';
 import { EnhetsregisteretState, useEnheter } from './useEnheter';
+import { RestSummertSykefraværshistorikk } from '../api/summert-sykefraværshistorikk-api';
+import { useSummertSykefravær } from './useSummertSykefravær';
 
 export interface Sykefravarsstatistikk {
     altinnOrganisasjoner: RestAltinnOrganisasjoner;
     altinnOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
     virksomhetsdata: RestVirksomhetsdata;
     enhetsInfomasjon: EnhetsregisteretState;
+    summertSykefravær: RestSummertSykefraværshistorikk;
 }
 
 export function useSykefravarsstatistikk(): Sykefravarsstatistikk {
@@ -17,10 +20,12 @@ export function useSykefravarsstatistikk(): Sykefravarsstatistikk {
     const altinnOrganisasjonerMedStatistikk = useAltinnOrganisasjonerMedStatistikk();
     const virksomhetsdata = useVirksomhetsdata();
     const enhetsInfomasjon = useEnheter();
+    const summertSykefravær = useSummertSykefravær();
     return {
         altinnOrganisasjoner,
         altinnOrganisasjonerMedStatistikk,
         virksomhetsdata,
         enhetsInfomasjon,
+        summertSykefravær,
     };
 }

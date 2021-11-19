@@ -30,10 +30,7 @@ import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { Forside } from './Forside/Forside';
 import { Sammenligningspanel } from './Forside/Sammenligningspanel/Sammenligningspanel';
-import {
-    summertSykefraværshistorikkContext,
-    SummertSykefraværshistorikkProvider,
-} from './utils/summertSykefraværshistorikkContext';
+import { summertSykefraværshistorikkContext } from './utils/summertSykefraværshistorikkContext';
 import { RestSummertSykefraværshistorikk } from './api/summert-sykefraværshistorikk-api';
 import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { Kurskalender } from './Forside/Kurskalender/Kurskalender';
@@ -54,17 +51,15 @@ const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
     return (
         <OrgNrProvider>
-            <SummertSykefraværshistorikkProvider>
-                <SykefraværshistorikkProvider>
-                    <FeatureTogglesProvider>
-                        <IaTjenesterMetrikkerContextProvider>
-                            <main id="maincontent">
-                                <AppContent {...useSykefravarsstatistikk()} />
-                            </main>
-                        </IaTjenesterMetrikkerContextProvider>
-                    </FeatureTogglesProvider>
-                </SykefraværshistorikkProvider>
-            </SummertSykefraværshistorikkProvider>
+            <SykefraværshistorikkProvider>
+                <FeatureTogglesProvider>
+                    <IaTjenesterMetrikkerContextProvider>
+                        <main id="maincontent">
+                            <AppContent {...useSykefravarsstatistikk()} />
+                        </main>
+                    </IaTjenesterMetrikkerContextProvider>
+                </FeatureTogglesProvider>
+            </SykefraværshistorikkProvider>
         </OrgNrProvider>
     );
 };
