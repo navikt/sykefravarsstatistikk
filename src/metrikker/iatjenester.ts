@@ -5,7 +5,7 @@ import { iaTjenesterMetrikkerContext } from './IaTjenesterMetrikkerContext';
 
 interface IaTjenesteMetrikk {
     orgnr: String;
-    altinnRettighet: String,
+    altinnRettighet: String;
     type: String;
     kilde: String;
     tjenesteMottakkelsesdato: String;
@@ -13,7 +13,7 @@ interface IaTjenesteMetrikk {
 
 export const erIaTjenesterMetrikkerSendtForBedrift = (
     orgnr: string | undefined,
-    sendteMetrikker: [string],
+    sendteMetrikker: [string]
 ): boolean => {
     if (orgnr === undefined) {
         return true;
@@ -24,7 +24,7 @@ export const erIaTjenesterMetrikkerSendtForBedrift = (
 
 export const iaTjenesterMetrikkerErSendtForBedrift = (
     orgnr: string | undefined,
-    sendteMetrikker: [string],
+    sendteMetrikker: [string]
 ): [string] => {
     if (orgnr !== undefined) {
         sendteMetrikker.push(orgnr);
@@ -45,9 +45,7 @@ const getIaTjenesterMetrikkerUrl = () => {
 
 const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
 
-function byggIaTjenesteMottattMetrikk(
-    nåværendeOrgnr: string | undefined,
-) {
+function byggIaTjenesteMottattMetrikk(nåværendeOrgnr: string | undefined) {
     const iaTjenesteMetrikk: IaTjenesteMetrikk = {
         orgnr: nåværendeOrgnr ?? '',
         kilde: 'SYKEFRAVÆRSSTATISTIKK',
@@ -91,21 +89,17 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
 
     useEffect(() => {
         const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr);
-        if (!erIaTjenesterMetrikkerSendtForBedrift(
-            orgnr,
-            context.bedrifterSomHarSendtMetrikker,
-        )) {
-            sendIaTjenesteMetrikk(iaTjenesteMetrikk)
-                .then((isSent) => {
-                    if (isSent) {
-                        context.setBedrifterSomHarSendtMetrikker(
-                            iaTjenesterMetrikkerErSendtForBedrift(
-                                orgnr,
-                                context.bedrifterSomHarSendtMetrikker,
-                            ),
-                        );
-                    }
-                });
+        if (!erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker)) {
+            sendIaTjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
+                if (isSent) {
+                    context.setBedrifterSomHarSendtMetrikker(
+                        iaTjenesterMetrikkerErSendtForBedrift(
+                            orgnr,
+                            context.bedrifterSomHarSendtMetrikker
+                        )
+                    );
+                }
+            });
         }
-    }, [orgnr]);
+    }, [orgnr, context]);
 };

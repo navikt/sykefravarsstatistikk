@@ -25,9 +25,7 @@ export const getSiste4KvartalsvisSykefraværshistorikk = (
     ];
     alleProsenter.reverse();
 
-    return alleProsenter
-        .filter((sammenligning, index) => index < 4)
-        .filter((prosent) => !prosent.erMaskert);
+    return alleProsenter.filter((_, index) => index < 4).filter((prosent) => !prosent.erMaskert);
 };
 
 export const getAntallTapteDagsverkSiste4Kvartaler = (
@@ -60,9 +58,8 @@ export const getSykefraværsprosentSiste4Kvartaler = (
     historikkListe: KvartalsvisSykefraværshistorikk[]
 ): number | Maskering.ErMaskertEllerHarIkkeNokData => {
     const antallTapteDagsverSiste4Kvartaler = getAntallTapteDagsverkSiste4Kvartaler(historikkListe);
-    const antallMuligeDagsverkSiste4Kvartaler = getAntallMuligeDagsverkSiste4Kvartaler(
-        historikkListe
-    );
+    const antallMuligeDagsverkSiste4Kvartaler =
+        getAntallMuligeDagsverkSiste4Kvartaler(historikkListe);
     if (
         antallTapteDagsverSiste4Kvartaler === Maskering.ErMaskertEllerHarIkkeNokData ||
         antallMuligeDagsverkSiste4Kvartaler === Maskering.ErMaskertEllerHarIkkeNokData

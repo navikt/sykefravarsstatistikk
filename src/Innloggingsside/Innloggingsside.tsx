@@ -9,7 +9,7 @@ import Sidetittel from 'nav-frontend-typografi/lib/sidetittel';
 interface Props {
     redirectUrl: string;
 }
-export const Innloggingsside: React.FunctionComponent<Props> = ({ redirectUrl }) => {
+const Innloggingsside: React.FunctionComponent<Props> = ({ redirectUrl }) => {
     const redirectTilLogin = () => {
         window.location.href = `/sykefravarsstatistikk/redirect-til-login?redirect=${redirectUrl}`;
     };

@@ -1,5 +1,6 @@
-const {METRIKKER_API_PATH} = require('./konstanter');
-const {createProxyMiddleware} = require('http-proxy-middleware');
+const { METRIKKER_API_PATH } = require('./konstanter');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const HttpsProxyAgent = require('https-proxy-agent');
 
 const listeAvTillatteUrler = [new RegExp('^' + METRIKKER_API_PATH + '/mottatt-iatjeneste')];
 const proxyServer = process.env.HTTPS_PROXY || process.env.HTTP_PROXY;
@@ -15,12 +16,18 @@ const proxyConfig = {
 
         if (urlErTillatt) {
             // Dette er den fremtidige URL-en: TODO: bruk denne når PR #10 er i dev-gcp eller merget
-            const nyPath = path.replace(METRIKKER_API_PATH + '/mottatt-iatjeneste', '/uinnlogget/mottatt-iatjeneste');
+            const nyPath = path.replace(
+                METRIKKER_API_PATH + '/mottatt-iatjeneste',
+                '/uinnlogget/mottatt-iatjeneste'
+            );
             //const nyPath = path.replace(METRIKKER_API_PATH + '/mottatt-iatjeneste', '/metrikker/');
-            console.log("Proxy path til", nyPath)
+            console.log('Proxy path til', nyPath);
             return nyPath;
         } else {
-            throw Error('Path er ikke tillatt, request er ikke videresendt til ia-tjenester-metrikker: ' + path);
+            throw Error(
+                'Path er ikke tillatt, request er ikke videresendt til ia-tjenester-metrikker: ' +
+                    path
+            );
         }
     },
     secure: true,
@@ -42,4 +49,4 @@ const getIATjenesterMetrikkerProxy = () => {
     return createProxyMiddleware(METRIKKER_API_PATH, proxyConfig);
 };
 
-module.exports = {getIATjenesterMetrikkerProxy};
+module.exports = { getIATjenesterMetrikkerProxy };
