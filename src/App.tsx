@@ -21,12 +21,8 @@ import {
     PATH_KALKULATOR,
 } from './konstanter';
 import { virksomhetsdataContext } from './utils/virksomhetsdataContext';
-import {
-    sykefraværshistorikkContext,
-    SykefraværshistorikkProvider,
-} from './utils/sykefraværshistorikkContext';
+import { sykefraværshistorikkContext } from './utils/sykefraværshistorikkContext';
 import { sendEventDirekte } from './amplitude/events';
-import { FeatureTogglesProvider } from './utils/FeatureTogglesContext';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { Forside } from './Forside/Forside';
 import { Sammenligningspanel } from './Forside/Sammenligningspanel/Sammenligningspanel';
@@ -51,15 +47,11 @@ const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
     return (
         <OrgNrProvider>
-            <SykefraværshistorikkProvider>
-                <FeatureTogglesProvider>
-                    <IaTjenesterMetrikkerContextProvider>
-                        <main id="maincontent">
-                            <AppContent {...useSykefravarsstatistikk()} />
-                        </main>
-                    </IaTjenesterMetrikkerContextProvider>
-                </FeatureTogglesProvider>
-            </SykefraværshistorikkProvider>
+            <IaTjenesterMetrikkerContextProvider>
+                <main id="maincontent">
+                    <AppContent {...useSykefravarsstatistikk()} />
+                </main>
+            </IaTjenesterMetrikkerContextProvider>
         </OrgNrProvider>
     );
 };
