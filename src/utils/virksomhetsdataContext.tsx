@@ -1,7 +1,7 @@
 import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
 import { RestStatus } from '../api/api-utils';
 import { hentRestvirksomhetsdata, RestVirksomhetsdata } from '../api/virksomhetsdata-api';
-import { useOrgnr } from './orgnr-hook';
+import { useOrgnr } from '../hooks/useOrgnr';
 
 export const virksomhetsdataContext = createContext<RestVirksomhetsdata>({
     status: RestStatus.IkkeLastet,

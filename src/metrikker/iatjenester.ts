@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
-import { useOrgnr } from '../utils/orgnr-hook';
 import { tilIsoDatoMedUtcTimezoneUtenMillis } from '../utils/app-utils';
 import { iaTjenesterMetrikkerContext } from './IaTjenesterMetrikkerContext';
+import { useOrgnr } from '../hooks/useOrgnr';
 
 interface IaTjenesteMetrikk {
     orgnr: String;

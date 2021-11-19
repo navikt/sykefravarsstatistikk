@@ -1,7 +1,10 @@
 import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
-import { hentRestSykefraværshistorikk, RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
+import {
+    hentRestSykefraværshistorikk,
+    RestSykefraværshistorikk,
+} from '../api/kvartalsvis-sykefraværshistorikk-api';
 import { RestStatus } from '../api/api-utils';
-import { useOrgnr } from './orgnr-hook';
+import { useOrgnr } from '../hooks/useOrgnr';
 
 export const sykefraværshistorikkContext = createContext<RestSykefraværshistorikk>({
     status: RestStatus.IkkeLastet,
@@ -9,9 +12,8 @@ export const sykefraværshistorikkContext = createContext<RestSykefraværshistor
 
 export const SykefraværshistorikkProvider: FunctionComponent = (props) => {
     const orgnr = useOrgnr();
-    const [restSykefraværshistorikk, setRestSykefraværshistorikk] = useState<
-        RestSykefraværshistorikk
-    >({ status: RestStatus.IkkeLastet });
+    const [restSykefraværshistorikk, setRestSykefraværshistorikk] =
+        useState<RestSykefraværshistorikk>({ status: RestStatus.IkkeLastet });
 
     useEffect(() => {
         if (orgnr) {

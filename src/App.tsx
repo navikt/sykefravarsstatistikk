@@ -49,8 +49,8 @@ import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetr
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 import SamtalestøttePodletpanel from './Forside/Samtalestøttepanel/SamtalestøttePodletpanel';
 import { amplitudeClient } from './amplitude/client';
-import { useOrgnr } from './utils/orgnr-hook';
 import { Sykefravarsstatistikk, useSykefravarsstatistikk } from './hooks/useSykefravarsstatistikk';
+import { useOrgnr } from './hooks/useOrgnr';
 
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');

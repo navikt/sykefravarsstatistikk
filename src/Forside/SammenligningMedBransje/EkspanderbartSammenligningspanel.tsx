@@ -26,8 +26,8 @@ import {
     useSendIaTjenesteMetrikkEvent,
 } from '../../metrikker/iatjenester';
 import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
-import { useOrgnr } from '../../utils/orgnr-hook';
 import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
+import { useOrgnr } from '../../hooks/useOrgnr';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;

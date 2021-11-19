@@ -7,9 +7,9 @@ import {
     medOrgnrQuery,
 } from './brødsmulesti-utils';
 import { setBreadcrumbs, onBreadcrumbClick } from '@navikt/nav-dekoratoren-moduler';
-import { useOrgnr } from '../utils/orgnr-hook';
 import { useHistory } from 'react-router-dom';
 import { BASE_PATH } from '../konstanter';
+import { useOrgnr } from '../hooks/useOrgnr';
 
 interface Props {
     gjeldendeSide: string;

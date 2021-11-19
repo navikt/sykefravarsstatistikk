@@ -1,6 +1,5 @@
 import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
 import { RestRessurs, RestStatus } from '../api/api-utils';
-import { useOrgnr } from './orgnr-hook';
 import {
     hentInformasjonOmOverordnetEnhet,
     hentInformasjonOmUnderenhet,
@@ -9,6 +8,7 @@ import {
     RestUnderenhet,
     Underenhet,
 } from '../api/enhetsregisteret-api';
+import { useOrgnr } from '../hooks/useOrgnr';
 
 export interface EnhetsregisteretState {
     restUnderenhet: RestUnderenhet;

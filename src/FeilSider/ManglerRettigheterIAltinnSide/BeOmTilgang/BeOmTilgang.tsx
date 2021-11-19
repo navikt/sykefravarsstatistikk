@@ -3,7 +3,7 @@ import Lenkepanel from 'nav-frontend-lenkepanel/lib';
 import { ReactComponent as AltinnLogo } from './altinn-logo.svg';
 import './BeOmTilgang.less';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import { useOrgnr } from '../../../utils/orgnr-hook';
+import { useOrgnr } from '../../../hooks/useOrgnr';
 
 const beOmTilgangTilSykefraværsstatistikkIAltinnLink = (orgnr: string | undefined) =>
     'https://altinn.no/ui/DelegationRequest?offeredBy=' + orgnr + '&resources=3403_2';

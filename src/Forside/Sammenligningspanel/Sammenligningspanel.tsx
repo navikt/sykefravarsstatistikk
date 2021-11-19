@@ -6,7 +6,7 @@ import { RestSummertSykefraværshistorikk } from '../../api/summert-sykefraværs
 import { RestStatus } from '../../api/api-utils';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
-import { useOrgnr } from '../../utils/orgnr-hook';
+import { useOrgnr } from '../../hooks/useOrgnr';
 
 export const Sammenligningspanel: FunctionComponent<{
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
@@ -46,10 +46,7 @@ export const Sammenligningspanel: FunctionComponent<{
                     }}
                     content={() => panelRef.current}
                     trigger={() => (
-                        <button
-                            ref={lastNedKnappRef}
-                            className="sammenligningspanel__knapp knapp"
-                        >
+                        <button ref={lastNedKnappRef} className="sammenligningspanel__knapp knapp">
                             Last ned
                         </button>
                     )}
@@ -57,5 +54,5 @@ export const Sammenligningspanel: FunctionComponent<{
                 {children}
             </div>
         </>
-    )
+    );
 };
