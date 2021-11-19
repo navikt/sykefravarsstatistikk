@@ -1,9 +1,9 @@
 import { ÅrstallOgKvartal } from './sykefraværshistorikk-utils';
 
-const sistOppdatert = new Date('2021.09.09');
-const nesteOppdatering = new Date('2021.12.02');
-export const periodeFra = new Date('2020.07.01');
-export const periodeTil = new Date('2021.06.30');
+const sistOppdatert = new Date('2021-09-09');
+const nesteOppdatering = new Date('2021-12-02');
+export const periodeFra = new Date('2020-07-01');
+export const periodeTil = new Date('2021-06-30');
 
 // TODO Hardkodede tall
 export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
@@ -79,22 +79,22 @@ const formatterDato = (dato: Date): string => {
 };
 
 export const tilIsoDatoMedUtcTimezoneUtenMillis = (dato: Date): String => {
-    return dato.toISOString().split('.')[0] + "Z";
-}
+    return dato.toISOString().split('.')[0] + 'Z';
+};
 
 const månedsnavn = [
-    "januar",
-    "februar",
-    "mars",
-    "april",
-    "mai",
-    "juni",
-    "juli",
-    "august",
-    "september",
-    "oktober",
-    "november",
-    "desember"
+    'januar',
+    'februar',
+    'mars',
+    'april',
+    'mai',
+    'juni',
+    'juli',
+    'august',
+    'september',
+    'oktober',
+    'november',
+    'desember',
 ];
 
 export const formatterDatoMedMånedNavn = (dato: Date): string => {
