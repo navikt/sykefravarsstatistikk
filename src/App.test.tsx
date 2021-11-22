@@ -11,6 +11,22 @@ import { BrowserRouter } from 'react-router-dom';
 
 // eslint-disable-next-line jest/expect-expect
 it('renders without crashing', () => {
+    // const meta: Sykefravarsstatistikk = {
+    //     virksomhetsdata: {
+    //         status: RestStatus.Suksess,
+    //         data: {
+    //             antallAnsatte: 2,
+    //             bransje: ArbeidsmiljøportalenBransje.ANDRE_BRANSJER,
+    //             næringskode5Siffer: {
+    //                 beskrivelse: 'hei',
+    //                 kode: 'på deg',
+    //             },
+    //         },
+    //     },
+    // };
+    //
+    // render(<AppContent />);
+
     render(
         <BrowserRouter basename={BASE_PATH}>
             <App />

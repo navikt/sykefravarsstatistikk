@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { tilIsoDatoMedUtcTimezoneUtenMillis } from '../utils/app-utils';
 import { iaTjenesterMetrikkerContext } from './IaTjenesterMetrikkerContext';
-import { orgnrContext } from '../App';
+import { useOrgnr } from '../hooks/useOrgnr';
 
 interface IaTjenesteMetrikk {
     orgnr: String;
@@ -57,7 +57,7 @@ function byggIaTjenesteMottattMetrikk(nåværendeOrgnr: string | undefined) {
 }
 
 export const useSendIaTjenesteMetrikkEvent = (): (() => Promise<boolean>) => {
-    const nåværendeOrgnr = useContext(orgnrContext);
+    const nåværendeOrgnr = useOrgnr();
     const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(nåværendeOrgnr);
 
     return () => sendIaTjenesteMetrikk(iaTjenesteMetrikk);
@@ -85,11 +85,16 @@ export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
 
 export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
     const context = useContext(iaTjenesterMetrikkerContext);
-    const orgnr = useContext(orgnrContext);
+    const orgnr = useOrgnr();
 
     useEffect(() => {
         const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr);
-        if (!erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker)) {
+        if (
+            !erIaTjenesterMetrikkerSendtForBedrift(
+                orgnr ?? '',
+                context.bedrifterSomHarSendtMetrikker
+            )
+        ) {
             sendIaTjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
                 if (isSent) {
                     context.setBedrifterSomHarSendtMetrikker(

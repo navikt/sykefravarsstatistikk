@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { hentRestvirksomhetsdata, RestVirksomhetsdata } from '../api/virksomhetsdata-api';
 import { RestStatus } from '../api/api-utils';
-import { orgnrContext } from '../App';
+import { useOrgnr } from './useOrgnr';
 
 export function useVirksomhetsdata() {
-    const orgnr = useContext(orgnrContext);
+    const orgnr = useOrgnr();
     const [restVirksomhetsdata, setRestVirksomhetsdata] = useState<RestVirksomhetsdata>({
         status: RestStatus.IkkeLastet,
     });

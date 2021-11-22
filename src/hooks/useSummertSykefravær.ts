@@ -1,13 +1,13 @@
-import { useContext, useEffect, useState } from 'react';
-import { orgnrContext } from '../App';
+import { useEffect, useState } from 'react';
 import {
     hentRestSummertSykefraværshistorikk,
     RestSummertSykefraværshistorikk,
 } from '../api/summert-sykefraværshistorikk-api';
 import { RestStatus } from '../api/api-utils';
+import { useOrgnr } from './useOrgnr';
 
 export function useSummertSykefravær() {
-    const orgnr = useContext(orgnrContext);
+    const orgnr = useOrgnr();
     const [restSummertSykefraværshistorikk, setRestSummertSykefraværshistorikk] =
         useState<RestSummertSykefraværshistorikk>({ status: RestStatus.IkkeLastet });
 

@@ -74,7 +74,7 @@ export const useEkstraDataRef = (): MutableRefObject<Partial<Ekstradata>> => {
     return ekstradata;
 };
 
-const getEkstraDataFraVirksomhetsdata = (
+export const getEkstraDataFraVirksomhetsdata = (
     restVirksomhetsdata: RestVirksomhetsdata
 ): Partial<Ekstradata> => {
     if (restVirksomhetsdata.status === RestStatus.Suksess) {
@@ -92,7 +92,7 @@ const getEkstraDataFraVirksomhetsdata = (
     return {};
 };
 
-const getEkstraDataFraSykefraværshistorikk = (
+export const getEkstraDataFraSykefraværshistorikk = (
     restSykefraværshistorikk: RestSykefraværshistorikk
 ): Partial<Ekstradata> => {
     if (restSykefraværshistorikk.status === RestStatus.Suksess) {
@@ -116,7 +116,7 @@ const getEkstraDataFraSykefraværshistorikk = (
     return {};
 };
 
-const getEkstraDataFraEnhetsregisteret = (
+export const getEkstraDataFraEnhetsregisteret = (
     restOverordnetEnhet: RestOverordnetEnhet,
     restvirksomhetsdata: RestVirksomhetsdata
 ): Partial<Ekstradata> => {
@@ -134,7 +134,7 @@ const getEkstraDataFraEnhetsregisteret = (
     return {};
 };
 
-const getEkstraDataFraSummertSykefraværshistorikk = (
+export const getEkstraDataFraSummertSykefraværshistorikk = (
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk,
     restvirksomhetsdata: RestVirksomhetsdata
 ): Partial<Ekstradata> => {

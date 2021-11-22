@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import { ToggleGruppePure } from 'nav-frontend-toggle';
 import Graf from './Graf/Graf';
@@ -13,7 +13,7 @@ import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltin
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../metrikker/iatjenester';
 import { useSendSidevisningEvent } from '../amplitude/events';
-import { orgnrContext } from '../App';
+import { useOrgnr } from '../hooks/useOrgnr';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -21,7 +21,7 @@ interface Props {
 }
 
 const GrafOgTabell: FunctionComponent<Props> = (props) => {
-    const orgnr = useContext(orgnrContext);
+    const orgnr = useOrgnr();
 
     useEffect(() => {
         scrollToBanner();

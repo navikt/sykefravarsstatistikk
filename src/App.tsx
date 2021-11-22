@@ -1,4 +1,4 @@
-import React, { createContext, FunctionComponent, useContext, useEffect, useState } from 'react';
+import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
 import Banner from './Banner/Banner';
 import { Route } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
@@ -56,16 +56,22 @@ export function OrgNrProvider({ children }: { children: React.ReactNode }) {
     return <orgnrContext.Provider value={orgnr ?? ''}>{children}</orgnrContext.Provider>;
 }
 
-const AppContent = ({
+export const AppContent = ({
     altinnOrganisasjoner,
     altinnOrganisasjonerMedStatistikk,
     summertSykefravær,
     fraværshistorikk,
     virksomhetsdata,
+    ekstradata,
 }: Sykefravarsstatistikk) => {
-    const orgnr = useContext(orgnrContext);
+    const orgnr = useOrgnr();
     if (orgnr) {
         amplitudeClient.setUserProperties({ 'orgnr: ': orgnr });
+    }
+    if (ekstradata) {
+        amplitudeClient.setUserProperties({
+            ekstradata: ekstradata,
+        });
     }
 
     const restOrganisasjoner = altinnOrganisasjoner;
