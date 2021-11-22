@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import Banner from './Banner/Banner';
 import { Route } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
@@ -67,26 +67,44 @@ export const AppContent = ({
 }: Sykefravarsstatistikk & {
     analyticsClient?: AnalyticsClient;
 }) => {
-    const ekstraRessurser: RestRessurs<any>[] = [
+    const ekstraRessurser: RestRessurs<any>[] = useMemo(() => {
+        return [
+            fraværshistorikk,
+            summertSykefravær,
+            virksomhetsdata,
+            enhetsInformasjon.restOverordnetEnhet,
+            enhetsInformasjon.restUnderenhet,
+        ];
+    }, [
         fraværshistorikk,
         summertSykefravær,
         virksomhetsdata,
         enhetsInformasjon.restOverordnetEnhet,
         enhetsInformasjon.restUnderenhet,
-    ];
+    ]);
 
-    if (ekstraRessurser.every((ressurs) => ressurs.status === RestStatus.Suksess)) {
-        const ekstradata = getEkstradata({
-            fraværshistorikk,
-            summertSykefravær,
-            virksomhetsdata,
-            enhetsInformasjon,
-        });
-        analyticsClient?.setUserProperties({
-            ekstradata,
-        });
-        sendEventDirekte('forside', 'sidelastet');
-    }
+    useEffect(() => {
+        if (ekstraRessurser.every((ressurs) => ressurs.status === RestStatus.Suksess)) {
+            const ekstradata = getEkstradata({
+                fraværshistorikk,
+                summertSykefravær,
+                virksomhetsdata,
+                enhetsInformasjon,
+            });
+            analyticsClient?.setUserProperties({
+                ekstradata: ekstradata,
+            });
+            console.log('reached here', ekstradata);
+            sendEventDirekte('forside', 'sidelastet');
+        }
+    }, [
+        fraværshistorikk,
+        summertSykefravær,
+        virksomhetsdata,
+        enhetsInformasjon,
+        ekstraRessurser,
+        analyticsClient,
+    ]);
 
     const restOrganisasjoner = altinnOrganisasjoner;
     const restOrganisasjonerMedStatistikk = altinnOrganisasjonerMedStatistikk;
