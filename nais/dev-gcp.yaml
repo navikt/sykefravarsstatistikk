@@ -12,7 +12,7 @@ spec:
     vault:
         enabled: true
     ingresses:
-        - https://arbeidsgiver-gcp.nav.no/sykefravarsstatistikk
+        - https://arbeidsgiver-gcp.dev.nav.no/sykefravarsstatistikk
     liveness:
         path: /sykefravarsstatistikk/internal/isReady
         initialDelay: 10
