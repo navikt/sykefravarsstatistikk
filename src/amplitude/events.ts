@@ -1,6 +1,6 @@
-import { amplitudeClient } from './client';
 import { useEkstraDataRef } from './ekstradata';
 import { useEffect, useRef } from 'react';
+import { sendAnalytics } from './useAnalytics';
 
 interface NavigereEventProperties {
     url: string;
@@ -19,7 +19,11 @@ export type EventData = { [key: string]: any };
  * @deprecated skal på sikt fjernes. Vi skal ikke lenger skrive appnavn i selve eventen, det puttes heller i event properties.
  */
 export const sendEventDirekte = (område: string, hendelse: string, data?: EventData): void => {
-    amplitudeClient.logEvent(['#sykefravarsstatistikk', område, hendelse].join('-'), data);
+    const type = ['#sykefravarsstatistikk', område, hendelse].join('-');
+    sendAnalytics({
+        type,
+        data,
+    });
 };
 
 export const useSendNavigereEvent = (): SendNavigereEvent => {
@@ -30,41 +34,53 @@ export const useSendNavigereEvent = (): SendNavigereEvent => {
             app: appnavn,
         };
         navigereEventProperties.url = navigereEventProperties.url.split('?')[0];
-        amplitudeClient.logEvent('navigere', {
-            ...eventdata,
-            ...ekstradata.current,
-            ...navigereEventProperties,
+        sendAnalytics({
+            type: 'navigere',
+            data: {
+                ...eventdata,
+                ...ekstradata.current,
+                ...navigereEventProperties,
+            },
         });
     };
 };
 
 export const sendKnappEvent = (pathname: string | undefined, label: string) => {
-    const eventdata = {
+    const data = {
         app: appnavn,
         url: pathname,
         label: label,
     };
 
-    amplitudeClient.logEvent('knapp', eventdata);
+    sendAnalytics({
+        type: 'knapp',
+        data,
+    });
 };
 
 export const sendSidevisningEvent = (pathname: string | undefined) => {
-    const eventdata = {
+    const data = {
         app: appnavn,
         url: pathname,
     };
 
-    amplitudeClient.logEvent('sidevisning', eventdata);
+    sendAnalytics({
+        type: 'sidevisning',
+        data,
+    });
 };
 
 export const sendInputfeltUtfyltEvent = (pathname: string, label: string) => {
-    const eventdata = {
+    const data = {
         app: appnavn,
         url: pathname,
         label: label,
     };
 
-    amplitudeClient.logEvent('inputfelt-utfylt', eventdata);
+    sendAnalytics({
+        type: 'inputfelt-utfylt',
+        data,
+    });
 };
 
 /**

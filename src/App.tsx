@@ -33,11 +33,15 @@ import {
 import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 import SamtalestøttePodletpanel from './Forside/Samtalestøttepanel/SamtalestøttePodletpanel';
-import { amplitudeClient } from './amplitude/client';
 import { Sykefravarsstatistikk, useSykefravarsstatistikk } from './hooks/useSykefravarsstatistikk';
 import { useOrgnr } from './hooks/useOrgnr';
 
-const App: FunctionComponent = () => {
+interface Props {
+    analyticsClient: AnalyticsClient;
+}
+
+const App: FunctionComponent<Props> = ({ analyticsClient }) => {
+    useAnalytics(analyticsClient);
     return (
         <IaTjenesterMetrikkerContextProvider>
             <main id="maincontent">
@@ -54,13 +58,15 @@ export const AppContent = ({
     fraværshistorikk,
     virksomhetsdata,
     ekstradata,
-}: Sykefravarsstatistikk) => {
+    analyticsClient
+}: Sykefravarsstatistikk & { analyticsClient?: AnalyticsClient;
+}) => {
     const orgnr = useOrgnr();
     if (orgnr) {
-        amplitudeClient.setUserProperties({ 'orgnr: ': orgnr });
+        analyticsClient?.setUserProperties({ 'orgnr: ': orgnr });
     }
     if (ekstradata) {
-        amplitudeClient.setUserProperties({
+        analyticsClient?.setUserProperties({
             ekstradata: ekstradata,
         });
         sendEventDirekte('forside', 'sidelastet');

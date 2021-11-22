@@ -8,6 +8,7 @@ import { ArbeidsmiljøportalenBransje } from './utils/bransje-utils';
 import { RestVirksomhetsdata } from './api/virksomhetsdata-api';
 import { BASE_PATH } from './konstanter';
 import { BrowserRouter } from 'react-router-dom';
+import { amplitudeMock } from './mocking/amplitude-mock';
 
 // eslint-disable-next-line jest/expect-expect
 it('renders without crashing', () => {
@@ -29,7 +30,7 @@ it('renders without crashing', () => {
 
     render(
         <BrowserRouter basename={BASE_PATH}>
-            <App />
+            <App analyticsClient={amplitudeMock} />
         </BrowserRouter>
     );
 });
