@@ -51,6 +51,20 @@ jobs:
                   VAR: version=${{ env.IMAGE }}
                   RESOURCE: nais/dev-sbs.yaml
                   PRINT_PAYLOAD: true
+    deploy-to-dev-gcp:
+        name: Deploy to dev-gcp
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/sende-appen-til-dev-gcp'
+        needs: compile-test-and-build
+        runs-on: Ubuntu-20.04
+        steps:
+            - uses: actions/checkout@v2
+            - uses: nais/deploy/actions/deploy@v1
+              env:
+                  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+                  CLUSTER: dev-gcp
+                  VAR: version=${{ env.IMAGE }}
+                  RESOURCE: nais/dev-gcp.yaml
+                  PRINT_PAYLOAD: true
     deploy-to-labs-gcp:
         name: Deploy to labs-gcp
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/hindre-autorun-av-postinstall-scripts-med-yarn'
