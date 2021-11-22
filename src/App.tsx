@@ -38,7 +38,6 @@ import { Sykefravarsstatistikk, useSykefravarsstatistikk } from './hooks/useSyke
 import { useOrgnr } from './hooks/useOrgnr';
 
 const App: FunctionComponent = () => {
-    sendEventDirekte('forside', 'sidelastet');
     return (
         <IaTjenesterMetrikkerContextProvider>
             <main id="maincontent">
@@ -64,6 +63,7 @@ export const AppContent = ({
         amplitudeClient.setUserProperties({
             ekstradata: ekstradata,
         });
+        sendEventDirekte('forside', 'sidelastet');
     }
 
     const restOrganisasjoner = altinnOrganisasjoner;
