@@ -17,7 +17,6 @@ import {
     getEkstraDataFraSykefraværshistorikk,
     getEkstraDataFraVirksomhetsdata,
 } from '../amplitude/ekstradata';
-import { RestRessurs, RestStatus } from '../api/api-utils';
 
 export interface Sykefravarsstatistikk {
     altinnOrganisasjoner: RestAltinnOrganisasjoner;
@@ -27,7 +26,6 @@ export interface Sykefravarsstatistikk {
     summertSykefravær: RestSummertSykefraværshistorikk;
     fraværshistorikk: RestSykefraværshistorikk;
     featureToggles: RestFeatureToggles;
-    ekstradata?: Partial<Ekstradata>;
 }
 
 export function useSykefravarsstatistikk(): Sykefravarsstatistikk {
@@ -38,13 +36,6 @@ export function useSykefravarsstatistikk(): Sykefravarsstatistikk {
     const summertSykefravær = useSummertSykefravær();
     const fraværshistorikk = useSykefraværshistorikk();
     const featureToggles = useFeatureToggles();
-    const ressurser: RestRessurs<any>[] = [
-        fraværshistorikk,
-        summertSykefravær,
-        virksomhetsdata,
-        enhetsInformasjon.restOverordnetEnhet,
-        enhetsInformasjon.restUnderenhet,
-    ];
 
     return {
         altinnOrganisasjoner,
@@ -54,18 +45,10 @@ export function useSykefravarsstatistikk(): Sykefravarsstatistikk {
         summertSykefravær,
         fraværshistorikk,
         featureToggles,
-        ...(ressurser.every((ressurs) => ressurs.status === RestStatus.Suksess) && {
-            ekstradata: getEkstradata({
-                fraværshistorikk,
-                summertSykefravær,
-                virksomhetsdata,
-                enhetsInformasjon,
-            }),
-        }),
     };
 }
 
-function getEkstradata({
+export function getEkstradata({
     fraværshistorikk,
     summertSykefravær,
     virksomhetsdata,

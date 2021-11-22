@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import Banner from './Banner/Banner';
 import { Route } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
-import { RestStatus } from './api/api-utils';
+import { RestRessurs, RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
@@ -26,11 +26,18 @@ import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/E
 import { Kurskalender } from './Forside/Kurskalender/Kurskalender';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import { hentRestKurs, RestKursliste } from './api/kurs-api';
-import { LegacyBarnehageSammenligningRedirect, LegacySammenligningRedirect } from './utils/redirects';
+import {
+    LegacyBarnehageSammenligningRedirect,
+    LegacySammenligningRedirect,
+} from './utils/redirects';
 import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 import SamtalestøttePodletpanel from './Forside/Samtalestøttepanel/SamtalestøttePodletpanel';
-import { Sykefravarsstatistikk, useSykefravarsstatistikk } from './hooks/useSykefravarsstatistikk';
+import {
+    getEkstradata,
+    Sykefravarsstatistikk,
+    useSykefravarsstatistikk,
+} from './hooks/useSykefravarsstatistikk';
 import { AnalyticsClient } from './amplitude/client';
 import { useAnalytics } from './amplitude/useAnalytics';
 
@@ -42,28 +49,41 @@ const App: FunctionComponent<Props> = ({ analyticsClient }) => {
     useAnalytics(analyticsClient);
     return (
         <IaTjenesterMetrikkerContextProvider>
-            <main id='maincontent'>
+            <main id="maincontent">
                 <AppContent {...useSykefravarsstatistikk()} analyticsClient={analyticsClient} />
             </main>
         </IaTjenesterMetrikkerContextProvider>
     );
 };
 
-export const AppContent = (
-    {
-        altinnOrganisasjoner,
-        altinnOrganisasjonerMedStatistikk,
-        summertSykefravær,
+export const AppContent = ({
+    altinnOrganisasjoner,
+    altinnOrganisasjonerMedStatistikk,
+    summertSykefravær,
+    fraværshistorikk,
+    virksomhetsdata,
+    analyticsClient,
+    enhetsInformasjon,
+}: Sykefravarsstatistikk & {
+    analyticsClient?: AnalyticsClient;
+}) => {
+    const ekstraRessurser: RestRessurs<any>[] = [
         fraværshistorikk,
+        summertSykefravær,
         virksomhetsdata,
-        ekstradata,
-        analyticsClient,
-    }: Sykefravarsstatistikk & {
-        analyticsClient?: AnalyticsClient;
-    }) => {
-    if (ekstradata) {
+        enhetsInformasjon.restOverordnetEnhet,
+        enhetsInformasjon.restUnderenhet,
+    ];
+
+    if (ekstraRessurser.every((ressurs) => ressurs.status === RestStatus.Suksess)) {
+        const ekstradata = getEkstradata({
+            fraværshistorikk,
+            summertSykefravær,
+            virksomhetsdata,
+            enhetsInformasjon,
+        });
         analyticsClient?.setUserProperties({
-            ekstradata: ekstradata,
+            ekstradata,
         });
         sendEventDirekte('forside', 'sidelastet');
     }
@@ -113,7 +133,7 @@ export const AppContent = (
                     <LegacySammenligningRedirect />
                 </Route>
                 <Route path={PATH_FORSIDE} exact={true}>
-                    <Brødsmulesti gjeldendeSide='sykefraværsstatistikk' />
+                    <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <InnloggingssideWrapper
                         restSykefraværshistorikk={restSykefraværshistorikk}
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
@@ -139,11 +159,11 @@ export const AppContent = (
                     </InnloggingssideWrapper>
                 </Route>
                 <Route path={PATH_KALKULATOR} exact={true}>
-                    <Brødsmulesti gjeldendeSide='kalkulator' />
+                    <Brødsmulesti gjeldendeSide="kalkulator" />
                     <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk} />
                 </Route>
                 <Route path={PATH_HISTORIKK} exact={true}>
-                    <Brødsmulesti gjeldendeSide='historikk' />
+                    <Brødsmulesti gjeldendeSide="historikk" />
                     <GrafOgTabell
                         restSykefraværsstatistikk={restSykefraværshistorikk}
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
@@ -155,7 +175,7 @@ export const AppContent = (
 
     return (
         <>
-            {<Banner tittel='Sykefraværsstatistikk' restOrganisasjoner={restOrganisasjoner} />}
+            {<Banner tittel="Sykefraværsstatistikk" restOrganisasjoner={restOrganisasjoner} />}
             {innhold}
         </>
     );
