@@ -10,7 +10,7 @@ spec:
     team: arbeidsgiver
     port: 3000
     vault:
-        enabled: false
+        enabled: true
     ingresses:
         - https://arbeidsgiver-gcp.nav.no/sykefravarsstatistikk
     liveness:
@@ -19,6 +19,13 @@ spec:
     readiness:
         path: /sykefravarsstatistikk/internal/isReady
         initialDelay: 10
+    env:
+        - name: API_GATEWAY
+          value: https://api-gw-q0.oera.no
+        - name: NODE_EXTRA_CA_CERTS
+          value: /etc/ssl/ca-bundle.pem
+        - name: LOGIN_URL
+          value: https://loginservice.dev.nav.no/login?redirect=
     accessPolicy:
         outbound:
             external:
