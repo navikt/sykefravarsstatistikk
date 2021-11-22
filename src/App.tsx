@@ -1,4 +1,4 @@
-import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import Banner from './Banner/Banner';
 import { Route } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
@@ -40,21 +40,13 @@ import { useOrgnr } from './hooks/useOrgnr';
 const App: FunctionComponent = () => {
     sendEventDirekte('forside', 'sidelastet');
     return (
-        <OrgNrProvider>
-            <IaTjenesterMetrikkerContextProvider>
-                <main id="maincontent">
-                    <AppContent {...useSykefravarsstatistikk()} />
-                </main>
-            </IaTjenesterMetrikkerContextProvider>
-        </OrgNrProvider>
+        <IaTjenesterMetrikkerContextProvider>
+            <main id="maincontent">
+                <AppContent {...useSykefravarsstatistikk()} />
+            </main>
+        </IaTjenesterMetrikkerContextProvider>
     );
 };
-
-export const orgnrContext = createContext<string>('');
-export function OrgNrProvider({ children }: { children: React.ReactNode }) {
-    const orgnr = useOrgnr();
-    return <orgnrContext.Provider value={orgnr ?? ''}>{children}</orgnrContext.Provider>;
-}
 
 export const AppContent = ({
     altinnOrganisasjoner,
