@@ -63,7 +63,9 @@
         "webpack": "4.44.2"
     },
     "devDependencies": {
+        "@testing-library/dom": "^8.11.1",
         "@testing-library/react": "^12.1.2",
+        "@testing-library/user-event": "^13.5.0",
         "@types/amplitude-js": "^8.0.1",
         "@types/classnames": "^2.2.9",
         "@types/enzyme": "^3.10.3",

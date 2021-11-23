@@ -4,9 +4,10 @@ import { act, render, waitFor } from '@testing-library/react';
 import App, { AppContent } from '../App';
 import React from 'react';
 import { mockSykefraværNoEkstradata, mockSykefraværWithEkstradata } from '../mocking/data-mocks';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { AnalyticsClient } from './client';
 import { Sykefravarsstatistikk } from '../hooks/useSykefravarsstatistikk';
+import userEvent from '@testing-library/user-event';
 
 let amplitudeMockClient: AnalyticsClient;
 
@@ -51,6 +52,17 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', () => {
     expect(amplitudeMockClient.logEvent).toHaveBeenCalledTimes(2);
 });
 
+it('Klikk på panelene trigger eventer i amplitude', async () => {
+    const a = render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
+    const b = a.container.querySelector('#ekspanderbart-sammenligningspanel__tittel-knapp-TOTALT');
+    a.debug(b!);
+
+    userEvent.click(b!);
+    expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
+        panelnavn: 'overordnet-sykefravær-sammenlikning',
+    });
+});
+
 it('sidevisning event kalles med user properties', async () => {
     act(() => {
         render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
@@ -86,8 +98,8 @@ it('kaller ikke setUserProperties hvis vi ikke har ekstradata', () => {
 const WithAnalytics = (data: Sykefravarsstatistikk) => {
     useAnalytics(amplitudeMockClient);
     return (
-        <MemoryRouter initialEntries={['/sykefravarsstatistikk/?bedrift=910969439']}>
+        <BrowserRouter basename={'/sykefravarsstatistikk/?bedrift=910969439'}>
             <AppContent {...data} analyticsClient={amplitudeMockClient} />
-        </MemoryRouter>
+        </BrowserRouter>
     );
 };
