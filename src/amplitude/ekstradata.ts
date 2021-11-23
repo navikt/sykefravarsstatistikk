@@ -16,14 +16,8 @@ import { mapTilPrivatElleOffentligSektor, Sektor } from '../utils/sektorUtils';
 import { RestSummertSykefraværshistorikk } from '../api/summert-sykefraværshistorikk-api';
 import { getSammenligningResultatMedProsent } from '../Forside/vurdering-utils';
 import { SammenligningsType } from '../Forside/vurderingstekster';
-import { MutableRefObject, useContext, useEffect, useRef } from 'react';
-import { virksomhetsdataContext } from '../utils/virksomhetsdataContext';
-import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkContext';
-import { summertSykefraværshistorikkContext } from '../utils/summertSykefraværshistorikkContext';
-import { enhetsregisteretContext } from '../utils/enhetsregisteretContext';
 import { RestVirksomhetsdata } from '../api/virksomhetsdata-api';
 import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
-import { EnhetsregisteretState } from '../hooks/useEnheter';
 
 export interface Ekstradata {
     næring2siffer: string;
@@ -39,40 +33,6 @@ export interface Ekstradata {
 
     sektor: Sektor;
 }
-
-export const useEkstraDataRef = (): MutableRefObject<Partial<Ekstradata>> => {
-    const restVirksomhetsdata = useContext<RestVirksomhetsdata>(virksomhetsdataContext);
-    const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
-        sykefraværshistorikkContext
-    );
-    const restSummertSykefraværshistorikk = useContext<RestSummertSykefraværshistorikk>(
-        summertSykefraværshistorikkContext
-    );
-    const dataFraEnhetsregisteret = useContext<EnhetsregisteretState>(enhetsregisteretContext);
-
-    const ekstradata = useRef<Partial<Ekstradata>>({});
-
-    useEffect(() => {
-        ekstradata.current = {
-            ...getEkstraDataFraVirksomhetsdata(restVirksomhetsdata),
-            ...getEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
-            ...getEkstraDataFraSummertSykefraværshistorikk(
-                restSummertSykefraværshistorikk,
-                restVirksomhetsdata
-            ),
-            ...getEkstraDataFraEnhetsregisteret(
-                dataFraEnhetsregisteret.restOverordnetEnhet,
-                restVirksomhetsdata
-            ),
-        };
-    }, [
-        restVirksomhetsdata,
-        dataFraEnhetsregisteret,
-        restSykefraværshistorikk,
-        restSummertSykefraværshistorikk,
-    ]);
-    return ekstradata;
-};
 
 export const getEkstraDataFraVirksomhetsdata = (
     restVirksomhetsdata: RestVirksomhetsdata

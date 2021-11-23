@@ -6,7 +6,7 @@ import './microfrontends.less';
 import { SAMTALESTØTTE_MIKROFONTEND, SAMTALESTØTTE_MIKROFRONTEND_PATH } from '../konstanter';
 import { getMiljø } from '../utils/miljøUtils';
 
-type PodletProps = {
+export type PodletProps = {
     visning: string | undefined;
     orgnr?: string;
 };
@@ -28,12 +28,12 @@ const getMikrofrontendConfig = (): MikrofrontendConfig => {
         case 'dev-sbs':
             return {
                 appBaseUrl:
-                    'https://arbeidsgiver-gcp.dev.nav.no' + SAMTALESTØTTE_MIKROFRONTEND_PATH
+                    'https://arbeidsgiver-gcp.dev.nav.no' + SAMTALESTØTTE_MIKROFRONTEND_PATH,
             };
 
         case 'local':
             return {
-                appBaseUrl: 'http://localhost:3001' + SAMTALESTØTTE_MIKROFRONTEND_PATH
+                appBaseUrl: 'http://localhost:3001' + SAMTALESTØTTE_MIKROFRONTEND_PATH,
             };
 
         default:

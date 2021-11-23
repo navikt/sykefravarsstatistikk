@@ -18,7 +18,7 @@ import {
     PATH_HISTORIKK,
     PATH_KALKULATOR,
 } from './konstanter';
-import { sendEventDirekte } from './amplitude/events';
+import { appnavn } from './amplitude/events';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { Forside } from './Forside/Forside';
 import { Sammenligningspanel } from './Forside/Sammenligningspanel/Sammenligningspanel';
@@ -32,7 +32,6 @@ import {
 } from './utils/redirects';
 import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
-import SamtalestøttePodletpanel from './Forside/Samtalestøttepanel/SamtalestøttePodletpanel';
 import {
     getEkstradata,
     Sykefravarsstatistikk,
@@ -43,14 +42,19 @@ import { useAnalytics } from './amplitude/useAnalytics';
 
 interface Props {
     analyticsClient: AnalyticsClient;
+    samtalestøttePodlet?: React.ReactNode;
 }
 
-const App: FunctionComponent<Props> = ({ analyticsClient }) => {
+const App: FunctionComponent<Props> = ({ analyticsClient, samtalestøttePodlet }) => {
     useAnalytics(analyticsClient);
     return (
         <IaTjenesterMetrikkerContextProvider>
             <main id="maincontent">
-                <AppContent {...useSykefravarsstatistikk()} analyticsClient={analyticsClient} />
+                <AppContent
+                    {...useSykefravarsstatistikk()}
+                    analyticsClient={analyticsClient}
+                    samtalestøttePodlet={samtalestøttePodlet}
+                />
             </main>
         </IaTjenesterMetrikkerContextProvider>
     );
@@ -64,8 +68,10 @@ export const AppContent = ({
     virksomhetsdata,
     analyticsClient,
     enhetsInformasjon,
+    samtalestøttePodlet,
 }: Sykefravarsstatistikk & {
     analyticsClient?: AnalyticsClient;
+    samtalestøttePodlet?: React.ReactNode;
 }) => {
     const ekstraRessurser: RestRessurs<any>[] = useMemo(() => {
         return [
@@ -94,8 +100,10 @@ export const AppContent = ({
             analyticsClient?.setUserProperties({
                 ekstradata,
             });
-            console.log('reached here', ekstradata);
-            sendEventDirekte('forside', 'sidelastet');
+            analyticsClient?.logEvent('sidevisning', {
+                app: appnavn,
+                url: window.location.pathname,
+            });
         }
     }, [
         fraværshistorikk,
@@ -171,7 +179,7 @@ export const AppContent = ({
                             <KalkulatorPanel liten />
                             <Historikkpanel />
                             <Kurskalender restKursliste={restKursliste} liten={true} />
-                            <SamtalestøttePodletpanel />
+                            {samtalestøttePodlet}
                             <ArbeidsmiljøportalPanel restvirksomhetsdata={restvirksomhetsdata} />
                         </Forside>
                     </InnloggingssideWrapper>

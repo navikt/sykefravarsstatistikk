@@ -97,7 +97,16 @@ it('sidevisning event kalles med user properties', async () => {
         },
     });
     await waitFor(() => {
-        expect(amplitudeMockClient.logEvent).toHaveBeenCalled();
+        expect(amplitudeMockClient.logEvent).toHaveBeenCalledTimes(2);
+        expect(amplitudeMockClient.logEvent).toHaveBeenNthCalledWith(1, 'sidevisning', {
+            app: 'sykefravarsstatistikk',
+            url: '/sykefravarsstatistikk/',
+        });
+        expect(amplitudeMockClient.logEvent).toHaveBeenNthCalledWith(
+            2,
+            '#sykefravarsstatistikk-banner-bedrift valgt',
+            {}
+        );
     });
 });
 

@@ -1,4 +1,3 @@
-import { useEkstraDataRef } from './ekstradata';
 import { useEffect, useRef } from 'react';
 import { sendAnalytics } from './useAnalytics';
 
@@ -8,7 +7,7 @@ interface NavigereEventProperties {
     lenketekst?: string;
 }
 
-const appnavn = 'sykefravarsstatistikk';
+export const appnavn = 'sykefravarsstatistikk';
 
 type SendNavigereEvent = (navigereEventProperties: NavigereEventProperties & Object) => void;
 type SendEvent = (område: string, hendelse: string, data?: Object) => void;
@@ -27,8 +26,6 @@ export const sendEventDirekte = (område: string, hendelse: string, data?: Event
 };
 
 export const useSendNavigereEvent = (): SendNavigereEvent => {
-    const ekstradata = useEkstraDataRef();
-
     return (navigereEventProperties: NavigereEventProperties & EventData) => {
         const eventdata = {
             app: appnavn,
@@ -38,7 +35,6 @@ export const useSendNavigereEvent = (): SendNavigereEvent => {
             type: 'navigere',
             data: {
                 ...eventdata,
-                ...ekstradata.current,
                 ...navigereEventProperties,
             },
         });
@@ -58,7 +54,7 @@ export const sendKnappEvent = (pathname: string | undefined, label: string) => {
     });
 };
 
-export const sendSidevisningEvent = (pathname: string | undefined) => {
+export const sendSidevisningEvent = (pathname: string = window.location.pathname) => {
     const data = {
         app: appnavn,
         url: pathname,
@@ -87,10 +83,8 @@ export const sendInputfeltUtfyltEvent = (pathname: string, label: string) => {
  * @deprecated skal på sikt ikke brukes; "ekstradata" settes i stedet som user properties.
  */
 export const useSendEvent = (): SendEvent => {
-    const ekstradata = useEkstraDataRef();
-
     return (område: string, hendelse: string, data?: EventData) =>
-        sendEventDirekte(område, hendelse, { ...ekstradata.current, ...data });
+        sendEventDirekte(område, hendelse, { ...data });
 };
 
 /**
