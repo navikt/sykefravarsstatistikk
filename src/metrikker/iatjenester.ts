@@ -12,15 +12,15 @@ interface IaTjenesteMetrikk {
 }
 
 export const erIaTjenesterMetrikkerSendtForBedrift = (
-    orgnr: string,
+    orgnr: string | undefined,
     sendteMetrikker: [string]
 ): boolean => {
-    if (orgnr) {
+    if (orgnr === undefined) {
         return true;
     } else {
         return sendteMetrikker.includes(orgnr);
     }
-};
+};;
 
 export const iaTjenesterMetrikkerErSendtForBedrift = (
     orgnr: string | undefined,
