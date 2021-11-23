@@ -26,26 +26,26 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', () => {
         );
     });
     const eventDataForFirstEvent = {
-        type: 'knapp',
+        eventname: 'knapp',
         data: {
             someKey: 'someValue',
         },
     };
     sendAnalytics(eventDataForFirstEvent);
     expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith(
-        eventDataForFirstEvent.type,
+        eventDataForFirstEvent.eventname,
         eventDataForFirstEvent.data
     );
 
     const eventDataForSecondEvent = {
-        type: 'navigere',
+        eventname: 'navigere',
         data: {
             someKey: 'someValue',
         },
     };
     sendAnalytics(eventDataForSecondEvent);
     expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith(
-        eventDataForSecondEvent.type,
+        eventDataForSecondEvent.eventname,
         eventDataForSecondEvent.data
     );
 
@@ -88,17 +88,15 @@ it('sidevisning event kalles med user properties', async () => {
     });
     expect(amplitudeMockClient.setUserProperties).toHaveBeenCalledTimes(1);
     expect(amplitudeMockClient.setUserProperties).toHaveBeenCalledWith({
-        ekstradata: {
-            antallAnsatte: '50-99',
-            bransje: undefined,
-            korttidSiste4Kvartaler: 'MIDDELS',
-            langtidSiste4Kvartaler: 'MIDDELS',
-            næring2siffer:
-                '84 Offentlig administrasjon og forsvar, og trygdeordninger underlagt offentlig forvaltning',
-            prosent: '>16',
-            sammenligning: 'virksomhet ligger 8-10 over',
-            sykefraværSiste4Kvartaler: 'MIDDELS',
-        },
+        antallAnsatte: '50-99',
+        bransje: undefined,
+        korttidSiste4Kvartaler: 'MIDDELS',
+        langtidSiste4Kvartaler: 'MIDDELS',
+        næring2siffer:
+            '84 Offentlig administrasjon og forsvar, og trygdeordninger underlagt offentlig forvaltning',
+        prosent: '>16',
+        sammenligning: 'virksomhet ligger 8-10 over',
+        sykefraværSiste4Kvartaler: 'MIDDELS',
     });
     await waitFor(() => {
         expect(amplitudeMockClient.logEvent).toHaveBeenCalledTimes(2);
