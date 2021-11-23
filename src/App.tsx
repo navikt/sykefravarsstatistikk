@@ -92,7 +92,7 @@ export const AppContent = ({
                 enhetsInformasjon,
             });
             analyticsClient?.setUserProperties({
-                ekstradata: ekstradata,
+                ekstradata,
             });
             console.log('reached here', ekstradata);
             sendEventDirekte('forside', 'sidelastet');
