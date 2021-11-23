@@ -29,6 +29,7 @@ import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikke
 import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 import { useOrgnr } from '../../hooks/useOrgnr';
 import { sendAnalytics } from '../../amplitude/useAnalytics';
+import { appnavn } from '../../amplitude/events';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -177,6 +178,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                             type: 'panel-ekspander',
                             data: {
                                 panelnavn: sammenligningsType,
+                                app: appnavn,
                             },
                         });
                     }

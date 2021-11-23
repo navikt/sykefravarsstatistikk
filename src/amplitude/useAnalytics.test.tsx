@@ -53,13 +53,15 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', () => {
 });
 
 it('Klikk på panelene trigger eventer i amplitude', async () => {
-    const a = render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
-    const b = a.container.querySelector('#ekspanderbart-sammenligningspanel__tittel-knapp-TOTALT');
-    a.debug(b!);
+    const { container } = render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
+    const panel = container.querySelector(
+        '#ekspanderbart-sammenligningspanel__tittel-knapp-TOTALT'
+    );
 
-    userEvent.click(b!);
+    userEvent.click(panel!);
     expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
         panelnavn: 'TOTALT',
+        app: 'sykefravarsstatistikk',
     });
 });
 
@@ -72,9 +74,11 @@ it('Klikk på panel trigger sender riktig panelnavn i amplitude', () => {
     userEvent.click(panel!);
     expect(amplitudeMockClient.logEvent).not.toHaveBeenCalledWith('panel-ekspander', {
         panelnavn: 'TOTALT',
+        app: 'sykefravarsstatistikk',
     });
     expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
         panelnavn: 'GRADERT',
+        app: 'sykefravarsstatistikk',
     });
 });
 
