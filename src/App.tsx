@@ -98,7 +98,7 @@ export const AppContent = ({
                 enhetsInformasjon,
             });
             analyticsClient?.setUserProperties({
-                ekstradata,
+                ...ekstradata,
             });
             analyticsClient?.logEvent('sidevisning', {
                 app: appnavn,
