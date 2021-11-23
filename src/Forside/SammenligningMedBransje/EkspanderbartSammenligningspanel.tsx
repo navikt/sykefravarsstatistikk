@@ -171,12 +171,15 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             <EkspanderbartpanelBase
                 onClick={() => {
                     setErÅpen(!erÅpen);
-                    sendAnalytics({
-                        type: 'panel-ekspander',
-                        data: {
-                            panelnavn: sammenligningsType,
-                        },
-                    });
+                    if (!erÅpen) {
+                        // Vi åpner panelet
+                        sendAnalytics({
+                            type: 'panel-ekspander',
+                            data: {
+                                panelnavn: sammenligningsType,
+                            },
+                        });
+                    }
                 }}
                 apen={erÅpen}
                 id={panelknappID}
