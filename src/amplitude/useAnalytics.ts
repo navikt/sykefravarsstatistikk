@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { EventData } from './events';
 
 interface AnalyticsData {
-    type: string;
+    eventname: string;
     data?: EventData;
 }
 
@@ -13,9 +13,9 @@ export const useAnalytics = <T extends AnalyticsData>(client: AnalyticsClient) =
     useEffect(() => {
         const listener = (event: Event) => {
             let {
-                detail: { data, type },
+                detail: { data, eventname },
             } = event as CustomEvent<T>;
-            client.logEvent(type, data);
+            client.logEvent(eventname, data);
         };
         document.addEventListener(ANALYTICS_EVENT, listener);
 

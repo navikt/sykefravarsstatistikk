@@ -21,7 +21,7 @@ export type EventData = { [key: string]: any };
 export const sendEventDirekte = (område: string, hendelse: string, data?: EventData): void => {
     const type = ['#sykefravarsstatistikk', område, hendelse].join('-');
     sendAnalytics({
-        type,
+        eventname: type,
         data,
     });
 };
@@ -33,7 +33,7 @@ export const useSendNavigereEvent = (): SendNavigereEvent => {
         };
         navigereEventProperties.url = navigereEventProperties.url.split('?')[0];
         sendAnalytics({
-            type: 'navigere',
+            eventname: 'navigere',
             data: {
                 ...eventdata,
                 ...navigereEventProperties,
@@ -50,7 +50,7 @@ export const sendKnappEvent = (pathname: string | undefined, label: string) => {
     };
 
     sendAnalytics({
-        type: 'knapp',
+        eventname: 'knapp',
         data,
     });
 };
@@ -62,7 +62,7 @@ export const sendSidevisningEvent = (pathname: string = window.location.pathname
     };
 
     sendAnalytics({
-        type: 'sidevisning',
+        eventname: 'sidevisning',
         data,
     });
 };
@@ -75,7 +75,7 @@ export const sendInputfeltUtfyltEvent = (pathname: string, label: string) => {
     };
 
     sendAnalytics({
-        type: 'inputfelt-utfylt',
+        eventname: 'inputfelt-utfylt',
         data,
     });
 };
@@ -110,7 +110,7 @@ export const useSendSidevisningEvent = (område: string, orgnr: string | undefin
 
 export function logPanelEkspanderEvent(sammenligningsType: SammenligningsType) {
     sendAnalytics({
-        type: 'panel-ekspander',
+        eventname: 'panel-ekspander',
         data: {
             panelnavn: sammenligningsType,
             app: appnavn,
