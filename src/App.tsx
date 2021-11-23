@@ -34,7 +34,7 @@ import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetr
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 import {
     getEkstradata,
-    Sykefravarsstatistikk,
+    SykefraværAppData,
     useSykefravarsstatistikk,
 } from './hooks/useSykefravarsstatistikk';
 import { AnalyticsClient } from './amplitude/client';
@@ -69,7 +69,7 @@ export const AppContent = ({
     analyticsClient,
     enhetsInformasjon,
     samtalestøttePodlet,
-}: Sykefravarsstatistikk & {
+}: SykefraværAppData & {
     analyticsClient?: AnalyticsClient;
     samtalestøttePodlet?: React.ReactNode;
 }) => {

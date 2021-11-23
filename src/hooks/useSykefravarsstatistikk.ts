@@ -18,7 +18,7 @@ import {
     getEkstraDataFraVirksomhetsdata,
 } from '../amplitude/ekstradata';
 
-export interface Sykefravarsstatistikk {
+export interface SykefraværAppData {
     altinnOrganisasjoner: RestAltinnOrganisasjoner;
     altinnOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
     virksomhetsdata: RestVirksomhetsdata;
@@ -28,7 +28,7 @@ export interface Sykefravarsstatistikk {
     featureToggles: RestFeatureToggles;
 }
 
-export function useSykefravarsstatistikk(): Sykefravarsstatistikk {
+export function useSykefravarsstatistikk(): SykefraværAppData {
     const altinnOrganisasjoner = useAltinnOrganisasjoner();
     const altinnOrganisasjonerMedStatistikk = useAltinnOrganisasjonerMedStatistikk();
     const virksomhetsdata = useVirksomhetsdata();

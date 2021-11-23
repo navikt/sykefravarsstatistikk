@@ -6,7 +6,7 @@ import React from 'react';
 import { mockSykefraværNoEkstradata, mockSykefraværWithEkstradata } from '../mocking/data-mocks';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { AnalyticsClient } from './client';
-import { Sykefravarsstatistikk } from '../hooks/useSykefravarsstatistikk';
+import { SykefraværAppData } from '../hooks/useSykefravarsstatistikk';
 import userEvent from '@testing-library/user-event';
 
 let amplitudeMockClient: AnalyticsClient;
@@ -123,7 +123,7 @@ it('kaller ikke setUserProperties hvis vi ikke har ekstradata', () => {
     expect(amplitudeMockClient.logEvent).not.toHaveBeenCalled();
 });
 
-const WithAnalytics = (data: Sykefravarsstatistikk) => {
+const WithAnalytics = (data: SykefraværAppData) => {
     useAnalytics(amplitudeMockClient);
     return (
         <BrowserRouter basename={'/sykefravarsstatistikk/?bedrift=910969439'}>

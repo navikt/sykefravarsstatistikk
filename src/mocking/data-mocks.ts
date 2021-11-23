@@ -1,9 +1,9 @@
-import { Sykefravarsstatistikk } from '../hooks/useSykefravarsstatistikk';
+import { SykefraværAppData } from '../hooks/useSykefravarsstatistikk';
 import { RestStatus } from '../api/api-utils';
 import { SykefraværshistorikkType } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
 
-export const mockSykefraværWithEkstradata: Sykefravarsstatistikk = {
+export const mockSykefraværWithEkstradata: SykefraværAppData = {
     altinnOrganisasjonerMedStatistikk: { status: RestStatus.IkkeLastet },
     enhetsInformasjon: {
         restUnderenhet: {
@@ -1050,7 +1050,7 @@ export const mockSykefraværWithEkstradata: Sykefravarsstatistikk = {
         ],
     },
 };
-export const mockSykefraværNoEkstradata: Sykefravarsstatistikk = {
+export const mockSykefraværNoEkstradata: SykefraværAppData = {
     ...mockSykefraværWithEkstradata,
     virksomhetsdata: {
         status: RestStatus.IkkeLastet,
