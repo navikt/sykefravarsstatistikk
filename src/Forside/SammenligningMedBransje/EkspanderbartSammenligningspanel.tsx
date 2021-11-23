@@ -28,6 +28,7 @@ import {
 import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
 import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 import { useOrgnr } from '../../hooks/useOrgnr';
+import { sendAnalytics } from '../../amplitude/useAnalytics';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -170,6 +171,12 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             <EkspanderbartpanelBase
                 onClick={() => {
                     setErÅpen(!erÅpen);
+                    sendAnalytics({
+                        type: 'panel-ekspander',
+                        data: {
+                            panelnavn: sammenligningsType,
+                        },
+                    });
                 }}
                 apen={erÅpen}
                 id={panelknappID}
