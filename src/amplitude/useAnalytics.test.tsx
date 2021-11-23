@@ -59,7 +59,22 @@ it('Klikk på panelene trigger eventer i amplitude', async () => {
 
     userEvent.click(b!);
     expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
-        panelnavn: 'overordnet-sykefravær-sammenlikning',
+        panelnavn: 'TOTALT',
+    });
+});
+
+it('Klikk på panel trigger sender riktig panelnavn i amplitude', () => {
+    const { container } = render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
+    const panel = container.querySelector(
+        '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
+    );
+
+    userEvent.click(panel!);
+    expect(amplitudeMockClient.logEvent).not.toHaveBeenCalledWith('panel-ekspander', {
+        panelnavn: 'TOTALT',
+    });
+    expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
+        panelnavn: 'GRADERT',
     });
 });
 
