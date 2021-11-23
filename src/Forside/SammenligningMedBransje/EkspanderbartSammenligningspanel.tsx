@@ -28,8 +28,7 @@ import {
 import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
 import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 import { useOrgnr } from '../../hooks/useOrgnr';
-import { sendAnalytics } from '../../amplitude/useAnalytics';
-import { appnavn } from '../../amplitude/events';
+import { logPanelEkspanderEvent } from '../../amplitude/events';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -59,7 +58,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
     const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
 
-    const orgnr = useOrgnr() ?? '';
+    const orgnr = useOrgnr();
     const sendIaTjenesteMetrikkEvent = useSendIaTjenesteMetrikkEvent();
     const context = useContext(iaTjenesterMetrikkerContext);
 
@@ -173,14 +172,8 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 onClick={() => {
                     setErÅpen(!erÅpen);
                     if (!erÅpen) {
-                        // Vi åpner panelet
-                        sendAnalytics({
-                            type: 'panel-ekspander',
-                            data: {
-                                panelnavn: sammenligningsType,
-                                app: appnavn,
-                            },
-                        });
+                        // Vi har åpnet panelet
+                        logPanelEkspanderEvent(sammenligningsType);
                     }
                 }}
                 apen={erÅpen}

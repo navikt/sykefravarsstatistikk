@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { sendAnalytics } from './useAnalytics';
+import { SammenligningsType } from '../Forside/vurderingstekster';
 
 interface NavigereEventProperties {
     url: string;
@@ -106,3 +107,13 @@ export const useSendSidevisningEvent = (område: string, orgnr: string | undefin
         }
     }, [orgnr, område, sendEvent]);
 };
+
+export function logPanelEkspanderEvent(sammenligningsType: SammenligningsType) {
+    sendAnalytics({
+        type: 'panel-ekspander',
+        data: {
+            panelnavn: sammenligningsType,
+            app: appnavn,
+        },
+    });
+}

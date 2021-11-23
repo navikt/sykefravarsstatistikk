@@ -73,7 +73,7 @@ export const AppContent = ({
     analyticsClient?: AnalyticsClient;
     samtalestøttePodlet?: React.ReactNode;
 }) => {
-    const ekstraRessurser: RestRessurs<any>[] = useMemo(() => {
+    const datakilder: RestRessurs<any>[] = useMemo(() => {
         return [
             fraværshistorikk,
             summertSykefravær,
@@ -90,7 +90,7 @@ export const AppContent = ({
     ]);
 
     useEffect(() => {
-        if (ekstraRessurser.every((ressurs) => ressurs.status === RestStatus.Suksess)) {
+        if (datakilder.every((ressurs) => ressurs.status === RestStatus.Suksess)) {
             const ekstradata = getEkstradata({
                 fraværshistorikk,
                 summertSykefravær,
@@ -110,7 +110,7 @@ export const AppContent = ({
         summertSykefravær,
         virksomhetsdata,
         enhetsInformasjon,
-        ekstraRessurser,
+        datakilder,
         analyticsClient,
     ]);
 
