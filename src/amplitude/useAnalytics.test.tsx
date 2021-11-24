@@ -52,20 +52,60 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', () => {
     expect(amplitudeMockClient.logEvent).toHaveBeenCalledTimes(2);
 });
 
-it('Klikk på panelene trigger eventer i amplitude', async () => {
+it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
     const { container } = render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
-    const panel = container.querySelector(
+
+    const sammenlikningspanel_total = container.querySelector(
         '#ekspanderbart-sammenligningspanel__tittel-knapp-TOTALT'
     );
+    const sammenlikningspanel_gradert = container.querySelector(
+        '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
+    );
+    const sammenlikningspanel_langtid = container.querySelector(
+        '#ekspanderbart-sammenligningspanel__tittel-knapp-LANGTID'
+    );
+    const sammenlikningspanel_korttid = container.querySelector(
+        '#ekspanderbart-sammenligningspanel__tittel-knapp-KORTTID'
+    );
 
-    userEvent.click(panel!);
+    userEvent.click(sammenlikningspanel_total!);
     expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
         panelnavn: 'TOTALT',
         app: 'sykefravarsstatistikk',
     });
+
+    userEvent.click(sammenlikningspanel_gradert!);
+    expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
+        panelnavn: 'GRADERT',
+        app: 'sykefravarsstatistikk',
+    });
+
+    userEvent.click(sammenlikningspanel_langtid!);
+    expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
+        panelnavn: 'LANGTID',
+        app: 'sykefravarsstatistikk',
+    });
+
+    userEvent.click(sammenlikningspanel_korttid!);
+    expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
+        panelnavn: 'KORTTID',
+        app: 'sykefravarsstatistikk',
+    });
 });
 
-it('Klikk på panel trigger sender riktig panelnavn i amplitude', () => {
+it('Klikk på lenke til Arbeidsmiljøportalen genererer event i amplitude', () => {
+    const a = render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
+    userEvent.click(a.getByText('Gå til Arbeidsmiljøportalen'));
+
+    expect(amplitudeMockClient.logEvent).toHaveBeenLastCalledWith('navigere', {
+        app: 'sykefravarsstatistikk',
+        url: '/',
+        lenketekst: 'Gå til Arbeidsmiljøportalen',
+        destinasjon: 'https://www.arbeidsmiljoportalen.no',
+    });
+});
+
+it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', () => {
     const { container } = render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
     const panel = container.querySelector(
         '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
@@ -76,13 +116,9 @@ it('Klikk på panel trigger sender riktig panelnavn i amplitude', () => {
         panelnavn: 'TOTALT',
         app: 'sykefravarsstatistikk',
     });
-    expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
-        panelnavn: 'GRADERT',
-        app: 'sykefravarsstatistikk',
-    });
 });
 
-it('sidevisning event kalles med user properties', async () => {
+it('sidevisning event kalles med riktige user properties', async () => {
     act(() => {
         render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
     });
@@ -112,7 +148,9 @@ it('sidevisning event kalles med user properties', async () => {
     });
 });
 
-it('kaller ikke setUserProperties hvis vi ikke har ekstradata', () => {
+// TODO runar: test for at sidevisning-event kjører på nytt dersom brukeren bytter bedrift
+
+it('Kaller ikke setUserProperties hvis vi ikke har ekstradata', () => {
     act(() => {
         render(<WithAnalytics {...mockSykefraværNoEkstradata} />);
     });

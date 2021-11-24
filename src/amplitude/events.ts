@@ -2,44 +2,30 @@ import { useEffect, useRef } from 'react';
 import { sendAnalytics } from './useAnalytics';
 import { SammenligningsType } from '../Forside/vurderingstekster';
 
-interface NavigereEventProperties {
-    url: string;
-    destinasjon?: string;
-    lenketekst?: string;
-}
-
 export const appnavn = 'sykefravarsstatistikk';
-
-type SendNavigereEvent = (navigereEventProperties: NavigereEventProperties & Object) => void;
-type SendEvent = (område: string, hendelse: string, data?: Object) => void;
-
-export type EventData = { [key: string]: any };
+export type EventData = { app: string; url: string; [key: string]: any };
 
 /**
  * @deprecated skal på sikt fjernes. Vi skal ikke lenger skrive appnavn i selve eventen, det puttes heller i event properties.
  */
-export const sendEventDirekte = (område: string, hendelse: string, data?: EventData): void => {
+export const sendEventDirekte = (område: string, hendelse: string, data: EventData): void => {
     const type = ['#sykefravarsstatistikk', område, hendelse].join('-');
     sendAnalytics({
         eventname: type,
-        data,
+        data: data,
     });
 };
 
-export const useSendNavigereEvent = (): SendNavigereEvent => {
-    return (navigereEventProperties: NavigereEventProperties & EventData) => {
-        const eventdata = {
+export const sendNavigereEvent = (destinasjon: string, lenketekst: string) => {
+    sendAnalytics({
+        eventname: 'navigere',
+        data: {
             app: appnavn,
-        };
-        navigereEventProperties.url = navigereEventProperties.url.split('?')[0];
-        sendAnalytics({
-            eventname: 'navigere',
-            data: {
-                ...eventdata,
-                ...navigereEventProperties,
-            },
-        });
-    };
+            url: window.location.hostname,
+            destinasjon: destinasjon,
+            lenketekst: lenketekst,
+        },
+    });
 };
 
 export const sendKnappEvent = (pathname: string | undefined, label: string) => {
@@ -56,7 +42,7 @@ export const sendKnappEvent = (pathname: string | undefined, label: string) => {
 };
 
 export const sendSidevisningEvent = (pathname: string = window.location.pathname) => {
-    const data = {
+    const data: Side = {
         app: appnavn,
         url: pathname,
     };

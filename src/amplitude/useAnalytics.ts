@@ -4,7 +4,7 @@ import { EventData } from './events';
 
 interface AnalyticsData {
     eventname: string;
-    data?: EventData;
+    data: EventData;
 }
 
 const ANALYTICS_EVENT = 'amplitude';
