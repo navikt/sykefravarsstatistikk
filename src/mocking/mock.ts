@@ -155,7 +155,9 @@ if (mock.kursliste) {
 
 if (mock.iatjenester) {
     fetchMock.post('end:/ia-tjenester-metrikker/innlogget/mottatt-iatjeneste', {
-        status: 'created',
+        body: {
+            status: 'created',
+        },
     });
 }
 
