@@ -5,6 +5,7 @@ export const appnavn = 'sykefravarsstatistikk';
 export type EventData = { app: string; url: string; [key: string]: any };
 
 export const sendNavigereEvent = (destinasjon: string, lenketekst: string) => {
+    console.log('WINDOW ER: sendNavigereEvent', window.location.pathname);
     sendAnalytics({
         eventname: 'navigere',
         data: {
@@ -28,6 +29,7 @@ export const sendKnappEvent = (label: string) => {
 };
 
 export const sendSidevisningEvent = () => {
+    console.log('WINDOW ER: sendSidevisningEvent ', window.location.pathname);
     sendAnalytics({
         eventname: 'sidevisning',
         data: {
@@ -49,6 +51,7 @@ export const sendInputfeltUtfyltEvent = (label: string) => {
 };
 
 export function logPanelEkspanderEvent(sammenligningsType: SammenligningsType) {
+    console.log('WINDOW ER: logPanelEkspanderEvent', window.location.pathname);
     sendAnalytics({
         eventname: 'panel-ekspander',
         data: {
