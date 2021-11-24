@@ -13,6 +13,7 @@ import { RestVirksomhetsdata } from '../../api/virksomhetsdata-api';
 import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
 import { Element } from 'nav-frontend-typografi';
 import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
+import {sendPanelEkspanderEvent} from "../../amplitude/events";
 
 interface Props {
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
@@ -77,6 +78,9 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             <SlikHarViKommetFramTilDittResultat
                 resultat={sammenligningResultatTotalt.sammenligningVurdering}
                 kvartaler={sammenligningResultatTotalt.kvartaler}
+                onÅpne={ function () {
+                    sendPanelEkspanderEvent('slik-har-vi-kommet-fram-til-ditt-resultat')
+                }}
             />
             <DinNæringEllerBransje
                 restSummertSykefraværshistorikk={restSummertSykefraværshistorikk}

@@ -42,8 +42,8 @@ it('Klikk på les-mer-panelet sender panel-ekspander event til Amplitude', () =>
 
     userEvent.click(lesMerPanel);
     expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
-        app: 'sykefravarstatistikk',
-        url: '/sykefravarstatistikk',
+        app: 'sykefravarsstatistikk',
+        url: '/sykefravarsstatistikk/',
         panelnavn: 'slik-har-vi-kommet-fram-til-ditt-resultat',
     });
 });
