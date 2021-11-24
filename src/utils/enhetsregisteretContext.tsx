@@ -1,8 +1,8 @@
 import { createContext } from 'react';
 import { RestStatus } from '../api/api-utils';
-import { EnhetsregisteretState } from '../hooks/useEnheter';
+import { Enhetsregisterdata } from '../hooks/useEnheter';
 
-export const enhetsregisteretContext = createContext<EnhetsregisteretState>({
+export const enhetsregisteretContext = createContext<Enhetsregisterdata>({
     restUnderenhet: {
         status: RestStatus.IkkeLastet,
     },

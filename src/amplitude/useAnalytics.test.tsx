@@ -6,7 +6,7 @@ import React from 'react';
 import { mockSykefraværNoEkstradata, mockSykefraværWithEkstradata } from '../mocking/data-mocks';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { AnalyticsClient } from './client';
-import { SykefraværAppData } from '../hooks/useSykefravarsstatistikk';
+import { SykefraværAppData } from '../hooks/useSykefraværAppData';
 import userEvent from '@testing-library/user-event';
 
 let amplitudeMockClient: AnalyticsClient;

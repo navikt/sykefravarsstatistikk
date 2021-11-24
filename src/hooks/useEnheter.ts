@@ -53,12 +53,12 @@ const useRestDataForFlereVirksomheter = <T extends Object>(
     return [gjeldendeData, dataForAlleVirksomheter];
 };
 
-export interface EnhetsregisteretState {
+export interface Enhetsregisterdata {
     restUnderenhet: RestUnderenhet;
     restOverordnetEnhet: RestOverordnetEnhet;
 }
 
-export function useEnheter(): EnhetsregisteretState {
+export function useEnheter(): Enhetsregisterdata {
     const underenhetOrgnr = useOrgnr();
 
     const [gjeldendeUnderenhet] = useRestDataForFlereVirksomheter<Underenhet>(
