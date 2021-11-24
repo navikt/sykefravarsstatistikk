@@ -5,23 +5,23 @@ import App, { AppContent } from '../App';
 import React from 'react';
 import { mockSykefraværNoEkstradata, mockSykefraværWithEkstradata } from '../mocking/data-mocks';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
-import { AnalyticsClient } from './client';
 import { SykefraværAppData } from '../hooks/useSykefraværAppData';
 import userEvent from '@testing-library/user-event';
 
-let amplitudeMockClient: AnalyticsClient;
-
 beforeEach(() => {
-    amplitudeMockClient = amplitudeMock;
-    amplitudeMockClient.setUserProperties = jest.fn(amplitudeMockClient.setUserProperties);
-    amplitudeMockClient.logEvent = jest.fn(amplitudeMockClient.logEvent);
+    jest.spyOn(amplitudeMock, 'setUserProperties');
+    jest.spyOn(amplitudeMock, 'logEvent');
+});
+
+afterEach(() => {
+    jest.restoreAllMocks();
 });
 
 it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', () => {
     act(() => {
         render(
             <MemoryRouter initialEntries={['/sykefravarsstatistikk/?bedrift=910969439']}>
-                <App analyticsClient={amplitudeMockClient} />
+                <App analyticsClient={amplitudeMock} />
             </MemoryRouter>
         );
     });
@@ -32,7 +32,7 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', () => {
         },
     };
     sendAnalytics(eventDataForFirstEvent);
-    expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith(
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
         eventDataForFirstEvent.eventname,
         eventDataForFirstEvent.data
     );
@@ -44,12 +44,12 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', () => {
         },
     };
     sendAnalytics(eventDataForSecondEvent);
-    expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith(
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
         eventDataForSecondEvent.eventname,
         eventDataForSecondEvent.data
     );
 
-    expect(amplitudeMockClient.logEvent).toHaveBeenCalledTimes(2);
+    expect(amplitudeMock.logEvent).toHaveBeenCalledTimes(2);
 });
 
 it('Klikk på panelene trigger eventer i amplitude', async () => {
@@ -59,7 +59,7 @@ it('Klikk på panelene trigger eventer i amplitude', async () => {
     );
 
     userEvent.click(panel!);
-    expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith('panel-ekspander', {
         panelnavn: 'TOTALT',
         app: 'sykefravarsstatistikk',
     });
@@ -72,11 +72,11 @@ it('Klikk på panel trigger sender riktig panelnavn i amplitude', () => {
     );
 
     userEvent.click(panel!);
-    expect(amplitudeMockClient.logEvent).not.toHaveBeenCalledWith('panel-ekspander', {
+    expect(amplitudeMock.logEvent).not.toHaveBeenCalledWith('panel-ekspander', {
         panelnavn: 'TOTALT',
         app: 'sykefravarsstatistikk',
     });
-    expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith('panel-ekspander', {
         panelnavn: 'GRADERT',
         app: 'sykefravarsstatistikk',
     });
@@ -86,8 +86,8 @@ it('sidevisning event kalles med user properties', async () => {
     act(() => {
         render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
     });
-    expect(amplitudeMockClient.setUserProperties).toHaveBeenCalledTimes(1);
-    expect(amplitudeMockClient.setUserProperties).toHaveBeenCalledWith({
+    expect(amplitudeMock.setUserProperties).toHaveBeenCalledTimes(1);
+    expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
         antallAnsatte: '50-99',
         bransje: undefined,
         korttidSiste4Kvartaler: 'MIDDELS',
@@ -99,12 +99,12 @@ it('sidevisning event kalles med user properties', async () => {
         sykefraværSiste4Kvartaler: 'MIDDELS',
     });
     await waitFor(() => {
-        expect(amplitudeMockClient.logEvent).toHaveBeenCalledTimes(2);
-        expect(amplitudeMockClient.logEvent).toHaveBeenNthCalledWith(1, 'sidevisning', {
+        expect(amplitudeMock.logEvent).toHaveBeenCalledTimes(2);
+        expect(amplitudeMock.logEvent).toHaveBeenNthCalledWith(1, 'sidevisning', {
             app: 'sykefravarsstatistikk',
             url: '/sykefravarsstatistikk/',
         });
-        expect(amplitudeMockClient.logEvent).toHaveBeenNthCalledWith(
+        expect(amplitudeMock.logEvent).toHaveBeenNthCalledWith(
             2,
             '#sykefravarsstatistikk-banner-bedrift valgt',
             {}
@@ -117,15 +117,15 @@ it('kaller ikke setUserProperties hvis vi ikke har ekstradata', () => {
         render(<WithAnalytics {...mockSykefraværNoEkstradata} />);
     });
 
-    expect(amplitudeMockClient.setUserProperties).not.toHaveBeenCalled();
-    expect(amplitudeMockClient.logEvent).not.toHaveBeenCalled();
+    expect(amplitudeMock.setUserProperties).not.toHaveBeenCalled();
+    expect(amplitudeMock.logEvent).not.toHaveBeenCalled();
 });
 
 const WithAnalytics = (data: SykefraværAppData) => {
-    useAnalytics(amplitudeMockClient);
+    useAnalytics(amplitudeMock);
     return (
         <BrowserRouter basename={'/sykefravarsstatistikk/?bedrift=910969439'}>
-            <AppContent {...data} analyticsClient={amplitudeMockClient} />
+            <AppContent {...data} analyticsClient={amplitudeMock} />
         </BrowserRouter>
     );
 };
