@@ -9,7 +9,7 @@ export const sendNavigereEvent = (destinasjon: string, lenketekst: string) => {
         eventname: 'navigere',
         data: {
             app: appnavn,
-            url: window.location.hostname,
+            url: window.location.pathname,
             destinasjon: destinasjon,
             lenketekst: lenketekst,
         },

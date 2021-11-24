@@ -62,24 +62,28 @@ it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
     expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
         panelnavn: 'TOTALT',
         app: 'sykefravarsstatistikk',
+        url: '/',
     });
 
     userEvent.click(sammenlikningspanel_gradert!);
     expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
         panelnavn: 'GRADERT',
         app: 'sykefravarsstatistikk',
+        url: '/',
     });
 
     userEvent.click(sammenlikningspanel_langtid!);
     expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
         panelnavn: 'LANGTID',
         app: 'sykefravarsstatistikk',
+        url: '/',
     });
 
     userEvent.click(sammenlikningspanel_korttid!);
     expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
         panelnavn: 'KORTTID',
         app: 'sykefravarsstatistikk',
+        url: '/',
     });
 });
 
