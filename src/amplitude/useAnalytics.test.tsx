@@ -42,6 +42,18 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', () => {
     );
 });
 
+it('Klikk på les-mer-panelet sender panel-ekspander event til Amplitude', () => {
+    const page = render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
+    const lesMerPanel = page.getByText('Slik har vi kommet fram til ditt resultat');
+
+    userEvent.click(lesMerPanel);
+    expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
+        app: 'sykefravarstatistikk',
+        url: '/sykefravarstatistikk',
+        panelnavn: 'slik-har-vi-kommet-fram-til-ditt-resultat',
+    });
+});
+
 it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
     const { container } = render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
 
@@ -88,8 +100,8 @@ it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
 });
 
 it('Klikk på lenke til Arbeidsmiljøportalen genererer event i amplitude', () => {
-    const a = render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
-    userEvent.click(a.getByText('Gå til Arbeidsmiljøportalen'));
+    const page = render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
+    userEvent.click(page.getByText('Gå til Arbeidsmiljøportalen'));
 
     expect(amplitudeMockClient.logEvent).toHaveBeenLastCalledWith('navigere', {
         app: 'sykefravarsstatistikk',
