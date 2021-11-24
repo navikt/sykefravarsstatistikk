@@ -6,13 +6,11 @@ import PanelBase from 'nav-frontend-paneler';
 import './KalkulatorPanel.less';
 import { PATH_KALKULATOR } from '../../konstanter';
 import { Link, useLocation } from 'react-router-dom';
-import { useSendEvent } from '../../amplitude/events';
 import classNames from 'classnames';
 import { PaneltittelMedIkon } from '../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
 
 const KalkulatorPanel: FunctionComponent<{ liten?: boolean }> = ({ liten }) => {
     const location = useLocation();
-    const sendEvent = useSendEvent();
 
     return (
         <PanelBase className={classNames('kalkulatorpanel', liten && 'kalkulatorpanel--liten')}>
@@ -28,7 +26,6 @@ const KalkulatorPanel: FunctionComponent<{ liten?: boolean }> = ({ liten }) => {
                     search: location.search,
                 }}
                 className="kalkulatorpanel__lenke"
-                onClick={() => sendEvent('forside kalkulator', 'klikk')}
             >
                 Gå til kostnadskalkulatoren
             </Link>

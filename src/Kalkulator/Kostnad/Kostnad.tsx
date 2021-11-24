@@ -23,7 +23,7 @@ let endringIUtregnetKostnadHarBlittLogget = false;
 const regnUtKostnadOgSendEventHvisTalletErEndret = (props: Props) => {
     if (utregnetKostnadHarBlittEndret && !endringIUtregnetKostnadHarBlittLogget) {
         // Endring i utregnet kostnad impliserer at brukeren har endret noe i minst ett av inputfeltene.
-        sendInputfeltUtfyltEvent(window.location.pathname, 'kalkulatorfeltene');
+        sendInputfeltUtfyltEvent('kalkulatorfeltene');
         endringIUtregnetKostnadHarBlittLogget = true;
     }
     utregnetKostnadHarBlittEndret = true;
@@ -46,11 +46,11 @@ const Kostnad: FunctionComponent<Props> = (props) => {
     const øktKostnadTekst = `Øker dere sykefraværet til ${formatertSykefraværMål} taper dere ytterligere årlig`;
 
     return (
-        <div className='kostnad'>
-            <Systemtittel tag='h2' className='kostnad__tittel'>
-                Resultat <SedlerIkon className='kostnad__ikon' />
+        <div className="kostnad">
+            <Systemtittel tag="h2" className="kostnad__tittel">
+                Resultat <SedlerIkon className="kostnad__ikon" />
             </Systemtittel>
-            <div className='kostnad__tekst'>
+            <div className="kostnad__tekst">
                 <Element>Totale kostnader per år med nåværende sykefravær</Element>
                 <Element>{somKroneverdi(props.nåværendeKostnad)}</Element>
             </div>
@@ -61,9 +61,7 @@ const Kostnad: FunctionComponent<Props> = (props) => {
 
             <div className={classNames('kostnad__tekst', 'kostnad__resultatrad')}>
                 <Element>
-                    {regnUtKostnad(props) >= 0
-                        ? redusertKostnadTekst
-                        : øktKostnadTekst}
+                    {regnUtKostnad(props) >= 0 ? redusertKostnadTekst : øktKostnadTekst}
                 </Element>
                 <Element
                     className={

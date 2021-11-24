@@ -28,28 +28,18 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', () => {
     const eventDataForFirstEvent = {
         eventname: 'knapp',
         data: {
+            app: 'someValue',
+            url: 'someValue',
             someKey: 'someValue',
         },
     };
+
     sendAnalytics(eventDataForFirstEvent);
+
     expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith(
         eventDataForFirstEvent.eventname,
         eventDataForFirstEvent.data
     );
-
-    const eventDataForSecondEvent = {
-        eventname: 'navigere',
-        data: {
-            someKey: 'someValue',
-        },
-    };
-    sendAnalytics(eventDataForSecondEvent);
-    expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith(
-        eventDataForSecondEvent.eventname,
-        eventDataForSecondEvent.data
-    );
-
-    expect(amplitudeMockClient.logEvent).toHaveBeenCalledTimes(2);
 });
 
 it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
