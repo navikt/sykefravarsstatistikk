@@ -20,7 +20,7 @@ export const erIaTjenesterMetrikkerSendtForBedrift = (
     } else {
         return sendteMetrikker.includes(orgnr);
     }
-};;
+};
 
 export const iaTjenesterMetrikkerErSendtForBedrift = (
     orgnr: string | undefined,
