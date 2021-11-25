@@ -78,7 +78,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             <SlikHarViKommetFramTilDittResultat
                 resultat={sammenligningResultatTotalt.sammenligningVurdering}
                 kvartaler={sammenligningResultatTotalt.kvartaler}
-                onÅpne={ function () {
+                onÅpne={ () => {
                     sendPanelEkspanderEvent('slik-har-vi-kommet-fram-til-ditt-resultat')
                 }}
             />
