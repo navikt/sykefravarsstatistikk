@@ -151,27 +151,27 @@ it('Visning av kalkulatoren rendrer sidevisning-event', async () => {
         render(<AppWithAnalytics {...mockSykefraværNoEkstradata} />);
     });
     const knappTilKalkis = screen.getByRole('link', { name: /Gå til kostnadskalkulatoren/i });
-    userEvent.click(knappTilKalkis, { button: 0 });
+    userEvent.click(knappTilKalkis);
 
-    // expect(amplitudeMock.logEvent).toHaveBeenCalledWith('navigere', {
-    //     app: 'sykefravarsstatistikk',
-    //     url: '/sykefravarsstatistikk/',
-    //     destinasjon: '/sykefravarsstatistikk/kalkulator/',
-    //     lenketekst: "Gå til kostnadskalkulatoren",
-    // })
-    //
-    // expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith('sidevisning', {
-    //     app: 'sykefravarsstatistikk',
-    //     url: '/sykefravarsstatistikk/kalkulator',
-    // })
-}, 60000);
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith('navigere', {
+        app: 'sykefravarsstatistikk',
+        url: '/sykefravarsstatistikk/',
+        destinasjon: '/sykefravarsstatistikk/kalkulator/',
+        lenketekst: 'Gå til kostnadskalkulatoren',
+    });
+
+    expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith('sidevisning', {
+        app: 'sykefravarsstatistikk',
+        url: '/sykefravarsstatistikk/kalkulator',
+    });
+});
 
 // TODO runar: test for at sidevisning-event kjører på nytt dersom brukeren bytter bedrift
 
 it('Kaller ikke setUserProperties hvis vi ikke har ekstradata', async () => {
     await waitFor(() => {
         render(<AppWithAnalytics {...mockSykefraværNoEkstradata} />);
-    };);
+    });
     expect(amplitudeMock.setUserProperties).not.toHaveBeenCalled();
     expect(amplitudeMock.logEvent).not.toHaveBeenCalled();
 });
@@ -179,16 +179,7 @@ it('Kaller ikke setUserProperties hvis vi ikke har ekstradata', async () => {
 const AppWithAnalytics = (data: SykefraværAppData) => {
     useAnalytics(amplitudeMock);
     return (
-        <BrowserRouter basename={'/sykefravarsstatistikk/?bedrift=910969439'}>
-            <AppContent {...data} analyticsClient={amplitudeMock} />
-        </BrowserRouter>
-    );
-};
-
-const KalkisWithAnalytics = (data: SykefraværAppData) => {
-    useAnalytics(amplitudeMock);
-    return (
-        <BrowserRouter basename={'/sykefravarsstatistikk/kalkulator?bedrift=910969439'}>
+        <BrowserRouter basename={'/sykefravarsstatistikk'}>
             <AppContent {...data} analyticsClient={amplitudeMock} />
         </BrowserRouter>
     );
