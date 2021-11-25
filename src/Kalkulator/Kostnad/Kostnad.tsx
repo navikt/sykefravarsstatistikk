@@ -4,7 +4,6 @@ import { ReactComponent as SedlerIkon } from '../sedlerIkon.svg';
 import './Kostnad.less';
 import classNames from 'classnames';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import { sendInputfeltUtfyltEvent } from '../../amplitude/events';
 
 interface Props {
     nåværendeKostnad: number;
@@ -17,16 +16,8 @@ const regnUtKostnad = (props: Props) => {
     return props.nåværendeKostnad - props.ønsketKostnad;
 };
 
-let utregnetKostnadHarBlittEndret = false;
-let endringIUtregnetKostnadHarBlittLogget = false;
 
 const regnUtKostnadOgSendEventHvisTalletErEndret = (props: Props) => {
-    if (utregnetKostnadHarBlittEndret && !endringIUtregnetKostnadHarBlittLogget) {
-        // Endring i utregnet kostnad impliserer at brukeren har endret noe i minst ett av inputfeltene.
-        sendInputfeltUtfyltEvent('kalkulatorfeltene');
-        endringIUtregnetKostnadHarBlittLogget = true;
-    }
-    utregnetKostnadHarBlittEndret = true;
     return somKroneverdi(regnUtKostnad(props));
 };
 

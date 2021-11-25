@@ -5,13 +5,11 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import PanelBase from 'nav-frontend-paneler';
 import './KalkulatorPanel.less';
 import { PATH_KALKULATOR } from '../../konstanter';
-import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import { PaneltittelMedIkon } from '../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
+import InternLenke from '../../felleskomponenter/InternLenke/InternLenke';
 
 const KalkulatorPanel: FunctionComponent<{ liten?: boolean }> = ({ liten }) => {
-    const location = useLocation();
-
     return (
         <PanelBase className={classNames('kalkulatorpanel', liten && 'kalkulatorpanel--liten')}>
             <PaneltittelMedIkon src={kalkisSvg} alt="Kalkulatorikon">
@@ -20,15 +18,13 @@ const KalkulatorPanel: FunctionComponent<{ liten?: boolean }> = ({ liten }) => {
             <Normaltekst className="kalkulatorpanel__ingress">
                 Her kan du beregne hvor mye sykefraværet koster, og hvor mye du kan spare.
             </Normaltekst>
-            <Link
-                to={{
-                    pathname: PATH_KALKULATOR,
-                    search: location.search,
-                }}
+            <InternLenke
+                pathname={PATH_KALKULATOR}
+                onClick={() => {}}
                 className="kalkulatorpanel__lenke"
             >
                 Gå til kostnadskalkulatoren
-            </Link>
+            </InternLenke>
         </PanelBase>
     );
 };
