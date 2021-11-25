@@ -1,6 +1,6 @@
 import { sendAnalytics, useAnalytics } from './useAnalytics';
 import { amplitudeMock } from '../mocking/amplitude-mock';
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { mockSykefraværNoEkstradata, mockSykefraværWithEkstradata } from '../mocking/data-mocks';
 import { BrowserRouter } from 'react-router-dom';
@@ -144,6 +144,13 @@ it('sidevisning event kalles med riktige user properties', async () => {
         app: 'sykefravarsstatistikk',
         url: '/sykefravarsstatistikk/',
     });
+});
+
+it('Klikk på kalkultoren trigger klikk-event, deretter sidevisning-event', () => {
+    await waitFor(() => {
+        render(<WithAnalytics {...mockSykefraværNoEkstradata} />);
+    });
+    const kalkis = screen.getByRole('link');
 });
 
 // TODO runar: test for at sidevisning-event kjører på nytt dersom brukeren bytter bedrift
