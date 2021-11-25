@@ -1,6 +1,6 @@
 import { sendAnalytics, useAnalytics } from './useAnalytics';
 import { amplitudeMock } from '../mocking/amplitude-mock';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import { mockSykefraværNoEkstradata, mockSykefraværWithEkstradata } from '../mocking/data-mocks';
 import { BrowserRouter } from 'react-router-dom';
@@ -20,7 +20,6 @@ afterEach(() => {
 it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => {
     await waitFor(() => {
         render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
-
     });
     const eventDataForFirstEvent = {
         eventname: 'knapp',
@@ -44,7 +43,7 @@ it('Klikk på les-mer-panelet sender panel-ekspander event til Amplitude', () =>
     const lesMerPanel = page.getByText('Slik har vi kommet fram til ditt resultat');
 
     userEvent.click(lesMerPanel);
-    expect(amplitudeMockClient.logEvent).toHaveBeenCalledWith('panel-ekspander', {
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith('panel-ekspander', {
         app: 'sykefravarsstatistikk',
         url: '/sykefravarsstatistikk/',
         panelnavn: 'slik-har-vi-kommet-fram-til-ditt-resultat',
@@ -54,16 +53,17 @@ it('Klikk på les-mer-panelet sender panel-ekspander event til Amplitude', () =>
 it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
     await waitFor(() => {
         render(<WithAnalytics {...mockSykefraværWithEkstradata} />);
-
     });
-    const sammenlikningspanel_total = document.querySelector('#ekspanderbart-sammenligningspanel__tittel-knapp-TOTALT');
-    const sammenlikningspanel_gradert = container.querySelector(
+    const sammenlikningspanel_total = document.querySelector(
+        '#ekspanderbart-sammenligningspanel__tittel-knapp-TOTALT'
+    );
+    const sammenlikningspanel_gradert = document.querySelector(
         '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
     );
-    const sammenlikningspanel_langtid = container.querySelector(
+    const sammenlikningspanel_langtid = document.querySelector(
         '#ekspanderbart-sammenligningspanel__tittel-knapp-LANGTID'
     );
-    const sammenlikningspanel_korttid = container.querySelector(
+    const sammenlikningspanel_korttid = document.querySelector(
         '#ekspanderbart-sammenligningspanel__tittel-knapp-KORTTID'
     );
 
