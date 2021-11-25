@@ -35,8 +35,8 @@ import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 import {
     getEkstradata,
     SykefraværAppData,
-    useSykefravarsstatistikk,
-} from './hooks/useSykefravarsstatistikk';
+    useSykefraværAppData,
+} from './hooks/useSykefraværAppData';
 import { AnalyticsClient } from './amplitude/client';
 import { useAnalytics } from './amplitude/useAnalytics';
 
@@ -51,7 +51,7 @@ const App: FunctionComponent<Props> = ({ analyticsClient, samtalestøttePodlet }
         <IaTjenesterMetrikkerContextProvider>
             <main id="maincontent">
                 <AppContent
-                    {...useSykefravarsstatistikk()}
+                    {...useSykefraværAppData()}
                     analyticsClient={analyticsClient}
                     samtalestøttePodlet={samtalestøttePodlet}
                 />
@@ -64,10 +64,10 @@ export const AppContent = ({
     altinnOrganisasjoner,
     altinnOrganisasjonerMedStatistikk,
     summertSykefravær,
-    fraværshistorikk,
+    sykefraværshistorikk,
     virksomhetsdata,
     analyticsClient,
-    enhetsInformasjon,
+    enhetsregisterdata,
     samtalestøttePodlet,
 }: SykefraværAppData & {
     analyticsClient?: AnalyticsClient;
@@ -75,27 +75,27 @@ export const AppContent = ({
 }) => {
     const datakilder: RestRessurs<any>[] = useMemo(() => {
         return [
-            fraværshistorikk,
+            sykefraværshistorikk,
             summertSykefravær,
             virksomhetsdata,
-            enhetsInformasjon.restOverordnetEnhet,
-            enhetsInformasjon.restUnderenhet,
+            enhetsregisterdata.restOverordnetEnhet,
+            enhetsregisterdata.restUnderenhet,
         ];
     }, [
-        fraværshistorikk,
+        sykefraværshistorikk,
         summertSykefravær,
         virksomhetsdata,
-        enhetsInformasjon.restOverordnetEnhet,
-        enhetsInformasjon.restUnderenhet,
+        enhetsregisterdata.restOverordnetEnhet,
+        enhetsregisterdata.restUnderenhet,
     ]);
 
     useEffect(() => {
         if (datakilder.every((ressurs) => ressurs.status === RestStatus.Suksess)) {
             const ekstradata = getEkstradata({
-                fraværshistorikk,
+                sykefraværshistorikk,
                 summertSykefravær,
                 virksomhetsdata,
-                enhetsInformasjon,
+                enhetsregisterdata,
             });
             analyticsClient?.setUserProperties({
                 ...ekstradata,
@@ -106,10 +106,10 @@ export const AppContent = ({
             });
         }
     }, [
-        fraværshistorikk,
+        sykefraværshistorikk,
         summertSykefravær,
         virksomhetsdata,
-        enhetsInformasjon,
+        enhetsregisterdata,
         datakilder,
         analyticsClient,
     ]);
@@ -118,7 +118,7 @@ export const AppContent = ({
     const restOrganisasjonerMedStatistikk = altinnOrganisasjonerMedStatistikk;
 
     const restSummertSykefraværshistorikk = summertSykefravær;
-    const restSykefraværshistorikk = fraværshistorikk;
+    const restSykefraværshistorikk = sykefraværshistorikk;
     const restvirksomhetsdata = virksomhetsdata;
 
     const [restKursliste, setRestKursliste] = useState<RestKursliste>({

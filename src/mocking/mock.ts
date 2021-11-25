@@ -22,6 +22,7 @@ const mock = {
     enhetsregisteret: true,
     featureToggles: true,
     kursliste: true,
+    iatjenester: true,
 };
 
 let delayfaktor = 0;
@@ -150,6 +151,14 @@ if (mock.featureToggles) {
 
 if (mock.kursliste) {
     mockGetAndLog(KURSOVERSIKT_API_PATH, kurslisteMock);
+}
+
+if (mock.iatjenester) {
+    fetchMock.post('end:/ia-tjenester-metrikker/innlogget/mottatt-iatjeneste', {
+        body: {
+            status: 'created',
+        },
+    });
 }
 
 fetchMock.spy();

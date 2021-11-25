@@ -170,9 +170,9 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
         <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
             <EkspanderbartpanelBase
                 onClick={() => {
-                    setErÅpen(!erÅpen);
-                    if (!erÅpen) {
-                        // Vi har åpnet panelet
+                    const skalPaneletÅpnes = !erÅpen;
+                    setErÅpen(skalPaneletÅpnes);
+                    if (skalPaneletÅpnes) {
                         sendPanelEkspanderEvent(sammenligningsType);
                     }
                 }}

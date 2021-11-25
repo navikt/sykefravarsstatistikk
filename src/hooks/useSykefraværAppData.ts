@@ -3,7 +3,7 @@ import { useAltinnOrganisasjoner } from './useAltinnOrganisasjoner';
 import { useAltinnOrganisasjonerMedStatistikk } from './useAltinnOrganisasjonerMedStatistikk';
 import { RestVirksomhetsdata } from '../api/virksomhetsdata-api';
 import { useVirksomhetsdata } from './useVirksomhetsdata';
-import { EnhetsregisteretState, useEnheter } from './useEnheter';
+import { Enhetsregisterdata, useEnheter } from './useEnheter';
 import { RestSummertSykefraværshistorikk } from '../api/summert-sykefraværshistorikk-api';
 import { useSummertSykefravær } from './useSummertSykefravær';
 import { useSykefraværshistorikk } from './useSykefraværshistorikk';
@@ -22,47 +22,50 @@ export interface SykefraværAppData {
     altinnOrganisasjoner: RestAltinnOrganisasjoner;
     altinnOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
     virksomhetsdata: RestVirksomhetsdata;
-    enhetsInformasjon: EnhetsregisteretState;
+    enhetsregisterdata: Enhetsregisterdata;
     summertSykefravær: RestSummertSykefraværshistorikk;
-    fraværshistorikk: RestSykefraværshistorikk;
+    sykefraværshistorikk: RestSykefraværshistorikk;
     featureToggles: RestFeatureToggles;
 }
 
-export function useSykefravarsstatistikk(): SykefraværAppData {
+export function useSykefraværAppData(): SykefraværAppData {
     const altinnOrganisasjoner = useAltinnOrganisasjoner();
     const altinnOrganisasjonerMedStatistikk = useAltinnOrganisasjonerMedStatistikk();
     const virksomhetsdata = useVirksomhetsdata();
-    const enhetsInformasjon = useEnheter();
+    const enhetsregisterdata = useEnheter();
     const summertSykefravær = useSummertSykefravær();
-    const fraværshistorikk = useSykefraværshistorikk();
+    const sykefraværshistorikk = useSykefraværshistorikk();
     const featureToggles = useFeatureToggles();
 
     return {
         altinnOrganisasjoner,
         altinnOrganisasjonerMedStatistikk,
         virksomhetsdata,
-        enhetsInformasjon,
+        enhetsregisterdata,
         summertSykefravær,
-        fraværshistorikk,
+        sykefraværshistorikk,
         featureToggles,
     };
 }
 
 export function getEkstradata({
-    fraværshistorikk,
+    sykefraværshistorikk,
     summertSykefravær,
     virksomhetsdata,
-    enhetsInformasjon,
+    enhetsregisterdata,
 }: {
     summertSykefravær: RestSummertSykefraværshistorikk;
-    fraværshistorikk: RestSykefraværshistorikk;
+    sykefraværshistorikk: RestSykefraværshistorikk;
     virksomhetsdata: RestVirksomhetsdata;
-    enhetsInformasjon: EnhetsregisteretState;
+    enhetsregisterdata: Enhetsregisterdata;
 }): Partial<Ekstradata> {
     return {
         ...getEkstraDataFraVirksomhetsdata(virksomhetsdata),
-        ...getEkstraDataFraSykefraværshistorikk(fraværshistorikk),
+        ...getEkstraDataFraSykefraværshistorikk(sykefraværshistorikk),
         ...getEkstraDataFraSummertSykefraværshistorikk(summertSykefravær, virksomhetsdata),
-        ...getEkstraDataFraEnhetsregisteret(enhetsInformasjon.restOverordnetEnhet, virksomhetsdata),
+        ...getEkstraDataFraEnhetsregisteret(
+            enhetsregisterdata.restOverordnetEnhet,
+            virksomhetsdata
+        ),
     };
 }
