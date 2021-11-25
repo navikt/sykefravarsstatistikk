@@ -1,35 +1,27 @@
 const jsdom = require('jsdom');
-const request = require('request');
+const axios = require('axios');
 
 const { JSDOM } = jsdom;
 
 const url =
     'https://www.nav.no/dekoratoren/?context=arbeidsgiver&redirectToApp=true&feedback=false';
 
-const requestDecorator = (callback) => request(url, callback);
+function getDecoratorValuesFromBody(body) {
+    const { document } = new JSDOM(body).window;
+    const prop = 'innerHTML';
 
-const getDecorator = () =>
-    new Promise((resolve, reject) => {
-        const callback = (error, response, body) => {
-            if (!error && response.statusCode >= 200 && response.statusCode < 400) {
-                const { document } = new JSDOM(body).window;
-                const prop = 'innerHTML';
+    return {
+        NAV_SCRIPTS: document.getElementById('scripts')[prop],
+        NAV_STYLES: document.getElementById('styles')[prop],
+        NAV_HEADING: document.getElementById('header-withmenu')[prop],
+        NAV_FOOTER: document.getElementById('footer-withmenu')[prop],
+        NAV_MENU_RESOURCES: document.getElementById('megamenu-resources')[prop],
+    };
+}
 
-                const data = {
-                    NAV_SCRIPTS: document.getElementById('scripts')[prop],
-                    NAV_STYLES: document.getElementById('styles')[prop],
-                    NAV_HEADING: document.getElementById('header-withmenu')[prop],
-                    NAV_FOOTER: document.getElementById('footer-withmenu')[prop],
-                    NAV_MENU_RESOURCES: document.getElementById('megamenu-resources')[prop],
-                };
-                resolve(data);
-            } else {
-                console.log(error);
-                reject(new Error(error));
-            }
-        };
-
-        requestDecorator(callback);
-    });
+async function getDecorator() {
+    const { data: body } = await axios.get(url);
+    return getDecoratorValuesFromBody(body);
+}
 
 module.exports = getDecorator;
