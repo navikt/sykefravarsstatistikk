@@ -159,7 +159,7 @@ it('Kaller ikke setUserProperties hvis vi ikke har ekstradata', async () => {
 const WithAnalytics = (data: SykefraværAppData) => {
     useAnalytics(amplitudeMock);
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={'/sykefravarsstatistikk/?bedrift=910969439'}>
             <AppContent {...data} analyticsClient={amplitudeMock} />
         </BrowserRouter>
     );
