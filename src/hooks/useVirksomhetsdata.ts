@@ -1,13 +1,9 @@
-import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
-import { RestStatus } from '../api/api-utils';
+import { useEffect, useState } from 'react';
 import { hentRestvirksomhetsdata, RestVirksomhetsdata } from '../api/virksomhetsdata-api';
-import { useOrgnr } from './orgnr-hook';
+import { RestStatus } from '../api/api-utils';
+import { useOrgnr } from './useOrgnr';
 
-export const virksomhetsdataContext = createContext<RestVirksomhetsdata>({
-    status: RestStatus.IkkeLastet,
-});
-
-export const VirksomhetsdataProvider: FunctionComponent = (props) => {
+export function useVirksomhetsdata() {
     const orgnr = useOrgnr();
     const [restVirksomhetsdata, setRestVirksomhetsdata] = useState<RestVirksomhetsdata>({
         status: RestStatus.IkkeLastet,
@@ -24,7 +20,5 @@ export const VirksomhetsdataProvider: FunctionComponent = (props) => {
             hentRestVirksomhetsdataOgSettState();
         }
     }, [orgnr]);
-
-    const Provider = virksomhetsdataContext.Provider;
-    return <Provider value={restVirksomhetsdata}>{props.children}</Provider>;
-};
+    return restVirksomhetsdata;
+}

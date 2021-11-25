@@ -4,12 +4,16 @@ import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import { sendKnappEvent, sendSidevisningEvent, useSendSidevisningEvent } from '../../amplitude/events';
+import {
+    sendKnappEvent,
+    sendSidevisningEvent,
+    useSendSidevisningEvent,
+} from '../../amplitude/events';
 import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
-import { useOrgnr } from '../../utils/orgnr-hook';
 import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../../metrikker/iatjenester';
+import { useOrgnr } from '../../hooks/useOrgnr';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -17,7 +21,7 @@ interface Props {
 
 const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => {
     const [kalkulatorvariant, setKalkulatorvariant] = useState<Kalkulatorvariant>(
-        Kalkulatorvariant.Prosent,
+        Kalkulatorvariant.Prosent
     );
     const orgnr = useOrgnr();
     useSendSidevisningEvent('kalkulator', orgnr);
@@ -33,21 +37,21 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     }, []);
 
     return (
-        <div className='kalkulator__wrapper'>
-            <div className='kalkulator'>
+        <div className="kalkulator__wrapper">
+            <div className="kalkulator">
                 <div>
-                    <div className='kalkulator__tittel-wrapper'>
+                    <div className="kalkulator__tittel-wrapper">
                         <div>
-                            <Systemtittel tag='h1' className='kalkulator__tittel'>
+                            <Systemtittel tag="h1" className="kalkulator__tittel">
                                 Hvor mye koster sykefraværet?
                             </Systemtittel>
-                            <Normaltekst className='kalkulator__ingress'>
-                                Her kan du beregne hvor mye sykefraværet koster og hvor mye du
-                                kan spare. Lønnskostnader og sykepengerefusjon er ikke med i
+                            <Normaltekst className="kalkulator__ingress">
+                                Her kan du beregne hvor mye sykefraværet koster og hvor mye du kan
+                                spare. Lønnskostnader og sykepengerefusjon er ikke med i
                                 regnestykket og kommer i tillegg til kostnad per dag.
                             </Normaltekst>
                         </div>
-                        <div className='kalkulator__dagsverk-eller-prosent-toggle'>
+                        <div className="kalkulator__dagsverk-eller-prosent-toggle">
                             <ToggleKnappPure
                                 pressed={kalkulatorvariant === Kalkulatorvariant.Prosent}
                                 onClick={() => {
@@ -68,7 +72,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                             </ToggleKnappPure>
                         </div>
                     </div>
-                    <Normaltekst className='kalkulator__input-overskrift'>
+                    <Normaltekst className="kalkulator__input-overskrift">
                         Fyll inn og juster tallene så de passer for deg
                     </Normaltekst>
                     {kalkulatorvariant === Kalkulatorvariant.Dagsverk ? (
@@ -76,9 +80,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                             restSykefraværshistorikk={restSykefraværshistorikk}
                         />
                     ) : (
-                        <KalkulatorMedProsent
-                            restSykefraværshistorikk={restSykefraværshistorikk}
-                        />
+                        <KalkulatorMedProsent restSykefraværshistorikk={restSykefraværshistorikk} />
                     )}
                 </div>
             </div>
