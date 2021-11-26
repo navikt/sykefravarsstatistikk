@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { SykefraværAppData } from '../hooks/useSykefraværAppData';
 import userEvent from '@testing-library/user-event';
 import { AppContent } from '../App';
+import { BASE_PATH } from '../konstanter';
 
 beforeEach(() => {
     jest.spyOn(amplitudeMock, 'setUserProperties');
@@ -38,9 +39,11 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => 
     );
 });
 
-it('Klikk på les-mer-panelet sender panel-ekspander event til Amplitude', () => {
-    const page = render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
-    const lesMerPanel = page.getByText('Slik har vi kommet fram til ditt resultat');
+it('Klikk på les-mer-panelet sender panel-ekspander event til Amplitude', async () => {
+    await waitFor(() => {
+        render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
+    });
+    const lesMerPanel = screen.getByText('Slik har vi kommet fram til ditt resultat');
 
     userEvent.click(lesMerPanel);
     expect(amplitudeMock.logEvent).toHaveBeenCalledWith('panel-ekspander', {
@@ -96,9 +99,11 @@ it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
     });
 });
 
-it('Klikk på lenke til Arbeidsmiljøportalen genererer event i amplitude', () => {
-    const page = render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
-    userEvent.click(page.getByText('Gå til Arbeidsmiljøportalen'));
+it('Klikk på lenke til Arbeidsmiljøportalen genererer event i amplitude', async () => {
+    await waitFor(() => {
+        render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
+    });
+    userEvent.click(screen.getByText('Gå til Arbeidsmiljøportalen'));
 
     expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith('navigere', {
         app: 'sykefravarsstatistikk',
@@ -179,7 +184,7 @@ it('Kaller ikke setUserProperties hvis vi ikke har ekstradata', async () => {
 const AppWithAnalytics = (data: SykefraværAppData) => {
     useAnalytics(amplitudeMock);
     return (
-        <BrowserRouter basename={'/sykefravarsstatistikk'}>
+        <BrowserRouter basename={BASE_PATH}>
             <AppContent {...data} analyticsClient={amplitudeMock} />
         </BrowserRouter>
     );
