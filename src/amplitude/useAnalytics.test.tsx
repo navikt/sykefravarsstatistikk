@@ -30,9 +30,7 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => 
             someKey: 'someValue',
         },
     };
-
     sendAnalytics(eventDataForFirstEvent);
-
     expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
         eventDataForFirstEvent.eventname,
         eventDataForFirstEvent.data
@@ -46,11 +44,13 @@ it('Klikk på les-mer-panelet sender panel-ekspander event til Amplitude', async
     const lesMerPanel = screen.getByText('Slik har vi kommet fram til ditt resultat');
 
     userEvent.click(lesMerPanel);
-    expect(amplitudeMock.logEvent).toHaveBeenCalledWith('panel-ekspander', {
-        app: 'sykefravarsstatistikk',
-        url: '/sykefravarsstatistikk/',
-        panelnavn: 'slik-har-vi-kommet-fram-til-ditt-resultat',
-    });
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
+        'panel-ekspander',
+        expect.objectContaining({
+            app: 'sykefravarsstatistikk',
+            panelnavn: 'slik-har-vi-kommet-fram-til-ditt-resultat',
+        })
+    );
 });
 
 it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
@@ -71,32 +71,40 @@ it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
     );
 
     userEvent.click(sammenlikningspanel_total!);
-    expect(amplitudeMock.logEvent).toHaveBeenCalledWith('panel-ekspander', {
-        panelnavn: 'TOTALT',
-        app: 'sykefravarsstatistikk',
-        url: '/sykefravarsstatistikk/',
-    });
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
+        'panel-ekspander',
+        expect.objectContaining({
+            panelnavn: 'TOTALT',
+            app: 'sykefravarsstatistikk',
+        })
+    );
 
     userEvent.click(sammenlikningspanel_gradert!);
-    expect(amplitudeMock.logEvent).toHaveBeenCalledWith('panel-ekspander', {
-        panelnavn: 'GRADERT',
-        app: 'sykefravarsstatistikk',
-        url: '/sykefravarsstatistikk/',
-    });
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
+        'panel-ekspander',
+        expect.objectContaining({
+            panelnavn: 'GRADERT',
+            app: 'sykefravarsstatistikk',
+        })
+    );
 
     userEvent.click(sammenlikningspanel_langtid!);
-    expect(amplitudeMock.logEvent).toHaveBeenCalledWith('panel-ekspander', {
-        panelnavn: 'LANGTID',
-        app: 'sykefravarsstatistikk',
-        url: '/sykefravarsstatistikk/',
-    });
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
+        'panel-ekspander',
+        expect.objectContaining({
+            panelnavn: 'LANGTID',
+            app: 'sykefravarsstatistikk',
+        })
+    );
 
     userEvent.click(sammenlikningspanel_korttid!);
-    expect(amplitudeMock.logEvent).toHaveBeenCalledWith('panel-ekspander', {
-        panelnavn: 'KORTTID',
-        app: 'sykefravarsstatistikk',
-        url: '/sykefravarsstatistikk/',
-    });
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
+        'panel-ekspander',
+        expect.objectContaining({
+            panelnavn: 'KORTTID',
+            app: 'sykefravarsstatistikk',
+        })
+    );
 });
 
 it('Klikk på lenke til Arbeidsmiljøportalen genererer event i amplitude', async () => {
@@ -105,12 +113,14 @@ it('Klikk på lenke til Arbeidsmiljøportalen genererer event i amplitude', asyn
     });
     userEvent.click(screen.getByText('Gå til Arbeidsmiljøportalen'));
 
-    expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith('navigere', {
-        app: 'sykefravarsstatistikk',
-        url: '/sykefravarsstatistikk/',
-        lenketekst: 'Gå til Arbeidsmiljøportalen',
-        destinasjon: 'https://www.arbeidsmiljoportalen.no',
-    });
+    expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
+        'navigere',
+        expect.objectContaining({
+            app: 'sykefravarsstatistikk',
+            lenketekst: 'Gå til Arbeidsmiljøportalen',
+            destinasjon: 'https://www.arbeidsmiljoportalen.no',
+        })
+    );
 });
 
 it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', async () => {
@@ -122,11 +132,13 @@ it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', asy
     );
 
     userEvent.click(panel!);
-    expect(amplitudeMock.logEvent).not.toHaveBeenCalledWith('panel-ekspander', {
-        panelnavn: 'TOTALT',
-        app: 'sykefravarsstatistikk',
-        url: '/sykefravarsstatistikk/',
-    });
+    expect(amplitudeMock.logEvent).not.toHaveBeenCalledWith(
+        'panel-ekspander',
+        expect.objectContaining({
+            panelnavn: 'TOTALT',
+            app: 'sykefravarsstatistikk',
+        })
+    );
 });
 
 it('sidevisning event kalles med riktige user properties', async () => {
@@ -145,10 +157,12 @@ it('sidevisning event kalles med riktige user properties', async () => {
         sammenligning: 'virksomhet ligger 8-10 over',
         sykefraværSiste4Kvartaler: 'MIDDELS',
     });
-    expect(amplitudeMock.logEvent).toHaveBeenCalledWith('sidevisning', {
-        app: 'sykefravarsstatistikk',
-        url: '/sykefravarsstatistikk/',
-    });
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
+        'sidevisning',
+        expect.objectContaining({
+            app: 'sykefravarsstatistikk',
+        })
+    );
 });
 
 it('Visning av kalkulatoren rendrer sidevisning-event', async () => {
@@ -158,17 +172,21 @@ it('Visning av kalkulatoren rendrer sidevisning-event', async () => {
     const knappTilKalkis = screen.getByRole('link', { name: /Gå til kostnadskalkulatoren/i });
     userEvent.click(knappTilKalkis);
 
-    expect(amplitudeMock.logEvent).toHaveBeenCalledWith('navigere', {
-        app: 'sykefravarsstatistikk',
-        url: '/sykefravarsstatistikk/',
-        destinasjon: '/kalkulator',
-        lenketekst: 'Gå til kostnadskalkulatoren',
-    });
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
+        'navigere',
+        expect.objectContaining({
+            app: 'sykefravarsstatistikk',
+            destinasjon: '/kalkulator',
+            lenketekst: 'Gå til kostnadskalkulatoren',
+        })
+    );
 
-    expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith('sidevisning', {
-        app: 'sykefravarsstatistikk',
-        url: '/sykefravarsstatistikk/kalkulator',
-    });
+    expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
+        'sidevisning',
+        expect.objectContaining({
+            app: 'sykefravarsstatistikk',
+        })
+    );
 });
 
 // TODO runar: test for at sidevisning-event kjører på nytt dersom brukeren bytter bedrift
@@ -178,10 +196,9 @@ it('Kaller ikke setUserProperties hvis vi ikke har ekstradata', async () => {
         render(<AppWithAnalytics {...mockSykefraværNoEkstradata} />);
     });
     expect(amplitudeMock.setUserProperties).not.toHaveBeenCalled();
-    expect(amplitudeMock.logEvent).not.toHaveBeenCalled();
 });
 
-it('Kaller bedrift-valgt event når', async () => {
+it('Kaller bedrift-valgt event når vi velger virksomhet', async () => {
     await waitFor(() => {
         render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
     });
@@ -190,10 +207,12 @@ it('Kaller bedrift-valgt event når', async () => {
     const ønsketVirksomhet = screen.getAllByLabelText(/virksomhetsnr. 444444444/i)[0];
     userEvent.click(ønsketVirksomhet);
     await waitFor(() => {
-        expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith('bedrift-valgt', {
-            app: 'sykefravarsstatistikk',
-            url: '/sykefravarsstatistikk/',
-        });
+        expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
+            'bedrift-valgt',
+            expect.objectContaining({
+                app: 'sykefravarsstatistikk',
+            })
+        );
     });
 });
 

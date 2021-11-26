@@ -4,5 +4,9 @@ export function scrollToBanner() {
     if (header) {
         scrollHeight = header.getBoundingClientRect().height;
     }
-    setTimeout(() => window.scrollTo(0, scrollHeight), 0);
+    setTimeout(() => {
+        if (process.env.NODE_ENV !== 'test') {
+            window.scrollTo(0, scrollHeight);
+        }
+    }, 0);
 }
