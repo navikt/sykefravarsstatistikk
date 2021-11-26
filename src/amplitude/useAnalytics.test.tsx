@@ -148,7 +148,7 @@ it('sidevisning event kalles med riktige user properties', async () => {
 
 it('Visning av kalkulatoren rendrer sidevisning-event', async () => {
     await waitFor(() => {
-        render(<AppWithAnalytics {...mockSykefraværNoEkstradata} />);
+        render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
     });
     const knappTilKalkis = screen.getByRole('link', { name: /Gå til kostnadskalkulatoren/i });
     userEvent.click(knappTilKalkis);
