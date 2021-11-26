@@ -47,6 +47,16 @@ export const sendInputfeltUtfyltEvent = (label: string) => {
     });
 };
 
+export const sendBedriftValgtEvent = () => {
+    sendAnalytics({
+        eventname: 'bedrift-valgt',
+        data: {
+            url: window.location.pathname,
+            app: appnavn,
+        },
+    });
+};
+
 export function sendPanelEkspanderEvent(panelnavn: string) {
     sendAnalytics({
         eventname: 'panel-ekspander',

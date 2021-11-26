@@ -5,6 +5,7 @@ import Bedriftsmeny from '@navikt/bedriftsmeny';
 import '@navikt/bedriftsmeny/lib/bedriftsmeny.css';
 import { RestStatus } from '../api/api-utils';
 import { AltinnOrganisasjon, RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
+import { sendBedriftValgtEvent } from '../amplitude/events';
 
 interface Props {
     tittel: string;
@@ -20,7 +21,7 @@ const Banner: React.FunctionComponent<Props & RouteComponentProps> = (props) => 
             organisasjoner={altinnOrganisasjoner}
             sidetittel={tittel}
             history={history}
-            onOrganisasjonChange={() => {}} // TODO: Lag en sendBedriftValgtEvent-metode
+            onOrganisasjonChange={sendBedriftValgtEvent}
         />
     );
 };

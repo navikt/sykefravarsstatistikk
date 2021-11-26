@@ -181,6 +181,22 @@ it('Kaller ikke setUserProperties hvis vi ikke har ekstradata', async () => {
     expect(amplitudeMock.logEvent).not.toHaveBeenCalled();
 });
 
+it('Kaller bedrift-valgt event når', async () => {
+    await waitFor(() => {
+        render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
+    });
+    const virksomhetsVelger = screen.getByLabelText(/velg virksomhet/i);
+    userEvent.click(virksomhetsVelger);
+    const ønsketVirksomhet = screen.getAllByLabelText(/virksomhetsnr. 444444444/i)[0];
+    userEvent.click(ønsketVirksomhet);
+    await waitFor(() => {
+        expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith('bedrift-valgt', {
+            app: 'sykefravarsstatistikk',
+            url: '/sykefravarsstatistikk/',
+        });
+    });
+});
+
 const AppWithAnalytics = (data: SykefraværAppData) => {
     useAnalytics(amplitudeMock);
     return (

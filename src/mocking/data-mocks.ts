@@ -40,6 +40,14 @@ export const mockSykefraværWithEkstradata: SykefraværAppData = {
                 Status: 'Active',
                 ParentOrganizationNumber: '111111111',
             },
+            {
+                Name: 'FLESK OG FISK SIGDAL',
+                Type: 'Business',
+                OrganizationNumber: '444444444',
+                OrganizationForm: 'BEDR',
+                Status: 'Active',
+                ParentOrganizationNumber: '111111111',
+            },
         ],
     },
     virksomhetsdata: {
