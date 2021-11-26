@@ -33,6 +33,14 @@ export const mockSykefraværWithEkstradata: SykefraværAppData = {
         status: RestStatus.Suksess,
         data: [
             {
+                Name: 'FLESK OG FISK AS',
+                Type: 'Enterprise',
+                OrganizationNumber: '111111111',
+                OrganizationForm: 'AS',
+                Status: 'Active',
+                ParentOrganizationNumber: '',
+            },
+            {
                 Name: 'FLESK OG FISK OSLO',
                 Type: 'Business',
                 OrganizationNumber: '910969439',
