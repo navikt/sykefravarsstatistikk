@@ -16,10 +16,9 @@ import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
 import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
-import Lenke from 'nav-frontend-lenker';
 import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { OmGradertSykmelding } from '../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
-import { BASE_PATH } from '../../konstanter';
+import { PATH_KALKULATOR } from '../../konstanter';
 import {
     erIaTjenesterMetrikkerSendtForBedrift,
     iaTjenesterMetrikkerErSendtForBedrift,
@@ -29,6 +28,7 @@ import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikke
 import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 import { useOrgnr } from '../../hooks/useOrgnr';
 import { sendPanelEkspanderEvent } from '../../amplitude/events';
+import InternLenke from '../../felleskomponenter/InternLenke/InternLenke';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -95,7 +95,9 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         hvor stor andel disse utgjør av alle legemeldte fraværsdager i din
                         virksomhet. Du kan finne antallet legemeldte fraværsdager for din virksomhet
                         under tapte dagsverk i{' '}
-                        <Lenke href={`${BASE_PATH}/kalkulator`}>kostnadskalkulatoren.</Lenke>
+                        <InternLenke pathname={PATH_KALKULATOR} onClick={() => {}}>
+                            kostnadskalkulatoren.
+                        </InternLenke>
                     </Normaltekst>
                     <LesMerPanel
                         åpneLabel={'Se eksempel'}
