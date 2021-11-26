@@ -4,7 +4,7 @@ import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import { sendKnappEvent } from '../../amplitude/events';
+import {sendKnappEvent, sendSidevisningEvent} from '../../amplitude/events';
 import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
@@ -20,8 +20,8 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     );
 
     useSendIaTjenesteMetrikkMottattVedSidevisningEvent();
-
     useEffect(() => {
+        sendSidevisningEvent();
         scrollToBanner();
     }, []);
 

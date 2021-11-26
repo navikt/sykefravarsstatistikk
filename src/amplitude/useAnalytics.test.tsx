@@ -161,7 +161,7 @@ it('Visning av kalkulatoren rendrer sidevisning-event', async () => {
     expect(amplitudeMock.logEvent).toHaveBeenCalledWith('navigere', {
         app: 'sykefravarsstatistikk',
         url: '/sykefravarsstatistikk/',
-        destinasjon: '/sykefravarsstatistikk/kalkulator/',
+        destinasjon: '/kalkulator',
         lenketekst: 'Gå til kostnadskalkulatoren',
     });
 
