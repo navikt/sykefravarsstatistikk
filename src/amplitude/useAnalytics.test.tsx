@@ -204,7 +204,7 @@ it('Kaller bedrift-valgt event når vi velger virksomhet', async () => {
     });
     const virksomhetsVelger = screen.getByLabelText(/velg virksomhet/i);
     userEvent.click(virksomhetsVelger);
-    const ønsketVirksomhet = screen.getAllByLabelText(/virksomhetsnr. 444444444/i)[0];
+    const ønsketVirksomhet = screen.getByLabelText(/virksomhetsnr. 444444444/i);
     userEvent.click(ønsketVirksomhet);
     await waitFor(() => {
         expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(

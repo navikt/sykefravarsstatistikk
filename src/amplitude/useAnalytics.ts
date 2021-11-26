@@ -12,6 +12,7 @@ const ANALYTICS_EVENT = 'amplitude';
 export const useAnalytics = <T extends AnalyticsData>(client: AnalyticsClient) => {
     useEffect(() => {
         const listener = (event: Event) => {
+            event.stopImmediatePropagation();
             let {
                 detail: { data, eventname },
             } = event as CustomEvent<T>;
