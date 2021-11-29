@@ -95,9 +95,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                         hvor stor andel disse utgjør av alle legemeldte fraværsdager i din
                         virksomhet. Du kan finne antallet legemeldte fraværsdager for din virksomhet
                         under tapte dagsverk i{' '}
-                        <InternLenke pathname={PATH_KALKULATOR} onClick={() => {}}>
-                            kostnadskalkulatoren.
-                        </InternLenke>
+                        <InternLenke pathname={PATH_KALKULATOR}>kostnadskalkulatoren.</InternLenke>
                     </Normaltekst>
                     <LesMerPanel
                         åpneLabel={'Se eksempel'}

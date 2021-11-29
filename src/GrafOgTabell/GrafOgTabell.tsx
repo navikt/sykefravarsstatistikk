@@ -12,6 +12,7 @@ import { scrollToBanner } from '../utils/scrollUtils';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../metrikker/iatjenester';
+import { sendSidevisningEvent } from '../amplitude/events';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -21,6 +22,7 @@ interface Props {
 const GrafOgTabell: FunctionComponent<Props> = (props) => {
     useEffect(() => {
         scrollToBanner();
+        sendSidevisningEvent();
     }, []);
 
     useSendIaTjenesteMetrikkMottattVedSidevisningEvent();

@@ -18,11 +18,7 @@ const KalkulatorPanel: FunctionComponent<{ liten?: boolean }> = ({ liten }) => {
             <Normaltekst className="kalkulatorpanel__ingress">
                 Her kan du beregne hvor mye sykefraværet koster, og hvor mye du kan spare.
             </Normaltekst>
-            <InternLenke
-                pathname={PATH_KALKULATOR}
-                onClick={() => {}}
-                className="kalkulatorpanel__lenke"
-            >
+            <InternLenke pathname={PATH_KALKULATOR} className="kalkulatorpanel__lenke">
                 Gå til kostnadskalkulatoren
             </InternLenke>
         </PanelBase>
