@@ -20,7 +20,7 @@ afterEach(() => {
 
 it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => {
     await waitFor(() => {
-        render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
+        render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
     });
     const eventDataForFirstEvent = {
         eventname: 'knapp',
@@ -39,7 +39,7 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => 
 
 it('Klikk på les-mer-panelet sender panel-ekspander event til Amplitude', async () => {
     await waitFor(() => {
-        render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
+        render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
     });
     const lesMerPanel = screen.getByText('Slik har vi kommet fram til ditt resultat');
 
@@ -55,7 +55,7 @@ it('Klikk på les-mer-panelet sender panel-ekspander event til Amplitude', async
 
 it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
     await waitFor(() => {
-        render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
+        render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
     });
     const sammenlikningspanel_total = document.querySelector(
         '#ekspanderbart-sammenligningspanel__tittel-knapp-TOTALT'
@@ -109,7 +109,7 @@ it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
 
 it('Klikk på lenke til Arbeidsmiljøportalen genererer event i amplitude', async () => {
     await waitFor(() => {
-        render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
+        render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
     });
     userEvent.click(screen.getByText('Gå til Arbeidsmiljøportalen'));
 
@@ -125,7 +125,7 @@ it('Klikk på lenke til Arbeidsmiljøportalen genererer event i amplitude', asyn
 
 it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', async () => {
     await waitFor(() => {
-        render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
+        render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
     });
     const panel = document.querySelector(
         '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
@@ -143,7 +143,7 @@ it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', asy
 
 it('sidevisning event kalles med riktige user properties', async () => {
     await waitFor(() => {
-        render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
+        render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
     });
     expect(amplitudeMock.setUserProperties).toHaveBeenCalledTimes(1);
     expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
@@ -167,7 +167,7 @@ it('sidevisning event kalles med riktige user properties', async () => {
 
 it('Visning av kalkulatoren rendrer sidevisning-event', async () => {
     await waitFor(() => {
-        render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
+        render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
     });
     const knappTilKalkis = screen.getByRole('link', { name: /Gå til kostnadskalkulatoren/i });
     userEvent.click(knappTilKalkis);
@@ -189,18 +189,50 @@ it('Visning av kalkulatoren rendrer sidevisning-event', async () => {
     );
 });
 
-// TODO runar: test for at sidevisning-event kjører på nytt dersom brukeren bytter bedrift
+it('Endring av inputfelt i kalkulatoren trigger event i Amplitude', async () => {
+    await waitFor(() => {
+        render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
+    });
+    const knappTilKalkis = screen.getByRole('link', { name: /Gå til kostnadskalkulatoren/i });
+    userEvent.click(knappTilKalkis);
+
+    expect(amplitudeMock.logEvent).not.toHaveBeenLastCalledWith(
+        'inputfelt-utfylt',
+        expect.objectContaining({
+            app: 'sykefravarsstatistikk',
+            url: '/sykefravarsstatistikk/kalkulator',
+            label: 'Totalt antall dagsverk i din bedrift siste 12 mnd',
+            name: 'totalt-antall-dagsverk',
+        })
+    );
+
+    const antallDagsverkKnapp = screen.getByRole('spinbutton', {
+        name: /totalt-antall-dagsverk/i,
+    });
+
+    userEvent.type(antallDagsverkKnapp, '100');
+
+    expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
+        'inputfelt-utfylt',
+        expect.objectContaining({
+            app: 'sykefravarsstatistikk',
+            url: '/sykefravarsstatistikk/kalkulator',
+            label: 'Totalt antall dagsverk i din bedrift siste 12 mnd',
+            name: 'totalt-antall-dagsverk',
+        })
+    );
+});
 
 it('Kaller ikke setUserProperties hvis vi ikke har ekstradata', async () => {
     await waitFor(() => {
-        render(<AppWithAnalytics {...mockSykefraværNoEkstradata} />);
+        render(<AppContentWithAnalytics {...mockSykefraværNoEkstradata} />);
     });
     expect(amplitudeMock.setUserProperties).not.toHaveBeenCalled();
 });
 
 it('Kaller bedrift-valgt event når vi velger virksomhet', async () => {
     await waitFor(() => {
-        render(<AppWithAnalytics {...mockSykefraværWithEkstradata} />);
+        render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
     });
     const virksomhetsVelger = screen.getByLabelText(/velg virksomhet/i);
     userEvent.click(virksomhetsVelger);
@@ -216,7 +248,7 @@ it('Kaller bedrift-valgt event når vi velger virksomhet', async () => {
     });
 });
 
-const AppWithAnalytics = (data: SykefraværAppData) => {
+const AppContentWithAnalytics = (data: SykefraværAppData) => {
     useAnalytics(amplitudeMock);
     return (
         <BrowserRouter basename={BASE_PATH}>

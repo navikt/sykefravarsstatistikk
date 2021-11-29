@@ -16,11 +16,6 @@ const regnUtKostnad = (props: Props) => {
     return props.nåværendeKostnad - props.ønsketKostnad;
 };
 
-
-const regnUtKostnadOgSendEventHvisTalletErEndret = (props: Props) => {
-    return somKroneverdi(regnUtKostnad(props));
-};
-
 const Kostnad: FunctionComponent<Props> = (props) => {
     const sykefraværMål =
         props.ønsketRedusert !== undefined && !isNaN(props.ønsketRedusert)
@@ -61,7 +56,7 @@ const Kostnad: FunctionComponent<Props> = (props) => {
                             : 'kostnad__sisteresultat_minus'
                     }
                 >
-                    {regnUtKostnadOgSendEventHvisTalletErEndret(props)}
+                    {somKroneverdi(regnUtKostnad(props))}
                 </Element>
             </div>
         </div>

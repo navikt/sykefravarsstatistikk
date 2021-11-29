@@ -36,13 +36,14 @@ export const sendSidevisningEvent = () => {
     });
 };
 
-export const sendInputfeltUtfyltEvent = (label: string) => {
+export const sendInputfeltUtfyltEvent = (label: string, name: string) => {
     sendAnalytics({
         eventname: 'inputfelt-utfylt',
         data: {
             app: appnavn,
             url: window.location.pathname,
             label: label,
+            name: name,
         },
     });
 };
