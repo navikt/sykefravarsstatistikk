@@ -22,7 +22,7 @@ function initializeAmplitudeClient(): AnalyticsClient {
 export const amplitudeClient = initializeAmplitudeClient();
 
 export interface AnalyticsClient {
-    logEvent(event: string, data?: EventProperties): void;
+    logEvent(name: string, properties?: EventProperties): void;
 
     setUserProperties(properties: any): void;
 }
