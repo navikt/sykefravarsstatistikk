@@ -24,7 +24,7 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => 
 
     const eventDataForFirstEvent = {
         eventname: 'knapp',
-        data: {
+        eventProperties: {
             app: 'someValue',
             url: 'someValue',
             someKey: 'someValue',
@@ -33,7 +33,7 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => 
     sendAnalytics(eventDataForFirstEvent);
     expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
         eventDataForFirstEvent.eventname,
-        eventDataForFirstEvent.data
+        eventDataForFirstEvent.eventProperties
     );
 });
 

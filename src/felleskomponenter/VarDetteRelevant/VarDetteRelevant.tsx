@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FunctionComponent, useState } from 'react';
 import './VarDetteRelevant.less';
 import { TommelOppToggleKnapp } from './TommelOppToggleKnapp';
-import { sendFeedbackEvent } from '../../amplitude/events';
+import { sendTilbakemeldingFraBrukerEvent } from '../../amplitude/events';
 
 interface Props {
     tipsID: string;
@@ -15,7 +15,7 @@ const VarDetteRelevant: FunctionComponent<Props> = (props) => {
             setErRelevant('ikke satt');
         } else {
             setErRelevant(verdi);
-            sendFeedbackEvent('var-dette-relevant', props.tipsID, verdi);
+            sendTilbakemeldingFraBrukerEvent(props.tipsID, 'var-dette-relevant', verdi);
         }
     };
 

@@ -69,14 +69,14 @@ export function sendPanelEkspanderEvent(panelnavn: string) {
     });
 }
 
-export function sendFeedbackEvent(type: string, id: string, verdi: any) {
+export function sendTilbakemeldingFraBrukerEvent(id: string, type?: string, verdi?: any) {
     sendAnalytics({
-        eventname: 'feedback',
+        eventname: 'tilbakemelding-fra-bruker',
         eventProperties: {
             app,
             url: window.location.pathname,
-            type,
             id,
+            type,
             verdi,
         },
     });
