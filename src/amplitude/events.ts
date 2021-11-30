@@ -9,7 +9,7 @@ export const sendNavigereEvent = (destinasjon: string, lenketekst: string) => {
         eventProperties: {
             app,
             url: window.location.pathname,
-            destinasjon: destinasjon,
+            destinasjon,
             lenketekst,
         },
     });

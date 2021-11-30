@@ -1,4 +1,4 @@
-import { sendAnalytics, useAnalytics } from './useAnalytics';
+import { sendAnalytics } from './useAnalytics';
 import { amplitudeMock } from '../mocking/amplitude-mock';
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
@@ -20,7 +20,7 @@ afterEach(() => {
 });
 
 it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => {
-    render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
+    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
 
     const eventDataForFirstEvent = {
         eventname: 'knapp',
@@ -38,13 +38,13 @@ it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => 
 });
 
 it('Kaller ikke setUserProperties hvis vi ikke har ekstradata', async () => {
-    render(<AppContentWithAnalytics {...mockSykefraværNoEkstradata} />);
+    render(<AppContentWithRouter {...mockSykefraværNoEkstradata} />);
 
     expect(amplitudeMock.setUserProperties).not.toHaveBeenCalled();
 });
 
 it('Kaller bedrift-valgt event når vi velger virksomhet', async () => {
-    render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
+    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
 
     const virksomhetsVelger = await screen.findByLabelText(/velg virksomhet/i);
     userEvent.click(virksomhetsVelger);
@@ -61,7 +61,7 @@ it('Kaller bedrift-valgt event når vi velger virksomhet', async () => {
 });
 
 it('Klikk på les-mer-panelet sender panel-ekspander event til Amplitude', async () => {
-    render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
+    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
 
     const lesMerPanel = screen.getByText('Slik har vi kommet fram til ditt resultat');
 
@@ -76,7 +76,7 @@ it('Klikk på les-mer-panelet sender panel-ekspander event til Amplitude', async
 });
 
 it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
-    render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
+    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
 
     const sammenlikningspanel_total = document.querySelector(
         '#ekspanderbart-sammenligningspanel__tittel-knapp-TOTALT'
@@ -129,7 +129,7 @@ it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
 });
 
 it('Klikk på lenke til Arbeidsmiljøportalen genererer event i amplitude', async () => {
-    render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
+    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
     userEvent.click(screen.getByText('Gå til Arbeidsmiljøportalen'));
 
     expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
@@ -143,7 +143,7 @@ it('Klikk på lenke til Arbeidsmiljøportalen genererer event i amplitude', asyn
 });
 
 it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', async () => {
-    render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
+    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
 
     const panel = document.querySelector(
         '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
@@ -160,7 +160,7 @@ it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', asy
 });
 
 it('sidevisning event kalles med riktige user properties', async () => {
-    render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
+    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
 
     expect(amplitudeMock.setUserProperties).toHaveBeenCalledTimes(1);
     expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
@@ -184,7 +184,7 @@ it('sidevisning event kalles med riktige user properties', async () => {
 });
 
 it('Visning av kalkulatoren sender sidevisning-event', async () => {
-    render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
+    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
 
     const knappTilKalkis = await screen.findByRole('link', {
         name: /Gå til kostnadskalkulatoren/i,
@@ -210,7 +210,7 @@ it('Visning av kalkulatoren sender sidevisning-event', async () => {
 
 // TODO: Disse to testene kjører grønt når de kjøres enkeltvis, men rødt når de kjører sammen med de andre. Det må fikses! Trolig er det noe med BrowserRouter som beholdes mellom testene.
 // it('Endring av inputfelt i kalkulatoren trigger event i Amplitude', async () => {
-//     render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
+//     render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
 //
 //     const knappTilKalkis = screen.getByRole('link', { name: /Gå til kostnadskalkulatoren/i });
 //     userEvent.click(knappTilKalkis);
@@ -244,7 +244,7 @@ it('Visning av kalkulatoren sender sidevisning-event', async () => {
 //
 // it('Klikk på "Gå til sykefravær over tid" rendrer navigere-event, deretter sidevisning-event', async () => {
 //     await waitFor(() => {
-//         render(<AppContentWithAnalytics {...mockSykefraværWithEkstradata} />);
+//         render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
 //     });
 //
 //     const knappTilHistorikk = screen.getAllByRole('link', {
@@ -270,8 +270,7 @@ it('Visning av kalkulatoren sender sidevisning-event', async () => {
 //     );
 // });
 
-const AppContentWithAnalytics = (data: SykefraværAppData) => {
-    useAnalytics(amplitudeMock);
+const AppContentWithRouter = (data: SykefraværAppData) => {
     return (
         <BrowserRouter basename={BASE_PATH}>
             <AppContent {...data} analyticsClient={amplitudeMock} />
