@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './InternLenke.less';
 import classNames from 'classnames';
+import { sendNavigereEvent } from '../../amplitude/events';
 
 interface Props {
     pathname: string;
@@ -10,8 +11,12 @@ interface Props {
     ariaCurrentLocation?: boolean;
 }
 
-const InternLenke: FunctionComponent<Props> = (props) => {
+const InternLenke: FunctionComponent<Props> = ({ children: lenketekst, ...props }) => {
     const location = useLocation();
+
+    if (typeof lenketekst !== 'string') {
+        throw Error('EksternLenke støttes bare av tekstlenker.');
+    }
 
     return (
         <Link
@@ -19,11 +24,14 @@ const InternLenke: FunctionComponent<Props> = (props) => {
                 pathname: props.pathname,
                 search: location.search,
             }}
-            onClick={props.onClick}
+            onClick={(e) => {
+                sendNavigereEvent(props.pathname, lenketekst);
+                props.onClick?.(e);
+            }}
             className={classNames('intern-lenke', props.className)}
             aria-current={props.ariaCurrentLocation && 'location'}
         >
-            {props.children}
+            {lenketekst}
         </Link>
     );
 };

@@ -42,14 +42,14 @@ const mockGetAndLog = (
     if (response instanceof Function) {
         responseFunction = (url: string, opts: MockRequest) => {
             const responseValue = response(url, opts);
-            console.log('%c' + url, 'color:lightblue;font-weight:bold;', {
+            console.log('%c' + url, 'color:lightblue;font-weight:bold;', process.env.NODE_ENV === 'test' ? '' : {
                 response: responseValue,
             });
             return responseValue;
         };
     } else {
         responseFunction = (url) => {
-            console.log('%c' + url, 'color:lightblue;font-weight:bold;', { response });
+            console.log('%c' + url, 'color:lightblue;font-weight:bold;', process.env.NODE_ENV === 'test' ? '' : { response });
             return response;
         };
     }

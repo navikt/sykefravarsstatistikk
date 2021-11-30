@@ -18,7 +18,7 @@ import {
     PATH_HISTORIKK,
     PATH_KALKULATOR,
 } from './konstanter';
-import { appnavn } from './amplitude/events';
+import { sendSidevisningEvent} from './amplitude/events';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { Forside } from './Forside/Forside';
 import { Sammenligningspanel } from './Forside/Sammenligningspanel/Sammenligningspanel';
@@ -46,7 +46,6 @@ interface Props {
 }
 
 const App: FunctionComponent<Props> = ({ analyticsClient, samtalestøttePodlet }) => {
-    useAnalytics(analyticsClient);
     return (
         <IaTjenesterMetrikkerContextProvider>
             <main id="maincontent">
@@ -70,9 +69,10 @@ export const AppContent = ({
     enhetsregisterdata,
     samtalestøttePodlet,
 }: SykefraværAppData & {
-    analyticsClient?: AnalyticsClient;
+    analyticsClient: AnalyticsClient;
     samtalestøttePodlet?: React.ReactNode;
 }) => {
+    useAnalytics(analyticsClient);
     const datakilder: RestRessurs<any>[] = useMemo(() => {
         return [
             sykefraværshistorikk,
@@ -100,10 +100,7 @@ export const AppContent = ({
             analyticsClient?.setUserProperties({
                 ...ekstradata,
             });
-            analyticsClient?.logEvent('sidevisning', {
-                app: appnavn,
-                url: window.location.pathname,
-            });
+            sendSidevisningEvent();
         }
     }, [
         sykefraværshistorikk,

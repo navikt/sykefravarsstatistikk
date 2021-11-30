@@ -4,16 +4,11 @@ import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import {
-    sendKnappEvent,
-    sendSidevisningEvent,
-    useSendSidevisningEvent,
-} from '../../amplitude/events';
+import {sendKnappEvent, sendSidevisningEvent} from '../../amplitude/events';
 import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
 import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../../metrikker/iatjenester';
-import { useOrgnr } from '../../hooks/useOrgnr';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -23,16 +18,10 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     const [kalkulatorvariant, setKalkulatorvariant] = useState<Kalkulatorvariant>(
         Kalkulatorvariant.Prosent
     );
-    const orgnr = useOrgnr();
-    useSendSidevisningEvent('kalkulator', orgnr);
-    // TODO ^ useSendSidevisningEvent kan fjernes på sikt, den er erstattet av sendSidevisningEvent
-
-    const pathname = window.location.pathname;
-    sendSidevisningEvent(pathname);
 
     useSendIaTjenesteMetrikkMottattVedSidevisningEvent();
-
     useEffect(() => {
+        sendSidevisningEvent();
         scrollToBanner();
     }, []);
 
@@ -56,7 +45,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                                 pressed={kalkulatorvariant === Kalkulatorvariant.Prosent}
                                 onClick={() => {
                                     setKalkulatorvariant(Kalkulatorvariant.Prosent);
-                                    sendKnappEvent(pathname, 'Prosent');
+                                    sendKnappEvent('Prosent');
                                 }}
                             >
                                 Prosent
@@ -65,7 +54,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                                 pressed={kalkulatorvariant === Kalkulatorvariant.Dagsverk}
                                 onClick={() => {
                                     setKalkulatorvariant(Kalkulatorvariant.Dagsverk);
-                                    sendKnappEvent(pathname, 'Dagsverk');
+                                    sendKnappEvent('Dagsverk');
                                 }}
                             >
                                 Dagsverk

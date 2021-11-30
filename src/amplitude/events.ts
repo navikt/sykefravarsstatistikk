@@ -1,119 +1,83 @@
-import { useEffect, useRef } from 'react';
 import { sendAnalytics } from './useAnalytics';
-import { SammenligningsType } from '../Forside/vurderingstekster';
 
-interface NavigereEventProperties {
-    url: string;
-    destinasjon?: string;
-    lenketekst?: string;
-}
+export const app = 'sykefravarsstatistikk';
+export type EventProperties = { app: string; url: string; [key: string]: any };
 
-export const appnavn = 'sykefravarsstatistikk';
-
-type SendNavigereEvent = (navigereEventProperties: NavigereEventProperties & Object) => void;
-type SendEvent = (område: string, hendelse: string, data?: Object) => void;
-
-export type EventData = { [key: string]: any };
-
-/**
- * @deprecated skal på sikt fjernes. Vi skal ikke lenger skrive appnavn i selve eventen, det puttes heller i event properties.
- */
-export const sendEventDirekte = (område: string, hendelse: string, data?: EventData): void => {
-    const type = ['#sykefravarsstatistikk', område, hendelse].join('-');
+export const sendNavigereEvent = (destinasjon: string, lenketekst: string) => {
     sendAnalytics({
-        eventname: type,
-        data,
+        eventname: 'navigere',
+        eventProperties: {
+            app,
+            url: window.location.pathname,
+            destinasjon,
+            lenketekst,
+        },
     });
 };
 
-export const useSendNavigereEvent = (): SendNavigereEvent => {
-    return (navigereEventProperties: NavigereEventProperties & EventData) => {
-        const eventdata = {
-            app: appnavn,
-        };
-        navigereEventProperties.url = navigereEventProperties.url.split('?')[0];
-        sendAnalytics({
-            eventname: 'navigere',
-            data: {
-                ...eventdata,
-                ...navigereEventProperties,
-            },
-        });
-    };
-};
-
-export const sendKnappEvent = (pathname: string | undefined, label: string) => {
-    const data = {
-        app: appnavn,
-        url: pathname,
-        label: label,
-    };
-
+export const sendKnappEvent = (label: string) => {
     sendAnalytics({
         eventname: 'knapp',
-        data,
+        eventProperties: {
+            app,
+            url: window.location.pathname,
+            label,
+        },
     });
 };
 
-export const sendSidevisningEvent = (pathname: string = window.location.pathname) => {
-    const data = {
-        app: appnavn,
-        url: pathname,
-    };
-
+export const sendSidevisningEvent = () => {
     sendAnalytics({
         eventname: 'sidevisning',
-        data,
+        eventProperties: {
+            app,
+            url: window.location.pathname,
+        },
     });
 };
 
-export const sendInputfeltUtfyltEvent = (pathname: string, label: string) => {
-    const data = {
-        app: appnavn,
-        url: pathname,
-        label: label,
-    };
-
+export const sendInputfeltUtfyltEvent = (label: string, name: string) => {
     sendAnalytics({
         eventname: 'inputfelt-utfylt',
-        data,
+        eventProperties: {
+            app,
+            url: window.location.pathname,
+            label,
+            name,
+        },
     });
 };
 
-/**
- * @deprecated skal på sikt ikke brukes; "ekstradata" settes i stedet som user properties.
- */
-export const useSendEvent = (): SendEvent => {
-    return (område: string, hendelse: string, data?: EventData) =>
-        sendEventDirekte(område, hendelse, { ...data });
+export const sendBedriftValgtEvent = () => {
+    sendAnalytics({
+        eventname: 'bedrift-valgt',
+        eventProperties: {
+            app,
+            url: window.location.pathname,
+        },
+    });
 };
 
-/**
- * @deprecated erstattes på sikt av sendSidevisningEvent
- */
-export const useSendSidevisningEvent = (område: string, orgnr: string | undefined) => {
-    const sendEvent = useSendEvent();
-    const skalSendeEvent = useRef(true);
-
-    useEffect(() => {
-        skalSendeEvent.current = true;
-    }, [orgnr]);
-
-    useEffect(() => {
-        if (skalSendeEvent.current) {
-            skalSendeEvent.current = false;
-
-            sendEvent(område, 'vist');
-        }
-    }, [orgnr, område, sendEvent]);
-};
-
-export function logPanelEkspanderEvent(sammenligningsType: SammenligningsType) {
+export function sendPanelEkspanderEvent(panelnavn: string) {
     sendAnalytics({
         eventname: 'panel-ekspander',
-        data: {
-            panelnavn: sammenligningsType,
-            app: appnavn,
+        eventProperties: {
+            app,
+            panelnavn,
+            url: window.location.pathname,
+        },
+    });
+}
+
+export function sendTilbakemeldingFraBrukerEvent(id: string, type?: string, verdi?: any) {
+    sendAnalytics({
+        eventname: 'tilbakemelding-fra-bruker',
+        eventProperties: {
+            app,
+            url: window.location.pathname,
+            id,
+            type,
+            verdi,
         },
     });
 }

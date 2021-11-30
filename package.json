@@ -10,6 +10,7 @@
         "@navikt/nav-dekoratoren-moduler": "^1.6.5",
         "@navikt/navspa": "^4.0.0",
         "@sentry/browser": "^6.13.3",
+        "@testing-library/jest-dom": "^5.15.1",
         "amplitude-js": "^8.9.0",
         "browserslist": "^4.17.3",
         "classnames": "^2.2.6",

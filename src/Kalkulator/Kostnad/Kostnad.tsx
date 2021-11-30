@@ -4,7 +4,6 @@ import { ReactComponent as SedlerIkon } from '../sedlerIkon.svg';
 import './Kostnad.less';
 import classNames from 'classnames';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import { sendInputfeltUtfyltEvent } from '../../amplitude/events';
 
 interface Props {
     nåværendeKostnad: number;
@@ -13,21 +12,8 @@ interface Props {
     antallTapteDagsverkEllerProsent?: Kalkulatorvariant;
 }
 
-const regnUtKostnad = (props: Props) => {
+const beregnKostnad = (props: Props) => {
     return props.nåværendeKostnad - props.ønsketKostnad;
-};
-
-let utregnetKostnadHarBlittEndret = false;
-let endringIUtregnetKostnadHarBlittLogget = false;
-
-const regnUtKostnadOgSendEventHvisTalletErEndret = (props: Props) => {
-    if (utregnetKostnadHarBlittEndret && !endringIUtregnetKostnadHarBlittLogget) {
-        // Endring i utregnet kostnad impliserer at brukeren har endret noe i minst ett av inputfeltene.
-        sendInputfeltUtfyltEvent(window.location.pathname, 'kalkulatorfeltene');
-        endringIUtregnetKostnadHarBlittLogget = true;
-    }
-    utregnetKostnadHarBlittEndret = true;
-    return somKroneverdi(regnUtKostnad(props));
 };
 
 const Kostnad: FunctionComponent<Props> = (props) => {
@@ -46,11 +32,11 @@ const Kostnad: FunctionComponent<Props> = (props) => {
     const øktKostnadTekst = `Øker dere sykefraværet til ${formatertSykefraværMål} taper dere ytterligere årlig`;
 
     return (
-        <div className='kostnad'>
-            <Systemtittel tag='h2' className='kostnad__tittel'>
-                Resultat <SedlerIkon className='kostnad__ikon' />
+        <div className="kostnad">
+            <Systemtittel tag="h2" className="kostnad__tittel">
+                Resultat <SedlerIkon className="kostnad__ikon" />
             </Systemtittel>
-            <div className='kostnad__tekst'>
+            <div className="kostnad__tekst">
                 <Element>Totale kostnader per år med nåværende sykefravær</Element>
                 <Element>{somKroneverdi(props.nåværendeKostnad)}</Element>
             </div>
@@ -61,18 +47,16 @@ const Kostnad: FunctionComponent<Props> = (props) => {
 
             <div className={classNames('kostnad__tekst', 'kostnad__resultatrad')}>
                 <Element>
-                    {regnUtKostnad(props) >= 0
-                        ? redusertKostnadTekst
-                        : øktKostnadTekst}
+                    {beregnKostnad(props) >= 0 ? redusertKostnadTekst : øktKostnadTekst}
                 </Element>
                 <Element
                     className={
-                        regnUtKostnad(props) >= 0
+                        beregnKostnad(props) >= 0
                             ? 'kostnad__sisteresultat'
                             : 'kostnad__sisteresultat_minus'
                     }
                 >
-                    {regnUtKostnadOgSendEventHvisTalletErEndret(props)}
+                    {somKroneverdi(beregnKostnad(props))}
                 </Element>
             </div>
         </div>

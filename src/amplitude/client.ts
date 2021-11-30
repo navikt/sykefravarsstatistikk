@@ -1,5 +1,5 @@
 import amplitude from 'amplitude-js';
-import { EventData } from './events';
+import { EventProperties } from './events';
 
 function initializeAmplitudeClient(): AnalyticsClient {
     const bucketId =
@@ -22,6 +22,7 @@ function initializeAmplitudeClient(): AnalyticsClient {
 export const amplitudeClient = initializeAmplitudeClient();
 
 export interface AnalyticsClient {
-    logEvent(event: string, data?: EventData): void;
+    logEvent(name: string, properties?: EventProperties): void;
+
     setUserProperties(properties: any): void;
 }
