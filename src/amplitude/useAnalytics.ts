@@ -1,10 +1,10 @@
 import { AnalyticsClient } from './client';
 import { useEffect } from 'react';
-import { EventData } from './events';
+import { EventProperties } from './events';
 
 interface AnalyticsData {
     eventname: string;
-    data: EventData;
+    eventProperties: EventProperties;
 }
 
 const ANALYTICS_EVENT = 'amplitude';
@@ -14,9 +14,9 @@ export const useAnalytics = <T extends AnalyticsData>(client: AnalyticsClient) =
         const listener = (event: Event) => {
             event.stopImmediatePropagation();
             let {
-                detail: { data, eventname },
+                detail: { eventProperties, eventname },
             } = event as CustomEvent<T>;
-            client.logEvent(eventname, data);
+            client.logEvent(eventname, eventProperties);
         };
         document.addEventListener(ANALYTICS_EVENT, listener);
 
@@ -26,7 +26,7 @@ export const useAnalytics = <T extends AnalyticsData>(client: AnalyticsClient) =
     }, [client]);
 };
 
-export const sendAnalytics = (data: AnalyticsData) => {
-    const analyticsEvent = new CustomEvent<AnalyticsData>(ANALYTICS_EVENT, { detail: data });
+export const sendAnalytics = (eventData: AnalyticsData) => {
+    const analyticsEvent = new CustomEvent<AnalyticsData>(ANALYTICS_EVENT, { detail: eventData });
     document.dispatchEvent(analyticsEvent);
 };

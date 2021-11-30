@@ -1,13 +1,13 @@
 import { sendAnalytics } from './useAnalytics';
 
-export const appnavn = 'sykefravarsstatistikk';
-export type EventData = { app: string; url: string; [key: string]: any };
+export const app = 'sykefravarsstatistikk';
+export type EventProperties = { app: string; url: string; [key: string]: any };
 
 export const sendNavigereEvent = (destinasjon: string, lenketekst: string) => {
     sendAnalytics({
         eventname: 'navigere',
-        data: {
-            app: appnavn,
+        eventProperties: {
+            app,
             url: window.location.pathname,
             destinasjon: destinasjon,
             lenketekst: lenketekst,
@@ -18,8 +18,8 @@ export const sendNavigereEvent = (destinasjon: string, lenketekst: string) => {
 export const sendKnappEvent = (label: string) => {
     sendAnalytics({
         eventname: 'knapp',
-        data: {
-            app: appnavn,
+        eventProperties: {
+            app,
             url: window.location.pathname,
             label: label,
         },
@@ -29,8 +29,8 @@ export const sendKnappEvent = (label: string) => {
 export const sendSidevisningEvent = () => {
     sendAnalytics({
         eventname: 'sidevisning',
-        data: {
-            app: appnavn,
+        eventProperties: {
+            app,
             url: window.location.pathname,
         },
     });
@@ -39,8 +39,8 @@ export const sendSidevisningEvent = () => {
 export const sendInputfeltUtfyltEvent = (label: string, name: string) => {
     sendAnalytics({
         eventname: 'inputfelt-utfylt',
-        data: {
-            app: appnavn,
+        eventProperties: {
+            app,
             url: window.location.pathname,
             label: label,
             name: name,
@@ -51,9 +51,9 @@ export const sendInputfeltUtfyltEvent = (label: string, name: string) => {
 export const sendBedriftValgtEvent = () => {
     sendAnalytics({
         eventname: 'bedrift-valgt',
-        data: {
+        eventProperties: {
+            app,
             url: window.location.pathname,
-            app: appnavn,
         },
     });
 };
@@ -61,10 +61,10 @@ export const sendBedriftValgtEvent = () => {
 export function sendPanelEkspanderEvent(panelnavn: string) {
     sendAnalytics({
         eventname: 'panel-ekspander',
-        data: {
+        eventProperties: {
+            app,
             panelnavn,
             url: window.location.pathname,
-            app: appnavn,
         },
     });
 }
