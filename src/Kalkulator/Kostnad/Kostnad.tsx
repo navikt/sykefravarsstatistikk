@@ -12,7 +12,7 @@ interface Props {
     antallTapteDagsverkEllerProsent?: Kalkulatorvariant;
 }
 
-const regnUtKostnad = (props: Props) => {
+const beregnKostnad = (props: Props) => {
     return props.nåværendeKostnad - props.ønsketKostnad;
 };
 
@@ -47,16 +47,16 @@ const Kostnad: FunctionComponent<Props> = (props) => {
 
             <div className={classNames('kostnad__tekst', 'kostnad__resultatrad')}>
                 <Element>
-                    {regnUtKostnad(props) >= 0 ? redusertKostnadTekst : øktKostnadTekst}
+                    {beregnKostnad(props) >= 0 ? redusertKostnadTekst : øktKostnadTekst}
                 </Element>
                 <Element
                     className={
-                        regnUtKostnad(props) >= 0
+                        beregnKostnad(props) >= 0
                             ? 'kostnad__sisteresultat'
                             : 'kostnad__sisteresultat_minus'
                     }
                 >
-                    {somKroneverdi(regnUtKostnad(props))}
+                    {somKroneverdi(beregnKostnad(props))}
                 </Element>
             </div>
         </div>

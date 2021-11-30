@@ -10,7 +10,7 @@ export const sendNavigereEvent = (destinasjon: string, lenketekst: string) => {
             app,
             url: window.location.pathname,
             destinasjon: destinasjon,
-            lenketekst: lenketekst,
+            lenketekst,
         },
     });
 };
@@ -21,7 +21,7 @@ export const sendKnappEvent = (label: string) => {
         eventProperties: {
             app,
             url: window.location.pathname,
-            label: label,
+            label,
         },
     });
 };
@@ -42,8 +42,8 @@ export const sendInputfeltUtfyltEvent = (label: string, name: string) => {
         eventProperties: {
             app,
             url: window.location.pathname,
-            label: label,
-            name: name,
+            label,
+            name,
         },
     });
 };
@@ -65,6 +65,19 @@ export function sendPanelEkspanderEvent(panelnavn: string) {
             app,
             panelnavn,
             url: window.location.pathname,
+        },
+    });
+}
+
+export function sendFeedbackEvent(type: string, id: string, verdi: any) {
+    sendAnalytics({
+        eventname: 'feedback',
+        eventProperties: {
+            app,
+            url: window.location.pathname,
+            type,
+            id,
+            verdi,
         },
     });
 }

@@ -20,18 +20,16 @@ interface Props {
 export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
     const labelId = props.name + '-label';
 
-    const onChangeWithAnalytics = (event: any) => {
-        props.onChange(event);
-        sendInputfeltUtfyltEvent(props.label, props.name);
-    };
-
     return (
         <div className="kalkulatorrad">
             <Element id={labelId}>{props.label}</Element>
             <div className="kalkulatorrad__input-hjelpetekst-wrapper">
                 <Input
                     label=""
-                    onChange={onChangeWithAnalytics}
+                    onChange={(event: any) => {
+                        props.onChange(event);
+                        sendInputfeltUtfyltEvent(props.label, props.name);
+                    }}
                     value={props.value || ''}
                     type="number"
                     className="kalkulatorrad__input"
