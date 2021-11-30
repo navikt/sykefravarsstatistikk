@@ -63,9 +63,6 @@ export function getEkstradata({
         ...getEkstraDataFraVirksomhetsdata(virksomhetsdata),
         ...getEkstraDataFraSykefraværshistorikk(sykefraværshistorikk),
         ...getEkstraDataFraSummertSykefraværshistorikk(summertSykefravær, virksomhetsdata),
-        ...getEkstraDataFraEnhetsregisteret(
-            enhetsregisterdata.restOverordnetEnhet,
-            virksomhetsdata
-        ),
+        ...getEkstraDataFraEnhetsregisteret(enhetsregisterdata.restOverordnetEnhet),
     };
 }

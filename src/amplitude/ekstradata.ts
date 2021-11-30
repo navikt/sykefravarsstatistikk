@@ -17,7 +17,6 @@ import { RestSummertSykefraværshistorikk } from '../api/summert-sykefraværshis
 import { getSammenligningResultatMedProsent } from '../Forside/vurdering-utils';
 import { SammenligningsType } from '../Forside/vurderingstekster';
 import { RestVirksomhetsdata } from '../api/virksomhetsdata-api';
-import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 
 export interface Ekstradata {
     næring2siffer: string;
@@ -77,14 +76,9 @@ export const getEkstraDataFraSykefraværshistorikk = (
 };
 
 export const getEkstraDataFraEnhetsregisteret = (
-    restOverordnetEnhet: RestOverordnetEnhet,
-    restvirksomhetsdata: RestVirksomhetsdata
+    restOverordnetEnhet: RestOverordnetEnhet
 ): Partial<Ekstradata> => {
-    if (
-        restvirksomhetsdata.status === RestStatus.Suksess &&
-        restvirksomhetsdata.data.bransje === ArbeidsmiljøportalenBransje.BARNEHAGER &&
-        restOverordnetEnhet.status === RestStatus.Suksess
-    ) {
+    if (restOverordnetEnhet.status === RestStatus.Suksess) {
         return {
             sektor: mapTilPrivatElleOffentligSektor(
                 restOverordnetEnhet.data.institusjonellSektorkode
