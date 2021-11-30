@@ -166,6 +166,7 @@ it('sidevisning event kalles med riktige user properties', async () => {
     expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
         antallAnsatte: '50-99',
         bransje: undefined,
+        sektor: 'offentlig',
         korttidSiste4Kvartaler: 'MIDDELS',
         langtidSiste4Kvartaler: 'MIDDELS',
         næring2siffer:
