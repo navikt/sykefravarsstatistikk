@@ -14,4 +14,12 @@ describe('Tester for sektorUtils funksjoner', () => {
         });
         expect(resulatMedPrivatSektorkode).toBe('privat');
     });
+
+    test('Mapper tom sektorkode til privat sektor', () => {
+        const resulatMedOffentligSektorkode = mapTilPrivatEllerOffentligSektor({
+            kode: '',
+            beskrivelse: '',
+        });
+        expect(resulatMedOffentligSektorkode).toBe('privat');
+    });
 });
