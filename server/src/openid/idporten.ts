@@ -1,7 +1,6 @@
 import { BaseClient, Issuer } from 'openid-client';
 import { createRemoteJWKSet, FlattenedJWSInput, JWSHeaderParameters, jwtVerify } from 'jose';
 import { GetKeyFunction } from 'jose/dist/types/types';
-import { JWTInvalid } from 'jose/dist/types/util/errors';
 
 const acceptedAcrLevel = 'Level4';
 const acceptedSigningAlgorithm = 'RS256';
@@ -32,10 +31,10 @@ export async function verifiserAccessToken(token: string) {
     });
 
     if (payload.acr !== acceptedAcrLevel) {
-        throw new JWTInvalid('Invalid ACR-level');
+        throw new Error('Invalid ACR-level');
     }
 
     if (payload.client_id !== process.env.IDPORTEN_CLIENT_ID) {
-        throw new JWTInvalid('Invalid client id');
+        throw new Error('Invalid client id');
     }
 }

@@ -11,5 +11,5 @@ then
     done
 fi
 
-exec node server.js
+exec node dist/server.js
 
