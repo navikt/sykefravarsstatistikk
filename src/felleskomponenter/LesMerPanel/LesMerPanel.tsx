@@ -5,6 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import './LesMerPanel.less';
 import { UnmountClosed } from 'react-collapse';
 import classNames from 'classnames';
+import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from '../../amplitude/events';
 
 interface Props {
     åpneLabel: string;
@@ -40,7 +41,17 @@ const LesMerPanel: React.FunctionComponent<Props> = ({
                     className
                 )}
             >
-                <InfoToggler onToggle={() => setÅpen(!åpen)} åpen={åpen}>
+                <InfoToggler
+                    onToggle={() => {
+                        if (åpen) {
+                            sendPanelKollapsEvent(åpneLabel);
+                        } else {
+                            sendPanelEkspanderEvent(åpneLabel);
+                        }
+                        setÅpen(!åpen);
+                    }}
+                    åpen={åpen}
+                >
                     <Normaltekst tag="span">{åpen ? lukkTekst : åpneLabel}</Normaltekst>
                 </InfoToggler>
             </div>

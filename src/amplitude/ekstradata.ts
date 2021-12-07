@@ -12,7 +12,7 @@ import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
 import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import { konverterTilKvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
 import { RestOverordnetEnhet } from '../api/enhetsregisteret-api';
-import { mapTilPrivatElleOffentligSektor, Sektor } from '../utils/sektorUtils';
+import { mapTilPrivatEllerOffentligSektor, Sektor } from '../utils/sektorUtils';
 import { RestSummertSykefraværshistorikk } from '../api/summert-sykefraværshistorikk-api';
 import { getSammenligningResultatMedProsent } from '../Forside/vurdering-utils';
 import { SammenligningsType } from '../Forside/vurderingstekster';
@@ -80,7 +80,7 @@ export const getEkstraDataFraEnhetsregisteret = (
 ): Partial<Ekstradata> => {
     if (restOverordnetEnhet.status === RestStatus.Suksess) {
         return {
-            sektor: mapTilPrivatElleOffentligSektor(
+            sektor: mapTilPrivatEllerOffentligSektor(
                 restOverordnetEnhet.data.institusjonellSektorkode
             ),
         };
