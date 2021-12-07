@@ -1,5 +1,7 @@
 import { Options } from 'http-proxy-middleware/dist/types';
 import { FRONTEND_API_PATH } from './konstanter';
+import { exchangeToken } from './openid/tokenx';
+// import { TokenSet } from 'openid-client';
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
@@ -33,6 +35,23 @@ const proxyConfig: Options = {
             return path.replace(FRONTEND_API_PATH, BACKEND_API_PATH);
         }
         return BACKEND_API_PATH + '/not-found';
+    },
+    onProxyReq: (_, __) => {
+        // if (req.headers.authorization) {
+        //     new TokenSet();
+        //     proxyReq.setHeader('authorization', 'Bearer token'); // FIXME: Gjør token exchange til tokenX her
+        // } else {
+        //     throw new Error('User is not authorized to call backend!');
+        // }
+        console.log('hello');
+        console.log(_.getHeaders());
+    },
+    router: async (req) => {
+        const tokenSet = await exchangeToken(req);
+        if (!tokenSet.expired() && tokenSet.access_token) {
+            req.headers['authorization'] = `Bearer ${tokenSet.access_token}`;
+        }
+        return undefined;
     },
     secure: true,
     xfwd: true,

@@ -11,6 +11,7 @@ import getDecorator from './decorator';
 import mustacheExpress from 'mustache-express';
 
 import proxy from './proxy';
+import { initTokenX } from './openid/tokenx';
 
 const app = express();
 const { BASE_PATH } = require('./konstanter');
@@ -34,7 +35,8 @@ const renderAppMedDecorator = (decoratorFragments: DecoratorContent): Promise<st
     });
 };
 
-const startServer = (html: string) => {
+const startServer = async (html: string) => {
+    await initTokenX();
     app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req: Request, res: Response) => {
