@@ -1,5 +1,5 @@
-const jsdom = require('jsdom');
-const axios = require('axios');
+import jsdom from 'jsdom';
+import axios from 'axios';
 
 const { JSDOM } = jsdom;
 
@@ -11,11 +11,11 @@ function getDecoratorValuesFromBody(body: string) {
     const prop = 'innerHTML';
 
     return {
-        NAV_SCRIPTS: document.getElementById('scripts')[prop],
-        NAV_STYLES: document.getElementById('styles')[prop],
-        NAV_HEADING: document.getElementById('header-withmenu')[prop],
-        NAV_FOOTER: document.getElementById('footer-withmenu')[prop],
-        NAV_MENU_RESOURCES: document.getElementById('megamenu-resources')[prop],
+        NAV_SCRIPTS: document.getElementById('scripts')![prop],
+        NAV_STYLES: document.getElementById('styles')![prop],
+        NAV_HEADING: document.getElementById('header-withmenu')![prop],
+        NAV_FOOTER: document.getElementById('footer-withmenu')![prop],
+        NAV_MENU_RESOURCES: document.getElementById('megamenu-resources')![prop],
     };
 }
 
