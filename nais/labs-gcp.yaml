@@ -13,6 +13,10 @@ spec:
         enabled: false
     ingresses:
         - https://arbeidsgiver.labs.nais.io/sykefravarsstatistikk
+    idporten:
+        enabled: true
+        sidecar:
+            enabled: true
     liveness:
         path: /sykefravarsstatistikk/internal/isReady
         initialDelay: 10
