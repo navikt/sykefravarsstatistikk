@@ -6,7 +6,15 @@ const { JSDOM } = jsdom;
 const url =
     'https://www.nav.no/dekoratoren/?context=arbeidsgiver&redirectToApp=true&feedback=false';
 
-function getDecoratorValuesFromBody(body: string) {
+export interface DecoratorContent {
+    NAV_SCRIPTS: string;
+    NAV_STYLES: string;
+    NAV_HEADING: string;
+    NAV_FOOTER: string;
+    NAV_MENU_RESOURCES: string;
+}
+
+function getDecoratorValuesFromBody(body: string): DecoratorContent {
     const { document } = new JSDOM(body).window;
     const prop = 'innerHTML';
 
@@ -19,9 +27,7 @@ function getDecoratorValuesFromBody(body: string) {
     };
 }
 
-async function getDecorator() {
+export default async function getDecorator() {
     const { data: body } = await axios.get(url);
     return getDecoratorValuesFromBody(body);
 }
-
-module.exports = getDecorator;

@@ -47,4 +47,4 @@ if (envProperties.APIGW_HEADER) {
 
 const proxy = createProxyMiddleware(FRONTEND_API_PATH, proxyConfig);
 
-module.exports = proxy;
+export default proxy;
