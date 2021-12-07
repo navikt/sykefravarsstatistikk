@@ -1,5 +1,6 @@
 import { BaseClient, Issuer } from 'openid-client';
 import { Request } from 'express';
+import { verifiserAccessToken } from './idporten';
 
 let tokenxClient: BaseClient;
 
@@ -21,10 +22,11 @@ export async function initTokenX() {
 // 3. Hvis tokenet ikke finnes der, sjekk om det finnes et idporten token i auth header fra wonderwall.
 // 4. Hvis det IKKE finnes der heller, kast en exception
 export async function exchangeToken(req: Request) {
-    const token = req.headers.authorization?.split(' ')[0]; // TODO: Hent denne fra session cache
+    const token = req.headers.authorization?.split(' ')[1]; // TODO: Hent denne fra session cache
     if (!token) {
         throw new Error('Du er ikke autorisert!');
     }
+    await verifiserAccessToken(token);
     const additionalClaims = {
         clientAssertionPayload: {
             nbf: Math.floor(Date.now() / 1000),
