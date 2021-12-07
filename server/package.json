@@ -23,6 +23,6 @@
         "ts-node": "^10.4.0"
     },
     "scripts": {
-        "watch": "nodemon server.ts"
+        "watch": "nodemon src/server.ts"
     }
 }

@@ -24,7 +24,7 @@ app.set('views', buildPath);
 
 const renderAppMedDecorator = (decoratorFragments: DecoratorContent): Promise<string> => {
     return new Promise((resolve, reject) => {
-        app.render('index.html', decoratorFragments, (err: Error, html: string) => {
+        app.render('../../build/index.html', decoratorFragments, (err: Error, html: string) => {
             if (err) {
                 reject(err);
             } else {
