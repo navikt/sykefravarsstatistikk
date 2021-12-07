@@ -60,18 +60,40 @@ it('Kaller bedrift-valgt event når vi velger virksomhet', async () => {
     });
 });
 
-it('Klikk på les-mer-panelet sender panel-ekspander event til Amplitude', async () => {
+it('Klikk på les-mer-panel sender panel-ekspander event til Amplitude', async () => {
     render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
 
-    const lesMerPanel = screen.getByText('Slik har vi kommet fram til ditt resultat');
+    const lesMerPanel = screen.getByRole('button', {
+        name: 'Slik har vi kommet fram til ditt resultat',
+    });
 
     userEvent.click(lesMerPanel);
     expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
         'panel-ekspander',
         expect.objectContaining({
             app: 'sykefravarsstatistikk',
-            panelnavn: 'slik-har-vi-kommet-fram-til-ditt-resultat',
+            panelnavn: 'Slik har vi kommet fram til ditt resultat',
         })
+    );
+});
+
+it('To klikk på les-mer-panel sender panel-kollaps event til Amplitude', async () => {
+    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+
+    const lesMerPanel = screen.getByRole('button', {
+        name: 'Slik har vi kommet fram til ditt resultat',
+    });
+
+    userEvent.click(lesMerPanel);
+    expect(amplitudeMock.logEvent).not.toHaveBeenCalledWith('panel-kollaps', expect.objectCo;ntaining({}))
+
+    userEvent.click(lesMerPanel);
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
+        'panel-kollaps',
+        expect.objectContaining({
+            app: 'sykefravarsstatistikk',
+            panelnavn: 'Slik har vi kommet fram til ditt resultat',
+        }),
     );
 });
 
@@ -128,7 +150,7 @@ it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
     );
 });
 
-it('Klikk på lenke til Arbeidsmiljøportalen genererer event i amplitude', async () => {
+it('Klikk på lenke til Arbeidsmiljøportalen trigger event i amplitude', async () => {
     render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
     userEvent.click(screen.getByText('Gå til Arbeidsmiljøportalen'));
 

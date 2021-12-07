@@ -27,7 +27,7 @@ import {
 import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
 import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 import { useOrgnr } from '../../hooks/useOrgnr';
-import { sendPanelEkspanderEvent } from '../../amplitude/events';
+import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from '../../amplitude/events';
 import InternLenke from '../../felleskomponenter/InternLenke/InternLenke';
 
 interface Props {
@@ -174,6 +174,8 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     setErÅpen(skalPaneletÅpnes);
                     if (skalPaneletÅpnes) {
                         sendPanelEkspanderEvent(sammenligningsType);
+                    } else {
+                        sendPanelKollapsEvent(sammenligningsType);
                     }
                 }}
                 apen={erÅpen}
