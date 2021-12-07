@@ -1,6 +1,5 @@
-// OPS Dette er foreløpig duplisert i konstanter.js
+// OPS Dette er foreløpig duplisert i konstanter.ts
 export const BASE_PATH = '/sykefravarsstatistikk';
-
 
 export const PATH_FORSIDE = '/';
 export const PATH_FORSIDE_GENERELL = '/sammenligning';

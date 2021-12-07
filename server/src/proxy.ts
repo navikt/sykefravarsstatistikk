@@ -1,4 +1,6 @@
-const { FRONTEND_API_PATH } = require('./konstanter');
+import { Options } from 'http-proxy-middleware/dist/types';
+import { FRONTEND_API_PATH } from './konstanter';
+
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const envProperties = {
@@ -12,17 +14,19 @@ const API_GATEWAY_BASEURL = `${envProperties.API_GATEWAY}`;
 const listeAvTillatteUrler = [
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/summert'),
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/kvartalsvis'),
-    new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/legemeldtsykefravarsprosent'),
+    new RegExp(
+        '^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/legemeldtsykefravarsprosent'
+    ),
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/bedriftsmetrikker'),
     new RegExp('^' + FRONTEND_API_PATH + '/organisasjoner/statistikk'),
     new RegExp('^' + FRONTEND_API_PATH + '/organisasjoner'),
     new RegExp('^' + FRONTEND_API_PATH + '/feature'),
 ];
 
-const proxyConfig = {
+const proxyConfig: Options = {
     target: API_GATEWAY_BASEURL,
     changeOrigin: true,
-    pathRewrite: (path, req) => {
+    pathRewrite: (path, _) => {
         const urlErTillatt = listeAvTillatteUrler.filter((regexp) => regexp.test(path)).length > 0;
 
         if (urlErTillatt) {

@@ -6,7 +6,7 @@ const { JSDOM } = jsdom;
 const url =
     'https://www.nav.no/dekoratoren/?context=arbeidsgiver&redirectToApp=true&feedback=false';
 
-function getDecoratorValuesFromBody(body) {
+function getDecoratorValuesFromBody(body: string) {
     const { document } = new JSDOM(body).window;
     const prop = 'innerHTML';
 
