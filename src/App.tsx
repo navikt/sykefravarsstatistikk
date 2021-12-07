@@ -18,7 +18,7 @@ import {
     PATH_HISTORIKK,
     PATH_KALKULATOR,
 } from './konstanter';
-import { sendSidevisningEvent} from './amplitude/events';
+import { sendSidevisningEvent } from './amplitude/events';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { Forside } from './Forside/Forside';
 import { Sammenligningspanel } from './Forside/Sammenligningspanel/Sammenligningspanel';
@@ -73,6 +73,7 @@ export const AppContent = ({
     samtalestøttePodlet?: React.ReactNode;
 }) => {
     useAnalytics(analyticsClient);
+
     const datakilder: RestRessurs<any>[] = useMemo(() => {
         return [
             sykefraværshistorikk,

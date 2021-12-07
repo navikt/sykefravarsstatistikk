@@ -69,6 +69,17 @@ export function sendPanelEkspanderEvent(panelnavn: string) {
     });
 }
 
+export function sendPanelKollapsEvent(panelnavn: string) {
+    sendAnalytics({
+        eventname: 'panel-kollaps',
+        eventProperties: {
+            app,
+            panelnavn,
+            url: window.location.pathname,
+        },
+    });
+}
+
 export function sendTilbakemeldingFraBrukerEvent(id: string, type?: string, verdi?: any) {
     sendAnalytics({
         eventname: 'tilbakemelding-fra-bruker',
