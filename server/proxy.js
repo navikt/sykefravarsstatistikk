@@ -1,5 +1,6 @@
 const { FRONTEND_API_PATH } = require('./konstanter');
 const { createProxyMiddleware } = require('http-proxy-middleware');
+const { exchangeToken } = require('./tokenx');
 
 const envProperties = {
     API_GATEWAY: process.env.API_GATEWAY || 'http://localhost:8080',
@@ -12,7 +13,9 @@ const API_GATEWAY_BASEURL = `${envProperties.API_GATEWAY}`;
 const listeAvTillatteUrler = [
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/summert'),
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/kvartalsvis'),
-    new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/legemeldtsykefravarsprosent'),
+    new RegExp(
+        '^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/legemeldtsykefravarsprosent'
+    ),
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/bedriftsmetrikker'),
     new RegExp('^' + FRONTEND_API_PATH + '/organisasjoner/statistikk'),
     new RegExp('^' + FRONTEND_API_PATH + '/organisasjoner'),
@@ -29,6 +32,13 @@ const proxyConfig = {
             return path.replace(FRONTEND_API_PATH, BACKEND_API_PATH);
         }
         return BACKEND_API_PATH + '/not-found';
+    },
+    router: async (req) => {
+        const tokenSet = await exchangeToken(req);
+        if (!tokenSet?.expired() && tokenSet?.access_token) {
+            req.headers['authorization'] = `Bearer ${tokenSet.access_token}`;
+        }
+        return undefined;
     },
     secure: true,
     xfwd: true,

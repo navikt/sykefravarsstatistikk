@@ -13,6 +13,8 @@ spec:
         enabled: false
     ingresses:
         - https://arbeidsgiver.labs.nais.io/sykefravarsstatistikk
+    tokenx:
+        enabled: true
     idporten:
         enabled: true
         sidecar:
@@ -30,3 +32,4 @@ spec:
                   namespace: arbeidsgiver
             external:
                 - host: dekoratoren.dev.nav.no
+                - host: fakedings.dev-gcp.nais.io

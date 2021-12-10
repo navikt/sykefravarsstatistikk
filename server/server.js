@@ -6,8 +6,13 @@ const mustacheExpress = require('mustache-express');
 const proxy = require('./proxy');
 const { BASE_PATH } = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
+const dotenv = require('dotenv');
+const { initIdporten } = require('./idporten');
+const { initTokenX } = require('./tokenx');
 
 const PORT = process.env.PORT || 3000;
+
+dotenv.config();
 
 app.engine('html', mustacheExpress());
 app.set('view engine', 'mustache');
@@ -25,12 +30,14 @@ const renderAppMedDecorator = (decoratorFragments) => {
     });
 };
 
-const startServer = (html) => {
+const startServer = async (html) => {
+    await Promise.all([initIdporten(), initTokenX()]);
+
     app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
         res.setHeader('Referrer', req.query.redirect);
-        res.redirect('/oauth2/login');
+        res.redirect(BASE_PATH + '/oauth2/login');
     });
 
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));

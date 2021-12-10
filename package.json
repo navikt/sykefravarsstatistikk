@@ -111,7 +111,7 @@
         "start": "craco start",
         "mock": "REACT_APP_MOCK=true yarn start",
         "wock": "set REACT_APP_MOCK=true && yarn start",
-        "serve": "node server/server.js",
+        "serve": "NODE_ENV=development node server/server.js",
         "build": "craco build",
         "test": "craco test ./",
         "lint": "yarn lint:eslint & yarn lint:typescript",
