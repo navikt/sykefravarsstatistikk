@@ -2,7 +2,10 @@ import { sendAnalytics } from './useAnalytics';
 import { amplitudeMock } from '../mocking/amplitude-mock';
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { mockSykefraværNoEkstradata, mockSykefraværWithEkstradata } from '../mocking/data-mocks';
+import {
+    mockSykefraværNoEkstradata,
+    mockSykefraværWithEkstradata,
+} from '../mocking/use-analytics-test-mocks';
 import { BrowserRouter } from 'react-router-dom';
 import { SykefraværAppData } from '../hooks/useSykefraværAppData';
 import userEvent from '@testing-library/user-event';
@@ -85,7 +88,10 @@ it('To klikk på les-mer-panel sender panel-kollaps event til Amplitude', async 
     });
 
     userEvent.click(lesMerPanel);
-    expect(amplitudeMock.logEvent).not.toHaveBeenCalledWith('panel-kollaps', expect.objectCo;ntaining({}))
+    expect(amplitudeMock.logEvent).not.toHaveBeenCalledWith(
+        'panel-kollaps',
+        expect.objectContaining({})
+    );
 
     userEvent.click(lesMerPanel);
     expect(amplitudeMock.logEvent).toHaveBeenCalledWith(

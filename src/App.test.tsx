@@ -9,7 +9,7 @@ import { RestVirksomhetsdata } from './api/virksomhetsdata-api';
 import { BASE_PATH } from './konstanter';
 import { BrowserRouter } from 'react-router-dom';
 import { amplitudeMock } from './mocking/amplitude-mock';
-import { mockSykefraværNoEkstradata } from './mocking/data-mocks';
+import { mockSykefraværNoEkstradata } from './mocking/use-analytics-test-mocks';
 
 // eslint-disable-next-line jest/expect-expect
 it('renders without crashing', async () => {

@@ -1,17 +1,25 @@
-import { mapTilPrivatElleOffentligSektor } from './sektorUtils';
+import { mapTilPrivatEllerOffentligSektor } from './sektorUtils';
 
 describe('Tester for sektorUtils funksjoner', () => {
     test('mapTilPrivatElleOffentligSektor returnerer "offentlig" eller "private" avhengig av institusjonell sektor kode', () => {
-        const resulatMedOffentligSektorkode = mapTilPrivatElleOffentligSektor({
+        const resulatMedOffentligSektorkode = mapTilPrivatEllerOffentligSektor({
             kode: '6500',
             beskrivelse: 'Kommuneforvaltningen',
         });
         expect(resulatMedOffentligSektorkode).toBe('offentlig');
 
-        const resulatMedPrivatSektorkode = mapTilPrivatElleOffentligSektor({
+        const resulatMedPrivatSektorkode = mapTilPrivatEllerOffentligSektor({
             kode: '2100',
             beskrivelse: 'Private aksjeselskaper mv.',
         });
         expect(resulatMedPrivatSektorkode).toBe('privat');
+    });
+
+    test('Mapper tom sektorkode til privat sektor', () => {
+        const resulatMedOffentligSektorkode = mapTilPrivatEllerOffentligSektor({
+            kode: '',
+            beskrivelse: '',
+        });
+        expect(resulatMedOffentligSektorkode).toBe('privat');
     });
 });
