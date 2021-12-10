@@ -36,19 +36,9 @@ const proxyConfig: Options = {
         }
         return BACKEND_API_PATH + '/not-found';
     },
-    onProxyReq: (_, __) => {
-        // if (req.headers.authorization) {
-        //     new TokenSet();
-        //     proxyReq.setHeader('authorization', 'Bearer token'); // FIXME: Gjør token exchange til tokenX her
-        // } else {
-        //     throw new Error('User is not authorized to call backend!');
-        // }
-        console.log('hello');
-        console.log(_.getHeaders());
-    },
     router: async (req) => {
         const tokenSet = await exchangeToken(req);
-        if (!tokenSet.expired() && tokenSet.access_token) {
+        if (!tokenSet?.expired() && tokenSet?.access_token) {
             req.headers['authorization'] = `Bearer ${tokenSet.access_token}`;
         }
         return undefined;

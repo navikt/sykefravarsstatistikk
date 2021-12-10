@@ -1,20 +1,22 @@
-import { BaseClient, Issuer } from 'openid-client';
+import { BaseClient, Issuer, TokenSet } from 'openid-client';
 import { Request } from 'express';
 import { verifiserAccessToken } from './idporten';
 
-let tokenxClient: BaseClient;
+let tokenxClient: BaseClient | undefined;
 
 export async function initTokenX() {
-    const tokenxIssuer = await Issuer.discover(process.env.TOKEN_X_WELL_KNOWN_URL!);
-    tokenxClient = new tokenxIssuer.Client(
-        {
-            client_id: process.env.TOKEN_X_CLIENT_ID!,
-            token_endpoint_auth_method: 'private_key_jwt',
-        },
-        {
-            keys: [JSON.parse(process.env.TOKEN_X_PRIVATE_JWK!)],
-        }
-    );
+    if (process.env.NODE_ENV === 'production') {
+        const tokenxIssuer = await Issuer.discover(process.env.TOKEN_X_WELL_KNOWN_URL!);
+        tokenxClient = new tokenxIssuer.Client(
+            {
+                client_id: process.env.TOKEN_X_CLIENT_ID!,
+                token_endpoint_auth_method: 'private_key_jwt',
+            },
+            {
+                keys: [JSON.parse(process.env.TOKEN_X_PRIVATE_JWK!)],
+            }
+        );
+    }
 }
 
 // 1. Sjekke token fra session
@@ -22,20 +24,23 @@ export async function initTokenX() {
 // 3. Hvis tokenet ikke finnes der, sjekk om det finnes et idporten token i auth header fra wonderwall.
 // 4. Hvis det IKKE finnes der heller, kast en exception
 export async function exchangeToken(req: Request) {
-    const token = req.headers.authorization?.split(' ')[1]; // TODO: Hent denne fra session cache
+    let token = req.headers.authorization?.split(' ')[1]; // TODO: Hent denne fra session cache
     if (!token) {
-        throw new Error('Du er ikke autorisert!');
+        if (process.env.NODE_ENV === 'production') {
+            throw new Error('Du er ikke autorisert!');
+        }
+        token = await (await fetch(process.env.FAKEDINGS_URL_IDPORTEN + '?acr=Level=4')).text();
     }
     await verifiserAccessToken(token);
     const additionalClaims = {
         clientAssertionPayload: {
             nbf: Math.floor(Date.now() / 1000),
             // TokenX only allows a single audience
-            aud: [tokenxClient.metadata.token_endpoint],
+            aud: [tokenxClient?.metadata.token_endpoint],
         },
     };
 
-    return await tokenxClient.grant(
+    let tokenSet = await tokenxClient?.grant(
         {
             grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
             client_assertion_type: 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
@@ -45,4 +50,13 @@ export async function exchangeToken(req: Request) {
         },
         additionalClaims
     );
+    if (!tokenSet) {
+        const tokenXToken = await (
+            await fetch(process.env.FAKEDINGS_URL_TOKENX + '?aud=someaudience&acr=Level4')
+        ).text();
+        tokenSet = new TokenSet({
+            access_token: tokenXToken,
+        });
+    }
+    return tokenSet;
 }

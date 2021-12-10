@@ -11,9 +11,14 @@ import getDecorator from './decorator';
 import mustacheExpress from 'mustache-express';
 
 import proxy from './proxy';
+import dotenv from 'dotenv';
+
 // import { initTokenX } from './openid/tokenx';
 // import { initIdporten } from './openid/idporten';
 
+dotenv.config({
+    path: '../.env.local',
+});
 const app = express();
 const { BASE_PATH } = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
