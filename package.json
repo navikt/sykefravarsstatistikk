@@ -58,7 +58,7 @@
         "react-responsive": "^8.0.3",
         "react-router-dom": "^5.2.1",
         "react-scripts": "^4.0.1",
-        "react-to-print": "^2.13.0",
+        "react-to-print": "^2.14.1",
         "recharts": "^2.1.2",
         "tar": "^6.1.9",
         "webpack": "4.44.2"
