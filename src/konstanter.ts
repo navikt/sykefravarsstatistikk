@@ -11,4 +11,4 @@ export const PATH_HISTORIKK = '/historikk';
 export const SAMTALESTØTTE_MIKROFONTEND = 'samtalestotte-podlet';
 export const SAMTALESTØTTE_MIKROFRONTEND_PATH = '/' + SAMTALESTØTTE_MIKROFONTEND;
 
-export const ER_VEDLIKEHOLD_AKTIVERT = false;
+export const ER_VEDLIKEHOLD_AKTIVERT = true;
