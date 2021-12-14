@@ -13,12 +13,6 @@ spec:
         enabled: false
     ingresses:
         - https://arbeidsgiver.labs.nais.io/sykefravarsstatistikk
-    tokenx:
-        enabled: true
-    idporten:
-        enabled: true
-        sidecar:
-            enabled: true
     liveness:
         path: /sykefravarsstatistikk/internal/isReady
         initialDelay: 10
@@ -30,9 +24,5 @@ spec:
           value: production
     accessPolicy:
         outbound:
-            rules:
-                - application: sykefravarsstatistikk-api
-                  namespace: arbeidsgiver
             external:
                 - host: dekoratoren.dev.nav.no
-                - host: fakedings.dev-gcp.nais.io

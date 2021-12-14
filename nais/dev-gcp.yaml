@@ -26,7 +26,18 @@ spec:
           value: /etc/ssl/ca-bundle.pem
         - name: LOGIN_URL
           value: https://loginservice.dev.nav.no/login?redirect=
+        - name: NODE_ENV
+          value: production
+    tokenx:
+        enabled: true
+        idporten:
+            enabled: true
+            sidecar:
+                enabled: true
     accessPolicy:
         outbound:
+            rules:
+                - application: sykefravarsstatistikk-api
+                  namespace: arbeidsgiver
             external:
                 - host: dekoratoren.dev.nav.no
