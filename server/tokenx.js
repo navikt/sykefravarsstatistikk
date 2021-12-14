@@ -46,7 +46,13 @@ async function getTokenXToken(token, additionalClaims) {
             additionalClaims
         );
     } catch (error) {
-        console.error('Noe gikk galt under grant til tokenX:', error);
+        const { errorResp, error_description, error_uri, state, scope, response } = error;
+        console.error('Her er responsen', errorResp);
+        console.error('Her er desc', error_description);
+        console.error('Her er uri', error_uri);
+        console.error('Her er state', state);
+        console.error('Her er scope', scope);
+        console.error('Her er res', response);
     }
     if (!tokenSet && process.env.NODE_ENV !== 'production') {
         // Dette skjer kun i lokalt miljø - siden tokenxClient kun blir initialisert i production env
