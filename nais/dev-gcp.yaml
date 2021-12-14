@@ -32,10 +32,10 @@ spec:
           value: "dev-fss:arbeidsgiver:sykefravarsstatistikk-api"
     tokenx:
         enabled: true
-        idporten:
+    idporten:
+        enabled: true
+        sidecar:
             enabled: true
-            sidecar:
-                enabled: true
     accessPolicy:
         outbound:
             rules:
