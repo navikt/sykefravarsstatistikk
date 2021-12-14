@@ -57,7 +57,7 @@ jobs:
                   PRINT_PAYLOAD: true
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/sende-appen-til-dev-gcp'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/wonderwall-og-tokenx-impl'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
