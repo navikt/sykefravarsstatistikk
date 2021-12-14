@@ -25,6 +25,6 @@
         "ts-node": "^10.4.0"
     },
     "scripts": {
-        "watch": "NODE_ENV=development nodemon src/server.ts"
+        "watch": "NODE_ENV=development nodemon server.js"
     }
 }
