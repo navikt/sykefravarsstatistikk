@@ -76,7 +76,7 @@ async function exchangeToken(req) {
         clientAssertionPayload: {
             nbf: Math.floor(Date.now() / 1000),
             // TokenX only allows a single audience
-            aud: [tokenxClient?.metadata.token_endpoint],
+            aud: [tokenxClient?.issuer.metadata.token_endpoint],
         },
     };
 
