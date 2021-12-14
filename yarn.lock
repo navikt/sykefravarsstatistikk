@@ -1615,10 +1615,10 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@navikt/bedriftsmeny@^3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@navikt/bedriftsmeny/-/bedriftsmeny-3.5.0.tgz#7b66aacbc4311c323cafae247748e517116caf5c"
-  integrity sha512-KwWHd6yIDAAYotS2h81C2/45nseiSOvsxzMA/ukEcz6cymzIRtLuRpHNiMUtF+RYREeqD2GjcZqLIjwROUNafg==
+"@navikt/bedriftsmeny@^3.5.2":
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/@navikt/bedriftsmeny/-/bedriftsmeny-3.5.2.tgz#30d48b5be9b43701dc19bd3c7fbac15a43fd36d7"
+  integrity sha512-lfT1BVm0YgZO+i530PCM1Eki5QDBiuIUK/zm/yCSRnKLlgH0eSFjiTCk7vTc07FOG+agb1gZq/jgdgE10c/YYQ==
   dependencies:
     "@types/amplitude-js" "^8.0.1"
     fuzzysort "^1.1.4"
