@@ -33,17 +33,22 @@ async function getMockTokenXToken() {
 }
 
 async function getTokenXToken(token, additionalClaims) {
-    let tokenSet = await tokenxClient?.grant(
-        {
-            grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
-            client_assertion_type: 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
-            subject_token_type: 'urn:ietf:params:oauth:token-type:jwt',
-            audience: process.env.TOKENX_AUDIENCE,
-            subject_token: token,
-        },
-        additionalClaims
-    );
-    if (!tokenSet) {
+    let tokenSet;
+    try {
+        tokenSet = await tokenxClient?.grant(
+            {
+                grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
+                client_assertion_type: 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
+                subject_token_type: 'urn:ietf:params:oauth:token-type:jwt',
+                audience: process.env.TOKENX_AUDIENCE,
+                subject_token: token,
+            },
+            additionalClaims
+        );
+    } catch (error) {
+        console.error('Noe gikk galt under grant til tokenX:', error);
+    }
+    if (!tokenSet && process.env.NODE_ENV !== 'production') {
         // Dette skjer kun i lokalt miljø - siden tokenxClient kun blir initialisert i production env
         tokenSet = await getMockTokenXToken();
     }
