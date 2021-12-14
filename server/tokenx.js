@@ -45,14 +45,14 @@ async function getTokenXToken(token, additionalClaims) {
             },
             additionalClaims
         );
-    } catch (error) {
-        const { errorResp, error_description, error_uri, state, scope, response } = error;
-        console.error('Her er responsen', errorResp);
-        console.error('Her er desc', error_description);
-        console.error('Her er uri', error_uri);
-        console.error('Her er state', state);
-        console.error('Her er scope', scope);
-        console.error('Her er res', response);
+    } catch (err) {
+        console.error(
+            `Noe gikk galt med token exchange mot TokenX.
+            Feilmelding fra openid-client: (${err}).
+            HTTP Status fra TokenX: (${err.response.statusCode} ${err.response.statusMessage})
+            Body fra TokenX:`,
+            err.response.body
+        );
     }
     if (!tokenSet && process.env.NODE_ENV !== 'production') {
         // Dette skjer kun i lokalt miljø - siden tokenxClient kun blir initialisert i production env
