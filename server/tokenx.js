@@ -53,10 +53,12 @@ async function getTokenXToken(token, additionalClaims) {
 async function exchangeToken(req) {
     let token = req.headers.authorization?.split(' ')[1];
     if (!token) {
-        if (process.env.NODE_ENV === 'production') {
-            throw new Error('Du er ikke autorisert!');
+        if (process.env.NODE_ENV !== 'production') {
+            token = await getMockTokenFromIdporten();
+        } else {
+            // Brukeren er ikke autorisert
+            return;
         }
-        token = await getMockTokenFromIdporten();
     }
     await verifiserAccessToken(token);
     const additionalClaims = {
