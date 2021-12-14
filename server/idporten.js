@@ -34,8 +34,9 @@ async function verifiserAccessToken(token) {
 module.exports = {
     verifiserAccessToken,
     initIdporten,
+    getMockTokenFromIdporten,
 };
 
-export async function getMockTokenFromIdporten() {
+async function getMockTokenFromIdporten() {
     return await (await fetch(process.env.FAKEDINGS_URL_IDPORTEN + '?acr=Level=4')).text();
 }
