@@ -44,7 +44,7 @@ async function exchangeToken(req) {
             grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
             client_assertion_type: 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
             subject_token_type: 'urn:ietf:params:oauth:token-type:jwt',
-            audience: 'someaudience', // FIXME
+            audience: process.env.TOKENX_AUDIENCE,
             subject_token: token,
         },
         additionalClaims
@@ -52,7 +52,8 @@ async function exchangeToken(req) {
     if (!tokenSet) {
         const tokenXToken = await (
             await fetch(
-                process.env.FAKEDINGS_URL_TOKENX + '?aud=someaudience&acr=Level4&pid=01065500791'
+                process.env.FAKEDINGS_URL_TOKENX +
+                    `?aud=${process.env.TOKENX_AUDIENCE}&acr=Level4&pid=01065500791`
             )
         ).text();
         tokenSet = new TokenSet({
