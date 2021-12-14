@@ -1,5 +1,6 @@
 const { Issuer } = require('openid-client');
 const { createRemoteJWKSet, jwtVerify } = require('jose');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 const acceptedAcrLevel = 'Level4';
 const acceptedSigningAlgorithm = 'RS256';
@@ -34,3 +35,7 @@ module.exports = {
     verifiserAccessToken,
     initIdporten,
 };
+
+export async function getMockTokenFromIdporten() {
+    return await (await fetch(process.env.FAKEDINGS_URL_IDPORTEN + '?acr=Level=4')).text();
+}

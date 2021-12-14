@@ -1,3 +1,5 @@
+import { getMockTokenFromIdporten } from './idporten';
+
 const { Issuer, TokenSet } = require('openid-client');
 const { verifiserAccessToken } = require('./idporten');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
@@ -18,27 +20,19 @@ async function initTokenX() {
     }
 }
 
-// 1. Sjekke token fra session
-// 2. Hvis tokenet finnes der, så send det direkte videre til apiet
-// 3. Hvis tokenet ikke finnes der, sjekk om det finnes et idporten token i auth header fra wonderwall.
-// 4. Hvis det IKKE finnes der heller, kast en exception
-async function exchangeToken(req) {
-    let token = req.headers.authorization?.split(' ')[1]; // TODO: Hent denne fra session cache
-    if (!token) {
-        if (process.env.NODE_ENV === 'production') {
-            throw new Error('Du er ikke autorisert!');
-        }
-        token = await (await fetch(process.env.FAKEDINGS_URL_IDPORTEN + '?acr=Level=4')).text();
-    }
-    await verifiserAccessToken(token);
-    const additionalClaims = {
-        clientAssertionPayload: {
-            nbf: Math.floor(Date.now() / 1000),
-            // TokenX only allows a single audience
-            aud: [tokenxClient?.metadata.token_endpoint],
-        },
-    };
+async function getMockTokenXToken() {
+    const tokenXToken = await (
+        await fetch(
+            process.env.FAKEDINGS_URL_TOKENX +
+                `?aud=${process.env.TOKENX_AUDIENCE}&acr=Level4&pid=01065500791`
+        )
+    ).text();
+    return new TokenSet({
+        access_token: tokenXToken,
+    });
+}
 
+async function getTokenXToken(token, additionalClaims) {
     let tokenSet = await tokenxClient?.grant(
         {
             grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
@@ -50,17 +44,30 @@ async function exchangeToken(req) {
         additionalClaims
     );
     if (!tokenSet) {
-        const tokenXToken = await (
-            await fetch(
-                process.env.FAKEDINGS_URL_TOKENX +
-                    `?aud=${process.env.TOKENX_AUDIENCE}&acr=Level4&pid=01065500791`
-            )
-        ).text();
-        tokenSet = new TokenSet({
-            access_token: tokenXToken,
-        });
+        // Dette skjer kun i lokalt miljø - siden tokenxClient kun blir initialisert i production env
+        tokenSet = await getMockTokenXToken();
     }
     return tokenSet;
+}
+
+async function exchangeToken(req) {
+    let token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        if (process.env.NODE_ENV === 'production') {
+            throw new Error('Du er ikke autorisert!');
+        }
+        token = await getMockTokenFromIdporten();
+    }
+    await verifiserAccessToken(token);
+    const additionalClaims = {
+        clientAssertionPayload: {
+            nbf: Math.floor(Date.now() / 1000),
+            // TokenX only allows a single audience
+            aud: [tokenxClient?.metadata.token_endpoint],
+        },
+    };
+
+    return await getTokenXToken(token, additionalClaims);
 }
 
 module.exports = {
