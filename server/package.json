@@ -21,8 +21,7 @@
         "@types/jsdom": "^16.2.13",
         "@types/mustache-express": "^1.2.1",
         "@types/node": "^16.11.12",
-        "nodemon": "^2.0.15",
-        "ts-node": "^10.4.0"
+        "nodemon": "^2.0.15"
     },
     "scripts": {
         "watch": "NODE_ENV=development nodemon server.js"
