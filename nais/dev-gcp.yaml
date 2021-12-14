@@ -28,6 +28,8 @@ spec:
           value: https://loginservice.dev.nav.no/login?redirect=
         - name: NODE_ENV
           value: production
+        - name: TOKENX_AUDIENCE
+          value: "dev-fss:arbeidsgiver:sykefravarsstatistikk-api"
     tokenx:
         enabled: true
         idporten:

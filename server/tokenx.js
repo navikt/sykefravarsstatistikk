@@ -1,4 +1,4 @@
-import { getMockTokenFromIdporten } from './idporten';
+const { getMockTokenFromIdporten } = require('./idporten');
 
 const { Issuer, TokenSet } = require('openid-client');
 const { verifiserAccessToken } = require('./idporten');
