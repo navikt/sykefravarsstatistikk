@@ -20,9 +20,9 @@ interface Props {
 }
 
 export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
-                                                                        restSummertSykefraværshistorikk,
-                                                                        restVirksomhetsdata,
-                                                                    }) => {
+    restSummertSykefraværshistorikk,
+    restVirksomhetsdata,
+}) => {
     if (
         restSummertSykefraværshistorikk.status === RestStatus.IngenTilgang ||
         restSummertSykefraværshistorikk.status === RestStatus.IkkeInnlogget
@@ -36,7 +36,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
     ) {
         return (
             <Skeleton
-                className='ekspanderbart-sammenligningspanel__loading-skeleton'
+                className="ekspanderbart-sammenligningspanel__loading-skeleton"
                 height={355}
             />
         );
@@ -59,20 +59,20 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
 
     const antallKvartalerVirksomhet =
         sammenligningResultatTotalt.sammenligningVurdering ===
-        SykefraværVurdering.UFULLSTENDIG_DATA ||
+            SykefraværVurdering.UFULLSTENDIG_DATA ||
         sammenligningResultatTotalt.sammenligningVurdering === SykefraværVurdering.INGEN_DATA ? (
             <strong> {sammenligningResultatTotalt.kvartaler?.length || 0} av 4 kvartaler</strong>
         ) : null;
 
     const antallKvartalerBransje =
         sammenligningResultatTotalt.sammenligningVurdering ===
-        SykefraværVurdering.UFULLSTENDIG_DATA ||
+            SykefraværVurdering.UFULLSTENDIG_DATA ||
         sammenligningResultatTotalt.sammenligningVurdering === SykefraværVurdering.INGEN_DATA ? (
             <strong>4 av 4 kvartaler</strong>
         ) : null;
 
     return (
-        <div className='ekspanderbar-sammenligning'>
+        <div className="ekspanderbar-sammenligning">
             <SammenligningIngress bransje={bransje} harBransje={harBransje} />
             <SlikHarViKommetFramTilDittResultat
                 resultat={sammenligningResultatTotalt.sammenligningVurdering}
@@ -81,11 +81,11 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             <DinNæringEllerBransje
                 restSummertSykefraværshistorikk={restSummertSykefraværshistorikk}
             />
-            <Element className='ekspanderbar-sammenligning__undertittel'>
+            <Element className="ekspanderbar-sammenligning__undertittel">
                 Overordnet sammenligning:
             </Element>
             <EkspanderbartSammenligningspanel
-                className='ekspanderbar-sammenligning__sammenligning-totalt'
+                className="ekspanderbar-sammenligning__sammenligning-totalt"
                 sykefraværVurdering={sammenligningResultatTotalt.sammenligningVurdering}
                 sykefraværVirksomhet={sammenligningResultatTotalt.sykefraværVirksomhet}
                 sykefraværBransje={sammenligningResultatTotalt.sykefraværNæringEllerBransje}
@@ -95,7 +95,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 bransje={bransje}
                 harBransje={harBransje}
             />
-            <Element className='ekspanderbar-sammenligning__undertittel'>
+            <Element className="ekspanderbar-sammenligning__undertittel">
                 Detaljert sammenligning:
             </Element>
             <EkspanderbartSammenligningspanel

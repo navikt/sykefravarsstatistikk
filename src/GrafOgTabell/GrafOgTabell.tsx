@@ -11,9 +11,8 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
-import { useOrgnr } from '../utils/orgnr-hook';
 import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../metrikker/iatjenester';
-import { useSendSidevisningEvent } from '../amplitude/events';
+import { sendSidevisningEvent } from '../amplitude/events';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -21,13 +20,11 @@ interface Props {
 }
 
 const GrafOgTabell: FunctionComponent<Props> = (props) => {
-    const orgnr = useOrgnr();
-
     useEffect(() => {
         scrollToBanner();
+        sendSidevisningEvent();
     }, []);
 
-    useSendSidevisningEvent('historikk', orgnr);
     useSendIaTjenesteMetrikkMottattVedSidevisningEvent();
 
     const { restSykefraværsstatistikk } = props;
@@ -67,7 +64,6 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
 
     return (
         <div className="graf-og-tabell__wrapper">
-
             <div className="graf-og-tabell">
                 {restSykefraværsstatistikk.status !== RestStatus.IngenTilgang ? (
                     <div className="graf-og-tabell__overdel-wrapper">

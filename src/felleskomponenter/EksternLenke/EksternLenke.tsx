@@ -3,39 +3,29 @@ import Lenke, { Props } from 'nav-frontend-lenker';
 import { ReactComponent as EksternLenkeIkon } from './EksternLenkeIkon.svg';
 import './EksternLenke.less';
 import classNames from 'classnames';
-import { EventData, useSendNavigereEvent } from '../../amplitude/events';
+import { sendNavigereEvent } from '../../amplitude/events';
 
-interface ExtendedProps {
-    children: string;
-    eventProperties?: EventData;
-}
-
-const EksternLenke: FunctionComponent<Props & ExtendedProps> = (
-    {
-        children,
-        eventProperties,
-        className,
-        ...lenkeProperties
-    }) => {
-    const sendNavigereEvent = useSendNavigereEvent();
+const EksternLenke: FunctionComponent<Props> = ({
+    children: lenketekst,
+    className,
+    ...lenkeProperties
+}) => {
+    if (typeof lenketekst !== 'string') {
+        throw Error('EksternLenke støttes bare av tekstlenker.');
+    }
 
     return (
         <Lenke
             {...lenkeProperties}
             className={classNames('ekstern-lenke', className)}
-            target='_blank'
-            rel='noopener noreferrer'
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => {
-                sendNavigereEvent({
-                    lenketekst: children,
-                    destinasjon: lenkeProperties.href,
-                    url: window.location.href,
-                    ...eventProperties,
-                });
+                sendNavigereEvent(lenkeProperties.href, lenketekst);
             }}
         >
-            {children}
-            <EksternLenkeIkon className='ekstern-lenke__ikon' />
+            {lenketekst}
+            <EksternLenkeIkon className="ekstern-lenke__ikon" />
         </Lenke>
     );
 };

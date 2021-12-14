@@ -53,7 +53,6 @@ const mapTilKurs = (kursDto: KursDto): Kurs => ({
 });
 
 export const hentRestKurs = async (): Promise<RestKursliste> => {
-    console.log(KURSOVERSIKT_API_PATH);
     const response = await fetch(KURSOVERSIKT_API_PATH);
     const restStatus = getRestStatus(response.status);
 

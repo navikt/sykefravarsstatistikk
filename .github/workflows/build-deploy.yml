@@ -5,6 +5,10 @@ on: [push]
 env:
     IMAGE: docker.pkg.github.com/${{ github.repository }}/sykefravarsstatistikk:${{ github.sha }}
 
+concurrency:
+    group: build-deploy-on-${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     compile-test-and-build:
         name: Build and run tests
@@ -39,7 +43,7 @@ jobs:
 
     deploy-to-dev:
         name: Deploy to dev-sbs
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/hindre-autorun-av-postinstall-scripts-med-yarn'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/endringer-etter-publisering-3-kvartal-2021'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
@@ -53,7 +57,7 @@ jobs:
                   PRINT_PAYLOAD: true
     deploy-to-labs-gcp:
         name: Deploy to labs-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/hindre-autorun-av-postinstall-scripts-med-yarn'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/sende_eventer'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:

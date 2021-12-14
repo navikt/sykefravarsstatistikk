@@ -1,15 +1,25 @@
 import React from 'react';
-import App from './App';
-import { render } from '@testing-library/react';
+import { AppContent } from './App';
+import { render, waitFor } from '@testing-library/react';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import { RestStatus } from './api/api-utils';
 import { getvirksomhetsdataMock } from './mocking/virksomhetsdata-mock';
 import { ArbeidsmiljøportalenBransje } from './utils/bransje-utils';
 import { RestVirksomhetsdata } from './api/virksomhetsdata-api';
+import { BASE_PATH } from './konstanter';
+import { BrowserRouter } from 'react-router-dom';
+import { amplitudeMock } from './mocking/amplitude-mock';
+import { mockSykefraværNoEkstradata } from './mocking/use-analytics-test-mocks';
 
 // eslint-disable-next-line jest/expect-expect
-it('renders without crashing', () => {
-    render(<App />);
+it('renders without crashing', async () => {
+    await waitFor(() => {
+        render(
+            <BrowserRouter basename={BASE_PATH}>
+                <AppContent analyticsClient={amplitudeMock} {...mockSykefraværNoEkstradata} />
+            </BrowserRouter>
+        );
+    });
 });
 
 it('ArbeidsmiljøportalenPanel rendrer med riktig link basert på bransje', () => {

@@ -5,6 +5,10 @@ import App from './App';
 import * as Sentry from '@sentry/browser';
 import './index.less';
 import { getMiljø } from './utils/miljøUtils';
+import { BASE_PATH } from './konstanter';
+import { BrowserRouter } from 'react-router-dom';
+import { amplitudeClient } from './amplitude/client';
+import SamtalestøttePodletpanel from './Forside/Samtalestøttepanel/SamtalestøttePodletpanel';
 
 if (process.env.REACT_APP_MOCK || getMiljø() === 'labs-gcp') {
     console.log('========================================');
@@ -20,4 +24,9 @@ Sentry.init({
     enabled: getMiljø() !== 'local',
 });
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <BrowserRouter basename={BASE_PATH}>
+        <App analyticsClient={amplitudeClient} samtalestøttePodlet={<SamtalestøttePodletpanel />} />
+    </BrowserRouter>,
+    document.getElementById('root')
+);

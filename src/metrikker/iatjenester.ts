@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
-import { useOrgnr } from '../utils/orgnr-hook';
 import { tilIsoDatoMedUtcTimezoneUtenMillis } from '../utils/app-utils';
 import { iaTjenesterMetrikkerContext } from './IaTjenesterMetrikkerContext';
+import { useOrgnr } from '../hooks/useOrgnr';
 
 interface IaTjenesteMetrikk {
     orgnr: String;
@@ -89,7 +89,12 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
 
     useEffect(() => {
         const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr);
-        if (!erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker)) {
+        if (
+            !erIaTjenesterMetrikkerSendtForBedrift(
+                orgnr ?? '',
+                context.bedrifterSomHarSendtMetrikker
+            )
+        ) {
             sendIaTjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
                 if (isSent) {
                     context.setBedrifterSomHarSendtMetrikker(

@@ -1,6 +1,3 @@
-import React, { createContext, FunctionComponent, useEffect, useState } from 'react';
-import { RestRessurs, RestStatus } from '../api/api-utils';
-import { useOrgnr } from './orgnr-hook';
 import {
     hentInformasjonOmOverordnetEnhet,
     hentInformasjonOmUnderenhet,
@@ -9,27 +6,11 @@ import {
     RestUnderenhet,
     Underenhet,
 } from '../api/enhetsregisteret-api';
+import { RestRessurs, RestStatus } from '../api/api-utils';
+import { useEffect, useState } from 'react';
+import { useOrgnr } from './useOrgnr';
 
-export interface EnhetsregisteretState {
-    restUnderenhet: RestUnderenhet;
-    restOverordnetEnhet: RestOverordnetEnhet;
-}
-
-export const enhetsregisteretContext = createContext<EnhetsregisteretState>({
-    restUnderenhet: {
-        status: RestStatus.IkkeLastet,
-    },
-    restOverordnetEnhet: {
-        status: RestStatus.IkkeLastet,
-    },
-});
-
-interface DataForVirksomhet<T> {
-    orgnr: string;
-    restData: RestRessurs<T>;
-}
-
-export const useRestDataForFlereVirksomheter = <T extends Object>(
+const useRestDataForFlereVirksomheter = <T extends Object>(
     hentData: (orgnr: string) => Promise<RestRessurs<T>>,
     orgnr: string | undefined
 ): [RestRessurs<T>, DataForVirksomhet<T>[]] => {
@@ -72,7 +53,12 @@ export const useRestDataForFlereVirksomheter = <T extends Object>(
     return [gjeldendeData, dataForAlleVirksomheter];
 };
 
-export const EnhetsregisteretProvider: FunctionComponent = (props) => {
+export interface Enhetsregisterdata {
+    restUnderenhet: RestUnderenhet;
+    restOverordnetEnhet: RestOverordnetEnhet;
+}
+
+export function useEnheter(): Enhetsregisterdata {
     const underenhetOrgnr = useOrgnr();
 
     const [gjeldendeUnderenhet] = useRestDataForFlereVirksomheter<Underenhet>(
@@ -85,13 +71,10 @@ export const EnhetsregisteretProvider: FunctionComponent = (props) => {
             ? gjeldendeUnderenhet.data.overordnetEnhet
             : undefined
     );
+    return { restUnderenhet: gjeldendeUnderenhet, restOverordnetEnhet: gjeldendeOverordnetEnhet };
+}
 
-    const Provider = enhetsregisteretContext.Provider;
-
-    const contextValue: EnhetsregisteretState = {
-        restUnderenhet: gjeldendeUnderenhet,
-        restOverordnetEnhet: gjeldendeOverordnetEnhet,
-    };
-
-    return <Provider value={contextValue}>{props.children}</Provider>;
-};
+interface DataForVirksomhet<T> {
+    orgnr: string;
+    restData: RestRessurs<T>;
+}

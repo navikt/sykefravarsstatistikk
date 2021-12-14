@@ -12,17 +12,11 @@ import { mapTilNæringsbeskrivelse } from './næringsbeskrivelser';
 import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import { konverterTilKvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
 import { RestOverordnetEnhet } from '../api/enhetsregisteret-api';
-import { mapTilPrivatElleOffentligSektor, Sektor } from '../utils/sektorUtils';
+import { mapTilPrivatEllerOffentligSektor, Sektor } from '../utils/sektorUtils';
 import { RestSummertSykefraværshistorikk } from '../api/summert-sykefraværshistorikk-api';
 import { getSammenligningResultatMedProsent } from '../Forside/vurdering-utils';
 import { SammenligningsType } from '../Forside/vurderingstekster';
-import { MutableRefObject, useContext, useEffect, useRef } from 'react';
-import { virksomhetsdataContext } from '../utils/virksomhetsdataContext';
-import { sykefraværshistorikkContext } from '../utils/sykefraværshistorikkContext';
-import { summertSykefraværshistorikkContext } from '../utils/summertSykefraværshistorikkContext';
-import { enhetsregisteretContext, EnhetsregisteretState } from '../utils/enhetsregisteretContext';
 import { RestVirksomhetsdata } from '../api/virksomhetsdata-api';
-import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 
 export interface Ekstradata {
     næring2siffer: string;
@@ -39,42 +33,8 @@ export interface Ekstradata {
     sektor: Sektor;
 }
 
-export const useEkstraDataRef = (): MutableRefObject<Partial<Ekstradata>> => {
-    const restVirksomhetsdata = useContext<RestVirksomhetsdata>(virksomhetsdataContext);
-    const restSykefraværshistorikk = useContext<RestSykefraværshistorikk>(
-        sykefraværshistorikkContext,
-    );
-    const restSummertSykefraværshistorikk = useContext<RestSummertSykefraværshistorikk>(
-        summertSykefraværshistorikkContext,
-    );
-    const dataFraEnhetsregisteret = useContext<EnhetsregisteretState>(enhetsregisteretContext);
-
-    const ekstradata = useRef<Partial<Ekstradata>>({});
-
-    useEffect(() => {
-        ekstradata.current = {
-            ...getEkstraDataFraVirksomhetsdata(restVirksomhetsdata),
-            ...getEkstraDataFraSykefraværshistorikk(restSykefraværshistorikk),
-            ...getEkstraDataFraSummertSykefraværshistorikk(
-                restSummertSykefraværshistorikk,
-                restVirksomhetsdata,
-            ),
-            ...getEkstraDataFraEnhetsregisteret(
-                dataFraEnhetsregisteret.restOverordnetEnhet,
-                restVirksomhetsdata,
-            ),
-        };
-    }, [
-        restVirksomhetsdata,
-        dataFraEnhetsregisteret,
-        restSykefraværshistorikk,
-        restSummertSykefraværshistorikk,
-    ]);
-    return ekstradata;
-};
-
-const getEkstraDataFraVirksomhetsdata = (
-    restVirksomhetsdata: RestVirksomhetsdata,
+export const getEkstraDataFraVirksomhetsdata = (
+    restVirksomhetsdata: RestVirksomhetsdata
 ): Partial<Ekstradata> => {
     if (restVirksomhetsdata.status === RestStatus.Suksess) {
         const metrikker = restVirksomhetsdata.data;
@@ -91,12 +51,12 @@ const getEkstraDataFraVirksomhetsdata = (
     return {};
 };
 
-const getEkstraDataFraSykefraværshistorikk = (
-    restSykefraværshistorikk: RestSykefraværshistorikk,
+export const getEkstraDataFraSykefraværshistorikk = (
+    restSykefraværshistorikk: RestSykefraværshistorikk
 ): Partial<Ekstradata> => {
     if (restSykefraværshistorikk.status === RestStatus.Suksess) {
         const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
-            restSykefraværshistorikk.data,
+            restSykefraværshistorikk.data
         );
 
         const sammenligningForSisteKvartal = kvartalsvisSammenligning.pop();
@@ -115,31 +75,24 @@ const getEkstraDataFraSykefraværshistorikk = (
     return {};
 };
 
-const getEkstraDataFraEnhetsregisteret = (
-    restOverordnetEnhet: RestOverordnetEnhet,
-    restvirksomhetsdata: RestVirksomhetsdata,
+export const getEkstraDataFraEnhetsregisteret = (
+    restOverordnetEnhet: RestOverordnetEnhet
 ): Partial<Ekstradata> => {
-    if (
-        restvirksomhetsdata.status === RestStatus.Suksess &&
-        restvirksomhetsdata.data.bransje === ArbeidsmiljøportalenBransje.BARNEHAGER &&
-        restOverordnetEnhet.status === RestStatus.Suksess
-    ) {
+    if (restOverordnetEnhet.status === RestStatus.Suksess) {
         return {
-            sektor: mapTilPrivatElleOffentligSektor(
-                restOverordnetEnhet.data.institusjonellSektorkode,
+            sektor: mapTilPrivatEllerOffentligSektor(
+                restOverordnetEnhet.data.institusjonellSektorkode
             ),
         };
     }
     return {};
 };
 
-const getEkstraDataFraSummertSykefraværshistorikk = (
+export const getEkstraDataFraSummertSykefraværshistorikk = (
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk,
-    restvirksomhetsdata: RestVirksomhetsdata,
+    restvirksomhetsdata: RestVirksomhetsdata
 ): Partial<Ekstradata> => {
-    if (
-        restvirksomhetsdata.status !== RestStatus.Suksess
-    ) {
+    if (restvirksomhetsdata.status !== RestStatus.Suksess) {
         return {};
     }
 
@@ -159,18 +112,18 @@ const getEkstraDataFraSummertSykefraværshistorikk = (
         const sammenligningResultatTotalt = getSammenligningResultatMedProsent(
             restSummertSykefraværshistorikk.status,
             summertSykefraværshistorikk,
-            SammenligningsType.TOTALT,
+            SammenligningsType.TOTALT
         );
 
         const sammenligningResultatKorttid = getSammenligningResultatMedProsent(
             restSummertSykefraværshistorikk.status,
             summertSykefraværshistorikk,
-            SammenligningsType.KORTTID,
+            SammenligningsType.KORTTID
         );
         const sammenligningResultatLangtid = getSammenligningResultatMedProsent(
             restSummertSykefraværshistorikk.status,
             summertSykefraværshistorikk,
-            SammenligningsType.LANGTID,
+            SammenligningsType.LANGTID
         );
 
         const resultater = {
@@ -179,10 +132,8 @@ const getEkstraDataFraSummertSykefraværshistorikk = (
             langtidSiste4Kvartaler: sammenligningResultatLangtid.sammenligningVurdering,
         };
 
-
         let ekstradata: Partial<Ekstradata> = { ...resultater };
         return { ...ekstradata };
-
     } catch (error) {
         return {};
     }

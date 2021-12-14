@@ -23,9 +23,11 @@
     "types": ["jest"]
   },
   "include": [
-    "src"
+    "src",
+    "./jest-setup.ts"
   ],
   "exclude": [
-    "server"
+    "server",
+    "node_modules"
   ]
 }

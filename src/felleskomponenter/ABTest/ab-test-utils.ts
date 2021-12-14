@@ -1,5 +1,3 @@
-import { amplitudeClient } from '../../amplitude/client';
-
 export enum ABTestVersjon {
     VersjonA = 'VersjonA',
     VersjonB = 'VersjonB',
@@ -14,8 +12,4 @@ export const getABTestVersjon = (erFeatureAktivert: boolean | undefined): ABTest
     } else {
         return ABTestVersjon.VersjonA;
     }
-};
-
-export const sendABTestEvent = (feature: string, versjon: ABTestVersjon): void => {
-    amplitudeClient.logEvent('ab-test', { feature, versjon });
 };

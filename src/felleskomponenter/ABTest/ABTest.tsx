@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactElement, useEffect } from 'react';
 import { RestStatus } from '../../api/api-utils';
-import { ABTestVersjon, getABTestVersjon, sendABTestEvent } from './ab-test-utils';
+import { ABTestVersjon, getABTestVersjon } from './ab-test-utils';
 import { RestFeatureToggles } from '../../api/feature-toggles-api';
 import Lasteside from '../../Lasteside/Lasteside';
 
@@ -27,7 +27,6 @@ export const ABTest: FunctionComponent<Props> = ({
     useEffect(() => {
         if (restFeatureToggles.status === RestStatus.Suksess) {
             const versjon = getABTestVersjon(restFeatureToggles.data[feature]);
-            sendABTestEvent(feature, versjon);
             sendTriggerTilHotjar(versjon);
         }
     }, [restFeatureToggles, feature]);
