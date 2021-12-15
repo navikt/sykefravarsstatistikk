@@ -36,9 +36,15 @@ const startServer = async (html) => {
     app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
-        res.setHeader('Referrer', req.query.redirect);
+        const loginserviceUrl = process.env.LOGIN_URL + req.query.redirect;
+        res.setHeader('Referrer', loginserviceUrl);
         res.redirect(BASE_PATH + '/oauth2/login');
     });
+
+    // app.get('/success', (req, res) => {
+    //     const loginserviceUrl = process.env.LOGIN_URL + req.query.redirect;
+    //     res.redirect(loginserviceUrl);
+    // });
 
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
