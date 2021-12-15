@@ -60,8 +60,7 @@
         "react-scripts": "^4.0.1",
         "react-to-print": "^2.13.0",
         "recharts": "^2.1.2",
-        "tar": "^6.1.9",
-        "webpack": "4.44.2"
+        "tar": "^6.1.9"
     },
     "devDependencies": {
         "@testing-library/dom": "^8.11.1",
