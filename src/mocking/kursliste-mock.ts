@@ -1,4 +1,6 @@
-export const kurslisteMock = [
+import { KursDto } from '../api/kurs-api';
+
+export const kurslisteMock: KursDto[] = [
     {
         Title: 'Syn: Webinar: Overgang til høyere utdanning med redusert syn',
         ShowInActivityList: 0,
