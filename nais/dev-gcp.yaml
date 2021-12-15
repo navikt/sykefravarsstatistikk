@@ -44,3 +44,4 @@ spec:
                   cluster: dev-fss
             external:
                 - host: dekoratoren.dev.nav.no
+                - host: loginservice.dev.nav.no
