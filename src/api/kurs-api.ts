@@ -1,6 +1,5 @@
 import { getRestStatus, RestRessurs, RestStatus } from './api-utils';
 import { getMiljø } from '../utils/miljøUtils';
-import { kurslisteMock } from '../mocking/kursliste-mock';
 
 const KURSOVERSIKT_API_ENDEPUNKT = '/kursoversikt/api/kurs';
 
@@ -9,7 +8,7 @@ export const KURSOVERSIKT_API_PATH =
         ? 'https://kursoversikt.dev.nav.no' + KURSOVERSIKT_API_ENDEPUNKT
         : 'https://arbeidsgiver.nav.no' + KURSOVERSIKT_API_ENDEPUNKT;
 
-export interface KursDto {
+interface KursDto {
     Title: string;
     ShowInActivityList: number;
     RegistrationUrl: string;
@@ -54,12 +53,6 @@ const mapTilKurs = (kursDto: KursDto): Kurs => ({
 });
 
 export const hentRestKurs = async (): Promise<RestKursliste> => {
-    if (getMiljø() === 'dev-gcp') {
-        return {
-            status: RestStatus.Suksess,
-            data: kurslisteMock.map(mapTilKurs),
-        };
-    }
     const response = await fetch(KURSOVERSIKT_API_PATH);
     const restStatus = getRestStatus(response.status);
 
