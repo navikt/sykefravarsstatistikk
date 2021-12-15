@@ -21,7 +21,7 @@ spec:
         initialDelay: 10
     env:
         - name: API_GATEWAY
-          value: https://sykefravarsstatistikk-api.dev-fss-pub.nais.io
+          value: http://sykefravarsstatistikk-api.arbeidsgiver.svc.nais.local
         - name: NODE_EXTRA_CA_CERTS
           value: /etc/ssl/ca-bundle.pem
         - name: LOGIN_URL
@@ -41,6 +41,6 @@ spec:
             rules:
                 - application: sykefravarsstatistikk-api
                   namespace: arbeidsgiver
+                  cluster: dev-fss
             external:
                 - host: dekoratoren.dev.nav.no
-                - host: https://sykefravarsstatistikk-api.dev-fss-pub.nais.io
