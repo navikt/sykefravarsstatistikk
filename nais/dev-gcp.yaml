@@ -44,3 +44,4 @@ spec:
             external:
                 - host: dekoratoren.dev.nav.no
                 - host: sykefravarsstatistikk-api.dev-fss-pub.nais.io
+                - host: loginservice.dev.nav.no
