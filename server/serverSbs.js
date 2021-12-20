@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
-const proxy = require('./proxy');
+const proxy = require('./proxySbs');
 const { BASE_PATH } = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
 
@@ -26,6 +26,7 @@ const renderAppMedDecorator = (decoratorFragments) => {
 };
 
 const startServer = (html) => {
+    console.log('Starting server: serverSbs.js');
     app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {

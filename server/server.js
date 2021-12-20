@@ -33,6 +33,8 @@ const renderAppMedDecorator = (decoratorFragments) => {
 };
 
 const startServer = async (html) => {
+    console.log('Starting server: server.js');
+
     await Promise.all([initIdporten(), initTokenX()]);
 
     app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
