@@ -38,7 +38,7 @@ const startServer = async (html) => {
     app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
-        const referrerUrl = `${process.env.INGRESS}/success?redirect=${req.query.redirect}`;
+        const referrerUrl = `${process.env.APP_INGRESS}/success?redirect=${req.query.redirect}`;
         res.setHeader('Referrer', referrerUrl);
         res.redirect(BASE_PATH + '/oauth2/login');
     });
