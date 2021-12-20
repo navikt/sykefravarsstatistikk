@@ -43,7 +43,7 @@ const startServer = async (html) => {
         res.redirect(BASE_PATH + '/oauth2/login');
     });
 
-    app.get('/success', (req, res) => {
+    app.get(`${BASE_PATH}/success`, (req, res) => {
         const loginserviceToken = req.cookies['selvbetjening-idtoken'];
         if (loginserviceToken) {
             res.redirect(req.query.redirect);
