@@ -3,12 +3,12 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const { exchangeToken } = require('./tokenx');
 
 const envProperties = {
-    API_GATEWAY: process.env.API_GATEWAY || 'http://localhost:8080',
+    BACKEND_API_BASE_URL: process.env.BACKEND_API_BASE_URL || 'http://localhost:8080',
     APIGW_HEADER: process.env.APIGW_HEADER,
 };
 
 const BACKEND_API_PATH = '/sykefravarsstatistikk-api';
-const API_GATEWAY_BASEURL = `${envProperties.API_GATEWAY}`;
+const BACKEND_API_BASE_URL = `${envProperties.BACKEND_API_BASE_URL}`;
 
 const listeAvTillatteUrler = [
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/summert'),
@@ -23,7 +23,7 @@ const listeAvTillatteUrler = [
 ];
 
 const proxyConfig = {
-    target: API_GATEWAY_BASEURL,
+    target: BACKEND_API_BASE_URL,
     changeOrigin: true,
     pathRewrite: (path) => {
         const urlErTillatt = listeAvTillatteUrler.filter((regexp) => regexp.test(path)).length > 0;
