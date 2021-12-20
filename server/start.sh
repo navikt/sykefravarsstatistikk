@@ -11,5 +11,11 @@ then
     done
 fi
 
-exec node server.js
+
+if [ "$NAIS_CLUSTER_NAME" == "dev-sbs" ]
+then
+  exec node serverSbs.js
+else
+  exec node server.js
+fi
 
