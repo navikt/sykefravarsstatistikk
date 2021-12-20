@@ -44,10 +44,12 @@ const startServer = async (html) => {
 
     app.get(`${BASE_PATH}/success`, (req, res) => {
         const loginserviceToken = req.cookies['selvbetjening-idtoken'];
-        if (loginserviceToken) {
+        if (loginserviceToken && req.query.redirect.startsWith(process.env.APP_INGRESS)) {
             res.redirect(req.query.redirect);
-        } else {
+        } else if (req.query.redirect.startsWith(process.env.APP_INGRESS)) {
             res.redirect(`${process.env.LOGIN_URL}${req.query.redirect}`);
+        } else {
+            res.redirect(`${process.env.LOGIN_URL}${process.env.APP_INGRESS}`);
         }
     });
 
