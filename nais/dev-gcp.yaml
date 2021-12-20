@@ -31,7 +31,7 @@ spec:
         - name: TOKENX_AUDIENCE
           value: "dev-fss:arbeidsgiver:sykefravarsstatistikk-api"
         - name: APP_INGRESS
-        - value: https://arbeidsgiver-gcp.dev.nav.no/sykefravarsstatistikk
+          value: https://arbeidsgiver-gcp.dev.nav.no/sykefravarsstatistikk
     tokenx:
         enabled: true
     idporten:
