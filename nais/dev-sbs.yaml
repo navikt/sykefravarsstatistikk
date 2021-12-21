@@ -21,8 +21,8 @@ spec:
         path: /sykefravarsstatistikk/internal/isReady
         initialDelay: 20
     env:
-        - name: BACKEND_API_BASE_URL
-          value: https://arbeidsgiver.dev.intern.nav.no
+        - name: API_GATEWAY
+          value: https://api-gw-q0.oera.no
         - name: NODE_ENV
           value: production
         - name: NODE_EXTRA_CA_CERTS
