@@ -12,7 +12,9 @@ const BACKEND_API_BASE_URL = `${envProperties.BACKEND_API_BASE_URL}`;
 const listeAvTillatteUrler = [
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/summert'),
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/kvartalsvis'),
-    new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/legemeldtsykefravarsprosent'),
+    new RegExp(
+        '^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/legemeldtsykefravarsprosent'
+    ),
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/bedriftsmetrikker'),
     new RegExp('^' + FRONTEND_API_PATH + '/organisasjoner/statistikk'),
     new RegExp('^' + FRONTEND_API_PATH + '/organisasjoner'),
@@ -22,7 +24,7 @@ const listeAvTillatteUrler = [
 const proxyConfig = {
     target: BACKEND_API_BASE_URL,
     changeOrigin: true,
-    pathRewrite: (path, req) => {
+    pathRewrite: (path) => {
         const urlErTillatt = listeAvTillatteUrler.filter((regexp) => regexp.test(path)).length > 0;
 
         if (urlErTillatt) {
