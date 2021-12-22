@@ -5,6 +5,7 @@ import Hjelpetekst from 'nav-frontend-hjelpetekst';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import './Kalkulatorrad.less';
 import { sendInputfeltUtfyltEvent } from '../../../amplitude/events';
+import classNames from 'classnames';
 
 interface Props {
     onChange: (event: any) => void;
@@ -23,7 +24,14 @@ export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
     return (
         <div className="kalkulatorrad">
             <Element id={labelId}>{props.label}</Element>
-            <div className="kalkulatorrad__input-hjelpetekst-wrapper">
+            <div
+                className={
+                    props.hjelpetekst
+                        ? 'kalkulatorrad__input-hjelpetekst-wrapper'
+                        : classNames('kalkulatorrad__input-hjelpetekst-wrapper',
+                      'kalkulatorrad__input-no-hjelpetekst-wrapper')
+                }
+            >
                 <Input
                     label=""
                     onChange={(event: any) => {
