@@ -30,7 +30,7 @@ spec:
       value: https://loginservice.nav.no/login?redirect=
     - name: TOKENX_AUDIENCE
       value: "prod-fss:arbeidsgiver:sykefravarsstatistikk-api"
-    tokenx:
+  tokenx:
       enabled: true
     idporten:
       enabled: true
