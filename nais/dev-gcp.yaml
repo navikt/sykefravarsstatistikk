@@ -14,7 +14,7 @@ spec:
     ingresses:
         - https://arbeidsgiver-gcp.dev.nav.no/sykefravarsstatistikk
     liveness:
-        path: /sykefravarsstatistikk/internal/isReady
+        path: /sykefravarsstatistikk/internal/isAlive
         initialDelay: 10
     readiness:
         path: /sykefravarsstatistikk/internal/isReady

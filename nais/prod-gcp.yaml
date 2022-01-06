@@ -30,6 +30,8 @@ spec:
       value: https://loginservice.nav.no/login?redirect=
     - name: TOKENX_AUDIENCE
       value: "prod-fss:arbeidsgiver:sykefravarsstatistikk-api"
+    - name: APP_INGRESS
+        value: https://arbeidsgiver.nav.no/sykefravarsstatistikk
   tokenx:
       enabled: true
     idporten:
@@ -41,6 +43,7 @@ spec:
         rules:
           - application: sykefravarsstatistikk-api
             namespace: arbeidsgiver
+            cluster: prod-fss
         external:
           - host: dekoratoren.nav.no
           - host: sykefravarsstatistikk-api.prod-fss-pub.nais.io
