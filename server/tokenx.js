@@ -6,7 +6,7 @@ const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fet
 let tokenxClient;
 
 async function initTokenX() {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'not-local') {
         const tokenxIssuer = await Issuer.discover(process.env.TOKEN_X_WELL_KNOWN_URL);
         tokenxClient = new tokenxIssuer.Client(
             {
@@ -54,8 +54,8 @@ async function getTokenXToken(token, additionalClaims) {
             err.response.body
         );
     }
-    if (!tokenSet && process.env.NODE_ENV !== 'production') {
-        // Dette skjer kun i lokalt miljø - siden tokenxClient kun blir initialisert i production env
+    if (!tokenSet && process.env.NODE_ENV !== 'not-local') {
+        // Dette skjer kun i lokalt miljø - siden tokenxClient kun blir initialisert i GCP env
         tokenSet = await getMockTokenXToken();
     }
     return tokenSet;
@@ -64,7 +64,7 @@ async function getTokenXToken(token, additionalClaims) {
 async function exchangeToken(req) {
     let token = req.headers.authorization?.split(' ')[1];
     if (!token) {
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV !== 'not-local') {
             token = await getMockTokenFromIdporten();
         } else {
             // Brukeren er ikke autorisert

@@ -25,7 +25,7 @@ async function verifiserAccessToken(token) {
 
     if (
         payload.client_id !== process.env.IDPORTEN_CLIENT_ID &&
-        process.env.NODE_ENV === 'production' // client_id finnes for øyeblikket ikke på fakedings sine access tokens fra idporten
+        process.env.NODE_ENV === 'not-local' // client_id finnes for øyeblikket ikke på fakedings sine access tokens fra idporten
     ) {
         throw new Error('Invalid client id');
     }
