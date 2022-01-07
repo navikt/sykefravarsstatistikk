@@ -9,6 +9,10 @@ let idportenIssuer;
 let _remoteJWKSet;
 
 async function initIdporten() {
+    if (process.env.NODE_ENV === 'labs-gcp') {
+        // I labs så returnerer vi mock uansett
+        return;
+    }
     idportenIssuer = await Issuer.discover(process.env.IDPORTEN_WELL_KNOWN_URL);
     _remoteJWKSet = createRemoteJWKSet(new URL(idportenIssuer.metadata.jwks_uri));
 }

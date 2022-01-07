@@ -34,6 +34,10 @@ const proxyConfig = {
         return BACKEND_API_PATH + '/not-found';
     },
     router: async (req) => {
+        if (process.env.NODE_ENV === 'labs-gcp') {
+            // I labs så returnerer vi mock uansett
+            return undefined;
+        }
         const tokenSet = await exchangeToken(req);
         if (!tokenSet?.expired() && tokenSet?.access_token) {
             req.headers['authorization'] = `Bearer ${tokenSet.access_token}`;

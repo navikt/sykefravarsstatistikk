@@ -1,50 +1,50 @@
 apiVersion: nais.io/v1alpha1
 kind: Application
 metadata:
-  name: sykefravarsstatistikk
-  namespace: arbeidsgiver
-  labels:
-    team: arbeidsgiver
+    name: sykefravarsstatistikk
+    namespace: arbeidsgiver
+    labels:
+        team: arbeidsgiver
 spec:
-  image: { { version } }
-  team: arbeidsgiver
-  port: 3000
-  vault:
-    enabled: true
-  ingresses:
-    - https://arbeidsgiver.nav.no/sykefravarsstatistikk
-  liveness:
-    path: /sykefravarsstatistikk/internal/isAlive
-    initialDelay: 20
-  readiness:
-    path: /sykefravarsstatistikk/internal/isReady
-    initialDelay: 20
-  env:
-    - name: BACKEND_API_BASE_URL
-      value: https://sykefravarsstatistikk-api.prod-fss-pub.nais.io
-    - name: NODE_ENV
-      value: not-local
-    - name: NODE_EXTRA_CA_CERTS
-      value: /etc/ssl/ca-bundle.pem
-    - name: LOGIN_URL
-      value: https://loginservice.nav.no/login?redirect=
-    - name: TOKENX_AUDIENCE
-      value: "prod-fss:arbeidsgiver:sykefravarsstatistikk-api"
-    - name: APP_INGRESS
-      value: https://arbeidsgiver.nav.no/sykefravarsstatistikk
-  tokenx:
-    enabled: true
-  idporten:
-    enabled: true
-    sidecar:
-      enabled: true
-  accessPolicy:
-    outbound:
-      rules:
-        - application: sykefravarsstatistikk-api
-          namespace: arbeidsgiver
-          cluster: prod-fss
-      external:
-        - host: dekoratoren.nav.no
-        - host: sykefravarsstatistikk-api.prod-fss-pub.nais.io
-        - host: loginservice.nav.no
+    image: {{ image }}
+    team: arbeidsgiver
+    port: 3000
+    vault:
+        enabled: true
+    ingresses:
+        - https://arbeidsgiver.nav.no/sykefravarsstatistikk
+    liveness:
+        path: /sykefravarsstatistikk/internal/isAlive
+        initialDelay: 20
+    readiness:
+        path: /sykefravarsstatistikk/internal/isReady
+        initialDelay: 20
+    env:
+        - name: BACKEND_API_BASE_URL
+          value: https://sykefravarsstatistikk-api.prod-fss-pub.nais.io
+        - name: NODE_ENV
+          value: not-local
+        - name: NODE_EXTRA_CA_CERTS
+          value: /etc/ssl/ca-bundle.pem
+        - name: LOGIN_URL
+          value: https://loginservice.nav.no/login?redirect=
+        - name: TOKENX_AUDIENCE
+          value: "prod-fss:arbeidsgiver:sykefravarsstatistikk-api"
+        - name: APP_INGRESS
+          value: https://arbeidsgiver.nav.no/sykefravarsstatistikk
+    tokenx:
+        enabled: true
+    idporten:
+        enabled: true
+        sidecar:
+            enabled: true
+    accessPolicy:
+        outbound:
+            rules:
+                - application: sykefravarsstatistikk-api
+                  namespace: arbeidsgiver
+                  cluster: prod-fss
+            external:
+                - host: dekoratoren.nav.no
+                - host: sykefravarsstatistikk-api.prod-fss-pub.nais.io
+                - host: loginservice.nav.no
