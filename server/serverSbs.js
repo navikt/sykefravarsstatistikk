@@ -1,21 +1,14 @@
 const path = require('path');
 const express = require('express');
+const app = express();
 const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
-const proxy = require('./proxy');
+const proxy = require('./proxySbs');
 const { BASE_PATH } = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
-const dotenv = require('dotenv');
-const { initIdporten } = require('./idporten');
-const { initTokenX } = require('./tokenx');
-const cookieParser = require('cookie-parser');
 
-const app = express();
 const PORT = process.env.PORT || 3000;
 
-dotenv.config();
-
-app.use(cookieParser());
 app.engine('html', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', buildPath);
@@ -32,31 +25,20 @@ const renderAppMedDecorator = (decoratorFragments) => {
     });
 };
 
-const startServer = async (html) => {
-    console.log('Starting server: server.js');
-
-    await Promise.all([initIdporten(), initTokenX()]);
-
+const startServer = (html) => {
+    console.log('Starting server: serverSbs.js');
     app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
-        const referrerUrl = `${process.env.APP_INGRESS}/success?redirect=${req.query.redirect}`;
-        res.redirect(BASE_PATH + `/oauth2/login?redirect=${referrerUrl}`);
-    });
-
-    app.get(`${BASE_PATH}/success`, (req, res) => {
-        const loginserviceToken = req.cookies['selvbetjening-idtoken'];
-        if (loginserviceToken && req.query.redirect.startsWith(process.env.APP_INGRESS)) {
-            res.redirect(req.query.redirect);
-        } else if (req.query.redirect.startsWith(process.env.APP_INGRESS)) {
-            res.redirect(`${process.env.LOGIN_URL}${req.query.redirect}`);
-        } else {
-            res.redirect(`${process.env.LOGIN_URL}${process.env.APP_INGRESS}`);
-        }
+        const loginUrl =
+            process.env.LOGIN_URL ||
+            'http://localhost:8080/sykefravarsstatistikk-api/local/cookie?subject=01065500791&cookiename=selvbetjening-idtoken&redirect=';
+        res.redirect(loginUrl + req.query.redirect);
     });
 
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
+
 
     app.use(proxy);
 

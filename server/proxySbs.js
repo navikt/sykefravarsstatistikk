@@ -1,14 +1,13 @@
 const { FRONTEND_API_PATH } = require('./konstanter');
 const { createProxyMiddleware } = require('http-proxy-middleware');
-const { exchangeToken } = require('./tokenx');
 
 const envProperties = {
-    BACKEND_API_BASE_URL: process.env.BACKEND_API_BASE_URL || 'http://localhost:8080',
+    API_GATEWAY: process.env.API_GATEWAY || 'http://localhost:8080',
     APIGW_HEADER: process.env.APIGW_HEADER,
 };
 
 const BACKEND_API_PATH = '/sykefravarsstatistikk-api';
-const BACKEND_API_BASE_URL = `${envProperties.BACKEND_API_BASE_URL}`;
+const API_GATEWAY_BASEURL = `${envProperties.API_GATEWAY}`;
 
 const listeAvTillatteUrler = [
     new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/summert'),
@@ -23,7 +22,7 @@ const listeAvTillatteUrler = [
 ];
 
 const proxyConfig = {
-    target: BACKEND_API_BASE_URL,
+    target: API_GATEWAY_BASEURL,
     changeOrigin: true,
     pathRewrite: (path) => {
         const urlErTillatt = listeAvTillatteUrler.filter((regexp) => regexp.test(path)).length > 0;
@@ -32,13 +31,6 @@ const proxyConfig = {
             return path.replace(FRONTEND_API_PATH, BACKEND_API_PATH);
         }
         return BACKEND_API_PATH + '/not-found';
-    },
-    router: async (req) => {
-        const tokenSet = await exchangeToken(req);
-        if (!tokenSet?.expired() && tokenSet?.access_token) {
-            req.headers['authorization'] = `Bearer ${tokenSet.access_token}`;
-        }
-        return undefined;
     },
     secure: true,
     xfwd: true,

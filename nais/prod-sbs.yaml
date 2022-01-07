@@ -20,8 +20,10 @@ spec:
     path: /sykefravarsstatistikk/internal/isReady
     initialDelay: 20
   env:
-    - name: API_GATEWAY
+    - name: BACKEND_API_BASE_URL
       value: https://api-gw.oera.no
+    - name: NODE_ENV
+      value: production
     - name: NODE_EXTRA_CA_CERTS
       value: /etc/ssl/ca-bundle.pem
     - name: LOGIN_URL
