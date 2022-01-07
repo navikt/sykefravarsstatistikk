@@ -12,7 +12,7 @@ then
 fi
 
 
-if [ "$NAIS_CLUSTER_NAME" == "dev-sbs" || "$NAIS_CLUSTER_NAME" == "prod-sbs" ]
+if [ "$NAIS_CLUSTER_NAME" == "dev-sbs" ] || [ "$NAIS_CLUSTER_NAME" == "prod-sbs" ]
 then
   exec node serverSbs.js
 else
