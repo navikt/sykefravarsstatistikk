@@ -33,18 +33,18 @@ spec:
     - name: APP_INGRESS
       value: https://arbeidsgiver.nav.no/sykefravarsstatistikk
   tokenx:
+    enabled: true
+  idporten:
+    enabled: true
+    sidecar:
       enabled: true
-    idporten:
-      enabled: true
-      sidecar:
-        enabled: true
-    accessPolicy:
-      outbound:
-        rules:
-          - application: sykefravarsstatistikk-api
-            namespace: arbeidsgiver
-            cluster: prod-fss
-        external:
-          - host: dekoratoren.nav.no
-          - host: sykefravarsstatistikk-api.prod-fss-pub.nais.io
-          - host: loginservice.nav.no
+  accessPolicy:
+    outbound:
+      rules:
+        - application: sykefravarsstatistikk-api
+          namespace: arbeidsgiver
+          cluster: prod-fss
+      external:
+        - host: dekoratoren.nav.no
+        - host: sykefravarsstatistikk-api.prod-fss-pub.nais.io
+        - host: loginservice.nav.no
