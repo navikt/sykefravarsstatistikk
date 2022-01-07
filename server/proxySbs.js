@@ -2,7 +2,7 @@ const { FRONTEND_API_PATH } = require('./konstanter');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const envProperties = {
-    API_GATEWAY: process.env.API_GATEWAY || 'http://localhost:8080',
+    API_GATEWAY: process.env.BACKEND_API_BASE_URL || 'http://localhost:8080',
     APIGW_HEADER: process.env.APIGW_HEADER,
 };
 
