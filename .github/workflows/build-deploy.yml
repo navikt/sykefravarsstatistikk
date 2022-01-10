@@ -43,7 +43,7 @@ jobs:
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/wonderwall-og-tokenx-impl'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/slette-sbs-konfig-etter-mirgrering'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
@@ -55,6 +55,7 @@ jobs:
                   VAR: version=${{ env.IMAGE }}
                   RESOURCE: nais/dev-gcp.yaml
                   PRINT_PAYLOAD: true
+                  
     deploy-to-labs-gcp:
         name: Deploy to labs-gcp
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/bug/fiks-labs-for-tokenx-idporten'
@@ -95,5 +96,5 @@ jobs:
             - uses: nais/deploy/actions/deploy@v1
               env:
                   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-                  CLUSTER: prod-sbs
+                  CLUSTER: prod-gcp
                   RESOURCE: nais/alerterator.yaml
