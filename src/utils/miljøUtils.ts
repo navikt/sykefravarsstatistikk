@@ -1,7 +1,7 @@
 export const getMiljø = () => {
     const href = window.location.href;
     if (href.startsWith('https://arbeidsgiver.nav.no')) {
-        return 'prod-sbs';
+        return 'prod-gcp';
     }
     if (href.startsWith('https://arbeidsgiver-q.nav.no')) {
         return 'dev-sbs';
