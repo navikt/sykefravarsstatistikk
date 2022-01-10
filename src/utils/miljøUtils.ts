@@ -1,16 +1,17 @@
 export const getMiljø = () => {
-    const href = window.location.href;
-    if (href.startsWith('https://arbeidsgiver.nav.no')) {
-        return 'prod-sbs';
+    const hostname = window.location.hostname;
+
+    if (hostname === 'arbeidsgiver.nav.no') {
+        return 'prod-gcp';
     }
-    if (href.startsWith('https://arbeidsgiver-q.nav.no')) {
-        return 'dev-sbs';
-    }
-    if (href.startsWith('https://arbeidsgiver.labs.nais.io')) {
+
+    if (hostname === 'arbeidsgiver.labs.nais.io') {
         return 'labs-gcp';
     }
-    if (href.startsWith('https://arbeidsgiver-gcp.dev.nav.no')) {
+
+    if (hostname === 'arbeidsgiver-gcp.dev.nav.no') {
         return 'dev-gcp';
     }
+
     return 'local';
 };

@@ -4,7 +4,7 @@ import { getMiljø } from '../utils/miljøUtils';
 const KURSOVERSIKT_API_ENDEPUNKT = '/kursoversikt/api/kurs';
 
 export const KURSOVERSIKT_API_PATH =
-    getMiljø() === 'dev-sbs' || getMiljø() === 'dev-gcp'
+    getMiljø() === 'dev-gcp'
         ? 'https://kursoversikt.dev.nav.no' + KURSOVERSIKT_API_ENDEPUNKT
         : 'https://arbeidsgiver.nav.no' + KURSOVERSIKT_API_ENDEPUNKT;
 

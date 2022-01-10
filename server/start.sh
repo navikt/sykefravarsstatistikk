@@ -11,11 +11,4 @@ then
     done
 fi
 
-
-if [ "$NAIS_CLUSTER_NAME" == "dev-sbs" ] || [ "$NAIS_CLUSTER_NAME" == "prod-sbs" ]
-then
-  exec node serverSbs.js
-else
-  exec node server.js
-fi
-
+exec node server.js
