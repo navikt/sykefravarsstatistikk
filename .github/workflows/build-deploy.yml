@@ -55,7 +55,7 @@ jobs:
                   VAR: version=${{ env.IMAGE }}
                   RESOURCE: nais/dev-gcp.yaml
                   PRINT_PAYLOAD: true
-                  
+
     deploy-to-labs-gcp:
         name: Deploy to labs-gcp
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/bug/fiks-labs-for-tokenx-idporten'
