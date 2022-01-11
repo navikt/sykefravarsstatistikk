@@ -105,7 +105,8 @@
         "immer": "^9.0.6",
         "set-value": "^4.0.1",
         "ansi-html": "https://registry.yarnpkg.com/ansi-html-community/-/ansi-html-community-0.0.8.tgz#69fbc4d6ccbe383f9736934ae34c3f8290f1bf41",
-        "ansi-regex": "^5.0.1"
+        "ansi-regex": "^5.0.1",
+        "shell-quote": "1.7.3"
     },
     "scripts": {
         "start": "craco start",
