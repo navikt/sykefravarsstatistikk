@@ -41,9 +41,9 @@ jobs:
                   echo ${IMAGE}
                   docker push ${IMAGE}
 
-    deploy-to-dev:
-        name: Deploy to dev-sbs
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/endringer-etter-publisering-3-kvartal-2021'
+    deploy-to-dev-gcp:
+        name: Deploy to dev-gcp
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/slette-sbs-konfig-etter-mirgrering'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
@@ -51,13 +51,14 @@ jobs:
             - uses: nais/deploy/actions/deploy@v1
               env:
                   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-                  CLUSTER: dev-sbs
+                  CLUSTER: dev-gcp
                   VAR: version=${{ env.IMAGE }}
-                  RESOURCE: nais/dev-sbs.yaml
+                  RESOURCE: nais/dev-gcp.yaml
                   PRINT_PAYLOAD: true
+
     deploy-to-labs-gcp:
         name: Deploy to labs-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/sende_eventer'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/bug/fiks-labs-for-tokenx-idporten'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
@@ -70,8 +71,8 @@ jobs:
                   RESOURCE: nais/labs-gcp.yaml
                   PRINT_PAYLOAD: true
 
-    deploy-to-prod:
-        name: Deploy to prod-sbs
+    deploy-to-prod-gcp:
+        name: Deploy to prod-gcp
         if: github.ref == 'refs/heads/master'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
@@ -80,9 +81,9 @@ jobs:
             - uses: nais/deploy/actions/deploy@v1
               env:
                   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-                  CLUSTER: prod-sbs
+                  CLUSTER: prod-gcp
                   VAR: version=${{ env.IMAGE }}
-                  RESOURCE: nais/prod-sbs.yaml
+                  RESOURCE: nais/prod-gcp.yaml
                   PRINT_PAYLOAD: true
 
     deploy-alert-to-prod:
@@ -95,5 +96,5 @@ jobs:
             - uses: nais/deploy/actions/deploy@v1
               env:
                   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-                  CLUSTER: prod-sbs
+                  CLUSTER: prod-gcp
                   RESOURCE: nais/alerterator.yaml

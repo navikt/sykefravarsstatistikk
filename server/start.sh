@@ -12,4 +12,3 @@ then
 fi
 
 exec node server.js
-

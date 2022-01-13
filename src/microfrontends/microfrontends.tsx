@@ -25,7 +25,7 @@ const getMikrofrontendConfig = (): MikrofrontendConfig => {
     const miljø = getMiljø();
 
     switch (miljø) {
-        case 'dev-sbs':
+        case 'dev-gcp':
             return {
                 appBaseUrl:
                     'https://arbeidsgiver-gcp.dev.nav.no' + SAMTALESTØTTE_MIKROFRONTEND_PATH,

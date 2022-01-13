@@ -10,11 +10,13 @@ Hensikten er å gjøre arbeidsgivere mer engasjerte i eget sykefravær.
 
 # Komme i gang
 
--   Installere avhengigheter: `yarn`
--   Kjøre applikasjon med mock: `yarn run mock` (for Windows: `yarn run wock`)
--   Hvis du vil kjøre mot egen backend lokalt, kan du sette `mock.sykefraværsstatistikkApi = false` i `mock.ts` før du kjører `yarn mock`. (NB! Krever at `sykefravarsstatistikk-api` kjører på port 8080.)
--   Kjøre applikasjonen normalt: `yarn start` (NB! Krever integrasjon med `sykefravarsstatistikk-api` og `ditt-nav-arbeidsgiver-api`)
--   Kjøre applikasjonen med Docker:
+- Installere avhengigheter: `yarn`
+- Kjøre applikasjon med mock: `yarn run mock` (for Windows: `yarn run wock`)
+- Rename filen `.env.example` -> `.env`
+- Hvis du vil kjøre mot egen backend lokalt, kan du sette `mock.sykefraværsstatistikkApi = false` i `mock.ts` før du kjører `yarn mock`. (NB! Krever at `sykefravarsstatistikk-api` kjører på port 8080.)
+  - Da må du kjøre `yarn run mock` først før `yarn start`
+- Kjøre applikasjonen normalt: `yarn start` (NB! Krever integrasjon med `sykefravarsstatistikk-api` og `ditt-nav-arbeidsgiver-api`)
+- Kjøre applikasjonen med Docker:
     1. `yarn install && yarn build`
     2. `docker build -t sykefravarsstatistikk .`
     3. `docker run -d -p 3000:3000 sykefravarsstatistikk`
