@@ -43,7 +43,7 @@ jobs:
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/slette-sbs-konfig-etter-mirgrering'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/oppdater-sec-champion-kickk-off'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
@@ -58,7 +58,7 @@ jobs:
 
     deploy-to-labs-gcp:
         name: Deploy to labs-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/bug/fiks-labs-for-tokenx-idporten'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/oppdater-sec-champion-kickk-off'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
