@@ -19,6 +19,7 @@
         "craco-less": "^1.20.0",
         "glob-parent": "^6.0.1",
         "https-proxy-agent": "^5.0.0",
+        "immer": "^9.0.6",
         "is-svg": "^4.3.2",
         "lodash.throttle": "^4.1.1",
         "nav-frontend-alertstriper": "^4.0.1",
@@ -61,7 +62,8 @@
         "react-scripts": "^4.0.1",
         "react-to-print": "^2.13.0",
         "recharts": "^2.1.2",
-        "tar": "^6.1.9"
+        "tar": "^6.1.9",
+        "url-parse": "^1.5.3"
     },
     "devDependencies": {
         "@testing-library/dom": "^8.11.1",
@@ -105,7 +107,8 @@
         "immer": "^9.0.6",
         "set-value": "^4.0.1",
         "ansi-html": "https://registry.yarnpkg.com/ansi-html-community/-/ansi-html-community-0.0.8.tgz#69fbc4d6ccbe383f9736934ae34c3f8290f1bf41",
-        "ansi-regex": "^5.0.1"
+        "ansi-regex": "^5.0.1",
+        "shell-quote": "1.7.3"
     },
     "scripts": {
         "start": "craco start",
