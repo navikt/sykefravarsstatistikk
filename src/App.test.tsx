@@ -11,8 +11,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { amplitudeMock } from './mocking/amplitude-mock';
 import { mockSykefraværNoEkstradata } from './mocking/use-analytics-test-mocks';
 
-// OBS: trenger ikke å bruke en summy fetch når Jest skal ha en versjon som spiller bra med node-fetch ^3.1.1
-// Se: https://github.com/node-fetch/node-fetch/issues/1289
 function setupFetchStub(data: string) {
     // @ts-ignore
     return function fetchStub(input: RequestInfo, init?: RequestInit | undefined) {
@@ -28,6 +26,9 @@ function setupFetchStub(data: string) {
     }
 }
 
+// OBS: Vi måte lage en dummy implementasjon av fetch (global) ettersom Jest ikke spiller bra sammen med node-fetch 3.1.1
+// TODO: Når Jest kommer med en versjon som fungerer bra med node-fetch ^3.1.1, da kan vi fjerne denne
+// Se: https://github.com/node-fetch/node-fetch/issues/1289
 beforeEach(() => {
     return jest.spyOn(global, "fetch")
         .mockImplementation(setupFetchStub("Ingen data nødvendig, vi tester ikke kurs-api response"));
