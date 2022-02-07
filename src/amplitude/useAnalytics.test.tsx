@@ -1,8 +1,8 @@
-/*import { sendAnalytics } from './useAnalytics';
+import { sendAnalytics } from './useAnalytics';
 import { amplitudeMock } from '../mocking/amplitude-mock';
-import { render, screen, waitFor } from '@testing-library/react';*/
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-/*import {
+import {
     mockSykefraværNoEkstradata,
     mockSykefraværWithEkstradata,
 } from '../mocking/use-analytics-test-mocks';
@@ -12,13 +12,11 @@ import userEvent from '@testing-library/user-event';
 import { AppContent } from '../App';
 import '@testing-library/jest-dom';
 import { BASE_PATH } from '../konstanter';
-*/
 
 it('Disabled', async () => {
     expect(true).toBe(true);
 });
 
-/*
 beforeEach(() => {
     jest.spyOn(amplitudeMock, 'setUserProperties');
     jest.spyOn(amplitudeMock, 'logEvent');
@@ -105,7 +103,7 @@ it('To klikk på les-mer-panel sender panel-kollaps event til Amplitude', async 
         expect.objectContaining({
             app: 'sykefravarsstatistikk',
             panelnavn: 'Slik har vi kommet fram til ditt resultat',
-        }),
+        })
     );
 });
 
@@ -241,8 +239,6 @@ it('Visning av kalkulatoren sender sidevisning-event', async () => {
         })
     );
 });
-*/
-
 
 // TODO: Disse to testene kjører grønt når de kjøres enkeltvis, men rødt når de kjører sammen med de andre. Det må fikses! Trolig er det noe med BrowserRouter som beholdes mellom testene.
 // it('Endring av inputfelt i kalkulatoren trigger event i Amplitude', async () => {
@@ -306,11 +302,10 @@ it('Visning av kalkulatoren sender sidevisning-event', async () => {
 //     );
 // });
 
-/*
 const AppContentWithRouter = (data: SykefraværAppData) => {
     return (
         <BrowserRouter basename={BASE_PATH}>
             <AppContent {...data} analyticsClient={amplitudeMock} />
         </BrowserRouter>
     );
-};*/
+};

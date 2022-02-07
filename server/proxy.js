@@ -49,6 +49,7 @@ const proxyConfig = {
     logLevel: 'info',
 };
 
+// TODO: Fjern Api Gateway-greier (ikke lenger i bruk)
 if (envProperties.APIGW_HEADER) {
     proxyConfig.headers = {
         'x-nav-apiKey': envProperties.APIGW_HEADER,
