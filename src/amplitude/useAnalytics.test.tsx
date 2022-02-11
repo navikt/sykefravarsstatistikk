@@ -1,6 +1,6 @@
 import { sendAnalytics } from './useAnalytics';
 import { amplitudeMock } from '../mocking/amplitude-mock';
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import {
     mockSykefraværNoEkstradata,
@@ -12,10 +12,6 @@ import userEvent from '@testing-library/user-event';
 import { AppContent } from '../App';
 import '@testing-library/jest-dom';
 import { BASE_PATH } from '../konstanter';
-
-it('Disabled', async () => {
-    expect(true).toBe(true);
-});
 
 beforeEach(() => {
     jest.spyOn(amplitudeMock, 'setUserProperties');
@@ -192,20 +188,26 @@ it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', asy
 });
 
 it('sidevisning event kalles med riktige user properties', async () => {
-    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+    act(() => {
+        render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+    });
 
-    expect(amplitudeMock.setUserProperties).toHaveBeenCalledTimes(1);
-    expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
-        antallAnsatte: '50-99',
-        bransje: undefined,
-        sektor: 'offentlig',
-        korttidSiste4Kvartaler: 'MIDDELS',
-        langtidSiste4Kvartaler: 'MIDDELS',
-        næring2siffer:
-            '84 Offentlig administrasjon og forsvar, og trygdeordninger underlagt offentlig forvaltning',
-        prosent: '>16',
-        sammenligning: 'virksomhet ligger 8-10 over',
-        sykefraværSiste4Kvartaler: 'MIDDELS',
+    act(() => {
+        expect(amplitudeMock.setUserProperties).toHaveBeenCalledTimes(1);
+    });
+    act(() => {
+        expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
+            antallAnsatte: '50-99',
+            bransje: undefined,
+            sektor: 'offentlig',
+            korttidSiste4Kvartaler: 'MIDDELS',
+            langtidSiste4Kvartaler: 'MIDDELS',
+            næring2siffer:
+                '84 Offentlig administrasjon og forsvar, og trygdeordninger underlagt offentlig forvaltning',
+            prosent: '>16',
+            sammenligning: 'virksomhet ligger 8-10 over',
+            sykefraværSiste4Kvartaler: 'MIDDELS',
+        });
     });
     expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
         'sidevisning',
@@ -216,13 +218,16 @@ it('sidevisning event kalles med riktige user properties', async () => {
 });
 
 it('Visning av kalkulatoren sender sidevisning-event', async () => {
-    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+    act(() => {
+        render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+    });
 
     const knappTilKalkis = await screen.findByRole('link', {
         name: /Gå til kostnadskalkulatoren/i,
     });
-    userEvent.click(knappTilKalkis);
-
+    act(() => {
+        userEvent.click(knappTilKalkis);
+    });
     expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
         'navigere',
         expect.objectContaining({
