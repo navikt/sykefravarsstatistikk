@@ -12,18 +12,16 @@ import userEvent from '@testing-library/user-event';
 import { AppContent } from '../App';
 import '@testing-library/jest-dom';
 import { BASE_PATH } from '../konstanter';
-
-it('Disabled', async () => {
-    expect(true).toBe(true);
-});
+import { setupFetchSpy } from '../mocking/node-fetch-stub';
 
 beforeEach(() => {
+    setupFetchSpy();
     jest.spyOn(amplitudeMock, 'setUserProperties');
     jest.spyOn(amplitudeMock, 'logEvent');
 });
 
 afterEach(() => {
-    jest.restoreAllMocks();
+    jest.resetAllMocks();
 });
 
 it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => {
