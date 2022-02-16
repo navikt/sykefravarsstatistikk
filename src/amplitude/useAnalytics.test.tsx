@@ -13,6 +13,9 @@ import { AppContent } from '../App';
 import '@testing-library/jest-dom';
 import { BASE_PATH } from '../konstanter';
 import { setupFetchSpy } from '../mocking/node-fetch-stub';
+import { renderHook } from '@testing-library/react-hooks';
+import { EkspanderbartSammenligningspanel } from "../Forside/SammenligningMedBransje/EkspanderbartSammenligningspanel";
+import exp from "constants";
 
 beforeEach(() => {
     setupFetchSpy();
@@ -173,13 +176,14 @@ it('Klikk på lenke til Arbeidsmiljøportalen trigger event i amplitude', async 
 });
 
 it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', async () => {
-    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+    const result = render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+    expect(await result.container.querySelector('#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT')).toBeInTheDocument();
 
-    const panel = document.querySelector(
+    const panel = result.container.querySelector(
         '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
     );
-
     userEvent.click(panel!);
+
     expect(amplitudeMock.logEvent).not.toHaveBeenCalledWith(
         'panel-ekspander',
         expect.objectContaining({
@@ -312,7 +316,7 @@ it('Visning av kalkulatoren sender sidevisning-event', async () => {
 const AppContentWithRouter = (data: SykefraværAppData) => {
     return (
         <BrowserRouter basename={BASE_PATH}>
-            <AppContent {...data} analyticsClient={amplitudeMock} />
+            <AppContent {...data} analyticsClient={amplitudeMock}/>
         </BrowserRouter>
     );
 };
