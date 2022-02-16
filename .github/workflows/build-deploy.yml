@@ -43,7 +43,7 @@ jobs:
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/snyk-upgrade-1c24820a5c28bd20deac18dfd01bda51'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/oppgrader-follow-redirects-dependabot-alert-14-feb-2022'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
