@@ -1,6 +1,6 @@
 import { sendAnalytics } from './useAnalytics';
 import { amplitudeMock } from '../mocking/amplitude-mock';
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import {
     mockSykefraværNoEkstradata,
@@ -173,13 +173,18 @@ it('Klikk på lenke til Arbeidsmiljøportalen trigger event i amplitude', async 
 });
 
 it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', async () => {
-    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+    const result = render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+    expect(
+        await result.container.querySelector(
+            '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
+        )
+    ).toBeInTheDocument();
 
-    const panel = document.querySelector(
+    const panel = result.container.querySelector(
         '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
     );
-
     userEvent.click(panel!);
+
     expect(amplitudeMock.logEvent).not.toHaveBeenCalledWith(
         'panel-ekspander',
         expect.objectContaining({
@@ -190,20 +195,26 @@ it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', asy
 });
 
 it('sidevisning event kalles med riktige user properties', async () => {
-    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+    act(() => {
+        render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+    });
 
-    expect(amplitudeMock.setUserProperties).toHaveBeenCalledTimes(1);
-    expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
-        antallAnsatte: '50-99',
-        bransje: undefined,
-        sektor: 'offentlig',
-        korttidSiste4Kvartaler: 'MIDDELS',
-        langtidSiste4Kvartaler: 'MIDDELS',
-        næring2siffer:
-            '84 Offentlig administrasjon og forsvar, og trygdeordninger underlagt offentlig forvaltning',
-        prosent: '>16',
-        sammenligning: 'virksomhet ligger 8-10 over',
-        sykefraværSiste4Kvartaler: 'MIDDELS',
+    act(() => {
+        expect(amplitudeMock.setUserProperties).toHaveBeenCalledTimes(1);
+    });
+    act(() => {
+        expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
+            antallAnsatte: '50-99',
+            bransje: undefined,
+            sektor: 'offentlig',
+            korttidSiste4Kvartaler: 'MIDDELS',
+            langtidSiste4Kvartaler: 'MIDDELS',
+            næring2siffer:
+                '84 Offentlig administrasjon og forsvar, og trygdeordninger underlagt offentlig forvaltning',
+            prosent: '>16',
+            sammenligning: 'virksomhet ligger 8-10 over',
+            sykefraværSiste4Kvartaler: 'MIDDELS',
+        });
     });
     expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
         'sidevisning',
@@ -214,13 +225,16 @@ it('sidevisning event kalles med riktige user properties', async () => {
 });
 
 it('Visning av kalkulatoren sender sidevisning-event', async () => {
-    render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+    act(() => {
+        render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+    });
 
     const knappTilKalkis = await screen.findByRole('link', {
         name: /Gå til kostnadskalkulatoren/i,
     });
-    userEvent.click(knappTilKalkis);
-
+    act(() => {
+        userEvent.click(knappTilKalkis);
+    });
     expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
         'navigere',
         expect.objectContaining({

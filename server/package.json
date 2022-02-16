@@ -3,17 +3,17 @@
     "version": "1.0.0",
     "license": "MIT",
     "dependencies": {
-        "axios": "^0.24.0",
+        "axios": "^0.26.0",
         "cookie-parser": "^1.4.6",
         "dotenv": "^10.0.0",
         "express": "^4.17.2",
         "fs-extra": "^10.0.0",
-        "http-proxy-middleware": "^2.0.2",
+        "http-proxy-middleware": "^2.0.3",
         "jose": "^4.4.0",
         "jsdom": "^16.7.0",
         "mustache-express": "^1.3.1",
         "node-fetch": "^3.2.0",
-        "openid-client": "^5.1.2",
+        "openid-client": "^5.1.3",
         "prom-client": "^13.2.0",
         "prometheus-api-metrics": "^3.2.0"
     },
@@ -26,5 +26,8 @@
     },
     "scripts": {
         "watch": "NODE_ENV=development nodemon server.js"
+    },
+    "resolutions": {
+        "follow-redirects": "^1.14.8"
     }
 }
