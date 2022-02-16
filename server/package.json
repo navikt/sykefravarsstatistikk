@@ -26,5 +26,8 @@
     },
     "scripts": {
         "watch": "NODE_ENV=development nodemon server.js"
+    },
+    "resolutions": {
+        "follow-redirects": "^1.14.8"
     }
 }
