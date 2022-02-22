@@ -1,5 +1,5 @@
-import { getRestStatus, RestRessurs, RestStatus } from './api-utils';
-import { getMiljø } from '../utils/miljøUtils';
+import { getRestStatus, RestRessurs, RestStatus } from "./api-utils";
+import { getMiljø } from "../utils/miljøUtils";
 
 const KURSOVERSIKT_API_ENDEPUNKT = '/kursoversikt/api/kurs';
 
