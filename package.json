@@ -63,7 +63,7 @@
         "react-to-print": "^2.14.4",
         "recharts": "^2.1.9",
         "tar": "^6.1.9",
-        "url-parse": "^1.5.6"
+        "url-parse": "^1.5.9"
     },
     "devDependencies": {
         "@testing-library/dom": "^8.11.3",
