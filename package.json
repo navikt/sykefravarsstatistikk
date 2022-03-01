@@ -51,6 +51,7 @@
         "nav-frontend-toggle-style": "^2.1.1",
         "nav-frontend-typografi": "^4.0.1",
         "nav-frontend-typografi-style": "^2.0.1",
+        "node-fetch": "^3.1.1",
         "prop-types": "^15.7.2",
         "react": "^17.0.2",
         "react-collapse": "^5.1.1",
