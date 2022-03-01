@@ -14,7 +14,7 @@
         "amplitude-js": "^8.16.0",
         "ansi-html": "https://registry.yarnpkg.com/ansi-html-community/-/ansi-html-community-0.0.8.tgz#69fbc4d6ccbe383f9736934ae34c3f8290f1bf41",
         "classnames": "^2.2.6",
-        "core-js": "^3.20.3",
+        "core-js": "^3.21.1",
         "craco-less": "^1.20.0",
         "glob-parent": "^6.0.1",
         "https-proxy-agent": "^5.0.0",
