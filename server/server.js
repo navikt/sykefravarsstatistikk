@@ -33,6 +33,18 @@ const renderAppMedDecorator = (decoratorFragments) => {
 };
 
 
+const cspString =
+    `default-src 'self' https://oidc-ver2.difi.no/idporten-oidc-provider/authorize https://idporten-ver2.difi.no/opensso/SSORedirect/metaAlias/norge.no/idp4 https://www.nav.no https://amplitude.nav.no https://arbeidsgiver.nav.no https://data.brreg.no;` +
+    `upgrade-insecure-requests;` +
+    `block-all-mixed-content;` +
+    `base-uri;` +
+    `object-src 'none';` +
+    `script-src 'self';` +
+    `img-src 'self' data: https://www.nav.no;` +
+    `font-src 'self' data: https://www.nav.no;` +
+    `style-src 'self' 'unsafe-inline' https://www.nav.no;` +
+    `style-src-elem 'self' 'unsafe-inline' https://www.nav.no;` +
+    `script-src-elem 'self' 'unsafe-inline' https://www.nav.no;`
 
 const startServer = async (html) => {
     console.log('Starting server: server.js');
@@ -49,6 +61,9 @@ const startServer = async (html) => {
             "Permissions-Policy",
             "geolocation=(), microphone=(), camera=()"
         );
+        res.header("Content-Security-Policy", cspString);
+        res.header("X-WebKit-CSP", cspString);
+        res.header("X-Content-Security-Policy", cspString);
 
         if (process.env.NODE_ENV === "development") {
             res.header("Access-Control-Allow-Origin", "http://localhost:3000");
