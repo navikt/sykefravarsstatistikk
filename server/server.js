@@ -32,6 +32,8 @@ const renderAppMedDecorator = (decoratorFragments) => {
     });
 };
 
+
+
 const startServer = async (html) => {
     console.log('Starting server: server.js');
 
@@ -39,13 +41,13 @@ const startServer = async (html) => {
 
     app.disable("x-powered-by");
     app.use((req, res, next) => {
-        res.header("X-Frame-Options", "DENY");
+        res.header("X-Frame-Options", "SAMEORIGIN");
         res.header("X-Xss-Protection", "1; mode=block");
         res.header("X-Content-Type-Options", "nosniff");
         res.header("Referrer-Policy", "no-referrer");
         res.header(
-            "Feature-Policy",
-            "geolocation 'none'; microphone 'none'; camera 'none'"
+            "Permissions-Policy",
+            "geolocation=(), microphone=(), camera=()"
         );
 
         if (process.env.NODE_ENV === "development") {
