@@ -3,11 +3,11 @@ const express = require('express');
 const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
 const proxy = require('./proxy');
-const { BASE_PATH } = require('./konstanter');
+const {BASE_PATH} = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
 const dotenv = require('dotenv');
-const { initIdporten } = require('./idporten');
-const { initTokenX } = require('./tokenx');
+const {initIdporten} = require('./idporten');
+const {initTokenX} = require('./tokenx');
 const cookieParser = require('cookie-parser');
 
 const app = express();
@@ -37,7 +37,30 @@ const startServer = async (html) => {
 
     await Promise.all([initIdporten(), initTokenX()]);
 
-    app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
+    app.disable("x-powered-by");
+    app.use((req, res, next) => {
+        res.header("X-Frame-Options", "DENY");
+        res.header("X-Xss-Protection", "1; mode=block");
+        res.header("X-Content-Type-Options", "nosniff");
+        res.header("Referrer-Policy", "no-referrer");
+        res.header(
+            "Feature-Policy",
+            "geolocation 'none'; microphone 'none'; camera 'none'"
+        );
+
+        if (process.env.NODE_ENV === "development") {
+            res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+            res.header(
+                "Access-Control-Allow-Headers",
+                "Origin, X-Requested-With, Content-Type, Accept"
+            );
+            res.header("Access-Control-Allow-Methods", "GET, POST");
+        }
+        res.header("X-TEST-RESPONSE-HEADER", "HELLO");
+        next();
+    });
+
+    app.use(BASE_PATH + '/', express.static(buildPath, {index: false}));
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
         const referrerUrl = `${process.env.APP_INGRESS}/success?redirect=${req.query.redirect}`;
