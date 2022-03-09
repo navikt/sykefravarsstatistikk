@@ -2,7 +2,6 @@ const csp = {
     "default-src": [
         "'self'",
         "arbeidsgiver.nav.no",
-        "appres.nav.no"
     ],
     "script-src": [
         "'self'",
