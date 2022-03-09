@@ -68,6 +68,10 @@ const csp = {
     "report-uri": [
         "https://sentry.gc.nav.no/api/13/security/?sentry_key=c4ef091d1fb54f01a7f808e621b28948",
     ],
+    "worker-src": [
+        "'self'",
+        "blob:"
+    ],
 };
 
 
