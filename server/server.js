@@ -3,13 +3,13 @@ const express = require('express');
 const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
 const proxy = require('./proxy');
-const {BASE_PATH} = require('./konstanter');
+const { BASE_PATH } = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
 const dotenv = require('dotenv');
-const {initIdporten} = require('./idporten');
-const {initTokenX} = require('./tokenx');
+const { initIdporten } = require('./idporten');
+const { initTokenX } = require('./tokenx');
 const cookieParser = require('cookie-parser');
-const getCspValue = require("./csp");
+const getCspValue = require('./csp');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -33,39 +33,35 @@ const renderAppMedDecorator = (decoratorFragments) => {
     });
 };
 
-
 const startServer = async (html) => {
     console.log('Starting server: server.js');
 
     await Promise.all([initIdporten(), initTokenX()]);
 
-    app.disable("x-powered-by");
+    app.disable('x-powered-by');
     app.use((req, res, next) => {
-        res.header("X-Frame-Options", "SAMEORIGIN");
-        res.header("X-Xss-Protection", "1; mode=block");
-        res.header("X-Content-Type-Options", "nosniff");
-        res.header("Referrer-Policy", "no-referrer");
-        res.header(
-            "Permissions-Policy",
-            "geolocation=(), microphone=(), camera=()"
-        );
-        res.header("Content-Security-Policy", getCspValue());
-        res.header("X-WebKit-CSP", getCspValue());
-        res.header("X-Content-Security-Policy", getCspValue());
+        res.header('X-Frame-Options', 'SAMEORIGIN');
+        res.header('X-Xss-Protection', '1; mode=block');
+        res.header('X-Content-Type-Options', 'nosniff');
+        res.header('Referrer-Policy', 'no-referrer');
+        res.header('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+        res.header('Content-Security-Policy', getCspValue());
+        res.header('X-WebKit-CSP', getCspValue());
+        res.header('X-Content-Security-Policy', getCspValue());
 
-        if (process.env.NODE_ENV === "development") {
-            res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+        if (process.env.NODE_ENV === 'development') {
+            res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
             res.header(
-                "Access-Control-Allow-Headers",
-                "Origin, X-Requested-With, Content-Type, Accept"
+                'Access-Control-Allow-Headers',
+                'Origin, X-Requested-With, Content-Type, Accept'
             );
-            res.header("Access-Control-Allow-Methods", "GET, POST");
+            res.header('Access-Control-Allow-Methods', 'GET, POST');
         }
-        res.header("X-TEST-RESPONSE-HEADER", "HELLO");
+        res.header('X-TEST-RESPONSE-HEADER', 'HELLO');
         next();
     });
 
-    app.use(BASE_PATH + '/', express.static(buildPath, {index: false}));
+    app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
         const referrerUrl = `${process.env.APP_INGRESS}/success?redirect=${req.query.redirect}`;
