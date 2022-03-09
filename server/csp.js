@@ -1,12 +1,7 @@
 const csp = {
     "default-src": [
         "'self'",
-        "https://oidc-ver2.difi.no/idporten-oidc-provider/authorize",
-        "https://idporten-ver2.difi.no/opensso/SSORedirect/metaAlias/norge.no/idp4",
-        "https://amplitude.nav.no",
-        "https://arbeidsgiver.nav.no",
-        "https://data.brreg.no",
-        "https://www.nav.no",
+        "arbeidsgiver.nav.no",
         "appres.nav.no"
     ],
     "script-src": [
@@ -35,8 +30,11 @@ const csp = {
     "connect-src": [
         "'self'",
         "*.nav.no",
+        "oidc-ver2.difi.no/idporten-oidc-provider/authorize",
+        "idporten-ver2.difi.no/opensso/SSORedirect/metaAlias/norge.no/idp4",
+        "amplitude.nav.no",
+        "data.brreg.no",
         "appres.nav.no",
-        "amplitude.nav.no/collect",
         "*.psplugin.com",
         "*.hotjar.com",
         "*.vc.hotjar.com",
