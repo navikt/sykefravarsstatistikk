@@ -57,7 +57,6 @@ const startServer = async (html) => {
             );
             res.header('Access-Control-Allow-Methods', 'GET, POST');
         }
-        res.header('X-TEST-RESPONSE-HEADER', 'HELLO');
         next();
     });
 
