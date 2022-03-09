@@ -34,7 +34,13 @@ const renderAppMedDecorator = (decoratorFragments) => {
 
 
 const cspString =
-    `default-src 'self' https://oidc-ver2.difi.no/idporten-oidc-provider/authorize https://idporten-ver2.difi.no/opensso/SSORedirect/metaAlias/norge.no/idp4 https://www.nav.no https://amplitude.nav.no https://arbeidsgiver.nav.no https://data.brreg.no;` +
+    `default-src 'self'` +
+    ` https://oidc-ver2.difi.no/idporten-oidc-provider/authorize` +
+    ` https://idporten-ver2.difi.no/opensso/SSORedirect/metaAlias/norge.no/idp4` +
+    ` https://amplitude.nav.no` +
+    ` https://arbeidsgiver.nav.no` +
+    ` https://data.brreg.no` +
+    ` https://www.nav.no;` +
     `upgrade-insecure-requests;` +
     `block-all-mixed-content;` +
     `base-uri;` +
