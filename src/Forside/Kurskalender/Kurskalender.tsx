@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
-import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import kalenderSvg from './kalender.svg';
 import './Kurskalender.less';
 import { PaneltittelMedIkon } from '../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
 import { Kurs, RestKursliste } from '../../api/kurs-api';
 import { RestStatus } from '../../api/api-utils';
 import classNames from 'classnames';
+import Lenke from 'nav-frontend-lenker';
 
 interface Props {
     restKursliste: RestKursliste;
@@ -31,9 +31,9 @@ export const Kurskalender: FunctionComponent<Props> = (props) => {
                 NAV tilbyr nettkurs, med temaer som forebygging og oppfølging av sykefravær
             </Normaltekst>
 
-            <EksternLenke href='https://arbeidsgiver.nav.no/kursoversikt/?tema=Inkluderende%20arbeidsliv%20(IA)'>
+            <Lenke href="https://arbeidsgiver.nav.no/kursoversikt/?tema=Inkluderende%20arbeidsliv%20(IA)">
                 Gå til kurskalenderen
-            </EksternLenke>
+            </Lenke>
         </div>
     ) : null;
 };
@@ -43,6 +43,6 @@ const getNesteIANettkurs = (kursliste: Kurs[]): Kurs | undefined => {
         .filter((kurs) => kurs.tema === 'Inkluderende arbeidsliv (IA)')
         .filter((kurs) => kurs.type === 'Webinar')
         .sort(
-            (kurs1, kurs2) => new Date(kurs1.start).getTime() - new Date(kurs2.start).getTime(),
+            (kurs1, kurs2) => new Date(kurs1.start).getTime() - new Date(kurs2.start).getTime()
         )[0];
 };
