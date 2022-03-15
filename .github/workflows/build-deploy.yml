@@ -43,7 +43,7 @@ jobs:
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/aapne-kurskalender-i-samme-fane'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/innføre-csp'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
@@ -58,7 +58,7 @@ jobs:
 
     deploy-to-labs-gcp:
         name: Deploy to labs-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/aapne-kurskalender-i-samme-fane'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/innføre-csp'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
