@@ -9,7 +9,7 @@ const dotenv = require('dotenv');
 const { initIdporten } = require('./idporten');
 const { initTokenX } = require('./tokenx');
 const cookieParser = require('cookie-parser');
-const getCspValue = require('./csp');
+const getCspValue = require('./content-security-policy');
 
 const app = express();
 const PORT = process.env.PORT || 3000;

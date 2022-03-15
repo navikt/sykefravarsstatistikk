@@ -1,4 +1,4 @@
-const csp = {
+const contentSecurityPolicy = {
     'default-src': ["'self'", 'arbeidsgiver.nav.no'],
     'script-src': [
         "'self'",
@@ -58,7 +58,7 @@ const csp = {
 };
 
 function getCspValue() {
-    return Object.entries(csp)
+    return Object.entries(contentSecurityPolicy)
         .map((entry) => `${entry[0]} ${entry[1].join(' ')}`)
         .join('; ');
 }
