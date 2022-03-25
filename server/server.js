@@ -9,6 +9,7 @@ const dotenv = require('dotenv');
 const { initIdporten } = require('./idporten');
 const { initTokenX } = require('./tokenx');
 const cookieParser = require('cookie-parser');
+const getCspValue = require('./content-security-policy');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -36,6 +37,28 @@ const startServer = async (html) => {
     console.log('Starting server: server.js');
 
     await Promise.all([initIdporten(), initTokenX()]);
+
+    app.disable('x-powered-by');
+    app.use((req, res, next) => {
+        res.header('X-Frame-Options', 'SAMEORIGIN');
+        res.header('X-Xss-Protection', '1; mode=block');
+        res.header('X-Content-Type-Options', 'nosniff');
+        res.header('Referrer-Policy', 'no-referrer');
+        res.header('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+        res.header('Content-Security-Policy', getCspValue());
+        res.header('X-WebKit-CSP', getCspValue());
+        res.header('X-Content-Security-Policy', getCspValue());
+
+        if (process.env.NODE_ENV === 'development') {
+            res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+            res.header(
+                'Access-Control-Allow-Headers',
+                'Origin, X-Requested-With, Content-Type, Accept'
+            );
+            res.header('Access-Control-Allow-Methods', 'GET, POST');
+        }
+        next();
+    });
 
     app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
