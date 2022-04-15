@@ -1450,10 +1450,10 @@
     prop-types "^15.7.2"
     react "^17.0.2"
 
-"@navikt/navspa@^4.0.0":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@navikt/navspa/-/navspa-4.1.1.tgz#92fb0f11227e062f3aa52f48fb7e323110209507"
-  integrity sha512-as3Or60JKsRV8iTcnHID02rbTikuRhmrEJSCNtMSJWF3k9WOkokHm2wpYdjvF1P2cGVHJh0eBLDTQumFiLaiJQ==
+"@navikt/navspa@^5.0.0":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@navikt/navspa/-/navspa-5.0.1.tgz#e141c8c59473aa61c8134c1b7c17d7094eae7580"
+  integrity sha512-TIVoOdFN64Fp3vwGOoUOiT4+K79RZs4V3jBxWve769rW3K0oN+25i3eYBCNloc8TwwC7DJZY25199VrAMyNVyQ==
   dependencies:
     loadjs "^4.2.0"
 
