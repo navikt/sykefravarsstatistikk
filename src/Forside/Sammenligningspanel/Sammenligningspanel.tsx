@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useRef } from 'react';
 import './Sammenligningspanel.less';
 import ReactToPrint from 'react-to-print';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { AlertStripeFeil, AlertStripeInfo } from "nav-frontend-alertstriper";
 import { RestSummertSykefraværshistorikk } from '../../api/summert-sykefraværshistorikk-api';
 import { RestStatus } from '../../api/api-utils';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
@@ -24,6 +24,9 @@ export const Sammenligningspanel: FunctionComponent<{
 
     return (
         <>
+            <AlertStripeInfo className="sammenligningspanel__info_om_oppdateringer">
+                Vi jobber med å oppdatere sidene våre
+            </AlertStripeInfo>
             {harFeil && (
                 <AlertStripeFeil className="sammenligningspanel__info-eller-feilmelding">
                     Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen senere.
