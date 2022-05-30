@@ -4,8 +4,8 @@ import { EventProperties } from './events';
 function initializeAmplitudeClient(): AnalyticsClient {
     const bucketId =
         window.location.hostname === 'arbeidsgiver.nav.no'
-            ? '3a6fe32c3457e77ce81c356bb14ca886'
-            : '55477baea93c5227d8c0f6b813653615';
+            ? 'a8243d37808422b4c768d31c88a22ef4'
+            : '6ed1f00aabc6ced4fd6fcb7fcdc01b30';
 
     const amplitudeInstance = amplitude.getInstance();
     amplitudeInstance.init(bucketId, '', {
