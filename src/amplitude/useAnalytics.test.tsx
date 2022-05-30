@@ -24,22 +24,24 @@ afterEach(() => {
     jest.resetAllMocks();
 });
 
+const defaultEventData = {
+    app: 'sykefravarsstatistikk',
+    team: 'teamia',
+    url: '/',
+};
+
 it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => {
     render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
 
-    const eventDataForFirstEvent = {
-        eventname: 'knapp',
-        eventProperties: {
-            app: 'someValue',
-            url: 'someValue',
-            someKey: 'someValue',
-        },
+    const eventname = 'dummyEvent';
+    const eventData = {
+        someKey: 'someValue',
     };
-    sendAnalytics(eventDataForFirstEvent);
-    expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
-        eventDataForFirstEvent.eventname,
-        eventDataForFirstEvent.eventProperties
-    );
+    sendAnalytics(eventname, eventData);
+    expect(amplitudeMock.logEvent).toHaveBeenCalledWith(eventname, {
+        ...defaultEventData,
+        ...eventData,
+    });
 });
 
 it('Kaller ikke setUserProperties hvis vi ikke har ekstradata', async () => {

@@ -1,10 +1,9 @@
 import { AnalyticsClient } from './client';
 import { useEffect } from 'react';
-import { EventProperties } from './events';
 
 interface AnalyticsData {
     eventname: string;
-    eventProperties: EventProperties;
+    eventProperties: any;
 }
 
 const ANALYTICS_EVENT = 'amplitude';

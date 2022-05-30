@@ -1,7 +1,5 @@
 import { sendAnalytics } from './useAnalytics';
 
-export type EventProperties = { app: string; url: string; [key: string]: any };
-
 export const sendNavigereEvent = (destinasjon: string, lenketekst: string) => {
     sendAnalytics('navigere', {
         destinasjon,
