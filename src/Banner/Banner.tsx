@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Banner.less';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import Bedriftsmeny from '@navikt/bedriftsmeny';
@@ -16,12 +16,22 @@ const Banner: React.FunctionComponent<Props & RouteComponentProps> = (props) => 
     const { history, tittel, restOrganisasjoner } = props;
     let altinnOrganisasjoner: AltinnOrganisasjon[] =
         restOrganisasjoner.status === RestStatus.Suksess ? restOrganisasjoner.data : [];
+
+    const [bedriftValgtManueltFraLista, setBedriftValgtManueltFraLista] = useState(false);
+
+    const sendEventHvisBedriftBlirManueltValgt = () => {
+        if (bedriftValgtManueltFraLista) {
+            sendBedriftValgtEvent();
+        }
+        setBedriftValgtManueltFraLista(true);
+    };
+
     return (
         <Bedriftsmeny
             organisasjoner={altinnOrganisasjoner}
             sidetittel={tittel}
             history={history}
-            onOrganisasjonChange={sendBedriftValgtEvent}
+            onOrganisasjonChange={sendEventHvisBedriftBlirManueltValgt}
         />
     );
 };
