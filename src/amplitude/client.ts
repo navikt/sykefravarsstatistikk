@@ -1,11 +1,15 @@
 import amplitude from 'amplitude-js';
-import { EventProperties } from './events';
+
+const AmplitudeBucket = {
+    ARBEIDSGIVER_PROD: 'a8243d37808422b4c768d31c88a22ef4',
+    ARBEIDSGIVER_DEV: '6ed1f00aabc6ced4fd6fcb7fcdc01b30',
+};
 
 function initializeAmplitudeClient(): AnalyticsClient {
     const bucketId =
         window.location.hostname === 'arbeidsgiver.nav.no'
-            ? '3a6fe32c3457e77ce81c356bb14ca886'
-            : '55477baea93c5227d8c0f6b813653615';
+            ? AmplitudeBucket.ARBEIDSGIVER_PROD
+            : AmplitudeBucket.ARBEIDSGIVER_DEV;
 
     const amplitudeInstance = amplitude.getInstance();
     amplitudeInstance.init(bucketId, '', {
@@ -22,7 +26,7 @@ function initializeAmplitudeClient(): AnalyticsClient {
 export const amplitudeClient = initializeAmplitudeClient();
 
 export interface AnalyticsClient {
-    logEvent(name: string, properties?: EventProperties): void;
+    logEvent(eventname: string, eventProperties?: any): void;
 
     setUserProperties(properties: any): void;
 }

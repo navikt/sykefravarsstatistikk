@@ -43,7 +43,7 @@ jobs:
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/innføre-csp'
+        if: github.ref == 'refs/heads/bruke-nye-amplitude-nokler'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:

@@ -1,10 +1,9 @@
 import { AnalyticsClient } from './client';
 import { useEffect } from 'react';
-import { EventProperties } from './events';
 
 interface AnalyticsData {
     eventname: string;
-    eventProperties: EventProperties;
+    eventProperties: any;
 }
 
 const ANALYTICS_EVENT = 'amplitude';
@@ -26,7 +25,20 @@ export const useAnalytics = <T extends AnalyticsData>(client: AnalyticsClient) =
     }, [client]);
 };
 
-export const sendAnalytics = (eventData: AnalyticsData) => {
-    const analyticsEvent = new CustomEvent<AnalyticsData>(ANALYTICS_EVENT, { detail: eventData });
+const defaultEventProperties = () => {
+    return {
+        app: 'sykefravarsstatistikk',
+        team: 'teamia',
+        url: window.location.pathname,
+    };
+};
+
+export const sendAnalytics = (eventname: string, additionalEventProperties?: any) => {
+    const analyticsEvent = new CustomEvent<AnalyticsData>(ANALYTICS_EVENT, {
+        detail: {
+            eventname,
+            eventProperties: { ...defaultEventProperties(), ...additionalEventProperties },
+        },
+    });
     document.dispatchEvent(analyticsEvent);
 };

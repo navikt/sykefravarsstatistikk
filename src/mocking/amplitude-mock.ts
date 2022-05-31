@@ -1,11 +1,10 @@
 import { AnalyticsClient } from '../amplitude/client';
-import { EventProperties } from '../amplitude/events';
 
 export const amplitudeMock: AnalyticsClient = {
     setUserProperties(properties: any) {
         console.log('properties', properties);
     },
-    logEvent(event: string, data?: EventProperties) {
+    logEvent(event: string, data?: any) {
         console.log('Logging event:', event, data);
     },
 };
