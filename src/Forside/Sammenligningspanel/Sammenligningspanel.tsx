@@ -1,12 +1,13 @@
 import React, { FunctionComponent, useRef } from 'react';
 import './Sammenligningspanel.less';
 import ReactToPrint from 'react-to-print';
-import { AlertStripeFeil, AlertStripeInfo } from "nav-frontend-alertstriper";
+import { AlertStripeFeil, AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { RestSummertSykefraværshistorikk } from '../../api/summert-sykefraværshistorikk-api';
 import { RestStatus } from '../../api/api-utils';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import { useOrgnr } from '../../hooks/useOrgnr';
+import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 
 export const Sammenligningspanel: FunctionComponent<{
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
@@ -25,7 +26,16 @@ export const Sammenligningspanel: FunctionComponent<{
     return (
         <>
             <AlertStripeInfo className="sammenligningspanel__info_om_oppdateringer">
-                Vi jobber med å oppdatere sidene våre
+                Det er oppdaget feil i sykefraværsstatistikken. Feilen er korrigert 2. juni 2022.
+                Virksomheter med få ansatte og høyt sykefravær, kan oppleve store endringer i sine
+                tall. Du kan lese mer om feilen på{' '}
+                <EksternLenke
+                    href={
+                        'https://www.nav.no/no/nav-og-samfunn/statistikk/sykefravar-statistikk/nyheter/feil-i-sykefravaersstatistikken'
+                    }
+                >
+                    nav.no
+                </EksternLenke>
             </AlertStripeInfo>
             {harFeil && (
                 <AlertStripeFeil className="sammenligningspanel__info-eller-feilmelding">
