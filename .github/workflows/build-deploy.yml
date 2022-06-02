@@ -43,7 +43,7 @@ jobs:
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/bruke-nye-amplitude-nokler'
+        if: github.ref == 'refs/heads/endringer-publisering-1-kvartal-2022'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
