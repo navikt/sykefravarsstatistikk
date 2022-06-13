@@ -45,10 +45,13 @@ const getIaTjenesterMetrikkerUrl = () => {
 
 const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
 
-function byggIaTjenesteMottattMetrikk(nåværendeOrgnr: string | undefined) {
+function byggIaTjenesteMottattMetrikk(
+    nåværendeOrgnr: string | undefined,
+    kilde: string | undefined = 'SYKEFRAVÆRSSTATISTIKK'
+) {
     const iaTjenesteMetrikk: IaTjenesteMetrikk = {
         orgnr: nåværendeOrgnr ?? '',
-        kilde: 'SYKEFRAVÆRSSTATISTIKK',
+        kilde: kilde,
         type: 'DIGITAL_IA_TJENESTE',
         tjenesteMottakkelsesdato: tilIsoDatoMedUtcTimezoneUtenMillis(new Date()),
         altinnRettighet: 'SYKEFRAVÆRSSTATISTIKK_FOR_VIRKSOMHETER',
@@ -83,12 +86,14 @@ export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
     }
 };
 
-export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
+export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = (kilde?: string | undefined) => {
     const context = useContext(iaTjenesterMetrikkerContext);
     const orgnr = useOrgnr();
 
     useEffect(() => {
-        const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr);
+        const iaTjenesteMetrikk = kilde
+            ? byggIaTjenesteMottattMetrikk(orgnr, kilde)
+            : byggIaTjenesteMottattMetrikk(orgnr);
         if (
             !erIaTjenesterMetrikkerSendtForBedrift(
                 orgnr ?? '',

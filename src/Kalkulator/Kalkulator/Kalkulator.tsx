@@ -19,7 +19,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
         Kalkulatorvariant.Prosent
     );
 
-    useSendIaTjenesteMetrikkMottattVedSidevisningEvent();
+    useSendIaTjenesteMetrikkMottattVedSidevisningEvent('KALKULATOR');
     useEffect(() => {
         sendSidevisningEvent();
         scrollToBanner();
