@@ -111,5 +111,5 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = (kilde?: strin
                 }
             });
         }
-    }, [orgnr, context]);
+    }, [orgnr, context, kilde]);
 };
