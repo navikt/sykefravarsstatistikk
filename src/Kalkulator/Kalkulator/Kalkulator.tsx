@@ -1,14 +1,20 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
 import { RestSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import { Kalkulatorvariant } from '../kalkulator-utils';
-import {sendKnappEvent, sendSidevisningEvent} from '../../amplitude/events';
+import { sendKnappEvent, sendSidevisningEvent } from '../../amplitude/events';
 import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
-import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../../metrikker/iatjenester';
+import {
+    erIaTjenesterMetrikkerSendtForBedrift,
+    iaTjenesterMetrikkerErSendtForBedrift,
+    useSendIaTjenesteMetrikkEvent,
+} from '../../metrikker/iatjenester';
+import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
+import { useOrgnr } from '../../hooks/useOrgnr';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -18,8 +24,32 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     const [kalkulatorvariant, setKalkulatorvariant] = useState<Kalkulatorvariant>(
         Kalkulatorvariant.Prosent
     );
+    const [sendKalkulatorMetrikker, setSendKalkulatorMetrikker]=useState<boolean>(false);
 
-    useSendIaTjenesteMetrikkMottattVedSidevisningEvent('KALKULATOR');
+    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkEvent('KALKULATOR');
+    const orgnr = useOrgnr();
+    const context = useContext(iaTjenesterMetrikkerContext);
+
+    useEffect(()=>{if(sendKalkulatorMetrikker){
+        if (
+          !erIaTjenesterMetrikkerSendtForBedrift(
+            orgnr,
+            context.bedrifterSomHarSendtMetrikker
+          )
+        )
+            sendIaTjensterKalkulatorMetrikker().then((isSent) => {
+                if (isSent) {
+                    context.setBedrifterSomHarSendtMetrikker(
+                      iaTjenesterMetrikkerErSendtForBedrift(
+                        orgnr,
+                        context.bedrifterSomHarSendtMetrikker
+                      )
+                    );
+                }
+            });
+    }},[
+      sendKalkulatorMetrikker,orgnr,context,sendIaTjensterKalkulatorMetrikker
+    ])
     useEffect(() => {
         sendSidevisningEvent();
         scrollToBanner();
@@ -46,6 +76,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                                 onClick={() => {
                                     setKalkulatorvariant(Kalkulatorvariant.Prosent);
                                     sendKnappEvent('Prosent');
+                                    setSendKalkulatorMetrikker(true);
                                 }}
                             >
                                 Prosent
@@ -55,6 +86,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                                 onClick={() => {
                                     setKalkulatorvariant(Kalkulatorvariant.Dagsverk);
                                     sendKnappEvent('Dagsverk');
+                                    setSendKalkulatorMetrikker(true);
                                 }}
                             >
                                 Dagsverk

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import React, { FunctionComponent, ReactElement, useContext, useEffect, useState } from 'react';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Input } from 'nav-frontend-skjema';
 import Hjelpetekst from 'nav-frontend-hjelpetekst';
@@ -6,6 +6,13 @@ import NavFrontendSpinner from 'nav-frontend-spinner';
 import './Kalkulatorrad.less';
 import { sendInputfeltUtfyltEvent } from '../../../amplitude/events';
 import classNames from 'classnames';
+import {
+    erIaTjenesterMetrikkerSendtForBedrift,
+    iaTjenesterMetrikkerErSendtForBedrift,
+    useSendIaTjenesteMetrikkEvent,
+} from '../../../metrikker/iatjenester';
+import { useOrgnr } from '../../../hooks/useOrgnr';
+import { iaTjenesterMetrikkerContext } from '../../../metrikker/IaTjenesterMetrikkerContext';
 
 interface Props {
     onChange: (event: any) => void;
@@ -20,7 +27,27 @@ interface Props {
 
 export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
     const labelId = props.name + '-label';
-
+    const [sendKalkulatorMetrikker, setSendKalkulatorMetrikker] = useState<boolean>(false);
+    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkEvent('KALKULATOR');
+    const orgnr = useOrgnr();
+    const context = useContext(iaTjenesterMetrikkerContext);
+    useEffect(() => {
+        if (sendKalkulatorMetrikker) {
+            if (
+                !erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker)
+            )
+                sendIaTjensterKalkulatorMetrikker().then((isSent) => {
+                    if (isSent) {
+                        context.setBedrifterSomHarSendtMetrikker(
+                            iaTjenesterMetrikkerErSendtForBedrift(
+                                orgnr,
+                                context.bedrifterSomHarSendtMetrikker
+                            )
+                        );
+                    }
+                });
+        }
+    }, [sendKalkulatorMetrikker, orgnr,context,sendIaTjensterKalkulatorMetrikker]);
     return (
         <div className="kalkulatorrad">
             <Element id={labelId}>{props.label}</Element>
@@ -28,8 +55,10 @@ export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
                 className={
                     props.hjelpetekst
                         ? 'kalkulatorrad__input-hjelpetekst-wrapper'
-                        : classNames('kalkulatorrad__input-hjelpetekst-wrapper',
-                      'kalkulatorrad__input-no-hjelpetekst-wrapper')
+                        : classNames(
+                              'kalkulatorrad__input-hjelpetekst-wrapper',
+                              'kalkulatorrad__input-no-hjelpetekst-wrapper'
+                          )
                 }
             >
                 <Input
@@ -37,6 +66,7 @@ export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
                     onChange={(event: any) => {
                         props.onChange(event);
                         sendInputfeltUtfyltEvent(props.label, props.name);
+                        setSendKalkulatorMetrikker(true);
                     }}
                     value={props.value || ''}
                     type="number"

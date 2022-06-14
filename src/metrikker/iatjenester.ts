@@ -59,10 +59,9 @@ function byggIaTjenesteMottattMetrikk(
     return iaTjenesteMetrikk;
 }
 
-export const useSendIaTjenesteMetrikkEvent = (): (() => Promise<boolean>) => {
+export const useSendIaTjenesteMetrikkEvent = (kilde ?:string): (() => Promise<boolean>) => {
     const nåværendeOrgnr = useOrgnr();
-    const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(nåværendeOrgnr);
-
+    const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(nåværendeOrgnr,kilde);
     return () => sendIaTjenesteMetrikk(iaTjenesteMetrikk);
 };
 
@@ -80,20 +79,19 @@ export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
         // @ts-ignore
         const fetchResponse = await fetch(`${iaTjenesterMetrikkerAPI}`, settings);
         const data = await fetchResponse.json();
+        console.log("data er",data)
         return data.status === 'created';
     } catch (e) {
         return false;
     }
 };
 
-export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = (kilde?: string | undefined) => {
+export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
     const context = useContext(iaTjenesterMetrikkerContext);
     const orgnr = useOrgnr();
 
     useEffect(() => {
-        const iaTjenesteMetrikk = kilde
-            ? byggIaTjenesteMottattMetrikk(orgnr, kilde)
-            : byggIaTjenesteMottattMetrikk(orgnr);
+        const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr);
         if (
             !erIaTjenesterMetrikkerSendtForBedrift(
                 orgnr ?? '',
@@ -111,5 +109,5 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = (kilde?: strin
                 }
             });
         }
-    }, [orgnr, context, kilde]);
+    }, [orgnr, context]);
 };
