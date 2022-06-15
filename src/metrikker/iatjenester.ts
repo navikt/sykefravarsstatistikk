@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { tilIsoDatoMedUtcTimezoneUtenMillis } from '../utils/app-utils';
-import { iaTjenesterMetrikkerContext } from './IaTjenesterMetrikkerContext';
+import { iaTjenesterMetrikkerContext, TjenestePerOrgnr } from './IaTjenesterMetrikkerContext';
 import { useOrgnr } from '../hooks/useOrgnr';
 
 interface IaTjenesteMetrikk {
@@ -13,21 +13,32 @@ interface IaTjenesteMetrikk {
 
 export const erIaTjenesterMetrikkerSendtForBedrift = (
     orgnr: string | undefined,
-    sendteMetrikker: [string]
+    sendteMetrikker: [TjenestePerOrgnr],
+    kilde: string = 'SYKEFRAVÆRSSTATISTIKK'
 ): boolean => {
     if (orgnr === undefined) {
         return true;
     } else {
-        return sendteMetrikker.includes(orgnr);
+        return sendteMetrikker.some(
+            (tjenestePerOrgnr) =>
+                tjenestePerOrgnr.orgnr === orgnr && tjenestePerOrgnr.kilde === kilde
+        );
     }
 };
 
 export const iaTjenesterMetrikkerErSendtForBedrift = (
     orgnr: string | undefined,
-    sendteMetrikker: [string]
-): [string] => {
-    if (orgnr !== undefined) {
-        sendteMetrikker.push(orgnr);
+    sendteMetrikker: [TjenestePerOrgnr],
+    kilde: string = 'SYKEFRAVÆRSSTATISTIKK'
+): [TjenestePerOrgnr] => {
+    if (
+        orgnr !== undefined &&
+        !sendteMetrikker.some(
+            (tjenestePerOrgnr) =>
+                tjenestePerOrgnr.orgnr === orgnr && tjenestePerOrgnr.kilde === kilde
+        )
+    ) {
+        sendteMetrikker.push({ orgnr: orgnr, kilde: kilde });
     }
     return sendteMetrikker;
 };
@@ -59,9 +70,9 @@ function byggIaTjenesteMottattMetrikk(
     return iaTjenesteMetrikk;
 }
 
-export const useSendIaTjenesteMetrikkEvent = (kilde ?:string): (() => Promise<boolean>) => {
+export const useSendIaTjenesteMetrikkEvent = (kilde?: string): (() => Promise<boolean>) => {
     const nåværendeOrgnr = useOrgnr();
-    const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(nåværendeOrgnr,kilde);
+    const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(nåværendeOrgnr, kilde);
     return () => sendIaTjenesteMetrikk(iaTjenesteMetrikk);
 };
 
@@ -79,7 +90,6 @@ export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
         // @ts-ignore
         const fetchResponse = await fetch(`${iaTjenesterMetrikkerAPI}`, settings);
         const data = await fetchResponse.json();
-        console.log("data er",data)
         return data.status === 'created';
     } catch (e) {
         return false;

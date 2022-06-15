@@ -34,14 +34,15 @@ export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
     useEffect(() => {
         if (sendKalkulatorMetrikker) {
             if (
-                !erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker)
+                !erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker,'KALKULATOR')
             )
                 sendIaTjensterKalkulatorMetrikker().then((isSent) => {
                     if (isSent) {
                         context.setBedrifterSomHarSendtMetrikker(
                             iaTjenesterMetrikkerErSendtForBedrift(
                                 orgnr,
-                                context.bedrifterSomHarSendtMetrikker
+                                context.bedrifterSomHarSendtMetrikker,
+                              'KALKULATOR'
                             )
                         );
                     }

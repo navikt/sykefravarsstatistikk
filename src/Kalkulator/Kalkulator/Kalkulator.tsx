@@ -34,7 +34,8 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
         if (
           !erIaTjenesterMetrikkerSendtForBedrift(
             orgnr,
-            context.bedrifterSomHarSendtMetrikker
+            context.bedrifterSomHarSendtMetrikker,
+            'KALKULATOR'
           )
         )
             sendIaTjensterKalkulatorMetrikker().then((isSent) => {
@@ -42,7 +43,8 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                     context.setBedrifterSomHarSendtMetrikker(
                       iaTjenesterMetrikkerErSendtForBedrift(
                         orgnr,
-                        context.bedrifterSomHarSendtMetrikker
+                        context.bedrifterSomHarSendtMetrikker,
+                        'KALKULATOR'
                       )
                     );
                 }
