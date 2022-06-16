@@ -10,11 +10,14 @@ interface IaTjenesteMetrikk {
     kilde: String;
     tjenesteMottakkelsesdato: String;
 }
-
+export enum IaTjenesteKilde {
+    SYKEFRAVÆRSSTATISTIKK = 'SYKEFRAVÆRSSTATISTIKK',
+    KALKULATOR = 'KALKULATOR',
+}
 export const erIaTjenesterMetrikkerSendtForBedrift = (
     orgnr: string | undefined,
     sendteMetrikker: [TjenestePerOrgnr],
-    kilde: string = 'SYKEFRAVÆRSSTATISTIKK'
+    kilde: string = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
 ): boolean => {
     if (orgnr === undefined) {
         return true;
@@ -29,7 +32,7 @@ export const erIaTjenesterMetrikkerSendtForBedrift = (
 export const iaTjenesterMetrikkerErSendtForBedrift = (
     orgnr: string | undefined,
     sendteMetrikker: [TjenestePerOrgnr],
-    kilde: string = 'SYKEFRAVÆRSSTATISTIKK'
+    kilde: string = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
 ): [TjenestePerOrgnr] => {
     if (
         orgnr !== undefined &&
@@ -58,7 +61,7 @@ const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/motta
 
 function byggIaTjenesteMottattMetrikk(
     nåværendeOrgnr: string | undefined,
-    kilde: string | undefined = 'SYKEFRAVÆRSSTATISTIKK'
+    kilde: string | undefined = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
 ) {
     const iaTjenesteMetrikk: IaTjenesteMetrikk = {
         orgnr: nåværendeOrgnr ?? '',

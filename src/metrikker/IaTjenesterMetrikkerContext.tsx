@@ -1,4 +1,5 @@
 import React, { createContext, FunctionComponent, useState } from 'react';
+import { IaTjenesteKilde } from "./iatjenester";
 
 export interface TjenestePerOrgnr {
     orgnr: string;
@@ -16,7 +17,7 @@ export const iaTjenesterMetrikkerContext = createContext<{
 export const IaTjenesterMetrikkerContextProvider: FunctionComponent = (props) => {
     const [bedrifterSomHarSendtMetrikker, setBedrifterSomHarSendtMetrikker] = useState<
         [TjenestePerOrgnr]
-    >([{ orgnr: '', kilde: 'SYKEFRAVÆRSSTATISTIKK' }]);
+    >([{ orgnr: '', kilde: IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK }]);
 
     const Provider = iaTjenesterMetrikkerContext.Provider;
     return (

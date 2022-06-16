@@ -7,10 +7,10 @@ import './Kalkulatorrad.less';
 import { sendInputfeltUtfyltEvent } from '../../../amplitude/events';
 import classNames from 'classnames';
 import {
-    erIaTjenesterMetrikkerSendtForBedrift,
+    erIaTjenesterMetrikkerSendtForBedrift, IaTjenesteKilde,
     iaTjenesterMetrikkerErSendtForBedrift,
-    useSendIaTjenesteMetrikkEvent,
-} from '../../../metrikker/iatjenester';
+    useSendIaTjenesteMetrikkEvent
+} from "../../../metrikker/iatjenester";
 import { useOrgnr } from '../../../hooks/useOrgnr';
 import { iaTjenesterMetrikkerContext } from '../../../metrikker/IaTjenesterMetrikkerContext';
 
@@ -28,13 +28,13 @@ interface Props {
 export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
     const labelId = props.name + '-label';
     const [sendKalkulatorMetrikker, setSendKalkulatorMetrikker] = useState<boolean>(false);
-    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkEvent('KALKULATOR');
+    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkEvent(IaTjenesteKilde.KALKULATOR);
     const orgnr = useOrgnr();
     const context = useContext(iaTjenesterMetrikkerContext);
     useEffect(() => {
         if (sendKalkulatorMetrikker) {
             if (
-                !erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker,'KALKULATOR')
+                !erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker,IaTjenesteKilde.KALKULATOR)
             )
                 sendIaTjensterKalkulatorMetrikker().then((isSent) => {
                     if (isSent) {
@@ -42,7 +42,7 @@ export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
                             iaTjenesterMetrikkerErSendtForBedrift(
                                 orgnr,
                                 context.bedrifterSomHarSendtMetrikker,
-                              'KALKULATOR'
+                              IaTjenesteKilde.KALKULATOR
                             )
                         );
                     }

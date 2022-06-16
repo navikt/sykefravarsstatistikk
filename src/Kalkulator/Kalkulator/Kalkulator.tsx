@@ -9,10 +9,10 @@ import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
 import {
-    erIaTjenesterMetrikkerSendtForBedrift,
+    erIaTjenesterMetrikkerSendtForBedrift, IaTjenesteKilde,
     iaTjenesterMetrikkerErSendtForBedrift,
-    useSendIaTjenesteMetrikkEvent,
-} from '../../metrikker/iatjenester';
+    useSendIaTjenesteMetrikkEvent
+} from "../../metrikker/iatjenester";
 import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
 import { useOrgnr } from '../../hooks/useOrgnr';
 
@@ -26,7 +26,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     );
     const [sendKalkulatorMetrikker, setSendKalkulatorMetrikker]=useState<boolean>(false);
 
-    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkEvent('KALKULATOR');
+    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkEvent(IaTjenesteKilde.KALKULATOR);
     const orgnr = useOrgnr();
     const context = useContext(iaTjenesterMetrikkerContext);
 
@@ -35,7 +35,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
           !erIaTjenesterMetrikkerSendtForBedrift(
             orgnr,
             context.bedrifterSomHarSendtMetrikker,
-            'KALKULATOR'
+            IaTjenesteKilde.KALKULATOR
           )
         )
             sendIaTjensterKalkulatorMetrikker().then((isSent) => {
@@ -44,7 +44,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                       iaTjenesterMetrikkerErSendtForBedrift(
                         orgnr,
                         context.bedrifterSomHarSendtMetrikker,
-                        'KALKULATOR'
+                        IaTjenesteKilde.KALKULATOR
                       )
                     );
                 }
