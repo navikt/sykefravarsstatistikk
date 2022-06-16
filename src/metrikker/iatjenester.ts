@@ -1,7 +1,7 @@
-import { useContext, useEffect } from "react";
-import { tilIsoDatoMedUtcTimezoneUtenMillis } from "../utils/app-utils";
-import { iaTjenesterMetrikkerContext, TjenestePerOrgnr } from "./IaTjenesterMetrikkerContext";
-import { useOrgnr } from "../hooks/useOrgnr";
+import { useContext, useEffect } from 'react';
+import { tilIsoDatoMedUtcTimezoneUtenMillis } from '../utils/app-utils';
+import { iaTjenesterMetrikkerContext, TjenestePerOrgnr } from './IaTjenesterMetrikkerContext';
+import { useOrgnr } from '../hooks/useOrgnr';
 
 interface IaTjenesteMetrikk {
     orgnr: String;
@@ -14,32 +14,36 @@ export enum IaTjenesteKilde {
     SYKEFRAVÆRSSTATISTIKK = 'SYKEFRAVÆRSSTATISTIKK',
     KALKULATOR = 'KALKULATOR',
 }
+const erMetrikkerSendtForKilde = (
+    orgnr: string | undefined,
+    sendteMetrikker: [TjenestePerOrgnr],
+    kilde: IaTjenesteKilde
+) => {
+    return sendteMetrikker.some(
+        (tjenestePerOrgnr) => tjenestePerOrgnr.orgnr === orgnr && tjenestePerOrgnr.kilde === kilde
+    );
+};
+
 export const erIaTjenesterMetrikkerSendtForBedrift = (
     orgnr: string | undefined,
     sendteMetrikker: [TjenestePerOrgnr],
-    kilde: string = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
+    kilde: IaTjenesteKilde = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
 ): boolean => {
     if (orgnr === undefined) {
         return true;
     } else {
-        return sendteMetrikker.some(
-            (tjenestePerOrgnr) =>
-                tjenestePerOrgnr.orgnr === orgnr && tjenestePerOrgnr.kilde === kilde
-        );
+        return erMetrikkerSendtForKilde(orgnr, sendteMetrikker, kilde);
     }
 };
 
 export const iaTjenesterMetrikkerErSendtForBedrift = (
     orgnr: string | undefined,
     sendteMetrikker: [TjenestePerOrgnr],
-    kilde: string = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
+    kilde: IaTjenesteKilde = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
 ): [TjenestePerOrgnr] => {
     if (
         orgnr !== undefined &&
-        !sendteMetrikker.some(
-            (tjenestePerOrgnr) =>
-                tjenestePerOrgnr.orgnr === orgnr && tjenestePerOrgnr.kilde === kilde
-        )
+        !erMetrikkerSendtForKilde(orgnr,sendteMetrikker,kilde)
     ) {
         sendteMetrikker.push({ orgnr: orgnr, kilde: kilde });
     }
@@ -95,7 +99,7 @@ export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
 
 export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = (
     kilde: IaTjenesteKilde = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK,
-    sendMetrikker:boolean=true
+    sendMetrikker: boolean = true
 ) => {
     const context = useContext(iaTjenesterMetrikkerContext);
     const orgnr = useOrgnr();
@@ -107,8 +111,8 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = (
                 orgnr ?? '',
                 context.bedrifterSomHarSendtMetrikker,
                 kilde
-            )
-          &&sendMetrikker
+            ) &&
+            sendMetrikker
         ) {
             sendIaTjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
                 if (isSent) {
@@ -122,5 +126,5 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = (
                 }
             });
         }
-    }, [orgnr, context, kilde,sendMetrikker]);
+    }, [orgnr, context, kilde, sendMetrikker]);
 };
