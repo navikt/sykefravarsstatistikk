@@ -48,7 +48,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     antallKvartalerVirksomhet,
     antallKvartalerBransje,
     sammenligningsType,
-    bransje,
     harBransje,
     defaultÅpen,
     className,
@@ -133,7 +132,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
         </>
     );
 
-    const tipsliste: Tips[] = getTips(sammenligningsType, sykefraværVurdering, bransje);
+    const tipsliste: Tips[] = getTips(sammenligningsType);
     const harTips = tipsliste.length > 0;
 
     const vurderingstekst = getVurderingstekst(sykefraværVurdering, sammenligningsType, harBransje);

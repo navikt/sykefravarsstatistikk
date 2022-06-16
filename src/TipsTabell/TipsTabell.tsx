@@ -41,7 +41,9 @@ export const TipsTabell: FunctionComponent = () => {
             >
                 <option value={undefined}>Ingen bransje</option>
                 <option value={ArbeidsmiljøportalenBransje.BARNEHAGER}>BARNEHAGER</option>
-                <option value={ArbeidsmiljøportalenBransje.NÆRINGSMIDDELINDUSTRI}>NÆRINGSMIDDELINDUSTRI</option>
+                <option value={ArbeidsmiljøportalenBransje.NÆRINGSMIDDELINDUSTRI}>
+                    NÆRINGSMIDDELINDUSTRI
+                </option>
                 <option value={ArbeidsmiljøportalenBransje.SYKEHUS}>SYKEHUS</option>
                 <option value={ArbeidsmiljøportalenBransje.SYKEHJEM}>SYKEHJEM</option>
                 <option value={ArbeidsmiljøportalenBransje.TRANSPORT}>TRANSPORT</option>
@@ -77,23 +79,12 @@ export const TipsTabell: FunctionComponent = () => {
                             <td>
                                 <Speedometer resultat={vurdering} />
                             </td>
-                            <td>
-                                {mapTilTipsliste(
-                                    getTips(SammenligningsType.TOTALT, vurdering, bransje)
-                                )}
-                            </td>
-                            <td>
-                                {mapTilTipsliste(
-                                    getTips(SammenligningsType.KORTTID, vurdering, bransje)
-                                )}
-                            </td>
-                            <td>
-                                {mapTilTipsliste(
-                                    getTips(SammenligningsType.LANGTID, vurdering, bransje)
-                                )}
-                            </td>
+                            <td>{mapTilTipsliste(getTips(SammenligningsType.TOTALT))}</td>
+                            <td>{mapTilTipsliste(getTips(SammenligningsType.KORTTID))}</td>
+                            <td>{mapTilTipsliste(getTips(SammenligningsType.LANGTID))}</td>
                         </tr>
                     ))}
+                    ,{' '}
                 </tbody>
             </table>
         </div>
