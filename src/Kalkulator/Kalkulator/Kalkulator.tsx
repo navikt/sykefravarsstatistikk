@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
@@ -9,12 +9,9 @@ import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
 import {
-    erIaTjenesterMetrikkerSendtForBedrift, IaTjenesteKilde,
-    iaTjenesterMetrikkerErSendtForBedrift,
-    useSendIaTjenesteMetrikkEvent
-} from "../../metrikker/iatjenester";
-import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
-import { useOrgnr } from '../../hooks/useOrgnr';
+    IaTjenesteKilde,
+    useSendIaTjenesteMetrikkMottattVedSidevisningEvent,
+} from '../../metrikker/iatjenester';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -24,34 +21,17 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     const [kalkulatorvariant, setKalkulatorvariant] = useState<Kalkulatorvariant>(
         Kalkulatorvariant.Prosent
     );
-    const [sendKalkulatorMetrikker, setSendKalkulatorMetrikker]=useState<boolean>(false);
+    const [sendKalkulatorMetrikker, setSendKalkulatorMetrikker] = useState<boolean>(false);
 
-    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkEvent(IaTjenesteKilde.KALKULATOR);
-    const orgnr = useOrgnr();
-    const context = useContext(iaTjenesterMetrikkerContext);
+    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkMottattVedSidevisningEvent(
+        IaTjenesteKilde.KALKULATOR,
+        sendKalkulatorMetrikker
+    );
 
-    useEffect(()=>{if(sendKalkulatorMetrikker){
-        if (
-          !erIaTjenesterMetrikkerSendtForBedrift(
-            orgnr,
-            context.bedrifterSomHarSendtMetrikker,
-            IaTjenesteKilde.KALKULATOR
-          )
-        )
-            sendIaTjensterKalkulatorMetrikker().then((isSent) => {
-                if (isSent) {
-                    context.setBedrifterSomHarSendtMetrikker(
-                      iaTjenesterMetrikkerErSendtForBedrift(
-                        orgnr,
-                        context.bedrifterSomHarSendtMetrikker,
-                        IaTjenesteKilde.KALKULATOR
-                      )
-                    );
-                }
-            });
-    }},[
-      sendKalkulatorMetrikker,orgnr,context,sendIaTjensterKalkulatorMetrikker
-    ])
+    useEffect(() => {
+        return sendIaTjensterKalkulatorMetrikker;
+    }, [sendIaTjensterKalkulatorMetrikker, sendKalkulatorMetrikker]);
+
     useEffect(() => {
         sendSidevisningEvent();
         scrollToBanner();

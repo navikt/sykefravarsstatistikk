@@ -1,18 +1,12 @@
-import React, { FunctionComponent, ReactElement, useContext, useEffect, useState } from 'react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { Input } from 'nav-frontend-skjema';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import NavFrontendSpinner from 'nav-frontend-spinner';
-import './Kalkulatorrad.less';
-import { sendInputfeltUtfyltEvent } from '../../../amplitude/events';
-import classNames from 'classnames';
-import {
-    erIaTjenesterMetrikkerSendtForBedrift, IaTjenesteKilde,
-    iaTjenesterMetrikkerErSendtForBedrift,
-    useSendIaTjenesteMetrikkEvent
-} from "../../../metrikker/iatjenester";
-import { useOrgnr } from '../../../hooks/useOrgnr';
-import { iaTjenesterMetrikkerContext } from '../../../metrikker/IaTjenesterMetrikkerContext';
+import React, { FunctionComponent, ReactElement, useEffect, useState } from "react";
+import { Element, Normaltekst } from "nav-frontend-typografi";
+import { Input } from "nav-frontend-skjema";
+import Hjelpetekst from "nav-frontend-hjelpetekst";
+import NavFrontendSpinner from "nav-frontend-spinner";
+import "./Kalkulatorrad.less";
+import { sendInputfeltUtfyltEvent } from "../../../amplitude/events";
+import classNames from "classnames";
+import { IaTjenesteKilde, useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from "../../../metrikker/iatjenester";
 
 interface Props {
     onChange: (event: any) => void;
@@ -28,27 +22,16 @@ interface Props {
 export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
     const labelId = props.name + '-label';
     const [sendKalkulatorMetrikker, setSendKalkulatorMetrikker] = useState<boolean>(false);
-    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkEvent(IaTjenesteKilde.KALKULATOR);
-    const orgnr = useOrgnr();
-    const context = useContext(iaTjenesterMetrikkerContext);
+
+    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkMottattVedSidevisningEvent(
+      IaTjenesteKilde.KALKULATOR,
+      sendKalkulatorMetrikker
+    );
+
     useEffect(() => {
-        if (sendKalkulatorMetrikker) {
-            if (
-                !erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker,IaTjenesteKilde.KALKULATOR)
-            )
-                sendIaTjensterKalkulatorMetrikker().then((isSent) => {
-                    if (isSent) {
-                        context.setBedrifterSomHarSendtMetrikker(
-                            iaTjenesterMetrikkerErSendtForBedrift(
-                                orgnr,
-                                context.bedrifterSomHarSendtMetrikker,
-                              IaTjenesteKilde.KALKULATOR
-                            )
-                        );
-                    }
-                });
-        }
-    }, [sendKalkulatorMetrikker, orgnr,context,sendIaTjensterKalkulatorMetrikker]);
+        return sendIaTjensterKalkulatorMetrikker;
+    }, [sendIaTjensterKalkulatorMetrikker, sendKalkulatorMetrikker]);
+
     return (
         <div className="kalkulatorrad">
             <Element id={labelId}>{props.label}</Element>
