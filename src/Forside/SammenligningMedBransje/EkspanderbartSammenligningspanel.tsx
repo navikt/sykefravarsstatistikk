@@ -150,17 +150,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
         }
     };
 
-    const getLesMerTekst = (): string => {
-        switch (sammenligningsType) {
-            case SammenligningsType.TOTALT:
-                return 'Les mer om tallene og få tips til hva du kan gjøre';
-            case SammenligningsType.KORTTID:
-            case SammenligningsType.GRADERT:
-            case SammenligningsType.LANGTID:
-                return 'Les mer om tallene';
-        }
-    };
-
     return (
         <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
             <EkspanderbartpanelBase
@@ -199,7 +188,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                                         (erÅpen ? 'åpen' : 'lukket')
                                 )}
                             >
-                                {getLesMerTekst()}
+                                Les mer om tallene
                             </Normaltekst>
                         </div>
                     </div>
