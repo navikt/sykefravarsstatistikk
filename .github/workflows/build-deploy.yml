@@ -58,7 +58,7 @@ jobs:
 
     deploy-to-labs-gcp:
         name: Deploy to labs-gcp
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/innføre-csp'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/fjerne_innganger'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
