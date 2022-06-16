@@ -18,7 +18,6 @@ import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
 import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { OmGradertSykmelding } from '../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
-import { PATH_KALKULATOR } from '../../konstanter';
 import {
     erIaTjenesterMetrikkerSendtForBedrift,
     iaTjenesterMetrikkerErSendtForBedrift,
@@ -28,7 +27,6 @@ import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikke
 import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 import { useOrgnr } from '../../hooks/useOrgnr';
 import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from '../../amplitude/events';
-import InternLenke from '../../felleskomponenter/InternLenke/InternLenke';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -93,9 +91,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     <Normaltekst className="ekspanderbart-sammenligningspanel__utregningsforklring-tekst">
                         Vi teller antall fraværsdager med bruk av gradert sykmelding. Så beregner vi
                         hvor stor andel disse utgjør av alle legemeldte fraværsdager i din
-                        virksomhet. Du kan finne antallet legemeldte fraværsdager for din virksomhet
-                        under tapte dagsverk i{' '}
-                        <InternLenke pathname={PATH_KALKULATOR}>kostnadskalkulatoren.</InternLenke>
+                        virksomhet.
                     </Normaltekst>
                     <LesMerPanel
                         åpneLabel={'Se eksempel'}

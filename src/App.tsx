@@ -6,7 +6,6 @@ import { RestRessurs, RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
-import KalkulatorPanel from './Forside/Kalkulatorpanel/KalkulatorPanel';
 import Historikkpanel from './Forside/Historikkpanel/Historikkpanel';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
@@ -174,7 +173,6 @@ export const AppContent = ({
                                     restVirksomhetsdata={restvirksomhetsdata}
                                 />
                             </Sammenligningspanel>
-                            <KalkulatorPanel liten />
                             <Historikkpanel />
                             <Kurskalender restKursliste={restKursliste} liten={true} />
                             {samtalestøttePodlet}
