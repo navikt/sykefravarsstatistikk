@@ -226,34 +226,6 @@ it('sidevisning event kalles med riktige user properties', async () => {
     );
 });
 
-it('Visning av kalkulatoren sender sidevisning-event', async () => {
-    act(() => {
-        render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
-    });
-
-    const knappTilKalkis = await screen.findByRole('link', {
-        name: /Gå til kostnadskalkulatoren/i,
-    });
-    act(() => {
-        userEvent.click(knappTilKalkis);
-    });
-    expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
-        'navigere',
-        expect.objectContaining({
-            app: 'sykefravarsstatistikk',
-            destinasjon: '/kalkulator',
-            lenketekst: 'Gå til kostnadskalkulatoren',
-        })
-    );
-
-    expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
-        'sidevisning',
-        expect.objectContaining({
-            app: 'sykefravarsstatistikk',
-        })
-    );
-});
-
 // TODO: Disse to testene kjører grønt når de kjøres enkeltvis, men rødt når de kjører sammen med de andre. Det må fikses! Trolig er det noe med BrowserRouter som beholdes mellom testene.
 // it('Endring av inputfelt i kalkulatoren trigger event i Amplitude', async () => {
 //     render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
