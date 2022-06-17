@@ -54,7 +54,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
 }) => {
     const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
     const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
-    //const [sendKalkulatorMetrikker, setSendKalkulatorMetrikker] = useState<boolean>(false);
 
     const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkMottattVedSidevisningEvent(
         IaTjenesteKilde.KALKULATOR,

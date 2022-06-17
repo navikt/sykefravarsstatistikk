@@ -25,15 +25,11 @@ const erMetrikkerSendtForKilde = (
 };
 
 export const erIaTjenesterMetrikkerSendtForBedrift = (
-    orgnr: string | undefined,
+    orgnr: string,
     sendteMetrikker: [TjenestePerOrgnr],
     kilde: IaTjenesteKilde = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
 ): boolean => {
-    if (orgnr === undefined) {
-        return true;
-    } else {
-        return erMetrikkerSendtForKilde(orgnr, sendteMetrikker, kilde);
-    }
+    return erMetrikkerSendtForKilde(orgnr, sendteMetrikker, kilde);
 };
 
 export const iaTjenesterMetrikkerErSendtForBedrift = (
@@ -41,10 +37,7 @@ export const iaTjenesterMetrikkerErSendtForBedrift = (
     sendteMetrikker: [TjenestePerOrgnr],
     kilde: IaTjenesteKilde = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
 ): [TjenestePerOrgnr] => {
-    if (
-        orgnr !== undefined &&
-        !erMetrikkerSendtForKilde(orgnr,sendteMetrikker,kilde)
-    ) {
+    if (orgnr !== undefined && !erMetrikkerSendtForKilde(orgnr, sendteMetrikker, kilde)) {
         sendteMetrikker.push({ orgnr: orgnr, kilde: kilde });
     }
     return sendteMetrikker;
