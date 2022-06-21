@@ -55,7 +55,7 @@ const mockGetAndLog = (
             console.log(
                 '%c' + url,
                 'color:lightblue;font-weight:bold;',
-                process.env.NODE_ENV === 'test' ? '' : { respons, e }
+                process.env.NODE_ENV === 'test' ? '' : { response }
             );
             return response;
         };

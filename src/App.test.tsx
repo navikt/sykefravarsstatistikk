@@ -10,11 +10,6 @@ import { BASE_PATH } from './konstanter';
 import { BrowserRouter } from 'react-router-dom';
 import { amplitudeMock } from './mocking/amplitude-mock';
 import { mockSykefraværNoEkstradata } from './mocking/use-analytics-test-mocks';
-import { setupFetchSpy } from './mocking/node-fetch-stub';
-
-beforeEach(() => {
-    setupFetchSpy();
-});
 
 // eslint-disable-next-line jest/expect-expect
 it('renders without crashing', async () => {
