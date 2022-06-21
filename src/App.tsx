@@ -17,6 +17,7 @@ import {
     PATH_HISTORIKK,
     PATH_KALKULATOR,
 } from './konstanter';
+import './App.less';
 import { sendSidevisningEvent } from './amplitude/events';
 import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { Forside } from './Forside/Forside';
@@ -173,9 +174,11 @@ export const AppContent = ({
                                     restVirksomhetsdata={restvirksomhetsdata}
                                 />
                             </Sammenligningspanel>
-                            <Historikkpanel />
-                            <Kurskalender restKursliste={restKursliste} liten={true} />
-                            {samtalestøttePodlet}
+                            <div className={'app__lenkepanelWrapper'}>
+                                <Historikkpanel />
+                                <Kurskalender restKursliste={restKursliste} liten={true} />
+                                {samtalestøttePodlet}
+                            </div>
                             <ArbeidsmiljøportalPanel restvirksomhetsdata={restvirksomhetsdata} />
                         </Forside>
                     </InnloggingssideWrapper>
