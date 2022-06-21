@@ -12,10 +12,8 @@ import userEvent from '@testing-library/user-event';
 import { AppContent } from '../App';
 import '@testing-library/jest-dom';
 import { BASE_PATH } from '../konstanter';
-import { setupFetchSpy } from '../mocking/node-fetch-stub';
 
 beforeEach(() => {
-    setupFetchSpy();
     jest.spyOn(amplitudeMock, 'setUserProperties');
     jest.spyOn(amplitudeMock, 'logEvent');
 });

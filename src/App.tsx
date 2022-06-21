@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
+import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import Banner from './Banner/Banner';
 import { Route } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
@@ -23,9 +23,7 @@ import Kalkulator from './Kalkulator/Kalkulator/Kalkulator';
 import { Forside } from './Forside/Forside';
 import { Sammenligningspanel } from './Forside/Sammenligningspanel/Sammenligningspanel';
 import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/EkspanderbarSammenligning';
-import { Kurskalender } from './Forside/Kurskalender/Kurskalender';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
-import { hentRestKurs, RestKursliste } from './api/kurs-api';
 import {
     LegacyBarnehageSammenligningRedirect,
     LegacySammenligningRedirect,
@@ -119,17 +117,6 @@ export const AppContent = ({
     const restSykefraværshistorikk = sykefraværshistorikk;
     const restvirksomhetsdata = virksomhetsdata;
 
-    const [restKursliste, setRestKursliste] = useState<RestKursliste>({
-        status: RestStatus.IkkeLastet,
-    });
-
-    useEffect(() => {
-        const hentOgSetRestKurs = async () => {
-            setRestKursliste(await hentRestKurs());
-        };
-        hentOgSetRestKurs();
-    }, [setRestKursliste]);
-
     const brukerHarIkkeTilgangTilNoenOrganisasjoner =
         restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
 
@@ -176,7 +163,6 @@ export const AppContent = ({
                             </Sammenligningspanel>
                             <div className={'app__lenkepanelWrapper'}>
                                 <Historikkpanel />
-                                <Kurskalender restKursliste={restKursliste} liten={true} />
                                 {samtalestøttePodlet}
                             </div>
                             <ArbeidsmiljøportalPanel restvirksomhetsdata={restvirksomhetsdata} />
