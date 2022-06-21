@@ -10,7 +10,7 @@ import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
 import {
     IaTjenesteKilde,
-    useSendIaTjenesteMetrikkMottattVedSidevisningEvent,
+    useSendIaTjenesteMetrikkMottattEvent,
 } from '../../metrikker/iatjenester';
 
 interface Props {
@@ -23,7 +23,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     );
     const [sendKalkulatorMetrikker, setSendKalkulatorMetrikker] = useState<boolean>(false);
 
-    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkMottattVedSidevisningEvent(
+    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkMottattEvent(
         IaTjenesteKilde.KALKULATOR,
         sendKalkulatorMetrikker
     );

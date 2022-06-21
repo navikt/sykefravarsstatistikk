@@ -11,7 +11,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
-import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../metrikker/iatjenester';
+import { useSendIaTjenesteMetrikkMottattEvent } from '../metrikker/iatjenester';
 import { sendSidevisningEvent } from '../amplitude/events';
 
 interface Props {
@@ -25,7 +25,7 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
         sendSidevisningEvent();
     }, []);
 
-    useSendIaTjenesteMetrikkMottattVedSidevisningEvent();
+    useSendIaTjenesteMetrikkMottattEvent();
 
     const { restSykefraværsstatistikk } = props;
     const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');

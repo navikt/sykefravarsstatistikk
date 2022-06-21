@@ -90,7 +90,7 @@ export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
     }
 };
 
-export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = (
+export const useSendIaTjenesteMetrikkMottattEvent = (
     kilde: IaTjenesteKilde = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK,
     sendMetrikker: boolean = true
 ) => {
@@ -116,6 +116,7 @@ export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = (
                             kilde
                         )
                     );
+                    console.log("data ersendt",kilde)
                 }
             });
         }

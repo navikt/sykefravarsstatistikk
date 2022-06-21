@@ -6,7 +6,7 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import "./Kalkulatorrad.less";
 import { sendInputfeltUtfyltEvent } from "../../../amplitude/events";
 import classNames from "classnames";
-import { IaTjenesteKilde, useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from "../../../metrikker/iatjenester";
+import { IaTjenesteKilde, useSendIaTjenesteMetrikkMottattEvent } from "../../../metrikker/iatjenester";
 
 interface Props {
     onChange: (event: any) => void;
@@ -23,7 +23,7 @@ export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
     const labelId = props.name + '-label';
     const [sendKalkulatorMetrikker, setSendKalkulatorMetrikker] = useState<boolean>(false);
 
-    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkMottattVedSidevisningEvent(
+    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkMottattEvent(
       IaTjenesteKilde.KALKULATOR,
       sendKalkulatorMetrikker
     );

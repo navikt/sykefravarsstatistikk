@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, useEffect, useState } from 'react';
+import React, { FunctionComponent, ReactElement, useState } from 'react';
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
@@ -19,10 +19,7 @@ import { Kakediagram } from '../Kakediagram/Kakediagram';
 import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { OmGradertSykmelding } from '../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
 import { PATH_KALKULATOR } from '../../konstanter';
-import {
-    IaTjenesteKilde,
-    useSendIaTjenesteMetrikkMottattVedSidevisningEvent,
-} from '../../metrikker/iatjenester';
+import { IaTjenesteKilde, useSendIaTjenesteMetrikkMottattEvent } from '../../metrikker/iatjenester';
 import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from '../../amplitude/events';
 import InternLenke from '../../felleskomponenter/InternLenke/InternLenke';
@@ -55,14 +52,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
     const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
 
-    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkMottattVedSidevisningEvent(
-        IaTjenesteKilde.KALKULATOR,
-        erÅpen
-    );
-
-    useEffect(() => {
-        return sendIaTjensterKalkulatorMetrikker;
-    }, [sendIaTjensterKalkulatorMetrikker, erÅpen]);
+    useSendIaTjenesteMetrikkMottattEvent(IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK, erÅpen);
 
     const visningAvProsentForBransje: number | null | undefined =
         sykefraværVurdering === SykefraværVurdering.FEIL ? null : sykefraværBransje;
