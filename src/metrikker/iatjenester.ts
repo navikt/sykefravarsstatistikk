@@ -1,7 +1,5 @@
-import { useContext, useEffect } from 'react';
 import { tilIsoDatoMedUtcTimezoneUtenMillis } from '../utils/app-utils';
-import { iaTjenesterMetrikkerContext, TjenestePerOrgnr } from './IaTjenesterMetrikkerContext';
-import { useOrgnr } from '../hooks/useOrgnr';
+import { TjenestePerOrgnr } from './IaTjenesterMetrikkerContext';
 
 interface IaTjenesteMetrikk {
     orgnr: String;
@@ -90,35 +88,29 @@ export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
     }
 };
 
-export const useSendIaTjenesteMetrikkMottattEvent = (
-    kilde: IaTjenesteKilde = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK,
-    sendMetrikker: boolean = true
+export const SendIaTjenesteMetrikkMottattEvent = (
+    orgnr: string | undefined,
+    context: any,
+    kilde: IaTjenesteKilde = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
 ) => {
-    const context = useContext(iaTjenesterMetrikkerContext);
-    const orgnr = useOrgnr();
-
-    useEffect(() => {
-        const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr, kilde);
-        if (
-            !erIaTjenesterMetrikkerSendtForBedrift(
-                orgnr ?? '',
-                context.bedrifterSomHarSendtMetrikker,
-                kilde
-            ) &&
-            sendMetrikker
-        ) {
-            sendIaTjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
-                if (isSent) {
-                    context.setBedrifterSomHarSendtMetrikker(
-                        iaTjenesterMetrikkerErSendtForBedrift(
-                            orgnr,
-                            context.bedrifterSomHarSendtMetrikker,
-                            kilde
-                        )
-                    );
-                    console.log("data ersendt",kilde)
-                }
-            });
-        }
-    }, [orgnr, context, kilde, sendMetrikker]);
+    const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr, kilde);
+    if (
+        !erIaTjenesterMetrikkerSendtForBedrift(
+            orgnr ?? '',
+            context.bedrifterSomHarSendtMetrikker,
+            kilde
+        )
+    ) {
+        sendIaTjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
+            if (isSent) {
+                context.setBedrifterSomHarSendtMetrikker(
+                    iaTjenesterMetrikkerErSendtForBedrift(
+                        orgnr,
+                        context.bedrifterSomHarSendtMetrikker,
+                        kilde
+                    )
+                );
+            }
+        });
+    }
 };

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './Kalkulator.less';
 import { scrollToBanner } from '../../utils/scrollUtils';
@@ -10,8 +10,10 @@ import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
 import {
     IaTjenesteKilde,
-    useSendIaTjenesteMetrikkMottattEvent,
+    SendIaTjenesteMetrikkMottattEvent,
 } from '../../metrikker/iatjenester';
+import { useOrgnr } from '../../hooks/useOrgnr';
+import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
 
 interface Props {
     restSykefraværshistorikk: RestSykefraværshistorikk;
@@ -21,16 +23,8 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
     const [kalkulatorvariant, setKalkulatorvariant] = useState<Kalkulatorvariant>(
         Kalkulatorvariant.Prosent
     );
-    const [sendKalkulatorMetrikker, setSendKalkulatorMetrikker] = useState<boolean>(false);
-
-    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkMottattEvent(
-        IaTjenesteKilde.KALKULATOR,
-        sendKalkulatorMetrikker
-    );
-
-    useEffect(() => {
-        return sendIaTjensterKalkulatorMetrikker;
-    }, [sendIaTjensterKalkulatorMetrikker, sendKalkulatorMetrikker]);
+    const orgnr = useOrgnr();
+    const context = useContext(iaTjenesterMetrikkerContext);
 
     useEffect(() => {
         sendSidevisningEvent();
@@ -58,7 +52,11 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                                 onClick={() => {
                                     setKalkulatorvariant(Kalkulatorvariant.Prosent);
                                     sendKnappEvent('Prosent');
-                                    setSendKalkulatorMetrikker(true);
+                                    SendIaTjenesteMetrikkMottattEvent(
+                                        orgnr,
+                                        context,
+                                        IaTjenesteKilde.KALKULATOR
+                                    );
                                 }}
                             >
                                 Prosent
@@ -68,7 +66,11 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                                 onClick={() => {
                                     setKalkulatorvariant(Kalkulatorvariant.Dagsverk);
                                     sendKnappEvent('Dagsverk');
-                                    setSendKalkulatorMetrikker(true);
+                                    SendIaTjenesteMetrikkMottattEvent(
+                                        orgnr,
+                                        context,
+                                        IaTjenesteKilde.KALKULATOR
+                                    );
                                 }}
                             >
                                 Dagsverk

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, useEffect, useState } from "react";
+import React, { FunctionComponent, ReactElement, useContext } from "react";
 import { Element, Normaltekst } from "nav-frontend-typografi";
 import { Input } from "nav-frontend-skjema";
 import Hjelpetekst from "nav-frontend-hjelpetekst";
@@ -6,7 +6,9 @@ import NavFrontendSpinner from "nav-frontend-spinner";
 import "./Kalkulatorrad.less";
 import { sendInputfeltUtfyltEvent } from "../../../amplitude/events";
 import classNames from "classnames";
-import { IaTjenesteKilde, useSendIaTjenesteMetrikkMottattEvent } from "../../../metrikker/iatjenester";
+import { IaTjenesteKilde, SendIaTjenesteMetrikkMottattEvent } from "../../../metrikker/iatjenester";
+import { iaTjenesterMetrikkerContext } from "../../../metrikker/IaTjenesterMetrikkerContext";
+import { useOrgnr } from "../../../hooks/useOrgnr";
 
 interface Props {
     onChange: (event: any) => void;
@@ -21,16 +23,14 @@ interface Props {
 
 export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
     const labelId = props.name + '-label';
-    const [sendKalkulatorMetrikker, setSendKalkulatorMetrikker] = useState<boolean>(false);
+    const context = useContext(iaTjenesterMetrikkerContext);
+    const orgnr = useOrgnr();
 
-    const sendIaTjensterKalkulatorMetrikker = useSendIaTjenesteMetrikkMottattEvent(
-      IaTjenesteKilde.KALKULATOR,
-      sendKalkulatorMetrikker
-    );
-
-    useEffect(() => {
-        return sendIaTjensterKalkulatorMetrikker;
-    }, [sendIaTjensterKalkulatorMetrikker, sendKalkulatorMetrikker]);
+    const onChangeEventHandler = (event: any) => {
+        props.onChange(event);
+        sendInputfeltUtfyltEvent(props.label, props.name);
+        SendIaTjenesteMetrikkMottattEvent(orgnr, context, IaTjenesteKilde.KALKULATOR);
+    };
 
     return (
         <div className="kalkulatorrad">
@@ -47,11 +47,7 @@ export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
             >
                 <Input
                     label=""
-                    onChange={(event: any) => {
-                        props.onChange(event);
-                        sendInputfeltUtfyltEvent(props.label, props.name);
-                        setSendKalkulatorMetrikker(true);
-                    }}
+                    onChange={onChangeEventHandler}
                     value={props.value || ''}
                     type="number"
                     className="kalkulatorrad__input"
