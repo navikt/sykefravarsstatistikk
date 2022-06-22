@@ -22,7 +22,6 @@ import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from '../../amplitude/events';
 import { useOrgnr } from '../../hooks/useOrgnr';
 import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
-import './EkspanderbartSammenligningspanel.less';
 import { sendIaTjenesteMetrikkMottattEvent } from '../../metrikker/iatjenester';
 
 interface Props {
