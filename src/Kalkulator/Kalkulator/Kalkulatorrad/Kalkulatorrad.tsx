@@ -1,11 +1,14 @@
-import React, { FunctionComponent, ReactElement } from 'react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { Input } from 'nav-frontend-skjema';
-import Hjelpetekst from 'nav-frontend-hjelpetekst';
-import NavFrontendSpinner from 'nav-frontend-spinner';
-import './Kalkulatorrad.less';
-import { sendInputfeltUtfyltEvent } from '../../../amplitude/events';
-import classNames from 'classnames';
+import React, { FunctionComponent, ReactElement, useContext } from "react";
+import { Element, Normaltekst } from "nav-frontend-typografi";
+import { Input } from "nav-frontend-skjema";
+import Hjelpetekst from "nav-frontend-hjelpetekst";
+import NavFrontendSpinner from "nav-frontend-spinner";
+import "./Kalkulatorrad.less";
+import { sendInputfeltUtfyltEvent } from "../../../amplitude/events";
+import classNames from "classnames";
+import { IaTjenesteKilde, SendIaTjenesteMetrikkMottattEvent } from "../../../metrikker/iatjenester";
+import { iaTjenesterMetrikkerContext } from "../../../metrikker/IaTjenesterMetrikkerContext";
+import { useOrgnr } from "../../../hooks/useOrgnr";
 
 interface Props {
     onChange: (event: any) => void;
@@ -20,6 +23,14 @@ interface Props {
 
 export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
     const labelId = props.name + '-label';
+    const context = useContext(iaTjenesterMetrikkerContext);
+    const orgnr = useOrgnr();
+
+    const onChangeEventHandler = (event: any) => {
+        props.onChange(event);
+        sendInputfeltUtfyltEvent(props.label, props.name);
+        SendIaTjenesteMetrikkMottattEvent(orgnr, context, IaTjenesteKilde.KALKULATOR);
+    };
 
     return (
         <div className="kalkulatorrad">
@@ -28,16 +39,15 @@ export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
                 className={
                     props.hjelpetekst
                         ? 'kalkulatorrad__input-hjelpetekst-wrapper'
-                        : classNames('kalkulatorrad__input-hjelpetekst-wrapper',
-                      'kalkulatorrad__input-no-hjelpetekst-wrapper')
+                        : classNames(
+                              'kalkulatorrad__input-hjelpetekst-wrapper',
+                              'kalkulatorrad__input-no-hjelpetekst-wrapper'
+                          )
                 }
             >
                 <Input
                     label=""
-                    onChange={(event: any) => {
-                        props.onChange(event);
-                        sendInputfeltUtfyltEvent(props.label, props.name);
-                    }}
+                    onChange={onChangeEventHandler}
                     value={props.value || ''}
                     type="number"
                     className="kalkulatorrad__input"

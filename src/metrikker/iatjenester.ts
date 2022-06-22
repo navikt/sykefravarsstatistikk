@@ -1,7 +1,5 @@
-import { useContext, useEffect } from 'react';
 import { tilIsoDatoMedUtcTimezoneUtenMillis } from '../utils/app-utils';
-import { iaTjenesterMetrikkerContext } from './IaTjenesterMetrikkerContext';
-import { useOrgnr } from '../hooks/useOrgnr';
+import { TjenestePerOrgnr } from './IaTjenesterMetrikkerContext';
 
 interface IaTjenesteMetrikk {
     orgnr: String;
@@ -10,24 +8,35 @@ interface IaTjenesteMetrikk {
     kilde: String;
     tjenesteMottakkelsesdato: String;
 }
+export enum IaTjenesteKilde {
+    SYKEFRAVÆRSSTATISTIKK = 'SYKEFRAVÆRSSTATISTIKK',
+    KALKULATOR = 'KALKULATOR',
+}
+const erMetrikkerSendtForKilde = (
+    orgnr: string | undefined,
+    sendteMetrikker: [TjenestePerOrgnr],
+    kilde: IaTjenesteKilde
+) => {
+    return sendteMetrikker.some(
+        (tjenestePerOrgnr) => tjenestePerOrgnr.orgnr === orgnr && tjenestePerOrgnr.kilde === kilde
+    );
+};
 
 export const erIaTjenesterMetrikkerSendtForBedrift = (
-    orgnr: string | undefined,
-    sendteMetrikker: [string]
+    orgnr: string,
+    sendteMetrikker: [TjenestePerOrgnr],
+    kilde: IaTjenesteKilde = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
 ): boolean => {
-    if (orgnr === undefined) {
-        return true;
-    } else {
-        return sendteMetrikker.includes(orgnr);
-    }
+    return erMetrikkerSendtForKilde(orgnr, sendteMetrikker, kilde);
 };
 
 export const iaTjenesterMetrikkerErSendtForBedrift = (
     orgnr: string | undefined,
-    sendteMetrikker: [string]
-): [string] => {
-    if (orgnr !== undefined) {
-        sendteMetrikker.push(orgnr);
+    sendteMetrikker: [TjenestePerOrgnr],
+    kilde: IaTjenesteKilde = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
+): [TjenestePerOrgnr] => {
+    if (orgnr !== undefined && !erMetrikkerSendtForKilde(orgnr, sendteMetrikker, kilde)) {
+        sendteMetrikker.push({ orgnr: orgnr, kilde: kilde });
     }
     return sendteMetrikker;
 };
@@ -45,23 +54,19 @@ const getIaTjenesterMetrikkerUrl = () => {
 
 const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
 
-function byggIaTjenesteMottattMetrikk(nåværendeOrgnr: string | undefined) {
+function byggIaTjenesteMottattMetrikk(
+    nåværendeOrgnr: string | undefined,
+    kilde: string = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
+) {
     const iaTjenesteMetrikk: IaTjenesteMetrikk = {
         orgnr: nåværendeOrgnr ?? '',
-        kilde: 'SYKEFRAVÆRSSTATISTIKK',
+        kilde: kilde,
         type: 'DIGITAL_IA_TJENESTE',
         tjenesteMottakkelsesdato: tilIsoDatoMedUtcTimezoneUtenMillis(new Date()),
         altinnRettighet: 'SYKEFRAVÆRSSTATISTIKK_FOR_VIRKSOMHETER',
     };
     return iaTjenesteMetrikk;
 }
-
-export const useSendIaTjenesteMetrikkEvent = (): (() => Promise<boolean>) => {
-    const nåværendeOrgnr = useOrgnr();
-    const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(nåværendeOrgnr);
-
-    return () => sendIaTjenesteMetrikk(iaTjenesteMetrikk);
-};
 
 export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
     const settings = {
@@ -83,28 +88,29 @@ export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
     }
 };
 
-export const useSendIaTjenesteMetrikkMottattVedSidevisningEvent = () => {
-    const context = useContext(iaTjenesterMetrikkerContext);
-    const orgnr = useOrgnr();
-
-    useEffect(() => {
-        const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr);
-        if (
-            !erIaTjenesterMetrikkerSendtForBedrift(
-                orgnr ?? '',
-                context.bedrifterSomHarSendtMetrikker
-            )
-        ) {
-            sendIaTjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
-                if (isSent) {
-                    context.setBedrifterSomHarSendtMetrikker(
-                        iaTjenesterMetrikkerErSendtForBedrift(
-                            orgnr,
-                            context.bedrifterSomHarSendtMetrikker
-                        )
-                    );
-                }
-            });
-        }
-    }, [orgnr, context]);
+export const SendIaTjenesteMetrikkMottattEvent = (
+    orgnr: string | undefined,
+    context: any,
+    kilde: IaTjenesteKilde = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
+) => {
+    const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr, kilde);
+    if (
+        !erIaTjenesterMetrikkerSendtForBedrift(
+            orgnr ?? '',
+            context.bedrifterSomHarSendtMetrikker,
+            kilde
+        )
+    ) {
+        sendIaTjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
+            if (isSent) {
+                context.setBedrifterSomHarSendtMetrikker(
+                    iaTjenesterMetrikkerErSendtForBedrift(
+                        orgnr,
+                        context.bedrifterSomHarSendtMetrikker,
+                        kilde
+                    )
+                );
+            }
+        });
+    }
 };
