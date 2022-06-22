@@ -11,7 +11,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
-import { SendIaTjenesteMetrikkMottattEvent } from '../metrikker/iatjenester';
+import { sendIaTjenesteMetrikkMottattEvent } from '../metrikker/iatjenester';
 import { sendSidevisningEvent } from '../amplitude/events';
 import { useOrgnr } from '../hooks/useOrgnr';
 import { iaTjenesterMetrikkerContext } from '../metrikker/IaTjenesterMetrikkerContext';
@@ -34,7 +34,7 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
 
     let innhold;
 
-    SendIaTjenesteMetrikkMottattEvent(orgnr, context);
+    sendIaTjenesteMetrikkMottattEvent(orgnr, context);
 
     if (
         restSykefraværsstatistikk.status === RestStatus.LasterInn ||

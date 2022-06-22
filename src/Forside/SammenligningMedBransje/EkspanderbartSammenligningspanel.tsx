@@ -1,23 +1,29 @@
-import React, { FunctionComponent, ReactElement, useContext, useState } from "react";
-import { Ingress, Normaltekst, Systemtittel } from "nav-frontend-typografi";
-import "./EkspanderbartSammenligningspanel.less";
-import { Speedometer, SykefraværVurdering } from "../Speedometer/Speedometer";
-import { getForklaringAvVurdering, getVurderingstekst, SammenligningsType } from "../vurderingstekster";
-import { EkspanderbartpanelBase } from "nav-frontend-ekspanderbartpanel";
-import { ForklaringAvPeriode } from "./ForklaringAvPeriode";
-import { DetaljertVisningSykefravær } from "./DetaljertVisningSykefravær";
-import { TipsVisning } from "../../felleskomponenter/tips/TipsVisning";
-import { getTips, Tips } from "../../felleskomponenter/tips/tips";
-import lyspære from "./lyspære-liten.svg";
-import classNames from "classnames";
-import { OppChevron } from "nav-frontend-chevron";
-import { Kakediagram } from "../Kakediagram/Kakediagram";
-import LesMerPanel from "../../felleskomponenter/LesMerPanel/LesMerPanel";
-import { OmGradertSykmelding } from "../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding";
-import { ArbeidsmiljøportalenBransje } from "../../utils/bransje-utils";
-import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from "../../amplitude/events";
-import { useOrgnr } from "../../hooks/useOrgnr";
-import { iaTjenesterMetrikkerContext } from "../../metrikker/IaTjenesterMetrikkerContext";
+import React, { FunctionComponent, ReactElement, useContext, useState } from 'react';
+import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import './EkspanderbartSammenligningspanel.less';
+import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
+import {
+    getForklaringAvVurdering,
+    getVurderingstekst,
+    SammenligningsType,
+} from '../vurderingstekster';
+import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
+import { ForklaringAvPeriode } from './ForklaringAvPeriode';
+import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
+import { TipsVisning } from '../../felleskomponenter/tips/TipsVisning';
+import { getTips, Tips } from '../../felleskomponenter/tips/tips';
+import lyspære from './lyspære-liten.svg';
+import classNames from 'classnames';
+import { OppChevron } from 'nav-frontend-chevron';
+import { Kakediagram } from '../Kakediagram/Kakediagram';
+import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
+import { OmGradertSykmelding } from '../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
+import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
+import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from '../../amplitude/events';
+import { useOrgnr } from '../../hooks/useOrgnr';
+import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
+import './EkspanderbartSammenligningspanel.less';
+import { sendIaTjenesteMetrikkMottattEvent } from '../../metrikker/iatjenester';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -129,7 +135,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     setErÅpen(skalPaneletÅpnes);
                     if (skalPaneletÅpnes) {
                         sendPanelEkspanderEvent(sammenligningsType);
-                        SendIaTjenesteMetrikkMottattEvent(orgnr, context);
+                        sendIaTjenesteMetrikkMottattEvent(orgnr, context);
                     } else {
                         sendPanelKollapsEvent(sammenligningsType);
                     }

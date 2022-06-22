@@ -1,14 +1,14 @@
-import React, { FunctionComponent, ReactElement, useContext } from "react";
-import { Element, Normaltekst } from "nav-frontend-typografi";
-import { Input } from "nav-frontend-skjema";
-import Hjelpetekst from "nav-frontend-hjelpetekst";
-import NavFrontendSpinner from "nav-frontend-spinner";
-import "./Kalkulatorrad.less";
-import { sendInputfeltUtfyltEvent } from "../../../amplitude/events";
-import classNames from "classnames";
-import { IaTjenesteKilde, SendIaTjenesteMetrikkMottattEvent } from "../../../metrikker/iatjenester";
-import { iaTjenesterMetrikkerContext } from "../../../metrikker/IaTjenesterMetrikkerContext";
-import { useOrgnr } from "../../../hooks/useOrgnr";
+import React, { FunctionComponent, ReactElement, useContext } from 'react';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Input } from 'nav-frontend-skjema';
+import Hjelpetekst from 'nav-frontend-hjelpetekst';
+import NavFrontendSpinner from 'nav-frontend-spinner';
+import './Kalkulatorrad.less';
+import { sendInputfeltUtfyltEvent } from '../../../amplitude/events';
+import classNames from 'classnames';
+import { IaTjenesteKilde, sendIaTjenesteMetrikkMottattEvent } from '../../../metrikker/iatjenester';
+import { iaTjenesterMetrikkerContext } from '../../../metrikker/IaTjenesterMetrikkerContext';
+import { useOrgnr } from '../../../hooks/useOrgnr';
 
 interface Props {
     onChange: (event: any) => void;
@@ -29,7 +29,7 @@ export const Kalkulatorrad: FunctionComponent<Props> = (props) => {
     const onChangeEventHandler = (event: any) => {
         props.onChange(event);
         sendInputfeltUtfyltEvent(props.label, props.name);
-        SendIaTjenesteMetrikkMottattEvent(orgnr, context, IaTjenesteKilde.KALKULATOR);
+        sendIaTjenesteMetrikkMottattEvent(orgnr, context, IaTjenesteKilde.KALKULATOR);
     };
 
     return (

@@ -8,10 +8,7 @@ import { sendKnappEvent, sendSidevisningEvent } from '../../amplitude/events';
 import { KalkulatorMedDagsverk } from './KalkulatorMedDagsverk';
 import { KalkulatorMedProsent } from './KalkulatorMedProsent';
 import { ToggleKnappPure } from 'nav-frontend-toggle';
-import {
-    IaTjenesteKilde,
-    SendIaTjenesteMetrikkMottattEvent,
-} from '../../metrikker/iatjenester';
+import { IaTjenesteKilde, sendIaTjenesteMetrikkMottattEvent } from '../../metrikker/iatjenester';
 import { useOrgnr } from '../../hooks/useOrgnr';
 import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
 
@@ -52,7 +49,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                                 onClick={() => {
                                     setKalkulatorvariant(Kalkulatorvariant.Prosent);
                                     sendKnappEvent('Prosent');
-                                    SendIaTjenesteMetrikkMottattEvent(
+                                    sendIaTjenesteMetrikkMottattEvent(
                                         orgnr,
                                         context,
                                         IaTjenesteKilde.KALKULATOR
@@ -66,7 +63,7 @@ const Kalkulator: FunctionComponent<Props> = ({ restSykefraværshistorikk }) => 
                                 onClick={() => {
                                     setKalkulatorvariant(Kalkulatorvariant.Dagsverk);
                                     sendKnappEvent('Dagsverk');
-                                    SendIaTjenesteMetrikkMottattEvent(
+                                    sendIaTjenesteMetrikkMottattEvent(
                                         orgnr,
                                         context,
                                         IaTjenesteKilde.KALKULATOR

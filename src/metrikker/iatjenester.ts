@@ -88,7 +88,7 @@ export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
     }
 };
 
-export const SendIaTjenesteMetrikkMottattEvent = (
+export const sendIaTjenesteMetrikkMottattEvent = (
     orgnr: string | undefined,
     context: any,
     kilde: IaTjenesteKilde = IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK
