@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import { ToggleGruppePure } from 'nav-frontend-toggle';
 import Graf from './Graf/Graf';
@@ -11,8 +11,10 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
 import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
-import { useSendIaTjenesteMetrikkMottattVedSidevisningEvent } from '../metrikker/iatjenester';
+import { SendIaTjenesteMetrikkMottattEvent } from '../metrikker/iatjenester';
 import { sendSidevisningEvent } from '../amplitude/events';
+import { useOrgnr } from '../hooks/useOrgnr';
+import { iaTjenesterMetrikkerContext } from '../metrikker/IaTjenesterMetrikkerContext';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -25,12 +27,14 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
         sendSidevisningEvent();
     }, []);
 
-    useSendIaTjenesteMetrikkMottattVedSidevisningEvent();
-
+    const orgnr = useOrgnr();
+    const context = useContext(iaTjenesterMetrikkerContext);
     const { restSykefraværsstatistikk } = props;
     const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
 
     let innhold;
+
+    SendIaTjenesteMetrikkMottattEvent(orgnr, context);
 
     if (
         restSykefraværsstatistikk.status === RestStatus.LasterInn ||

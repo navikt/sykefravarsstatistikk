@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, useContext, useEffect, useState } from 'react';
+import React, { FunctionComponent, ReactElement, useContext, useState } from 'react';
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
@@ -19,16 +19,12 @@ import { Kakediagram } from '../Kakediagram/Kakediagram';
 import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { OmGradertSykmelding } from '../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
 import { PATH_KALKULATOR } from '../../konstanter';
-import {
-    erIaTjenesterMetrikkerSendtForBedrift,
-    iaTjenesterMetrikkerErSendtForBedrift,
-    useSendIaTjenesteMetrikkEvent,
-} from '../../metrikker/iatjenester';
-import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
+import { SendIaTjenesteMetrikkMottattEvent } from '../../metrikker/iatjenester';
 import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
-import { useOrgnr } from '../../hooks/useOrgnr';
 import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from '../../amplitude/events';
 import InternLenke from '../../felleskomponenter/InternLenke/InternLenke';
+import { useOrgnr } from '../../hooks/useOrgnr';
+import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -57,28 +53,8 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
 }) => {
     const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
     const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
-
     const orgnr = useOrgnr();
-    const sendIaTjenesteMetrikkEvent = useSendIaTjenesteMetrikkEvent();
     const context = useContext(iaTjenesterMetrikkerContext);
-
-    useEffect(() => {
-        if (
-            !erIaTjenesterMetrikkerSendtForBedrift(orgnr, context.bedrifterSomHarSendtMetrikker) &&
-            erÅpen
-        ) {
-            sendIaTjenesteMetrikkEvent().then((isSent) => {
-                if (isSent) {
-                    context.setBedrifterSomHarSendtMetrikker(
-                        iaTjenesterMetrikkerErSendtForBedrift(
-                            orgnr,
-                            context.bedrifterSomHarSendtMetrikker
-                        )
-                    );
-                }
-            });
-        }
-    }, [erÅpen, context, orgnr, sendIaTjenesteMetrikkEvent]);
 
     const visningAvProsentForBransje: number | null | undefined =
         sykefraværVurdering === SykefraværVurdering.FEIL ? null : sykefraværBransje;
@@ -174,6 +150,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     setErÅpen(skalPaneletÅpnes);
                     if (skalPaneletÅpnes) {
                         sendPanelEkspanderEvent(sammenligningsType);
+                        SendIaTjenesteMetrikkMottattEvent(orgnr, context);
                     } else {
                         sendPanelKollapsEvent(sammenligningsType);
                     }
