@@ -18,13 +18,11 @@ import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
 import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { OmGradertSykmelding } from '../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
-import { PATH_KALKULATOR } from '../../konstanter';
-import { SendIaTjenesteMetrikkMottattEvent } from '../../metrikker/iatjenester';
 import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from '../../amplitude/events';
-import InternLenke from '../../felleskomponenter/InternLenke/InternLenke';
 import { useOrgnr } from '../../hooks/useOrgnr';
 import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
+import { sendIaTjenesteMetrikkMottattEvent } from '../../metrikker/iatjenester';
 
 interface Props {
     sykefraværVurdering: SykefraværVurdering;
@@ -46,7 +44,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     antallKvartalerVirksomhet,
     antallKvartalerBransje,
     sammenligningsType,
-    bransje,
     harBransje,
     defaultÅpen,
     className,
@@ -69,9 +66,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     <Normaltekst className="ekspanderbart-sammenligningspanel__utregningsforklring-tekst">
                         Vi teller antall fraværsdager med bruk av gradert sykmelding. Så beregner vi
                         hvor stor andel disse utgjør av alle legemeldte fraværsdager i din
-                        virksomhet. Du kan finne antallet legemeldte fraværsdager for din virksomhet
-                        under tapte dagsverk i{' '}
-                        <InternLenke pathname={PATH_KALKULATOR}>kostnadskalkulatoren.</InternLenke>
+                        virksomhet.
                     </Normaltekst>
                     <LesMerPanel
                         åpneLabel={'Se eksempel'}
@@ -113,7 +108,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
         </>
     );
 
-    const tipsliste: Tips[] = getTips(sammenligningsType, sykefraværVurdering, bransje);
+    const tipsliste: Tips[] = getTips(sammenligningsType);
     const harTips = tipsliste.length > 0;
 
     const vurderingstekst = getVurderingstekst(sykefraværVurdering, sammenligningsType, harBransje);
@@ -131,17 +126,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
         }
     };
 
-    const getLesMerTekst = (): string => {
-        switch (sammenligningsType) {
-            case SammenligningsType.TOTALT:
-                return 'Les mer om tallene og få tips til hva du kan gjøre';
-            case SammenligningsType.KORTTID:
-            case SammenligningsType.GRADERT:
-            case SammenligningsType.LANGTID:
-                return 'Les mer om tallene';
-        }
-    };
-
     return (
         <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
             <EkspanderbartpanelBase
@@ -150,7 +134,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                     setErÅpen(skalPaneletÅpnes);
                     if (skalPaneletÅpnes) {
                         sendPanelEkspanderEvent(sammenligningsType);
-                        SendIaTjenesteMetrikkMottattEvent(orgnr, context);
+                        sendIaTjenesteMetrikkMottattEvent(orgnr, context);
                     } else {
                         sendPanelKollapsEvent(sammenligningsType);
                     }
@@ -181,7 +165,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                                         (erÅpen ? 'åpen' : 'lukket')
                                 )}
                             >
-                                {getLesMerTekst()}
+                                Les mer om tallene
                             </Normaltekst>
                         </div>
                     </div>

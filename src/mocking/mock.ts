@@ -13,15 +13,12 @@ import { defaultBedriftsmetrikker } from './virksomhetsdata-mock';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './altinn-mock';
 import { summertSykefraværshistorikkMockUtenData } from './summert-sykefraværshistorikk-mock';
 import { getMiljø } from '../utils/miljøUtils';
-import { kurslisteMock } from './kursliste-mock';
-import { KURSOVERSIKT_API_PATH } from '../api/kurs-api';
 
 const mock = {
     minSideArbeidsgiver: true,
     sykefraværsstatistikkApi: true,
     enhetsregisteret: true,
     featureToggles: true,
-    kursliste: true,
     iatjenester: true,
 };
 
@@ -42,14 +39,24 @@ const mockGetAndLog = (
     if (response instanceof Function) {
         responseFunction = (url: string, opts: MockRequest) => {
             const responseValue = response(url, opts);
-            console.log('%c' + url, 'color:lightblue;font-weight:bold;', process.env.NODE_ENV === 'test' ? '' : {
-                response: responseValue,
-            });
+            console.log(
+                '%c' + url,
+                'color:lightblue;font-weight:bold;',
+                process.env.NODE_ENV === 'test'
+                    ? ''
+                    : {
+                          response: responseValue,
+                      }
+            );
             return responseValue;
         };
     } else {
         responseFunction = (url) => {
-            console.log('%c' + url, 'color:lightblue;font-weight:bold;', process.env.NODE_ENV === 'test' ? '' : { response });
+            console.log(
+                '%c' + url,
+                'color:lightblue;font-weight:bold;',
+                process.env.NODE_ENV === 'test' ? '' : { response }
+            );
             return response;
         };
     }
@@ -147,10 +154,6 @@ if (mock.featureToggles) {
             delay: 1000 * delayfaktor,
         }
     );
-}
-
-if (mock.kursliste) {
-    mockGetAndLog(KURSOVERSIKT_API_PATH, kurslisteMock);
 }
 
 if (mock.iatjenester) {

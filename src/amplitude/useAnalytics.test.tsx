@@ -12,10 +12,8 @@ import userEvent from '@testing-library/user-event';
 import { AppContent } from '../App';
 import '@testing-library/jest-dom';
 import { BASE_PATH } from '../konstanter';
-import { setupFetchSpy } from '../mocking/node-fetch-stub';
 
 beforeEach(() => {
-    setupFetchSpy();
     jest.spyOn(amplitudeMock, 'setUserProperties');
     jest.spyOn(amplitudeMock, 'logEvent');
 });
@@ -226,23 +224,22 @@ it('sidevisning event kalles med riktige user properties', async () => {
     );
 });
 
-it('Visning av kalkulatoren sender sidevisning-event', async () => {
-    act(() => {
+it('Klikk på "Gå til sykefravær over tid" rendrer navigere-event, deretter sidevisning-event', async () => {
+    await waitFor(() => {
         render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
     });
 
-    const knappTilKalkis = await screen.findByRole('link', {
-        name: /Gå til kostnadskalkulatoren/i,
-    });
-    act(() => {
-        userEvent.click(knappTilKalkis);
-    });
+    const knappTilHistorikk = screen.getAllByRole('link', {
+        name: /Gå til sykefravær over tid/i,
+    })[0];
+    userEvent.click(knappTilHistorikk);
+
     expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
         'navigere',
         expect.objectContaining({
             app: 'sykefravarsstatistikk',
-            destinasjon: '/kalkulator',
-            lenketekst: 'Gå til kostnadskalkulatoren',
+            destinasjon: '/historikk',
+            lenketekst: 'Gå til sykefravær over tid',
         })
     );
 
@@ -253,68 +250,6 @@ it('Visning av kalkulatoren sender sidevisning-event', async () => {
         })
     );
 });
-
-// TODO: Disse to testene kjører grønt når de kjøres enkeltvis, men rødt når de kjører sammen med de andre. Det må fikses! Trolig er det noe med BrowserRouter som beholdes mellom testene.
-// it('Endring av inputfelt i kalkulatoren trigger event i Amplitude', async () => {
-//     render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
-//
-//     const knappTilKalkis = screen.getByRole('link', { name: /Gå til kostnadskalkulatoren/i });
-//     userEvent.click(knappTilKalkis);
-//
-//     expect(amplitudeMock.logEvent).not.toHaveBeenLastCalledWith(
-//         'inputfelt-utfylt',
-//         expect.objectContaining({
-//             app: 'sykefravarsstatistikk',
-//             url: '/sykefravarsstatistikk/kalkulator',
-//             label: 'Totalt antall dagsverk i din bedrift siste 12 mnd',
-//             name: 'totalt-antall-dagsverk',
-//         })
-//     );
-//
-//     const antallDagsverkKnapp = screen.getByRole('spinbutton', {
-//         name: /totalt-antall-dagsverk/i,
-//     });
-//
-//     userEvent.type(antallDagsverkKnapp, '100');
-//
-//     expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
-//         'inputfelt-utfylt',
-//         expect.objectContaining({
-//             app: 'sykefravarsstatistikk',
-//             url: '/sykefravarsstatistikk/kalkulator',
-//             label: 'Totalt antall dagsverk i din bedrift siste 12 mnd',
-//             name: 'totalt-antall-dagsverk',
-//         })
-//     );
-// });
-//
-// it('Klikk på "Gå til sykefravær over tid" rendrer navigere-event, deretter sidevisning-event', async () => {
-//     await waitFor(() => {
-//         render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
-//     });
-//
-//     const knappTilHistorikk = screen.getAllByRole('link', {
-//         name: /Gå til sykefravær over tid/i,
-//     })[0];
-//     userEvent.click(knappTilHistorikk);
-//
-//     expect(amplitudeMock.logEvent).toHaveBeenNthCalledWith(
-//         3,
-//         'navigere',
-//         expect.objectContaining({
-//             app: 'sykefravarsstatistikk',
-//             destinasjon: '/historikk',
-//             lenketekst: 'Gå til sykefravær over tid',
-//         })
-//     );
-//
-//     expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
-//         'sidevisning',
-//         expect.objectContaining({
-//             app: 'sykefravarsstatistikk',
-//         })
-//     );
-// });
 
 const AppContentWithRouter = (data: SykefraværAppData) => {
     return (
