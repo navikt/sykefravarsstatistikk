@@ -43,7 +43,7 @@ jobs:
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/fjerne_innganger'
+        if: github.ref == 'refs/heads/oppgrader-avhengigheter-pga-dependabot-alerts-juni-2022'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
