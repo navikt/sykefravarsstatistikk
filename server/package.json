@@ -28,6 +28,7 @@
         "watch": "NODE_ENV=development nodemon server.js"
     },
     "resolutions": {
-        "follow-redirects": "^1.14.9"
+        "follow-redirects": "^1.14.9",
+        "got": "^11.8.5"
     }
 }
