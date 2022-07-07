@@ -25,18 +25,6 @@ export const Sammenligningspanel: FunctionComponent<{
 
     return (
         <>
-            <AlertStripeInfo className="sammenligningspanel__info_om_oppdateringer">
-                Det er oppdaget feil i sykefraværsstatistikken. Feilen er korrigert 2. juni 2022.
-                Virksomheter med få ansatte og høyt sykefravær, kan oppleve store endringer i sine
-                tall. Du kan lese mer om feilen på{' '}
-                <EksternLenke
-                    href={
-                        'https://www.nav.no/no/nav-og-samfunn/statistikk/sykefravar-statistikk/nyheter/feil-i-sykefravaersstatistikken'
-                    }
-                >
-                    nav.no
-                </EksternLenke>
-            </AlertStripeInfo>
             {harFeil && (
                 <AlertStripeFeil className="sammenligningspanel__info-eller-feilmelding">
                     Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen senere.
