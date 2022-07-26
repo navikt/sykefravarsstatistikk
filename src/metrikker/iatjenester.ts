@@ -1,5 +1,6 @@
 import { tilIsoDatoMedUtcTimezoneUtenMillis } from '../utils/app-utils';
 import { TjenestePerOrgnr } from './IaTjenesterMetrikkerContext';
+import { BASE_PATH } from '../konstanter';
 
 interface IaTjenesteMetrikk {
     orgnr: String;
@@ -42,7 +43,7 @@ export const iaTjenesterMetrikkerErSendtForBedrift = (
 };
 
 const getIaTjenesterMetrikkerUrl = () => {
-    return '/proxy/ia-tjenester-metrikker';
+    return `${BASE_PATH}/proxy/ia-tjenester-metrikker`;
 };
 
 const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
