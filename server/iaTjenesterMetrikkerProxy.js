@@ -3,10 +3,10 @@ const {createProxyMiddleware} = require('http-proxy-middleware');
 const {exchangeToken} = require('./tokenx');
 
 const envProperties = {
-    IA_TJENESTER_METRIKKER_BASE_URL: process.env.IA_TJENESTER_METRIKKER_BASE_URL || 'http://localhost:9090',
+    IA_TJENESTER_METRIKKER_BASE_URL: process.env.IA_TJENESTER_METRIKKER_BASE_URL || 'http://localhost:9090/ia-tjenester-metrikker',
 };
 
-const BACKEND_IA_TJENESTER_METRIKKER_PATH = '/ia-tjenester-metrikker';
+const BACKEND_IA_TJENESTER_METRIKKER_PATH = '/';
 const IA_TJENESTER_METRIKKER_BASE_URL = `${envProperties.IA_TJENESTER_METRIKKER_BASE_URL}`;
 
 const proxyConfig = {
