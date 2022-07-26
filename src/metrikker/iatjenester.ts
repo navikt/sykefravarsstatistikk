@@ -42,14 +42,7 @@ export const iaTjenesterMetrikkerErSendtForBedrift = (
 };
 
 const getIaTjenesterMetrikkerUrl = () => {
-    switch (window.location.hostname) {
-        case 'localhost':
-            return 'http://localhost:8080/ia-tjenester-metrikker';
-        case 'arbeidsgiver.nav.no':
-            return 'https://arbeidsgiver.nav.no/ia-tjenester-metrikker';
-        default:
-            return 'https://ia-tjenester-metrikker.dev.intern.nav.no';
-    }
+    return '/proxy/ia-tjenester-metrikker';
 };
 
 const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
