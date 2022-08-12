@@ -36,7 +36,7 @@ import {
     useSykefraværAppData,
 } from './hooks/useSykefraværAppData';
 import { AnalyticsClient } from './amplitude/client';
-import { useAnalytics } from './amplitude/useAnalytics';
+import { useAnalytics } from './hooks/useAnalytics';
 
 interface Props {
     analyticsClient: AnalyticsClient;

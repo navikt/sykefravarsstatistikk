@@ -1,4 +1,4 @@
-import { sendAnalytics } from './useAnalytics';
+import { sendAnalytics } from '../hooks/useAnalytics';
 
 export const sendNavigereEvent = (destinasjon: string, lenketekst: string) => {
     sendAnalytics('navigere', {

@@ -7,7 +7,7 @@ import {
     mockSykefraværWithEkstradata,
 } from '../mocking/use-analytics-test-mocks';
 import { BrowserRouter } from 'react-router-dom';
-import { SykefraværAppData } from '../hooks/useSykefraværAppData';
+import { SykefraværAppData } from './useSykefraværAppData';
 import userEvent from '@testing-library/user-event';
 import { AppContent } from '../App';
 import '@testing-library/jest-dom';

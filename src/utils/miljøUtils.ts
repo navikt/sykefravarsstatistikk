@@ -1,17 +1,26 @@
-export const getMiljø = () => {
-    const hostname = window.location.hostname;
+import {
+    DEV_HOST,
+    LABS_HOST,
+    MILJØ, MIN_SIDE_ARBEIDSGIVER_DEV,
+    MIN_SIDE_ARBEIDSGIVER_LABS,
+    MIN_SIDE_ARBEIDSGIVER_PROD,
+    PROD_HOST,
+} from '../konstanter';
 
-    if (hostname === 'arbeidsgiver.nav.no') {
-        return 'prod-gcp';
+export const getMiljø = ():string => {
+    switch (window.location.hostname) {
+        case PROD_HOST: return MILJØ.PROD;
+        case LABS_HOST: return MILJØ.LABS;
+        case DEV_HOST: return MILJØ.DEV;
+        default: return MILJØ.LOCAL;
     }
+};
 
-    if (hostname === 'arbeidsgiver.labs.nais.io') {
-        return 'labs-gcp';
+export const getMinSideArbeidsgiverUrl = () => {
+    switch (getMiljø()) {
+        case MILJØ.PROD: return MIN_SIDE_ARBEIDSGIVER_PROD;
+        case MILJØ.LABS: return MIN_SIDE_ARBEIDSGIVER_LABS;
+        case MILJØ.DEV: return MIN_SIDE_ARBEIDSGIVER_DEV;
+        default: return MIN_SIDE_ARBEIDSGIVER_LABS;
     }
-
-    if (hostname === 'arbeidsgiver-gcp.dev.nav.no') {
-        return 'dev-gcp';
-    }
-
-    return 'local';
 };
