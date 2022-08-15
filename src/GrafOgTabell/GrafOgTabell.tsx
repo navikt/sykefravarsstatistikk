@@ -9,12 +9,12 @@ import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
-import ManglerRettigheterIAltinnSide from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { sendIaTjenesteMetrikkMottattEvent } from '../metrikker/iatjenester';
 import { sendSidevisningEvent } from '../amplitude/events';
 import { useOrgnr } from '../hooks/useOrgnr';
 import { iaTjenesterMetrikkerContext } from '../metrikker/IaTjenesterMetrikkerContext';
+import { ManglerRettighetRedirect } from '../utils/redirects';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
@@ -36,6 +36,9 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
 
     sendIaTjenesteMetrikkMottattEvent(orgnr, context);
 
+    if (restSykefraværsstatistikk.status === RestStatus.IngenTilgang) {
+        return <ManglerRettighetRedirect/>;
+    }
     if (
         restSykefraværsstatistikk.status === RestStatus.LasterInn ||
         restSykefraværsstatistikk.status === RestStatus.IkkeLastet
@@ -44,12 +47,6 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
             <div className="graf-og-tabell__spinner">
                 <NavFrontendSpinner type={'XXL'} />
             </div>
-        );
-    } else if (restSykefraværsstatistikk.status === RestStatus.IngenTilgang) {
-        innhold = (
-            <ManglerRettigheterIAltinnSide
-                restOrganisasjonerMedStatistikk={props.restOrganisasjonerMedStatistikk}
-            />
         );
     } else if (restSykefraværsstatistikk.status !== RestStatus.Suksess) {
         innhold = (
@@ -69,42 +66,36 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
     return (
         <div className="graf-og-tabell__wrapper">
             <div className="graf-og-tabell">
-                {restSykefraværsstatistikk.status !== RestStatus.IngenTilgang ? (
-                    <div className="graf-og-tabell__overdel-wrapper">
-                        <div className="graf-og-tabell__tekst-wrapper">
-                            <Systemtittel tag="h1" className="graf-og-tabell__tittel">
-                                Se sykefraværet over tid
-                            </Systemtittel>
-                            <Normaltekst className="graf-og-tabell__ingress">
-                                Se hvordan det legemeldte sykefraværet utvikler seg over tid. Du kan
-                                sammenligne sykefraværet deres med næringen og sektoren dere
-                                tilhører.
-                            </Normaltekst>
-                        </div>
-                        <ToggleGruppePure
-                            className="graf-og-tabell__knapper"
-                            toggles={[
-                                {
-                                    children: 'Graf',
-                                    pressed: grafEllerTabell === 'graf',
-                                    onClick: () => setGrafEllerTabell('graf'),
-                                },
-                                {
-                                    children: 'Tabell',
-                                    pressed: grafEllerTabell === 'tabell',
-                                    onClick: () => {
-                                        setGrafEllerTabell('tabell');
-                                    },
-                                },
-                            ]}
-                        />
+                <div className="graf-og-tabell__overdel-wrapper">
+                    <div className="graf-og-tabell__tekst-wrapper">
+                        <Systemtittel tag="h1" className="graf-og-tabell__tittel">
+                            Se sykefraværet over tid
+                        </Systemtittel>
+                        <Normaltekst className="graf-og-tabell__ingress">
+                            Se hvordan det legemeldte sykefraværet utvikler seg over tid. Du kan
+                            sammenligne sykefraværet deres med næringen og sektoren dere
+                            tilhører.
+                        </Normaltekst>
                     </div>
-                ) : (
-                    innhold
-                )}
-                {restSykefraværsstatistikk.status !== RestStatus.IngenTilgang && (
-                    <div className="graf-og-tabell__innhold">{innhold}</div>
-                )}
+                    <ToggleGruppePure
+                        className="graf-og-tabell__knapper"
+                        toggles={[
+                            {
+                                children: 'Graf',
+                                pressed: grafEllerTabell === 'graf',
+                                onClick: () => setGrafEllerTabell('graf'),
+                            },
+                            {
+                                children: 'Tabell',
+                                pressed: grafEllerTabell === 'tabell',
+                                onClick: () => {
+                                    setGrafEllerTabell('tabell');
+                                },
+                            },
+                        ]}
+                    />
+                </div>
+                <div className="graf-og-tabell__innhold">{innhold}</div>
             </div>
         </div>
     );
