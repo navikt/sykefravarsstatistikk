@@ -26,7 +26,7 @@ import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/E
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import {
     LegacyBarnehageSammenligningRedirect,
-    LegacySammenligningRedirect,
+    LegacySammenligningRedirect, ManglerRettighetRedirect,
 } from './utils/redirects';
 import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
@@ -36,7 +36,7 @@ import {
     useSykefraværAppData,
 } from './hooks/useSykefraværAppData';
 import { AnalyticsClient } from './amplitude/client';
-import { useAnalytics } from './amplitude/useAnalytics';
+import { useAnalytics } from './hooks/useAnalytics';
 
 interface Props {
     analyticsClient: AnalyticsClient;
@@ -133,7 +133,7 @@ export const AppContent = ({
     } else if (restOrganisasjoner.status !== RestStatus.Suksess) {
         innhold = <FeilFraAltinnSide />;
     } else if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
-        window.location.replace('/min-side-arbeidsgiver/mangler-tilgang');
+        return <ManglerRettighetRedirect/>
     } else {
         innhold = (
             <>

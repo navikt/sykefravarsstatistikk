@@ -5,6 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
 import './Innloggingsside.less';
 import Sidetittel from 'nav-frontend-typografi/lib/sidetittel';
+import { MIN_SIDE_ARBEIDSGIVER_PROD } from "../konstanter";
 
 interface Props {
     redirectUrl: string;
@@ -32,7 +33,7 @@ const Innloggingsside: React.FunctionComponent<Props> = ({ redirectUrl }) => {
                 <Lenke
                     className="innloggingsside__lenke"
                     href={
-                        'https://arbeidsgiver.nav.no/min-side-arbeidsgiver/informasjon-om-tilgangsstyring'
+                        MIN_SIDE_ARBEIDSGIVER_PROD+'/informasjon-om-tilgangsstyring'
                     }
                 >
                     Les mer om roller og tilganger

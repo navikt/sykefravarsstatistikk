@@ -1,4 +1,4 @@
-import { AnalyticsClient } from './client';
+import { AnalyticsClient } from '../amplitude/client';
 import { useEffect } from 'react';
 
 interface AnalyticsData {
