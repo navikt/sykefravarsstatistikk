@@ -3,7 +3,7 @@ import { RestSummertSykefraværshistorikk } from '../../api/summert-sykefraværs
 import { EkspanderbartSammenligningspanel } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
 import { RestStatus } from '../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
-import { getSammenligningResultat, summertHistorikkHarBransje } from '../vurdering-utils';
+import { getSammenligningResultat, aggregertStatistikkHarBransje } from '../vurdering-utils';
 import { SykefraværVurdering } from '../Speedometer/Speedometer';
 import { SammenligningsType } from '../vurderingstekster';
 import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngress';
@@ -13,26 +13,29 @@ import { RestVirksomhetsdata } from '../../api/virksomhetsdata-api';
 import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
 import { Element } from 'nav-frontend-typografi';
 import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
+import { AggregertStatistikkResponse } from '../../hooks/useAggregertStatistikk';
 
 interface Props {
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
     restVirksomhetsdata: RestVirksomhetsdata;
+    aggregertStatistikk: AggregertStatistikkResponse;
 }
 
 export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
     restSummertSykefraværshistorikk,
     restVirksomhetsdata,
+    aggregertStatistikk
 }) => {
     if (
-        restSummertSykefraværshistorikk.status === RestStatus.IngenTilgang ||
-        restSummertSykefraværshistorikk.status === RestStatus.IkkeInnlogget
+        aggregertStatistikk.restStatus === RestStatus.IngenTilgang ||
+        aggregertStatistikk.restStatus === RestStatus.IkkeInnlogget
     ) {
         return null;
     }
 
     if (
-        restSummertSykefraværshistorikk.status === RestStatus.LasterInn ||
-        restSummertSykefraværshistorikk.status === RestStatus.IkkeLastet
+        aggregertStatistikk.restStatus === RestStatus.LasterInn ||
+        aggregertStatistikk.restStatus === RestStatus.IkkeLastet
     ) {
         return (
             <Skeleton
@@ -42,6 +45,8 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
         );
     }
 
+
+
     const bransje: ArbeidsmiljøportalenBransje | undefined =
         restVirksomhetsdata.status === RestStatus.Suksess
             ? restVirksomhetsdata.data.bransje
@@ -49,13 +54,24 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
 
     const harBransje =
         restSummertSykefraværshistorikk.status === RestStatus.Suksess &&
-        summertHistorikkHarBransje(restSummertSykefraværshistorikk.data);
+        aggregertStatistikkHarBransje(aggregertStatistikk.data);
+    const {
+        prosentSiste4Kvartaler,
+        prosentSiste4KvartalerKorttid,
+        prosentSiste4KvartalerLangtid,
+        prosentSiste4KvartalerGradert,
+        prosentSiste4KvartalerTotalt,
+        trendTotalt,
+        trend
+    } = aggregertStatistikk.data
+
     const {
         sammenligningResultatTotalt,
         sammenligningResultatKorttid,
         sammenligningResultatLangtid,
         sammenligningResultatGradert,
-    } = getSammenligningResultat(restSummertSykefraværshistorikk);
+    } = getSammenligningResultat(restSummertSykefraværshistorikk, aggregertStatistikk);
+
 
     const antallKvartalerVirksomhet =
         sammenligningResultatTotalt.sammenligningVurdering ===

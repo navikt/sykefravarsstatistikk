@@ -9,6 +9,7 @@ import { SykefraværVurdering } from './Speedometer/Speedometer';
 import { RestStatus } from '../api/api-utils';
 import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
 import { SammenligningsType } from './vurderingstekster';
+import { AggregertStatistikkResponse, AggregertStatistikkType, StatistikkType } from '../hooks/useAggregertStatistikk';
 
 export const getVurderingForSammenligningAvSykefravær = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,
@@ -146,11 +147,14 @@ export interface Sammenligningsresultater {
 }
 
 export const getSammenligningResultat = (
-    restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk
+    restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk,
+    aggregertStatistikkResponse: AggregertStatistikkResponse
 ): Sammenligningsresultater => {
     if (
-        restSummertSykefraværshistorikk.status !== RestStatus.Suksess &&
-        restSummertSykefraværshistorikk.status !== RestStatus.Feil
+        aggregertStatistikkResponse.restStatus !== RestStatus.Suksess &&
+        aggregertStatistikkResponse.restStatus !== RestStatus.Feil
+        //restSummertSykefraværshistorikk.status !== RestStatus.Suksess &&
+        //restSummertSykefraværshistorikk.status !== RestStatus.Feil
     )
         return {
             sammenligningResultatTotalt: undefinedSammenligningResultatReturnObjekt,
@@ -159,12 +163,19 @@ export const getSammenligningResultat = (
             sammenligningResultatGradert: undefinedSammenligningResultatReturnObjekt,
         };
     const summertSykefraværshistorikk =
-        restSummertSykefraværshistorikk.status === RestStatus.Suksess
-            ? restSummertSykefraværshistorikk.data
+        //restSummertSykefraværshistorikk.status === RestStatus.Suksess
+        aggregertStatistikkResponse.restStatus === RestStatus.Suksess
+            ? aggregertStatistikkResponse.data
             : undefined;
 
-    const sammenligningResultatTotalt = getSammenligningResultatMedProsent(
+    /*const sammenligningResultatTotalt = getSammenligningResultatMedProsent(
         restSummertSykefraværshistorikk.status,
+        summertSykefraværshistorikk,
+        SammenligningsType.TOTALT
+    );
+     */
+    const sammenligningResultatTotalt = getSammenligningResultatMedProsent(
+        aggregertStatistikkResponse.restStatus,
         summertSykefraværshistorikk,
         SammenligningsType.TOTALT
     );
@@ -329,6 +340,22 @@ const getGradertProsent = (
     if (!totaltTapteDagsverk || !gradertTapteDagsverk) return undefined;
     else return (gradertTapteDagsverk * 100) / totaltTapteDagsverk;
 };
+/*
 export const summertHistorikkHarBransje = (historikk: SummertSykefraværshistorikk[]): boolean => {
     return !!historikk.find((data) => data.type === Statistikkategori.BRANSJE);
+};
+ */
+
+const harBransje = (array: StatistikkType[]) => {
+    return !!array.find((data) => data.label === Statistikkategori.BRANSJE);
+}
+
+export const aggregertStatistikkHarBransje = (historikk: AggregertStatistikkType): boolean => {
+    return [
+        historikk.prosentSiste4Kvartaler,
+        historikk.prosentSiste4KvartalerTotalt,
+        historikk.prosentSiste4KvartalerLangtid,
+        historikk.prosentSiste4KvartalerGradert,
+        historikk.prosentSiste4KvartalerKorttid
+    ].every(harBransje)
 };

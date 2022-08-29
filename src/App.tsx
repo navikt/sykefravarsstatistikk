@@ -66,6 +66,7 @@ export const AppContent = ({
     analyticsClient,
     enhetsregisterdata,
     samtalestøttePodlet,
+    aggregertStatistikk
 }: SykefraværAppData & {
     analyticsClient: AnalyticsClient;
     samtalestøttePodlet?: React.ReactNode;
@@ -159,6 +160,7 @@ export const AppContent = ({
                                         restSummertSykefraværshistorikk
                                     }
                                     restVirksomhetsdata={restvirksomhetsdata}
+                                    aggregertStatistikk={aggregertStatistikk}
                                 />
                             </Sammenligningspanel>
                             <div className={'app__lenkepanelWrapper'}>
