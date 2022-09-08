@@ -3,7 +3,7 @@ import { ÅrstallOgKvartal } from './sykefraværshistorikk-utils';
 const sistOppdatert = new Date('2022-09-08');
 const nesteOppdatering = new Date('2022-12-01');
 export const periodeFra = new Date('2021-07-01');
-export const periodeTil = new Date('2022-09-30');
+export const periodeTil = new Date('2022-06-30');
 
 // TODO Hardkodede tall
 export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
