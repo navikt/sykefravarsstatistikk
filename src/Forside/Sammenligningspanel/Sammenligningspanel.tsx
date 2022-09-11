@@ -2,19 +2,18 @@ import React, { FunctionComponent, useRef } from 'react';
 import './Sammenligningspanel.less';
 import ReactToPrint from 'react-to-print';
 import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { RestSummertSykefraværshistorikk } from '../../api/summert-sykefraværshistorikk-api';
 import { RestStatus } from '../../api/api-utils';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import { useOrgnr } from '../../hooks/useOrgnr';
 
 export const Sammenligningspanel: FunctionComponent<{
-    restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
     restAltinnOrganisasjoner: RestAltinnOrganisasjoner;
-}> = ({ restSummertSykefraværshistorikk, restAltinnOrganisasjoner, children }) => {
+    restStatus: RestStatus;
+}> = ({ restAltinnOrganisasjoner, restStatus, children }) => {
     const panelRef = useRef<HTMLDivElement>(null);
     const lastNedKnappRef = useRef<HTMLButtonElement>(null);
-    const harFeil = restSummertSykefraværshistorikk.status === RestStatus.Feil;
+    const harFeil = restStatus === RestStatus.Feil;
     const orgnr = useOrgnr();
     const navnPåVirksomhet =
         restAltinnOrganisasjoner.status === RestStatus.Suksess &&

@@ -114,7 +114,6 @@ export const AppContent = ({
     const restOrganisasjoner = altinnOrganisasjoner;
     const restOrganisasjonerMedStatistikk = altinnOrganisasjonerMedStatistikk;
 
-    const restSummertSykefraværshistorikk = summertSykefravær;
     const restSykefraværshistorikk = sykefraværshistorikk;
     const restvirksomhetsdata = virksomhetsdata;
 
@@ -147,19 +146,14 @@ export const AppContent = ({
                 <Route path={PATH_FORSIDE} exact={true}>
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <InnloggingssideWrapper
-                        restSykefraværshistorikk={restSykefraværshistorikk}
-                        restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
+                        aggregertStatistikk={aggregertStatistikk}
                     >
                         <Forside>
                             <Sammenligningspanel
-                                restSummertSykefraværshistorikk={restSummertSykefraværshistorikk}
+                                restStatus={aggregertStatistikk.restStatus}
                                 restAltinnOrganisasjoner={restOrganisasjoner}
                             >
                                 <EkspanderbarSammenligning
-                                    restSummertSykefraværshistorikk={
-                                        restSummertSykefraværshistorikk
-                                    }
-                                    restVirksomhetsdata={restvirksomhetsdata}
                                     aggregertStatistikk={aggregertStatistikk}
                                 />
                             </Sammenligningspanel>

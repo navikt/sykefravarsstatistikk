@@ -2,6 +2,7 @@ import { SykefraværAppData } from '../hooks/useSykefraværAppData';
 import { RestStatus } from '../api/api-utils';
 import { SykefraværshistorikkType } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
+import { AggregertStatistikk, AggregertStatistikkResponse } from '../hooks/useAggregertStatistikk';
 
 export const mockSykefraværWithEkstradata: SykefraværAppData = {
     altinnOrganisasjonerMedStatistikk: { status: RestStatus.IkkeLastet },
@@ -68,7 +69,11 @@ export const mockSykefraværWithEkstradata: SykefraværAppData = {
             },
         },
     },
-
+    aggregertStatistikk: {
+        restStatus: RestStatus.Suksess,
+        aggregertData: new Map<Statistikkategori, AggregertStatistikk>(),
+        error: undefined
+    },
     sykefraværshistorikk: {
         status: RestStatus.Suksess,
         data: [

@@ -1,22 +1,19 @@
 import * as React from 'react';
 import './Forside.less';
 import Innloggingsside from '../Innloggingsside/Innloggingsside';
-import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import { RestStatus } from '../api/api-utils';
-import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { ManglerRettighetRedirect } from '../utils/redirects';
+import { AggregertStatistikkResponse } from '../hooks/useAggregertStatistikk';
 
 interface Props {
-    restSykefraværshistorikk: RestSykefraværshistorikk;
-    restOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
+    aggregertStatistikk: AggregertStatistikkResponse
 }
 
 const InnloggingssideWrapper: React.FunctionComponent<Props> = ({
-    restSykefraværshistorikk,
+    aggregertStatistikk,
     children,
 }) => {
-    const status = restSykefraværshistorikk.status;
-    switch (status) {
+    switch (aggregertStatistikk.restStatus) {
         case RestStatus.IngenTilgang: {
             return (
                 <ManglerRettighetRedirect/>

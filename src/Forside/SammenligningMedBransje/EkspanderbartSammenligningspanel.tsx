@@ -2,11 +2,7 @@ import React, { FunctionComponent, ReactElement, useContext, useState } from 're
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
-import {
-    getForklaringAvVurdering,
-    getVurderingstekst,
-    SammenligningsType,
-} from '../vurderingstekster';
+import { getForklaringAvVurdering, getVurderingstekst, SammenligningsType } from '../vurderingstekster';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import { ForklaringAvPeriode } from './ForklaringAvPeriode';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
@@ -18,43 +14,77 @@ import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
 import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { OmGradertSykmelding } from '../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
-import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from '../../amplitude/events';
 import { useOrgnr } from '../../hooks/useOrgnr';
 import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
 import { sendIaTjenesteMetrikkMottattEvent } from '../../metrikker/iatjenester';
+import { StatistikkType } from '../../hooks/useAggregertStatistikk';
 
 interface Props {
-    sykefraværVurdering: SykefraværVurdering;
-    sykefraværVirksomhet: number | null | undefined;
-    sykefraværBransje: number | null | undefined;
-    antallKvartalerVirksomhet: ReactElement | null;
-    antallKvartalerBransje: ReactElement | null;
     sammenligningsType: SammenligningsType;
-    bransje: ArbeidsmiljøportalenBransje | undefined;
+    virksomhetStatistikk?: StatistikkType;
+    bransjeEllerNæringStatistikk?: StatistikkType;
     harBransje: boolean;
     defaultÅpen?: boolean;
     className?: string;
 }
 
+export const parseVerdi = (verdi: string) => {
+    return parseFloat(verdi.replace(",", "."));
+}
+
+
+export const getVurdering = (virksomhet?: StatistikkType, bransjeEllerNæring?: StatistikkType) => {
+
+    if(virksomhet === undefined && bransjeEllerNæring === undefined) return SykefraværVurdering.INGEN_DATA;
+    if(virksomhet === undefined && bransjeEllerNæring !== undefined) return SykefraværVurdering.MASKERT;
+
+    const antallKvartaler = virksomhet?.kvartalerIBeregningen.length || 0;
+
+    if(antallKvartaler < 4) return SykefraværVurdering.UFULLSTENDIG_DATA;
+    if(virksomhet?.verdi === undefined || bransjeEllerNæring?.verdi === undefined) return SykefraværVurdering.UFULLSTENDIG_DATA;
+
+    const virksomhetVerdi = parseVerdi(virksomhet.verdi);
+    const bransjeEllerNæringVerdi = parseVerdi(bransjeEllerNæring.verdi);
+
+    if(virksomhetVerdi > (bransjeEllerNæringVerdi * 1.1)) return SykefraværVurdering.OVER;
+    if(virksomhetVerdi < (bransjeEllerNæringVerdi * 0.9)) return SykefraværVurdering.UNDER;
+    return SykefraværVurdering.MIDDELS
+}
+
+const antallKvartalerVirksomhet = (sammenligningVurdering: SykefraværVurdering, antallKvartaler?: number) =>{
+    if(
+        sammenligningVurdering === SykefraværVurdering.UFULLSTENDIG_DATA
+        || sammenligningVurdering === SykefraværVurdering.INGEN_DATA
+    ) return <strong> {antallKvartaler || 0} av 4 kvartaler</strong>;
+
+    return null;
+}
+
+const antallKvartalerBransje = (sammenligningVurdering: SykefraværVurdering ) => {
+    if(
+       sammenligningVurdering === SykefraværVurdering.UFULLSTENDIG_DATA
+       || sammenligningVurdering === SykefraværVurdering.INGEN_DATA
+    ) return <strong>4 av 4 kvartaler</strong>
+
+    return null;
+}
+
+
 export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
-    sykefraværVurdering,
-    sykefraværVirksomhet,
-    sykefraværBransje,
-    antallKvartalerVirksomhet,
-    antallKvartalerBransje,
     sammenligningsType,
     harBransje,
     defaultÅpen,
     className,
+    virksomhetStatistikk,
+    bransjeEllerNæringStatistikk
 }) => {
     const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
     const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
     const orgnr = useOrgnr();
     const context = useContext(iaTjenesterMetrikkerContext);
 
-    const visningAvProsentForBransje: number | null | undefined =
-        sykefraværVurdering === SykefraværVurdering.FEIL ? null : sykefraværBransje;
+    const sykefraværVurdering = getVurdering(virksomhetStatistikk, bransjeEllerNæringStatistikk)
 
     const overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
 
@@ -88,21 +118,26 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                 <DetaljertVisningSykefravær
                     className="ekspanderbart-sammenligningspanel__detaljert-visning"
                     overskrift="Din virksomhet:"
-                    prosent={sykefraværVirksomhet}
-                    visingAntallKvartaller={antallKvartalerVirksomhet}
+                    prosent={virksomhetStatistikk?.verdi}
+                    visingAntallKvartaller={antallKvartalerVirksomhet(sykefraværVurdering, virksomhetStatistikk?.kvartalerIBeregningen.length)}
                 />
                 <DetaljertVisningSykefravær
                     className="ekspanderbart-sammenligningspanel__detaljert-visning"
                     overskrift={overskriftForTallForNæringEllerBransje}
-                    prosent={visningAvProsentForBransje}
-                    visingAntallKvartaller={antallKvartalerBransje}
+                    prosent={bransjeEllerNæringStatistikk?.verdi}
+                    visingAntallKvartaller={antallKvartalerBransje(sykefraværVurdering)}
                 />
             </div>
             {sammenligningsType === SammenligningsType.GRADERT ? (
                 <OmGradertSykmelding vurdering={sykefraværVurdering} />
             ) : (
                 <div className="ekspanderbart-sammenligningspanel__forklaring-av-vurdering">
-                    {getForklaringAvVurdering(sykefraværVurdering, sykefraværBransje)}
+                    {getForklaringAvVurdering(
+                        sykefraværVurdering,
+                        bransjeEllerNæringStatistikk?.verdi
+                            ? parseVerdi(bransjeEllerNæringStatistikk?.verdi)
+                            : undefined
+                    )}
                 </div>
             )}
         </>

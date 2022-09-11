@@ -2,39 +2,36 @@ import React, { FunctionComponent } from 'react';
 import næringEllerBransjeIkonSvg from './næring-eller-bransje-ikon.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
 import './DinNæringEllerBransje.less';
-import { RestSummertSykefraværshistorikk, Statistikkategori } from '../../../api/summert-sykefraværshistorikk-api';
 import { RestStatus } from '../../../api/api-utils';
 import EksternLenke from '../../../felleskomponenter/EksternLenke/EksternLenke';
+import { Statistikkategori } from '../../../api/summert-sykefraværshistorikk-api';
 
 interface Props {
-    restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
+    restStatus: RestStatus;
+    statistikKategori?: Statistikkategori;
+    label: string
 }
 
 export const DinNæringEllerBransje: FunctionComponent<Props> = ({
-    restSummertSykefraværshistorikk,
+    restStatus,
+    statistikKategori,
+    label
 }) => {
-    if (restSummertSykefraværshistorikk.status !== RestStatus.Suksess) {
+    if (restStatus !== RestStatus.Suksess) {
         return null;
     }
 
-    const dataForBransje = restSummertSykefraværshistorikk.data.find(
-        (data) => data.type === Statistikkategori.BRANSJE
-    );
-    const dataForNæring = restSummertSykefraværshistorikk.data.find(
-        (data) => data.type === Statistikkategori.NÆRING
-    );
-
     let tekst;
-    if (dataForBransje) {
+    if (statistikKategori === Statistikkategori.BRANSJE) {
         tekst = (
             <>
-                <strong>Du tilhører bransjen:</strong> {dataForBransje.label}
+                <strong>Du tilhører bransjen:</strong> {label}
             </>
         );
-    } else if (dataForNæring) {
+    } else if (statistikKategori === Statistikkategori.NÆRING) {
         tekst = (
             <>
-                <strong>Du tilhører næringen:</strong> {dataForNæring.label}
+                <strong>Du tilhører næringen:</strong> {label}
             </>
         );
     } else {

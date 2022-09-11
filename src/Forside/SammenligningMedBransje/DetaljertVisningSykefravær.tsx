@@ -6,7 +6,7 @@ import classNames from 'classnames';
 
 interface Props {
     overskrift: string;
-    prosent: number | undefined | null;
+    prosent: string | undefined | null;
     visingAntallKvartaller: ReactElement | undefined | null;
     className?: string;
 }
