@@ -240,12 +240,6 @@ export const getSammenligningResultatMedProsent = (
         kvartaler
     );
 
-    /*return {
-        sammenligningVurdering: sammenligningVurdering,
-        sykefraværVirksomhet: sykefraværVirksomhet,
-        sykefraværBransje: sykefraværBransje,
-        kvartaler: kvartaler,
-    };*/
 };
 const getSammmenligningVruderingProsenterOgKvartaler = (
     sammenligningsType: SammenligningsType,
@@ -328,7 +322,4 @@ const getGradertProsent = (
 ): number | undefined => {
     if (!totaltTapteDagsverk || !gradertTapteDagsverk) return undefined;
     else return (gradertTapteDagsverk * 100) / totaltTapteDagsverk;
-};
-export const summertHistorikkHarBransje = (historikk: SummertSykefraværshistorikk[]): boolean => {
-    return !!historikk.find((data) => data.type === Statistikkategori.BRANSJE);
 };

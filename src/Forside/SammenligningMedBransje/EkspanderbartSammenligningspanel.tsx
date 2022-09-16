@@ -31,8 +31,7 @@ interface Props {
 
 export const parseVerdi = (verdi: string) => {
     return parseFloat(verdi.replace(",", "."));
-}
-
+};
 
 export const getVurdering = (virksomhet?: StatistikkType, bransjeEllerNæring?: StatistikkType) => {
 
