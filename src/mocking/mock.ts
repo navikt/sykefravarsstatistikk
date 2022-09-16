@@ -13,6 +13,7 @@ import { defaultBedriftsmetrikker } from './virksomhetsdata-mock';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './altinn-mock';
 import { summertSykefraværshistorikkMockUtenData } from './summert-sykefraværshistorikk-mock';
 import { getMiljø } from '../utils/miljøUtils';
+import { aggregertMockData } from './aggregert-mock';
 
 const mock = {
     minSideArbeidsgiver: true,
@@ -20,6 +21,7 @@ const mock = {
     enhetsregisteret: true,
     featureToggles: true,
     iatjenester: true,
+    aggregertStatistikk: true
 };
 
 let delayfaktor = 0;
@@ -162,6 +164,21 @@ if (mock.iatjenester) {
             status: 'created',
         },
     });
+}
+
+if (mock.aggregertStatistikk) {
+    mockGetAndLog(
+        'express:/sykefravarsstatistikk/api/:orgnr/v1/sykefravarshistorikk/aggregert',
+        (/*url*/) => {
+            //const orgnr = url.match(/[0-9]{9}/)![0];
+            return (
+                aggregertMockData
+            );
+        },
+        {
+            delay: 1000 * delayfaktor,
+        }
+    );
 }
 
 fetchMock.spy();

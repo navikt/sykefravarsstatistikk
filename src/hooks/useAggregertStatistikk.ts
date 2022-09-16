@@ -12,7 +12,7 @@ import { BASE_PATH } from '../konstanter';
  *  3) endepunkt returnerer kvartaler i stigende datorekke
  */
 
-const StatistikkModel = z.object({
+const StatistikkValidator = z.object({
     statistikkategori: z.nativeEnum(Statistikkategori),
     label: z.string(),
     verdi: z.string(),
@@ -20,14 +20,16 @@ const StatistikkModel = z.object({
     kvartalerIBeregningen: z.array(z.object({ årstall: z.number(), kvartal: z.number().min(1).max(4) }))
 })
 
-const AggregertStatistikkResponseModel = z.object({
-    prosentSiste4Kvartaler: z.array(StatistikkModel).default([]),
-    prosentSiste4KvartalerTotalt: z.array(StatistikkModel).default([]),
-    prosentSiste4KvartalerGradert: z.array(StatistikkModel).default([]),
-    prosentSiste4KvartalerKorttid: z.array(StatistikkModel).default([]),
-    prosentSiste4KvartalerLangtid: z.array(StatistikkModel).default([]),
-    trend: z.array(StatistikkModel).default([]),
-    trendTotalt: z.array(StatistikkModel).default([])
+const ResponseValidator = z.object({
+    prosentSiste4Kvartaler: z.array(StatistikkValidator).default([]),
+    prosentSiste4KvartalerTotalt: z.array(StatistikkValidator).default([]),
+    prosentSiste4KvartalerGradert: z.array(StatistikkValidator).default([]),
+    prosentSiste4KvartalerKorttid: z.array(StatistikkValidator).default([]),
+    prosentSiste4KvartalerLangtid: z.array(StatistikkValidator).default([]),
+    trend: z.array(StatistikkValidator).default([]),
+    trendTotalt: z.array(StatistikkValidator).default([]),
+    tapteDagsverkTotalt: z.array(StatistikkValidator).default([]),
+    muligeDagsverkTotalt: z.array(StatistikkValidator).default([])
 })
 
 export type AggregertStatistikk = {
@@ -38,8 +40,8 @@ export type AggregertStatistikk = {
     trendTotalt?: StatistikkType
 }
 
-export type AggregertStatistikkResponseType = z.infer<typeof AggregertStatistikkResponseModel>;
-export type StatistikkType = z.infer<typeof StatistikkModel>
+type Response = z.infer<typeof ResponseValidator>;
+export type StatistikkType = z.infer<typeof StatistikkValidator>
 
 export type AggregertStatistikkResponse = {
     restStatus: RestStatus,
@@ -47,15 +49,30 @@ export type AggregertStatistikkResponse = {
     error?: any
 }
 
-const fetcher = (input: RequestInfo) => fetch(input, { method: 'GET', credentials: 'include', })
+const fetcher = async (input: RequestInfo) => {
+    const res = await fetch(input, { method: 'GET', credentials: 'include', })
+
+    if(!res.ok) {
+        return {
+            data: undefined,
+            status: res.status
+        }
+    }
+
+    const json = await res.json()
+
+    return {
+        data: json,
+        status: res.status
+    }
+}
 
 const getCategory = (category: Statistikkategori, statistikk: StatistikkType[]) => {
     return statistikk.find(e => e.statistikkategori === category)
 }
 
-const groupByCategory = (aggregertStatistikk: AggregertStatistikkResponseType) => {
+const groupByCategory = (aggregertStatistikk: Response) => {
     const map = new Map<Statistikkategori, AggregertStatistikk>()
-
     Object.values(Statistikkategori).forEach(kategori => {
         map.set(kategori, {
             prosentSiste4KvartalerTotalt: getCategory(kategori, aggregertStatistikk.prosentSiste4KvartalerTotalt),
@@ -71,6 +88,7 @@ const groupByCategory = (aggregertStatistikk: AggregertStatistikkResponseType) =
 
 function useFetch(orgnr: string) {
     const { data, error } = useSWR(`${BASE_PATH}/api/${orgnr}/v1/sykefravarshistorikk/aggregert`, fetcher)
+
     return {
         data: data,
         isLoading: !error && !data,
@@ -99,7 +117,7 @@ function useAggregertStatistikk (): AggregertStatistikkResponse {
     try {
         return {
             restStatus: getRestStatus(data ? data.status : 0),
-            aggregertData: groupByCategory(AggregertStatistikkResponseModel.parse(data))
+            aggregertData: groupByCategory(ResponseValidator.parse(data?.data))
         }
     } catch (e) {
         if(data){
