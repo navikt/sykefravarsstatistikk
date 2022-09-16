@@ -1,42 +1,43 @@
 @import '../../variables';
 
 .les-mer-panel {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
 
-    .ReactCollapse--collapse {
-        transition: height 500ms;
+  .ReactCollapse--collapse {
+    transition: height 500ms;
+  }
+
+  &__toggler {
+    order: 2;
+
+    &--åpen {
+      margin-top: 0.75rem;
     }
+  }
 
-    &__toggler {
-        order: 2;
+  .infoToggler {
+    text-align: left;
+  }
 
-        &--åpen {
-            margin-top: 0.75rem;
-        }
-    }
+  &__innhold {
+    order: 1;
+    margin-top: 0.25rem;
+  }
 
-    .infoToggler {
-        text-align: left;
-    }
+  &__print-innhold {
+    display: none;
+  }
 
-    &__innhold {
-        order: 1;
-        margin-top: 0.25rem;
-    }
-
+  @media print {
     &__print-innhold {
-        display: none;
+      display: block;
     }
 
-    @media print {
-        &__print-innhold {
-            display: block;
-        }
-        &__toggler,
-        &__innhold {
-            display: none;
-        }
+    &__toggler,
+    &__innhold {
+      display: none;
     }
+  }
 }

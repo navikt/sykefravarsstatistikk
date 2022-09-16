@@ -1,57 +1,57 @@
-import React, { FunctionComponent, useRef } from 'react';
+import React, {FunctionComponent, useRef} from 'react';
 import './Sammenligningspanel.less';
 import ReactToPrint from 'react-to-print';
-import { AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { RestStatus } from '../../api/api-utils';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
-import { useOrgnr } from '../../hooks/useOrgnr';
+import {AlertStripeFeil} from 'nav-frontend-alertstriper';
+import {RestStatus} from '../../api/api-utils';
+import {Normaltekst, Systemtittel} from 'nav-frontend-typografi';
+import {RestAltinnOrganisasjoner} from '../../api/altinnorganisasjon-api';
+import {useOrgnr} from '../../hooks/useOrgnr';
 
 export const Sammenligningspanel: FunctionComponent<{
-    restAltinnOrganisasjoner: RestAltinnOrganisasjoner;
-    restStatus: RestStatus;
-}> = ({ restAltinnOrganisasjoner, restStatus, children }) => {
-    const panelRef = useRef<HTMLDivElement>(null);
-    const lastNedKnappRef = useRef<HTMLButtonElement>(null);
-    const harFeil = restStatus === RestStatus.Feil;
-    const orgnr = useOrgnr();
-    const navnPåVirksomhet =
-        restAltinnOrganisasjoner.status === RestStatus.Suksess &&
-        restAltinnOrganisasjoner.data.find(
-            (organisasjon) => organisasjon.OrganizationNumber === orgnr
-        )?.Name;
+  restAltinnOrganisasjoner: RestAltinnOrganisasjoner;
+  restStatus: RestStatus;
+}> = ({restAltinnOrganisasjoner, restStatus, children}) => {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const lastNedKnappRef = useRef<HTMLButtonElement>(null);
+  const harFeil = restStatus === RestStatus.Feil;
+  const orgnr = useOrgnr();
+  const navnPåVirksomhet =
+      restAltinnOrganisasjoner.status === RestStatus.Suksess &&
+      restAltinnOrganisasjoner.data.find(
+          (organisasjon) => organisasjon.OrganizationNumber === orgnr
+      )?.Name;
 
-    return (
-        <>
-            {harFeil && (
-                <AlertStripeFeil className="sammenligningspanel__info-eller-feilmelding">
-                    Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen senere.
-                </AlertStripeFeil>
-            )}
-            <div className="sammenligningspanel" ref={panelRef}>
-                <div className="sammenligningspanel__print-header">
-                    <Normaltekst className="sammenligningspanel__href">
-                        {window.location.href}
-                    </Normaltekst>
-                    <Systemtittel tag="h1" className="sammenligningspanel__print-tittel">
-                        Sykefraværsstatistikk for {navnPåVirksomhet} ({orgnr})
-                    </Systemtittel>
-                </div>
-                <ReactToPrint
-                    onAfterPrint={() => {
-                        if (lastNedKnappRef.current) {
-                            lastNedKnappRef.current.focus();
-                        }
-                    }}
-                    content={() => panelRef.current}
-                    trigger={() => (
-                        <button ref={lastNedKnappRef} className="sammenligningspanel__knapp knapp">
-                            Last ned
-                        </button>
-                    )}
-                />
-                {children}
-            </div>
-        </>
-    );
+  return (
+      <>
+        {harFeil && (
+            <AlertStripeFeil className="sammenligningspanel__info-eller-feilmelding">
+              Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen senere.
+            </AlertStripeFeil>
+        )}
+        <div className="sammenligningspanel" ref={panelRef}>
+          <div className="sammenligningspanel__print-header">
+            <Normaltekst className="sammenligningspanel__href">
+              {window.location.href}
+            </Normaltekst>
+            <Systemtittel tag="h1" className="sammenligningspanel__print-tittel">
+              Sykefraværsstatistikk for {navnPåVirksomhet} ({orgnr})
+            </Systemtittel>
+          </div>
+          <ReactToPrint
+              onAfterPrint={() => {
+                if (lastNedKnappRef.current) {
+                  lastNedKnappRef.current.focus();
+                }
+              }}
+              content={() => panelRef.current}
+              trigger={() => (
+                  <button ref={lastNedKnappRef} className="sammenligningspanel__knapp knapp">
+                    Last ned
+                  </button>
+              )}
+          />
+          {children}
+        </div>
+      </>
+  );
 };

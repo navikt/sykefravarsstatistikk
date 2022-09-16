@@ -20,7 +20,9 @@
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true,
     "noUnusedParameters": true,
-    "types": ["jest"]
+    "types": [
+      "jest"
+    ]
   },
   "include": [
     "src",

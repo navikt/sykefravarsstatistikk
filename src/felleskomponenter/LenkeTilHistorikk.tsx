@@ -1,16 +1,17 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import InternLenke from './InternLenke/InternLenke';
-import { PATH_HISTORIKK } from '../konstanter';
+import {PATH_HISTORIKK} from '../konstanter';
 
 interface Props {
-    kildeSomSendesMedEvent: string;
+  kildeSomSendesMedEvent: string;
 }
+
 export const LenkeTilHistorikk: FunctionComponent<Props> = () => {
-    return (
-        <InternLenke
-            pathname={PATH_HISTORIKK}
-        >
-            Gå til sykefravær over tid
-        </InternLenke>
-    );
+  return (
+      <InternLenke
+          pathname={PATH_HISTORIKK}
+      >
+        Gå til sykefravær over tid
+      </InternLenke>
+  );
 };

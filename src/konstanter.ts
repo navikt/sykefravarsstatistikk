@@ -16,10 +16,10 @@ export const LABS_HOST = 'arbeidsgiver.labs.nais.io';
 export const PROD_HOST = 'arbeidsgiver.nav.no';
 
 export const enum MILJØ {
-    PROD = 'prod-gcp',
-    LABS = 'labs-gcp',
-    DEV = 'dev-gcp',
-    LOCAL = 'local',
+  PROD = 'prod-gcp',
+  LABS = 'labs-gcp',
+  DEV = 'dev-gcp',
+  LOCAL = 'local',
 }
 
 export const MIN_SIDE_ARBEIDSGIVER_DEV = 'https://min-side-arbeidsgiver.dev.nav.no/min-side-arbeidsgiver';
