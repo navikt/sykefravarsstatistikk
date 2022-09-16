@@ -11,6 +11,7 @@
         "@navikt/navspa": "^4.0.0",
         "@sentry/browser": "^6.17.8",
         "@testing-library/jest-dom": "^5.16.2",
+        "@testing-library/react-hooks": "8.0.1",
         "amplitude-js": "^8.16.0",
         "browserslist": "^4.17.3",
         "classnames": "^2.2.6",

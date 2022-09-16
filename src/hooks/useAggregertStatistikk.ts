@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+import useSWR, { Fetcher } from 'swr';
 import { z } from 'zod';
 import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
 import { getRestStatus, RestStatus } from '../api/api-utils';
@@ -30,7 +30,7 @@ const ResponseValidator = z.object({
     trendTotalt: z.array(StatistikkValidator).default([]),
     tapteDagsverkTotalt: z.array(StatistikkValidator).default([]),
     muligeDagsverkTotalt: z.array(StatistikkValidator).default([])
-})
+}).strict("Ukjent datastruktur")
 
 export type AggregertStatistikk = {
     prosentSiste4KvartalerTotalt?: StatistikkType,
@@ -49,7 +49,9 @@ export type AggregertStatistikkResponse = {
     error?: any
 }
 
-const fetcher = async (input: RequestInfo) => {
+
+
+const defaultFetcher: Fetcher<{data: any, status: number}> = async (input: RequestInfo) => {
     const res = await fetch(input, { method: 'GET', credentials: 'include', })
 
     if(!res.ok) {
@@ -86,8 +88,15 @@ const groupByCategory = (aggregertStatistikk: Response) => {
     return map
 }
 
-function useFetch(orgnr: string) {
-    const { data, error } = useSWR(`${BASE_PATH}/api/${orgnr}/v1/sykefravarshistorikk/aggregert`, fetcher)
+function useFetch(orgnr: string, fetcher?: Fetcher<{data: any, status: number}>) {
+    const _fetcher = fetcher? fetcher : defaultFetcher
+    const { data, error } = useSWR(`${BASE_PATH}/api/${orgnr}/v1/sykefravarshistorikk/aggregert`, _fetcher)
+
+    if(data && getRestStatus(data.status) === RestStatus.Feil) return {
+        data: undefined,
+        isLoading: false,
+        isError: error
+    }
 
     return {
         data: data,
@@ -97,9 +106,9 @@ function useFetch(orgnr: string) {
 }
 
 
-function useAggregertStatistikk (): AggregertStatistikkResponse {
+function useAggregertStatistikk (fetcher?: Fetcher<{data: any, status: number}>): AggregertStatistikkResponse {
     const orgnr = useOrgnr() || "";
-    const { data, isLoading, isError } = useFetch(orgnr)
+    const { data, isLoading, isError } = useFetch(orgnr, fetcher)
 
     if(isError) {
         return {
@@ -114,6 +123,20 @@ function useAggregertStatistikk (): AggregertStatistikkResponse {
         }
     }
 
+    if(data && getRestStatus(data.status) === RestStatus.IngenTilgang) {
+        return {
+            restStatus: RestStatus.IngenTilgang,
+            aggregertData: undefined
+        }
+    }
+
+    if(data && getRestStatus(data.status) === RestStatus.IkkeInnlogget) {
+        return {
+            restStatus: RestStatus.IkkeInnlogget,
+            aggregertData: undefined
+        }
+    }
+
     try {
         return {
             restStatus: getRestStatus(data ? data.status : 0),
@@ -122,8 +145,8 @@ function useAggregertStatistikk (): AggregertStatistikkResponse {
     } catch (e) {
         if(data){
             return {
-                restStatus: getRestStatus(data.status),
-                error: e
+                restStatus: RestStatus.Feil,
+                error: new Error("Kunne ikke parse aggregert data", {cause: e as Error})
             }
         }
         return {
