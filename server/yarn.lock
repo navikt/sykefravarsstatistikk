@@ -1110,10 +1110,10 @@ is-yarn-global@^0.3.0:
   resolved "https://registry.yarnpkg.com/is-yarn-global/-/is-yarn-global-0.3.0.tgz#d502d3382590ea3004893746754c89139973e232"
   integrity sha512-VjSeb/lHmkoyd8ryPVIKvOCn4D1koMqY+vqyjjUfc3xyKtP4dYOxM44sZrnqQSzSds3xyOrUTLTC9LVCVgLngw==
 
-jose@^4.1.4, jose@^4.4.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/jose/-/jose-4.7.0.tgz#f0a88709285e1a6c1ba7df0d19e33f64aca03cad"
-  integrity sha512-DJNm2vlcVW+0Fhl5LVxdhXK5Nw5VYZvL79uiq3ZCRm6vqzTuEVT9T5lIRfzmkGbaaiV+edefGog25TWVyJ4mRQ==
+jose@^4.1.4, jose@^4.9.2:
+  version "4.9.2"
+  resolved "https://registry.yarnpkg.com/jose/-/jose-4.9.2.tgz#268994df4443b9c191de0b001c2e3796ac6cf368"
+  integrity sha512-EqKvu2PqJCD3Jrg3PvcYZVS7D21qMVLSYMDAFcOdGUEOpJSLNtJO7NjLANvu3SYHVl6pdP2ff7ve6EZW2nX7Nw==
 
 jsdom@^16.7.0:
   version "16.7.0"
