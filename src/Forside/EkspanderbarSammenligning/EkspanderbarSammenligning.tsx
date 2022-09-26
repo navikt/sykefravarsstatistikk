@@ -1,133 +1,104 @@
-import React, { FunctionComponent } from 'react';
-import { RestSummertSykefraværshistorikk } from '../../api/summert-sykefraværshistorikk-api';
-import { EkspanderbartSammenligningspanel } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
-import { RestStatus } from '../../api/api-utils';
+import React, {FunctionComponent} from 'react';
+import {Statistikkategori} from '../../api/summert-sykefraværshistorikk-api';
+import {
+  EkspanderbartSammenligningspanel,
+  getVurdering,
+} from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
+import {RestStatus} from '../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
-import { getSammenligningResultat, summertHistorikkHarBransje } from '../vurdering-utils';
-import { SykefraværVurdering } from '../Speedometer/Speedometer';
-import { SammenligningsType } from '../vurderingstekster';
-import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngress';
-import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
+import {SammenligningsType} from '../vurderingstekster';
+import {SammenligningIngress} from '../SammenligningIngress/SammenligningIngress';
+import {
+  SlikHarViKommetFramTilDittResultat,
+} from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
 import './EkspanderbarSammenligning.less';
-import { RestVirksomhetsdata } from '../../api/virksomhetsdata-api';
-import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
-import { Element } from 'nav-frontend-typografi';
-import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
+import {DinNæringEllerBransje} from './DinNæringEllerBransje/DinNæringEllerBransje';
+import {Element} from 'nav-frontend-typografi';
+import {AggregertStatistikkResponse} from '../../hooks/useAggregertStatistikk';
 
 interface Props {
-    restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk;
-    restVirksomhetsdata: RestVirksomhetsdata;
+  aggregertStatistikk: AggregertStatistikkResponse;
+}
+
+const getBransjeEllerNæringKategori = (aggregertStatistikk: AggregertStatistikkResponse) => {
+  if (aggregertStatistikk.aggregertData?.has(Statistikkategori.BRANSJE)) return Statistikkategori.BRANSJE;
+  if (aggregertStatistikk.aggregertData?.has(Statistikkategori.NÆRING)) return Statistikkategori.NÆRING;
+  return undefined
 }
 
 export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
-    restSummertSykefraværshistorikk,
-    restVirksomhetsdata,
-}) => {
-    if (
-        restSummertSykefraværshistorikk.status === RestStatus.IngenTilgang ||
-        restSummertSykefraværshistorikk.status === RestStatus.IkkeInnlogget
-    ) {
-        return null;
-    }
+                                                                      aggregertStatistikk
+                                                                    }) => {
+  if (
+      aggregertStatistikk.restStatus === RestStatus.IngenTilgang ||
+      aggregertStatistikk.restStatus === RestStatus.IkkeInnlogget
+  ) {
+    return null;
+  }
 
-    if (
-        restSummertSykefraværshistorikk.status === RestStatus.LasterInn ||
-        restSummertSykefraværshistorikk.status === RestStatus.IkkeLastet
-    ) {
-        return (
-            <Skeleton
-                className="ekspanderbart-sammenligningspanel__loading-skeleton"
-                height={355}
-            />
-        );
-    }
-
-    const bransje: ArbeidsmiljøportalenBransje | undefined =
-        restVirksomhetsdata.status === RestStatus.Suksess
-            ? restVirksomhetsdata.data.bransje
-            : undefined;
-
-    const harBransje =
-        restSummertSykefraværshistorikk.status === RestStatus.Suksess &&
-        summertHistorikkHarBransje(restSummertSykefraværshistorikk.data);
-    const {
-        sammenligningResultatTotalt,
-        sammenligningResultatKorttid,
-        sammenligningResultatLangtid,
-        sammenligningResultatGradert,
-    } = getSammenligningResultat(restSummertSykefraværshistorikk);
-
-    const antallKvartalerVirksomhet =
-        sammenligningResultatTotalt.sammenligningVurdering ===
-            SykefraværVurdering.UFULLSTENDIG_DATA ||
-        sammenligningResultatTotalt.sammenligningVurdering === SykefraværVurdering.INGEN_DATA ? (
-            <strong> {sammenligningResultatTotalt.kvartaler?.length || 0} av 4 kvartaler</strong>
-        ) : null;
-
-    const antallKvartalerBransje =
-        sammenligningResultatTotalt.sammenligningVurdering ===
-            SykefraværVurdering.UFULLSTENDIG_DATA ||
-        sammenligningResultatTotalt.sammenligningVurdering === SykefraværVurdering.INGEN_DATA ? (
-            <strong>4 av 4 kvartaler</strong>
-        ) : null;
-
+  if (
+      aggregertStatistikk.restStatus === RestStatus.LasterInn ||
+      aggregertStatistikk.restStatus === RestStatus.IkkeLastet
+  ) {
     return (
-        <div className="ekspanderbar-sammenligning">
-            <SammenligningIngress bransje={bransje} harBransje={harBransje} />
-            <SlikHarViKommetFramTilDittResultat
-                resultat={sammenligningResultatTotalt.sammenligningVurdering}
-                kvartaler={sammenligningResultatTotalt.kvartaler}
-            />
-            <DinNæringEllerBransje
-                restSummertSykefraværshistorikk={restSummertSykefraværshistorikk}
-            />
-            <Element className="ekspanderbar-sammenligning__undertittel">
-                Overordnet sammenligning:
-            </Element>
-            <EkspanderbartSammenligningspanel
-                className="ekspanderbar-sammenligning__sammenligning-totalt"
-                sykefraværVurdering={sammenligningResultatTotalt.sammenligningVurdering}
-                sykefraværVirksomhet={sammenligningResultatTotalt.sykefraværVirksomhet}
-                sykefraværBransje={sammenligningResultatTotalt.sykefraværNæringEllerBransje}
-                antallKvartalerVirksomhet={antallKvartalerVirksomhet}
-                antallKvartalerBransje={antallKvartalerBransje}
-                sammenligningsType={SammenligningsType.TOTALT}
-                bransje={bransje}
-                harBransje={harBransje}
-            />
-            <Element className="ekspanderbar-sammenligning__undertittel">
-                Detaljert sammenligning:
-            </Element>
-            <EkspanderbartSammenligningspanel
-                sykefraværVurdering={sammenligningResultatGradert.sammenligningVurdering}
-                sykefraværVirksomhet={sammenligningResultatGradert.sykefraværVirksomhet}
-                sykefraværBransje={sammenligningResultatGradert.sykefraværNæringEllerBransje}
-                antallKvartalerVirksomhet={antallKvartalerVirksomhet}
-                antallKvartalerBransje={antallKvartalerBransje}
-                sammenligningsType={SammenligningsType.GRADERT}
-                bransje={bransje}
-                harBransje={harBransje}
-            />
-            <EkspanderbartSammenligningspanel
-                sykefraværVurdering={sammenligningResultatKorttid.sammenligningVurdering}
-                sykefraværVirksomhet={sammenligningResultatKorttid.sykefraværVirksomhet}
-                sykefraværBransje={sammenligningResultatKorttid.sykefraværNæringEllerBransje}
-                antallKvartalerVirksomhet={antallKvartalerVirksomhet}
-                antallKvartalerBransje={antallKvartalerBransje}
-                sammenligningsType={SammenligningsType.KORTTID}
-                bransje={bransje}
-                harBransje={harBransje}
-            />
-            <EkspanderbartSammenligningspanel
-                sykefraværVurdering={sammenligningResultatLangtid.sammenligningVurdering}
-                sykefraværVirksomhet={sammenligningResultatLangtid.sykefraværVirksomhet}
-                sykefraværBransje={sammenligningResultatLangtid.sykefraværNæringEllerBransje}
-                antallKvartalerVirksomhet={antallKvartalerVirksomhet}
-                antallKvartalerBransje={antallKvartalerBransje}
-                sammenligningsType={SammenligningsType.LANGTID}
-                bransje={bransje}
-                harBransje={harBransje}
-            />
-        </div>
+        <Skeleton
+            className="ekspanderbart-sammenligningspanel__loading-skeleton"
+            height={355}
+        />
     );
+  }
+
+  const statistikKategori = getBransjeEllerNæringKategori(aggregertStatistikk);
+  const harBransje = statistikKategori === Statistikkategori.BRANSJE;
+
+  const [virksomhet, BransjeEllerNæring] = [
+    aggregertStatistikk.aggregertData?.get(Statistikkategori.VIRKSOMHET),
+    aggregertStatistikk.aggregertData?.get(harBransje ? Statistikkategori.BRANSJE : Statistikkategori.NÆRING),
+  ]
+
+  return (
+      <div className="ekspanderbar-sammenligning">
+        <SammenligningIngress harBransje={harBransje}/>
+        <SlikHarViKommetFramTilDittResultat
+            resultat={getVurdering(virksomhet?.prosentSiste4KvartalerTotalt, BransjeEllerNæring?.prosentSiste4KvartalerTotalt)}
+            kvartaler={virksomhet?.prosentSiste4KvartalerTotalt?.kvartalerIBeregningen}
+        />
+        <DinNæringEllerBransje
+            restStatus={aggregertStatistikk.restStatus}
+            statistikKategori={statistikKategori}
+            label={BransjeEllerNæring?.prosentSiste4KvartalerTotalt?.label || ""}
+        />
+        <Element className="ekspanderbar-sammenligning__undertittel">
+          Overordnet sammenligning:
+        </Element>
+        <EkspanderbartSammenligningspanel
+            className="ekspanderbar-sammenligning__sammenligning-totalt"
+            virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerTotalt}
+            bransjeEllerNæringStatistikk={BransjeEllerNæring?.prosentSiste4KvartalerTotalt}
+            sammenligningsType={SammenligningsType.TOTALT}
+            harBransje={harBransje}
+        />
+        <Element className="ekspanderbar-sammenligning__undertittel">
+          Detaljert sammenligning:
+        </Element>
+        <EkspanderbartSammenligningspanel
+            virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerGradert}
+            bransjeEllerNæringStatistikk={BransjeEllerNæring?.prosentSiste4KvartalerGradert}
+            sammenligningsType={SammenligningsType.GRADERT}
+            harBransje={harBransje}
+        />
+        <EkspanderbartSammenligningspanel
+            virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerKorttid}
+            bransjeEllerNæringStatistikk={BransjeEllerNæring?.prosentSiste4KvartalerKorttid}
+            sammenligningsType={SammenligningsType.KORTTID}
+            harBransje={harBransje}
+        />
+        <EkspanderbartSammenligningspanel
+            virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerLangtid}
+            bransjeEllerNæringStatistikk={BransjeEllerNæring?.prosentSiste4KvartalerLangtid}
+            sammenligningsType={SammenligningsType.LANGTID}
+            harBransje={harBransje}
+        />
+      </div>
+  );
 };

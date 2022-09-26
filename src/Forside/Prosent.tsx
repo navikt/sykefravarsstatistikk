@@ -1,17 +1,20 @@
-import React, { FunctionComponent } from 'react';
-import { formaterProsent } from '../utils/app-utils';
+import React, {FunctionComponent} from 'react';
 
 interface Props {
-    prosent: number | null | undefined;
-    strong?: boolean;
+  prosent: string | null | undefined;
+  strong?: boolean;
 }
 
-export const Prosent: FunctionComponent<Props> = ({ prosent, strong }) => {
-    const prosentErTall = prosent !== null && prosent !== undefined;
-    const formatertProsent = prosentErTall ? formaterProsent(prosent) : '—';
-    if (strong) {
-        return <strong>{formatertProsent}&nbsp;%</strong>;
-    } else {
-        return <>{formatertProsent}&nbsp;%</>;
-    }
+const norskDesimalFormat = (tall: string) => {
+  return tall.replace(".", ",");
+}
+
+export const Prosent: FunctionComponent<Props> = ({prosent, strong}) => {
+  const prosentErTall = prosent !== null && prosent !== undefined;
+  const formatertProsent = norskDesimalFormat(prosentErTall ? prosent : '—');
+  if (strong) {
+    return <strong>{formatertProsent}&nbsp;%</strong>;
+  } else {
+    return <>{formatertProsent}&nbsp;%</>;
+  }
 };

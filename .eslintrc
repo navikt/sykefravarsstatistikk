@@ -33,7 +33,10 @@
   ],
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx"],
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
       "rules": {
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": "error",
@@ -42,12 +45,22 @@
     },
     {
       // Enable only for tests
-      "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
-      "extends": ["plugin:testing-library/react", "plugin:jest/recommended"]
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": [
+        "plugin:testing-library/react",
+        "plugin:jest/recommended"
+      ]
     },
     {
-      "files": ["cypress/**/*.spec.*"],
-      "extends": ["plugin:cypress/recommended"] ,
+      "files": [
+        "cypress/**/*.spec.*"
+      ],
+      "extends": [
+        "plugin:cypress/recommended"
+      ],
       "rules": {
         "jest/valid-expect": "off"
       }

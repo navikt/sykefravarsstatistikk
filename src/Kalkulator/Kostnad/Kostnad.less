@@ -1,42 +1,47 @@
 @import '../../variables';
 
 .kostnad {
-    margin-top: 2rem;
-    padding: 2rem 1rem 3rem;
-    border-radius: 0.25rem;
-    border: 0.125rem solid @navBlaLighten60;
+  margin-top: 2rem;
+  padding: 2rem 1rem 3rem;
+  border-radius: 0.25rem;
+  border: 0.125rem solid @navBlaLighten60;
 
-    &__tittel {
-        display: flex;
-    }
+  &__tittel {
+    display: flex;
+  }
 
-    &__ikon {
-        margin-left: 1rem;
-    }
+  &__ikon {
+    margin-left: 1rem;
+  }
 
-    &__tekst {
-        padding-top: 1.5rem;
-        padding-bottom: 0.5rem;
-        display: flex;
-        justify-content: space-between;
+  &__tekst {
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__sisteresultat {
+    color: @navGronn;
+
+    &_minus {
+      color: @navRod;
     }
-    &__sisteresultat {
-        color: @navGronn;
-        &_minus {
-            color: @navRod;
-        }
-    }
-    &__sisterad {
-        border-bottom: 0.125rem solid @navLysGra;
-        padding-bottom: 1rem;
-    }
-    &__resultatrad {
-        border-bottom: 0.125rem double @navMorkGra;
-        padding-bottom: 1rem;
-    }
-    @media (min-width: @screen-sm-min) {
-        min-width: 21rem;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
+  }
+
+  &__sisterad {
+    border-bottom: 0.125rem solid @navLysGra;
+    padding-bottom: 1rem;
+  }
+
+  &__resultatrad {
+    border-bottom: 0.125rem double @navMorkGra;
+    padding-bottom: 1rem;
+  }
+
+  @media (min-width: @screen-sm-min) {
+    min-width: 21rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 }

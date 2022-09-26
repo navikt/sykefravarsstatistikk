@@ -1,51 +1,52 @@
 @import '../../../variables';
 
 .kalkulatorrad {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-top: 2rem;
+  width: 100%;
+
+  &__input {
+    width: 5rem;
+  }
+
+  &__input-hjelpetekst-wrapper {
     display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    margin-top: 2rem;
-    width: 100%;
+    align-items: center;
+  }
+
+  &__hjelpetekst {
+    margin-left: 1rem;
+  }
+
+  .kalkulatorrad {
+    // dobbel selektor pga. overskriving av default-styling
+    &__spinner {
+      width: 1rem;
+      height: 1rem;
+      margin-bottom: -0.2rem;
+    }
+  }
+
+  &__hjelpetekst-innhold {
+    max-width: 25rem;
+  }
+
+  @media (min-width: @screen-sm-min) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 22rem;
 
     &__input {
-        width: 5rem;
-    }
-
-    &__input-hjelpetekst-wrapper {
-        display: flex;
-        align-items: center;
-    }
-
-    &__hjelpetekst {
+      &.skjemaelement {
         margin-left: 1rem;
+      }
     }
 
-    .kalkulatorrad {
-        // dobbel selektor pga. overskriving av default-styling
-        &__spinner {
-            width: 1rem;
-            height: 1rem;
-            margin-bottom: -0.2rem;
-        }
+    &__input-no-hjelpetekst-wrapper {
+      padding-right: 2.5rem;
     }
-
-    &__hjelpetekst-innhold {
-        max-width: 25rem;
-    }
-
-    @media (min-width: @screen-sm-min) {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        max-width: 22rem;
-
-        &__input {
-            &.skjemaelement {
-                margin-left: 1rem;
-            }
-        }
-        &__input-no-hjelpetekst-wrapper {
-            padding-right: 2.5rem;
-        }
-    }
+  }
 }

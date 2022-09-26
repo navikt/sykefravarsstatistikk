@@ -1,50 +1,50 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { AsyncNavspa } from '@navikt/navspa';
+import {AsyncNavspa} from '@navikt/navspa';
 import './microfrontends.less';
-import { SAMTALESTØTTE_MIKROFONTEND, SAMTALESTØTTE_MIKROFRONTEND_PATH } from '../konstanter';
-import { getMiljø } from '../utils/miljøUtils';
+import {SAMTALESTØTTE_MIKROFONTEND, SAMTALESTØTTE_MIKROFRONTEND_PATH} from '../konstanter';
+import {getMiljø} from '../utils/miljøUtils';
 
 export type PodletProps = {
-    visning: string | undefined;
-    orgnr?: string;
+  visning: string | undefined;
+  orgnr?: string;
 };
 
 export type MikrofrontendConfig = {
-    appBaseUrl: string;
+  appBaseUrl: string;
 };
 
 const LasterInn: FunctionComponent = () => (
     <div className="microfrontends__laster-inn">
-        <NavFrontendSpinner />
+      <NavFrontendSpinner/>
     </div>
 );
 
 const getMikrofrontendConfig = (): MikrofrontendConfig => {
-    const miljø = getMiljø();
+  const miljø = getMiljø();
 
-    switch (miljø) {
-        case 'dev-gcp':
-            return {
-                appBaseUrl:
-                    'https://arbeidsgiver-gcp.dev.nav.no' + SAMTALESTØTTE_MIKROFRONTEND_PATH,
-            };
+  switch (miljø) {
+    case 'dev-gcp':
+      return {
+        appBaseUrl:
+            'https://arbeidsgiver-gcp.dev.nav.no' + SAMTALESTØTTE_MIKROFRONTEND_PATH,
+      };
 
-        case 'local':
-            return {
-                appBaseUrl: 'http://localhost:3001' + SAMTALESTØTTE_MIKROFRONTEND_PATH,
-            };
+    case 'local':
+      return {
+        appBaseUrl: 'http://localhost:3001' + SAMTALESTØTTE_MIKROFRONTEND_PATH,
+      };
 
-        default:
-            return { appBaseUrl: SAMTALESTØTTE_MIKROFRONTEND_PATH };
-    }
+    default:
+      return {appBaseUrl: SAMTALESTØTTE_MIKROFRONTEND_PATH};
+  }
 };
 
 const samtalestottePodletConfig = {
-    appName: SAMTALESTØTTE_MIKROFONTEND,
-    appBaseUrl: getMikrofrontendConfig().appBaseUrl,
-    loader: <LasterInn />,
+  appName: SAMTALESTØTTE_MIKROFONTEND,
+  appBaseUrl: getMikrofrontendConfig().appBaseUrl,
+  loader: <LasterInn/>,
 };
 
 export const SamtalestøttePodlet = AsyncNavspa.importer<PodletProps>(samtalestottePodletConfig);
