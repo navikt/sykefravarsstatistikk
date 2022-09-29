@@ -17,7 +17,7 @@ import {aggregertMockData} from './aggregert-mock';
 
 const mock = {
   minSideArbeidsgiver: true,
-  sykefraværsstatistikkApi: true,
+  sykefraværsstatistikkApi: false,
   enhetsregisteret: true,
   featureToggles: true,
   iatjenester: true,

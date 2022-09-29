@@ -25,7 +25,8 @@ const listeAvTillatteUrler = [
   new RegExp('^' + FRONTEND_API_PATH + '/organisasjoner'),
   new RegExp('^' + FRONTEND_API_PATH + '/feature'),
   new RegExp(
-      '^' + FRONTEND_API_PATH + '/[0-9]{9}/v1/sykefravarshistorikk/aggregert')
+      '^' + FRONTEND_API_PATH + '/[0-9]{9}/v1/sykefravarshistorikk/aggregert'),
+  new RegExp('^' + FRONTEND_API_PATH + '/publiseringsdatoer')
 ];
 
 const proxyConfig = {

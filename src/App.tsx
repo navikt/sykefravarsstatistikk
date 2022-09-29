@@ -69,7 +69,8 @@ export const AppContent = ({
                              analyticsClient,
                              enhetsregisterdata,
                              samtalestøttePodlet,
-                             aggregertStatistikk
+                             aggregertStatistikk,
+                             publiseringsdatoer
                            }: SykefraværAppData & {
   analyticsClient: AnalyticsClient;
   samtalestøttePodlet?: React.ReactNode;
@@ -120,6 +121,8 @@ export const AppContent = ({
   const restSykefraværshistorikk = sykefraværshistorikk;
   const restvirksomhetsdata = virksomhetsdata;
 
+  const restPubliseringsdatoer = publiseringsdatoer;
+
   const brukerHarIkkeTilgangTilNoenOrganisasjoner =
       restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
 
@@ -158,6 +161,7 @@ export const AppContent = ({
                 >
                   <EkspanderbarSammenligning
                       aggregertStatistikk={aggregertStatistikk}
+                      restPubliseringsdatoer={restPubliseringsdatoer}
                   />
                 </Sammenligningspanel>
                 <div className={'app__lenkepanelWrapper'}>
