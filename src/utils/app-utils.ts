@@ -1,10 +1,5 @@
 import {ÅrstallOgKvartal} from './sykefraværshistorikk-utils';
 
-const sistOppdatert = new Date('2022-09-08');
-const nesteOppdatering = new Date('2022-12-01');
-export const periodeFra = new Date('2021-07-01');
-export const periodeTil = new Date('2022-06-30');
-
 // TODO Hardkodede tall
 export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
   {
@@ -25,57 +20,12 @@ export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
   },
 ];
 
-const ANTALL_DAGER_HVOR_VI_VISER_SIST_OPPDATERT = 45;
 
-export const getTekstForOppdateringsdato = (
-    dagensDato: Date = new Date(),
-    sistOppdatertDato: Date = sistOppdatert,
-    nesteOppdateringDato: Date = nesteOppdatering,
-    brukSomAriaLabel: boolean = false
-): string => {
-  let sistOppdatertPlussAntallDagerHvorViViserSistOppdatert = new Date(sistOppdatertDato);
-  sistOppdatertPlussAntallDagerHvorViViserSistOppdatert.setDate(
-      sistOppdatertPlussAntallDagerHvorViViserSistOppdatert.getDate() +
-      ANTALL_DAGER_HVOR_VI_VISER_SIST_OPPDATERT
-  );
-
-  const erOver45Dager = dagensDato > sistOppdatertPlussAntallDagerHvorViViserSistOppdatert;
-
-  if (erOver45Dager) {
-    return `Neste oppdatering: ${
-        brukSomAriaLabel
-            ? formatterDatoMedMånedNavn(nesteOppdateringDato)
-            : formatterDato(nesteOppdateringDato)
-    }`;
-  } else {
-    return `Sist oppdatert: ${
-        brukSomAriaLabel
-            ? formatterDatoMedMånedNavn(sistOppdatertDato)
-            : formatterDato(sistOppdatertDato)
-    }`;
-  }
-};
-
-export const getAriaLabelTekstForOppdateringsdato = () => {
-  return getTekstForOppdateringsdato(new Date(), sistOppdatert, nesteOppdatering, true);
-};
 export const formaterProsent = (prosent: number | null | undefined): string => {
   if (prosent === undefined || prosent === null) {
     return '';
   }
   return Number(prosent).toFixed(1).toString().replace('.', ',');
-};
-
-const formatterDato = (dato: Date): string => {
-  const days = dato.getDate();
-  const month = dato.getMonth() + 1;
-  const year = dato.getFullYear();
-
-  return `${days.toLocaleString('nb', {
-    minimumIntegerDigits: 2,
-  })}.${month.toLocaleString('nb', {
-    minimumIntegerDigits: 2,
-  })}.${year}`;
 };
 
 export const tilIsoDatoMedUtcTimezoneUtenMillis = (dato: Date): String => {
@@ -97,7 +47,7 @@ const månedsnavn = [
   'desember',
 ];
 
-export const getÅrstallOgKvartalTilPeriode = (årstallOgKvartal: ÅrstallOgKvartal): string => {
+export const getPeriodeMedDato = (årstallOgKvartal: ÅrstallOgKvartal): string => {
   if (årstallOgKvartal.kvartal === 1) {
     return `1. april ${årstallOgKvartal.årstall-1} til 31. mars ${årstallOgKvartal.årstall}`;
   } else if (årstallOgKvartal.kvartal === 2) {

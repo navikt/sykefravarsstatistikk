@@ -1,20 +1,40 @@
-import React, {FunctionComponent} from "react";
+import React, {FunctionComponent, ReactElement} from "react";
 import {SykefraværVurdering} from "../Speedometer/Speedometer";
 import {ÅrstallOgKvartal} from "../../utils/sykefraværshistorikk-utils";
 import {Normaltekst} from "nav-frontend-typografi";
 import "./SlikHarViKommetFramTilDittResultatTekst.less";
 import {LenkeTilHistorikk} from "../../felleskomponenter/LenkeTilHistorikk";
-import {siste4PubliserteKvartaler} from "../../utils/app-utils";
+import {getPeriodeMedDato, siste4PubliserteKvartaler} from "../../utils/app-utils";
+import {RestPubliseringsdatoer} from "../../api/publiseringsdatoer-api";
+import {RestStatus} from "../../api/api-utils";
+import NavFrontendSpinner from "nav-frontend-spinner";
 
 interface Props {
   resultat: SykefraværVurdering;
   kvartaler?: ÅrstallOgKvartal[];
+  restPubliseringsdatoer: RestPubliseringsdatoer;
 }
 
 export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> = ({
                                                                                     resultat,
                                                                                     kvartaler,
+                                                                                    restPubliseringsdatoer,
                                                                                   }) => {
+  const getPeriodeElement = (): ReactElement => {
+    if (restPubliseringsdatoer.status === RestStatus.Suksess) {
+      return (
+      <Normaltekst>{`Periode: `+ getPeriodeMedDato(restPubliseringsdatoer.data.gjeldendePeriode)}</Normaltekst>
+      )
+    } else if (
+        restPubliseringsdatoer.status === RestStatus.LasterInn ||
+        restPubliseringsdatoer.status === RestStatus.IkkeLastet
+    ) {
+      return <NavFrontendSpinner/>
+    } else {
+      return <Normaltekst>{""}</Normaltekst>
+    }
+  }
+
   switch (resultat) {
     case SykefraværVurdering.OVER:
     case SykefraværVurdering.MIDDELS:
@@ -46,7 +66,7 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
             <Normaltekst>
               Bransjens tall er beregnet på sykefraværsstatistikk fra:
             </Normaltekst>
-            <Kvartalsliste kvartaler={siste4PubliserteKvartaler}/>
+            {getPeriodeElement()}
             <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total"/>
           </>
       );

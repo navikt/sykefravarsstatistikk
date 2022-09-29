@@ -2,7 +2,7 @@ import React, {FunctionComponent, ReactElement} from 'react';
 import {Ingress, Normaltekst} from 'nav-frontend-typografi';
 import {
   formatterDatoMedMånedNavn,
-  getÅrstallOgKvartalTilPeriode,
+  getPeriodeMedDato,
 } from '../../utils/app-utils';
 import './ForklaringAvPeriode.less';
 import {SammenligningsType} from '../vurderingstekster';
@@ -49,7 +49,7 @@ export const ForklaringAvPeriode: FunctionComponent<Props> = (
     if (restPubliseringsdatoer.status === RestStatus.Suksess) {
       return (
           <div>
-            <Normaltekst>{`Periode: `+ getÅrstallOgKvartalTilPeriode(restPubliseringsdatoer.data.gjeldendePeriode)}</Normaltekst>
+            <Normaltekst>{`Periode: `+ getPeriodeMedDato(restPubliseringsdatoer.data.gjeldendePeriode)}</Normaltekst>
           </div>
       )
     } else if (

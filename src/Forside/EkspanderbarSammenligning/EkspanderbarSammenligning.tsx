@@ -65,6 +65,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
         <SlikHarViKommetFramTilDittResultat
             resultat={getVurdering(virksomhet?.prosentSiste4KvartalerTotalt, BransjeEllerNæring?.prosentSiste4KvartalerTotalt)}
             kvartaler={virksomhet?.prosentSiste4KvartalerTotalt?.kvartalerIBeregningen}
+            restPubliseringsdatoer={restPubliseringsdatoer}
         />
         <DinNæringEllerBransje
             restStatus={aggregertStatistikk.restStatus}
