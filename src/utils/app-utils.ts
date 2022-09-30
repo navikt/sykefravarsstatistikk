@@ -1,26 +1,5 @@
 import {ÅrstallOgKvartal} from './sykefraværshistorikk-utils';
 
-// TODO Hardkodede tall
-export const siste4PubliserteKvartaler: ÅrstallOgKvartal[] = [
-  {
-    årstall: 2022,
-    kvartal: 2,
-  },
-  {
-    årstall: 2022,
-    kvartal: 1,
-  },
-  {
-    årstall: 2021,
-    kvartal: 4,
-  },
-  {
-    årstall: 2021,
-    kvartal: 3,
-  },
-];
-
-
 export const formaterProsent = (prosent: number | null | undefined): string => {
   if (prosent === undefined || prosent === null) {
     return '';

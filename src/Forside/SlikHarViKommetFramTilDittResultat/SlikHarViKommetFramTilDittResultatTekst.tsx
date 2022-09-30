@@ -4,7 +4,7 @@ import {ÅrstallOgKvartal} from "../../utils/sykefraværshistorikk-utils";
 import {Normaltekst} from "nav-frontend-typografi";
 import "./SlikHarViKommetFramTilDittResultatTekst.less";
 import {LenkeTilHistorikk} from "../../felleskomponenter/LenkeTilHistorikk";
-import {getPeriodeMedDato, siste4PubliserteKvartaler} from "../../utils/app-utils";
+import {getPeriodeMedDato} from "../../utils/app-utils";
 import {RestPubliseringsdatoer} from "../../api/publiseringsdatoer-api";
 import {RestStatus} from "../../api/api-utils";
 import NavFrontendSpinner from "nav-frontend-spinner";
@@ -23,7 +23,11 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
   const getPeriodeElement = (): ReactElement => {
     if (restPubliseringsdatoer.status === RestStatus.Suksess) {
       return (
-      <Normaltekst>{`Periode: `+ getPeriodeMedDato(restPubliseringsdatoer.data.gjeldendePeriode)}</Normaltekst>
+          <Normaltekst>{
+              `Tallene er beregnet på sykefraværsstatistikk fra `+
+              getPeriodeMedDato(restPubliseringsdatoer.data.gjeldendePeriode) +
+              ` (fire siste kvartaler).`
+          }</Normaltekst>
       )
     } else if (
         restPubliseringsdatoer.status === RestStatus.LasterInn ||
@@ -82,7 +86,7 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
             <Normaltekst>
               Bransjens tall er beregnet på sykefraværsstatistikk fra:
             </Normaltekst>
-            <Kvartalsliste kvartaler={siste4PubliserteKvartaler}/>
+            {getPeriodeElement()}
             <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total"/>
           </>
       );
@@ -96,7 +100,7 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
             <Normaltekst>
               Bransjens tall er beregnet på sykefraværsstatistikk fra:
             </Normaltekst>
-            <Kvartalsliste kvartaler={siste4PubliserteKvartaler}/>
+            {getPeriodeElement()}
           </>
       );
     case SykefraværVurdering.FEIL:
