@@ -28,7 +28,7 @@ const getBransjeEllerNæringKategori = (aggregertStatistikk: AggregertStatistikk
 
 export const EkspanderbarSammenligning: FunctionComponent<Props> = ({ aggregertStatistikk }) => {
     if (
-        aggregertStatistikk.restStatus === RestStatus.,IngenTilgang ||
+        aggregertStatistikk.restStatus === RestStatus.IngenTilgang ||
         aggregertStatistikk.restStatus === RestStatus.IkkeInnlogget
     ) {
         return null;
