@@ -44,7 +44,7 @@ jobs:
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/Migrere_deploy_script_fra_docker.pkg.github.com_til_ghcr.io'
+        if: github.ref == 'refs/heads/master'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
