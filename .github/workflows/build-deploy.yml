@@ -74,7 +74,7 @@ jobs:
 
     deploy-to-prod-gcp:
         name: Deploy to prod-gcp
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/minors-oct22'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
