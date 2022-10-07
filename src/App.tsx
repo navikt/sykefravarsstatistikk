@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useEffect, useMemo} from 'react';
 import Banner from './Banner/Banner';
-import {Route} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
 import {RestRessurs, RestStatus} from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
@@ -142,14 +142,11 @@ export const AppContent = ({
     return <ManglerRettighetRedirect/>
   } else {
     innhold = (
-        <>
-          <Route path={PATH_FORSIDE_BARNEHAGE}>
-            <LegacyBarnehageSammenligningRedirect/>
-          </Route>
-          <Route path={PATH_FORSIDE_GENERELL}>
-            <LegacySammenligningRedirect/>
-          </Route>
-          <Route path={PATH_FORSIDE} exact={true}>
+        <Routes>
+          <Route path={PATH_FORSIDE_BARNEHAGE} element={<LegacyBarnehageSammenligningRedirect/>}/>
+          <Route path={PATH_FORSIDE_GENERELL} element={<LegacySammenligningRedirect/>}/>
+          <Route path={PATH_FORSIDE} element={
+            <>
             <Brødsmulesti gjeldendeSide="sykefraværsstatistikk"/>
             <InnloggingssideWrapper
                 aggregertStatistikk={aggregertStatistikk}
@@ -171,19 +168,24 @@ export const AppContent = ({
                 <ArbeidsmiljøportalPanel restvirksomhetsdata={restvirksomhetsdata}/>
               </Forside>
             </InnloggingssideWrapper>
-          </Route>
-          <Route path={PATH_KALKULATOR} exact={true}>
-            <Brødsmulesti gjeldendeSide="kalkulator"/>
-            <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk}/>
-          </Route>
-          <Route path={PATH_HISTORIKK} exact={true}>
-            <Brødsmulesti gjeldendeSide="historikk"/>
-            <GrafOgTabell
-                restSykefraværsstatistikk={restSykefraværshistorikk}
-                restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
-            />
-          </Route>
-        </>
+          </>
+          }/>
+          <Route path={PATH_KALKULATOR} element={
+            <>
+              <Brødsmulesti gjeldendeSide="kalkulator"/>
+              <Kalkulator restSykefraværshistorikk={restSykefraværshistorikk}/>
+            </>
+          } />
+          <Route path={PATH_HISTORIKK} element={
+            <>
+              <Brødsmulesti gjeldendeSide="historikk"/>
+              <GrafOgTabell
+                  restSykefraværsstatistikk={restSykefraværshistorikk}
+                  restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
+              />
+            </>
+          }/>
+        </Routes>
     );
   }
 

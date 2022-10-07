@@ -1,32 +1,31 @@
-import React, {FunctionComponent} from 'react';
-import {Statistikkategori} from '../../api/summert-sykefraværshistorikk-api';
+import React, { FunctionComponent } from 'react';
+import { Statistikkategori } from '../../api/summert-sykefraværshistorikk-api';
 import {
-  EkspanderbartSammenligningspanel,
-  getVurdering,
+    EkspanderbartSammenligningspanel,
+    getVurdering,
 } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
-import {RestStatus} from '../../api/api-utils';
+import { RestStatus } from '../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
-import {SammenligningsType} from '../vurderingstekster';
-import {SammenligningIngress} from '../SammenligningIngress/SammenligningIngress';
-import {
-  SlikHarViKommetFramTilDittResultat,
-} from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
+import { SammenligningsType } from '../vurderingstekster';
+import { SammenligningIngress } from '../SammenligningIngress/SammenligningIngress';
+import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
 import './EkspanderbarSammenligning.less';
-import {DinNæringEllerBransje} from './DinNæringEllerBransje/DinNæringEllerBransje';
-import {Element} from 'nav-frontend-typografi';
-import {AggregertStatistikkResponse} from '../../hooks/useAggregertStatistikk';
+import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
+import { Element } from 'nav-frontend-typografi';
+import { AggregertStatistikkResponse } from '../../hooks/useAggregertStatistikk';
 import {RestPubliseringsdatoer} from "../../api/publiseringsdatoer-api";
 
 interface Props {
-  aggregertStatistikk: AggregertStatistikkResponse;
+    aggregertStatistikk: AggregertStatistikkResponse;
   restPubliseringsdatoer: RestPubliseringsdatoer;
 }
 
 const getBransjeEllerNæringKategori = (aggregertStatistikk: AggregertStatistikkResponse) => {
-  if (aggregertStatistikk.aggregertData?.has(Statistikkategori.BRANSJE)) return Statistikkategori.BRANSJE;
-  if (aggregertStatistikk.aggregertData?.has(Statistikkategori.NÆRING)) return Statistikkategori.NÆRING;
-  return undefined
-}
+    const bransjedata = aggregertStatistikk.aggregertData?.get(Statistikkategori.BRANSJE)
+        ?.prosentSiste4KvartalerTotalt?.verdi;
+    if (bransjedata !== undefined) return Statistikkategori.BRANSJE;
+    return Statistikkategori.NÆRING;
+};
 
 export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                                                                       aggregertStatistikk,
@@ -39,25 +38,27 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
     return null;
   }
 
-  if (
-      aggregertStatistikk.restStatus === RestStatus.LasterInn ||
-      aggregertStatistikk.restStatus === RestStatus.IkkeLastet
-  ) {
-    return (
-        <Skeleton
-            className="ekspanderbart-sammenligningspanel__loading-skeleton"
-            height={355}
-        />
-    );
-  }
+    if (
+        aggregertStatistikk.restStatus === RestStatus.LasterInn ||
+        aggregertStatistikk.restStatus === RestStatus.IkkeLastet
+    ) {
+        return (
+            <Skeleton
+                className="ekspanderbart-sammenligningspanel__loading-skeleton"
+                height={355}
+            />
+        );
+    }
 
-  const statistikKategori = getBransjeEllerNæringKategori(aggregertStatistikk);
-  const harBransje = statistikKategori === Statistikkategori.BRANSJE;
+    const statistikKategori = getBransjeEllerNæringKategori(aggregertStatistikk);
+    const harBransje = statistikKategori === Statistikkategori.BRANSJE;
 
-  const [virksomhet, BransjeEllerNæring] = [
-    aggregertStatistikk.aggregertData?.get(Statistikkategori.VIRKSOMHET),
-    aggregertStatistikk.aggregertData?.get(harBransje ? Statistikkategori.BRANSJE : Statistikkategori.NÆRING),
-  ]
+    const [virksomhet, BransjeEllerNæring] = [
+        aggregertStatistikk.aggregertData?.get(Statistikkategori.VIRKSOMHET),
+        aggregertStatistikk.aggregertData?.get(
+            harBransje ? Statistikkategori.BRANSJE : Statistikkategori.NÆRING
+        ),
+    ];
 
   return (
       <div className="ekspanderbar-sammenligning">
@@ -70,7 +71,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
         <DinNæringEllerBransje
             restStatus={aggregertStatistikk.restStatus}
             statistikKategori={statistikKategori}
-            label={BransjeEllerNæring?.prosentSiste4KvartalerTotalt?.label || ""}
+            label={BransjeEllerNæring?.prosentSiste4KvartalerTotalt?.label || ''}
         />
         <Element className="ekspanderbar-sammenligning__undertittel">
           Overordnet sammenligning:
@@ -106,7 +107,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             sammenligningsType={SammenligningsType.LANGTID}
             harBransje={harBransje}
             restPubliseringsdatoer={restPubliseringsdatoer}
-        />
-      </div>
-  );
+            />
+        </div>
+    );
 };
