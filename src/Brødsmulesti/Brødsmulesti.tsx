@@ -7,7 +7,7 @@ import {
   medOrgnrQuery,
 } from './brødsmulesti-utils';
 import {onBreadcrumbClick, setBreadcrumbs} from '@navikt/nav-dekoratoren-moduler';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {BASE_PATH} from '../konstanter';
 import {useOrgnr} from '../hooks/useOrgnr';
 
@@ -18,7 +18,7 @@ interface Props {
 
 const Brødsmulesti: FunctionComponent<Props> = (props) => {
   const {gjeldendeSide} = props;
-  const history = useHistory();
+  const navigate = useNavigate();
   const orgnr = useOrgnr();
 
   useEffect(() => {
@@ -39,9 +39,9 @@ const Brødsmulesti: FunctionComponent<Props> = (props) => {
     );
 
     onBreadcrumbClick((breadcrumb) => {
-      history.push(breadcrumb.url.replace(BASE_PATH, ''));
+      navigate(breadcrumb.url.replace(BASE_PATH, ""))
     });
-  }, [props.config, gjeldendeSide, history, orgnr]);
+  }, [props.config, gjeldendeSide, navigate, orgnr]);
 
   return null;
 };

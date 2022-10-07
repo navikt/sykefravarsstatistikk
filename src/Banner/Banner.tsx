@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import './Banner.less';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
 import Bedriftsmeny from '@navikt/bedriftsmeny';
 import '@navikt/bedriftsmeny/lib/bedriftsmeny.css';
 import {RestStatus} from '../api/api-utils';
@@ -12,8 +11,8 @@ interface Props {
   restOrganisasjoner: RestAltinnOrganisasjoner;
 }
 
-const Banner: React.FunctionComponent<Props & RouteComponentProps> = (props) => {
-  const {history, tittel, restOrganisasjoner} = props;
+const Banner: React.FunctionComponent<Props> = (props) => {
+  const {tittel, restOrganisasjoner} = props;
   let altinnOrganisasjoner: AltinnOrganisasjon[] =
       restOrganisasjoner.status === RestStatus.Suksess ? restOrganisasjoner.data : [];
 
@@ -30,10 +29,9 @@ const Banner: React.FunctionComponent<Props & RouteComponentProps> = (props) => 
       <Bedriftsmeny
           organisasjoner={altinnOrganisasjoner}
           sidetittel={tittel}
-          history={history}
           onOrganisasjonChange={sendEventHvisBedriftBlirManueltValgt}
       />
   );
 };
 
-export default withRouter(Banner);
+export default Banner;
