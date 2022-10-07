@@ -4,11 +4,13 @@ import {ÅrstallOgKvartal} from '../../utils/sykefraværshistorikk-utils';
 import {SlikHarViKommetFramTilDittResultatTekst} from './SlikHarViKommetFramTilDittResultatTekst';
 import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 import './SlikHarViKommetFramTilDittResultat.less';
+import {RestPubliseringsdatoer} from "../../api/publiseringsdatoer-api";
 
 interface Props {
   resultat: SykefraværVurdering;
   kvartaler?: ÅrstallOgKvartal[];
   onÅpne?: () => void;
+  restPubliseringsdatoer: RestPubliseringsdatoer;
 }
 
 export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = (props) => {
@@ -22,6 +24,7 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = (pro
           <SlikHarViKommetFramTilDittResultatTekst
               resultat={props.resultat}
               kvartaler={props.kvartaler}
+              restPubliseringsdatoer={props.restPubliseringsdatoer}
           />
         </div>
       </LesMerPanel>
