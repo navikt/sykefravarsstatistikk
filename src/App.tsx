@@ -69,7 +69,8 @@ export const AppContent = ({
                              analyticsClient,
                              enhetsregisterdata,
                              samtalestøttePodlet,
-                             aggregertStatistikk
+                             aggregertStatistikk,
+                             publiseringsdatoer
                            }: SykefraværAppData & {
   analyticsClient: AnalyticsClient;
   samtalestøttePodlet?: React.ReactNode;
@@ -120,6 +121,8 @@ export const AppContent = ({
   const restSykefraværshistorikk = sykefraværshistorikk;
   const restvirksomhetsdata = virksomhetsdata;
 
+  const restPubliseringsdatoer = publiseringsdatoer;
+
   const brukerHarIkkeTilgangTilNoenOrganisasjoner =
       restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
 
@@ -144,27 +147,28 @@ export const AppContent = ({
           <Route path={PATH_FORSIDE_GENERELL} element={<LegacySammenligningRedirect/>}/>
           <Route path={PATH_FORSIDE} element={
             <>
-              <Brødsmulesti gjeldendeSide="sykefraværsstatistikk"/>
-              <InnloggingssideWrapper
-                  aggregertStatistikk={aggregertStatistikk}
-              >
-                <Forside>
-                  <Sammenligningspanel
-                      restStatus={aggregertStatistikk.restStatus}
-                      restAltinnOrganisasjoner={restOrganisasjoner}
-                  >
-                    <EkspanderbarSammenligning
-                        aggregertStatistikk={aggregertStatistikk}
-                    />
-                  </Sammenligningspanel>
-                  <div className={'app__lenkepanelWrapper'}>
-                    <Historikkpanel/>
-                    {samtalestøttePodlet}
-                  </div>
-                  <ArbeidsmiljøportalPanel restvirksomhetsdata={restvirksomhetsdata}/>
-                </Forside>
-              </InnloggingssideWrapper>
-            </>
+            <Brødsmulesti gjeldendeSide="sykefraværsstatistikk"/>
+            <InnloggingssideWrapper
+                aggregertStatistikk={aggregertStatistikk}
+            >
+              <Forside>
+                <Sammenligningspanel
+                    restStatus={aggregertStatistikk.restStatus}
+                    restAltinnOrganisasjoner={restOrganisasjoner}
+                >
+                  <EkspanderbarSammenligning
+                      aggregertStatistikk={aggregertStatistikk}
+                      restPubliseringsdatoer={restPubliseringsdatoer}
+                  />
+                </Sammenligningspanel>
+                <div className={'app__lenkepanelWrapper'}>
+                  <Historikkpanel/>
+                  {samtalestøttePodlet}
+                </div>
+                <ArbeidsmiljøportalPanel restvirksomhetsdata={restvirksomhetsdata}/>
+              </Forside>
+            </InnloggingssideWrapper>
+          </>
           }/>
           <Route path={PATH_KALKULATOR} element={
             <>
