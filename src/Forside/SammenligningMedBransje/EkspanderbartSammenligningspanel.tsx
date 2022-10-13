@@ -1,36 +1,36 @@
-import React, {FunctionComponent, ReactElement, useContext, useState} from 'react';
-import {Ingress, Normaltekst, Systemtittel} from 'nav-frontend-typografi';
+import React, { FunctionComponent, ReactElement, useContext, useState } from 'react';
+import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
-import {Speedometer, SykefraværVurdering} from '../Speedometer/Speedometer';
+import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
 import {
-  getForklaringAvVurdering,
-  getVurderingstekst,
-  SammenligningsType
+    getForklaringAvVurdering,
+    getVurderingstekst,
+    SammenligningsType,
 } from '../vurderingstekster';
-import {EkspanderbartpanelBase} from 'nav-frontend-ekspanderbartpanel';
-import {ForklaringAvPeriode} from './ForklaringAvPeriode';
-import {DetaljertVisningSykefravær} from './DetaljertVisningSykefravær';
-import {TipsVisning} from '../../felleskomponenter/tips/TipsVisning';
-import {getTips, Tips} from '../../felleskomponenter/tips/tips';
+import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
+import { ForklaringAvPeriode } from './ForklaringAvPeriode';
+import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
+import { TipsVisning } from '../../felleskomponenter/tips/TipsVisning';
+import { getTips, Tips } from '../../felleskomponenter/tips/tips';
 import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
-import {OppChevron} from 'nav-frontend-chevron';
-import {Kakediagram} from '../Kakediagram/Kakediagram';
+import { OppChevron } from 'nav-frontend-chevron';
+import { Kakediagram } from '../Kakediagram/Kakediagram';
 import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
-import {OmGradertSykmelding} from '../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
-import {sendPanelEkspanderEvent, sendPanelKollapsEvent} from '../../amplitude/events';
-import {useOrgnr} from '../../hooks/useOrgnr';
-import {iaTjenesterMetrikkerContext} from '../../metrikker/IaTjenesterMetrikkerContext';
-import {sendIaTjenesteMetrikkMottattEvent} from '../../metrikker/iatjenester';
-import {StatistikkType} from '../../hooks/useAggregertStatistikk';
+import { OmGradertSykmelding } from '../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
+import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from '../../amplitude/events';
+import { useOrgnr } from '../../hooks/useOrgnr';
+import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
+import { sendIaTjenesteMetrikkMottatt } from '../../metrikker/iatjenester';
+import { StatistikkType } from '../../hooks/useAggregertStatistikk';
 
 interface Props {
-  sammenligningsType: SammenligningsType;
-  virksomhetStatistikk?: StatistikkType;
-  bransjeEllerNæringStatistikk?: StatistikkType;
-  harBransje: boolean;
-  defaultÅpen?: boolean;
-  className?: string;
+    sammenligningsType: SammenligningsType;
+    virksomhetStatistikk?: StatistikkType;
+    bransjeEllerNæringStatistikk?: StatistikkType;
+    harBransje: boolean;
+    defaultÅpen?: boolean;
+    className?: string;
 }
 
 export const parseVerdi = (verdi: string) => {
@@ -172,8 +172,8 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
               const skalPaneletÅpnes = !erÅpen;
               setErÅpen(skalPaneletÅpnes);
               if (skalPaneletÅpnes) {
-                sendPanelEkspanderEvent(sammenligningsType);
-                sendIaTjenesteMetrikkMottattEvent(orgnr, context);
+                  sendPanelEkspanderEvent(sammenligningsType);
+                  sendIaTjenesteMetrikkMottatt(context, orgnr);
               } else {
                 sendPanelKollapsEvent(sammenligningsType);
               }

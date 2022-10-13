@@ -57,131 +57,129 @@ const App: FunctionComponent<Props> = ({ analyticsClient, samtalestøttePodlet }
 };
 
 export const AppContent = ({
-                             altinnOrganisasjoner,
-                             altinnOrganisasjonerMedStatistikk,
-                             summertSykefravær,
-                             sykefraværshistorikk,
-                             virksomhetsdata,
-                             analyticsClient,
-                             enhetsregisterdata,
-                             samtalestøttePodlet,
-  ,                           aggregertStatistikk
-                           }: SykefraværAppData & {
-  analyticsClient: AnalyticsClient;
-  samtalestøttePodlet?: React.ReactNode;
-}) => {
-  useAnalytics(analyticsClient);
-
-  const datakilder: RestRessurs<any>[] = useMemo(() => {
-    return [
-      sykefraværshistorikk,
-      summertSykefravær,
-      virksomhetsdata,
-      enhetsregisterdata.restOverordnetEnhet,
-      enhetsregisterdata.restUnderenhet,
-    ];
-  }, [
-    sykefraværshistorikk,
+    altinnOrganisasjoner,
+    altinnOrganisasjonerMedStatistikk,
     summertSykefravær,
+    sykefraværshistorikk,
     virksomhetsdata,
-    enhetsregisterdata.restOverordnetEnhet,
-    enhetsregisterdata.restUnderenhet,
-  ]);
+    analyticsClient,
+    enhetsregisterdata,
+    samtalestøttePodlet,
+    aggregertStatistikk,
+}: SykefraværAppData & {
+    analyticsClient: AnalyticsClient;
+    samtalestøttePodlet?: React.ReactNode;
+}) => {
+    useAnalytics(analyticsClient);
 
-  useEffect(() => {
-    if (datakilder.every((ressurs) => ressurs.status === RestStatus.Suksess)) {
-      const ekstradata = getEkstradata({
+    const datakilder: RestRessurs<any>[] = useMemo(() => {
+        return [
+            sykefraværshistorikk,
+            summertSykefravær,
+            virksomhetsdata,
+            enhetsregisterdata.restOverordnetEnhet,
+            enhetsregisterdata.restUnderenhet,
+        ];
+    }, [
+        sykefraværshistorikk,
+        summertSykefravær,
+        virksomhetsdata,
+        enhetsregisterdata.restOverordnetEnhet,
+        enhetsregisterdata.restUnderenhet,
+    ]);
+
+    useEffect(() => {
+        if (datakilder.every((ressurs) => ressurs.status === RestStatus.Suksess)) {
+            const ekstradata = getEkstradata({
+                sykefraværshistorikk,
+                summertSykefravær,
+                virksomhetsdata,
+                enhetsregisterdata,
+            });
+            analyticsClient?.setUserProperties({
+                ...ekstradata,
+            });
+            sendSidevisningEvent();
+        }
+    }, [
         sykefraværshistorikk,
         summertSykefravær,
         virksomhetsdata,
         enhetsregisterdata,
-      });
-      analyticsClient?.setUserProperties({
-        ...ekstradata,
-      });
-      sendSidevisningEvent();
+        datakilder,
+        analyticsClient,
+    ]);
+
+    const restOrganisasjoner = altinnOrganisasjoner;
+    const restOrganisasjonerMedStatistikk = altinnOrganisasjonerMedStatistikk;
+
+    const restSykefraværshistorikk = sykefraværshistorikk;
+    const restvirksomhetsdata = virksomhetsdata;
+
+    const brukerHarIkkeTilgangTilNoenOrganisasjoner =
+        restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
+
+    let innhold;
+    if (ER_VEDLIKEHOLD_AKTIVERT) {
+        return <VedlikeholdSide />;
+    } else if (
+        restOrganisasjoner.status === RestStatus.LasterInn ||
+        restvirksomhetsdata.status === RestStatus.LasterInn
+    ) {
+        innhold = <Lasteside />;
+    } else if (restOrganisasjoner.status === RestStatus.IkkeInnlogget) {
+        return <Innloggingsside redirectUrl={window.location.href} />;
+    } else if (restOrganisasjoner.status !== RestStatus.Suksess) {
+        innhold = <FeilFraAltinnSide />;
+    } else if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
+        return <ManglerRettighetRedirect />;
+    } else {
+        innhold = (
+            <>
+                <Route path={PATH_FORSIDE_BARNEHAGE}>
+                    <LegacyBarnehageSammenligningRedirect />
+                </Route>
+                <Route path={PATH_FORSIDE_GENERELL}>
+                    <LegacySammenligningRedirect />
+                </Route>
+                <Route path={PATH_FORSIDE} exact={true}>
+                    <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
+                    <InnloggingssideWrapper aggregertStatistikk={aggregertStatistikk}>
+                        <Forside>
+                            <Sammenligningspanel
+                                restStatus={aggregertStatistikk.restStatu'}
+                   '            restAltinnOrganisasjoner={restOrganisasjoner}
+                            >
+                                <EkspanderbarSammenligning
+                                    aggregertStatistikk={aggregertStatistikk}
+                                />
+                            </Sammenligningspanel>
+                            <div className={'app__lenkepanelWrapper'}>
+                                <Historikkpanel />
+                                {samtalestøttePodlet}
+                            </div>
+                            <ArbeidsmiljøportalPanel restvirksomhetsdata={restvirksomhetsdata} />
+                        </Forside>
+                    </InnloggingssideWrapper>
+                </Route>
+                TODO: Legg inn en redirect
+                <Route path={PATH_HISTORIKK} exact={true}>
+                    <Brødsmulesti gjeldendeSide="historikk" />
+                    <GrafOgTabell
+                        restSykefraværsstatistikk={restSykefraværshistorikk}
+                        restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
+                    />
+                </Route>
+      '     </>
+'       );
     }
-  }, [
-    sykefraværshistorikk,
-    summertSykefravær,
-    virksomhetsdata,
-    enhetsregisterdata,
-    datakilder,
-    analyticsClient,
-  ]);
 
-  const restOrganisasjoner = altinnOrganisasjoner;
-  const restOrganisasjonerMedStatistikk = altinnOrganisasjonerMedStatistikk;
-
-  const restSykefraværshistorikk = sykefraværshistorikk;
-  const restvirksomhetsdata = virksomhetsdata;
-
-  const brukerHarIkkeTilgangTilNoenOrganisasjoner =
-      restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
-
-  let innhold;
-  if (ER_VEDLIKEHOLD_AKTIVERT) {
-    return <VedlikeholdSide />;
-  } else if (
-      restOrganisasjoner.status === RestStatus.LasterInn ||
-      restvirksomhetsdata.status === RestStatus.LasterInn
-  ) {
-    innhold = <Lasteside />;
-  } else if (restOrganisasjoner.status === RestStatus.IkkeInnlogget) {
-    return <Innloggingsside redirectUrl={window.location.href} />;
-  } else if (restOrganisasjoner.status !== RestStatus.Suksess) {
-    innhold = <FeilFraAltinnSide />;
-  } else if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
-    return <ManglerRettighetRedirect />;
-  } else {
-    innhold = (
+    return (
         <>
-          <Route path={PATH_FORSIDE_BARNEHAGE}>
-            <LegacyBarnehageSammenligningRedirect />
-          </Route>
-          <Route path={PATH_FORSIDE_GENERELL}>
-            <LegacySammenligningRedirect />
-          </Route>
-          <Route path={PATH_FORSIDE} exact={true}>
-            <Brødsmulesti gjeldendeSide='sykefraværsstatistikk' />
-            <InnloggingssideWrapper
-                aggregertStatistikk={aggregertStatistikk}
-            >
-              <Forside>
-                <Sammenligningspanel
-                    restStatus={aggregertStatistikk.restStatus}
-                    restAltinnOrganisasjoner={restOrganisasjoner}
-                >
-                  <EkspanderbarSammenligning
-                      aggregertStatistikk={aggregertStatistikk}
-                  />
-                </Sammenligningspanel>
-                <div className={'app__lenkepanelWrapper'}>
-                  <Historikkpanel />
-                  {samtalestøttePodlet}
-                </div>
-                <ArbeidsmiljøportalPanel restvirksomhetsdata={restvirksomhetsdata} />
-              </Forside>
-            </InnloggingssideWrapper>
-          </Route>
-          TODO: Legg inn en redirect
-          <Route path={PATH_HISTORIKK} exact={true}>
-            <Brødsmulesti gjeldendeSide='historikk' />
-            <GrafOgTabell
-                restSykefraværsstatistikk={restSykefraværshistorikk}
-                restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
-            />
-          </Route>
+            {<Banner tittel="Sykefraværsstatistikk" restOrganisasjoner={restOrganisasjoner} />}
+            {innhold}
         </>
     );
-  }
-
-  return (
-      <>
-        {<Banner tittel='Sykefraværsstatistikk' restOrganisasjoner={restOrganisasjoner} />}
-        {innhold}
-      </>
-  );
 };
 
 export default App;

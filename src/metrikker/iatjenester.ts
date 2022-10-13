@@ -1,39 +1,27 @@
 import { tilIsoDatoMedUtcTimezoneUtenMillis } from '../utils/app-utils';
 import { BASE_PATH } from '../konstanter';
-import { TjenestePerOrgnr } from './IaTjenesterMetrikkerContext';
+import { Virksomhet } from './IaTjenesterMetrikkerContext';
 
 interface IaTjenesteMetrikk {
     orgnr: String;
     altinnRettighet: String;
     type: String;
+    kilde: 'SYKEFRAVÆRSSTATISTIKK';
     tjenesteMottakkelsesdato: String;
 }
 
 export const erIaTjenesterMetrikkerSendtForBedrift = (
-    orgnr: string,
-    sendteMetrikker: [TjenestePerOrgnr]
+    sendteMetrikker: [Virksomhet],
+    orgnr: string
 ): boolean => {
-    return sendteMetrikker.some(
-        (tjenestePerOrgnr) =>
-            tjenestePerOrgnr.orgnr === orgnr && tjenestePerOrgnr.kilde === 'SYKEFRAVÆRSSTATISTIKK,'
-    );
+    return sendteMetrikker.some((virksomhet) => virksomhet.orgnr === orgnr);
 };
 
-export const iaTjenesterMetrikkerErSendtForBedrift = (
-    orgnr: string | undefined,
-    sendteMetrikker: [TjenestePerOrgnr],
-    kilde = 'SYKEFRAVÆRSSTATISTIKK'
-): [TjenestePerOrgnr] => {
-    if (
-        orgnr !== undefined &&
-        !sendteMetrikker.some(
-            (tjenestePerOrgnr) =>
-                tjenestePerOrgnr.orgnr === orgnr &&
-                tjenestePerOrgnr.kilde === 'SYKEFRAVÆRSSTATISTIKK'
-        )
-    ) {
-        sendteMetrikker.push({ orgnr: orgnr, kilde: kilde });
-    }
+export const registrerLevertMetrikkForBedrift = (
+    sendteMetrikker: [Virksomhet],
+    orgnr: string
+): [Virksomhet] => {
+    sendteMetrikker.push({ orgnr: orgnr });
     return sendteMetrikker;
 };
 
@@ -43,10 +31,11 @@ const getIaTjenesterMetrikkerUrl = () => {
 
 const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
 
-function byggIaTjenesteMottattMetrikk(nåværendeOrgnr: string | undefined) {
+function byggIaTjenesteMottattMetrikk(nåværendeOrgnr?: string) {
     const iaTjenesteMetrikk: IaTjenesteMetrikk = {
         orgnr: nåværendeOrgnr ?? '',
         type: 'DIGITAL_IA_TJENESTE',
+        kilde: 'SYKEFRAVÆRSSTATISTIKK',
         tjenesteMottakkelsesdato: tilIsoDatoMedUtcTimezoneUtenMillis(new Date()),
         altinnRettighet: 'SYKEFRAVÆRSSTATISTIKK_FOR_VIRKSOMHETER',
     };
@@ -73,18 +62,26 @@ export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
     }
 };
 
-export const sendIaTjenesteMetrikkMottattEvent = (orgnr: string | undefined, context: any) => {
+export const sendIaTjenesteMetrikkMottatt = (context: any, orgnr?: string) => {
+    console.log('lista over sendt bedrifter er nå ', context.bedrifterSomHarSendtMetrikker);
     const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr);
+    console.log('Orgnummer: ', orgnr);
+    console.log(
+        'Er ia-tjeneste levert for bedrift? ',
+        erIaTjenesterMetrikkerSendtForBedrift(context.bedrifterSomHarSendtMetrikker, orgnr ?? '')
+    );
     if (
-        !erIaTjenesterMetrikkerSendtForBedrift(orgnr ?? '', context.bedrifterSomHarSendtMetrikker)
+        orgnr !== undefined &&
+        !erIaTjenesterMetrikkerSendtForBedrift(context.bedrifterSomHarSendtMetrikker, orgnr)
     ) {
         sendIaTjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
             if (isSent) {
                 context.setBedrifterSomHarSendtMetrikker(
-                    iaTjenesterMetrikkerErSendtForBedrift(
-                        orgnr,
-                        context.bedrifterSomHarSendtMetrikker
-                    )
+                    registrerLevertMetrikkForBedrift(context, orgnr)
+                );
+                console.log(
+                    'Registrerer IA-tjenestemetrikk; lista over sendt bedrifter er nå ',
+                    context.bedrifterSomHarSendtMetrikker
                 );
             }
         });

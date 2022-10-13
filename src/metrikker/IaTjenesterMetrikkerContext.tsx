@@ -1,27 +1,21 @@
 import React, { createContext, FunctionComponent, useState } from 'react';
 
-export interface TjenestePerOrgnr {
+export interface Virksomhet {
     orgnr: string;
-    kilde: string;
 }
 
 export const iaTjenesterMetrikkerContext = createContext<{
-    bedrifterSomHarSendtMetrikker: [TjenestePerOrgnr];
-    setBedrifterSomHarSendtMetrikker: (bedrifter: [TjenestePerOrgnr]) => void;
+    bedrifterSomHarSendtMetrikker: [Virksomhet];
+    setBedrifterSomHarSendtMetrikker: (bedrifter: [Virksomhet]) => void;
 }>({
-    bedrifterSomHarSendtMetrikker: [{ orgnr: '', kilde: 'SYKEFRAVÆRSSTATISTIKK' }],
+    bedrifterSomHarSendtMetrikker: [{ orgnr: '' }],
     setBedrifterSomHarSendtMetrikker: () => {},
 });
 
 export const IaTjenesterMetrikkerContextProvider: FunctionComponent = (props) => {
     const [bedrifterSomHarSendtMetrikker, setBedrifterSomHarSendtMetrikker] = useState<
-        [TjenestePerOrgnr]
-    >([
-        {
-            orgnr: '',
-            kilde: 'SYKEFRAVÆRSSTATISTIKK',
-        },
-    ]);
+        [Virksomhet]
+    >([{ orgnr: '' }]);
 
     const Provider = iaTjenesterMetrikkerContext.Provider;
     return (
