@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import Banner from './Banner/Banner';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route , Routes} from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
 import { RestRessurs, RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
@@ -68,7 +68,7 @@ export const AppContent = ({
     enhetsregisterdata,
     samtalestøttePodlet,
     aggregertStatistikk,
-}: SykefraværAppData & {
+publiseringsdatoer}: SykefraværAppData & {
     analyticsClient: AnalyticsClient;
     samtalestøttePodlet?: React.ReactNode;
 }) => {
@@ -118,7 +118,7 @@ export const AppContent = ({
     const restSykefraværshistorikk = sykefraværshistorikk;
     const restvirksomhetsdata = virksomhetsdata;
 
-    const brukerHarIkkeTilgangTilNoenOrganisasjoner =
+    const restPubliseringsdatoer = publiseringsdatoer;const brukerHarIkkeTilgangTilNoenOrganisasjoner =
         restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
 
     let innhold;
@@ -137,14 +137,15 @@ export const AppContent = ({
         return <ManglerRettighetRedirect />;
     } else {
         innhold = (
-            <>
-                <Route path={PATH_FORSIDE_BARNEHAGE}>
+            <Routes>
+                <Route path={PATH_FORSIDE_BARNEHAGE}element={
                     <LegacyBarnehageSammenligningRedirect />
-                </Route>
-                <Route path={PATH_FORSIDE_GENERELL}>
+                }/>
+                <Route path={PATH_FORSIDE_GENERELL}element={
                     <LegacySammenligningRedirect />
-                </Route>
-                <Route path={PATH_FORSIDE} exact={true}>
+                }/>
+                <Route path={PATH_FORSIDE} element={
+            <>
                     <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                     <InnloggingssideWrapper aggregertStatistikk={aggregertStatistikk}>
                         <Forside>
@@ -153,7 +154,7 @@ export const AppContent = ({
                                 restAltinnOrganisasjoner={restOrganisasjoner}
                             >
                                 <EkspanderbarSammenligning
-                                    aggregertStatistikk={aggregertStatistikk}
+                                    aggregertStatistikk={aggregertStatistikk}restPubliseringsdatoer={restPubliseringsdatoer}
                                 />
                             </Sammenligningspanel>
                             <div className={'app__lenkepanelWrapper'}>
@@ -163,18 +164,23 @@ export const AppContent = ({
                             <ArbeidsmiljøportalPanel restvirksomhetsdata={restvirksomhetsdata} />
                         </Forside>
                     </InnloggingssideWrapper>
-                </Route>
-                <Route path={PATH_KALKULATOR_REDIRECT} exact={true}>
+                </>
+          }/>
+                <Route path={PATH_KALKULATOR_REDIRECT} element={
+            <>
                     <Redirect to={getForebyggeFraværUrl() + '/kalkulator'} />
-                </Route>
-                <Route path={PATH_HISTORIKK} exact={true}>
+                </>
+          } />
+                <Route path={PATH_HISTORIKK} element={
+            <>
                     <Brødsmulesti gjeldendeSide="historikk" />
                     <GrafOgTabell
                         restSykefraværsstatistikk={restSykefraværshistorikk}
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                     />
-                </Route>
-            </>
+                </>
+            }/>
+        </Routes>
         );
     }
 

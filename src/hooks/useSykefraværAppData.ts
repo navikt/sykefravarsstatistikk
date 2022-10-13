@@ -18,6 +18,8 @@ import {
   getEkstraDataFraVirksomhetsdata,
 } from '../amplitude/ekstradata';
 import useAggregertStatistikk, {AggregertStatistikkResponse} from './useAggregertStatistikk';
+import {RestPubliseringsdatoer} from "../api/publiseringsdatoer-api";
+import {usePubliseringsdatoer} from "./usePubliseringsdatoer";
 
 export interface SykefraværAppData {
   altinnOrganisasjoner: RestAltinnOrganisasjoner;
@@ -28,6 +30,7 @@ export interface SykefraværAppData {
   sykefraværshistorikk: RestSykefraværshistorikk;
   featureToggles: RestFeatureToggles;
   aggregertStatistikk: AggregertStatistikkResponse;
+  publiseringsdatoer: RestPubliseringsdatoer;
 }
 
 export function useSykefraværAppData(): SykefraværAppData {
@@ -39,6 +42,7 @@ export function useSykefraværAppData(): SykefraværAppData {
   const sykefraværshistorikk = useSykefraværshistorikk();
   const featureToggles = useFeatureToggles();
   const aggregertStatistikk = useAggregertStatistikk();
+  const publiseringsdatoer = usePubliseringsdatoer();
 
   return {
     altinnOrganisasjoner,
@@ -48,7 +52,8 @@ export function useSykefraværAppData(): SykefraværAppData {
     summertSykefravær,
     sykefraværshistorikk,
     featureToggles,
-    aggregertStatistikk
+    aggregertStatistikk,
+    publiseringsdatoer
   };
 }
 

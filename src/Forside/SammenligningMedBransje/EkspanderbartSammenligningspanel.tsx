@@ -23,6 +23,7 @@ import { useOrgnr } from '../../hooks/useOrgnr';
 import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
 import { sendIaTjenesteMetrikkMottatt } from '../../metrikker/iatjenester';
 import { StatistikkType } from '../../hooks/useAggregertStatistikk';
+import {RestPubliseringsdatoer} from "../../api/publiseringsdatoer-api";
 
 interface Props {
     sammenligningsType: SammenligningsType;
@@ -31,6 +32,7 @@ interface Props {
     harBransje: boolean;
     defaultÅpen?: boolean;
     className?: string;
+  restPubliseringsdatoer: RestPubliseringsdatoer;
 }
 
 export const parseVerdi = (verdi: string) => {
@@ -80,7 +82,8 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                                                                              defaultÅpen,
                                                                              className,
                                                                              virksomhetStatistikk,
-                                                                             bransjeEllerNæringStatistikk
+                                                                             bransjeEllerNæringStatistikk,
+                                                                             restPubliseringsdatoer
                                                                            }) => {
   const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
   const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
@@ -118,6 +121,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
           <ForklaringAvPeriode
               className="ekspanderbart-sammenligningspanel__forklaring-av-periode"
               sammenligningsType={sammenligningsType}
+              restPubliseringsdatoer={restPubliseringsdatoer}
           />
           <DetaljertVisningSykefravær
               className="ekspanderbart-sammenligningspanel__detaljert-visning"
