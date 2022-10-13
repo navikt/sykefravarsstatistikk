@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import Banner from './Banner/Banner';
-import { Redirect, Route , Routes} from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
 import { RestRessurs, RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
@@ -68,7 +68,8 @@ export const AppContent = ({
     enhetsregisterdata,
     samtalestøttePodlet,
     aggregertStatistikk,
-publiseringsdatoer}: SykefraværAppData & {
+    publiseringsdatoer,
+}: SykefraværAppData & {
     analyticsClient: AnalyticsClient;
     samtalestøttePodlet?: React.ReactNode;
 }) => {
@@ -118,7 +119,8 @@ publiseringsdatoer}: SykefraværAppData & {
     const restSykefraværshistorikk = sykefraværshistorikk;
     const restvirksomhetsdata = virksomhetsdata;
 
-    const restPubliseringsdatoer = publiseringsdatoer;const brukerHarIkkeTilgangTilNoenOrganisasjoner =
+    const restPubliseringsdatoer = publiseringsdatoer;
+    const brukerHarIkkeTilgangTilNoenOrganisasjoner =
         restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
 
     let innhold;
@@ -138,49 +140,56 @@ publiseringsdatoer}: SykefraværAppData & {
     } else {
         innhold = (
             <Routes>
-                <Route path={PATH_FORSIDE_BARNEHAGE}element={
-                    <LegacyBarnehageSammenligningRedirect />
-                }/>
-                <Route path={PATH_FORSIDE_GENERELL}element={
-                    <LegacySammenligningRedirect />
-                }/>
-                <Route path={PATH_FORSIDE} element={
-            <>
-                    <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                    <InnloggingssideWrapper aggregertStatistikk={aggregertStatistikk}>
-                        <Forside>
-                            <Sammenligningspanel
-                                restStatus={aggregertStatistikk.restStatus}
-                                restAltinnOrganisasjoner={restOrganisasjoner}
-                            >
-                                <EkspanderbarSammenligning
-                                    aggregertStatistikk={aggregertStatistikk}restPubliseringsdatoer={restPubliseringsdatoer}
-                                />
-                            </Sammenligningspanel>
-                            <div className={'app__lenkepanelWrapper'}>
-                                <Historikkpanel />
-                                {samtalestøttePodlet}
-                            </div>
-                            <ArbeidsmiljøportalPanel restvirksomhetsdata={restvirksomhetsdata} />
-                        </Forside>
-                    </InnloggingssideWrapper>
-                </>
-          }/>
-                <Route path={PATH_KALKULATOR_REDIRECT} element={
-            <>
-                    <Redirect to={getForebyggeFraværUrl() + '/kalkulator'} />
-                </>
-          } />
-                <Route path={PATH_HISTORIKK} element={
-            <>
-                    <Brødsmulesti gjeldendeSide="historikk" />
-                    <GrafOgTabell
-                        restSykefraværsstatistikk={restSykefraværshistorikk}
-                        restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
-                    />
-                </>
-            }/>
-        </Routes>
+                <Route
+                    path={PATH_FORSIDE_BARNEHAGE}
+                    element={<LegacyBarnehageSammenligningRedirect />}
+                />
+                <Route path={PATH_FORSIDE_GENERELL} element={<LegacySammenligningRedirect />} />
+                <Route
+                    path={PATH_FORSIDE}
+                    element={
+                        <>
+                            <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
+                            <InnloggingssideWrapper aggregertStatistikk={aggregertStatistikk}>
+                                <Forside>
+                                    <Sammenligningspanel
+                                        restStatus={aggregertStatistikk.restStatus}
+                                        restAltinnOrganisasjoner={restOrganisasjoner}
+                                    >
+                                        <EkspanderbarSammenligning
+                                            aggregertStatistikk={aggregertStatistikk}
+                                            restPubliseringsdatoer={restPubliseringsdatoer}
+                                        />
+                                    </Sammenligningspanel>
+                                    <div className={'app__lenkepanelWrapper'}>
+                                        <Historikkpanel />
+                                        {samtalestøttePodlet}
+                                    </div>
+                                    <ArbeidsmiljøportalPanel
+                                        restvirksomhetsdata={restvirksomhetsdata}
+                                    />
+                                </Forside>
+                            </InnloggingssideWrapper>
+                        </>
+                    }
+                />
+                <Route
+                    path={PATH_KALKULATOR_REDIRECT}
+                    element={<Navigate replace to={getForebyggeFraværUrl() + '/kalkulator'} />}
+                />
+                <Route
+                    path={PATH_HISTORIKK}
+                    element={
+                        <>
+                            <Brødsmulesti gjeldendeSide="historikk" />
+                            <GrafOgTabell
+                                restSykefraværsstatistikk={restSykefraværshistorikk}
+                                restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
+                            />
+                        </>
+                    }
+                />
+            </Routes>
         );
     }
 
