@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import Banner from './Banner/Banner';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
 import { RestRessurs, RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
@@ -15,6 +15,7 @@ import {
     PATH_FORSIDE_BARNEHAGE,
     PATH_FORSIDE_GENERELL,
     PATH_HISTORIKK,
+    PATH_KALKULATOR_REDIRECT,
 } from './konstanter';
 import './App.less';
 import { sendSidevisningEvent } from './amplitude/events';
@@ -36,6 +37,7 @@ import {
 } from './hooks/useSykefraværAppData';
 import { AnalyticsClient } from './amplitude/client';
 import { useAnalytics } from './hooks/useAnalytics';
+import { getForebyggeFraværUrl } from './utils/miljøUtils';
 
 interface Props {
     analyticsClient: AnalyticsClient;
@@ -162,7 +164,9 @@ export const AppContent = ({
                         </Forside>
                     </InnloggingssideWrapper>
                 </Route>
-                TODO: Legg inn en redirect
+                <Route path={PATH_KALKULATOR_REDIRECT} exact={true}>
+                    <Redirect to={getForebyggeFraværUrl() + '/kalkulator'} />
+                </Route>
                 <Route path={PATH_HISTORIKK} exact={true}>
                     <Brødsmulesti gjeldendeSide="historikk" />
                     <GrafOgTabell
