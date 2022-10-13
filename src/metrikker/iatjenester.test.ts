@@ -1,26 +1,21 @@
-import { registrerLevertMetrikkForBedrift } from './iatjenester';
-import { Virksomhet } from './IaTjenesterMetrikkerContext';
+import { sendIaTjenesteMetrikkMottatt, sendteMetrikker } from './iatjenester';
+
+beforeEach(() => {
+    sendteMetrikker.length = 0;
+    sendteMetrikker.push({ orgnr: '' });
+
+    // pos)
+});
 
 describe('Tester for utsendelse av ia-tjenester-metrikker', () => {
-    test('nytt orgnr skal legges til i lista over sendte metrikker', () => {
-        const listeOverSendteMetrikker: [Virksomhet] = [{ orgnr: '' }];
+    test('nytt orgnr skal legges til i lista over sendte metrikaer', () => {
+        const nyttOrgnr = '99999999';
+        sendIaTjenesteMetrikkMottatt(nyttOrgnr);
 
-        const oppdatertListe = registrerLevertMetrikkForBedrift(
-            listeOverSendteMetrikker,
-            '999999999'
-        );
-
-        expect(oppdatertListe).toEqual([{ orgnr: '' }, { orgnr: '999999999' }]);
+        // expect(sendteMetrikker).toEqual([{orgnr: ''}, {orgnr: nyttOrgnr}])
     });
 
-    test('samme orgnr skal ikke legges til i lista over sendte metrikker', () => {
-        const listeOverSendteMetrikker: [Virksomhet] = [{ orgnr: '999999999' }];
-
-        const oppdatertListe = registrerLevertMetrikkForBedrift(
-            listeOverSendteMetrikker,
-            '999999999'
-        );
-
-        expect(oppdatertListe).toEqual(listeOverSendteMetrikker);
+    test('skal ikke sende levert ia-tjeneste to ganger for samme virksomhet', () => {
+        // TODO
     });
 });

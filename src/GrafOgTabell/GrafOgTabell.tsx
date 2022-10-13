@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import { ToggleGruppePure } from 'nav-frontend-toggle';
 import Graf from './Graf/Graf';
@@ -13,7 +13,6 @@ import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { sendIaTjenesteMetrikkMottatt } from '../metrikker/iatjenester';
 import { sendSidevisningEvent } from '../amplitude/events';
 import { useOrgnr } from '../hooks/useOrgnr';
-import { iaTjenesterMetrikkerContext } from '../metrikker/IaTjenesterMetrikkerContext';
 import { ManglerRettighetRedirect } from '../utils/redirects';
 
 interface Props {
@@ -28,13 +27,12 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
     }, []);
 
     const orgnr = useOrgnr();
-    const context = useContext(iaTjenesterMetrikkerContext);
     const { restSykefraværsstatistikk } = props;
     const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
 
     let innhold;
 
-    sendIaTjenesteMetrikkMottatt(context, orgnr);
+    sendIaTjenesteMetrikkMottatt(orgnr);
 
     if (restSykefraværsstatistikk.status === RestStatus.IngenTilgang) {
         return <ManglerRettighetRedirect />;

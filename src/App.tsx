@@ -28,7 +28,6 @@ import {
     LegacySammenligningRedirect,
     ManglerRettighetRedirect,
 } from './utils/redirects';
-import { IaTjenesterMetrikkerContextProvider } from './metrikker/IaTjenesterMetrikkerContext';
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 import {
     getEkstradata,
@@ -46,15 +45,13 @@ interface Props {
 
 const App: FunctionComponent<Props> = ({ analyticsClient, samtalestøttePodlet }) => {
     return (
-        <IaTjenesterMetrikkerContextProvider>
-            <main id="maincontent">
-                <AppContent
-                    {...useSykefraværAppData()}
-                    analyticsClient={analyticsClient}
-                    samtalestøttePodlet={samtalestøttePodlet}
-                />
-            </main>
-        </IaTjenesterMetrikkerContextProvider>
+        <main id="maincontent">
+            <AppContent
+                {...useSykefraværAppData()}
+                analyticsClient={analyticsClient}
+                samtalestøttePodlet={samtalestøttePodlet}
+            />
+        </main>
     );
 };
 

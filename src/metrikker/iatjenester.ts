@@ -1,6 +1,9 @@
 import { tilIsoDatoMedUtcTimezoneUtenMillis } from '../utils/app-utils';
 import { BASE_PATH } from '../konstanter';
-import { Virksomhet } from './IaTjenesterMetrikkerContext';
+
+export type Virksomhet = { orgnr: string };
+
+export const sendteMetrikker: Virksomhet[] = [{ orgnr: '' }];
 
 interface IaTjenesteMetrikk {
     orgnr: String;
@@ -10,19 +13,33 @@ interface IaTjenesteMetrikk {
     tjenesteMottakkelsesdato: String;
 }
 
-export const erIaTjenesterMetrikkerSendtForBedrift = (
-    sendteMetrikker: [Virksomhet],
-    orgnr: string
-): boolean => {
+export const sendIaTjenesteMetrikkMottatt = (orgnr?: string) => {
+    console.log('lista over sendt bedrifter er nå ', sendteMetrikker);
+    const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr);
+    console.log('Orgnummer: ', orgnr);
+    console.log(
+        'Er ia-tjeneste levert for bedrift? ',
+        erIaTjenesterMetrikkerSendtForBedrift(orgnr ?? '')
+    );
+    if (orgnr !== undefined && !erIaTjenesterMetrikkerSendtForBedrift(orgnr)) {
+        postIaTjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
+            if (isSent) {
+                registrerLevertMetrikkForBedrift(orgnr);
+                console.log(
+                    'Registrerer IA-tjenestemetrikk; lista over sendt bedrifter er nå ',
+                    sendteMetrikker
+                );
+            }
+        });
+    }
+};
+
+export const erIaTjenesterMetrikkerSendtForBedrift = (orgnr: string): boolean => {
     return sendteMetrikker.some((virksomhet) => virksomhet.orgnr === orgnr);
 };
 
-export const registrerLevertMetrikkForBedrift = (
-    sendteMetrikker: [Virksomhet],
-    orgnr: string
-): [Virksomhet] => {
+export const registrerLevertMetrikkForBedrift = (orgnr: string) => {
     sendteMetrikker.push({ orgnr: orgnr });
-    return sendteMetrikker;
 };
 
 const getIaTjenesterMetrikkerUrl = () => {
@@ -42,7 +59,7 @@ function byggIaTjenesteMottattMetrikk(nåværendeOrgnr?: string) {
     return iaTjenesteMetrikk;
 }
 
-export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
+export const postIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
     const settings = {
         method: 'POST',
         credentials: 'include',
@@ -59,31 +76,5 @@ export const sendIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
         return data.status === 'created';
     } catch (e) {
         return false;
-    }
-};
-
-export const sendIaTjenesteMetrikkMottatt = (context: any, orgnr?: string) => {
-    console.log('lista over sendt bedrifter er nå ', context.bedrifterSomHarSendtMetrikker);
-    const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr);
-    console.log('Orgnummer: ', orgnr);
-    console.log(
-        'Er ia-tjeneste levert for bedrift? ',
-        erIaTjenesterMetrikkerSendtForBedrift(context.bedrifterSomHarSendtMetrikker, orgnr ?? '')
-    );
-    if (
-        orgnr !== undefined &&
-        !erIaTjenesterMetrikkerSendtForBedrift(context.bedrifterSomHarSendtMetrikker, orgnr)
-    ) {
-        sendIaTjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
-            if (isSent) {
-                context.setBedrifterSomHarSendtMetrikker(
-                    registrerLevertMetrikkForBedrift(context, orgnr)
-                );
-                console.log(
-                    'Registrerer IA-tjenestemetrikk; lista over sendt bedrifter er nå ',
-                    context.bedrifterSomHarSendtMetrikker
-                );
-            }
-        });
     }
 };

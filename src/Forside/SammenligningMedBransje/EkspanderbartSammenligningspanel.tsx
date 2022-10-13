@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, useContext, useState } from 'react';
+import React, { FunctionComponent, ReactElement, useState } from 'react';
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
 import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
@@ -20,10 +20,9 @@ import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { OmGradertSykmelding } from '../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
 import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from '../../amplitude/events';
 import { useOrgnr } from '../../hooks/useOrgnr';
-import { iaTjenesterMetrikkerContext } from '../../metrikker/IaTjenesterMetrikkerContext';
 import { sendIaTjenesteMetrikkMottatt } from '../../metrikker/iatjenester';
 import { StatistikkType } from '../../hooks/useAggregertStatistikk';
-import {RestPubliseringsdatoer} from "../../api/publiseringsdatoer-api";
+import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
 
 interface Props {
     sammenligningsType: SammenligningsType;
@@ -32,7 +31,7 @@ interface Props {
     harBransje: boolean;
     defaultÅpen?: boolean;
     className?: string;
-  restPubliseringsdatoer: RestPubliseringsdatoer;
+    restPubliseringsdatoer: RestPubliseringsdatoer;
 }
 
 export const parseVerdi = (verdi: string) => {
@@ -88,7 +87,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
   const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
   const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
   const orgnr = useOrgnr();
-  const context = useContext(iaTjenesterMetrikkerContext);
 
   const sykefraværVurdering = getVurdering(virksomhetStatistikk, bransjeEllerNæringStatistikk)
 
@@ -177,7 +175,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
               setErÅpen(skalPaneletÅpnes);
               if (skalPaneletÅpnes) {
                   sendPanelEkspanderEvent(sammenligningsType);
-                  sendIaTjenesteMetrikkMottatt(context, orgnr);
+                  sendIaTjenesteMetrikkMottatt(orgnr);
               } else {
                 sendPanelKollapsEvent(sammenligningsType);
               }
