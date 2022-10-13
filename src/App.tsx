@@ -147,8 +147,8 @@ export const AppContent = ({
                     <InnloggingssideWrapper aggregertStatistikk={aggregertStatistikk}>
                         <Forside>
                             <Sammenligningspanel
-                                restStatus={aggregertStatistikk.restStatu'}
-                   '            restAltinnOrganisasjoner={restOrganisasjoner}
+                                restStatus={aggregertStatistikk.restStatus}
+                                restAltinnOrganisasjoner={restOrganisasjoner}
                             >
                                 <EkspanderbarSammenligning
                                     aggregertStatistikk={aggregertStatistikk}
@@ -170,8 +170,8 @@ export const AppContent = ({
                         restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                     />
                 </Route>
-      '     </>
-'       );
+            </>
+        );
     }
 
     return (
