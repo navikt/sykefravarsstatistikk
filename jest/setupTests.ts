@@ -1,6 +1,6 @@
 import Adapter from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
-import { mswServer } from './jest/mswServer';
+import { mswServer } from './mswServer';
 
 configure({ adapter: new Adapter() });
 

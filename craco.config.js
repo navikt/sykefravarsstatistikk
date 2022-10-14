@@ -17,7 +17,7 @@ module.exports = {
     },
     jest: {
         configure: {
-            setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+            setupFilesAfterEnv: ['<rootDir>/jest/setupTests.ts'],
         },
     },
 };

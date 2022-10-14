@@ -7,6 +7,3 @@ export const commonHandlers = [
         return res(ctx.json({ status: 'created' }));
     }),
 ];
-
-// /sykefravarsstatistikk/proxy/ia-tjenester-metrikker/innlogget/mottatt-iatjeneste
-// /sykefravarsstatistikk/proxy/ia-tjenester-metrikker/innlogget/mottatt-iatjeneste
