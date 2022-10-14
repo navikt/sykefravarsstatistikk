@@ -7,14 +7,13 @@ sektoren og i hele landet. Hensikten er å gjøre arbeidsgivere mer engasjerte i
 
 - https://arbeidsgiver.labs.nais.io/sykefravarsstatistikk/ -- Funker direkte fra nettleser med Mock data uten tilkobling
   til backend/preprod data. Hit deployes helst kun master.
-- https://arbeidsgiver-gcp.dev.nav.no/sykefravarsstatistikk/ -- krever naisdevice, brukes til utvikling.
+- https://arbeidsgiver-gcp.dev.nav.no/sykefravarsstatistikk/ -- brukes til utvikling. Krever naisdevice og innlogging
+  med test-fnr,
 
 # Kom i gang
 
 - Installer avhengigheter med `yarn`
 - Rename filen `.env.example` -> `.env`
--
--
 
 ## Tester
 
