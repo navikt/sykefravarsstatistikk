@@ -1,7 +1,6 @@
 import Adapter from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
-import './src/mocking/mock';
-import { mswServer } from './src/metrikker/msw-server';
+import { mswServer } from './jest/mswServer';
 
 configure({ adapter: new Adapter() });
 

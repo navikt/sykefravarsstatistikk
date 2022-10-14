@@ -1,12 +1,12 @@
 import { sendIaTjenesteMetrikkMottatt, sendteMetrikker } from './iatjenester';
-import { iaMetrikkFeilet } from './handlers';
-import { mswServer } from './msw-server';
+import { iaTjenestemetrikkFeiletHandler } from './mswHandlers';
+import { mswServer } from '../../jest/mswServer';
 
 beforeEach(() => {
     resetSendteMetrikker();
 });
 
-describe('Tester for utsendelse av ia-tjenester-metrikker', () => {
+describe('Tester vellykket utsendelse av ia-metrikk', () => {
     test('nytt orgnr skal legges til i lista over sendte metrikker', async () => {
         const nyttOrgnr = '99999999';
         const leverteIaTjenester = await sendIaTjenesteMetrikkMottatt(nyttOrgnr);
@@ -21,11 +21,16 @@ describe('Tester for utsendelse av ia-tjenester-metrikker', () => {
 
         expect(leverteIaTjenester).toEqual([{ orgnr: '' }, { orgnr: '888888888' }]);
     });
+});
+
+describe('Tester feilende utsendelse av IA-metrikk', () => {
+    beforeEach(() => {
+        mswServer.use(iaTjenestemetrikkFeiletHandler);
+    });
 
     test('skal ikke legge til orgnummer i lista over sendte metrikker dersom kallet feiler', async () => {
         const nyttOrgnr = '99999999';
 
-        mswServer.use(iaMetrikkFeilet);
         const leverteIaTjenester = await sendIaTjenesteMetrikkMottatt(nyttOrgnr);
         expect(leverteIaTjenester).toEqual([{ orgnr: '' }]);
     });
