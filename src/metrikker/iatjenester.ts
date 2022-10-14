@@ -13,40 +13,26 @@ interface IaTjenesteMetrikk {
     tjenesteMottakkelsesdato: String;
 }
 
-export const sendIaTjenesteMetrikkMottatt = (orgnr?: string) => {
-    console.log('lista over sendt bedrifter er nå ', sendteMetrikker);
+export const sendIaTjenesteMetrikkMottatt = async (orgnr?: string): Promise<Virksomhet[]> => {
     const iaTjenesteMetrikk = byggIaTjenesteMottattMetrikk(orgnr);
-    console.log('Orgnummer: ', orgnr);
-    console.log(
-        'Er ia-tjeneste levert for bedrift? ',
-        erIaTjenesterMetrikkerSendtForBedrift(orgnr ?? '')
-    );
     if (orgnr !== undefined && !erIaTjenesterMetrikkerSendtForBedrift(orgnr)) {
-        postIaTjenesteMetrikk(iaTjenesteMetrikk).then((isSent) => {
-            if (isSent) {
-                registrerLevertMetrikkForBedrift(orgnr);
-                console.log(
-                    'Registrerer IA-tjenestemetrikk; lista over sendt bedrifter er nå ',
-                    sendteMetrikker
-                );
-            }
-        });
+        const erSendt = await post(iaTjenesteMetrikk);
+        if (erSendt) {
+            sendteMetrikker.push({ orgnr: orgnr });
+        }
     }
+    return Promise.resolve(sendteMetrikker);
 };
 
 export const erIaTjenesterMetrikkerSendtForBedrift = (orgnr: string): boolean => {
     return sendteMetrikker.some((virksomhet) => virksomhet.orgnr === orgnr);
 };
 
-export const registrerLevertMetrikkForBedrift = (orgnr: string) => {
-    sendteMetrikker.push({ orgnr: orgnr });
-};
-
 const getIaTjenesterMetrikkerUrl = () => {
     return `${BASE_PATH}/proxy/ia-tjenester-metrikker`;
 };
 
-const iaTjenesterMetrikkerAPI = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
+export const iaTjenesterMetrikkerApiUrl = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
 
 function byggIaTjenesteMottattMetrikk(nåværendeOrgnr?: string) {
     const iaTjenesteMetrikk: IaTjenesteMetrikk = {
@@ -59,7 +45,7 @@ function byggIaTjenesteMottattMetrikk(nåværendeOrgnr?: string) {
     return iaTjenesteMetrikk;
 }
 
-export const postIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
+const post = async (iatjeneste: IaTjenesteMetrikk) => {
     const settings = {
         method: 'POST',
         credentials: 'include',
@@ -71,7 +57,7 @@ export const postIaTjenesteMetrikk = async (iatjeneste: IaTjenesteMetrikk) => {
     };
     try {
         // @ts-ignore
-        const fetchResponse = await fetch(`${iaTjenesterMetrikkerAPI}`, settings);
+        const fetchResponse = await fetch(`${iaTjenesterMetrikkerApiUrl}`, settings);
         const data = await fetchResponse.json();
         return data.status === 'created';
     } catch (e) {
