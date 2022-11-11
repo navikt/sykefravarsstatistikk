@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import Banner from './Banner/Banner';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
 import { RestRessurs, RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
@@ -24,6 +24,7 @@ import { Sammenligningspanel } from './Forside/Sammenligningspanel/Sammenligning
 import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import {
+    KalkulatorRedirect,
     LegacyBarnehageSammenligningRedirect,
     LegacySammenligningRedirect,
     ManglerRettighetRedirect,
@@ -36,7 +37,8 @@ import {
 } from './hooks/useSykefraværAppData';
 import { AnalyticsClient } from './amplitude/client';
 import { useAnalytics } from './hooks/useAnalytics';
-import { getForebyggeFraværUrl } from './utils/miljøUtils';
+import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
+import { RestVirksomhetsdata } from './api/virksomhetsdata-api';
 
 interface Props {
     analyticsClient: AnalyticsClient;
@@ -54,6 +56,16 @@ const App: FunctionComponent<Props> = ({ analyticsClient, samtalestøttePodlet }
         </main>
     );
 };
+
+function dataLastesInn(
+    restOrganisasjoner: RestAltinnOrganisasjoner,
+    restvirksomhetsdata: RestVirksomhetsdata
+) {
+    return (
+        restOrganisasjoner.status === RestStatus.LasterInn ||
+        restvirksomhetsdata.status === RestStatus.LasterInn
+    );
+}
 
 export const AppContent = ({
     altinnOrganisasjoner,
@@ -123,72 +135,73 @@ export const AppContent = ({
     let innhold;
     if (ER_VEDLIKEHOLD_AKTIVERT) {
         return <VedlikeholdSide />;
-    } else if (
-        restOrganisasjoner.status === RestStatus.LasterInn ||
-        restvirksomhetsdata.status === RestStatus.LasterInn
-    ) {
-        innhold = <Lasteside />;
-    } else if (restOrganisasjoner.status === RestStatus.IkkeInnlogget) {
-        return <Innloggingsside redirectUrl={window.location.href} />;
-    } else if (restOrganisasjoner.status !== RestStatus.Suksess) {
-        innhold = <FeilFraAltinnSide />;
-    } else if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
-        return <ManglerRettighetRedirect />;
-    } else {
-        innhold = (
-            <Routes>
-                <Route
-                    path={PATH_FORSIDE_BARNEHAGE}
-                    element={<LegacyBarnehageSammenligningRedirect />}
-                />
-                <Route path={PATH_FORSIDE_GENERELL} element={<LegacySammenligningRedirect />} />
-                <Route
-                    path={PATH_FORSIDE}
-                    element={
-                        <>
-                            <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                            <InnloggingssideWrapper aggregertStatistikk={aggregertStatistikk}>
-                                <Forside>
-                                    <Sammenligningspanel
-                                        restStatus={aggregertStatistikk.restStatus}
-                                        restAltinnOrganisasjoner={restOrganisasjoner}
-                                    >
-                                        <EkspanderbarSammenligning
-                                            aggregertStatistikk={aggregertStatistikk}
-                                            restPubliseringsdatoer={restPubliseringsdatoer}
-                                        />
-                                    </Sammenligningspanel>
-                                    <div className={'app__lenkepanelWrapper'}>
-                                        <Historikkpanel />
-                                        {samtalestøttePodlet}
-                                    </div>
-                                    <ArbeidsmiljøportalPanel
-                                        restvirksomhetsdata={restvirksomhetsdata}
-                                    />
-                                </Forside>
-                            </InnloggingssideWrapper>
-                        </>
-                    }
-                />
-                <Route
-                    path={PATH_KALKULATOR_REDIRECT}
-                    element={<Navigate replace to={getForebyggeFraværUrl() + '/kalkulator'} />}
-                />
-                <Route
-                    path={PATH_HISTORIKK}
-                    element={
-                        <>
-                            <Brødsmulesti gjeldendeSide="historikk" />
-                            <GrafOgTabell
-                                restSykefraværsstatistikk={restSykefraværshistorikk}
-                                restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
-                            />
-                        </>
-                    }
-                />
-            </Routes>
-        );
     }
+
+    if (dataLastesInn(restOrganisasjoner, restvirksomhetsdata)) {
+        innhold = <Lasteside />;
+    }
+
+    if (restOrganisasjoner.status === RestStatus.IkkeInnlogget) {
+        return <Innloggingsside redirectUrl={window.location.href} />;
+    }
+
+    if (restOrganisasjoner.status !== RestStatus.Suksess) {
+        innhold = <FeilFraAltinnSide />;
+    }
+
+    if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
+        return <ManglerRettighetRedirect />;
+    }
+
+    innhold = (
+        <Routes>
+            <Route
+                path={PATH_FORSIDE_BARNEHAGE}
+                element={<LegacyBarnehageSammenligningRedirect />}
+            />
+            <Route path={PATH_FORSIDE_GENERELL} element={<LegacySammenligningRedirect />} />
+            <Route path={PATH_KALKULATOR_REDIRECT} element={<KalkulatorRedirect />} />
+            <Route
+                path={PATH_FORSIDE}
+                element={
+                    <>
+                        <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
+                        <InnloggingssideWrapper aggregertStatistikk={aggregertStatistikk}>
+                            <Forside>
+                                <Sammenligningspanel
+        '                     '     restStatus={aggregertStatistikk.restStatus}
+                                    restAltinnOrganisasjoner={restOrganisasjoner}
+                                >
+                                    <EkspanderbarSammenligning
+                                        aggregertStatistikk={aggregertStatistikk}
+                                        restPubliseringsdatoer={restPubliseringsdatoer}
+                                    />
+                                </Sammenligningspanel>
+                                <div className={'app__lenkepanelWrapper'}>
+                                    <Historikkpanel />
+                                    {samtalestøttePodlet}
+                                </div>
+                                <ArbeidsmiljøportalPanel
+                                    restvirksomhetsdata={restvirksomhetsdata}
+                                />
+                            </Forside>
+                        </InnloggingssideWrapper>
+                    </>
+                }
+            />
+            <Route
+                path={PATH_HISTORIKK}
+                element={
+                    <>
+                        <Brødsmulesti gjeldendeSide="historikk" />
+                        <GrafOgTabell
+                            restSykefraværsstatistikk={restSykefraværshistorikk}
+                            restOrganisasjonerMedStatistikk={restOrganisasjonerMedS'atistikk}'                        />
+                    </>
+                }
+            />
+        </Routes>
+    );
 
     return (
         <>

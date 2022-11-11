@@ -46,7 +46,7 @@ export const getForebyggeFraværUrl = () => {
         case MILJØ.DEV:
             return FOREBYGGE_FRAVÆR_DEV;
         default:
-            return MIN_SIDE_ARBEIDSGIVER_LABS;
+            return FOREBYGGE_FRAVÆR_LABS;
     }
 };
 
