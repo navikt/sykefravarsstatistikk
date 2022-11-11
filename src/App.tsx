@@ -169,7 +169,7 @@ export const AppContent = ({
                         <InnloggingssideWrapper aggregertStatistikk={aggregertStatistikk}>
                             <Forside>
                                 <Sammenligningspanel
-        '                     '     restStatus={aggregertStatistikk.restStatus}
+                                    restStatus={aggregertStatistikk.restStatus}
                                     restAltinnOrganisasjoner={restOrganisasjoner}
                                 >
                                     <EkspanderbarSammenligning
@@ -196,7 +196,8 @@ export const AppContent = ({
                         <Brødsmulesti gjeldendeSide="historikk" />
                         <GrafOgTabell
                             restSykefraværsstatistikk={restSykefraværshistorikk}
-                            restOrganisasjonerMedStatistikk={restOrganisasjonerMedS'atistikk}'                        />
+                            restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
+                        />
                     </>
                 }
             />
