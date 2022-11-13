@@ -1,11 +1,11 @@
-import {BASE_PATH, PATH_FORSIDE, PATH_HISTORIKK, PATH_KALKULATOR} from '../konstanter';
+import { BASE_PATH, PATH_FORSIDE, PATH_HISTORIKK } from '../konstanter';
 
 export interface Brødsmule {
-  side: string;
-  overordnetSide: string | undefined;
-  lenketekst: string;
-  href: string;
-  handleMedReactRouter?: boolean;
+    side: string;
+    overordnetSide: string | undefined;
+    lenketekst: string;
+    href: string;
+    handleMedReactRouter?: boolean;
 }
 
 export type BrødsmulestiConfig = Brødsmule[];
@@ -26,13 +26,6 @@ export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
     overordnetSide: 'minSideArbeidsgiver',
     lenketekst: 'Sykefraværsstatistikk',
     href: BASE_PATH + PATH_FORSIDE,
-    handleMedReactRouter: true,
-  },
-  {
-    side: 'kalkulator',
-    overordnetSide: 'sykefraværsstatistikk',
-    lenketekst: 'Kostnadskalkulator',
-    href: BASE_PATH + PATH_KALKULATOR,
     handleMedReactRouter: true,
   },
   {

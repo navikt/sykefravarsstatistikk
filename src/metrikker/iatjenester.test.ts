@@ -1,48 +1,42 @@
-import {IaTjenesteKilde, iaTjenesterMetrikkerErSendtForBedrift} from "./iatjenester";
-import {TjenestePerOrgnr} from "./IaTjenesterMetrikkerContext";
+import { sendIaTjenesteMetrikkMottatt, sendteMetrikker } from './iatjenester';
+import { iaTjenestemetrikkFeiletHandler } from './mswHandlers';
+import { mswServer } from '../../jest/mswServer';
 
-describe('Testerforiatjenester', () => {
-  test('ny_orgnr_skal_legges_til_i_en_tomliste', () => {
-    const iaTjenesterListe: TjenestePerOrgnr[] = [
-      {orgnr: '', kilde: ''},
-      {orgnr: '999999999', kilde: IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK},
-    ];
-    expect(
-        iaTjenesterMetrikkerErSendtForBedrift('999999999', [{orgnr: '', kilde: ''}])
-    ).toEqual(iaTjenesterListe);
-  });
-  test('samme_orgnr_skal_IKKE_legges_til_i_en_liste_som_har_samme_default_kilde', () => {
-    const iaTjenesterListe: TjenestePerOrgnr[] = [
-      {orgnr: '999999999', kilde: IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK},
-    ];
-    expect(
-        iaTjenesterMetrikkerErSendtForBedrift('999999999', [
-          {orgnr: '999999999', kilde: IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK},
-        ])
-    ).toEqual(iaTjenesterListe);
-  });
-
-  test('ny_orgnr_skal_legges_til_i_en_liste_som_IKKE_har_samme_kilde', () => {
-    const iaTjenesterListe: TjenestePerOrgnr[] = [
-      {orgnr: '999999999', kilde: IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK},
-      {orgnr: '999999999', kilde: IaTjenesteKilde.KALKULATOR},
-    ];
-    expect(
-        iaTjenesterMetrikkerErSendtForBedrift('999999999', [
-          {orgnr: '999999999', kilde: IaTjenesteKilde.SYKEFRAVÆRSSTATISTIKK},
-        ], IaTjenesteKilde.KALKULATOR)
-    ).toEqual(iaTjenesterListe);
-  });
-  test('ny_orgnr_skal_legges_til_i_en_liste_som_har_samme_kilde', () => {
-    const iaTjenesterListe: TjenestePerOrgnr[] = [
-      {orgnr: '999999999', kilde: IaTjenesteKilde.KALKULATOR},
-      {orgnr: '888888888', kilde: IaTjenesteKilde.KALKULATOR},
-    ];
-
-    expect(
-        iaTjenesterMetrikkerErSendtForBedrift('888888888', [
-          {orgnr: '999999999', kilde: IaTjenesteKilde.KALKULATOR},
-        ], IaTjenesteKilde.KALKULATOR)
-    ).toEqual(iaTjenesterListe);
-  });
+beforeEach(() => {
+    resetSendteMetrikker();
 });
+
+describe('Tester vellykket utsendelse av ia-metrikk', () => {
+    test('nytt orgnr skal legges til i lista over sendte metrikker', async () => {
+        const nyttOrgnr = '99999999';
+        const leverteIaTjenester = await sendIaTjenesteMetrikkMottatt(nyttOrgnr);
+
+        expect(leverteIaTjenester).toEqual([{ orgnr: '' }, { orgnr: '99999999' }]);
+    });
+
+    test('skal ikke sende levert ia-tjeneste to ganger for samme virksomhet', async () => {
+        const nyttOrgnr = '888888888';
+        await sendIaTjenesteMetrikkMottatt(nyttOrgnr);
+        const leverteIaTjenester = await sendIaTjenesteMetrikkMottatt(nyttOrgnr);
+
+        expect(leverteIaTjenester).toEqual([{ orgnr: '' }, { orgnr: '888888888' }]);
+    });
+});
+
+describe('Tester feilende utsendelse av IA-metrikk', () => {
+    beforeEach(() => {
+        mswServer.use(iaTjenestemetrikkFeiletHandler);
+    });
+
+    test('skal ikke legge til orgnummer i lista over sendte metrikker dersom kallet feiler', async () => {
+        const nyttOrgnr = '99999999';
+
+        const leverteIaTjenester = await sendIaTjenesteMetrikkMottatt(nyttOrgnr);
+        expect(leverteIaTjenester).toEqual([{ orgnr: '' }]);
+    });
+});
+
+function resetSendteMetrikker() {
+    sendteMetrikker.length = 0;
+    sendteMetrikker.push({ orgnr: '' });
+}

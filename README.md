@@ -1,33 +1,51 @@
 # Sykefraværsstatistikk
 
-Denne appen gir arbeidsgivere muligheten til å sammenligne sykefraværet i egen virksomhet, med
-sykefraværet i bransjen, sektoren og i hele landet.
-Hensikten er å gjøre arbeidsgivere mer engasjerte i eget sykefravær.
+Denne appen gir arbeidsgivere muligheten til å sammenligne sykefraværet i egen virksomhet, med sykefraværet i bransjen,
+sektoren og i hele landet. Hensikten er å gjøre arbeidsgivere mer engasjerte i eget sykefravær.
 
 # Testmiljø
 
-- https://arbeidsgiver.labs.nais.io/sykefravarsstatistikk/ -- Funker direkte fra nettleser med Mock
-  data uten tilkobling til backend/preprod data
-- https://arbeidsgiver-q.nav.no/sykefravarsstatistikk/ -- Funker fra `utviklerimage` med innlogget
-  bruker og test FnR
+- https://arbeidsgiver.labs.nais.io/sykefravarsstatistikk/ -- Funker direkte fra nettleser med Mock data uten tilkobling
+  til backend/preprod data. Hit deployes helst kun master.
+- https://arbeidsgiver-gcp.dev.nav.no/sykefravarsstatistikk/ -- brukes til utvikling. Krever naisdevice og innlogging
+  med test-fnr,
 
-# Komme i gang
+# Kom i gang
 
-- Installere avhengigheter: `yarn`
-- Kjøre applikasjon med mock: `yarn mock` (for Windows: `yarn wock`)
+- Installer avhengigheter med `yarn`
 - Rename filen `.env.example` -> `.env`
-- Hvis du vil kjøre mot egen backend lokalt, kan du sette `mock.sykefraværsstatistikkApi = false`
-  i `mock.ts` før du kjører `yarn mock`. (NB! Krever at `sykefravarsstatistikk-api` kjører på port
-  8080.)
-    - Da må du kjøre `yarn mock` først før `yarn start`
-- Kjøre applikasjonen normalt: `yarn start` (NB! Krever integrasjon med `sykefravarsstatistikk-api`
+
+## Tester
+
+Tester kan kjøres med `yarn test`.
+
+Dersom du ønsker å kjøre testene via Intellij sin jest-plugin, legg inn
+
+``` 
+--setupFilesAfterEnv=<rootDir>/jest/setupTests.ts 
+```
+
+under `Jest options` i `Edit configurations` -> `edit configuration templates` -> `Jest`. Merk at denne endringen kun
+trer i kraft på _nye_ konfigurasjoner.
+
+# Kjøring av applikasjonen
+
+- Kjør opp applikasjon med rene mock-data: `yarn mock` (for Windows: `yarn wock`)
+
+- Hvis du vil kjøre mot egen sykefraværsstatistikk-backend lokalt, kan du sette `mock.sykefraværsstatistikkApi = false`
+  i `mock.ts` før du kjører `yarn mock`. (NB! Krever at `sykefravarsstatistikk-api` kjører på port 8080.). Da må du
+  kjøre `yarn mock` først før `yarn start`.
+
+- For å kjøre applikasjonen uten mock: `yarn start` (NB! Krever integrasjon med `sykefravarsstatistikk-api`
   og `ditt-nav-arbeidsgiver-api`)
-- Kjøre applikasjonen med Docker:
-    1. Start container runtime (f.eks docker desktop eller colima)
-    2. `yarn install && yarn build`
-    3. `docker build -t sykefravarsstatistikk .`
-    4. `docker run -e NODE_ENV=development --env-file=./.env.example -d -p 3000:3000 sykefravarsstatistikk`
-    5. For å stoppe, kjør `docker stop <id>` hvor id-en hentes ved å kjøre `docker ps`
+
+## Kjøre applikasjonen med Docker:
+
+1. Start container runtime (f.eks docker desktop eller colima)
+2. `yarn install && yarn build`
+3. `docker build -t sykefravarsstatistikk .`
+4. `docker run -e NODE_ENV=development --env-file=./.env.example -d -p 3000:3000 sykefravarsstatistikk`
+5. For å stoppe, kjør `docker stop <id>` hvor id-en hentes ved å kjøre `docker ps`
 
 ---
 
