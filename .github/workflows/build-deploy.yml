@@ -12,9 +12,9 @@ concurrency:
 jobs:
     compile-test-and-build:
       - name: Setup node.js
-          uses: actions/setup-node@v3
-          with:
-              registry-url: 'https://npm.pkg.github.com'
+        uses: actions/setup-node@v3
+        with:
+          registry-url: 'https://npm.pkg.github.com'
       - name: Install dependencies
         run: npm ci
         env:
