@@ -119,7 +119,9 @@
     "eventsource": "2.0.2",
     "terser": "^4.8.1",
     "immer": "^9.0.15",
-    "ejs": "^3.1.7"
+    "ejs": "^3.1.7",
+    "@xmldom/xmldom": "0.8.4",
+    "loader-utils": "1.4.1"
   },
   "scripts": {
     "start": "craco start",
