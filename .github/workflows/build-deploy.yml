@@ -10,20 +10,16 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    get-github-package-parameters:
-        name: Setup node.js
-        uses: actions/setup-node@v2
-        with:
-          registry-url: 'https://npm.pkg.github.com'
-
     compile-test-and-build:
         name: Build and run tests
         runs-on: Ubuntu-20.04
         steps:
             - uses: actions/checkout@v2
-            - uses: actions/setup-node@v2
+            - uses: actions/setup-node@v3
               with:
                   node-version: '14.x'
+                  registry-url: 'https://npm.pkg.github.com'
+
             - uses: actions/cache@v2
               with:
                   path: ./node_modules
