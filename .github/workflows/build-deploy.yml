@@ -12,7 +12,7 @@ concurrency:
 jobs:
     get-github-package-parameters:
         name: Setup node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
           registry-url: 'https://npm.pkg.github.com'
 
