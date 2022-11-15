@@ -1520,10 +1520,10 @@
     strict-event-emitter "^0.2.4"
     web-encoding "^1.1.5"
 
-"@navikt/bedriftsmeny@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@navikt/bedriftsmeny/-/bedriftsmeny-4.0.2.tgz#e90c469c1d074059ca7942eb493315708f0f8af9"
-  integrity sha512-F/QzYC7Tf/z5vpQI8fZCYcjp1XYvTn+jfhmV9vAev0/b9nIg/XATZjuUp+PYsIye8hhNoyvx7ngzrHHgzVxk+A==
+"@navikt/bedriftsmeny@^4.1.1":
+  version "4.1.1"
+  resolved "https://npm.pkg.github.com/download/@navikt/bedriftsmeny/4.1.1/c631b105769e8c7e07a24ccacec9415d6f393ccd#c631b105769e8c7e07a24ccacec9415d6f393ccd"
+  integrity sha512-fGi7wnQpQLoN2TQ0Sl65rUyPUl2TduEp7nZ6/jQBpIXyK/JGlckBQM7pf2NQ8mbyj1PinIPwncS/7PvuQc0h6w==
   dependencies:
     "@types/amplitude-js" "^8.9.4"
     fuzzysort "^1.1.4"
