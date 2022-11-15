@@ -66,7 +66,7 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
             <div className="graf-og-tabell">
                 <div className="graf-og-tabell__overdel-wrapper">
                     <div className="graf-og-tabell__tekst-wrapper">
-                        <Systemtittel tag="h1" className="graf-og-tabell__tittel">
+                        <Systemtittel tag="h2" className="graf-og-tabell__tittel">
                             Se sykefraværet over tid
                         </Systemtittel>
                         <Normaltekst className="graf-og-tabell__ingress">
