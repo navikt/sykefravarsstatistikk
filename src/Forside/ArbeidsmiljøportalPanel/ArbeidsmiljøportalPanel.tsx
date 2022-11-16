@@ -34,7 +34,7 @@ export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({restvirksomh
         </div>
         <Normaltekst className="arbeidsmiljøportal-panel__tekst">
           Bedre arbeidsmiljø styrker jobbnærværet, forebygger og reduserer sykefravær og
-          frafall. <br/>
+          frafall. <br aria-hidden="true"/>
           Finn kunnskap og digitale verktøy som hjelper dere med å forebygge arbeidsrelatert
           sykefravær.
         </Normaltekst>
