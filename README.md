@@ -12,8 +12,17 @@ sektoren og i hele landet. Hensikten er å gjøre arbeidsgivere mer engasjerte i
 
 # Kom i gang
 
-- Installer avhengigheter med `yarn`
-- Rename filen `.env.example` -> `.env`
+Rename filen `.env.example` -> `.env`
+
+For å kunne laste ned pakker fra Github Package Registry må du logge inn på npm:
+```
+npm login --registry https://npm.pkg.github.com
+```
+- USERNAME: Din GitHub-bruker
+- PASSWORD: Et [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-personal-access-token-classic) med `packages:read`-scope
+- E-MAIL: En e-post du har koplet til GitHub
+
+Installer avhengigheter med `yarn`
 
 ## Tester
 
