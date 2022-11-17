@@ -122,8 +122,7 @@
     "ejs": "^3.1.7",
     "@xmldom/xmldom": "0.8.4",
     "loader-utils": "2.0.4",
-    "minimatch": "3.0.5",
-    "d3-color": "3.1.0"
+    "minimatch": "3.0.5"
   },
   "scripts": {
     "start": "craco start",
