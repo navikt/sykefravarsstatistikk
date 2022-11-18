@@ -8,6 +8,7 @@ export const KakediagramGrå: FunctionComponent = () => (
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
     >
+      <title>Grått kakediagram der sektoren indikerer et manglende tall</title>
       <path d="M61 61V0" stroke="black"/>
       <circle cx="61" cy="61.1758" r="60.5" fill="#D8D8D8" stroke="black"/>
       <circle cx="61" cy="61.1758" r="38.5" fill="white" stroke="black"/>
