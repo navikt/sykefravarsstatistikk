@@ -8,6 +8,7 @@ export const KakediagramRød: FunctionComponent = () => (
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
     >
+      <title>Rødt kakediagram der sektoren indikerer et lavt tall</title>
       <mask id="path-1-inside-1" fill="white">
         <path
             d="M122 61C122 51.764 119.903 42.6486 115.866 34.3414C111.83 26.0341 105.96 18.7518 98.6989 13.0439C91.4379 7.33589 82.9756 3.35125 73.9501 1.39048C64.9247 -0.570285 55.5718 -0.455985 46.597 1.72476L61 61H122Z"/>

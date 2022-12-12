@@ -8,7 +8,7 @@ export const KakediagramGrønn: FunctionComponent = () => (
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Kakediagram med grønn hoveddel</title>
+      <title>Grønt kakediagram der sektoren indikerer et høyt tall</title>
       <mask id="path-1-inside-1" fill="white">
         <path
             d="M7.09062 89.5443C12.5711 99.8949 20.9154 108.449 31.1268 114.185C41.3382 119.92 52.9848 122.595 64.6755 121.889C76.3661 121.183 87.6065 117.127 97.0538 110.205C106.501 103.283 113.756 93.787 117.952 82.8524C122.147 71.9177 123.106 60.0064 120.714 48.5414C118.322 37.0763 112.68 26.5422 104.462 18.1976C96.2441 9.8529 85.7975 4.05043 74.3704 1.48334C62.9432 -1.08376 51.0186 -0.306949 40.0211 3.72097L61 61L7.09062 89.5443Z"/>

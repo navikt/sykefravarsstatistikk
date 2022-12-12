@@ -19,10 +19,11 @@ export const PubliseringsdatoOppdateringsinfo: FunctionComponent<{
                         )}
                 </Normaltekst>
                 <Normaltekst>
-                    {`Neste oppdatering: ` +
-                        formatterDatoMedMånedNavn(
-                            new Date(publiseringsdatoer.nestePubliseringsdato)
-                        )}
+                    {isFinite(new Date(publiseringsdatoer.nestePubliseringsdato).getDate()) &&
+                        `Neste oppdatering: ` +
+                            formatterDatoMedMånedNavn(
+                                new Date(publiseringsdatoer.nestePubliseringsdato)
+                            )}
                 </Normaltekst>
             </div>
         );
