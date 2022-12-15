@@ -1,15 +1,15 @@
-import React, {FunctionComponent} from 'react';
+import React, { FunctionComponent } from 'react';
 import classNames from 'classnames';
 import './TipsBilde.less';
 
 interface Props {
-  className?: string;
-  src: string;
-  alt: string;
+    className?: string;
+    src: string;
+    alt: string;
 }
 
-export const TipsBilde: FunctionComponent<Props> = ({className, src, alt}) => (
+export const TipsBilde: FunctionComponent<Props> = ({ className, src, alt }) => (
     <div className={classNames('tips-bilde__wrapper', className)}>
-      <img className="tips-bilde" src={src} alt={alt}/>
+        <img className="tips-bilde" src={src} alt={alt} aria-hidden={true} />
     </div>
 );
