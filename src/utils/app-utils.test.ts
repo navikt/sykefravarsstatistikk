@@ -1,6 +1,5 @@
 import {
   formaterProsent,
-  getTekstForOppdateringsdato,
   tilIsoDatoMedUtcTimezoneUtenMillis,
 } from './app-utils';
 

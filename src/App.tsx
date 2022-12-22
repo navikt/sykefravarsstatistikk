@@ -39,20 +39,16 @@ import { AnalyticsClient } from './amplitude/client';
 import { useAnalytics } from './hooks/useAnalytics';
 import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
 import { RestVirksomhetsdata } from './api/virksomhetsdata-api';
+import Samtalestøttepanel from './Forside/Samtalestøttepanel/Samtalestøttepanel';
 
 interface Props {
     analyticsClient: AnalyticsClient;
-    samtalestøttePodlet?: React.ReactNode;
 }
 
-const App: FunctionComponent<Props> = ({ analyticsClient, samtalestøttePodlet }) => {
+const App: FunctionComponent<Props> = ({ analyticsClient }) => {
     return (
         <main id="maincontent">
-            <AppContent
-                {...useSykefraværAppData()}
-                analyticsClient={analyticsClient}
-                samtalestøttePodlet={samtalestøttePodlet}
-            />
+            <AppContent {...useSykefraværAppData()} analyticsClient={analyticsClient} />
         </main>
     );
 };
@@ -75,12 +71,10 @@ export const AppContent = ({
     virksomhetsdata,
     analyticsClient,
     enhetsregisterdata,
-    samtalestøttePodlet,
     aggregertStatistikk,
     publiseringsdatoer,
 }: SykefraværAppData & {
     analyticsClient: AnalyticsClient;
-    samtalestøttePodlet?: React.ReactNode;
 }) => {
     useAnalytics(analyticsClient);
 
@@ -179,7 +173,7 @@ export const AppContent = ({
                                 </Sammenligningspanel>
                                 <div className={'app__lenkepanelWrapper'}>
                                     <Historikkpanel />
-                                    {samtalestøttePodlet}
+                                    <Samtalestøttepanel />
                                 </div>
                                 <ArbeidsmiljøportalPanel
                                     restvirksomhetsdata={restvirksomhetsdata}

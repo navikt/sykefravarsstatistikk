@@ -7,10 +7,6 @@ export const PATH_FORSIDE_GENERELL = '/sammenligning';
 export const PATH_FORSIDE_BARNEHAGE = PATH_FORSIDE_GENERELL + '/barnehage';
 export const PATH_KALKULATOR_REDIRECT = '/kalkulator';
 export const PATH_HISTORIKK = '/historikk';
-
-export const SAMTALESTØTTE_MIKROFONTEND = 'samtalestotte-podlet';
-export const SAMTALESTØTTE_MIKROFRONTEND_PATH = '/' + SAMTALESTØTTE_MIKROFONTEND;
-
 export const DEV_HOST = 'arbeidsgiver-gcp.dev.nav.no';
 export const LABS_HOST = 'arbeidsgiver.labs.nais.io';
 export const PROD_HOST = 'arbeidsgiver.nav.no';
@@ -26,6 +22,11 @@ export const MIN_SIDE_ARBEIDSGIVER_DEV =
     'https://min-side-arbeidsgiver.dev.nav.no/min-side-arbeidsgiver';
 export const MIN_SIDE_ARBEIDSGIVER_LABS = 'https://arbeidsgiver.labs.nais.io/min-side-arbeidsgiver';
 export const MIN_SIDE_ARBEIDSGIVER_PROD = 'https://arbeidsgiver.nav.no/min-side-arbeidsgiver';
+
+export const SAMTALESTØTTE_DEV =
+    'https://arbeidsgiver-gcp.dev.nav.no/samtalestotte';
+export const SAMTALESTØTTE_LABS = 'https://arbeidsgiver.labs.nais.io/samtalestotte';
+export const SAMTALESTØTTE_PROD = 'https://arbeidsgiver.nav.no/samtalestotte';
 
 export const FOREBYGGE_FRAVÆR_DEV = 'https://min-ia.dev.nav.no/min-ia/';
 export const FOREBYGGE_FRAVÆR_LABS = 'https://arbeidsgiver.labs.nais.io/min-ia/';
