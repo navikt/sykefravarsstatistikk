@@ -54,10 +54,14 @@ describe("useAnalytics", () => {
   it('Kaller bedrift-valgt event når vi velger virksomhet', async () => {
     render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
 
-    const virksomhetsVelger = await screen.findByLabelText(/velg virksomhet/i);
-    userEvent.click(virksomhetsVelger);
-    const ønsketVirksomhet = await screen.findByLabelText(/virksomhetsnr. 444444444/i);
-    userEvent.click(ønsketVirksomhet);
+    const virksomhetsvelger = await screen.findByLabelText(/Velg aktiv virksomhet/i);
+    userEvent.click(virksomhetsvelger);
+
+    const ønsketOverenhet = await screen.findByText(/111111111/i);
+    userEvent.click(ønsketOverenhet);
+
+  const ønsketVirsomhet = await screen.findByText(/444444444/i);
+    userEvent.click(ønsketVirsomhet);
     await waitFor(() => {
       expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
           'bedrift-valgt',
