@@ -9,6 +9,9 @@ import {
     MIN_SIDE_ARBEIDSGIVER_LABS,
     MIN_SIDE_ARBEIDSGIVER_PROD,
     PROD_HOST,
+    SAMTALESTØTTE_DEV,
+    SAMTALESTØTTE_LABS,
+    SAMTALESTØTTE_PROD,
 } from '../konstanter';
 
 export const getMiljø = (): string => {
@@ -37,6 +40,19 @@ export const getMinSideArbeidsgiverUrl = () => {
     }
 };
 
+export const getSamtalestøtteUrl = () => {
+    switch (getMiljø()) {
+        case MILJØ.PROD:
+            return SAMTALESTØTTE_PROD;
+        case MILJØ.LABS:
+            return SAMTALESTØTTE_LABS;
+        case MILJØ.DEV:
+            return SAMTALESTØTTE_DEV;
+        default:
+            return MIN_SIDE_ARBEIDSGIVER_LABS;
+    }
+};
+
 export const getForebyggeFraværUrl = () => {
     switch (getMiljø()) {
         case MILJØ.PROD:
@@ -49,4 +65,3 @@ export const getForebyggeFraværUrl = () => {
             return FOREBYGGE_FRAVÆR_LABS;
     }
 };
-
