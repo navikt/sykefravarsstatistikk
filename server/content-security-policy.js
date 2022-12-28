@@ -11,6 +11,7 @@ const contentSecurityPolicy = {
         'script.hotjar.com',
         '*.psplugin.com',
         '*.nav.no',
+        '*.taskanalytics.com/tm.js',
     ],
     'style-src': [
         "'self'",
@@ -38,7 +39,7 @@ const contentSecurityPolicy = {
         'sentry.gc.nav.no',
         'ta-survey-v2.herokuapp.com',
     ],
-    'font-src': ['data:', '*.psplugin.com', '*.hotjar.com', 'fonts.gstatic.com', 'www.nav.no'],
+    'font-src': ['data:', '*.psplugin.com', '*.hotjar.com', 'fonts.gstatic.com', '*.nav.no'],
     'frame-src': ['vars.hotjar.com', '*.nav.no'],
     'img-src': [
         "'self'",

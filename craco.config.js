@@ -13,7 +13,7 @@ module.exports = {
             },
         },
         setupMiddlewares: (middlewares, {app}) => {
-            applyNotifikasjonMockMiddleware({app, path: "/sykefravarsstatistikk/notifikasjon-brukeb-api"})
+            applyNotifikasjonMockMiddleware({app, path: "/sykefravarsstatistikk/notifikasjon-bruker-api"})
 
             return middlewares;
         },
