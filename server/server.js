@@ -3,7 +3,7 @@ const express = require('express');
 const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
 const proxy = require('./proxy');
-const iaTjenesterMetrikkerProxy = require("./iaTjenesterMetrikkerProxy");
+const iaTjenesterMetrikkerProxy = require('./iaTjenesterMetrikkerProxy');
 const {BASE_PATH} = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
 const dotenv = require('dotenv');
@@ -11,9 +11,11 @@ const {initIdporten} = require('./idporten');
 const {initTokenX} = require('./tokenx');
 const cookieParser = require('cookie-parser');
 const getCspValue = require('./content-security-policy');
+const { createNotifikasjonBrukerApiProxyMiddleware } = require('./brukerapi-proxy-middleware');
+
+const { NAIS_CLUSTER_NAME = 'local', APP_INGRESS, LOGIN_URL, NODE_ENV, PORT = 3000 } = process.env;
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 dotenv.config();
 
@@ -51,7 +53,7 @@ const startServer = async (html) => {
     res.header('X-WebKit-CSP', getCspValue());
     res.header('X-Content-Security-Policy', getCspValue());
 
-    if (process.env.NODE_ENV === 'development') {
+        if (NODE_ENV === 'development') {
       res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
       res.header(
           'Access-Control-Allow-Headers',
@@ -65,19 +67,18 @@ const startServer = async (html) => {
   app.use(BASE_PATH + '/', express.static(buildPath, {index: false}));
 
   app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
-    const referrerUrl = `${process.env.APP_INGRESS}/success?redirect=${req.query.redirect}`;
+        const referrerUrl = `${APP_INGRESS}/success?redirect=${req.query.redirect}`;
     res.redirect(BASE_PATH + `/oauth2/login?redirect=${referrerUrl}`);
   });
 
   app.get(`${BASE_PATH}/success`, (req, res) => {
     const loginserviceToken = req.cookies['selvbetjening-idtoken'];
-    if (loginserviceToken && req.query.redirect.startsWith(
-        process.env.APP_INGRESS)) {
+        if (loginserviceToken && req.query.redirect.startsWith(APP_INGRESS)) {
       res.redirect(req.query.redirect);
-    } else if (req.query.redirect.startsWith(process.env.APP_INGRESS)) {
-      res.redirect(`${process.env.LOGIN_URL}${req.query.redirect}`);
+        } else if (req.query.redirect.startsWith(APP_INGRESS)) {
+            res.redirect(`${LOGIN_URL}${req.query.redirect}`);
     } else {
-      res.redirect(`${process.env.LOGIN_URL}${process.env.APP_INGRESS}`);
+            res.redirect(`${LOGIN_URL}${APP_INGRESS}`);
     }
   });
 
@@ -86,6 +87,21 @@ const startServer = async (html) => {
 
   app.use(proxy);
   app.use(iaTjenesterMetrikkerProxy);
+
+    if (NAIS_CLUSTER_NAME === 'local' || NAIS_CLUSTER_NAME === 'labs-gcp') {
+        const {
+            applyNotifikasjonMockMiddleware,
+        } = require('@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock');
+        applyNotifikasjonMockMiddleware({
+            app,
+            path: '/min-side-arbeidsgiver/notifikasjon-bruker-api',
+        });
+    } else {
+        app.use(
+            '/sykefravarsstatistikk/notifikasjon-bruker-api',
+            createNotifikasjonBrukerApiProxyMiddleware()
+        );
+    }
 
   app.get(BASE_PATH, (req, res) => {
     res.send(html);

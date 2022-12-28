@@ -46,6 +46,8 @@ spec:
                 - application: sykefravarsstatistikk-api
                   namespace: arbeidsgiver
                   cluster: prod-fss
+                - application: notifikasjon-bruker-api
+                  namespace: fager
             external:
                 - host: dekoratoren.nav.no
                 - host: sykefravarsstatistikk-api.prod-fss-pub.nais.io

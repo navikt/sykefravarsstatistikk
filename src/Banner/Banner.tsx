@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import './Banner.less';
-import Bedriftsmeny from '@navikt/bedriftsmeny';
+import Bedriftsmeny, { ForebyggeSykefravaer } from '@navikt/bedriftsmeny';
 import '@navikt/bedriftsmeny/lib/bedriftsmeny.css';
 import {RestStatus} from '../api/api-utils';
 import {AltinnOrganisasjon, RestAltinnOrganisasjoner} from '../api/altinnorganisasjon-api';
 import {sendBedriftValgtEvent} from '../amplitude/events';
+import { NotifikasjonWidget } from '@navikt/arbeidsgiver-notifikasjon-widget';
 
 interface Props {
   tittel: string;
@@ -29,8 +30,13 @@ const Banner: React.FunctionComponent<Props> = (props) => {
       <Bedriftsmeny
           organisasjoner={altinnOrganisasjoner}
           sidetittel={tittel}
+            undertittel={'INKLUDERENDE ARBEIDSLIV'}
           onOrganisasjonChange={sendEventHvisBedriftBlirManueltValgt}
-      />
+            piktogram={<ForebyggeSykefravaer />}
+            //amplitudeClient={amplitude}
+        >
+            <NotifikasjonWidget />
+        </Bedriftsmeny>
   );
 };
 
