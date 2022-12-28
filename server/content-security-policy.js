@@ -1,17 +1,15 @@
 const contentSecurityPolicy = {
-  'default-src': ["'self'", 'arbeidsgiver.nav.no'],
+  'default-src': ["'self'", 'arbeidsgiver.nav.no', 'nav.no'],
   'script-src': [
     "'self'",
     "'report-sample'",
     "'unsafe-inline'",
     "'unsafe-eval'",
-    'www.google-analytics.com',
     'www.googletagmanager.com',
     'static.hotjar.com',
     'script.hotjar.com',
     '*.psplugin.com',
     '*.nav.no',
-    '*.taskanalytics.com/tm.js',
   ],
   'style-src': [
     "'self'",
@@ -37,7 +35,6 @@ const contentSecurityPolicy = {
     'api.puzzel.com',
     'nav.boost.ai',
     'sentry.gc.nav.no',
-    'www.google-analytics.com',
     'ta-survey-v2.herokuapp.com',
   ],
   'font-src': ['data:', '*.psplugin.com', '*.hotjar.com', 'fonts.gstatic.com',
@@ -46,7 +43,6 @@ const contentSecurityPolicy = {
   'img-src': [
     "'self'",
     '*.hotjar.com',
-    'www.google-analytics.com',
     'www.gstatic.com',
     'translate.google.com',
     '*.nav.no',
