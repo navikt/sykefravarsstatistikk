@@ -17,9 +17,9 @@ interface Props {
 const LesMerPanel: React.FunctionComponent<Props> = ({
                                                        åpneLabel,
                                                        lukkLabel,
-                                                       children,
                                                        className,
                                                        onÅpne,
+    children,
                                                      }) => {
   const [åpen, setÅpenState] = useState<boolean>(false);
 
@@ -56,6 +56,8 @@ const LesMerPanel: React.FunctionComponent<Props> = ({
           </InfoToggler>
         </div>
         <div className="les-mer-panel__innhold">
+                {/*
+                // @ts-ignore */}
           <UnmountClosed isOpened={åpen}>{children}</UnmountClosed>
         </div>
         <div className={classNames('les-mer-panel__print-innhold', className)}>{children}</div>
