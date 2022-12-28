@@ -106,16 +106,14 @@
     "**/@babel/runtime": "7.13.10"
   },
   "scripts": {
+    "i": "yarn install && cd server && yarn install",
     "start": "craco start",
     "mock": "REACT_APP_MOCK=true yarn start",
     "wock": "set REACT_APP_MOCK=true && yarn start",
     "serve": "NODE_ENV=development node server/server.js",
     "build": "craco build",
     "test": "craco test ./",
-    "lint": "yarn lint:eslint & yarn lint:typescript",
-    "lint:eslint": "eslint .",
-    "lint:typescript": "tsc",
-    "eject": "craco eject"
+    "lint": "yarn lint:eslint & yarn lint:typescript"
   },
   "browserslist": {
     "production": [
