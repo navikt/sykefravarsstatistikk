@@ -36,6 +36,8 @@ jobs:
             - name: Build application
               run: |
                   yarn run build
+              env:
+                  CI: false
             - name: Login to GitHub Docker Registry
               uses: docker/login-action@v1
               with:
