@@ -8,7 +8,7 @@ const {
     TOKEN_X_PRIVATE_JWK,
 } = process.env;
 
-export const createNotifikasjonBrukerApiProxyMiddleware = ({ log }) => {
+const createNotifikasjonBrukerApiProxyMiddleware = ({ log }) => {
     const audience = `${NAIS_CLUSTER_NAME}:fager:notifikasjon-bruker-api`;
     return expressHttpProxy('http://notifikasjon-bruker-api.fager.svc.cluster.local', {
         proxyReqPathResolver: () => '/api/graphql',
