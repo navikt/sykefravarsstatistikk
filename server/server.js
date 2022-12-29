@@ -96,6 +96,7 @@ const startServer = async (html) => {
             path: '/sykefravarsstatistikk/notifikasjon-bruker-api',
         });
     } else {
+        console.log("Vi er ikke i LABS, oppretter ProxyMiddleware")
         app.use(
             '/sykefravarsstatistikk/notifikasjon-bruker-api',
             createNotifikasjonBrukerApiProxyMiddleware()

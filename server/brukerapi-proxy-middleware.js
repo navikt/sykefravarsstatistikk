@@ -22,9 +22,10 @@ const createNotifikasjonBrukerApiProxyMiddleware = () => {
         },
         proxyErrorHandler: (err, res, next) => {
             if (err instanceof errors.OPError) {
-                //logger.info(`token exchange feilet ${err.message}`, err);
+                console.log(`token exchange feilet ${err.message}`, err);
                 res.status(401).send();
             } else {
+                console.log("Feil!", err.message)
                 next(err);
             }
         },

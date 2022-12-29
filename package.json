@@ -6,7 +6,7 @@
   "dependencies": {
     "@babel/runtime": "^7.20.6",
     "@craco/craco": "^7.0.0",
-    "@navikt/arbeidsgiver-notifikasjon-widget": "^5.4.2",
+    "@navikt/arbeidsgiver-notifikasjon-widget": "5.4.3-rc",
     "@navikt/bedriftsmeny": "^6.3.0",
     "@navikt/ds-css": "^2.0.5",
     "@navikt/ds-icons": "^2.0.5",

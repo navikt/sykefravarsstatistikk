@@ -2168,10 +2168,10 @@
     strict-event-emitter "^0.2.4"
     web-encoding "^1.1.5"
 
-"@navikt/arbeidsgiver-notifikasjon-widget@^5.4.2":
-  version "5.4.2"
-  resolved "https://npm.pkg.github.com/download/@navikt/arbeidsgiver-notifikasjon-widget/5.4.2/7ae44a8d6ec41afe18881e592356dda28b1d39eb#7ae44a8d6ec41afe18881e592356dda28b1d39eb"
-  integrity sha512-NaPN24Ypt7cUiPphBRW6oOGytwjyRqMpAVizj50Cex7/oOPQiFypqhX1Guo9aQl+GOEYKBXCG1yJDbUWC9SqUw==
+"@navikt/arbeidsgiver-notifikasjon-widget@5.4.3-rc":
+  version "5.4.3-rc"
+  resolved "https://npm.pkg.github.com/download/@navikt/arbeidsgiver-notifikasjon-widget/5.4.3-rc/7a1aabbb1e26cb151ea9251cdba0ac83802158e8#7a1aabbb1e26cb151ea9251cdba0ac83802158e8"
+  integrity sha512-Yf19WS+8xJLG57klpGbSFYkEJxpZmXvDUcIxVG5xpWgb93AHscFEz8fLw5i9NKY6VPeUDETZec6vo1RwGLLITA==
   dependencies:
     "@apollo/client" "3.6.9"
     graphql "^16.6.0"
