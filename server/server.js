@@ -12,7 +12,7 @@ const { initIdporten } = require('./idporten');
 const { initTokenX } = require('./tokenx');
 const cookieParser = require('cookie-parser');
 const getCspValue = require('./content-security-policy');
-const {createLogger, format, transports} = require('winston');
+const { createLogger, format, transports } = require('winston');
 const { createNotifikasjonBrukerApiProxyMiddleware } = require('./brukerapi-proxy-middleware');
 
 const { NAIS_CLUSTER_NAME = 'local', APP_INGRESS, LOGIN_URL, NODE_ENV, PORT = 3000 } = process.env;
@@ -46,22 +46,23 @@ const log_events_counter = new Prometheus.Counter({
 
 // proxy calls to log.<level> https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/get
 const log = new Proxy(
-  createLogger({
-      transports: [
-          new transports.Console({
-              timestamp: true,
-              format: format.json(),
-          }),
-      ],
-  }),
-  {
-      get: (_log, level) => {
-          return (...args) => {
-              log_events_counter.inc({level: `${level}`})
-              return _log[level](...args);
-          }
-      }
-  });
+    createLogger({
+        transports: [
+            new transports.Console({
+                timestamp: true,
+                format: format.json(),
+            }),
+        ],
+    }),
+    {
+        get: (_log, level) => {
+            return (...args) => {
+                log_events_counter.inc({ level: `${level}` });
+                return _log[level](...args);
+            };
+        },
+    }
+);
 
 const startServer = async (html) => {
     console.log('Starting server: server.js');
@@ -123,10 +124,10 @@ const startServer = async (html) => {
             path: '/sykefravarsstatistikk/notifikasjon-bruker-api',
         });
     } else {
-        console.log("Vi er ikke i LABS, oppretter ProxyMiddleware")
+        console.log('Vi er ikke i LABS, oppretter ProxyMiddleware');
         app.use(
             '/sykefravarsstatistikk/notifikasjon-bruker-api',
-            createNotifikasjonBrukerApiProxyMiddleware(log)
+            createNotifikasjonBrukerApiProxyMiddleware({ log })
         );
     }
 
