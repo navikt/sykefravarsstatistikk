@@ -8,29 +8,28 @@ const {
     TOKEN_X_PRIVATE_JWK,
 } = process.env;
 
-const createNotifikasjonBrukerApiProxyMiddleware = () => {
+export const createNotifikasjonBrukerApiProxyMiddleware = ({ log }) => {
     const audience = `${NAIS_CLUSTER_NAME}:fager:notifikasjon-bruker-api`;
     return expressHttpProxy('http://notifikasjon-bruker-api.fager.svc.cluster.local', {
         proxyReqPathResolver: () => '/api/graphql',
         proxyReqOptDecorator: async (options, req) => {
             const tokenXClient = await createTokenXClient();
-            let subject_token = req.headers.authorization?.split(' ')[1];
-            const { access_token } = await exchangeToken(tokenXClient, { subject_token, audience });
+            const subject_token = req.cookies['selvbetjening-idtoken'];
+            const {access_token} = await exchangeToken(tokenXClient, {subject_token, audience});
 
             options.headers.Authorization = `Bearer ${access_token}`;
             return options;
         },
         proxyErrorHandler: (err, res, next) => {
             if (err instanceof errors.OPError) {
-                console.log(`token exchange feilet ${err.message}`, err);
+                log.info(`token exchange feilet ${err.message}`, err);
                 res.status(401).send();
             } else {
-                console.log("Feil!", err.message)
                 next(err);
             }
-        },
+        }
     });
-};
+}
 
 const createTokenXClient = async () => {
     const issuer = await Issuer.discover(TOKEN_X_WELL_KNOWN_URL);

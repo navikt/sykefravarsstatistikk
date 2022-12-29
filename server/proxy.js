@@ -2,14 +2,11 @@ const {FRONTEND_API_PATH} = require('./konstanter');
 const {createProxyMiddleware} = require('http-proxy-middleware');
 const {exchangeToken} = require('./tokenx');
 
-const envProperties = {
-  BACKEND_API_BASE_URL: process.env.BACKEND_API_BASE_URL
-      || 'http://localhost:8080',
-  APIGW_HEADER: process.env.APIGW_HEADER,
-};
+const {
+  BACKEND_API_BASE_URL = 'http://localhost:8080',
+} = process.env
 
 const BACKEND_API_PATH = '/sykefravarsstatistikk-api';
-const BACKEND_API_BASE_URL = `${envProperties.BACKEND_API_BASE_URL}`;
 
 const listeAvTillatteUrler = [
   new RegExp(
@@ -57,13 +54,6 @@ const proxyConfig = {
   logLevel: 'info',
 };
 
-// TODO: Fjern Api Gateway-greier (ikke lenger i bruk)
-if (envProperties.APIGW_HEADER) {
-  proxyConfig.headers = {
-    'x-nav-apiKey': envProperties.APIGW_HEADER,
-  };
-}
+const sykefraværsstatistikkApiProxy = createProxyMiddleware(FRONTEND_API_PATH, proxyConfig);
 
-const proxy = createProxyMiddleware(FRONTEND_API_PATH, proxyConfig);
-
-module.exports = proxy;
+module.exports = sykefraværsstatistikkApiProxy;
