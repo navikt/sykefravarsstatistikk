@@ -36,9 +36,6 @@ const Banner: React.FunctionComponent<Props> = (props) => {
             //amplitudeClient={amplitude}
         >
             <NotifikasjonWidget />
-            {/*
-            @ts-ignore*/}
-            {console.log(this !== undefined ? this.context: "ingen context")}
         </Bedriftsmeny>
     );
 };

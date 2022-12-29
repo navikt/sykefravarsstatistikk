@@ -202,6 +202,7 @@ export const AppContent = ({
         </Routes>
     );
 
+    console.log("MILJØ ER " + getMiljø())
     return (
         <NotifikasjonWidgetProvider
             miljo={getMiljø() === MILJØ.PROD ? 'prod' : 'dev'}
