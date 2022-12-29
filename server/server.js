@@ -114,7 +114,6 @@ const startServer = async (html) => {
     app.use(sykefraværsstatistikkApiProxy);
     app.use(iaTjenesterMetrikkerProxy);
 
-    app.use()
     if (NAIS_CLUSTER_NAME === 'labs-gcp') {
         const {
             applyNotifikasjonMockMiddleware,
