@@ -15,13 +15,6 @@ export const sendSidevisningEvent = () => {
   sendAnalytics('sidevisning');
 };
 
-export const sendInputfeltUtfyltEvent = (label: string, name: string) => {
-  sendAnalytics('inputfelt-utfylt', {
-    label,
-    name,
-  });
-};
-
 export const sendBedriftValgtEvent = () => {
   sendAnalytics('bedrift-valgt');
 };

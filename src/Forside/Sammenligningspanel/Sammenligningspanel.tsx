@@ -6,6 +6,7 @@ import {RestStatus} from '../../api/api-utils';
 import {Normaltekst, Systemtittel} from 'nav-frontend-typografi';
 import {RestAltinnOrganisasjoner} from '../../api/altinnorganisasjon-api';
 import {useOrgnr} from '../../hooks/useOrgnr';
+import { sendKnappEvent } from "../../amplitude/events";
 
 export const Sammenligningspanel: FunctionComponent<{
   restAltinnOrganisasjoner: RestAltinnOrganisasjoner;
@@ -38,7 +39,8 @@ export const Sammenligningspanel: FunctionComponent<{
             </Systemtittel>
           </div>
           <ReactToPrint
-              onAfterPrint={() => {
+            onBeforePrint={() => sendKnappEvent("skriv ut")}
+            onAfterPrint={() => {
                 if (lastNedKnappRef.current) {
                   lastNedKnappRef.current.focus();
                 }
