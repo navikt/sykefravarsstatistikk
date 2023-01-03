@@ -75,6 +75,7 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
                         </Normaltekst>
                     </div>
                     <ToggleGruppePure
+                        aria-label="Hvis du bruker skjermleser, bør du velge tabell"
                         className="graf-og-tabell__knapper"
                         toggles={[
                             {
