@@ -25,19 +25,11 @@ export const useAnalytics = <T extends AnalyticsData>(client: AnalyticsClient) =
   }, [client]);
 };
 
-const defaultEventProperties = () => {
-  return {
-    app: 'sykefravarsstatistikk',
-    team: 'teamia',
-    url: window.location.pathname,
-  };
-};
-
-export const sendAnalytics = (eventname: string, additionalEventProperties?: any) => {
+export const sendAnalytics = (eventname: string, eventProperties?: any) => {
   const analyticsEvent = new CustomEvent<AnalyticsData>(ANALYTICS_EVENT, {
     detail: {
       eventname,
-      eventProperties: {...defaultEventProperties(), ...additionalEventProperties},
+      eventProperties: {...eventProperties},
     },
   });
   document.dispatchEvent(analyticsEvent);

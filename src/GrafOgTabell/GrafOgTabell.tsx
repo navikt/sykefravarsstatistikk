@@ -11,7 +11,6 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { scrollToBanner } from '../utils/scrollUtils';
 import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { sendIaTjenesteMetrikkMottatt } from '../metrikker/iatjenester';
-import { sendSidevisningEvent } from '../amplitude/events';
 import { useOrgnr } from '../hooks/useOrgnr';
 import { ManglerRettighetRedirect } from '../utils/redirects';
 
@@ -23,7 +22,6 @@ interface Props {
 const GrafOgTabell: FunctionComponent<Props> = (props) => {
     useEffect(() => {
         scrollToBanner();
-        sendSidevisningEvent();
     }, []);
 
     const orgnr = useOrgnr();
