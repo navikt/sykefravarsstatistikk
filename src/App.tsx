@@ -20,7 +20,6 @@ import {
     PATH_KALKULATOR_REDIRECT,
 } from './konstanter';
 import './App.less';
-import { sendSidevisningEvent } from './amplitude/events';
 import { Forside } from './Forside/Forside';
 import { Sammenligningspanel } from './Forside/Sammenligningspanel/Sammenligningspanel';
 import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/EkspanderbarSammenligning';
@@ -109,7 +108,6 @@ export const AppContent = ({
             analyticsClient?.setUserProperties({
                 ...ekstradata,
             });
-            sendSidevisningEvent();
         }
     }, [
         sykefraværshistorikk,

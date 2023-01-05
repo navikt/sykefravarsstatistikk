@@ -11,19 +11,8 @@ export const sendKnappEvent = (label: string) => {
   sendAnalytics('knapp', {label});
 };
 
-export const sendSidevisningEvent = () => {
-  sendAnalytics('sidevisning');
-};
-
-export const sendInputfeltUtfyltEvent = (label: string, name: string) => {
-  sendAnalytics('inputfelt-utfylt', {
-    label,
-    name,
-  });
-};
-
 export const sendBedriftValgtEvent = () => {
-  sendAnalytics('bedrift-valgt');
+  sendAnalytics('bedrift valgt');
 };
 
 export function sendPanelEkspanderEvent(panelnavn: string) {
