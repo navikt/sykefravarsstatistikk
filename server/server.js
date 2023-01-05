@@ -2,7 +2,6 @@ const path = require('path');
 const express = require('express');
 const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
-const Prometheus = require('prom-client');
 const sykefraværsstatistikkApiProxy = require('./proxy');
 const iaTjenesterMetrikkerProxy = require('./iaTjenesterMetrikkerProxy');
 const { BASE_PATH } = require('./konstanter');
@@ -12,8 +11,8 @@ const { initIdporten } = require('./idporten');
 const { initTokenX } = require('./tokenx');
 const cookieParser = require('cookie-parser');
 const getCspValue = require('./content-security-policy');
-const { createLogger, format, transports } = require('winston');
 const { createNotifikasjonBrukerApiProxyMiddleware } = require('./brukerapi-proxy-middleware');
+const log = require('./logging');
 
 const { NAIS_CLUSTER_NAME = 'local', APP_INGRESS, LOGIN_URL, NODE_ENV, PORT = 3000 } = process.env;
 
@@ -37,32 +36,6 @@ const renderAppMedDecorator = (decoratorFragments) => {
         });
     });
 };
-
-const log_events_counter = new Prometheus.Counter({
-    name: 'logback_events_total',
-    help: 'Antall log events fordelt på level',
-    labelNames: ['level'],
-});
-
-// proxy calls to log.<level> https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/get
-const log = new Proxy(
-    createLogger({
-        transports: [
-            new transports.Console({
-                timestamp: true,
-                format: format.json(),
-            }),
-        ],
-    }),
-    {
-        get: (_log, level) => {
-            return (...args) => {
-                log_events_counter.inc({ level: `${level}` });
-                return _log[level](...args);
-            };
-        },
-    }
-);
 
 const startServer = async (html) => {
     log.info('Starting server: server.js');
