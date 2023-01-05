@@ -106,7 +106,7 @@
     "**/@babel/runtime": "7.13.10"
   },
   "scripts": {
-    "i": "yarn install && cd server && yarn install",
+    "ins": "yarn install && cd server && yarn install",
     "start": "craco start",
     "mock": "REACT_APP_MOCK=true yarn start",
     "wock": "set REACT_APP_MOCK=true && yarn start",
