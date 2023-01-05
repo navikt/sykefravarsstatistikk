@@ -10,11 +10,11 @@ const dotenv = require('dotenv');
 const { initIdporten } = require('./idporten');
 const { initTokenX } = require('./tokenx');
 const cookieParser = require('cookie-parser');
-const getCspValue = require('./content-security-policy');
 const { createNotifikasjonBrukerApiProxyMiddleware } = require('./brukerapi-proxy-middleware');
 const log = require('./logging');
+const contentHeaders= require('./contentHeaders')
 
-const { NAIS_CLUSTER_NAME = 'local', APP_INGRESS, LOGIN_URL, NODE_ENV, PORT = 3000 } = process.env;
+const { NAIS_CLUSTER_NAME = 'local', APP_INGRESS, LOGIN_URL, PORT = 3000 } = process.env;
 
 const app = express();
 
@@ -43,26 +43,7 @@ const startServer = async (html) => {
     await Promise.all([initIdporten(), initTokenX()]);
 
     app.disable('x-powered-by');
-    app.use((req, res, next) => {
-        res.header('X-Frame-Options', 'SAMEORIGIN');
-        res.header('X-Xss-Protection', '1; mode=block');
-        res.header('X-Content-Type-Options', 'nosniff');
-        res.header('Referrer-Policy', 'no-referrer');
-        res.header('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
-        res.header('Content-Security-Policy', getCspValue());
-        res.header('X-WebKit-CSP', getCspValue());
-        res.header('X-Content-Security-Policy', getCspValue());
-
-        if (NODE_ENV === 'development') {
-            res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-            res.header(
-                'Access-Control-Allow-Headers',
-                'Origin, X-Requested-With, Content-Type, Accept'
-            );
-            res.header('Access-Control-Allow-Methods', 'GET, POST');
-        }
-        next();
-    });
+    app.use(contentHeaders);
 
     app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
@@ -97,7 +78,6 @@ const startServer = async (html) => {
             path: '/sykefravarsstatistikk/notifikasjon-bruker-api',
         });
     } else {
-        console.log('Vi er ikke i LABS, oppretter ProxyMiddleware');
         app.use(
             '/sykefravarsstatistikk/notifikasjon-bruker-api',
             createNotifikasjonBrukerApiProxyMiddleware({ log })
@@ -113,16 +93,16 @@ const startServer = async (html) => {
     });
 
     app.listen(PORT, () => {
-        console.log('Server listening on port', PORT);
+        log.info('Server listening on port', PORT);
     });
 };
 
 getDecorator()
     .then(renderAppMedDecorator, (error) => {
-        console.error('Kunne ikke hente dekoratør ', error);
+        log.error('Kunne ikke hente dekoratør ', error);
         process.exit(1);
     })
     .then(startServer, (error) => {
-        console.error('Kunne ikke rendre app ', error);
+        log.error('Kunne ikke rendre app ', error);
         process.exit(1);
     });
