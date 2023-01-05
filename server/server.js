@@ -65,7 +65,7 @@ const log = new Proxy(
 );
 
 const startServer = async (html) => {
-    console.log('Starting server: server.js');
+    log.info('Starting server: server.js');
 
     await Promise.all([initIdporten(), initTokenX()]);
 
