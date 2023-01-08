@@ -8,13 +8,14 @@ const { BASE_PATH } = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
 const dotenv = require('dotenv');
 const { initIdporten } = require('./idporten');
-const { initTokenX } = require('./tokenx');
+const { initTokenXClient } = require('./tokenx');
 const cookieParser = require('cookie-parser');
 const { createNotifikasjonBrukerApiProxyMiddleware } = require('./brukerapi-proxy-middleware');
 const log = require('./logging');
-const contentHeaders= require('./contentHeaders')
+const contentHeaders = require('./contentHeaders');
+const { appRunningOnLabsGcp } = require('./environment');
 
-const { NAIS_CLUSTER_NAME = 'local', APP_INGRESS, LOGIN_URL, PORT = 3000 } = process.env;
+const { APP_INGRESS, LOGIN_URL, PORT = 3000 } = process.env;
 
 const app = express();
 
@@ -40,7 +41,7 @@ const renderAppMedDecorator = (decoratorFragments) => {
 const startServer = async (html) => {
     log.info('Starting server: server.js');
 
-    await Promise.all([initIdporten(), initTokenX()]);
+    await Promise.all([initIdporten(), initTokenXClient()]);
 
     app.disable('x-powered-by');
     app.use(contentHeaders);
@@ -69,7 +70,7 @@ const startServer = async (html) => {
     app.use(sykefraværsstatistikkApiProxy);
     app.use(iaTjenesterMetrikkerProxy);
 
-    if (NAIS_CLUSTER_NAME === 'labs-gcp') {
+    if (appRunningOnLabsGcp()) {
         const {
             applyNotifikasjonMockMiddleware,
         } = require('@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock');

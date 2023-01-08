@@ -1,6 +1,5 @@
 const getCspValue = require('./content-security-policy');
-
-const { NODE_ENV } = process.env;
+const { appRunningLocally } = require('./environment');
 
 const contentHeaders = (req, res, next) => {
     res.header('X-Frame-Options', 'SAMEORIGIN');
@@ -12,7 +11,7 @@ const contentHeaders = (req, res, next) => {
     res.header('X-WebKit-CSP', getCspValue());
     res.header('X-Content-Security-Policy', getCspValue());
 
-    if (NODE_ENV === 'development') {
+    if (appRunningLocally()) {
         res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
         res.header(
             'Access-Control-Allow-Headers',

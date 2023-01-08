@@ -1,6 +1,7 @@
 const {FRONTEND_API_PATH} = require('./konstanter');
 const {createProxyMiddleware} = require('http-proxy-middleware');
-const {exchangeToken} = require('./tokenx');
+const { exchangeTokenIdporten } = require("./idporten");
+const { appRunningOnLabsGcp } = require("./environment");
 
 const {
   BACKEND_API_BASE_URL = 'http://localhost:8080',
@@ -39,11 +40,11 @@ const proxyConfig = {
     return BACKEND_API_PATH + '/not-found';
   },
   router: async (req) => {
-    if (process.env.NODE_ENV === 'labs-gcp') {
+    if (appRunningOnLabsGcp()) {
       // I labs så returnerer vi mock uansett
       return undefined;
     }
-    const tokenSet = await exchangeToken(req);
+    const tokenSet = await exchangeTokenIdporten(req);
     if (!tokenSet?.expired() && tokenSet?.access_token) {
       req.headers['authorization'] = `Bearer ${tokenSet.access_token}`;
     }

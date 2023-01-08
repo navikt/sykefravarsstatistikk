@@ -19,9 +19,6 @@ spec:
     readiness:
         path: /sykefravarsstatistikk/internal/isReady
         initialDelay: 10
-    env:
-        - name: NODE_ENV
-          value: labs-gcp
     accessPolicy:
         outbound:
             external:
