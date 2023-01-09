@@ -1,4 +1,4 @@
-const {exchangeIdportenToken} = require('idporten')
+const {exchangeIdportenToken} = require('./idporten')
 const {createProxyMiddleware} = require('http-proxy-middleware');
 
 const {
