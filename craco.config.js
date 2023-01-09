@@ -3,6 +3,7 @@ const {
 } = require('@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock');
 
 const CracoLessPlugin = require('craco-less');
+const { NOTIFIKASJON_API_PATH } = require('./server/brukerapi-proxy-middleware');
 
 module.exports = {
     plugins: [{ plugin: CracoLessPlugin }],
@@ -17,7 +18,7 @@ module.exports = {
         setupMiddlewares: (middlewares, { app }) => {
             applyNotifikasjonMockMiddleware({
                 app,
-                path: '/sykefravarsstatistikk/notifikasjon-bruker-api',
+                path: NOTIFIKASJON_API_PATH,
             });
             return middlewares;
         },
