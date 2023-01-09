@@ -1,4 +1,6 @@
-const {applyNotifikasjonMockMiddleware} = require('@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock');
+const {
+    applyNotifikasjonMockMiddleware,
+} = require('@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock');
 
 const CracoLessPlugin = require('craco-less');
 
@@ -7,14 +9,16 @@ module.exports = {
     devServer: {
         proxy: {
             '/sykefravarsstatistikk/api': {
-                pathRewrite: {'^/sykefravarsstatistikk/api': ''},
-                    target: 'http://localhost:8080/sykefravarsstatistikk-api',
-                    changeOrigin: true,
+                pathRewrite: { '^/sykefravarsstatistikk/api': '' },
+                target: 'http://localhost:8080/sykefravarsstatistikk-api',
+                changeOrigin: true,
             },
         },
-        setupMiddlewares: (middlewares, {app}) => {
-            applyNotifikasjonMockMiddleware({app, path: "/sykefravarsstatistikk/notifikasjon-bruker-api"})
-
+        setupMiddlewares: (middlewares, { app }) => {
+            applyNotifikasjonMockMiddleware({
+                app,
+                path: '/sykefravarsstatistikk/notifikasjon-bruker-api',
+            });
             return middlewares;
         },
     },

@@ -1,10 +1,10 @@
-import { exchangeToken } from './tokenx';
-import {
+const { exchangeToken } = require('./tokenx');
+const {
     appRunningLocally,
     appRunningOnDevGcp,
     appRunningOnLabsGcp,
     appRunningOnProdGcp,
-} from './environment';
+} = require('./environment');
 
 const { Issuer } = require('openid-client');
 const { createRemoteJWKSet, jwtVerify } = require('jose');
@@ -16,8 +16,12 @@ const acceptedSigningAlgorithm = 'RS256';
 let idportenIssuer;
 let _remoteJWKSet;
 
-const { SYKEFRAVARSSTATISTIKK_API_AUDIENCE, IDPORTEN_WELL_KNOWN_URL, IDPORTEN_CLIENT_ID, FAKEDINGS_URL_IDPORTEN } =
-    process.env;
+const {
+    SYKEFRAVARSSTATISTIKK_API_AUDIENCE,
+    IDPORTEN_WELL_KNOWN_URL,
+    IDPORTEN_CLIENT_ID,
+    FAKEDINGS_URL_IDPORTEN,
+} = process.env;
 
 async function initIdporten() {
     if (appRunningOnLabsGcp()) {
@@ -53,7 +57,7 @@ async function getMockTokenFromIdporten() {
     return await (await fetch(FAKEDINGS_URL_IDPORTEN + '?acr=Level=4')).text();
 }
 
-export async function exchangeTokenIdporten(req) {
+async function exchangeTokenIdporten(req) {
     let subjectToken = req.headers.authorization?.split(' ')[1];
 
     if (!subjectToken) {
@@ -71,4 +75,5 @@ export async function exchangeTokenIdporten(req) {
 
 module.exports = {
     initIdporten,
+    exchangeTokenIdporten
 };

@@ -1,4 +1,4 @@
-import { appRunningOnDevGcp, appRunningOnProdGcp } from './environment';
+const { appRunningOnDevGcp, appRunningOnProdGcp } = require('./environment');
 
 const log = require('./logging');
 
@@ -31,7 +31,10 @@ async function initTokenXClient() {
 
 async function getFakeAccessToken() {
     const tokenXToken = await (
-        await fetch(FAKEDINGS_URL_TOKENX + `?aud=${SYKEFRAVARSSTATISTIKK_API_AUDIENCE}&acr=Level4&pid=01065500791`)
+        await fetch(
+            FAKEDINGS_URL_TOKENX +
+                `?aud=${SYKEFRAVARSSTATISTIKK_API_AUDIENCE}&acr=Level4&pid=01065500791`
+        )
     ).text();
     return new TokenSet({
         access_token: tokenXToken,
