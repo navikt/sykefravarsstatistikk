@@ -9,13 +9,7 @@ const { IA_TJENESTER_METRIKKER_BASE_URL = 'http://localhost:9090/ia-tjenester-me
 const proxyConfig = {
     target: IA_TJENESTER_METRIKKER_BASE_URL,
     changeOrigin: true,
-
-    pathRewrite: (path) => {
-        return path.replace(
-            FRONTEND_IA_TJENESTER_METRIKKER_PROXY_PATH,
-            '/'
-        );
-    },
+    pathRewrite: {FRONTEND_IA_TJENESTER_METRIKKER_PROXY_PATH: '/'},
     router: async (req) => {
         if (appRunningOnLabsGcp()) {
             // I labs så returnerer vi mock uansett

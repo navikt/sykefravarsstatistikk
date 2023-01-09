@@ -1,19 +1,19 @@
-FROM navikt/node-express:14
+FROM navikt/node-express:16
 
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
 
-WORKDIR /var/server
+WORKDIR /usr/src/app
 COPY server/ ./server
 COPY build/ ./build
 
 ## Give apprunner rights to application's build & run folders
 USER root
-RUN chown -R apprunner /var/server/build
-RUN chown -R apprunner /var/server/server
+RUN chown -R apprunner /usr/src/app/build
+RUN chown -R apprunner /usr/src/app/server
 USER apprunner
 
-WORKDIR /var/server/server
+WORKDIR /usr/src/app/server
 RUN yarn install --frozen-lockfile
 
 EXPOSE 3000
