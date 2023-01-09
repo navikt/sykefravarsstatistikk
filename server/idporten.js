@@ -57,7 +57,7 @@ async function getMockTokenFromIdporten() {
     return await (await fetch(FAKEDINGS_URL_IDPORTEN + '?acr=Level=4')).text();
 }
 
-async function exchangeIdportenToken(req) {
+async function exchangeIdportenToken(req, targetApp) {
     let subjectToken = req.headers.authorization?.split(' ')[1];
 
     if (!subjectToken) {
@@ -70,7 +70,7 @@ async function exchangeIdportenToken(req) {
     }
     await verifiserIdportenSubjectToken(subjectToken);
 
-    return await exchangeToken(subjectToken, SYKEFRAVARSSTATISTIKK_API_AUDIENCE);
+    return await exchangeToken(subjectToken, targetApp);
 }
 
 module.exports = {

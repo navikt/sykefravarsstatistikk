@@ -10,7 +10,7 @@ const dotenv = require('dotenv');
 const { initIdporten } = require('./idporten');
 const { initTokenXClient } = require('./tokenx');
 const cookieParser = require('cookie-parser');
-const { createNotifikasjonBrukerApiProxyMiddleware } = require('./brukerapi-proxy-middleware');
+const { notifikasjonBrukerApiProxy } = require('./brukerapi-proxy-middleware');
 const log = require('./logging');
 const contentHeaders = require('./contentHeaders');
 const { appRunningOnLabsGcp } = require('./environment');
@@ -79,10 +79,7 @@ const startServer = async (html) => {
             path: '/sykefravarsstatistikk/notifikasjon-bruker-api',
         });
     } else {
-        app.use(
-            '/sykefravarsstatistikk/notifikasjon-bruker-api',
-            createNotifikasjonBrukerApiProxyMiddleware({ log })
-        );
+        app.use(notifikasjonBrukerApiProxy);
     }
 
     app.get(BASE_PATH, (req, res) => {

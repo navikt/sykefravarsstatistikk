@@ -5,6 +5,7 @@ const { appRunningOnLabsGcp } = require("./environment");
 
 const {
   BACKEND_API_BASE_URL = 'http://localhost:8080',
+  SYKEFRAVARSSTATISTIKK_API_AUDIENCE
 } = process.env
 
 const BACKEND_API_PATH = '/sykefravarsstatistikk-api';
@@ -44,7 +45,7 @@ const proxyConfig = {
       // I labs så returnerer vi mock uansett
       return undefined;
     }
-    const tokenSet = await exchangeIdportenToken(req);
+    const tokenSet = await exchangeIdportenToken(req, SYKEFRAVARSSTATISTIKK_API_AUDIENCE);
     if (!tokenSet?.expired() && tokenSet?.access_token) {
       req.headers['authorization'] = `Bearer ${tokenSet.access_token}`;
     }
