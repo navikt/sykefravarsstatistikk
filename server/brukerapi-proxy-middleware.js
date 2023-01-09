@@ -1,9 +1,6 @@
 const { exchangeIdportenToken } = require('./idporten');
 const {createProxyMiddleware} = require('http-proxy-middleware');
 const { appRunningOnLabsGcp } = require('./environment');
-const {
-    applyNotifikasjonMockMiddleware,
-} = require('@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock');
 
 const { NOTIFIKASJON_API_AUDIENCE } = process.env;
 
@@ -27,6 +24,9 @@ const proxyConfig = {
 
 function applyNotifikasjonMiddleware(app) {
     if (appRunningOnLabsGcp()) {
+        const {
+            applyNotifikasjonMockMiddleware,
+        } = require('@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock');
         applyNotifikasjonMockMiddleware({
             app,
             path: NOTIFIKASJON_API_PATH,
