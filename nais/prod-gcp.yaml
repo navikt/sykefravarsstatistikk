@@ -32,7 +32,7 @@ spec:
           value: https://arbeidsgiver.nav.no/sykefravarsstatistikk
         - name: SYKEFRAVARSSTATISTIKK_API_AUDIENCE
           value: "prod-fss:arbeidsgiver:sykefravarsstatistikk-api"
-        - name: NOTIFIKASJON_BRUKER_API_AUDIENCE
+        - name: NOTIFIKASJON_API_AUDIENCE
           value: "prod-gcp:fager:notifikasjon-bruker-api"
     tokenx:
         enabled: true

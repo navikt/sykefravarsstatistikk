@@ -1,16 +1,20 @@
-const {exchangeIdportenToken} = require('./idporten')
+const { exchangeIdportenToken } = require('./idporten');
 const {createProxyMiddleware} = require('http-proxy-middleware');
-
+const { appRunningOnLabsGcp } = require('./environment');
 const {
-    NOTIFIKASJON_BRUKER_API_AUDIENCE,
-} = process.env;
+    applyNotifikasjonMockMiddleware,
+} = require('@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock');
+
+const { NOTIFIKASJON_API_AUDIENCE } = process.env;
+
+const NOTIFIKASJON_API_PATH = '/sykefravarsstatistikk/notifikasjon-bruker-api';
 
 const proxyConfig = {
     target: 'http://notifikasjon-bruker-api.fager.svc.cluster.local',
     changeOrigin: true,
-    pathRewrite: {"/sykefravarsstatistikk/notifikasjon-bruker-api": "/api/graphql"},
+    pathRewrite: { NOTIFIKASJONER_BRUKER_API_PATH: '/api/graphql' },
     router: async (req) => {
-        const tokenSet = await exchangeIdportenToken(req, NOTIFIKASJON_BRUKER_API_AUDIENCE);
+        const tokenSet = await exchangeIdportenToken(req, NOTIFIKASJON_API_AUDIENCE);
         if (!tokenSet?.expired() && tokenSet?.access_token) {
             req.headers['authorization'] = `Bearer ${tokenSet.access_token}`;
         }
@@ -21,7 +25,19 @@ const proxyConfig = {
     logLevel: 'info',
 };
 
-const notifikasjonBrukerApiProxy = createProxyMiddleware('/sykefravarsstatistikk/notifikasjon-bruker-api', proxyConfig);
+function applyNotifikasjonMiddleware(app) {
+    if (appRunningOnLabsGcp()) {
+        applyNotifikasjonMockMiddleware({
+            app,
+            path: NOTIFIKASJON_API_PATH,
+        });
+    } else {
+        const notifikasjonBrukerApiProxy = createProxyMiddleware(
+            NOTIFIKASJON_API_PATH,
+            proxyConfig
+        );
+        app.use(notifikasjonBrukerApiProxy);
+    }
+}
 
-
-module.exports = { notifikasjonBrukerApiProxy};
+module.exports = { applyNotifikasjonMiddleware, NOTIFIKASJON_API_PATH };

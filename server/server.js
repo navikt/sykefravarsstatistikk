@@ -10,10 +10,9 @@ const dotenv = require('dotenv');
 const { initIdporten } = require('./idporten');
 const { initTokenXClient } = require('./tokenx');
 const cookieParser = require('cookie-parser');
-const { notifikasjonBrukerApiProxy } = require('./brukerapi-proxy-middleware');
+const { applyNotifikasjonMiddleware } = require('./brukerapi-proxy-middleware');
 const log = require('./logging');
 const contentHeaders = require('./contentHeaders');
-const { appRunningOnLabsGcp } = require('./environment');
 
 const { APP_INGRESS, LOGIN_URL, PORT = 3000 } = process.env;
 
@@ -70,17 +69,7 @@ const startServer = async (html) => {
     app.use(sykefraværsstatistikkApiProxy);
     app.use(iaTjenesterMetrikkerProxy);
 
-    if (appRunningOnLabsGcp()) {
-        const {
-            applyNotifikasjonMockMiddleware,
-        } = require('@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock');
-        applyNotifikasjonMockMiddleware({
-            app,
-            path: '/sykefravarsstatistikk/notifikasjon-bruker-api',
-        });
-    } else {
-        app.use(notifikasjonBrukerApiProxy);
-    }
+    applyNotifikasjonMiddleware(app)
 
     app.get(BASE_PATH, (req, res) => {
         res.send(html);
