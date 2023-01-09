@@ -189,10 +189,10 @@
   resolved "https://registry.yarnpkg.com/@josephg/resolvable/-/resolvable-1.0.1.tgz#69bc4db754d79e1a2f17a650d3466e038d94a5eb"
   integrity sha512-CtzORUwWTTOTqfVtHaKRJ0I1kNQd1bpn3sUh8I3nJDVY+5/M/Oe1DnEWzPQvqq/xPIIkzzzIP7mfCoAjFRvDhg==
 
-"@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock@5.4.2":
-  version "5.4.2"
-  resolved "https://npm.pkg.github.com/download/@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock/5.4.2/22a28e48e87d36f36fb3be51ec311a72e64b8cd5#22a28e48e87d36f36fb3be51ec311a72e64b8cd5"
-  integrity sha512-3wl7LPQWmDAK7keFbuX/6C+9B3MFtBP4UM26pj81WpRNcgygP6TAhUc/bPDBD9fUiAW9JXHygn08dD2KJfoJ+Q==
+"@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock@5.4.4":
+  version "5.4.4"
+  resolved "https://npm.pkg.github.com/download/@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock/5.4.4/631d71c842eec65e797b179d0b945be4d2ad3eee#631d71c842eec65e797b179d0b945be4d2ad3eee"
+  integrity sha512-Vo1VadJ9h2XNKHP84muTx7x2MGOFF8wB++S5jwfBYWQzqgKcsTi2zUsj3nmUed+o7lotr+aZ3Stn5fqckbpalw==
   dependencies:
     apollo-server "^3.10.2"
     apollo-server-core "^3.10.2"
