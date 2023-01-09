@@ -1,6 +1,6 @@
 const { FRONTEND_IA_TJENESTER_METRIKKER_PROXY_PATH } = require('./konstanter');
 const { createProxyMiddleware } = require('http-proxy-middleware');
-const { exchangeTokenIdporten } = require('./idporten');
+const { exchangeIdportenToken } = require('./idporten');
 const { appRunningOnLabsGcp } = require('./environment');
 
 const { IA_TJENESTER_METRIKKER_BASE_URL = 'http://localhost:9090/ia-tjenester-metrikker' } =
@@ -21,7 +21,7 @@ const proxyConfig = {
             // I labs så returnerer vi mock uansett
             return undefined;
         }
-        const tokenSet = await exchangeTokenIdporten(req);
+        const tokenSet = await exchangeIdportenToken(req);
         if (!tokenSet?.expired() && tokenSet?.access_token) {
             req.headers['authorization'] = `Bearer ${tokenSet.access_token}`;
         }

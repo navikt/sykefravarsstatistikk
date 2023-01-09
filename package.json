@@ -75,7 +75,7 @@
     "zod": "^3.18.0"
   },
   "devDependencies": {
-    "@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock": "^5.4.2",
+    "@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock": "^5.4.3-rc",
     "@testing-library/dom": "^8.11.3",
     "@testing-library/react": "^12.1.3",
     "@testing-library/user-event": "^13.5.0",

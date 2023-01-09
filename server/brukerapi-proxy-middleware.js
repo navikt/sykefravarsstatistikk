@@ -10,13 +10,14 @@ const createNotifikasjonBrukerApiProxyMiddleware = ({ log }) => {
     return expressHttpProxy('http://notifikasjon-bruker-api.fager.svc.cluster.local', {
         proxyReqPathResolver: () => '/api/graphql',
         proxyReqOptDecorator: async (options, req) => {
-            let subject_token = req.headers.authorization?.split(' ')[1];
-            const { access_token } = await exchangeToken(
-                subject_token,
+            let subjectToken = req.headers.authorization?.split(' ')[1];
+            log.info("Lengde på subject token: ", subjectToken.length)
+            const accessToken  = await exchangeToken(
+                subjectToken,
                 NOTIFIKASJON_BRUKER_API_AUDIENCE
             );
 
-            options.headers.Authorization = `Bearer ${access_token}`;
+            options.headers.Authorization = `Bearer ${accessToken}`;
             return options;
         },
         proxyErrorHandler: (err, res, next) => {
