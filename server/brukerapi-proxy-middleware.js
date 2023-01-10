@@ -1,15 +1,13 @@
 const { exchangeIdportenToken } = require('./idporten');
-const {createProxyMiddleware} = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const { appRunningOnLabsGcp } = require('./environment');
 
 const { NOTIFIKASJON_API_AUDIENCE } = process.env;
 
-const NOTIFIKASJON_API_PATH = '/sykefravarsstatistikk/notifikasjon-bruker-api';
-
 const proxyConfig = {
     target: 'http://notifikasjon-bruker-api.fager.svc.cluster.local',
     changeOrigin: true,
-    pathRewrite: { NOTIFIKASJONER_BRUKER_API_PATH: '/api/graphql' },
+    pathRewrite: { '/sykefravarsstatistikk/notifikasjon-bruker-api': '/api/graphql' },
     router: async (req) => {
         const tokenSet = await exchangeIdportenToken(req, NOTIFIKASJON_API_AUDIENCE);
         if (!tokenSet?.expired() && tokenSet?.access_token) {
@@ -29,15 +27,18 @@ function applyNotifikasjonMiddleware(app) {
         } = require('@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock');
         applyNotifikasjonMockMiddleware({
             app,
-            path: NOTIFIKASJON_API_PATH,
+            path: '/sykefravarsstatistikk/notifikasjon-bruker-api',
         });
     } else {
         const notifikasjonBrukerApiProxy = createProxyMiddleware(
-            NOTIFIKASJON_API_PATH,
+            '/sykefravarsstatistikk/notifikasjon-bruker-api',
             proxyConfig
         );
         app.use(notifikasjonBrukerApiProxy);
     }
 }
 
-module.exports = { applyNotifikasjonMiddleware, NOTIFIKASJON_API_PATH };
+module.exports = {
+    applyNotifikasjonMiddleware,
+    NOTIFIKASJON_API_PATH: '/sykefravarsstatistikk/notifikasjon-bruker-api',
+};

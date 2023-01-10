@@ -32,6 +32,8 @@ spec:
           value: https://arbeidsgiver-gcp.dev.nav.no/sykefravarsstatistikk
         - name: SYKEFRAVARSSTATISTIKK_API_AUDIENCE
           value: "dev-fss:arbeidsgiver:sykefravarsstatistikk-api"
+        - name: IA_TJENESTER_METRIKKER_AUDIENCE
+          value: "dev-gcp:arbeidsgiver:ia-tjenester-metrikker"
         - name: NOTIFIKASJON_API_AUDIENCE
           value: "dev-gcp:fager:notifikasjon-bruker-api"
     tokenx:

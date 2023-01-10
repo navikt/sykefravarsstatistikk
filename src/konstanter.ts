@@ -1,4 +1,3 @@
-// OPS Dette er foreløpig duplisert i konstanter.js
 export const BASE_PATH = '/sykefravarsstatistikk';
 
 

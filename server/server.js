@@ -4,7 +4,6 @@ const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
 const sykefraværsstatistikkApiProxy = require('./proxy');
 const iaTjenesterMetrikkerProxy = require('./iaTjenesterMetrikkerProxy');
-const { BASE_PATH } = require('./konstanter');
 const buildPath = path.join(__dirname, '../build');
 const dotenv = require('dotenv');
 const { initIdporten } = require('./idporten');
@@ -24,6 +23,8 @@ app.use(cookieParser());
 app.engine('html', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', buildPath);
+
+const BASE_PATH = '/sykefravarsstatistikk';
 
 const renderAppMedDecorator = (decoratorFragments) => {
     return new Promise((resolve, reject) => {
@@ -69,7 +70,7 @@ const startServer = async (html) => {
     app.use(sykefraværsstatistikkApiProxy);
     app.use(iaTjenesterMetrikkerProxy);
 
-    applyNotifikasjonMiddleware(app)
+    applyNotifikasjonMiddleware(app);
 
     app.get(BASE_PATH, (req, res) => {
         res.send(html);

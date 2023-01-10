@@ -1,4 +1,3 @@
-const {FRONTEND_API_PATH} = require('./konstanter');
 const {createProxyMiddleware} = require('http-proxy-middleware');
 const { exchangeIdportenToken } = require("./idporten");
 const { appRunningOnLabsGcp } = require("./environment");
@@ -8,6 +7,7 @@ const {
   SYKEFRAVARSSTATISTIKK_API_AUDIENCE
 } = process.env
 
+const FRONTEND_API_PATH = '/sykefravarsstatistikk/api';
 const BACKEND_API_PATH = '/sykefravarsstatistikk-api';
 
 const listeAvTillatteUrler = [
