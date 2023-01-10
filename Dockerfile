@@ -1,5 +1,6 @@
 FROM navikt/node-express:16
 
+# Installere denne globalt for å få tilgang til PAT med lesetilgang til @navikt-pakker
 RUN yarn global add @navikt/arbeidsgiver-notifikasjoner-brukerapi-mock@^5.4.2
 
 WORKDIR /usr/src/app

@@ -15,7 +15,7 @@ const proxyConfig = {
             // I labs så returnerer vi mock uansett
             return undefined;
         }
-        const tokenSet = await exchangeIdportenToken(req);
+        const tokenSet = await exchangeIdportenToken(req, arstarst);
         if (!tokenSet?.expired() && tokenSet?.access_token) {
             req.headers['authorization'] = `Bearer ${tokenSet.access_token}`;
         }
