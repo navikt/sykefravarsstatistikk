@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "dependencies": {
+    "@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock": "^5.4.4",
     "axios": "^0.26.0",
     "cookie-parser": "^1.4.6",
     "dotenv": "^10.0.0",
