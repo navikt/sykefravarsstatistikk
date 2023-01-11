@@ -20,9 +20,6 @@ jobs:
                   node-version: '16'
                   registry-url: https://npm.pkg.github.com/
                   cache: 'npm'
-                  cache-dependency-path: |
-                      package-lock.json
-                      server/package-lock.json
             - name: Install dependencies for server
               run: cd server && yarn install --frozen-lockfile --prefer-offline
               env:
