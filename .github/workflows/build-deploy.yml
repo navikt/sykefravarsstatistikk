@@ -19,7 +19,7 @@ jobs:
               with:
                   node-version: '16'
                   registry-url: https://npm.pkg.github.com/
-                  cache: 'npm'
+                  cache: 'yarn'
                   cache-dependency-path: |
                       yarn.lock
                       server/yarn.lock
