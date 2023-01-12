@@ -12,16 +12,17 @@ import '@navikt/ds-css';
 
 async function main() {
     if (process.env.REACT_APP_MOCK || getMiljø() === 'labs-gcp') {
+        // msw krever "/" på slutten av url for å fungere sammen med "homepage"-config i CRA
         if (window.location.pathname === '/sykefravarsstatistikk') {
-            window.location.pathname = '/sykefravarsstatistikk/'
-            return
+            window.location.pathname = '/sykefravarsstatistikk/';
+            return;
         }
         const { worker } = require('./mocking/browser');
         await worker.start({
             serviceWorker: {
                 url: '/sykefravarsstatistikk/mockServiceWorker.js',
             },
-        })
+        });
     }
 
     Sentry.init({
@@ -31,11 +32,11 @@ async function main() {
     });
 
     ReactDOM.render(
-        <BrowserRouter basename={BASE_PATH}>
-            <App analyticsClient={amplitudeClient} />
-        </BrowserRouter>,
-        document.getElementById('root')
+      <BrowserRouter basename={BASE_PATH}>
+          <App analyticsClient={amplitudeClient} />
+      </BrowserRouter>,
+      document.getElementById('root')
     );
 }
 
-main()
+main();
