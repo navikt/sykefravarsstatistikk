@@ -236,6 +236,6 @@ export const organisasjonerMock: AltinnOrganisasjon[] = [
 export const getOrganisasjonerMock = (): AltinnOrganisasjon[] => {
   return organisasjonerMock;
 };
-export const getOrganisasjonerBrukerHarTilgangTilMock = (): AltinnOrganisasjon[] => {
+export const getOrganisasjonerMedStatistikktilgangMock = (): AltinnOrganisasjon[] => {
   return organisasjonerMock.filter((org) => org.OrganizationNumber !== orgnrUtenTilgang);
 };
