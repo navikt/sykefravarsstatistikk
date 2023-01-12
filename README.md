@@ -39,7 +39,7 @@ trer i kraft på _nye_ konfigurasjoner.
 
 # Kjøring av applikasjonen
 
-- Kjør opp applikasjon med rene mock-data: `yarn mock` (for Windows: `yarn wock`)
+- Kjør opp applikasjon med rene mock-data: `yarn mock`
 
 - Hvis du vil kjøre mot egen sykefraværsstatistikk-backend lokalt, kan du sette `mock.sykefraværsstatistikkApi = false`
   i `mock.ts` før du kjører `yarn mock`. (NB! Krever at `sykefravarsstatistikk-api` kjører på port 8080.). Da må du

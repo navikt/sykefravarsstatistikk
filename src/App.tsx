@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
+import { NotifikasjonWidgetProvider } from '@navikt/arbeidsgiver-notifikasjon-widget';
 import Banner from './Banner/Banner';
 import { Route, Routes } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
@@ -11,6 +12,7 @@ import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
 import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
 import {
     ER_VEDLIKEHOLD_AKTIVERT,
+    MILJØ,
     PATH_FORSIDE,
     PATH_FORSIDE_BARNEHAGE,
     PATH_FORSIDE_GENERELL,
@@ -39,6 +41,8 @@ import { useAnalytics } from './hooks/useAnalytics';
 import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
 import { RestVirksomhetsdata } from './api/virksomhetsdata-api';
 import Samtalestøttepanel from './Forside/Samtalestøttepanel/Samtalestøttepanel';
+import { getMiljø } from './utils/miljøUtils';
+
 
 interface Props {
     analyticsClient: AnalyticsClient;
@@ -195,12 +199,14 @@ export const AppContent = ({
             />
         </Routes>
     );
-
     return (
-        <>
+        <NotifikasjonWidgetProvider
+            miljo={getMiljø() === MILJØ.PROD ? 'prod' : 'dev'}
+            apiUrl="/sykefravarsstatistikk/notifikasjon-bruker-api"
+        >
             {<Banner tittel="Sykefraværsstatistikk" restOrganisasjoner={restOrganisasjoner} />}
             {innhold}
-        </>
+        </NotifikasjonWidgetProvider>
     );
 };
 

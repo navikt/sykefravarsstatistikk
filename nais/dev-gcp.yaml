@@ -28,12 +28,14 @@ spec:
           value: /etc/ssl/ca-bundle.pem
         - name: LOGIN_URL
           value: https://loginservice.dev.nav.no/login?redirect=
-        - name: NODE_ENV
-          value: not-local
-        - name: TOKENX_AUDIENCE
-          value: "dev-fss:arbeidsgiver:sykefravarsstatistikk-api"
         - name: APP_INGRESS
           value: https://arbeidsgiver-gcp.dev.nav.no/sykefravarsstatistikk
+        - name: SYKEFRAVARSSTATISTIKK_API_AUDIENCE
+          value: "dev-fss:arbeidsgiver:sykefravarsstatistikk-api"
+        - name: IA_TJENESTER_METRIKKER_AUDIENCE
+          value: "dev-gcp:arbeidsgiver:ia-tjenester-metrikker"
+        - name: NOTIFIKASJON_API_AUDIENCE
+          value: "dev-gcp:fager:notifikasjon-bruker-api"
     tokenx:
         enabled: true
     idporten:
@@ -46,6 +48,8 @@ spec:
                 - application: sykefravarsstatistikk-api
                   namespace: arbeidsgiver
                   cluster: dev-fss
+                - application: notifikasjon-bruker-api
+                  namespace: fager
             external:
                 - host: dekoratoren.dev.nav.no
                 - host: sykefravarsstatistikk-api.dev-fss-pub.nais.io

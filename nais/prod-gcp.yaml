@@ -24,16 +24,18 @@ spec:
           value: https://sykefravarsstatistikk-api.prod-fss-pub.nais.io
         - name: IA_TJENESTER_METRIKKER_BASE_URL
           value: https://arbeidsgiver.nav.no/ia-tjenester-metrikker
-        - name: NODE_ENV
-          value: not-local
         - name: NODE_EXTRA_CA_CERTS
           value: /etc/ssl/ca-bundle.pem
         - name: LOGIN_URL
           value: https://loginservice.nav.no/login?redirect=
-        - name: TOKENX_AUDIENCE
-          value: "prod-fss:arbeidsgiver:sykefravarsstatistikk-api"
         - name: APP_INGRESS
           value: https://arbeidsgiver.nav.no/sykefravarsstatistikk
+        - name: SYKEFRAVARSSTATISTIKK_API_AUDIENCE
+          value: "prod-fss:arbeidsgiver:sykefravarsstatistikk-api"
+        - name: IA_TJENESTER_METRIKKER_AUDIENCE
+          value: "prod-gcp:arbeidsgiver:ia-tjenester-metrikker"
+        - name: NOTIFIKASJON_API_AUDIENCE
+          value: "prod-gcp:fager:notifikasjon-bruker-api"
     tokenx:
         enabled: true
     idporten:
@@ -46,6 +48,8 @@ spec:
                 - application: sykefravarsstatistikk-api
                   namespace: arbeidsgiver
                   cluster: prod-fss
+                - application: notifikasjon-bruker-api
+                  namespace: fager
             external:
                 - host: dekoratoren.nav.no
                 - host: sykefravarsstatistikk-api.prod-fss-pub.nais.io

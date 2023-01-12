@@ -8,6 +8,7 @@ import {getMiljø} from './utils/miljøUtils';
 import {BASE_PATH} from './konstanter';
 import {BrowserRouter} from 'react-router-dom';
 import {amplitudeClient} from './amplitude/client';
+import "@navikt/ds-css"
 
 if (process.env.REACT_APP_MOCK || getMiljø() === 'labs-gcp') {
   console.log('========================================');
