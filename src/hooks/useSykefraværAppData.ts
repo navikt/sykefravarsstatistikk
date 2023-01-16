@@ -15,7 +15,6 @@ import {
   getEkstraDataFraEnhetsregisteret,
   getEkstraDataFraSummertSykefraværshistorikk,
   getEkstraDataFraSykefraværshistorikk,
-  getEkstraDataFraVirksomhetsdata,
 } from '../amplitude/ekstradata';
 import useAggregertStatistikk, {AggregertStatistikkResponse} from './useAggregertStatistikk';
 import {RestPubliseringsdatoer} from "../api/publiseringsdatoer-api";
@@ -66,7 +65,7 @@ export function getEkstradata({
     return {
         ...getEkstraDataFraSykefraværshistorikk(sykefraværshistorikk),
         ...getEkstraDataFraSummertSykefraværshistorikk(summertSykefravær),
-        ...getEkstraDataFraEnhetsregisteret(enhetsregisterdata.restOverordnetEnhet),
+        ...getEkstraDataFraEnhetsregisteret(enhetsregisterdata),
       // TODO: Hent data fra aggregert
     };
 }

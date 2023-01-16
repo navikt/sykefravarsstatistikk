@@ -1,55 +1,34 @@
 import {
   AntallAnsatteSegmentering,
   SegmenteringSammenligning,
-  SegmenteringSykefraværsprosent,
-  tilSegmenteringAntallAnsatte,
+  SegmenteringSykefraværsprosent, tilSegmenteringAntallAnsatte,
   tilSegmenteringSammenligning,
-  tilSegmenteringSykefraværsprosent,
-} from './segmentering';
-import {SykefraværVurdering} from '../Forside/Speedometer/Speedometer';
-import {RestStatus} from '../api/api-utils';
-import {mapTilNæringsbeskrivelse} from './næringsbeskrivelser';
-import {RestSykefraværshistorikk} from '../api/kvartalsvis-sykefraværshistorikk-api';
-import {konverterTilKvartalsvisSammenligning} from '../utils/sykefraværshistorikk-utils';
-import {mapTilPrivatEllerOffentligSektor, Sektor} from '../utils/sektorUtils';
-import {RestSummertSykefraværshistorikk} from '../api/summert-sykefraværshistorikk-api';
-import {getSammenligningResultatMedProsent} from '../Forside/vurdering-utils';
-import {SammenligningsType} from '../Forside/vurderingstekster';
-import {RestVirksomhetsdata} from '../api/virksomhetsdata-api';
-import { RestOverordnetEnhet } from "../enhetsregisteret/api/enheter-api";
+  tilSegmenteringSykefraværsprosent
+} from "./segmentering";
+import { SykefraværVurdering } from "../Forside/Speedometer/Speedometer";
+import { RestStatus } from "../api/api-utils";
+import { RestSykefraværshistorikk } from "../api/kvartalsvis-sykefraværshistorikk-api";
+import { konverterTilKvartalsvisSammenligning } from "../utils/sykefraværshistorikk-utils";
+import { mapTilPrivatEllerOffentligSektor, Sektor } from "../utils/sektorUtils";
+import { RestSummertSykefraværshistorikk } from "../api/summert-sykefraværshistorikk-api";
+import { getSammenligningResultatMedProsent } from "../Forside/vurdering-utils";
+import { SammenligningsType } from "../Forside/vurderingstekster";
+import { Enhetsregisterdata } from "../enhetsregisteret/hooks/useEnheter";
+import { næringskodeTilNæring } from "./næringsbeskrivelser";
+import { getArbeidsmiljøportalenBransje } from "../utils/bransje-utils";
+import { Næring } from "../enhetsregisteret/domene/underenhet";
 
 export interface Ekstradata {
-  næring2siffer: string;
+  næring: Næring;
   bransje: string;
   antallAnsatte: AntallAnsatteSegmentering;
-
   prosent: SegmenteringSykefraværsprosent;
   sammenligning: SegmenteringSammenligning;
-
   sykefraværSiste4Kvartaler: SykefraværVurdering;
   korttidSiste4Kvartaler: SykefraværVurdering;
   langtidSiste4Kvartaler: SykefraværVurdering;
-
   sektor: Sektor;
 }
-
-export const getEkstraDataFraVirksomhetsdata = (
-    restVirksomhetsdata: RestVirksomhetsdata
-): Partial<Ekstradata> => {
-  if (restVirksomhetsdata.status === RestStatus.Suksess) {
-    const metrikker = restVirksomhetsdata.data;
-    const næringskode2siffer = metrikker.næringskode5Siffer.kode.substring(0, 2);
-    const næring2siffer =
-        næringskode2siffer + ' ' + mapTilNæringsbeskrivelse(næringskode2siffer);
-
-    return {
-      næring2siffer,
-      bransje: metrikker.bransje,
-      antallAnsatte: tilSegmenteringAntallAnsatte(metrikker.antallAnsatte),
-    };
-  }
-  return {};
-};
 
 export const getEkstraDataFraSykefraværshistorikk = (
     restSykefraværshistorikk: RestSykefraværshistorikk
@@ -76,16 +55,24 @@ export const getEkstraDataFraSykefraværshistorikk = (
 };
 
 export const getEkstraDataFraEnhetsregisteret = (
-    restOverordnetEnhet: RestOverordnetEnhet
+    virksomhet: Enhetsregisterdata
 ): Partial<Ekstradata> => {
-  if (restOverordnetEnhet.status === RestStatus.Suksess) {
+    if (
+        virksomhet.restOverordnetEnhet.status !== RestStatus.Suksess ||
+        virksomhet.restUnderenhet.status !== RestStatus.Suksess
+    ) {
+        return {};
+    }
+
+    const enhetsdata = virksomhet.restOverordnetEnhet.data;
+    const underenhetdata = virksomhet.restUnderenhet.data;
+
     return {
-      sektor: mapTilPrivatEllerOffentligSektor(
-          restOverordnetEnhet.data.institusjonellSektorkode
-      ),
+        næring: underenhetdata.næring,
+        bransje: underenhetdata.bransje,
+        sektor: mapTilPrivatEllerOffentligSektor(enhetsdata.institusjonellSektorkode),
+        antallAnsatte: tilSegmenteringAntallAnsatte(underenhetdata.antallAnsatte),
     };
-  }
-  return {};
 };
 
 export const getEkstraDataFraSummertSykefraværshistorikk = (
