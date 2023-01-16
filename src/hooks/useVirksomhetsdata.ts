@@ -3,6 +3,7 @@ import {hentRestvirksomhetsdata, RestVirksomhetsdata} from '../api/virksomhetsda
 import {RestStatus} from '../api/api-utils';
 import {useOrgnr} from './useOrgnr';
 
+// @deprecated
 export function useVirksomhetsdata() {
   const orgnr = useOrgnr();
   const [restVirksomhetsdata, setRestVirksomhetsdata] = useState<RestVirksomhetsdata>({

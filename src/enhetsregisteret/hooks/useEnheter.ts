@@ -1,14 +1,16 @@
 import {
-  hentInformasjonOmOverordnetEnhet,
   hentInformasjonOmUnderenhet,
-  OverordnetEnhet,
-  RestOverordnetEnhet,
   RestUnderenhet,
-  Underenhet,
-} from '../api/enhetsregisteret-api';
-import {RestRessurs, RestStatus} from '../api/api-utils';
+
+} from '../api/underenheter-api';
+import {RestRessurs, RestStatus} from '../../api/api-utils';
 import {useEffect, useState} from 'react';
-import {useOrgnr} from './useOrgnr';
+import {useOrgnr} from '../../hooks/useOrgnr';
+import {
+  hentInformasjonOmOverordnetEnhet, RestOverordnetEnhet
+} from "../api/enheter-api";
+import { OverordnetEnhet } from "../domene/enhet";
+import { Underenhet } from "../domene/underenhet";
 
 const useRestDataForFlereVirksomheter = <T extends Object>(
     hentData: (orgnr: string) => Promise<RestRessurs<T>>,

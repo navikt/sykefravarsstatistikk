@@ -9,7 +9,7 @@ import {
   Statistikkategori,
   SummertSykefraværshistorikk
 } from '../api/summert-sykefraværshistorikk-api';
-import {OverordnetEnhet, UnderenhetDto} from '../api/enhetsregisteret-api';
+import {UnderenhetDto} from '../enhetsregisteret/api/underenheter-api';
 import {getvirksomhetsdataMock} from './virksomhetsdata-mock';
 import {ArbeidsmiljøportalenBransje} from '../utils/bransje-utils';
 import {
@@ -21,6 +21,7 @@ import {
   summertSykefraværshistorikkMockMedSiste4Kvartaler,
   summertSykefraværshistorikkMockRød,
 } from './summert-sykefraværshistorikk-mock';
+import { OverordnetEnhet } from "../enhetsregisteret/domene/enhet";
 
 export interface OrganisasjonMock {
   orgnr: string;

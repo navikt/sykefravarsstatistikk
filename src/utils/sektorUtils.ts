@@ -1,4 +1,4 @@
-import {InstitusjonellSektorkode} from '../api/enhetsregisteret-api';
+import { InstitusjonellSektorkode } from "../enhetsregisteret/domene/enhet";
 
 export type Sektor = 'offentlig' | 'privat';
 

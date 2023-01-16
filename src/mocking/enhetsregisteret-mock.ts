@@ -1,6 +1,4 @@
-import {UnderenhetDto} from '../api/enhetsregisteret-api';
-
-export const underenhetMock: UnderenhetDto = {
+export const underenhetMock = {
   organisasjonsnummer: "999999999",
   navn: "HEI OG HÅ BARNEHAGE",
   organisasjonsform: {

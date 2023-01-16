@@ -11,12 +11,12 @@ import {RestStatus} from '../api/api-utils';
 import {mapTilNæringsbeskrivelse} from './næringsbeskrivelser';
 import {RestSykefraværshistorikk} from '../api/kvartalsvis-sykefraværshistorikk-api';
 import {konverterTilKvartalsvisSammenligning} from '../utils/sykefraværshistorikk-utils';
-import {RestOverordnetEnhet} from '../api/enhetsregisteret-api';
 import {mapTilPrivatEllerOffentligSektor, Sektor} from '../utils/sektorUtils';
 import {RestSummertSykefraværshistorikk} from '../api/summert-sykefraværshistorikk-api';
 import {getSammenligningResultatMedProsent} from '../Forside/vurdering-utils';
 import {SammenligningsType} from '../Forside/vurderingstekster';
 import {RestVirksomhetsdata} from '../api/virksomhetsdata-api';
+import { RestOverordnetEnhet } from "../enhetsregisteret/api/enheter-api";
 
 export interface Ekstradata {
   næring2siffer: string;
@@ -90,12 +90,7 @@ export const getEkstraDataFraEnhetsregisteret = (
 
 export const getEkstraDataFraSummertSykefraværshistorikk = (
     restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk,
-    restvirksomhetsdata: RestVirksomhetsdata
 ): Partial<Ekstradata> => {
-  if (restvirksomhetsdata.status !== RestStatus.Suksess) {
-    return {};
-  }
-
   if (
       restSummertSykefraværshistorikk.status !== RestStatus.Suksess &&
       restSummertSykefraværshistorikk.status !== RestStatus.Feil
