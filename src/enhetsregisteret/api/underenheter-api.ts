@@ -79,11 +79,10 @@ export const hentInformasjonOmUnderenhet = async (orgnr: string): Promise<RestUn
         return {
             status: restStatus,
         };
-    } else {
-        const responseJson: UnderenhetDto = await response.json();
-        return {
-            status: RestStatus.Suksess,
-            data: mapTilUnderenhet(responseJson),
-        };
     }
+    const responseJson: UnderenhetDto = await response.json();
+    return {
+        status: RestStatus.Suksess,
+        data: mapTilUnderenhet(responseJson),
+    };
 };

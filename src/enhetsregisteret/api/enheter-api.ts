@@ -8,7 +8,7 @@ interface InstitusjonellSektorkodeDto {
     beskrivelse: string;
 }
 
-interface OverordnetEnhetDto {
+export interface OverordnetEnhetDto {
     organisasjonsnummer: string;
     institusjonellSektorkode: InstitusjonellSektorkodeDto;
 }

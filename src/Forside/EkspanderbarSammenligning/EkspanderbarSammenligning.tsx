@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Statistikkategori } from '../../api/summert-sykefraværshistorikk-api';
 import {
     EkspanderbartSammenligningspanel,
-    getVurdering,
+
 } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
 import { RestStatus } from '../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
@@ -14,6 +14,7 @@ import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEller
 import { Element } from 'nav-frontend-typografi';
 import { AggregertStatistikkResponse } from '../../hooks/useAggregertStatistikk';
 import {RestPubliseringsdatoer} from "../../api/publiseringsdatoer-api";
+import { getVurdering } from "../vurdering-utils";
 
 interface Props {
     aggregertStatistikk: AggregertStatistikkResponse;

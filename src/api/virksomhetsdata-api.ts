@@ -7,6 +7,7 @@ export type Næringskode5Siffer = {
   beskrivelse: string;
 };
 
+// TODO: Delete file
 export interface Virksomhetsdata {
   næringskode5Siffer: Næringskode5Siffer;
   bransje?: ArbeidsmiljøportalenBransje;

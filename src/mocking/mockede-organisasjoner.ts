@@ -1,4 +1,3 @@
-import {Virksomhetsdata} from '../api/virksomhetsdata-api';
 import {KvartalsvisSykefraværshistorikk} from '../api/kvartalsvis-sykefraværshistorikk-api';
 import {
   lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet,
@@ -7,36 +6,33 @@ import {
 } from './sykefraværshistorikk-mock';
 import {
   Statistikkategori,
-  SummertSykefraværshistorikk
 } from '../api/summert-sykefraværshistorikk-api';
 import {UnderenhetDto} from '../enhetsregisteret/api/underenheter-api';
-import {getvirksomhetsdataMock} from './virksomhetsdata-mock';
-import {ArbeidsmiljøportalenBransje} from '../utils/bransje-utils';
 import {
-  getSummertSykefraværshistorikkMock,
-  summertSykefraværshistorikkMockGrønn,
-  summertSykefraværshistorikkMockGul,
-  summertSykefraværshistorikkMockMaskert,
-  summertSykefraværshistorikkMockMedBare2Kvartaler,
-  summertSykefraværshistorikkMockMedSiste4Kvartaler,
-  summertSykefraværshistorikkMockRød,
+  getaggregertStatistikkMock,
+  aggregertStatistikkMockGrønn,
+  aggregertStatistikkMockGul,
+  aggregertStatistikkMockMaskert,
+  aggregertStatistikkMockMedBare2Kvartaler,
+  aggregertStatistikkMockMedSiste4Kvartaler,
+  aggregertStatistikkMockRød,
 } from './summert-sykefraværshistorikk-mock';
-import { OverordnetEnhet } from "../enhetsregisteret/domene/enhet";
+import { OverordnetEnhetDto } from "../enhetsregisteret/api/enheter-api";
+import { AggregertStatistikk } from "../hooks/useAggregertStatistikk";
 
 export interface OrganisasjonMock {
   orgnr: string;
-  bedriftsmetrikker?: Virksomhetsdata | number;
   sykefraværshistorikkKvartalsvis?: KvartalsvisSykefraværshistorikk[] | number;
-  summertSykefraværshistorikk?: SummertSykefraværshistorikk[] | number;
-  overordnetEnhet?: OverordnetEnhet | number;
-  underenhetDto?: UnderenhetDto | number;
+  aggregertStatistikk?: AggregertStatistikk[] | number;
+  overordnetEnhet?: OverordnetEnhetDto | number;
+  underenhet?: UnderenhetDto | number;
 }
 
 export const getMockOrganisasjon = (orgnr: string): OrganisasjonMock | undefined =>
     mockedeOrganisasjoner.find((org) => org.orgnr === orgnr);
 
-export const OverordnetEnhetFiskOgFlesk: OverordnetEnhet = {
-  orgnr: "111111111",
+export const OverordnetEnhetFiskOgFlesk: OverordnetEnhetDto = {
+  organisasjonsnummer: "111111111",
   institusjonellSektorkode: {kode: '2100', beskrivelse: 'Private aksjeselskaper mv.'},
 };
 
@@ -85,91 +81,73 @@ export const underenhetFiskOgFleskMock: UnderenhetDto = {
 const mockedeOrganisasjoner: OrganisasjonMock[] = [
   {
     orgnr: '111111111',
-    bedriftsmetrikker: 500,
     sykefraværshistorikkKvartalsvis: 500,
-    summertSykefraværshistorikk: 500,
+    aggregertStatistikk: 500,
     overordnetEnhet: OverordnetEnhetFiskOgFlesk,
   },
   {
     orgnr: '101010101',
-    bedriftsmetrikker: 500,
     sykefraværshistorikkKvartalsvis: 500,
-    summertSykefraværshistorikk: 500,
+    aggregertStatistikk: 500,
   },
   {
     orgnr: '100100100',
-    bedriftsmetrikker: 500,
     sykefraværshistorikkKvartalsvis: 403,
-    summertSykefraværshistorikk: 403,
+    aggregertStatistikk: 403,
   },
   {
     orgnr: '910969439',
-    summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+    aggregertStatistikk: getaggregertStatistikkMock(
         Statistikkategori.NÆRING,
         'Produksjon av nærings- og nytelsesmidler'
     ),
     overordnetEnhet: OverordnetEnhetFiskOgFlesk,
-    underenhetDto: underenhetFiskOgFleskMock,
-    bedriftsmetrikker: {
-      antallAnsatte: 132,
-      næringskode5Siffer: {
-        kode: '03111',
-        beskrivelse: 'Hav- og kystfiske',
-      },
-    }
+    underenhet: underenhetFiskOgFleskMock,
   },
   {
     orgnr: '888888881',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
     sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-    summertSykefraværshistorikk: summertSykefraværshistorikkMockRød,
+    aggregertStatistikk: aggregertStatistikkMockRød,
   },
   {
     orgnr: '888888882',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
     sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-    summertSykefraværshistorikk: summertSykefraværshistorikkMockGul,
+    aggregertStatistikk: aggregertStatistikkMockGul,
   },
   {
     orgnr: '888888883',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
     sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-    summertSykefraværshistorikk: summertSykefraværshistorikkMockGrønn,
+    aggregertStatistikk: aggregertStatistikkMockGrønn,
   },
   {
     orgnr: '888888884',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
     sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-    summertSykefraværshistorikk: 500,
+    aggregertStatistikk: 500,
   },
   {
     orgnr: '888888885',
-    bedriftsmetrikker: undefined,
     sykefraværshistorikkKvartalsvis: undefined,
-    summertSykefraværshistorikk: undefined,
+    aggregertStatistikk: undefined,
   },
   {
     orgnr: '888888886',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
     sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-    summertSykefraværshistorikk: summertSykefraværshistorikkMockMedBare2Kvartaler,
+    aggregertStatistikk: aggregertStatistikkMockMedBare2Kvartaler,
   },
   {
     orgnr: '888888887',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
     sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-    summertSykefraværshistorikk: summertSykefraværshistorikkMockMaskert,
+    aggregertStatistikk: aggregertStatistikkMockMaskert,
   },
   {
     orgnr: '888888888',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
     sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-    summertSykefraværshistorikk: summertSykefraværshistorikkMockMedSiste4Kvartaler,
+    aggregertStatistikk: aggregertStatistikkMockMedSiste4Kvartaler,
   },
   {
     orgnr: '333333333',
     sykefraværshistorikkKvartalsvis: lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet(),
-    summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+    aggregertStatistikk: getaggregertStatistikkMock(
         Statistikkategori.NÆRING,
         'Produksjon av nærings- og nytelsesmidler'
     ),
@@ -177,69 +155,61 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
   {
     orgnr: '444444444',
     sykefraværshistorikkKvartalsvis: lagMaskertHistorikk(),
-    summertSykefraværshistorikk: summertSykefraværshistorikkMockMaskert,
+    aggregertStatistikk: aggregertStatistikkMockMaskert,
   },
   {
     orgnr: '120000001',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BARNEHAGER),
     sykefraværshistorikkKvartalsvis: lagMockHistorikkForBarnehage(),
-    summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+    aggregertStatistikk: getaggregertStatistikkMock(
         Statistikkategori.BRANSJE,
         'Barnehager',
     ),
   },
   {
     orgnr: '120000002',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.SYKEHJEM),
-    summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+    aggregertStatistikk: getaggregertStatistikkMock(
         Statistikkategori.BRANSJE,
         'Sykehjem',
     ),
   },
   {
     orgnr: '120000003',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.SYKEHUS),
-    summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+    aggregertStatistikk: getaggregertStatistikkMock(
         Statistikkategori.BRANSJE,
         'Sykehus',
     ),
   },
   {
     orgnr: '120000004',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.NÆRINGSMIDDELINDUSTRI),
-    summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+    aggregertStatistikk: getaggregertStatistikkMock(
         Statistikkategori.BRANSJE,
         'Næringsmiddelindustrien',
     ),
   },
   {
     orgnr: '120000005',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.TRANSPORT),
-    summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+    aggregertStatistikk: getaggregertStatistikkMock(
         Statistikkategori.BRANSJE,
         'Transport',
     ),
   },
   {
     orgnr: '120000006',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.BYGG),
-    summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+    aggregertStatistikk: getaggregertStatistikkMock(
         Statistikkategori.BRANSJE,
         'Byggebransjen',
     ),
   },
   {
     orgnr: '120000007',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.ANLEGG),
-    summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+    aggregertStatistikk: getaggregertStatistikkMock(
         Statistikkategori.BRANSJE,
         'Anleggsbransjen',
     ),
   },
   {
     orgnr: '120000009',
-    bedriftsmetrikker: getvirksomhetsdataMock(ArbeidsmiljøportalenBransje.ANDRE_BRANSJER),
-    summertSykefraværshistorikk: getSummertSykefraværshistorikkMock(
+    aggregertStatistikk: getaggregertStatistikkMock(
         Statistikkategori.NÆRING,
         'Produksjon av nærings- og nytelsesmidler',
     ),

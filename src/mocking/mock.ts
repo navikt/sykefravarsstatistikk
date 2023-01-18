@@ -7,7 +7,7 @@ import fetchMock, {
 } from 'fetch-mock';
 import { lagMockHistorikkForNæring } from './sykefraværshistorikk-mock';
 import { UnderenhetDto } from '../enhetsregisteret/api/underenheter-api';
-import { underenhetMock } from './enhetsregisteret-mock';
+import { underenheterResponseMock } from '../enhetsregisteret/api/mocks/underenheter-api-mocks';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './altinn-mock';
 import { summertSykefraværshistorikkMockUtenData } from './summert-sykefraværshistorikk-mock';
@@ -131,10 +131,10 @@ if (mock.enhetsregisteret) {
     mockGetAndLog('begin:https://data.brreg.no/enhetsregisteret/api/underenheter/', (url) => {
         const orgnr = url.match(/[0-9]{9}/)![0];
         const defaultUnderenhetDto: UnderenhetDto = {
-            ...underenhetMock,
+            ...underenheterResponseMock,
             organisasjonsnummer: orgnr,
         };
-        const underenhetDto = getMockOrganisasjon(orgnr)?.underenhetDto;
+        const underenhetDto = getMockOrganisasjon(orgnr)?.underenhet;
         console.log('MOCK ENHETREGISTERET  / UNDERENHETER, underenhetDto: ', underenhetDto);
         return underenhetDto || defaultUnderenhetDto;
     });

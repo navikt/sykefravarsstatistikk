@@ -33,15 +33,15 @@ const ResponseValidator = z.object({
 }).strict("Ukjent datastruktur")
 
 export type AggregertStatistikk = {
-  prosentSiste4KvartalerTotalt?: StatistikkType,
-  prosentSiste4KvartalerGradert?: StatistikkType,
-  prosentSiste4KvartalerKorttid?: StatistikkType,
-  prosentSiste4KvartalerLangtid?: StatistikkType,
-  trendTotalt?: StatistikkType
+  prosentSiste4KvartalerTotalt?: Statistikk,
+  prosentSiste4KvartalerGradert?: Statistikk,
+  prosentSiste4KvartalerKorttid?: Statistikk,
+  prosentSiste4KvartalerLangtid?: Statistikk,
+  trendTotalt?: Statistikk
 }
 
 type Response = z.infer<typeof ResponseValidator>;
-export type StatistikkType = z.infer<typeof StatistikkValidator>
+export type Statistikk = z.infer<typeof StatistikkValidator>π
 
 export type AggregertStatistikkResponse = {
   restStatus: RestStatus,
@@ -68,7 +68,7 @@ const defaultFetcher: Fetcher<{ data: any, status: number }> = async (input: Req
   }
 }
 
-const getCategory = (category: Statistikkategori, statistikk: StatistikkType[]) => {
+const getCategory = (category: Statistikkategori, statistikk: Statistikk[]) => {
   return statistikk.find(e => e.statistikkategori === category)
 }
 

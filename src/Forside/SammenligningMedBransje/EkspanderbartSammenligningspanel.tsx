@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactElement, useState } from 'react';
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './EkspanderbartSammenligningspanel.less';
-import { Speedometer, SykefraværVurdering } from '../Speedometer/Speedometer';
+import { Speedometer } from '../Speedometer/Speedometer';
 import {
     getForklaringAvVurdering,
     getVurderingstekst,
@@ -21,13 +21,14 @@ import { OmGradertSykmelding } from '../../felleskomponenter/OmGradertSykmelding
 import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from '../../amplitude/events';
 import { useOrgnr } from '../../hooks/useOrgnr';
 import { sendIaTjenesteMetrikkMottatt } from '../../metrikker/iatjenester';
-import { StatistikkType } from '../../hooks/useAggregertStatistikk';
+import { Statistikk } from '../../hooks/useAggregertStatistikk';
 import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
+import { getVurdering } from '../vurdering-utils';
 
 interface Props {
     sammenligningsType: SammenligningsType;
-    virksomhetStatistikk?: StatistikkType;
-    bransjeEllerNæringStatistikk?: StatistikkType;
+    virksomhetStatistikk?: Statistikk;
+    bransjeEllerNæringStatistikk?: Statistikk;
     harBransje: boolean;
     defaultÅpen?: boolean;
     className?: string;
@@ -38,42 +39,9 @@ export const parseVerdi = (verdi: string) => {
   return parseFloat(verdi.replace(",", "."));
 };
 
-export const getVurdering = (virksomhet?: StatistikkType, bransjeEllerNæring?: StatistikkType) => {
-
-  if (virksomhet === undefined && bransjeEllerNæring === undefined) return SykefraværVurdering.INGEN_DATA;
-  if (virksomhet === undefined && bransjeEllerNæring !== undefined) return SykefraværVurdering.MASKERT;
-
-  const antallKvartaler = virksomhet?.kvartalerIBeregningen.length || 0;
-
-  if (antallKvartaler < 4) return SykefraværVurdering.UFULLSTENDIG_DATA;
-  if (virksomhet?.verdi === undefined || bransjeEllerNæring?.verdi === undefined) return SykefraværVurdering.UFULLSTENDIG_DATA;
-
-  const virksomhetVerdi = parseVerdi(virksomhet.verdi);
-  const bransjeEllerNæringVerdi = parseVerdi(bransjeEllerNæring.verdi);
-
-  if (virksomhetVerdi > (bransjeEllerNæringVerdi * 1.1)) return SykefraværVurdering.OVER;
-  if (virksomhetVerdi < (bransjeEllerNæringVerdi * 0.9)) return SykefraværVurdering.UNDER;
-  return SykefraværVurdering.MIDDELS
+const antallKvartalerTekst = (antallKvartaler?: number) => {
+  return <strong> {antallKvartaler || 0} av 4 kvartaler</strong>;
 }
-
-const antallKvartalerVirksomhet = (sammenligningVurdering: SykefraværVurdering, antallKvartaler?: number) => {
-  if (
-      sammenligningVurdering === SykefraværVurdering.UFULLSTENDIG_DATA
-      || sammenligningVurdering === SykefraværVurdering.INGEN_DATA
-  ) return <strong> {antallKvartaler || 0} av 4 kvartaler</strong>;
-
-  return null;
-}
-
-const antallKvartalerBransje = (sammenligningVurdering: SykefraværVurdering) => {
-  if (
-      sammenligningVurdering === SykefraværVurdering.UFULLSTENDIG_DATA
-      || sammenligningVurdering === SykefraværVurdering.INGEN_DATA
-  ) return <strong>4 av 4 kvartaler</strong>
-
-  return null;
-}
-
 
 export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
                                                                              sammenligningsType,
@@ -125,13 +93,13 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
               className="ekspanderbart-sammenligningspanel__detaljert-visning"
               overskrift="Din virksomhet:"
               prosent={virksomhetStatistikk?.verdi}
-              visingAntallKvartaller={antallKvartalerVirksomhet(sykefraværVurdering, virksomhetStatistikk?.kvartalerIBeregningen.length)}
+              visingAntallKvartaller={antallKvartalerTekst(virksomhetStatistikk?.kvartalerIBeregningen.length)}
           />
           <DetaljertVisningSykefravær
               className="ekspanderbart-sammenligningspanel__detaljert-visning"
               overskrift={overskriftForTallForNæringEllerBransje}
               prosent={bransjeEllerNæringStatistikk?.verdi}
-              visingAntallKvartaller={antallKvartalerBransje(sykefraværVurdering)}
+              visingAntallKvartaller={antallKvartalerTekst(bransjeEllerNæringStatistikk?.kvartalerIBeregningen.length)}
           />
         </div>
         {sammenligningsType === SammenligningsType.GRADERT ? (

@@ -1,4 +1,4 @@
-export const underenhetMock = {
+export const underenheterResponseMock = {
   organisasjonsnummer: "999999999",
   navn: "HEI OG HÅ BARNEHAGE",
   organisasjonsform: {
