@@ -1,9 +1,4 @@
 import { KvartalsvisSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
-import {
-    lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet,
-    lagMaskertHistorikk,
-    lagMockHistorikkForBarnehage,
-} from './aggregert-statistikk-mock-utils';
 import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
 import { UnderenhetDto } from '../enhetsregisteret/api/underenheter-api';
 import {
@@ -16,6 +11,11 @@ import {
     lagAggregertStatistikkMockGul,
 } from './summert-sykefraværshistorikk-mock';
 import { OverordnetEnhetDto } from '../enhetsregisteret/api/enheter-api';
+import {
+    lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet,
+    lagMaskertHistorikk,
+    lagMockHistorikkForBarnehage
+} from "./sykefraværshistorikk-mock";
 
 export interface OrganisasjonMock {
     orgnr: string;

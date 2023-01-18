@@ -154,7 +154,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
               <div className="ekspanderbart-sammenligningspanel__tittel-wrapper">
                 {SammenligningsType.GRADERT === sammenligningsType ? (
                     <Kakediagram
-                        resultat={sykefraværVurdering}
+                         resultat={sykefraværVurdering}
                         className={'ekspanderbart-sammenligningspanel__kakediagram'}
                     />
                 ) : (

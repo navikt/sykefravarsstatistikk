@@ -10,9 +10,8 @@ export enum SykefraværVurdering {
   MIDDELS = 'MIDDELS',
   OVER = 'OVER',
   MASKERT = 'MASKERT',
-  INGEN_DATA = 'INGEN_DATA',
   UFULLSTENDIG_DATA = 'UFULLSTENDIG_DATA',
-  FEIL = 'FEIL',
+  FEIL_ELLER_INGEN_DATA = 'FEIL_ELLER_INGEN_DATA',
 }
 
 interface Props {
@@ -40,9 +39,8 @@ const KakediagramSvg: FunctionComponent<{
     case SykefraværVurdering.OVER:
       return <KakediagramGrønn/>;
     case SykefraværVurdering.MASKERT:
-    case SykefraværVurdering.INGEN_DATA:
+    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
     case SykefraværVurdering.UFULLSTENDIG_DATA:
-    case SykefraværVurdering.FEIL:
       return <KakediagramGrå/>;
   }
 };
