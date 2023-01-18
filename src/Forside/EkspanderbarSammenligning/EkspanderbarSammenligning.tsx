@@ -12,16 +12,16 @@ import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDit
 import './EkspanderbarSammenligning.less';
 import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
 import { Element } from 'nav-frontend-typografi';
-import { AggregertStatistikkResponse } from '../../hooks/useAggregertStatistikk';
+import { RestAggregertStatistikk } from '../../hooks/useAggregertStatistikk';
 import {RestPubliseringsdatoer} from "../../api/publiseringsdatoer-api";
 import { getVurdering } from "../vurdering-utils";
 
 interface Props {
-    aggregertStatistikk: AggregertStatistikkResponse;
+    aggregertStatistikk: RestAggregertStatistikk;
   restPubliseringsdatoer: RestPubliseringsdatoer;
 }
 
-const getBransjeEllerNæringKategori = (aggregertStatistikk: AggregertStatistikkResponse) => {
+const getBransjeEllerNæringKategori = (aggregertStatistikk: RestAggregertStatistikk) => {
     const bransjedata = aggregertStatistikk.aggregertData?.get(Statistikkategori.BRANSJE)
         ?.prosentSiste4KvartalerTotalt?.verdi;
     if (bransjedata !== undefined) return Statistikkategori.BRANSJE;

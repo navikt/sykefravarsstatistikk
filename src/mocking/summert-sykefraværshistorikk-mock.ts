@@ -1,292 +1,137 @@
-import {
-  Statistikkategori,
-  SummertSykefraværshistorikk
-} from '../api/summert-sykefraværshistorikk-api';
+import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
+import { Statistikk } from '../hooks/useAggregertStatistikk';
+import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
 
-const siste4Kvartaler = [
-  {årstall: 2021, kvartal: 3,},
-  {årstall: 2021, kvartal: 4,},
-  {årstall: 2022, kvartal: 1,},
-  {årstall: 2022, kvartal: 2,},
-];
-
-const summertSykefraværshistorikkBarnehager: SummertSykefraværshistorikk = {
-  type: Statistikkategori.BRANSJE,
-  label: 'Barnehager',
-
-  summertKorttidsOgLangtidsfravær: {
-    summertKorttidsfravær: {
-      prosent: 1.2,
-      tapteDagsverk: 12,
-      muligeDagsverk: 1000,
-      erMaskert: false,
-      kvartaler: siste4Kvartaler,
-    },
-    summertLangtidsfravær: {
-      prosent: 7.5,
-      tapteDagsverk: 75,
-      muligeDagsverk: 1000,
-      erMaskert: false,
-      kvartaler: siste4Kvartaler,
-    },
-  },
-  summertGradertFravær: {
-    prosent: 4.4,
-    tapteDagsverk: 44,
-    muligeDagsverk: 1000,
-    erMaskert: false,
-    kvartaler: siste4Kvartaler,
-  },
+// TODO: Flytt meg ut av denne fila
+export type AggregertStatistikkApiResponse = {
+    prosentSiste4KvartalerTotalt: Statistikk[];
+    prosentSiste4KvartalerGradert: Statistikk[];
+    prosentSiste4KvartalerKorttid: Statistikk[];
+    prosentSiste4KvartalerLangtid: Statistikk[];
+    trendTotalt: Statistikk[];
 };
 
-export const summertSykefraværshistorikkMockMaskert: SummertSykefraværshistorikk[] = [
-  {
-    type: Statistikkategori.VIRKSOMHET,
-    label: 'En virksomhet',
-    summertKorttidsOgLangtidsfravær: {
-      summertKorttidsfravær: {
-        prosent: null,
-        tapteDagsverk: null,
-        muligeDagsverk: null,
-        erMaskert: true,
-        kvartaler: [],
-      },
-      summertLangtidsfravær: {
-        prosent: null,
-        tapteDagsverk: null,
-        muligeDagsverk: null,
-        erMaskert: true,
-        kvartaler: [],
-      },
-    },
-    summertGradertFravær: {
-      prosent: null,
-      tapteDagsverk: null,
-      muligeDagsverk: null,
-      erMaskert: true,
-      kvartaler: [],
-    },
-  },
-  summertSykefraværshistorikkBarnehager,
+const tomAggregertStatistikk: AggregertStatistikkApiResponse = {
+    prosentSiste4KvartalerTotalt: [],
+    prosentSiste4KvartalerGradert: [],
+    prosentSiste4KvartalerKorttid: [],
+    prosentSiste4KvartalerLangtid: [],
+    trendTotalt: [],
+};
+
+const siste4KvartalerMock: ÅrstallOgKvartal[] = [
+    { årstall: 2021, kvartal: 3 },
+    { årstall: 2021, kvartal: 4 },
+    { årstall: 2022, kvartal: 1 },
+    { årstall: 2022, kvartal: 2 },
 ];
 
-export const summertSykefraværshistorikkMockUtenData: SummertSykefraværshistorikk[] = [
-  {
-    type: Statistikkategori.VIRKSOMHET,
-    label: 'En virksomhet',
-    summertKorttidsOgLangtidsfravær: {
-      summertKorttidsfravær: {
-        prosent: null,
-        tapteDagsverk: null,
-        muligeDagsverk: null,
-        erMaskert: false,
-        kvartaler: [],
-      },
-      summertLangtidsfravær: {
-        prosent: null,
-        tapteDagsverk: null,
-        muligeDagsverk: null,
-        erMaskert: false,
-        kvartaler: [],
-      },
-    },
-    summertGradertFravær: {
-      prosent: null,
-      tapteDagsverk: null,
-      muligeDagsverk: null,
-      erMaskert: false,
-      kvartaler: [],
-    },
-  },
-  summertSykefraværshistorikkBarnehager,
-];
+function lagStatistikkMock(
+    statistikkategori: Statistikkategori,
+    label: string,
+    verdi: string,
+    kvartaler: ÅrstallOgKvartal[]
+): Statistikk {
+    return {
+        statistikkategori: statistikkategori,
+        label: label,
+        verdi: verdi,
+        antallPersonerIBeregningen: 15,
+        kvartalerIBeregningen: kvartaler,
+    };
+}
 
-export const summertSykefraværshistorikkMockMedBare2Kvartaler: SummertSykefraværshistorikk[] = [
-  {
-    type: Statistikkategori.VIRKSOMHET,
-    label: 'En virksomhet',
-    summertKorttidsOgLangtidsfravær: {
-      summertKorttidsfravær: {
-        prosent: 2.3,
-        tapteDagsverk: 140.6,
-        muligeDagsverk: 3990.4,
-        erMaskert: false,
-        kvartaler: [
-          {
-            årstall: 2019,
-            kvartal: 4,
-          },
-          {
-            årstall: 2020,
-            kvartal: 1,
-          },
-        ],
-      },
-      summertLangtidsfravær: {
-        prosent: 6.1,
-        tapteDagsverk: 116.7,
-        muligeDagsverk: 3990.4,
-        erMaskert: false,
-        kvartaler: [
-          {
-            årstall: 2019,
-            kvartal: 4,
-          },
-          {
-            årstall: 2020,
-            kvartal: 1,
-          },
-        ],
-      },
-    },
-    summertGradertFravær: {
-      prosent: 0.36,
-      tapteDagsverk: 15,
-      muligeDagsverk: 3990.4,
-      erMaskert: false,
-      kvartaler: [
-        {
-          årstall: 2019,
-          kvartal: 4,
-        },
-        {
-          årstall: 2020,
-          kvartal: 1,
-        },
-      ],
-    },
-  },
-  summertSykefraværshistorikkBarnehager,
-];
-
-export const getSummertSykefraværshistorikkMock = (
-    type: Statistikkategori.BRANSJE | Statistikkategori.NÆRING,
-    label: string
-): SummertSykefraværshistorikk[] => [
-  {
-    type: Statistikkategori.VIRKSOMHET,
-    label: 'En virksomhet',
-    summertKorttidsOgLangtidsfravær: {
-      summertKorttidsfravær: {
-        prosent: 2.3,
-        tapteDagsverk: 140.6,
-        muligeDagsverk: 3990.4,
-        erMaskert: false,
-        kvartaler: siste4Kvartaler,
-      },
-      summertLangtidsfravær: {
-        prosent: 6.1,
-        tapteDagsverk: 116.7,
-        muligeDagsverk: 3990.4,
-        erMaskert: false,
-        kvartaler: siste4Kvartaler,
-      },
-    },
-    summertGradertFravær: {
-      prosent: 1,
-      tapteDagsverk: 39.9,
-      muligeDagsverk: 3990.4,
-      erMaskert: false,
-      kvartaler: siste4Kvartaler,
-    },
-  },
-  {...summertSykefraværshistorikkBarnehager, type, label},
-];
-
-export const summertSykefraværshistorikkMockMedSiste4Kvartaler: SummertSykefraværshistorikk[] = getSummertSykefraværshistorikkMock(
+const statistikkBarnehage = lagStatistikkMock(
     Statistikkategori.BRANSJE,
-    'Barnehager'
+    'Barnehager',
+    '10.0',
+    siste4KvartalerMock
 );
 
-export const summertSykefraværshistorikkMockGrønn: SummertSykefraværshistorikk[] = [
-  {
-    type: Statistikkategori.VIRKSOMHET,
-    label: 'En virksomhet',
-    summertKorttidsOgLangtidsfravær: {
-      summertKorttidsfravær: {
-        prosent: 0.8,
-        tapteDagsverk: 140.6,
-        muligeDagsverk: 3990.4,
-        erMaskert: false,
-        kvartaler: siste4Kvartaler,
-      },
-      summertLangtidsfravær: {
-        prosent: 5.9,
-        tapteDagsverk: 116.7,
-        muligeDagsverk: 3990.4,
-        erMaskert: false,
-        kvartaler: siste4Kvartaler,
-      },
-    },
-    summertGradertFravær: {
-      prosent: 5.0,
-      tapteDagsverk: 200,
-      muligeDagsverk: 3990.4,
-      erMaskert: false,
-      kvartaler: siste4Kvartaler,
-    },
-  },
-  summertSykefraværshistorikkBarnehager,
-];
+function aggregertStatistikkBarnehage(
+    statistikkVirksomhet: Statistikk,
+    gradertVerdi: string = '10.0'
+): AggregertStatistikkApiResponse {
+    return {
+        prosentSiste4KvartalerTotalt: [statistikkVirksomhet, statistikkBarnehage],
+        prosentSiste4KvartalerKorttid: [statistikkVirksomhet, statistikkBarnehage],
+        prosentSiste4KvartalerLangtid: [statistikkVirksomhet, statistikkBarnehage],
+        prosentSiste4KvartalerGradert: [
+            statistikkVirksomhet,
+            {
+                ...statistikkBarnehage,
+                verdi: gradertVerdi,
+            },
+        ],
+        trendTotalt: [],
+    };
+}
 
-export const summertSykefraværshistorikkMockGul: SummertSykefraværshistorikk[] = [
-  {
-    type: Statistikkategori.VIRKSOMHET,
-    label: 'En virksomhet',
-    summertKorttidsOgLangtidsfravær: {
-      summertKorttidsfravær: {
-        prosent: 1.1,
-        tapteDagsverk: 44.67,
-        muligeDagsverk: 3990.4,
-        erMaskert: false,
-        kvartaler: siste4Kvartaler,
-      },
-      summertLangtidsfravær: {
-        prosent: 7.6,
-        tapteDagsverk: 303.3,
-        muligeDagsverk: 3990.4,
-        erMaskert: false,
-        kvartaler: siste4Kvartaler,
-      },
-    },
-    summertGradertFravær: {
-      prosent: 4.3,
-      tapteDagsverk: 170.1,
-      muligeDagsverk: 3990.4,
-      erMaskert: false,
-      kvartaler: siste4Kvartaler,
-    },
-  },
-  summertSykefraværshistorikkBarnehager,
-];
+export const aggregertStatistikkMockMaskert: AggregertStatistikkApiResponse = {
+    prosentSiste4KvartalerTotalt: [statistikkBarnehage],
+    prosentSiste4KvartalerKorttid: [statistikkBarnehage],
+    prosentSiste4KvartalerLangtid: [statistikkBarnehage],
+    prosentSiste4KvartalerGradert: [statistikkBarnehage],
+    trendTotalt: [],
+};
 
-export const summertSykefraværshistorikkMockRød: SummertSykefraværshistorikk[] = [
-  {
-    type: Statistikkategori.VIRKSOMHET,
-    label: 'En virksomhet',
-    summertKorttidsOgLangtidsfravær: {
-      summertKorttidsfravær: {
-        prosent: 1.8,
-        tapteDagsverk: 140.6,
-        muligeDagsverk: 3990.4,
-        erMaskert: false,
-        kvartaler: siste4Kvartaler,
-      },
-      summertLangtidsfravær: {
-        prosent: 10.4,
-        tapteDagsverk: 116.7,
-        muligeDagsverk: 3990.4,
-        erMaskert: false,
-        kvartaler: siste4Kvartaler,
-      },
-    },
-    summertGradertFravær: {
-      prosent: 2.5,
-      tapteDagsverk: 100.7,
-      muligeDagsverk: 3990.4,
-      erMaskert: false,
-      kvartaler: siste4Kvartaler,
-    },
-  },
-  summertSykefraværshistorikkBarnehager,
-];
+export const aggregertStatistikkMockUtenData: AggregertStatistikkApiResponse =
+    tomAggregertStatistikk;
+
+export function aggregertStatistikkMockMedBare2Kvartaler(): AggregertStatistikkApiResponse {
+    const statistikkVirksomhet = lagStatistikkMock(
+        Statistikkategori.VIRKSOMHET,
+        'Virksomhetens navn',
+        '10.0',
+        [
+            { årstall: 2022, kvartal: 1 },
+            { årstall: 2022, kvartal: 2 },
+        ]
+    );
+    return aggregertStatistikkBarnehage(statistikkVirksomhet);
+}
+
+export const lagAggregertStatistikkMockGul = (
+    type: Statistikkategori.BRANSJE | Statistikkategori.NÆRING,
+    label: string
+): AggregertStatistikkApiResponse => {
+    const statistikkBransjeEllerNæring = { ...statistikkBarnehage, type, label };
+    const statistikkVirksomhet = lagStatistikkMock(
+        Statistikkategori.VIRKSOMHET,
+        'Virksomhetens navn',
+        '10.5',
+        siste4KvartalerMock
+    );
+    return {
+        prosentSiste4KvartalerTotalt: [statistikkVirksomhet, statistikkBransjeEllerNæring],
+        prosentSiste4KvartalerKorttid: [statistikkVirksomhet, statistikkBransjeEllerNæring],
+        prosentSiste4KvartalerLangtid: [statistikkVirksomhet, statistikkBransjeEllerNæring],
+        prosentSiste4KvartalerGradert: [statistikkVirksomhet, statistikkBransjeEllerNæring],
+        trendTotalt: [],
+    };
+};
+
+export const aggregertStatistikkMockGulBarnehage: AggregertStatistikkApiResponse =
+    lagAggregertStatistikkMockGul(Statistikkategori.BRANSJE, 'Barnehager');
+
+export const aggregertStatistikkMockGrønnBarnehage: AggregertStatistikkApiResponse =
+    aggregertStatistikkBarnehage(
+        lagStatistikkMock(
+            Statistikkategori.VIRKSOMHET,
+            'Virksomhetens navn',
+            '8.0',
+            siste4KvartalerMock
+        ),
+        '12.0'
+    );
+
+export const aggregertStatistikkMockRødBarnehage: AggregertStatistikkApiResponse =
+    aggregertStatistikkBarnehage(
+        lagStatistikkMock(
+            Statistikkategori.VIRKSOMHET,
+            'Virksomhetens navn',
+            '12.0',
+            siste4KvartalerMock
+        ),
+        '8.0'
+    );

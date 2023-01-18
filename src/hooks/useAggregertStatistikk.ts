@@ -41,9 +41,9 @@ export type AggregertStatistikk = {
 }
 
 type Response = z.infer<typeof ResponseValidator>;
-export type Statistikk = z.infer<typeof StatistikkValidator>π
+export type Statistikk = z.infer<typeof StatistikkValidator>
 
-export type AggregertStatistikkResponse = {
+export type RestAggregertStatistikk = {
   restStatus: RestStatus,
   aggregertData?: Map<Statistikkategori, AggregertStatistikk>,
   error?: any
@@ -108,7 +108,7 @@ function useFetch(orgnr: string, fetcher?: Fetcher<{ data: any, status: number }
 }
 
 
-function useAggregertStatistikk(fetcher?: Fetcher<{ data: any, status: number }>): AggregertStatistikkResponse {
+function useAggregertStatistikk(fetcher?: Fetcher<{ data: any, status: number }>): RestAggregertStatistikk {
   const orgnr = useOrgnr() || "";
   const {data, isLoading, isError} = useFetch(orgnr, fetcher)
 

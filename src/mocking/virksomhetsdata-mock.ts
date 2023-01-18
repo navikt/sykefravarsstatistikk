@@ -1,13 +1,6 @@
 import {ArbeidsmiljøportalenBransje} from '../utils/bransje-utils';
 import {Virksomhetsdata} from '../api/virksomhetsdata-api';
 
-export const defaultBedriftsmetrikker: Virksomhetsdata = {
-  antallAnsatte: 99,
-  næringskode5Siffer: {
-    kode: '84300',
-    beskrivelse: 'Trygdeordninger underlagt offentlig forvaltning',
-  },
-};
 
 export const getvirksomhetsdataMock = (bransje: ArbeidsmiljøportalenBransje): Virksomhetsdata => {
   switch (bransje) {

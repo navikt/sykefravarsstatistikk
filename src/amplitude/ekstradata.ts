@@ -14,7 +14,7 @@ import { mapTilPrivatEllerOffentligSektor, Sektor } from '../utils/sektorUtils';
 import { Enhetsregisterdata } from '../enhetsregisteret/hooks/useEnheter';
 import { Næring } from '../enhetsregisteret/domene/underenhet';
 import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
-import { AggregertStatistikkResponse } from '../hooks/useAggregertStatistikk';
+import { RestAggregertStatistikk } from '../hooks/useAggregertStatistikk';
 import { getVurdering } from '../Forside/vurdering-utils';
 import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
 
@@ -76,7 +76,7 @@ export const getEkstraDataFraEnhetsregisteret = (
 };
 
 export const getEkstraDataFraAggregertSykefraværshistorikk = (
-    aggregertResponse: AggregertStatistikkResponse
+    aggregertResponse: RestAggregertStatistikk
 ): Partial<Ekstradata> => {
     if (aggregertResponse.restStatus !== RestStatus.Suksess) {
         return {};

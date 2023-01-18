@@ -3,10 +3,10 @@ import './Forside.less';
 import Innloggingsside from '../Innloggingsside/Innloggingsside';
 import {RestStatus} from '../api/api-utils';
 import {ManglerRettighetRedirect} from '../utils/redirects';
-import {AggregertStatistikkResponse} from '../hooks/useAggregertStatistikk';
+import {RestAggregertStatistikk} from '../hooks/useAggregertStatistikk';
 
 interface Props {
-  aggregertStatistikk: AggregertStatistikkResponse
+  aggregertStatistikk: RestAggregertStatistikk
 }
 
 const InnloggingssideWrapper: React.FunctionComponent<Props> = ({

@@ -11,7 +11,7 @@ import {
   getEkstraDataFraSykefraværshistorikk,
 } from '../amplitude/ekstradata';
 import useAggregertStatistikk, {
-  AggregertStatistikkResponse
+  RestAggregertStatistikk
 } from "./useAggregertStatistikk";
 import {RestPubliseringsdatoer} from "../api/publiseringsdatoer-api";
 import {usePubliseringsdatoer} from "./usePubliseringsdatoer";
@@ -21,7 +21,7 @@ export interface SykefraværAppData {
   altinnOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
   enhetsregisterdata: Enhetsregisterdata;
   sykefraværshistorikk: RestSykefraværshistorikk;
-  aggregertStatistikk: AggregertStatistikkResponse;
+  aggregertStatistikk: RestAggregertStatistikk;
   publiseringsdatoer: RestPubliseringsdatoer;
 }
 
@@ -45,7 +45,7 @@ export function useSykefraværAppData(): SykefraværAppData {
 
 export function getEkstradata(
     sykefraværshistorikk: RestSykefraværshistorikk,
-    aggregertHistorikk: AggregertStatistikkResponse,
+    aggregertHistorikk: RestAggregertStatistikk,
     enhetsregisterdata: Enhetsregisterdata,
 ): Partial<Ekstradata> {
     return {

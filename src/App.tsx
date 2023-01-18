@@ -41,7 +41,7 @@ import { useAnalytics } from './hooks/useAnalytics';
 import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
 import Samtalestøttepanel from './Forside/Samtalestøttepanel/Samtalestøttepanel';
 import { getMiljø } from './utils/miljøUtils';
-import { AggregertStatistikkResponse } from './hooks/useAggregertStatistikk';
+import { RestAggregertStatistikk } from './hooks/useAggregertStatistikk';
 
 interface Props {
     analyticsClient: AnalyticsClient;
@@ -57,7 +57,7 @@ const App: FunctionComponent<Props> = ({ analyticsClient }) => {
 
 function dataLastesInn(
     restOrganisasjoner: RestAltinnOrganisasjoner,
-    restAggregertStatistikk: AggregertStatistikkResponse
+    restAggregertStatistikk: RestAggregertStatistikk
 ) {
     return (
         restOrganisasjoner.status === RestStatus.LasterInn ||
