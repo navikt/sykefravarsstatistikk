@@ -5,12 +5,11 @@ import fetchMock, {
     MockResponse,
     MockResponseFunction,
 } from 'fetch-mock';
-import { lagMockHistorikkForNæring } from './sykefraværshistorikk-mock';
+import { lagMockHistorikkForNæring } from './aggregert-statistikk-mock-utils';
 import { UnderenhetDto } from '../enhetsregisteret/api/underenheter-api';
 import { underenheterResponseMock } from '../enhetsregisteret/api/mocks/underenheter-api-mocks';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './altinn-mock';
-import { summertSykefraværshistorikkMockUtenData } from './summert-sykefraværshistorikk-mock';
 import { getMiljø } from '../utils/miljøUtils';
 import { aggregertMockData } from './aggregert-mock';
 import { getMockPubliseringsdatoer } from './mock-publiseringsdatoer';
@@ -90,20 +89,6 @@ if (mock.sykefraværsstatistikkApi) {
     mockGetAndLog('express:/sykefravarsstatistikk/api/publiseringsdato', () => {
         return getMockPubliseringsdatoer();
     });
-    mockGetAndLog(
-        'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/summert',
-        (url) => {
-            const orgnr = url.match(/[0-9]{9}/)![0];
-
-            return (
-                getMockOrganisasjon(orgnr)?.summertSykefraværshistorikk ||
-                summertSykefraværshistorikkMockUtenData
-            );
-        },
-        {
-            delay: 1000 * delayfaktor,
-        }
-    );
 
     mockGetAndLog(
         '/sykefravarsstatistikk/api/organisasjoner/statistikk',
@@ -138,19 +123,6 @@ if (mock.enhetsregisteret) {
         console.log('MOCK ENHETREGISTERET  / UNDERENHETER, underenhetDto: ', underenhetDto);
         return underenhetDto || defaultUnderenhetDto;
     });
-}
-
-if (mock.featureToggles) {
-    mockGetAndLog(
-        'begin:/sykefravarsstatistikk/api/feature',
-        {
-            'sykefravarsstatistikk.ab-test.tips': false,
-            'sykefravarsstatistikk.arbeidsmiljoportal': !(getMiljø() === 'labs-gcp'),
-        },
-        {
-            delay: 1000 * delayfaktor,
-        }
-    );
 }
 
 if (mock.iatjenester) {

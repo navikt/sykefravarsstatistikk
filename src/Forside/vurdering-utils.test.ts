@@ -1,4 +1,3 @@
-import {getSammenligningResultat, getVurdering, Sammenligningsresultater} from './vurdering-utils';
 import {SykefraværVurdering} from './Speedometer/Speedometer';
 import {
   RestSummertSykefraværshistorikk,
@@ -6,38 +5,47 @@ import {
 } from '../api/summert-sykefraværshistorikk-api';
 import {RestStatus} from '../api/api-utils';
 import {
-  getSummertSykefraværshistorikkMock,
-  summertSykefraværshistorikkMockGrønn,
-  summertSykefraværshistorikkMockGul,
-  summertSykefraværshistorikkMockMaskert,
-  summertSykefraværshistorikkMockMedBare2Kvartaler,
-  summertSykefraværshistorikkMockRød,
-  summertSykefraværshistorikkMockUtenData,
-} from '../mocking/summert-sykefraværshistorikk-mock';
+  lagStatistikkMock,
+  siste4KvartalerMock
+} from "../mocking/summert-sykefraværshistorikk-mock";
+import { getVurdering } from "./vurdering-utils";
+
+function sykefraværVirksomhet(prosent: string) {
+  return lagStatistikkMock(
+    Statistikkategori.VIRKSOMHET,
+    'virksomhetens navn',
+    prosent,
+    siste4KvartalerMock
+  );
+}
+
+function sykefraværBransje(prosent: string) {
+  return lagStatistikkMock(
+    Statistikkategori.BRANSJE,
+    'bransjens navn',
+    prosent,
+    siste4KvartalerMock
+  );
+}
+
 
 it('getVurdering skal gi riktig vurdering', () => {
-  expect(getVurdering(5.5, 5)).toEqual(SykefraværVurdering.OVER);
-  expect(getVurdering(5.4, 5)).toEqual(SykefraværVurdering.MIDDELS);
-  expect(getVurdering(4.5, 5)).toEqual(SykefraværVurdering.MIDDELS);
-  expect(getVurdering(4.49, 5)).toEqual(SykefraværVurdering.UNDER);
+    expect(getVurdering(sykefraværVirksomhet('5.5'), sykefraværBransje('5.0'))).toEqual(
+        SykefraværVurdering.OVER
+    );
+    expect(getVurdering(sykefraværVirksomhet('5.4'), sykefraværBransje('5.0'))).toEqual(
+        SykefraværVurdering.MIDDELS
+    );
+    expect(getVurdering(sykefraværVirksomhet('4.5'), sykefraværBransje('5.0'))).toEqual(
+        SykefraværVurdering.MIDDELS
+    );
+    expect(getVurdering(sykefraværVirksomhet('4.49'), sykefraværBransje('5.0'))).toEqual(
+        SykefraværVurdering.UNDER
+    );
 });
-
-it('getVurderingForSammenligningMedProsent skal gi riktig resultat', () => {
-  expect(getVurdering(5.5, 5)).toEqual(SykefraværVurdering.OVER);
-  expect(getVurdering(5.4, 5)).toEqual(SykefraværVurdering.MIDDELS);
-  expect(getVurdering(4.5, 5)).toEqual(SykefraværVurdering.MIDDELS);
-  expect(getVurdering(4.49, 5)).toEqual(SykefraværVurdering.UNDER);
-});
-
-/*
-    sammenligningVurdering: SykefraværVurdering;
-sykefraværVirksomhet: number | null | undefined;
-sykefraværBransje: number | null | undefined;
-kvartaler: ÅrstallOgKvartal[] | undefined;
- */
 
 describe('Tester for getSammenligningResultat', () => {
-  it('getSammenligningResultat - skal gi vurdering FEIL hvis reststatus er FEIL', () => {
+  it('get - skal gi vurdering FEIL hvis reststatus er FEIL', () => {
     const restSummertSykefraværshistorikk: RestSummertSykefraværshistorikk = {
       status: RestStatus.Feil,
     };

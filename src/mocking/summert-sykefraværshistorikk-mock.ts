@@ -19,14 +19,14 @@ const tomAggregertStatistikk: AggregertStatistikkApiResponse = {
     trendTotalt: [],
 };
 
-const siste4KvartalerMock: ÅrstallOgKvartal[] = [
+export const siste4KvartalerMock: ÅrstallOgKvartal[] = [
     { årstall: 2021, kvartal: 3 },
     { årstall: 2021, kvartal: 4 },
     { årstall: 2022, kvartal: 1 },
     { årstall: 2022, kvartal: 2 },
 ];
 
-function lagStatistikkMock(
+export function lagStatistikkMock(
     statistikkategori: Statistikkategori,
     label: string,
     verdi: string,

@@ -21,3 +21,6 @@ export const getVurdering = (statistikk?: Statistikk, bransjeEllerNæring?: Stat
   if (virksomhetVerdi < bransjeEllerNæringVerdi * 0.9) return SykefraværVurdering.UNDER;
   return SykefraværVurdering.MIDDELS;
 };
+
+export const getGrønnGrense = (bransjensProsent: number) => bransjensProsent * 0.9;
+export const getRødGrense = (bransjensProsent: number) => bransjensProsent * 1.1;

@@ -3,7 +3,7 @@ import {
     lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet,
     lagMaskertHistorikk,
     lagMockHistorikkForBarnehage,
-} from './sykefraværshistorikk-mock';
+} from './aggregert-statistikk-mock-utils';
 import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
 import { UnderenhetDto } from '../enhetsregisteret/api/underenheter-api';
 import {
