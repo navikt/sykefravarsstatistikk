@@ -26,6 +26,11 @@ export const siste4KvartalerMock: ÅrstallOgKvartal[] = [
     { årstall: 2022, kvartal: 2 },
 ];
 
+export const siste2KvartalerMock: ÅrstallOgKvartal[]  = [
+    { årstall: 2022, kvartal: 1 },
+    { årstall: 2022, kvartal: 2 },
+];
+
 export function lagStatistikkMock(
     statistikkategori: Statistikkategori,
     label: string,
@@ -83,10 +88,7 @@ export function aggregertStatistikkMockMedBare2Kvartaler(): AggregertStatistikkA
         Statistikkategori.VIRKSOMHET,
         'Virksomhetens navn',
         '10.0',
-        [
-            { årstall: 2022, kvartal: 1 },
-            { årstall: 2022, kvartal: 2 },
-        ]
+        siste2KvartalerMock
     );
     return aggregertStatistikkBarnehage(statistikkVirksomhet);
 }

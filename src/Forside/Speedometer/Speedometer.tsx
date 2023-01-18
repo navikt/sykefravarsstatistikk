@@ -10,9 +10,8 @@ export enum SykefraværVurdering {
   MIDDELS = 'MIDDELS',
   OVER = 'OVER',
   MASKERT = 'MASKERT',
-  INGEN_DATA = 'INGEN_DATA',
+  FEIL_ELLER_INGEN_DATA = 'FEIL_ELLER_INGEN_DATA',
   UFULLSTENDIG_DATA = 'UFULLSTENDIG_DATA',
-  FEIL = 'FEIL',
 }
 
 interface Props {
@@ -59,9 +58,8 @@ const SpeedometerSvg: FunctionComponent<{
     case SykefraværVurdering.OVER:
       return <SpeedometerRød størrelsesfaktor={størrelsesfaktor}/>;
     case SykefraværVurdering.MASKERT:
-    case SykefraværVurdering.INGEN_DATA:
+    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
     case SykefraværVurdering.UFULLSTENDIG_DATA:
-    case SykefraværVurdering.FEIL:
       return <SpeedometerGrå størrelsesfaktor={størrelsesfaktor}/>;
   }
 };

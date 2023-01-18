@@ -68,14 +68,12 @@ const getVurderingstekstGradert = (
             statistikken din.
           </>
       );
-    case SykefraværVurdering.INGEN_DATA:
+    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
       return (
           <>
-            Markert grå: Vi <strong>finner ikke tall</strong> for virksomheten din.
+            Markert grå: Vi <strong>kan ikke finne ikke tall</strong> for virksomheten din.
           </>
       );
-    case SykefraværVurdering.FEIL:
-      return <>Markert grå: Vi kan ikke vise dine tall.</>;
   }
 };
 
@@ -116,18 +114,16 @@ const getVurderingstekstTotalt = (
     case SykefraværVurdering.MASKERT:
       return (
           <>
-            Markert grå: Du har <strong>for lave tall</strong> til at vi kan vise
+            Markert grå: Du har <strong>for lite tallgrunnlag</strong> til at vi kan vise
             statistikken din.
           </>
       );
-    case SykefraværVurdering.INGEN_DATA:
+    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
       return (
           <>
             Markert grå: Vi <strong>finner ikke tall</strong> for virksomheten din.
           </>
       );
-    case SykefraværVurdering.FEIL:
-      return <></>;
   }
 };
 
@@ -157,14 +153,12 @@ const getVurderingstekstKorttid = (resultat: SykefraværVurdering, harBransje: b
       );
     case SykefraværVurdering.UFULLSTENDIG_DATA:
     case SykefraværVurdering.MASKERT:
-    case SykefraværVurdering.INGEN_DATA:
+    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
       return (
           <>
             Markert grå: Andel <strong>legemeldt korttidsfravær</strong> fra 1. til 16. dag:
           </>
       );
-    case SykefraværVurdering.FEIL:
-      return <>—</>;
   }
 };
 
@@ -194,14 +188,12 @@ export const getVurderingstekstLangtid = (resultat: SykefraværVurdering, harBra
       );
     case SykefraværVurdering.UFULLSTENDIG_DATA:
     case SykefraværVurdering.MASKERT:
-    case SykefraværVurdering.INGEN_DATA:
+    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
       return (
           <>
             Markert grå: Andel <strong>langtidsfravær</strong> fra 17. dag:
           </>
       );
-    case SykefraværVurdering.FEIL:
-      return <>—</>;
   }
 };
 
@@ -261,15 +253,13 @@ export const getForklaringAvVurdering = (
             vi kan vise statistikken din.
           </Normaltekst>
       );
-    case SykefraværVurdering.INGEN_DATA:
+    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
       return (
           <Normaltekst>
             Sammenligningen din er blitt markert som grå fordi vi ikke finner tall for
             virksomheten din. Vi viser dine tall når de publiseres.
           </Normaltekst>
       );
-    case SykefraværVurdering.FEIL:
-      return <></>;
   }
 };
 
@@ -298,8 +288,7 @@ export const getTilpassetTittelOgTekstOmGradertSykmelding = (
       };
     case SykefraværVurdering.UFULLSTENDIG_DATA:
     case SykefraværVurdering.MASKERT:
-    case SykefraværVurdering.INGEN_DATA:
-    case SykefraværVurdering.FEIL:
+    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
       return {
         tittel: 'Vurder bruken av gradert sykmelding sammen med langtidsfraværet',
         tekst:

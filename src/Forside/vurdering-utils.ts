@@ -4,7 +4,7 @@ import { parseVerdi } from "./SammenligningMedBransje/EkspanderbartSammenligning
 
 export const getVurdering = (statistikk?: Statistikk, bransjeEllerNæring?: Statistikk) => {
   if (statistikk === undefined && bransjeEllerNæring === undefined)
-    return SykefraværVurdering.INGEN_DATA;
+    return SykefraværVurdering.FEIL_ELLER_INGEN_DATA;
   if (statistikk === undefined && bransjeEllerNæring !== undefined)
     return SykefraværVurdering.MASKERT;
 

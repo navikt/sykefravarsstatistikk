@@ -69,7 +69,7 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                     <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
-        case SykefraværVurdering.INGEN_DATA:
+        case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
             return (
                 <>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__paragraf">
