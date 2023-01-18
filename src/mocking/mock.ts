@@ -5,7 +5,6 @@ import fetchMock, {
     MockResponse,
     MockResponseFunction,
 } from 'fetch-mock';
-import { lagMockHistorikkForNæring } from './aggregert-statistikk-mock-utils';
 import { UnderenhetDto } from '../enhetsregisteret/api/underenheter-api';
 import { underenheterResponseMock } from '../enhetsregisteret/api/mocks/underenheter-api-mocks';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
@@ -14,6 +13,7 @@ import { getMiljø } from '../utils/miljøUtils';
 import { aggregertMockData } from './aggregert-mock';
 import { getMockPubliseringsdatoer } from './mock-publiseringsdatoer';
 import { OverordnetEnhet } from "../enhetsregisteret/domene/enhet";
+import { lagMockHistorikkForNæring } from "./sykefraværshistorikk-mock";
 
 const mock = {
     minSideArbeidsgiver: true,
