@@ -12,8 +12,8 @@ import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from 
 import { getMiljø } from '../utils/miljøUtils';
 import { aggregertMockData } from './aggregert-mock';
 import { getMockPubliseringsdatoer } from './mock-publiseringsdatoer';
-import { OverordnetEnhet } from "../enhetsregisteret/domene/enhet";
-import { lagMockHistorikkForNæring } from "./sykefraværshistorikk-mock";
+import { OverordnetEnhet } from '../enhetsregisteret/domene/enhet';
+import { lagMockHistorikkForNæring } from './sykefraværshistorikk-mock';
 
 const mock = {
     minSideArbeidsgiver: true,
@@ -98,7 +98,6 @@ if (mock.sykefraværsstatistikkApi) {
         }
     );
 }
-
 
 if (mock.enhetsregisteret) {
     mockGetAndLog('begin:https://data.brreg.no/enhetsregisteret/api/enheter/', (url) => {

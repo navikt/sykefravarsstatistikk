@@ -194,9 +194,7 @@ describe('useAnalytics', () => {
                 antallAnsatte: '50-99',
                 bransje: undefined,
                 sektor: 'offentlig',
-                korttidSiste4Kvartaler: 'MIDDELS',
-                langtidSiste4Kvartaler: 'MIDDELS',
-                næring2siffer:
+                næring:
                   '84 Offentlig administrasjon og forsvar, og trygdeordninger underlagt offentlig forvaltning',
                 prosent: '>16',
                 sammenligning: 'virksomhet ligger 8-10 over',

@@ -42,9 +42,21 @@ import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
 import Samtalestøttepanel from './Forside/Samtalestøttepanel/Samtalestøttepanel';
 import { getMiljø } from './utils/miljøUtils';
 import { RestAggregertStatistikk } from './hooks/useAggregertStatistikk';
+import { getMockOrganisasjon } from "./mocking/mockede-organisasjoner";
 
 interface Props {
     analyticsClient: AnalyticsClient;
+}
+
+const mockGrønnBarnehage = getMockOrganisasjon("888888883");
+const sykefraværAppData: SykefraværAppData = {
+    aggregertStatistikk: mockGrønnBarnehage?.aggregertStatistikk,
+    altinnOrganisasjoner: undefined,
+    altinnOrganisasjonerMedStatistikk: undefined,
+    enhetsregisterdata: undefined,
+    publiseringsdatoer: undefined,
+    sykefraværshistorikk: undefined
+
 }
 
 const App: FunctionComponent<Props> = ({ analyticsClient }) => {
