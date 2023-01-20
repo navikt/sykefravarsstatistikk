@@ -14,7 +14,7 @@ import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEller
 import { Element } from 'nav-frontend-typografi';
 import { RestAggregertStatistikk } from '../../hooks/useAggregertStatistikk';
 import {RestPubliseringsdatoer} from "../../api/publiseringsdatoer-api";
-import { getVurdering } from "../vurdering-utils";
+import { sammenliknSykefravær } from "../vurdering-utils";
 
 interface Props {
     aggregertStatistikk: RestAggregertStatistikk;
@@ -65,7 +65,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
       <div className="ekspanderbar-sammenligning">
         <SammenligningIngress harBransje={harBransje}/>
         <SlikHarViKommetFramTilDittResultat
-            resultat={getVurdering(virksomhet?.prosentSiste4KvartalerTotalt, BransjeEllerNæring?.prosentSiste4KvartalerTotalt)}
+            resultat={sammenliknSykefravær(virksomhet?.prosentSiste4KvartalerTotalt, BransjeEllerNæring?.prosentSiste4KvartalerTotalt)}
             kvartaler={virksomhet?.prosentSiste4KvartalerTotalt?.kvartalerIBeregningen}
             restPubliseringsdatoer={restPubliseringsdatoer}
         />

@@ -4,7 +4,7 @@ import './EkspanderbartSammenligningspanel.less';
 import { Speedometer } from '../Speedometer/Speedometer';
 import {
     getForklaringAvVurdering,
-    getVurderingstekst,
+    sammenliknSykefraværstekst,
     SammenligningsType,
 } from '../vurderingstekster';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
@@ -23,7 +23,7 @@ import { useOrgnr } from '../../hooks/useOrgnr';
 import { sendIaTjenesteMetrikkMottatt } from '../../metrikker/iatjenester';
 import { Statistikk } from '../../hooks/useAggregertStatistikk';
 import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
-import { getVurdering } from '../vurdering-utils';
+import { sammenliknSykefravær } from '../vurdering-utils';
 
 interface Props {
     sammenligningsType: SammenligningsType;
@@ -56,7 +56,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
   const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
   const orgnr = useOrgnr();
 
-  const sykefraværVurdering = getVurdering(virksomhetStatistikk, bransjeEllerNæringStatistikk)
+  const sykefraværVurdering = sammenliknSykefravær(virksomhetStatistikk, bransjeEllerNæringStatistikk)
 
   const overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
 
@@ -120,7 +120,7 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
   const tipsliste: Tips[] = getTips(sammenligningsType);
   const harTips = tipsliste.length > 0;
 
-  const vurderingstekst = getVurderingstekst(sykefraværVurdering, sammenligningsType, harBransje);
+  const vurderingstekst = sammenliknSykefraværstekst(sykefraværVurdering, sammenligningsType, harBransje);
 
   const getPaneltittel = (): ReactElement | string => {
     switch (sammenligningsType) {

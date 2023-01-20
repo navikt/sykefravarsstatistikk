@@ -15,7 +15,7 @@ import { Enhetsregisterdata } from '../enhetsregisteret/hooks/useEnheter';
 import { Næring } from '../enhetsregisteret/domene/underenhet';
 import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 import { RestAggregertStatistikk } from '../hooks/useAggregertStatistikk';
-import { getVurdering } from '../Forside/vurdering-utils';
+import { sammenliknSykefravær } from '../Forside/vurdering-utils';
 import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
 
 export interface Ekstradata {
@@ -24,9 +24,7 @@ export interface Ekstradata {
     antallAnsatte: AntallAnsatteSegmentering;
     prosent: SegmenteringSykefraværsprosent;
     sammenligning: SegmenteringSammenligning;
-    sykefraværSiste4Kvartaler: SykefraværVurdering;
-    korttidSiste4Kvartaler: SykefraværVurdering;
-    langtidSiste4Kvartaler: SykefraværVurdering;
+    sykefraværSiste4Kvartaler: SykefraværVurdering
     sektor: Sektor;
 }
 
@@ -94,42 +92,10 @@ export const getEkstraDataFraAggregertSykefraværshistorikk = (
         const bransjeEllerNæringsdataTotalt =
             bransjedataTotalt !== undefined ? bransjedataTotalt : næringsdataTotalt;
 
-        const virksomhetsdataLangtid = aggregertResponse.aggregertData?.get(
-            Statistikkategori.VIRKSOMHET
-        )?.prosentSiste4KvartalerLangtid;
-        const bransjedataLangtid = aggregertResponse.aggregertData?.get(
-            Statistikkategori.BRANSJE
-        )?.prosentSiste4KvartalerLangtid;
-        const næringsdataLangtid = aggregertResponse.aggregertData?.get(
-            Statistikkategori.NÆRING
-        )?.prosentSiste4KvartalerLangtid;
-        const bransjeEllerNæringsdataLangtid =
-            bransjedataLangtid !== undefined ? bransjedataLangtid : næringsdataLangtid;
-
-        const virksomhetsdataKorttid = aggregertResponse.aggregertData?.get(
-            Statistikkategori.VIRKSOMHET
-        )?.prosentSiste4KvartalerLangtid;
-        const bransjedataKorttid = aggregertResponse.aggregertData?.get(
-            Statistikkategori.BRANSJE
-        )?.prosentSiste4KvartalerKorttid;
-        const næringsdataKorttid = aggregertResponse.aggregertData?.get(
-            Statistikkategori.NÆRING
-        )?.prosentSiste4KvartalerKorttid;
-        const bransjeEllerNæringsdataKorttid =
-            bransjedataKorttid !== undefined ? bransjedataKorttid : næringsdataKorttid;
-
         const resultater = {
-            sykefraværSiste4Kvartaler: getVurdering(
+            sykefraværSiste4Kvartaler: sammenliknSykefravær(
                 virksomhetsdataTotalt,
                 bransjeEllerNæringsdataTotalt
-            ),
-            korttidSiste4Kvartaler: getVurdering(
-                virksomhetsdataKorttid,
-                bransjeEllerNæringsdataKorttid
-            ),
-            langtidSiste4Kvartaler: getVurdering(
-                virksomhetsdataLangtid,
-                bransjeEllerNæringsdataLangtid
             ),
         };
 

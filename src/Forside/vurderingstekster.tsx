@@ -11,23 +11,23 @@ export enum SammenligningsType {
   GRADERT = 'GRADERT',
 }
 
-export const getVurderingstekst = (
+export const sammenliknSykefraværstekst = (
     sykefraværResultat: SykefraværVurdering,
     sammenligningsType: SammenligningsType,
     harBransje: boolean
 ): ReactElement | string => {
   switch (sammenligningsType) {
     case SammenligningsType.TOTALT:
-      return getVurderingstekstTotalt(sykefraværResultat, harBransje);
+      return sammenliknSykefraværstekstTotalt(sykefraværResultat, harBransje);
     case SammenligningsType.LANGTID:
-      return getVurderingstekstLangtid(sykefraværResultat, harBransje);
+      return sammenliknSykefraværstekstLangtid(sykefraværResultat, harBransje);
     case SammenligningsType.KORTTID:
-      return getVurderingstekstKorttid(sykefraværResultat, harBransje);
+      return sammenliknSykefraværstekstKorttid(sykefraværResultat, harBransje);
     case SammenligningsType.GRADERT:
-      return getVurderingstekstGradert(sykefraværResultat, harBransje);
+      return sammenliknSykefraværstekstGradert(sykefraværResultat, harBransje);
   }
 };
-const getVurderingstekstGradert = (
+const sammenliknSykefraværstekstGradert = (
     sykefraværResultat: SykefraværVurdering,
     harBransje: boolean
 ): ReactElement | string => {
@@ -77,7 +77,7 @@ const getVurderingstekstGradert = (
   }
 };
 
-const getVurderingstekstTotalt = (
+const sammenliknSykefraværstekstTotalt = (
     sykefraværResultat: SykefraværVurdering,
     harBransje: boolean
 ): ReactElement | string => {
@@ -127,7 +127,7 @@ const getVurderingstekstTotalt = (
   }
 };
 
-const getVurderingstekstKorttid = (resultat: SykefraværVurdering, harBransje: boolean) => {
+const sammenliknSykefraværstekstKorttid = (resultat: SykefraværVurdering, harBransje: boolean) => {
   const bransjeEllerNæringTekst = harBransje ? 'bransjen' : 'næringen';
   switch (resultat) {
     case SykefraværVurdering.UNDER:
@@ -162,7 +162,7 @@ const getVurderingstekstKorttid = (resultat: SykefraværVurdering, harBransje: b
   }
 };
 
-export const getVurderingstekstLangtid = (resultat: SykefraværVurdering, harBransje: boolean) => {
+export const sammenliknSykefraværstekstLangtid = (resultat: SykefraværVurdering, harBransje: boolean) => {
   const bransjeEllerNæringTekst = harBransje ? 'bransjen' : 'næringen';
   switch (resultat) {
     case SykefraværVurdering.UNDER:
