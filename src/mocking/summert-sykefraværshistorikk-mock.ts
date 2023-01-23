@@ -1,17 +1,8 @@
 import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
-import { Statistikk } from '../hooks/useAggregertStatistikk';
+import { AggregertStatistikkResponse, Statistikk } from "../hooks/useAggregertStatistikk";
 import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
 
-// TODO: Flytt meg ut av denne fila
-export type AggregertStatistikkApiResponse = {
-    prosentSiste4KvartalerTotalt: Statistikk[];
-    prosentSiste4KvartalerGradert: Statistikk[];
-    prosentSiste4KvartalerKorttid: Statistikk[];
-    prosentSiste4KvartalerLangtid: Statistikk[];
-    trendTotalt: Statistikk[];
-};
-
-const tomAggregertStatistikk: AggregertStatistikkApiResponse = {
+const tomAggregertStatistikk: Partial<AggregertStatistikkResponse> = {
     prosentSiste4KvartalerTotalt: [],
     prosentSiste4KvartalerGradert: [],
     prosentSiste4KvartalerKorttid: [],
@@ -56,7 +47,7 @@ const statistikkBarnehage = lagStatistikkMock(
 function aggregertStatistikkBarnehage(
     statistikkVirksomhet: Statistikk,
     gradertVerdi: string = '10.0'
-): AggregertStatistikkApiResponse {
+): Partial<AggregertStatistikkResponse> {
     return {
         prosentSiste4KvartalerTotalt: [statistikkVirksomhet, statistikkBarnehage],
         prosentSiste4KvartalerKorttid: [statistikkVirksomhet, statistikkBarnehage],
@@ -72,7 +63,7 @@ function aggregertStatistikkBarnehage(
     };
 }
 
-export const aggregertStatistikkMockMaskert: AggregertStatistikkApiResponse = {
+export const aggregertStatistikkMockMaskert: Partial<AggregertStatistikkResponse> = {
     prosentSiste4KvartalerTotalt: [statistikkBarnehage],
     prosentSiste4KvartalerKorttid: [statistikkBarnehage],
     prosentSiste4KvartalerLangtid: [statistikkBarnehage],
@@ -80,10 +71,10 @@ export const aggregertStatistikkMockMaskert: AggregertStatistikkApiResponse = {
     trendTotalt: [],
 };
 
-export const aggregertStatistikkMockUtenData: AggregertStatistikkApiResponse =
+export const aggregertStatistikkMockUtenData: Partial<AggregertStatistikkResponse> =
     tomAggregertStatistikk;
 
-export function aggregertStatistikkMockMedBare2Kvartaler(): AggregertStatistikkApiResponse {
+export function aggregertStatistikkMockMedBare2Kvartaler(): Partial<AggregertStatistikkResponse> {
     const statistikkVirksomhet = lagStatistikkMock(
         Statistikkategori.VIRKSOMHET,
         'Virksomhetens navn',
@@ -96,7 +87,7 @@ export function aggregertStatistikkMockMedBare2Kvartaler(): AggregertStatistikkA
 export const lagAggregertStatistikkMockGul = (
     type: Statistikkategori.BRANSJE | Statistikkategori.NÆRING,
     label: string
-): AggregertStatistikkApiResponse => {
+): Partial<AggregertStatistikkResponse> => {
     const statistikkBransjeEllerNæring = { ...statistikkBarnehage, type, label };
     const statistikkVirksomhet = lagStatistikkMock(
         Statistikkategori.VIRKSOMHET,
@@ -113,10 +104,10 @@ export const lagAggregertStatistikkMockGul = (
     };
 };
 
-export const aggregertStatistikkMockGulBarnehage: AggregertStatistikkApiResponse =
+export const aggregertStatistikkMockGulBarnehage: Partial<AggregertStatistikkResponse> =
     lagAggregertStatistikkMockGul(Statistikkategori.BRANSJE, 'Barnehager');
 
-export const aggregertStatistikkMockGrønnBarnehage: AggregertStatistikkApiResponse =
+export const aggregertStatistikkMockGrønnBarnehage: Partial<AggregertStatistikkResponse> =
     aggregertStatistikkBarnehage(
         lagStatistikkMock(
             Statistikkategori.VIRKSOMHET,
@@ -127,7 +118,7 @@ export const aggregertStatistikkMockGrønnBarnehage: AggregertStatistikkApiRespo
         '12.0'
     );
 
-export const aggregertStatistikkMockRødBarnehage: AggregertStatistikkApiResponse =
+export const aggregertStatistikkMockRødBarnehage: Partial<AggregertStatistikkResponse> =
     aggregertStatistikkBarnehage(
         lagStatistikkMock(
             Statistikkategori.VIRKSOMHET,

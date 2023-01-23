@@ -1,15 +1,11 @@
 import {
     AntallAnsatteSegmentering,
-    SegmenteringSammenligning,
     SegmenteringSykefraværsprosent,
     tilSegmenteringAntallAnsatte,
-    tilSegmenteringSammenligning,
     tilSegmenteringSykefraværsprosent,
 } from './segmentering';
 import { SykefraværVurdering } from '../Forside/Speedometer/Speedometer';
 import { RestStatus } from '../api/api-utils';
-import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
-import { konverterTilKvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
 import { mapTilPrivatEllerOffentligSektor, Sektor } from '../utils/sektorUtils';
 import { Enhetsregisterdata } from '../enhetsregisteret/hooks/useEnheter';
 import { Næring } from '../enhetsregisteret/domene/underenhet';
@@ -23,34 +19,9 @@ export interface Ekstradata {
     bransje: ArbeidsmiljøportalenBransje;
     antallAnsatte: AntallAnsatteSegmentering;
     prosent: SegmenteringSykefraværsprosent;
-    sammenligning: SegmenteringSammenligning;
-    sykefraværSiste4Kvartaler: SykefraværVurdering
+    speedometerfarge: SykefraværVurdering;
     sektor: Sektor;
 }
-
-export const getEkstraDataFraSykefraværshistorikk = (
-    restSykefraværshistorikk: RestSykefraværshistorikk
-): Partial<Ekstradata> => {
-    if (restSykefraværshistorikk.status === RestStatus.Suksess) {
-        const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
-            restSykefraværshistorikk.data
-        );
-
-        const sammenligningForSisteKvartal = kvartalsvisSammenligning.pop();
-
-        if (sammenligningForSisteKvartal) {
-            const { virksomhet, næringEllerBransje } = sammenligningForSisteKvartal;
-
-            if (virksomhet) {
-                return {
-                    prosent: tilSegmenteringSykefraværsprosent(virksomhet),
-                    sammenligning: tilSegmenteringSammenligning(virksomhet, næringEllerBransje),
-                };
-            }
-        }
-    }
-    return {};
-};
 
 export const getEkstraDataFraEnhetsregisteret = (
     virksomhet: Enhetsregisterdata
@@ -92,11 +63,17 @@ export const getEkstraDataFraAggregertSykefraværshistorikk = (
         const bransjeEllerNæringsdataTotalt =
             bransjedataTotalt !== undefined ? bransjedataTotalt : næringsdataTotalt;
 
+        const speedometerfarge = sammenliknSykefravær(
+            virksomhetsdataTotalt,
+            bransjeEllerNæringsdataTotalt
+        );
+
         const resultater = {
-            sykefraværSiste4Kvartaler: sammenliknSykefravær(
-                virksomhetsdataTotalt,
-                bransjeEllerNæringsdataTotalt
+            prosent: tilSegmenteringSykefraværsprosent(
+                Number(virksomhetsdataTotalt?.verdi),
+                speedometerfarge === SykefraværVurdering.MASKERT
             ),
+            speedometerfarge: speedometerfarge,
         };
 
         let ekstradata: Partial<Ekstradata> = { ...resultater };

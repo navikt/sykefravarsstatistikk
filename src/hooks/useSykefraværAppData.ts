@@ -1,6 +1,6 @@
 import {RestAltinnOrganisasjoner} from '../api/altinnorganisasjon-api';
 import {useAltinnOrganisasjoner} from './useAltinnOrganisasjoner';
-import {useAltinnOrganisasjonerMedStatistikk} from './useAltinnOrganisasjonerMedStatistikk';
+import {useAltinnOrganisasjonerMedStatistikktilgang} from './useAltinnOrganisasjonerMedStatistikktilgang';
 import {Enhetsregisterdata, useEnheter} from '../enhetsregisteret/hooks/useEnheter';
 import {useSykefraværshistorikk} from './useSykefraværshistorikk';
 import {RestSykefraværshistorikk} from '../api/kvartalsvis-sykefraværshistorikk-api';
@@ -8,7 +8,6 @@ import {
   Ekstradata,
   getEkstraDataFraEnhetsregisteret,
   getEkstraDataFraAggregertSykefraværshistorikk,
-  getEkstraDataFraSykefraværshistorikk,
 } from '../amplitude/ekstradata';
 import useAggregertStatistikk, {
   RestAggregertStatistikk
@@ -18,7 +17,7 @@ import {usePubliseringsdatoer} from "./usePubliseringsdatoer";
 
 export interface SykefraværAppData {
   altinnOrganisasjoner: RestAltinnOrganisasjoner;
-  altinnOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
+  altinnOrganisasjonerMedStatistikktilgang: RestAltinnOrganisasjoner;
   enhetsregisterdata: Enhetsregisterdata;
   sykefraværshistorikk: RestSykefraværshistorikk;
   aggregertStatistikk: RestAggregertStatistikk;
@@ -27,7 +26,7 @@ export interface SykefraværAppData {
 
 export function useSykefraværAppData(): SykefraværAppData {
   const altinnOrganisasjoner = useAltinnOrganisasjoner();
-  const altinnOrganisasjonerMedStatistikk = useAltinnOrganisasjonerMedStatistikk();
+  const altinnOrganisasjonerMedStatistikktilgang = useAltinnOrganisasjonerMedStatistikktilgang();
   const enhetsregisterdata = useEnheter();
   const sykefraværshistorikk = useSykefraværshistorikk();
   const aggregertStatistikk = useAggregertStatistikk();
@@ -35,7 +34,7 @@ export function useSykefraværAppData(): SykefraværAppData {
 
   return {
     altinnOrganisasjoner,
-    altinnOrganisasjonerMedStatistikk,
+    altinnOrganisasjonerMedStatistikktilgang,
     enhetsregisterdata,
     sykefraværshistorikk,
     aggregertStatistikk,
@@ -44,12 +43,10 @@ export function useSykefraværAppData(): SykefraværAppData {
 }
 
 export function getEkstradata(
-    sykefraværshistorikk: RestSykefraværshistorikk,
     aggregertHistorikk: RestAggregertStatistikk,
     enhetsregisterdata: Enhetsregisterdata,
 ): Partial<Ekstradata> {
     return {
-        ...getEkstraDataFraSykefraværshistorikk(sykefraværshistorikk),
         ...getEkstraDataFraAggregertSykefraværshistorikk(aggregertHistorikk),
         ...getEkstraDataFraEnhetsregisteret(enhetsregisterdata),
     };

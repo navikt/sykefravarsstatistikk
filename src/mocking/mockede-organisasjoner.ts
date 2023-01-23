@@ -2,7 +2,6 @@ import { KvartalsvisSykefraværshistorikk } from '../api/kvartalsvis-sykefravær
 import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
 import { UnderenhetDto } from '../enhetsregisteret/api/underenheter-api';
 import {
-    AggregertStatistikkApiResponse,
     aggregertStatistikkMockGrønnBarnehage,
     aggregertStatistikkMockGulBarnehage,
     aggregertStatistikkMockMaskert,
@@ -14,19 +13,24 @@ import { OverordnetEnhetDto } from '../enhetsregisteret/api/enheter-api';
 import {
     lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet,
     lagMaskertHistorikk,
-    lagMockHistorikkForBarnehage
-} from "./sykefraværshistorikk-mock";
+    lagMockHistorikkForBarnehage,
+} from './sykefraværshistorikk-mock';
+import { AggregertStatistikkResponse } from '../hooks/useAggregertStatistikk';
 
 export interface OrganisasjonMock {
     orgnr: string;
     sykefraværshistorikkKvartalsvis?: KvartalsvisSykefraværshistorikk[] | number;
-    aggregertStatistikk?: AggregertStatistikkApiResponse | number;
+    aggregertStatistikk?: Partial<AggregertStatistikkResponse> | number;
     overordnetEnhet?: OverordnetEnhetDto | number;
     underenhet?: UnderenhetDto | number;
 }
 
-export const getMockOrganisasjon = (orgnr: string): OrganisasjonMock | undefined =>
-    mockedeOrganisasjoner.find((org) => org.orgnr === orgnr);
+export const getMockOrganisasjon = (orgnr: string): OrganisasjonMock =>
+    mockedeOrganisasjoner.find((org) => org.orgnr === orgnr) ?? {
+        orgnr: '101010101',
+        sykefraværshistorikkKvartalsvis: 500,
+        aggregertStatistikk: 500,
+    };
 
 export const OverordnetEnhetFiskOgFlesk: OverordnetEnhetDto = {
     organisasjonsnummer: '111111111',
