@@ -13,11 +13,11 @@ export const underenheterResponseMock = {
   registreringsdatoEnhetsregisteret: "1990-01-01",
   registrertIMvaregisteret: false,
   naeringskode1: {
-    beskrivelse: "barnehage",
-    kode: "77.777"
+    beskrivelse: "næringskoden til barnehage",
+    kode: "88.911"
   },
   naeringskode2: {
-    beskrivelse: "næring 1",
+    beskrivelse: "random næringskode",
     kode: "88.992"
   },
   antallAnsatte: 62,

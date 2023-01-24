@@ -157,10 +157,11 @@ describe('useAnalytics', () => {
 
         expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
             'navigere',
-            expect.objectContaining({
+            {
+                ...defaultEventData,
                 lenketekst: 'Gå til Arbeidsmiljøportalen',
-                destinasjon: 'https://www.arbeidsmiljoportalen.no',
-            })
+                destinasjon: 'https://www.arbeidsmiljoportalen.no/bransje/barnehage',
+            }
         );
     });
 
@@ -198,32 +199,13 @@ describe('useAnalytics', () => {
         act(() => {
             expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
                 antallAnsatte: '50-99',
-                bransje: "BARNEHAGE",
+                bransje: "BARNEHAGER",
                 sektor: 'offentlig',
                 næring2siffer: '88 Sosiale omsorgstjenester uten botilbud',
                 prosent: '10-12',
                 sykefraværsvurdering: "UNDER",
             });
         });
-    });
-
-    it('Klikk på "Gå til sykefravær over tid" rendrer navigere-event', async () => {
-        await waitFor(() => {
-            render(<AppContentWithRouter {...allDatahentingStatusOk} />);
-        });
-
-        const knappTilHistorikk = screen.getAllByRole('link', {
-            name: /Gå til sykefravær over tid/i,
-        })[0];
-        userEvent.click(knappTilHistorikk);
-
-        expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
-            'navigere',
-            expect.objectContaining({
-                destinasjon: '/historikk',
-                lenketekst: 'Gå til sykefravær over tid',
-            })
-        );
     });
 
     const AppContentWithRouter = (data: SykefraværAppData) => {

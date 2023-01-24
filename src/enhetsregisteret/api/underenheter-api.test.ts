@@ -6,15 +6,20 @@ describe('tester for enhetsregisteret-api', () => {
         expect(mapTilUnderenhet(underenheterResponseMock)).toEqual({
             orgnr: '999999999',
             overordnetEnhet: '999999991',
-            næringskode: {
-                beskrivelse: 'næring 1',
-                kode: '88.992',
-            },
-            antallAnsatte: 62,
             beliggenhetsadresse: {
                 kommune: 'OSLO',
                 kommunenummer: '9999',
             },
+            næringskode: {
+                beskrivelse: 'næringskoden til barnehage',
+                kode: '88911',
+            },
+            næring: {
+                beskrivelse: 'Sosiale omsorgstjenester uten botilbud',
+                kode: '88',
+            },
+            bransje: "BARNEHAGER",
+            antallAnsatte: 62,
         });
     });
 
