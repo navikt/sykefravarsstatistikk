@@ -26,18 +26,14 @@ function sykefraværBransje(prosent: string) {
 }
 
 it('sammenliknSykefravær skal gi riktig vurdering', () => {
-    expect(sammenliknSykefravær(sykefraværVirksomhet('5.5'), sykefraværBransje('5.0'))).toEqual(
-        SykefraværVurdering.OVER
-    );
-    expect(sammenliknSykefravær(sykefraværVirksomhet('5.4'), sykefraværBransje('5.0'))).toEqual(
-        SykefraværVurdering.MIDDELS
-    );
-    expect(sammenliknSykefravær(sykefraværVirksomhet('4.5'), sykefraværBransje('5.0'))).toEqual(
-        SykefraværVurdering.MIDDELS
-    );
-    expect(sammenliknSykefravær(sykefraværVirksomhet('4.49'), sykefraværBransje('5.0'))).toEqual(
-        SykefraværVurdering.UNDER
-    );
+    expect(sammenliknSykefravær(sykefraværVirksomhet('5.51'), sykefraværBransje('5.0')))
+      .toEqual(SykefraværVurdering.OVER);
+    expect(sammenliknSykefravær(sykefraværVirksomhet('5.50'), sykefraværBransje('5.0')))
+      .toEqual(SykefraværVurdering.MIDDELS);
+    expect(sammenliknSykefravær(sykefraværVirksomhet('4.5'), sykefraværBransje('5.0')))
+      .toEqual(SykefraværVurdering.MIDDELS);
+    expect(sammenliknSykefravær(sykefraværVirksomhet('4.49'), sykefraværBransje('5.0')))
+      .toEqual(SykefraværVurdering.UNDER);
 });
 
 it('sammenliknSykefravær skal gi vurdering INGEN_DATA hvis data tilsier det', () => {

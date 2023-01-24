@@ -8,24 +8,28 @@ import { SykefraværVurdering } from '../Forside/Speedometer/Speedometer';
 import { RestStatus } from '../api/api-utils';
 import { mapTilPrivatEllerOffentligSektor, Sektor } from '../utils/sektorUtils';
 import { Enhetsregisterdata } from '../enhetsregisteret/hooks/useEnheter';
-import { Næring } from '../enhetsregisteret/domene/underenhet';
 import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 import { RestAggregertStatistikk } from '../hooks/useAggregertStatistikk';
 import { sammenliknSykefravær } from '../Forside/vurdering-utils';
 import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
+import { Næring } from "../enhetsregisteret/domene/underenhet";
 
-export interface Ekstradata {
-    næring: Næring;
+export interface AmplitudeEkstradata {
+    næring2siffer: string;
     bransje: ArbeidsmiljøportalenBransje;
     antallAnsatte: AntallAnsatteSegmentering;
     prosent: SegmenteringSykefraværsprosent;
-    speedometerfarge: SykefraværVurdering;
+    sykefraværsvurdering: SykefraværVurdering;
     sektor: Sektor;
+}
+
+function formaterNæring(næring?: Næring): string | "INGEN_INFO" {
+    return næring ? `${næring?.kode} ${næring?.beskrivelse}` : "INGEN_INFO";
 }
 
 export const getEkstraDataFraEnhetsregisteret = (
     virksomhet: Enhetsregisterdata
-): Partial<Ekstradata> => {
+): Partial<AmplitudeEkstradata> => {
     if (
         virksomhet.restOverordnetEnhet.status !== RestStatus.Suksess ||
         virksomhet.restUnderenhet.status !== RestStatus.Suksess
@@ -37,16 +41,16 @@ export const getEkstraDataFraEnhetsregisteret = (
     const underenhetdata = virksomhet.restUnderenhet.data;
 
     return {
-        næring: underenhetdata.næring,
+        næring2siffer: formaterNæring(underenhetdata.næring),
         bransje: underenhetdata.bransje,
         sektor: mapTilPrivatEllerOffentligSektor(enhetsdata.institusjonellSektorkode),
         antallAnsatte: tilSegmenteringAntallAnsatte(underenhetdata.antallAnsatte),
     };
 };
 
-export const getEkstraDataFraAggregertSykefraværshistorikk = (
+export const getEkstraDataFraAggregertSykefravær = (
     aggregertResponse: RestAggregertStatistikk
-): Partial<Ekstradata> => {
+): Partial<AmplitudeEkstradata> => {
     if (aggregertResponse.restStatus !== RestStatus.Suksess) {
         return {};
     }
@@ -63,21 +67,19 @@ export const getEkstraDataFraAggregertSykefraværshistorikk = (
         const bransjeEllerNæringsdataTotalt =
             bransjedataTotalt !== undefined ? bransjedataTotalt : næringsdataTotalt;
 
-        const speedometerfarge = sammenliknSykefravær(
+        const speedometervurdering = sammenliknSykefravær(
             virksomhetsdataTotalt,
             bransjeEllerNæringsdataTotalt
         );
+        const prostsentsegmentering = tilSegmenteringSykefraværsprosent(
+            Number(virksomhetsdataTotalt?.verdi),
+            speedometervurdering === SykefraværVurdering.MASKERT
+        );
 
-        const resultater = {
-            prosent: tilSegmenteringSykefraværsprosent(
-                Number(virksomhetsdataTotalt?.verdi),
-                speedometerfarge === SykefraværVurdering.MASKERT
-            ),
-            speedometerfarge: speedometerfarge,
+        return {
+            sykefraværsvurdering: speedometervurdering,
+            prosent: prostsentsegmentering,
         };
-
-        let ekstradata: Partial<Ekstradata> = { ...resultater };
-        return { ...ekstradata };
     } catch (error) {
         return {};
     }
