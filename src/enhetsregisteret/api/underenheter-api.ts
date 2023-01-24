@@ -52,20 +52,29 @@ export interface UnderenhetDto {
 export type RestUnderenhet = RestRessurs<Underenhet>;
 
 export const mapTilUnderenhet = (underenhetDto: UnderenhetDto): Underenhet => {
-    const underenhet = {
-        orgnr: underenhetDto.organisasjonsnummer,
-        overordnetEnhet: underenhetDto.overordnetEnhet,
-        næringskode: underenhetDto.naeringskode1,
-        antallAnsatte: underenhetDto.antallAnsatte,
-        beliggenhetsadresse: {
-            kommune: underenhetDto.beliggenhetsadresse.kommune,
-            kommunenummer: underenhetDto.beliggenhetsadresse.kommunenummer,
-        },
+    const orgnr = underenhetDto.organisasjonsnummer;
+    const overordnetEnhet = underenhetDto.overordnetEnhet;
+    const næringskode = underenhetDto.naeringskode1
+        ? {
+              kode: underenhetDto.naeringskode1.kode.replace('.', ''),
+              beskrivelse: underenhetDto.naeringskode1.beskrivelse,
+          }
+        : undefined;
+    const antallAnsatte = underenhetDto.antallAnsatte;
+    const næring = næringskodeTilNæring(næringskode);
+    const bransje = getArbeidsmiljøportalenBransje(næringskode);
+    const beliggenhetsadresse = {
+        kommune: underenhetDto.beliggenhetsadresse.kommune,
+        kommunenummer: underenhetDto.beliggenhetsadresse.kommunenummer,
     };
     return {
-        ...underenhet,
-        næring: næringskodeTilNæring(underenhet.næringskode),
-        bransje: getArbeidsmiljøportalenBransje(underenhet.næringskode),
+        orgnr,
+        overordnetEnhet,
+        antallAnsatte,
+        beliggenhetsadresse,
+        bransje,
+        næring,
+        næringskode,
     };
 };
 

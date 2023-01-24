@@ -5,10 +5,10 @@ import {Enhetsregisterdata, useEnheter} from '../enhetsregisteret/hooks/useEnhet
 import {useSykefraværshistorikk} from './useSykefraværshistorikk';
 import {RestSykefraværshistorikk} from '../api/kvartalsvis-sykefraværshistorikk-api';
 import {
-  Ekstradata,
+  AmplitudeEkstradata,
   getEkstraDataFraEnhetsregisteret,
-  getEkstraDataFraAggregertSykefraværshistorikk,
-} from '../amplitude/ekstradata';
+  getEkstraDataFraAggregertSykefravær,
+} from '../amplitude/amplitudeEkstradata';
 import useAggregertStatistikk, {
   RestAggregertStatistikk
 } from "./useAggregertStatistikk";
@@ -45,9 +45,9 @@ export function useSykefraværAppData(): SykefraværAppData {
 export function getEkstradata(
     aggregertHistorikk: RestAggregertStatistikk,
     enhetsregisterdata: Enhetsregisterdata,
-): Partial<Ekstradata> {
+): Partial<AmplitudeEkstradata> {
     return {
-        ...getEkstraDataFraAggregertSykefraværshistorikk(aggregertHistorikk),
+        ...getEkstraDataFraAggregertSykefravær(aggregertHistorikk),
         ...getEkstraDataFraEnhetsregisteret(enhetsregisterdata),
     };
 }

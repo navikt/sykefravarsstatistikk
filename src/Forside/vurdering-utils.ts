@@ -17,8 +17,8 @@ export const sammenliknSykefravær = (statistikk?: Statistikk, bransjeEllerNæri
   const virksomhetVerdi = parseVerdi(statistikk.verdi);
   const bransjeEllerNæringVerdi = parseVerdi(bransjeEllerNæring.verdi);
 
-  if (virksomhetVerdi >= bransjeEllerNæringVerdi * 1.1) return SykefraværVurdering.OVER;
-  if (virksomhetVerdi <= bransjeEllerNæringVerdi * 0.9) return SykefraværVurdering.UNDER;
+  if (virksomhetVerdi > bransjeEllerNæringVerdi * 1.1) return SykefraværVurdering.OVER;
+  if (virksomhetVerdi < bransjeEllerNæringVerdi * 0.9) return SykefraværVurdering.UNDER;
   return SykefraværVurdering.MIDDELS;
 };
 

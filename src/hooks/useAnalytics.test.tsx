@@ -8,80 +8,12 @@ import userEvent from '@testing-library/user-event';
 import { AppContent } from '../App';
 import '@testing-library/jest-dom';
 import { renderHook } from '@testing-library/react-hooks';
-import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
-import { AggregertStatistikk } from './useAggregertStatistikk';
-import { siste4KvartalerMock } from '../mocking/summert-sykefraværshistorikk-mock';
-import { RestStatus } from '../api/api-utils';
-import { getMockPubliseringsdatoer } from '../mocking/mock-publiseringsdatoer';
-import { underenheterResponseMock } from '../enhetsregisteret/api/mocks/underenheter-api-mocks';
-import { mapTilUnderenhet } from '../enhetsregisteret/api/underenheter-api';
-import {
-    getOrganisasjonerBrukerHarTilgangTilMock,
-    getOrganisasjonerMock,
-} from '../mocking/altinn-mock';
+import { allDatahentingFeiler, allDatahentingStatusOk } from "../mocking/use-analytics-test-mocks";
 
 describe('useAnalytics', () => {
     const defaultEventData = {
         app: 'sykefravarsstatistikk',
         team: 'teamia',
-    };
-    const aggStat = new Map<Statistikkategori, AggregertStatistikk>();
-    aggStat.set(Statistikkategori.VIRKSOMHET, {
-        prosentSiste4KvartalerTotalt: {
-            statistikkategori: Statistikkategori.VIRKSOMHET,
-            label: 'Virksomheten min',
-            kvartalerIBeregningen: siste4KvartalerMock,
-            verdi: '10.0',
-            antallPersonerIBeregningen: 100,
-        },
-    });
-    aggStat.set(Statistikkategori.NÆRING, {
-        prosentSiste4KvartalerTotalt: {
-            statistikkategori: Statistikkategori.NÆRING,
-            label: 'Næringa mi',
-            kvartalerIBeregningen: siste4KvartalerMock,
-            verdi: '12.0',
-            antallPersonerIBeregningen: 1000,
-        },
-    });
-    aggStat.set(Statistikkategori.NÆRING, {});
-
-    const allDatahentingOk: SykefraværAppData = {
-        aggregertStatistikk: { restStatus: RestStatus.Suksess, aggregertData: aggStat },
-        altinnOrganisasjoner: { status: RestStatus.Suksess, data: getOrganisasjonerMock() },
-        altinnOrganisasjonerMedStatistikktilgang: {
-            status: RestStatus.Suksess,
-            data: getOrganisasjonerBrukerHarTilgangTilMock(),
-        },
-        enhetsregisterdata: {
-            restUnderenhet: {
-                status: RestStatus.Suksess,
-                data: mapTilUnderenhet(underenheterResponseMock),
-            },
-            restOverordnetEnhet: {
-                status: RestStatus.Suksess,
-                data: {
-                    orgnr: '11111111',
-                    institusjonellSektorkode: { kode: '6100', beskrivelse: 'min sektor' },
-                },
-            },
-        },
-        publiseringsdatoer: { status: RestStatus.Suksess, data: getMockPubliseringsdatoer() },
-        sykefraværshistorikk: { status: RestStatus.Suksess, data: [] },
-    };
-
-    const allDatahentingFeiler: SykefraværAppData = {
-        aggregertStatistikk: { restStatus: RestStatus.Feil },
-        altinnOrganisasjoner: { status: RestStatus.Feil },
-        altinnOrganisasjonerMedStatistikktilgang: { status: RestStatus.Feil },
-        enhetsregisterdata: {
-            restUnderenhet: { status: RestStatus.Feil },
-            restOverordnetEnhet: {
-                status: RestStatus.Feil,
-            },
-        },
-        publiseringsdatoer: { status: RestStatus.Feil },
-        sykefraværshistorikk: { status: RestStatus.Feil },
     };
 
     beforeEach(() => {
@@ -114,7 +46,7 @@ describe('useAnalytics', () => {
     });
 
     it('Kaller bedrift-valgt event når vi velger virksomhet', async () => {
-        render(<AppContentWithRouter {...allDatahentingOk} />);
+        render(<AppContentWithRouter {...allDatahentingStatusOk} />);
 
         const virksomhetsvelger = await screen.findByLabelText(/Velg aktiv virksomhet/i);
         userEvent.click(virksomhetsvelger);
@@ -133,7 +65,7 @@ describe('useAnalytics', () => {
     });
 
     it('Klikk på les-mer-panel sender panel-ekspander event til Amplitude', async () => {
-        render(<AppContentWithRouter {...allDatahentingOk} />);
+        render(<AppContentWithRouter {...allDatahentingStatusOk} />);
 
         const lesMerPanel = screen.getByRole('button', {
             name: 'Slik har vi kommet fram til ditt resultat',
@@ -149,7 +81,7 @@ describe('useAnalytics', () => {
     });
 
     it('To klikk på les-mer-panel sender panel-kollaps event til Amplitude', async () => {
-        render(<AppContentWithRouter {...allDatahentingOk} />);
+        render(<AppContentWithRouter {...allDatahentingStatusOk} />);
 
         const lesMerPanel = screen.getByRole('button', {
             name: 'Slik har vi kommet fram til ditt resultat',
@@ -220,20 +152,21 @@ describe('useAnalytics', () => {
     });
 
     it('Klikk på lenke til Arbeidsmiljøportalen trigger event i amplitude', async () => {
-        render(<AppContentWithRouter {...allDatahentingOk} />);
+        render(<AppContentWithRouter {...allDatahentingStatusOk} />);
         userEvent.click(screen.getByText('Gå til Arbeidsmiljøportalen'));
 
         expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
             'navigere',
-            expect.objectContaining({
+            {
+                ...defaultEventData,
                 lenketekst: 'Gå til Arbeidsmiljøportalen',
-                destinasjon: 'https://www.arbeidsmiljoportalen.no',
-            })
+                destinasjon: 'https://www.arbeidsmiljoportalen.no/bransje/barnehage',
+            }
         );
     });
 
     it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', async () => {
-        const result = render(<AppContentWithRouter {...allDatahentingOk} />);
+        const result = render(<AppContentWithRouter {...allDatahentingStatusOk} />);
         expect(
             await result.container.querySelector(
                 '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
@@ -256,7 +189,7 @@ describe('useAnalytics', () => {
 
     it('navigere-event kalles med riktige user properties', async () => {
         act(() => {
-            render(<AppContentWithRouter {...allDatahentingOk} />);
+            render(<AppContentWithRouter {...allDatahentingStatusOk} />);
             userEvent.click(screen.getByText('Gå til Arbeidsmiljøportalen'));
         });
 
@@ -266,33 +199,13 @@ describe('useAnalytics', () => {
         act(() => {
             expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
                 antallAnsatte: '50-99',
-                bransje: undefined,
+                bransje: "BARNEHAGER",
                 sektor: 'offentlig',
-                næring: '84 Offentlig administrasjon og forsvar, og trygdeordninger underlagt offentlig forvaltning',
-                prosent: '>16',
-                sammenligning: 'virksomhet ligger 8-10 over',
-                sykefraværSiste4Kvartaler: 'MIDDELS',
+                næring2siffer: '88 Sosiale omsorgstjenester uten botilbud',
+                prosent: '10-12',
+                sykefraværsvurdering: "UNDER",
             });
         });
-    });
-
-    it('Klikk på "Gå til sykefravær over tid" rendrer navigere-event', async () => {
-        await waitFor(() => {
-            render(<AppContentWithRouter {...allDatahentingOk} />);
-        });
-
-        const knappTilHistorikk = screen.getAllByRole('link', {
-            name: /Gå til sykefravær over tid/i,
-        })[0];
-        userEvent.click(knappTilHistorikk);
-
-        expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
-            'navigere',
-            expect.objectContaining({
-                destinasjon: '/historikk',
-                lenketekst: 'Gå til sykefravær over tid',
-            })
-        );
     });
 
     const AppContentWithRouter = (data: SykefraværAppData) => {

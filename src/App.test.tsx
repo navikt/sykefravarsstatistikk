@@ -6,15 +6,15 @@ import { RestStatus } from './api/api-utils';
 import { BASE_PATH } from './konstanter';
 import { BrowserRouter } from 'react-router-dom';
 import { amplitudeMock } from './mocking/amplitude-mock';
-import { mockSykefraværNoEkstradata } from './mocking/use-analytics-test-mocks';
 import { mapTilUnderenhet, RestUnderenhet } from './enhetsregisteret/api/underenheter-api';
 import { underenheterResponseMock } from './enhetsregisteret/api/mocks/underenheter-api-mocks';
+import { allDatahentingStatusOk } from "./mocking/use-analytics-test-mocks";
 
 it('renders without crashing', async () => {
     await waitFor(() => {
         render(
             <BrowserRouter basename={BASE_PATH}>
-                <AppContent analyticsClient={amplitudeMock} {...mockSykefraværNoEkstradata} />
+                <AppContent analyticsClient={amplitudeMock} {...allDatahentingStatusOk} />
             </BrowserRouter>
         );
     });
