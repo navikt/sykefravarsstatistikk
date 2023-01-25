@@ -14,18 +14,30 @@ import '@testing-library/jest-dom';
 import { renderHook } from '@testing-library/react-hooks';
 
 describe('useAnalytics', () => {
-  const defaultEventData = {
-    app: 'sykefravarsstatistikk',
-    team: 'teamia',
-  };
+    const defaultEventData = {
+        app: 'sykefravarsstatistikk',
+        team: 'teamia',
+    };
+    const { ResizeObserver } = window;
+
     beforeEach(() => {
         jest.spyOn(amplitudeMock, 'setUserProperties');
         jest.spyOn(amplitudeMock, 'logEvent');
         renderHook(() => useAnalytics(amplitudeMock));
+
+        // @ts-expect-error
+        delete window.ResizeObserver;
+        window.ResizeObserver = jest.fn().mockImplementation(() => ({
+            observe: jest.fn(),
+            unobserve: jest.fn(),
+            disconnect: jest.fn(),
+        }));
     });
 
     afterEach(() => {
         jest.resetAllMocks();
+        window.ResizeObserver = ResizeObserver;
+        jest.restoreAllMocks();
     });
 
     it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => {
@@ -54,9 +66,9 @@ describe('useAnalytics', () => {
         userEvent.click(virksomhetsvelger);
 
         const ønsketOverenhet = await screen.findByText(/111111111/i);
-    userEvent.click(ønsketOverenhet);
+        userEvent.click(ønsketOverenhet);
 
-  const ønsketVirsomhet = await screen.findByText(/444444444/i);
+        const ønsketVirsomhet = await screen.findByText(/444444444/i);
         userEvent.click(ønsketVirsomhet);
         await waitFor(() => {
             expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
@@ -75,10 +87,10 @@ describe('useAnalytics', () => {
 
         userEvent.click(lesMerPanel);
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
-          'panel-ekspander',
-          expect.objectContaining({
-              panelnavn: 'Slik har vi kommet fram til ditt resultat',
-          })
+            'panel-ekspander',
+            expect.objectContaining({
+                panelnavn: 'Slik har vi kommet fram til ditt resultat',
+            })
         );
     });
 
@@ -91,16 +103,16 @@ describe('useAnalytics', () => {
 
         userEvent.click(lesMerPanel);
         expect(amplitudeMock.logEvent).not.toHaveBeenCalledWith(
-          'panel-kollaps',
-          expect.objectContaining({})
+            'panel-kollaps',
+            expect.objectContaining({})
         );
 
         userEvent.click(lesMerPanel);
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
-          'panel-kollaps',
-          expect.objectContaining({
-              panelnavn: 'Slik har vi kommet fram til ditt resultat',
-          })
+            'panel-kollaps',
+            expect.objectContaining({
+                panelnavn: 'Slik har vi kommet fram til ditt resultat',
+            })
         );
     });
 
@@ -108,48 +120,48 @@ describe('useAnalytics', () => {
         render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
 
         const sammenlikningspanel_total = document.querySelector(
-          '#ekspanderbart-sammenligningspanel__tittel-knapp-TOTALT'
+            '#ekspanderbart-sammenligningspanel__tittel-knapp-TOTALT'
         );
         const sammenlikningspanel_gradert = document.querySelector(
-          '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
+            '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
         );
         const sammenlikningspanel_langtid = document.querySelector(
-          '#ekspanderbart-sammenligningspanel__tittel-knapp-LANGTID'
+            '#ekspanderbart-sammenligningspanel__tittel-knapp-LANGTID'
         );
         const sammenlikningspanel_korttid = document.querySelector(
-          '#ekspanderbart-sammenligningspanel__tittel-knapp-KORTTID'
+            '#ekspanderbart-sammenligningspanel__tittel-knapp-KORTTID'
         );
 
         userEvent.click(sammenlikningspanel_total!);
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
-          'panel-ekspander',
-          expect.objectContaining({
-              panelnavn: 'TOTALT',
-          })
+            'panel-ekspander',
+            expect.objectContaining({
+                panelnavn: 'TOTALT',
+            })
         );
 
         userEvent.click(sammenlikningspanel_gradert!);
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
-          'panel-ekspander',
-          expect.objectContaining({
-              panelnavn: 'GRADERT',
-          })
+            'panel-ekspander',
+            expect.objectContaining({
+                panelnavn: 'GRADERT',
+            })
         );
 
         userEvent.click(sammenlikningspanel_langtid!);
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
-          'panel-ekspander',
-          expect.objectContaining({
-              panelnavn: 'LANGTID',
-          })
+            'panel-ekspander',
+            expect.objectContaining({
+                panelnavn: 'LANGTID',
+            })
         );
 
         userEvent.click(sammenlikningspanel_korttid!);
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
-          'panel-ekspander',
-          expect.objectContaining({
-              panelnavn: 'KORTTID',
-          })
+            'panel-ekspander',
+            expect.objectContaining({
+                panelnavn: 'KORTTID',
+            })
         );
     });
 
@@ -158,33 +170,33 @@ describe('useAnalytics', () => {
         userEvent.click(screen.getByText('Gå til Arbeidsmiljøportalen'));
 
         expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
-          'navigere',
-          expect.objectContaining({
-              lenketekst: 'Gå til Arbeidsmiljøportalen',
-              destinasjon: 'https://www.arbeidsmiljoportalen.no',
-          })
+            'navigere',
+            expect.objectContaining({
+                lenketekst: 'Gå til Arbeidsmiljøportalen',
+                destinasjon: 'https://www.arbeidsmiljoportalen.no',
+            })
         );
     });
 
     it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', async () => {
         const result = render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
         expect(
-          await result.container.querySelector(
-            '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
-          )
+            await result.container.querySelector(
+                '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
+            )
         ).toBeInTheDocument();
 
         const panel = result.container.querySelector(
-          '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
+            '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
         );
         userEvent.click(panel!);
 
         expect(amplitudeMock.logEvent).not.toHaveBeenCalledWith(
-          'panel-ekspander',
-          expect.objectContaining({
-              panelnavn: 'TOTALT',
-              app: 'sykefravarsstatistikk',
-          })
+            'panel-ekspander',
+            expect.objectContaining({
+                panelnavn: 'TOTALT',
+                app: 'sykefravarsstatistikk',
+            })
         );
     });
 
@@ -205,7 +217,7 @@ describe('useAnalytics', () => {
                 korttidSiste4Kvartaler: 'MIDDELS',
                 langtidSiste4Kvartaler: 'MIDDELS',
                 næring2siffer:
-                  '84 Offentlig administrasjon og forsvar, og trygdeordninger underlagt offentlig forvaltning',
+                    '84 Offentlig administrasjon og forsvar, og trygdeordninger underlagt offentlig forvaltning',
                 prosent: '>16',
                 sammenligning: 'virksomhet ligger 8-10 over',
                 sykefraværSiste4Kvartaler: 'MIDDELS',
@@ -224,19 +236,19 @@ describe('useAnalytics', () => {
         userEvent.click(knappTilHistorikk);
 
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
-          'navigere',
-          expect.objectContaining({
-              destinasjon: '/historikk',
-              lenketekst: 'Gå til sykefravær over tid',
-          })
+            'navigere',
+            expect.objectContaining({
+                destinasjon: '/historikk',
+                lenketekst: 'Gå til sykefravær over tid',
+            })
         );
     });
 
     const AppContentWithRouter = (data: SykefraværAppData) => {
         return (
-          <BrowserRouter>
-              <AppContent {...data} analyticsClient={amplitudeMock} />
-          </BrowserRouter>
+            <BrowserRouter>
+                <AppContent {...data} analyticsClient={amplitudeMock} />
+            </BrowserRouter>
         );
     };
 });
