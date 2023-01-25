@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Statistikkategori } from '../../api/summert-sykefraværshistorikk-api';
 import {
     EkspanderbartSammenligningspanel,
-    getVurdering,
+
 } from '../SammenligningMedBransje/EkspanderbartSammenligningspanel';
 import { RestStatus } from '../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
@@ -12,15 +12,16 @@ import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDit
 import './EkspanderbarSammenligning.less';
 import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
 import { Element } from 'nav-frontend-typografi';
-import { AggregertStatistikkResponse } from '../../hooks/useAggregertStatistikk';
+import { RestAggregertStatistikk } from '../../hooks/useAggregertStatistikk';
 import {RestPubliseringsdatoer} from "../../api/publiseringsdatoer-api";
+import { sammenliknSykefravær } from "../vurdering-utils";
 
 interface Props {
-    aggregertStatistikk: AggregertStatistikkResponse;
+    aggregertStatistikk: RestAggregertStatistikk;
   restPubliseringsdatoer: RestPubliseringsdatoer;
 }
 
-const getBransjeEllerNæringKategori = (aggregertStatistikk: AggregertStatistikkResponse) => {
+const getBransjeEllerNæringKategori = (aggregertStatistikk: RestAggregertStatistikk) => {
     const bransjedata = aggregertStatistikk.aggregertData?.get(Statistikkategori.BRANSJE)
         ?.prosentSiste4KvartalerTotalt?.verdi;
     if (bransjedata !== undefined) return Statistikkategori.BRANSJE;
@@ -64,7 +65,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
       <div className="ekspanderbar-sammenligning">
         <SammenligningIngress harBransje={harBransje}/>
         <SlikHarViKommetFramTilDittResultat
-            resultat={getVurdering(virksomhet?.prosentSiste4KvartalerTotalt, BransjeEllerNæring?.prosentSiste4KvartalerTotalt)}
+            resultat={sammenliknSykefravær(virksomhet?.prosentSiste4KvartalerTotalt, BransjeEllerNæring?.prosentSiste4KvartalerTotalt)}
             kvartaler={virksomhet?.prosentSiste4KvartalerTotalt?.kvartalerIBeregningen}
             restPubliseringsdatoer={restPubliseringsdatoer}
         />

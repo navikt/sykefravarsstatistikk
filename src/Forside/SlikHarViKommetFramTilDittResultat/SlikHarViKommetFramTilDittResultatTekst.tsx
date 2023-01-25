@@ -69,7 +69,7 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                     <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
-        case SykefraværVurdering.INGEN_DATA:
+        case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
             return (
                 <>
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__paragraf">
@@ -77,22 +77,9 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                         som NAV og Statistisk sentralbyrå (SSB) utarbeider.
                     </Normaltekst>
                     <Normaltekst>
-                        Bransjens tall er beregnet på sykefraværsstatistikk fra:
+                       Vi klarte ikke å hente dine tall. Neste publiseringsdato for sykefraværsstatistikk er:
                     </Normaltekst>
                     <PeriodeForBeskrivelse restPubliseringsdatoer={restPubliseringsdatoer} />
-                </>
-            );
-        case SykefraværVurdering.FEIL:
-            return (
-                <>
-                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__paragraf">
-                        Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
-                        som NAV og Statistisk sentralbyrå (SSB) utarbeider.
-                    </Normaltekst>
-                    <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__paragraf">
-                        Tallene er beregnet på sykefraværsstatistikk fra:
-                    </Normaltekst>
-                    <Normaltekst>—</Normaltekst>
                 </>
             );
         default:

@@ -11,23 +11,23 @@ export enum SammenligningsType {
   GRADERT = 'GRADERT',
 }
 
-export const getVurderingstekst = (
+export const sammenliknSykefraværstekst = (
     sykefraværResultat: SykefraværVurdering,
     sammenligningsType: SammenligningsType,
     harBransje: boolean
 ): ReactElement | string => {
   switch (sammenligningsType) {
     case SammenligningsType.TOTALT:
-      return getVurderingstekstTotalt(sykefraværResultat, harBransje);
+      return sammenliknSykefraværstekstTotalt(sykefraværResultat, harBransje);
     case SammenligningsType.LANGTID:
-      return getVurderingstekstLangtid(sykefraværResultat, harBransje);
+      return sammenliknSykefraværstekstLangtid(sykefraværResultat, harBransje);
     case SammenligningsType.KORTTID:
-      return getVurderingstekstKorttid(sykefraværResultat, harBransje);
+      return sammenliknSykefraværstekstKorttid(sykefraværResultat, harBransje);
     case SammenligningsType.GRADERT:
-      return getVurderingstekstGradert(sykefraværResultat, harBransje);
+      return sammenliknSykefraværstekstGradert(sykefraværResultat, harBransje);
   }
 };
-const getVurderingstekstGradert = (
+const sammenliknSykefraværstekstGradert = (
     sykefraværResultat: SykefraværVurdering,
     harBransje: boolean
 ): ReactElement | string => {
@@ -68,18 +68,16 @@ const getVurderingstekstGradert = (
             statistikken din.
           </>
       );
-    case SykefraværVurdering.INGEN_DATA:
+    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
       return (
           <>
-            Markert grå: Vi <strong>finner ikke tall</strong> for virksomheten din.
+            Markert grå: Vi <strong>kan ikke finne ikke tall</strong> for virksomheten din.
           </>
       );
-    case SykefraværVurdering.FEIL:
-      return <>Markert grå: Vi kan ikke vise dine tall.</>;
   }
 };
 
-const getVurderingstekstTotalt = (
+const sammenliknSykefraværstekstTotalt = (
     sykefraværResultat: SykefraværVurdering,
     harBransje: boolean
 ): ReactElement | string => {
@@ -116,22 +114,20 @@ const getVurderingstekstTotalt = (
     case SykefraværVurdering.MASKERT:
       return (
           <>
-            Markert grå: Du har <strong>for lave tall</strong> til at vi kan vise
+            Markert grå: Du har <strong>for lite tallgrunnlag</strong> til at vi kan vise
             statistikken din.
           </>
       );
-    case SykefraværVurdering.INGEN_DATA:
+    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
       return (
           <>
             Markert grå: Vi <strong>finner ikke tall</strong> for virksomheten din.
           </>
       );
-    case SykefraværVurdering.FEIL:
-      return <></>;
   }
 };
 
-const getVurderingstekstKorttid = (resultat: SykefraværVurdering, harBransje: boolean) => {
+const sammenliknSykefraværstekstKorttid = (resultat: SykefraværVurdering, harBransje: boolean) => {
   const bransjeEllerNæringTekst = harBransje ? 'bransjen' : 'næringen';
   switch (resultat) {
     case SykefraværVurdering.UNDER:
@@ -157,18 +153,16 @@ const getVurderingstekstKorttid = (resultat: SykefraværVurdering, harBransje: b
       );
     case SykefraværVurdering.UFULLSTENDIG_DATA:
     case SykefraværVurdering.MASKERT:
-    case SykefraværVurdering.INGEN_DATA:
+    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
       return (
           <>
             Markert grå: Andel <strong>legemeldt korttidsfravær</strong> fra 1. til 16. dag:
           </>
       );
-    case SykefraværVurdering.FEIL:
-      return <>—</>;
   }
 };
 
-export const getVurderingstekstLangtid = (resultat: SykefraværVurdering, harBransje: boolean) => {
+export const sammenliknSykefraværstekstLangtid = (resultat: SykefraværVurdering, harBransje: boolean) => {
   const bransjeEllerNæringTekst = harBransje ? 'bransjen' : 'næringen';
   switch (resultat) {
     case SykefraværVurdering.UNDER:
@@ -194,14 +188,12 @@ export const getVurderingstekstLangtid = (resultat: SykefraværVurdering, harBra
       );
     case SykefraværVurdering.UFULLSTENDIG_DATA:
     case SykefraværVurdering.MASKERT:
-    case SykefraværVurdering.INGEN_DATA:
+    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
       return (
           <>
             Markert grå: Andel <strong>langtidsfravær</strong> fra 17. dag:
           </>
       );
-    case SykefraværVurdering.FEIL:
-      return <>—</>;
   }
 };
 
@@ -261,15 +253,13 @@ export const getForklaringAvVurdering = (
             vi kan vise statistikken din.
           </Normaltekst>
       );
-    case SykefraværVurdering.INGEN_DATA:
+    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
       return (
           <Normaltekst>
             Sammenligningen din er blitt markert som grå fordi vi ikke finner tall for
             virksomheten din. Vi viser dine tall når de publiseres.
           </Normaltekst>
       );
-    case SykefraværVurdering.FEIL:
-      return <></>;
   }
 };
 
@@ -298,8 +288,7 @@ export const getTilpassetTittelOgTekstOmGradertSykmelding = (
       };
     case SykefraværVurdering.UFULLSTENDIG_DATA:
     case SykefraværVurdering.MASKERT:
-    case SykefraværVurdering.INGEN_DATA:
-    case SykefraværVurdering.FEIL:
+    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
       return {
         tittel: 'Vurder bruken av gradert sykmelding sammen med langtidsfraværet',
         tekst:

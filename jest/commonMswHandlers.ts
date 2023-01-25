@@ -6,4 +6,19 @@ export const commonHandlers = [
     rest.post(iaTjenesterMetrikkerApiUrl, async (_, res, ctx) => {
         return res(ctx.json({ status: 'created' }));
     }),
+
+    rest.post('/sykefravarsstatistikk/notifikasjon-bruker-api', async (_, res, ctx) => {
+        return res(
+            ctx.json({
+                data: {
+                    notifikasjoner: {
+                        feilAltinn: false,
+                        feilDigiSyfo: false,
+                        notifikasjoner: [],
+                        __typename: 'NotifikasjonerResultat',
+                    },
+                },
+            })
+        );
+    }),
 ];

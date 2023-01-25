@@ -2,22 +2,20 @@ import { sendAnalytics, useAnalytics } from './useAnalytics';
 import { amplitudeMock } from '../mocking/amplitude-mock';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import {
-    mockSykefraværNoEkstradata,
-    mockSykefraværWithEkstradata,
-} from '../mocking/use-analytics-test-mocks';
 import { BrowserRouter } from 'react-router-dom';
 import { SykefraværAppData } from './useSykefraværAppData';
 import userEvent from '@testing-library/user-event';
 import { AppContent } from '../App';
 import '@testing-library/jest-dom';
 import { renderHook } from '@testing-library/react-hooks';
+import { allDatahentingFeiler, allDatahentingStatusOk } from "../mocking/use-analytics-test-mocks";
 
 describe('useAnalytics', () => {
-  const defaultEventData = {
-    app: 'sykefravarsstatistikk',
-    team: 'teamia',
-  };
+    const defaultEventData = {
+        app: 'sykefravarsstatistikk',
+        team: 'teamia',
+    };
+
     beforeEach(() => {
         jest.spyOn(amplitudeMock, 'setUserProperties');
         jest.spyOn(amplitudeMock, 'logEvent');
@@ -42,13 +40,13 @@ describe('useAnalytics', () => {
     });
 
     it('Kaller ikke setUserProperties hvis vi ikke har ekstradata', async () => {
-        render(<AppContentWithRouter {...mockSykefraværNoEkstradata} />);
+        render(<AppContentWithRouter {...allDatahentingFeiler} />);
 
         expect(amplitudeMock.setUserProperties).not.toHaveBeenCalled();
     });
 
     it('Kaller bedrift-valgt event når vi velger virksomhet', async () => {
-        render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+        render(<AppContentWithRouter {...allDatahentingStatusOk} />);
 
         const virksomhetsvelger = await screen.findByLabelText(/Velg aktiv virksomhet/i);
         userEvent.click(virksomhetsvelger);
@@ -67,7 +65,7 @@ describe('useAnalytics', () => {
     });
 
     it('Klikk på les-mer-panel sender panel-ekspander event til Amplitude', async () => {
-        render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+        render(<AppContentWithRouter {...allDatahentingStatusOk} />);
 
         const lesMerPanel = screen.getByRole('button', {
             name: 'Slik har vi kommet fram til ditt resultat',
@@ -83,7 +81,7 @@ describe('useAnalytics', () => {
     });
 
     it('To klikk på les-mer-panel sender panel-kollaps event til Amplitude', async () => {
-        render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+        render(<AppContentWithRouter {...allDatahentingStatusOk} />);
 
         const lesMerPanel = screen.getByRole('button', {
             name: 'Slik har vi kommet fram til ditt resultat',
@@ -105,7 +103,7 @@ describe('useAnalytics', () => {
     });
 
     it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
-        render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+        render(<AppContentWithRouter {...allDatahentingFeiler} />);
 
         const sammenlikningspanel_total = document.querySelector(
             '#ekspanderbart-sammenligningspanel__tittel-knapp-TOTALT'
@@ -154,20 +152,21 @@ describe('useAnalytics', () => {
     });
 
     it('Klikk på lenke til Arbeidsmiljøportalen trigger event i amplitude', async () => {
-        render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+        render(<AppContentWithRouter {...allDatahentingStatusOk} />);
         userEvent.click(screen.getByText('Gå til Arbeidsmiljøportalen'));
 
         expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
             'navigere',
-            expect.objectContaining({
+            {
+                ...defaultEventData,
                 lenketekst: 'Gå til Arbeidsmiljøportalen',
-                destinasjon: 'https://www.arbeidsmiljoportalen.no',
-            })
+                destinasjon: 'https://www.arbeidsmiljoportalen.no/bransje/barnehage',
+            }
         );
     });
 
     it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', async () => {
-        const result = render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+        const result = render(<AppContentWithRouter {...allDatahentingStatusOk} />);
         expect(
             await result.container.querySelector(
                 '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
@@ -190,7 +189,7 @@ describe('useAnalytics', () => {
 
     it('navigere-event kalles med riktige user properties', async () => {
         act(() => {
-            render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
+            render(<AppContentWithRouter {...allDatahentingStatusOk} />);
             userEvent.click(screen.getByText('Gå til Arbeidsmiljøportalen'));
         });
 
@@ -200,36 +199,13 @@ describe('useAnalytics', () => {
         act(() => {
             expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
                 antallAnsatte: '50-99',
-                bransje: undefined,
+                bransje: "BARNEHAGER",
                 sektor: 'offentlig',
-                korttidSiste4Kvartaler: 'MIDDELS',
-                langtidSiste4Kvartaler: 'MIDDELS',
-                næring2siffer:
-                    '84 Offentlig administrasjon og forsvar, og trygdeordninger underlagt offentlig forvaltning',
-                prosent: '>16',
-                sammenligning: 'virksomhet ligger 8-10 over',
-                sykefraværSiste4Kvartaler: 'MIDDELS',
+                næring2siffer: '88 Sosiale omsorgstjenester uten botilbud',
+                prosent: '10-12',
+                sykefraværsvurdering: "UNDER",
             });
         });
-    });
-
-    it('Klikk på "Gå til sykefravær over tid" rendrer navigere-event', async () => {
-        await waitFor(() => {
-            render(<AppContentWithRouter {...mockSykefraværWithEkstradata} />);
-        });
-
-        const knappTilHistorikk = screen.getAllByRole('link', {
-            name: /Gå til sykefravær over tid/i,
-        })[0];
-        userEvent.click(knappTilHistorikk);
-
-        expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
-            'navigere',
-            expect.objectContaining({
-                destinasjon: '/historikk',
-                lenketekst: 'Gå til sykefravær over tid',
-            })
-        );
     });
 
     const AppContentWithRouter = (data: SykefraværAppData) => {

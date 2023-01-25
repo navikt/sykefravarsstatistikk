@@ -33,17 +33,17 @@ const ResponseValidator = z.object({
 }).strict("Ukjent datastruktur")
 
 export type AggregertStatistikk = {
-  prosentSiste4KvartalerTotalt?: StatistikkType,
-  prosentSiste4KvartalerGradert?: StatistikkType,
-  prosentSiste4KvartalerKorttid?: StatistikkType,
-  prosentSiste4KvartalerLangtid?: StatistikkType,
-  trendTotalt?: StatistikkType
+  prosentSiste4KvartalerTotalt?: Statistikk,
+  prosentSiste4KvartalerGradert?: Statistikk,
+  prosentSiste4KvartalerKorttid?: Statistikk,
+  prosentSiste4KvartalerLangtid?: Statistikk,
+  trendTotalt?: Statistikk
 }
 
-type Response = z.infer<typeof ResponseValidator>;
-export type StatistikkType = z.infer<typeof StatistikkValidator>
+export type AggregertStatistikkResponse = z.infer<typeof ResponseValidator>;
+export type Statistikk = z.infer<typeof StatistikkValidator>
 
-export type AggregertStatistikkResponse = {
+export type RestAggregertStatistikk = {
   restStatus: RestStatus,
   aggregertData?: Map<Statistikkategori, AggregertStatistikk>,
   error?: any
@@ -68,11 +68,11 @@ const defaultFetcher: Fetcher<{ data: any, status: number }> = async (input: Req
   }
 }
 
-const getCategory = (category: Statistikkategori, statistikk: StatistikkType[]) => {
+const getCategory = (category: Statistikkategori, statistikk: Statistikk[]) => {
   return statistikk.find(e => e.statistikkategori === category)
 }
 
-const groupByCategory = (aggregertStatistikk: Response) => {
+export const groupByCategory = (aggregertStatistikk: AggregertStatistikkResponse) => {
   const map = new Map<Statistikkategori, AggregertStatistikk>()
   Object.values(Statistikkategori).forEach(kategori => {
     map.set(kategori, {
@@ -108,7 +108,7 @@ function useFetch(orgnr: string, fetcher?: Fetcher<{ data: any, status: number }
 }
 
 
-function useAggregertStatistikk(fetcher?: Fetcher<{ data: any, status: number }>): AggregertStatistikkResponse {
+function useAggregertStatistikk(fetcher?: Fetcher<{ data: any, status: number }>): RestAggregertStatistikk {
   const orgnr = useOrgnr() || "";
   const {data, isLoading, isError} = useFetch(orgnr, fetcher)
 
