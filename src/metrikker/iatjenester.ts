@@ -7,7 +7,6 @@ export const sendteMetrikker: Virksomhet[] = [{ orgnr: '' }];
 
 interface IaTjenesteMetrikk {
     orgnr: String;
-    altinnRettighet: String;
     type: String;
     kilde: 'SYKEFRAVÆRSSTATISTIKK';
     tjenesteMottakkelsesdato: String;
@@ -40,7 +39,6 @@ function byggIaTjenesteMottattMetrikk(nåværendeOrgnr?: string) {
         type: 'DIGITAL_IA_TJENESTE',
         kilde: 'SYKEFRAVÆRSSTATISTIKK',
         tjenesteMottakkelsesdato: tilIsoDatoMedUtcTimezoneUtenMillis(new Date()),
-        altinnRettighet: 'SYKEFRAVÆRSSTATISTIKK_FOR_VIRKSOMHETER',
     };
     return iaTjenesteMetrikk;
 }
