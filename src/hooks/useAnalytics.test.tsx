@@ -13,12 +13,11 @@ import { AppContent } from '../App';
 import '@testing-library/jest-dom';
 import { renderHook } from '@testing-library/react-hooks';
 
-const defaultEventProperties = {
+describe('useAnalytics', () => {
+  const defaultEventData = {
     app: 'sykefravarsstatistikk',
     team: 'teamia',
-};
-
-describe('useAnalytics', () => {
+  };
     beforeEach(() => {
         jest.spyOn(amplitudeMock, 'setUserProperties');
         jest.spyOn(amplitudeMock, 'logEvent');
@@ -31,15 +30,14 @@ describe('useAnalytics', () => {
 
     it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => {
         const eventname = 'dummyEvent';
-
         const eventData = {
             someKey: 'someValue',
         };
         sendAnalytics(eventname, eventData);
         expect(amplitudeMock.logEvent).toHaveBeenCalled();
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(eventname, {
-            ...defaultEventProperties,
-            ...eventData,
+          ...defaultEventData,
+          ...eventData,
         });
     });
 
@@ -63,7 +61,7 @@ describe('useAnalytics', () => {
         await waitFor(() => {
             expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
                 'bedrift valgt',
-                defaultEventProperties
+                defaultEventData
             );
         });
     });
