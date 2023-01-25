@@ -4,15 +4,7 @@ import {SpeedometerGul} from './SpeedometerGul';
 import {SpeedometerGrønn} from './SpeedometerGrønn';
 import classNames from 'classnames';
 import {SpeedometerGrå} from './SpeedometerGrå';
-
-export enum SykefraværVurdering {
-  UNDER = 'UNDER',
-  MIDDELS = 'MIDDELS',
-  OVER = 'OVER',
-  MASKERT = 'MASKERT',
-  FEIL_ELLER_INGEN_DATA = 'FEIL_ELLER_INGEN_DATA',
-  UFULLSTENDIG_DATA = 'UFULLSTENDIG_DATA',
-}
+import { SykefraværVurdering } from "../vurdering-utils";
 
 interface Props {
   resultat: SykefraværVurdering;
@@ -51,15 +43,15 @@ const SpeedometerSvg: FunctionComponent<{
   størrelsesfaktor: number;
 }> = ({resultat, størrelsesfaktor}) => {
   switch (resultat) {
-    case SykefraværVurdering.UNDER:
+    case 'UNDER':
       return <SpeedometerGrønn størrelsesfaktor={størrelsesfaktor}/>;
-    case SykefraværVurdering.MIDDELS:
+    case 'MIDDELS':
       return <SpeedometerGul størrelsesfaktor={størrelsesfaktor}/>;
-    case SykefraværVurdering.OVER:
+    case 'OVER':
       return <SpeedometerRød størrelsesfaktor={størrelsesfaktor}/>;
-    case SykefraværVurdering.MASKERT:
-    case SykefraværVurdering.FEIL_ELLER_INGEN_DATA:
-    case SykefraværVurdering.UFULLSTENDIG_DATA:
+    case 'MASKERT':
+    case 'FEIL_ELLER_INGEN_DATA':
+    case 'UFULLSTENDIG_DATA':
       return <SpeedometerGrå størrelsesfaktor={størrelsesfaktor}/>;
   }
 };

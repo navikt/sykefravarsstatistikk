@@ -4,13 +4,12 @@ import {
     tilSegmenteringAntallAnsatte,
     tilSegmenteringSykefraværsprosent,
 } from './segmentering';
-import { SykefraværVurdering } from '../Forside/Speedometer/Speedometer';
 import { RestStatus } from '../api/api-utils';
 import { mapTilPrivatEllerOffentligSektor, Sektor } from '../utils/sektorUtils';
 import { Enhetsregisterdata } from '../enhetsregisteret/hooks/useEnheter';
 import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 import { RestAggregertStatistikk } from '../hooks/useAggregertStatistikk';
-import { sammenliknSykefravær } from '../Forside/vurdering-utils';
+import { sammenliknSykefravær, SykefraværVurdering } from "../Forside/vurdering-utils";
 import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
 import { Næring } from "../enhetsregisteret/domene/underenhet";
 
@@ -73,7 +72,7 @@ export const getEkstraDataFraAggregertSykefravær = (
         );
         const prostsentsegmentering = tilSegmenteringSykefraværsprosent(
             Number(virksomhetsdataTotalt?.verdi),
-            speedometervurdering === SykefraværVurdering.MASKERT
+            speedometervurdering === 'MASKERT'
         );
 
         return {

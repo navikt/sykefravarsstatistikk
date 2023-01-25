@@ -1,10 +1,10 @@
 import React, {FunctionComponent} from 'react';
-import {SykefraværVurdering} from '../Speedometer/Speedometer';
 import {ÅrstallOgKvartal} from '../../utils/sykefraværshistorikk-utils';
 import {SlikHarViKommetFramTilDittResultatTekst} from './SlikHarViKommetFramTilDittResultatTekst';
 import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 import './SlikHarViKommetFramTilDittResultat.less';
 import {RestPubliseringsdatoer} from "../../api/publiseringsdatoer-api";
+import { SykefraværVurdering } from "../vurdering-utils";
 
 interface Props {
   resultat: SykefraværVurdering;

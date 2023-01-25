@@ -1,25 +1,32 @@
-import { SykefraværVurdering } from "./Speedometer/Speedometer";
-import { Statistikk } from "../hooks/useAggregertStatistikk";
-import { parseVerdi } from "./SammenligningMedBransje/EkspanderbartSammenligningspanel";
+import { Statistikk } from '../hooks/useAggregertStatistikk';
+import { parseVerdi } from './SammenligningMedBransje/EkspanderbartSammenligningspanel';
 
-export const sammenliknSykefravær = (statistikk?: Statistikk, bransjeEllerNæring?: Statistikk) => {
-  if (statistikk === undefined && bransjeEllerNæring === undefined)
-    return SykefraværVurdering.FEIL_ELLER_INGEN_DATA;
-  if (statistikk === undefined && bransjeEllerNæring !== undefined)
-    return SykefraværVurdering.MASKERT;
+export type SykefraværVurdering =
+    | 'UNDER'
+    | 'MIDDELS'
+    | 'OVER'
+    | 'MASKERT'
+    | 'FEIL_ELLER_INGEN_DATA'
+    | 'UFULLSTENDIG_DATA'
 
-  const antallKvartaler = statistikk?.kvartalerIBeregningen.length || 0;
+export const sammenliknSykefravær = (statistikk?: Statistikk, bransjeEllerNæring?: Statistikk): SykefraværVurdering => {
+    if (statistikk === undefined && bransjeEllerNæring === undefined)
+        return 'FEIL_ELLER_INGEN_DATA';
+    if (statistikk === undefined && bransjeEllerNæring !== undefined)
+        return 'MASKERT';
 
-  if (antallKvartaler < 4) return SykefraværVurdering.UFULLSTENDIG_DATA;
-  if (statistikk?.verdi === undefined || bransjeEllerNæring?.verdi === undefined)
-    return SykefraværVurdering.UFULLSTENDIG_DATA;
+    const antallKvartaler = statistikk?.kvartalerIBeregningen.length || 0;
 
-  const virksomhetVerdi = parseVerdi(statistikk.verdi);
-  const bransjeEllerNæringVerdi = parseVerdi(bransjeEllerNæring.verdi);
+    if (antallKvartaler < 4) return 'UFULLSTENDIG_DATA';
+    if (statistikk?.verdi === undefined || bransjeEllerNæring?.verdi === undefined)
+        return 'UFULLSTENDIG_DATA';
 
-  if (virksomhetVerdi > bransjeEllerNæringVerdi * 1.1) return SykefraværVurdering.OVER;
-  if (virksomhetVerdi < bransjeEllerNæringVerdi * 0.9) return SykefraværVurdering.UNDER;
-  return SykefraværVurdering.MIDDELS;
+    const virksomhetVerdi = parseVerdi(statistikk.verdi);
+    const bransjeEllerNæringVerdi = parseVerdi(bransjeEllerNæring.verdi);
+
+    if (virksomhetVerdi > bransjeEllerNæringVerdi * 1.1) return 'OVER';
+    if (virksomhetVerdi < bransjeEllerNæringVerdi * 0.9) return 'UNDER';
+    return 'MIDDELS';
 };
 
 export const getGrønnGrense = (bransjensProsent: number) => bransjensProsent * 0.9;
