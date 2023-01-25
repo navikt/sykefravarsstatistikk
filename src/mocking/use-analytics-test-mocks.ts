@@ -3,7 +3,7 @@ import { AggregertStatistikk } from '../hooks/useAggregertStatistikk';
 import { siste4KvartalerMock } from './summert-sykefraværshistorikk-mock';
 import { SykefraværAppData } from '../hooks/useSykefraværAppData';
 import { RestStatus } from '../api/api-utils';
-import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './altinn-mock';
+import { getOrganisasjonerMedStatistikktilgangMock, getOrganisasjonerMock } from "./altinn-mock";
 import { mapTilUnderenhet } from '../enhetsregisteret/api/underenheter-api';
 import { underenheterResponseMock } from '../enhetsregisteret/api/mocks/underenheter-api-mocks';
 import { getMockPubliseringsdatoer } from './mock-publiseringsdatoer';
@@ -33,7 +33,7 @@ export const allDatahentingStatusOk: SykefraværAppData = {
     altinnOrganisasjoner: { status: RestStatus.Suksess, data: getOrganisasjonerMock() },
     altinnOrganisasjonerMedStatistikktilgang: {
         status: RestStatus.Suksess,
-        data: getOrganisasjonerBrukerHarTilgangTilMock(),
+        data: getOrganisasjonerMedStatistikktilgangMock(),
     },
     enhetsregisterdata: {
         restUnderenhet: {

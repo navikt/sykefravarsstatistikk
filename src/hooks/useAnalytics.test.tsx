@@ -15,7 +15,6 @@ describe('useAnalytics', () => {
         app: 'sykefravarsstatistikk',
         team: 'teamia',
     };
-
     beforeEach(() => {
         jest.spyOn(amplitudeMock, 'setUserProperties');
         jest.spyOn(amplitudeMock, 'logEvent');
@@ -34,8 +33,8 @@ describe('useAnalytics', () => {
         sendAnalytics(eventname, eventData);
         expect(amplitudeMock.logEvent).toHaveBeenCalled();
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(eventname, {
-          ...defaultEventData,
-          ...eventData,
+            ...defaultEventData,
+            ...eventData,
         });
     });
 
