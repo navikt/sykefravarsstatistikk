@@ -24,6 +24,7 @@ import { sendIaTjenesteMetrikkMottatt } from '../../metrikker/iatjenester';
 import { Statistikk } from '../../hooks/useAggregertStatistikk';
 import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
 import { sammenliknSykefravær } from '../vurdering-utils';
+import { parseVerdi } from "../../utils/app-utils";
 
 interface Props {
     sammenligningsType: SammenligningsType;
@@ -34,10 +35,6 @@ interface Props {
     className?: string;
     restPubliseringsdatoer: RestPubliseringsdatoer;
 }
-
-export const parseVerdi = (verdi: string) => {
-  return parseFloat(verdi.replace(",", "."));
-};
 
 const antallKvartalerTekst = (antallKvartaler?: number) => {
   return <strong> {antallKvartaler || 0} av 4 kvartaler</strong>;

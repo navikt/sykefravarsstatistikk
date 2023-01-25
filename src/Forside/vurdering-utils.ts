@@ -1,5 +1,5 @@
 import { Statistikk } from '../hooks/useAggregertStatistikk';
-import { parseVerdi } from './SammenligningMedBransje/EkspanderbartSammenligningspanel';
+import { parseVerdi } from "../utils/app-utils";
 
 export type SykefraværVurdering =
     | 'UNDER'
