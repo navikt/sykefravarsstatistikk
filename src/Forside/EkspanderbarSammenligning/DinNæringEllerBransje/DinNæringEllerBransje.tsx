@@ -4,7 +4,7 @@ import {Normaltekst} from 'nav-frontend-typografi';
 import './DinNæringEllerBransje.less';
 import {RestStatus} from '../../../api/api-utils';
 import EksternLenke from '../../../felleskomponenter/EksternLenke/EksternLenke';
-import {Statistikkategori} from '../../../api/summert-sykefraværshistorikk-api';
+import { Statistikkategori } from "../../../domene/statistikkategori";
 
 interface Props {
   restStatus: RestStatus;

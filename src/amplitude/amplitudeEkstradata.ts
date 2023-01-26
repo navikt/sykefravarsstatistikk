@@ -10,8 +10,8 @@ import { Enhetsregisterdata } from '../enhetsregisteret/hooks/useEnheter';
 import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 import { RestAggregertStatistikk } from '../hooks/useAggregertStatistikk';
 import { sammenliknSykefravær, SykefraværVurdering } from "../Forside/vurdering-utils";
-import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
 import { Næring } from "../enhetsregisteret/domene/underenhet";
+import { Statistikkategori } from "../domene/statistikkategori";
 
 export interface AmplitudeEkstradata {
     næring2siffer: string;

@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import { Statistikkategori } from '../../api/summert-sykefraværshistorikk-api';
 import {
     EkspanderbartSammenligningspanel,
 
@@ -15,6 +14,7 @@ import { Element } from 'nav-frontend-typografi';
 import { RestAggregertStatistikk } from '../../hooks/useAggregertStatistikk';
 import {RestPubliseringsdatoer} from "../../api/publiseringsdatoer-api";
 import { sammenliknSykefravær } from "../vurdering-utils";
+import { Statistikkategori } from "../../domene/statistikkategori";
 
 interface Props {
     aggregertStatistikk: RestAggregertStatistikk;

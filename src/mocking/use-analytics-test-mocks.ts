@@ -1,4 +1,3 @@
-import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
 import { AggregertStatistikk } from '../hooks/useAggregertStatistikk';
 import { siste4KvartalerMock } from './summert-sykefraværshistorikk-mock';
 import { SykefraværAppData } from '../hooks/useSykefraværAppData';
@@ -7,6 +6,7 @@ import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from 
 import { mapTilUnderenhet } from '../enhetsregisteret/api/underenheter-api';
 import { underenheterResponseMock } from '../enhetsregisteret/api/mocks/underenheter-api-mocks';
 import { getMockPubliseringsdatoer } from './mock-publiseringsdatoer';
+import { Statistikkategori } from "../domene/statistikkategori";
 
 const aggregertStatistikkMock = new Map<Statistikkategori, AggregertStatistikk>();
 aggregertStatistikkMock.set(Statistikkategori.VIRKSOMHET, {

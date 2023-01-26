@@ -1,10 +1,10 @@
-import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
 import {
     lagStatistikkMock,
     siste4KvartalerMock,
     siste2KvartalerMock,
 } from '../mocking/summert-sykefraværshistorikk-mock';
 import { sammenliknSykefravær } from './vurdering-utils';
+import { Statistikkategori } from "../domene/statistikkategori";
 
 function sykefraværVirksomhet(prosent: string) {
     return lagStatistikkMock(

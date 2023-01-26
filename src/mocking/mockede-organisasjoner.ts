@@ -1,5 +1,4 @@
 import { KvartalsvisSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
-import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
 import { UnderenhetDto } from '../enhetsregisteret/api/underenheter-api';
 import {
     aggregertStatistikkMockGrønnBarnehage,
@@ -16,6 +15,7 @@ import {
     lagMockHistorikkForBarnehage,
 } from './sykefraværshistorikk-mock';
 import { AggregertStatistikkResponse } from '../hooks/useAggregertStatistikk';
+import { Statistikkategori } from "../domene/statistikkategori";
 
 export interface OrganisasjonMock {
     orgnr: string;
