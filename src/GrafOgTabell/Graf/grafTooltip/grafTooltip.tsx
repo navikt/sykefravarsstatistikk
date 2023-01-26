@@ -6,7 +6,7 @@ import {GrafSymbol} from '../GrafSymbol/GrafSymbol';
 
 const grafTooltip = (harBransje: boolean) => (
     <Tooltip
-        formatter={(value: any, name: any) => [
+        formatter={(value: any, name: any, _) => [
           <span className="tooltip__item-wrapper" key={`tooltip-${name}`}>
                 <GrafSymbol linje={name} className="tooltip__ikon"/>
                 <div className="tooltip__item-navn-og-verdi">

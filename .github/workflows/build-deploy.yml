@@ -50,7 +50,7 @@ jobs:
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/fjerne-altinn-rettighet-utsending-til-ia-tjenester-metrikker'
+        if: github.ref == 'refs/heads/update_recharts'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
