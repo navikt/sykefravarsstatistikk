@@ -15,15 +15,25 @@ describe('useAnalytics', () => {
         app: 'sykefravarsstatistikk',
         team: 'teamia',
     };
-
+const { ResizeObserver } = window;
     beforeEach(() => {
         jest.spyOn(amplitudeMock, 'setUserProperties');
         jest.spyOn(amplitudeMock, 'logEvent');
         renderHook(() => useAnalytics(amplitudeMock));
+
+        // @ts-expect-error
+        delete window.ResizeObserver;
+        window.ResizeObserver = jest.fn().mockImplementation(() => ({
+            observe: jest.fn(),
+            unobserve: jest.fn(),
+            disconnect: jest.fn(),
+        }));
     });
 
     afterEach(() => {
         jest.resetAllMocks();
+        window.ResizeObserver = ResizeObserver;
+        jest.restoreAllMocks();
     });
 
     it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => {
@@ -207,6 +217,7 @@ describe('useAnalytics', () => {
             });
         });
     });
+
 
     const AppContentWithRouter = (data: SykefraværAppData) => {
         return (
