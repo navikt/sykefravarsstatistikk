@@ -28,7 +28,7 @@ aggregertStatistikkMock.set(Statistikkategori.BRANSJE, {
     },
 });
 
-export const allDatahentingStatusOk: SykefraværAppData = {
+export const mockAllDatahentingStatusOk: SykefraværAppData = {
     aggregertStatistikk: { restStatus: RestStatus.Suksess, aggregertData: aggregertStatistikkMock },
     altinnOrganisasjoner: { status: RestStatus.Suksess, data: getOrganisasjonerMock() },
     altinnOrganisasjonerMedStatistikktilgang: {
@@ -52,7 +52,7 @@ export const allDatahentingStatusOk: SykefraværAppData = {
     sykefraværshistorikk: { status: RestStatus.Suksess, data: [] },
 };
 
-export const allDatahentingFeiler: SykefraværAppData = {
+export const mockAllDatahentingFeiler: SykefraværAppData = {
     aggregertStatistikk: { restStatus: RestStatus.Feil },
     altinnOrganisasjoner: { status: RestStatus.Feil },
     altinnOrganisasjonerMedStatistikktilgang: { status: RestStatus.Feil },

@@ -78,7 +78,7 @@ const getCategory = (category: Statistikkategori, statistikk: Statistikk[]) => {
     return statistikk.find((e) => e.statistikkategori === category);
 };
 
-export const groupByCategory = (aggregertStatistikk: AggregertStatistikkResponse) => {
+const groupByCategory = (aggregertStatistikk: AggregertStatistikkResponse) => {
     const map = new Map<Statistikkategori, AggregertStatistikk>();
     Object.values(Statistikkategori).forEach((kategori) => {
         map.set(kategori, {

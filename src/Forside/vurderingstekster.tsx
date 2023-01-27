@@ -70,7 +70,7 @@ const sammenliknSykefraværstekstGradert = (
     case 'FEIL_ELLER_INGEN_DATA':
       return (
           <>
-            Markert grå: Vi <strong>kan ikke finne ikke tall</strong> for virksomheten din.
+            Markert grå: Vi <strong>kan ikke finne tall</strong> for virksomheten din.
           </>
       );
   }

@@ -8,7 +8,7 @@ import userEvent from '@testing-library/user-event';
 import { AppContent } from '../App';
 import '@testing-library/jest-dom';
 import { renderHook } from '@testing-library/react-hooks';
-import { allDatahentingFeiler, allDatahentingStatusOk } from '../mocking/use-analytics-test-mocks';
+import { mockAllDatahentingFeiler, mockAllDatahentingStatusOk } from '../mocking/use-analytics-test-mocks';
 
 describe('useAnalytics', () => {
     const defaultEventData = {
@@ -50,13 +50,13 @@ describe('useAnalytics', () => {
     });
 
     it('Kaller ikke setUserProperties hvis vi ikke har ekstradata', async () => {
-        render(<AppContentWithRouter {...allDatahentingFeiler} />);
+        render(<AppContentWithRouter {...mockAllDatahentingFeiler} />);
 
         expect(amplitudeMock.setUserProperties).not.toHaveBeenCalled();
     });
 
     it('Kaller bedrift-valgt event når vi velger virksomhet', async () => {
-        render(<AppContentWithRouter {...allDatahentingStatusOk} />);
+        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
 
         const virksomhetsvelger = await screen.findByLabelText(/Velg aktiv virksomhet/i);
         userEvent.click(virksomhetsvelger);
@@ -75,7 +75,7 @@ describe('useAnalytics', () => {
     });
 
     it('Klikk på les-mer-panel sender panel-ekspander event til Amplitude', async () => {
-        render(<AppContentWithRouter {...allDatahentingStatusOk} />);
+        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
 
         const lesMerPanel = screen.getByRole('button', {
             name: 'Slik har vi kommet fram til ditt resultat',
@@ -91,7 +91,7 @@ describe('useAnalytics', () => {
     });
 
     it('To klikk på les-mer-panel sender panel-kollaps event til Amplitude', async () => {
-        render(<AppContentWithRouter {...allDatahentingStatusOk} />);
+        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
 
         const lesMerPanel = screen.getByRole('button', {
             name: 'Slik har vi kommet fram til ditt resultat',
@@ -113,7 +113,7 @@ describe('useAnalytics', () => {
     });
 
     it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
-        render(<AppContentWithRouter {...allDatahentingFeiler} />);
+        render(<AppContentWithRouter {...mockAllDatahentingFeiler} />);
 
         const sammenlikningspanel_total = document.querySelector(
             '#ekspanderbart-sammenligningspanel__tittel-knapp-TOTALT'
@@ -162,7 +162,7 @@ describe('useAnalytics', () => {
     });
 
     it('Klikk på lenke til Arbeidsmiljøportalen trigger event i amplitude', async () => {
-        render(<AppContentWithRouter {...allDatahentingStatusOk} />);
+        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
         userEvent.click(screen.getByText('Gå til Arbeidsmiljøportalen'));
 
         expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith('navigere', {
@@ -173,7 +173,7 @@ describe('useAnalytics', () => {
     });
 
     it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', async () => {
-        const result = render(<AppContentWithRouter {...allDatahentingStatusOk} />);
+        const result = render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
         expect(
             await result.container.querySelector(
                 '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
@@ -196,7 +196,7 @@ describe('useAnalytics', () => {
 
     it('navigere-event kalles med riktige user properties', async () => {
         act(() => {
-            render(<AppContentWithRouter {...allDatahentingStatusOk} />);
+            render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
             userEvent.click(screen.getByText('Gå til Arbeidsmiljøportalen'));
         });
 
