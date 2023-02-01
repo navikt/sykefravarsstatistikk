@@ -12,6 +12,7 @@ const cookieParser = require('cookie-parser');
 const { applyNotifikasjonMiddleware } = require('./brukerapi-proxy-middleware');
 const log = require('./logging');
 const contentHeaders = require('./contentHeaders');
+const loggingHandler = require("./backend-logger");
 
 const { APP_INGRESS, LOGIN_URL, PORT = 3000 } = process.env;
 
@@ -20,6 +21,7 @@ const app = express();
 dotenv.config();
 
 app.use(cookieParser());
+app.use(express.json())
 app.engine('html', mustacheExpress());
 app.set('view engine', 'mustache');
 app.set('views', buildPath);
@@ -47,6 +49,7 @@ const startServer = async (html) => {
     app.use(contentHeaders);
 
     app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
+    app.post(BASE_PATH + '/api/logger', loggingHandler )
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
         const referrerUrl = `${APP_INGRESS}/success?redirect=${req.query.redirect}`;
