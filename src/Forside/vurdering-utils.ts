@@ -9,6 +9,7 @@ import {SykefraværVurdering} from './Speedometer/Speedometer';
 import {RestStatus} from '../api/api-utils';
 import {ÅrstallOgKvartal} from '../utils/sykefraværshistorikk-utils';
 import {SammenligningsType} from './vurderingstekster';
+import {logger, predefinerteFeilmeldinger} from "../utils/logger";
 
 export const getVurderingForSammenligningAvSykefravær = (
     restStatus: RestStatus.Suksess | RestStatus.Feil,
@@ -115,6 +116,7 @@ export const getVurdering = (
   } else if (virksomhetensProsent >= getRødGrense(bransjensProsent)) {
     return SykefraværVurdering.OVER;
   }
+  logger.error(predefinerteFeilmeldinger.virksomhetensEllerBransjensTallErNaN)
   throw new Error('virksomhetens eller bransjens tall er NaN');
 };
 
