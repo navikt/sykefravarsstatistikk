@@ -4,6 +4,7 @@ import { getRestStatus, RestStatus } from '../api/api-utils';
 import { useOrgnr } from './useOrgnr';
 import { BASE_PATH } from '../konstanter';
 import { Statistikkategori } from '../domene/statistikkategori';
+import {logger, predefinerteFeilmeldinger} from "../utils/logger";
 
 /**
  * Antagelser:
@@ -146,14 +147,14 @@ function useAggregertStatistikk(
     }
 
     if (data && getRestStatus(data.status) === RestStatus.IngenTilgang) {
-        return {
+        logger.warn(predefinerteFeilmeldinger.brukerIkkeAutorisertFeil)return {
             restStatus: RestStatus.IngenTilgang,
             aggregertData: undefined,
         };
     }
 
     if (data && getRestStatus(data.status) === RestStatus.IkkeInnlogget) {
-        return {
+        logger.warn(predefinerteFeilmeldinger.brukerIkkeInloggetFeil)return {
             restStatus: RestStatus.IkkeInnlogget,
             aggregertData: undefined,
         };
@@ -166,11 +167,11 @@ function useAggregertStatistikk(
         };
     } catch (e) {
         if (data) {
-            return {
+            logger.error(predefinerteFeilmeldinger.kunneIkkeParseAggregertDataFeil)return {
                 restStatus: RestStatus.Feil,
                 error: new Error('Kunne ikke parse aggregert data', { cause: e as Error }),
             };
-        }
+        }logger.error(predefinerteFeilmeldinger.ukjentFeilMedAggregertData)
         return {
             restStatus: RestStatus.Feil,
             error: e,

@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/browser';
+import {logger, predefinerteFeilmeldinger} from "../utils/logger";
 
 export enum RestStatus {
   IkkeLastet = 'IkkeLastet',
@@ -78,7 +78,7 @@ export const fetchMedFeilhåndtering = async <T>(
     };
   }
   if (restStatus === RestStatus.Feil) {
-    Sentry.captureException(new Error('Status ' + response.status + ' ved kall til ' + url));
+    logger.error(predefinerteFeilmeldinger.feilVedNettverkskall)
 
     try {
       const body = await response.json();

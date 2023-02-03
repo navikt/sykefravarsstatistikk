@@ -1,5 +1,5 @@
 import {getRestStatus, RestRessurs, RestStatus} from './api-utils';
-import * as Sentry from '@sentry/browser';
+import {logger, predefinerteFeilmeldinger} from "../utils/logger";
 
 export type RestAltinnOrganisasjoner = RestRessurs<AltinnOrganisasjon[]>;
 
@@ -39,7 +39,7 @@ export const hentAltinnOrganisasjoner = async (
     };
   } catch (error: any) {
     if (error.status === RestStatus.Feil || !error.status) {
-      Sentry.captureException(new Error('Feil ved kall til ' + url));
+      logger.error(predefinerteFeilmeldinger.feilVedHentingAvAltinnOrganisasjoner)
       return {status: RestStatus.Feil};
     }
     return {status: error.status};

@@ -1,5 +1,7 @@
 import { Statistikk } from '../hooks/useAggregertStatistikk';
 import { parseVerdi } from "../utils/app-utils";
+import {logger, predefinerteFeilmeldinger} from "../utils/logger";
+
 
 export type SykefraværVurdering =
     | 'UNDER'
@@ -11,7 +13,9 @@ export type SykefraværVurdering =
 
 export const sammenliknSykefravær = (statistikk?: Statistikk, bransjeEllerNæring?: Statistikk): SykefraværVurdering => {
     if (statistikk === undefined && bransjeEllerNæring === undefined)
-        return 'FEIL_ELLER_INGEN_DATA';
+      logger.error(predefinerteFeilmeldinger.virksomhetensEllerBransjensTallErNaN)
+
+  return 'FEIL_ELLER_INGEN_DATA';
     if (statistikk === undefined && bransjeEllerNæring !== undefined)
         return 'MASKERT';
 

@@ -77,6 +77,7 @@ jobs:
                   VAR: version=${{ env.IMAGE }}
                   RESOURCE: nais/labs-gcp.yaml
                   PRINT_PAYLOAD: true
+                  DEPLOY_SERVER: deploy.nais.io:443
 
     deploy-to-prod-gcp:
         name: Deploy to prod-gcp
