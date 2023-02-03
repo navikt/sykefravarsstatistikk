@@ -1,4 +1,4 @@
-import {Næringskode5Siffer} from '../api/virksomhetsdata-api';
+import { Næringskode5Siffer } from "../enhetsregisteret/domene/underenhet";
 
 export enum ArbeidsmiljøportalenBransje {
   BARNEHAGER = 'BARNEHAGER',
@@ -11,8 +11,12 @@ export enum ArbeidsmiljøportalenBransje {
   ANDRE_BRANSJER = 'ANDRE_BRANSJER',
 }
 
-export const getArbeidsmiljøportalenBransje = (næring: Næringskode5Siffer): ArbeidsmiljøportalenBransje => {
-  const næringskode2siffer = næring.kode.slice(0, 2);
+export const getArbeidsmiljøportalenBransje = (næringskode?: Næringskode5Siffer): ArbeidsmiljøportalenBransje => {
+  if (næringskode === undefined || næringskode.kode.length < 2) {
+    return ArbeidsmiljøportalenBransje.ANDRE_BRANSJER;
+  }
+
+  const næringskode2siffer = næringskode.kode.slice(0, 2);
 
   switch (næringskode2siffer) {
     case '10':
@@ -23,7 +27,7 @@ export const getArbeidsmiljøportalenBransje = (næring: Næringskode5Siffer): A
       return ArbeidsmiljøportalenBransje.ANLEGG;
   }
 
-  switch (næring.kode) {
+  switch (næringskode.kode) {
     case '88911':
       return ArbeidsmiljøportalenBransje.BARNEHAGER;
     case '86101':

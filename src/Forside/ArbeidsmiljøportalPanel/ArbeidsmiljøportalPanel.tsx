@@ -4,20 +4,17 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import arbeidsmiljøportalLogoSvg from './arbeidsmiljøportal-logo.svg';
 import { RestStatus } from '../../api/api-utils';
-import { RestVirksomhetsdata } from '../../api/virksomhetsdata-api';
-import {
-    ArbeidsmiljøportalenBransje,
-    getArbeidsmiljøportalenBransje,
-} from '../../utils/bransje-utils';
+import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
+import { RestUnderenhet } from '../../enhetsregisteret/api/underenheter-api';
 
 interface Props {
-    restvirksomhetsdata: RestVirksomhetsdata;
+    restUnderenhet: RestUnderenhet;
 }
 
-export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restvirksomhetsdata }) => {
-    const bransje =
-        restvirksomhetsdata.status === RestStatus.Suksess
-            ? getArbeidsmiljøportalenBransje(restvirksomhetsdata.data.næringskode5Siffer)
+export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restUnderenhet }) => {
+    const maybeBransje =
+        restUnderenhet.status === RestStatus.Suksess
+            ? restUnderenhet.data.bransje
             : ArbeidsmiljøportalenBransje.ANDRE_BRANSJER;
 
     return (
@@ -39,7 +36,7 @@ export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restvirksom
                 Finn kunnskap og digitale verktøy som hjelper dere med å forebygge arbeidsrelatert
                 sykefravær.
             </Normaltekst>
-            <EksternLenke href={getLenkeTilBransjensSideIArbeidsmiljøportalen(bransje)}>
+            <EksternLenke href={getLenkeTilBransjensSideIArbeidsmiljøportalen(maybeBransje)}>
                 Gå til Arbeidsmiljøportalen
             </EksternLenke>
         </div>
@@ -47,7 +44,7 @@ export const ArbeidsmiljøportalPanel: FunctionComponent<Props> = ({ restvirksom
 };
 
 export const getLenkeTilBransjensSideIArbeidsmiljøportalen = (
-    bransje: ArbeidsmiljøportalenBransje
+    bransje?: ArbeidsmiljøportalenBransje
 ): string => {
     switch (bransje) {
         case ArbeidsmiljøportalenBransje.BARNEHAGER:
