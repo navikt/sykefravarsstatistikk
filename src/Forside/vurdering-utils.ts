@@ -1,7 +1,6 @@
 import { Statistikk } from '../hooks/useAggregertStatistikk';
-import { parseVerdi } from "../utils/app-utils";
-import {logger, predefinerteFeilmeldinger} from "../utils/logger";
-
+import { parseVerdi } from '../utils/app-utils';
+import { logger, predefinerteFeilmeldinger } from '../utils/logger';
 
 export type SykefraværVurdering =
     | 'UNDER'
@@ -9,15 +8,17 @@ export type SykefraværVurdering =
     | 'OVER'
     | 'MASKERT'
     | 'FEIL_ELLER_INGEN_DATA'
-    | 'UFULLSTENDIG_DATA'
+    | 'UFULLSTENDIG_DATA';
 
-export const sammenliknSykefravær = (statistikk?: Statistikk, bransjeEllerNæring?: Statistikk): SykefraværVurdering => {
-    if (statistikk === undefined && bransjeEllerNæring === undefined)
-      logger.error(predefinerteFeilmeldinger.virksomhetensEllerBransjensTallErNaN)
-
-  return 'FEIL_ELLER_INGEN_DATA';
-    if (statistikk === undefined && bransjeEllerNæring !== undefined)
-        return 'MASKERT';
+export const sammenliknSykefravær = (
+    statistikk?: Statistikk,
+    bransjeEllerNæring?: Statistikk
+): SykefraværVurdering => {
+    if (statistikk === undefined && bransjeEllerNæring === undefined) {
+        logger.warn(predefinerteFeilmeldinger.virksomhetensOgBransjensTallErNaN);
+        return 'FEIL_ELLER_INGEN_DATA';
+    }
+    if (statistikk === undefined && bransjeEllerNæring !== undefined) return 'MASKERT';
 
     const antallKvartaler = statistikk?.kvartalerIBeregningen.length || 0;
 

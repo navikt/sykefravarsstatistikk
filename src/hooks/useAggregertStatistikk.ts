@@ -147,14 +147,16 @@ function useAggregertStatistikk(
     }
 
     if (data && getRestStatus(data.status) === RestStatus.IngenTilgang) {
-        logger.warn(predefinerteFeilmeldinger.brukerIkkeAutorisertFeil)return {
+        logger.warn(predefinerteFeilmeldinger.brukerIkkeAutorisertFeil)
+        return {
             restStatus: RestStatus.IngenTilgang,
             aggregertData: undefined,
         };
     }
 
     if (data && getRestStatus(data.status) === RestStatus.IkkeInnlogget) {
-        logger.warn(predefinerteFeilmeldinger.brukerIkkeInloggetFeil)return {
+        logger.warn(predefinerteFeilmeldinger.brukerIkkeInloggetFeil)
+        return {
             restStatus: RestStatus.IkkeInnlogget,
             aggregertData: undefined,
         };
@@ -167,7 +169,8 @@ function useAggregertStatistikk(
         };
     } catch (e) {
         if (data) {
-            logger.error(predefinerteFeilmeldinger.kunneIkkeParseAggregertDataFeil)return {
+            logger.error(predefinerteFeilmeldinger.kunneIkkeParseAggregertDataFeil)
+            return {
                 restStatus: RestStatus.Feil,
                 error: new Error('Kunne ikke parse aggregert data', { cause: e as Error }),
             };

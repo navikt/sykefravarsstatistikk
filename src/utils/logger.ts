@@ -4,7 +4,7 @@ import { backendLogger } from "./backendLogger";
 // Må synces med listen over predefinerte feilmeldinger i server
 export const predefinerteFeilmeldinger = {
   feilVedHentingAvAltinnOrganisasjoner: "Feil ved kall til Altinn for henting av organisasjoner",
-  virksomhetensEllerBransjensTallErNaN: "virksomhetens eller bransjens tall er NaN",
+  virksomhetensOgBransjensTallErNaN: "Virksomhetens og bransjens tall er NaN",
   kunneIkkeParseAggregertDataFeil: "Kunne ikke parse aggregert data",
   ukjentFeilMedAggregertData: "Ukjent feil med aggregert data",
   brukerIkkeInloggetFeil: "Nettverkskall feilet da bruker ikke er innlogget",
