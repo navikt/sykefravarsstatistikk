@@ -15,11 +15,11 @@ describe('Tester vellykket utsendelse av ia-metrikk', () => {
     });
 
     test('skal ikke sende levert ia-tjeneste to ganger for samme virksomhet', async () => {
-        const nyttOrgnr = '888888888';
+        const nyttOrgnr = '888888882';
         await sendIaTjenesteMetrikkMottatt(nyttOrgnr);
         const leverteIaTjenester = await sendIaTjenesteMetrikkMottatt(nyttOrgnr);
 
-        expect(leverteIaTjenester).toEqual([{ orgnr: '' }, { orgnr: '888888888' }]);
+        expect(leverteIaTjenester).toEqual([{ orgnr: '' }, { orgnr: '888888882' }]);
     });
 });
 

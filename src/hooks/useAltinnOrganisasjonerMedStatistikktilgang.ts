@@ -3,7 +3,7 @@ import {hentAltinnOrganisasjoner, RestAltinnOrganisasjoner} from '../api/altinno
 import {RestStatus} from '../api/api-utils';
 import {BASE_PATH} from '../konstanter';
 
-export function useAltinnOrganisasjonerMedStatistikk() {
+export function useAltinnOrganisasjonerMedStatistikktilgang() {
   const [restAltinnOrganisasjoner, setRestAltinnOrganisasjoner] =
       useState<RestAltinnOrganisasjoner>({
         status: RestStatus.LasterInn,

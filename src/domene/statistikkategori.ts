@@ -1,0 +1,10 @@
+export enum Statistikkategori {
+    LAND = 'LAND',
+    SEKTOR = 'SEKTOR',
+    NÆRING = 'NÆRING',
+    BRANSJE = 'BRANSJE',
+    VIRKSOMHET = 'VIRKSOMHET',
+    OVERORDNET_ENHET = 'OVERORDNET_ENHET',
+    NÆRING2SIFFER = 'NÆRING2SIFFER',
+    NÆRING5SIFFER = 'NÆRING5SIFFER',
+}

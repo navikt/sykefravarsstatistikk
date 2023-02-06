@@ -3,7 +3,7 @@ import { NotifikasjonWidgetProvider } from '@navikt/arbeidsgiver-notifikasjon-wi
 import Banner from './Banner/Banner';
 import { Route, Routes } from 'react-router-dom';
 import InnloggingssideWrapper from './Forside/InnloggingssideWrapper';
-import { RestRessurs, RestStatus } from './api/api-utils';
+import { RestStatus } from './api/api-utils';
 import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
@@ -39,10 +39,9 @@ import {
 import { AnalyticsClient } from './amplitude/client';
 import { useAnalytics } from './hooks/useAnalytics';
 import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
-import { RestVirksomhetsdata } from './api/virksomhetsdata-api';
 import Samtalestøttepanel from './Forside/Samtalestøttepanel/Samtalestøttepanel';
 import { getMiljø } from './utils/miljøUtils';
-
+import { RestAggregertStatistikk } from './hooks/useAggregertStatistikk';
 
 interface Props {
     analyticsClient: AnalyticsClient;
@@ -58,93 +57,65 @@ const App: FunctionComponent<Props> = ({ analyticsClient }) => {
 
 function dataLastesInn(
     restOrganisasjoner: RestAltinnOrganisasjoner,
-    restvirksomhetsdata: RestVirksomhetsdata
+    restAggregertStatistikk: RestAggregertStatistikk
 ) {
     return (
         restOrganisasjoner.status === RestStatus.LasterInn ||
-        restvirksomhetsdata.status === RestStatus.LasterInn
+        restAggregertStatistikk.restStatus === RestStatus.LasterInn
     );
 }
 
 export const AppContent = ({
     altinnOrganisasjoner,
-    altinnOrganisasjonerMedStatistikk,
-    summertSykefravær,
-    sykefraværshistorikk,
-    virksomhetsdata,
-    analyticsClient,
+    altinnOrganisasjonerMedStatistikktilgang,
     enhetsregisterdata,
+    sykefraværshistorikk,
     aggregertStatistikk,
     publiseringsdatoer,
+    analyticsClient,
 }: SykefraværAppData & {
     analyticsClient: AnalyticsClient;
 }) => {
     useAnalytics(analyticsClient);
 
-    const datakilder: RestRessurs<any>[] = useMemo(() => {
-        return [
-            sykefraværshistorikk,
-            summertSykefravær,
-            virksomhetsdata,
-            enhetsregisterdata.restOverordnetEnhet,
-            enhetsregisterdata.restUnderenhet,
-        ];
-    }, [
-        sykefraværshistorikk,
-        summertSykefravær,
-        virksomhetsdata,
-        enhetsregisterdata.restOverordnetEnhet,
-        enhetsregisterdata.restUnderenhet,
-    ]);
+    const datakilder = useMemo(() => {
+        return [sykefraværshistorikk, aggregertStatistikk, enhetsregisterdata];
+    }, [sykefraværshistorikk, aggregertStatistikk, enhetsregisterdata]);
 
     useEffect(() => {
-        if (datakilder.every((ressurs) => ressurs.status === RestStatus.Suksess)) {
-            const ekstradata = getEkstradata({
-                sykefraværshistorikk,
-                summertSykefravær,
-                virksomhetsdata,
-                enhetsregisterdata,
-            });
+        if (
+            sykefraværshistorikk.status === RestStatus.Suksess &&
+            aggregertStatistikk.restStatus === RestStatus.Suksess &&
+            enhetsregisterdata.restUnderenhet.status === RestStatus.Suksess &&
+            enhetsregisterdata.restOverordnetEnhet.status === RestStatus.Suksess
+        ) {
+            const ekstradata = getEkstradata(aggregertStatistikk, enhetsregisterdata);
             analyticsClient?.setUserProperties({
                 ...ekstradata,
             });
         }
-    }, [
-        sykefraværshistorikk,
-        summertSykefravær,
-        virksomhetsdata,
-        enhetsregisterdata,
-        datakilder,
-        analyticsClient,
-    ]);
-
-    const restOrganisasjoner = altinnOrganisasjoner;
-    const restOrganisasjonerMedStatistikk = altinnOrganisasjonerMedStatistikk;
-
-    const restSykefraværshistorikk = sykefraværshistorikk;
-    const restvirksomhetsdata = virksomhetsdata;
-
-    const restPubliseringsdatoer = publiseringsdatoer;
-    const brukerHarIkkeTilgangTilNoenOrganisasjoner =
-        restOrganisasjoner.status === RestStatus.Suksess && restOrganisasjoner.data.length === 0;
+    }, [sykefraværshistorikk, enhetsregisterdata, datakilder, analyticsClient, aggregertStatistikk]);
 
     let innhold;
     if (ER_VEDLIKEHOLD_AKTIVERT) {
         return <VedlikeholdSide />;
     }
 
-    if (dataLastesInn(restOrganisasjoner, restvirksomhetsdata)) {
+    if (dataLastesInn(altinnOrganisasjoner, aggregertStatistikk)) {
         innhold = <Lasteside />;
     }
 
-    if (restOrganisasjoner.status === RestStatus.IkkeInnlogget) {
+    if (altinnOrganisasjoner.status === RestStatus.IkkeInnlogget) {
         return <Innloggingsside redirectUrl={window.location.href} />;
     }
 
-    if (restOrganisasjoner.status !== RestStatus.Suksess) {
+    if (altinnOrganisasjoner.status !== RestStatus.Suksess) {
         innhold = <FeilFraAltinnSide />;
     }
 
+    const brukerHarIkkeTilgangTilNoenOrganisasjoner =
+        altinnOrganisasjoner.status === RestStatus.Suksess &&
+        altinnOrganisasjoner.data.length === 0;
     if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
         return <ManglerRettighetRedirect />;
     }
@@ -166,11 +137,11 @@ export const AppContent = ({
                             <Forside>
                                 <Sammenligningspanel
                                     restStatus={aggregertStatistikk.restStatus}
-                                    restAltinnOrganisasjoner={restOrganisasjoner}
+                                    restAltinnOrganisasjoner={altinnOrganisasjoner}
                                 >
                                     <EkspanderbarSammenligning
                                         aggregertStatistikk={aggregertStatistikk}
-                                        restPubliseringsdatoer={restPubliseringsdatoer}
+                                        restPubliseringsdatoer={publiseringsdatoer}
                                     />
                                 </Sammenligningspanel>
                                 <div className={'app__lenkepanelWrapper'}>
@@ -178,7 +149,7 @@ export const AppContent = ({
                                     <Samtalestøttepanel />
                                 </div>
                                 <ArbeidsmiljøportalPanel
-                                    restvirksomhetsdata={restvirksomhetsdata}
+                                    restUnderenhet={enhetsregisterdata.restUnderenhet}
                                 />
                             </Forside>
                         </InnloggingssideWrapper>
@@ -191,8 +162,10 @@ export const AppContent = ({
                     <>
                         <Brødsmulesti gjeldendeSide="historikk" />
                         <GrafOgTabell
-                            restSykefraværsstatistikk={restSykefraværshistorikk}
-                            restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
+                            restSykefraværsstatistikk={sykefraværshistorikk}
+                            restOrganisasjonerMedStatistikk={
+                                altinnOrganisasjonerMedStatistikktilgang
+                            }
                         />
                     </>
                 }
@@ -204,7 +177,7 @@ export const AppContent = ({
             miljo={getMiljø() === MILJØ.PROD ? 'prod' : 'dev'}
             apiUrl="/sykefravarsstatistikk/notifikasjon-bruker-api"
         >
-            {<Banner tittel="Sykefraværsstatistikk" restOrganisasjoner={restOrganisasjoner} />}
+            {<Banner tittel="Sykefraværsstatistikk" restOrganisasjoner={altinnOrganisasjoner} />}
             {innhold}
         </NotifikasjonWidgetProvider>
     );

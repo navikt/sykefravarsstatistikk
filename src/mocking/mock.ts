@@ -5,16 +5,15 @@ import fetchMock, {
     MockResponse,
     MockResponseFunction,
 } from 'fetch-mock';
-import { lagMockHistorikkForNæring } from './sykefraværshistorikk-mock';
-import { OverordnetEnhet, UnderenhetDto } from '../api/enhetsregisteret-api';
-import { underenhetMock } from './enhetsregisteret-mock';
+import { UnderenhetDto } from '../enhetsregisteret/api/underenheter-api';
+import { underenheterResponseMock } from '../enhetsregisteret/api/mocks/underenheter-api-mocks';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
-import { defaultBedriftsmetrikker } from './virksomhetsdata-mock';
 import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './altinn-mock';
-import { summertSykefraværshistorikkMockUtenData } from './summert-sykefraværshistorikk-mock';
 import { getMiljø } from '../utils/miljøUtils';
 import { aggregertMockData } from './aggregert-mock';
 import { getMockPubliseringsdatoer } from './mock-publiseringsdatoer';
+import { OverordnetEnhet } from '../enhetsregisteret/domene/enhet';
+import { lagMockHistorikkForNæring } from './sykefraværshistorikk-mock';
 
 const mock = {
     minSideArbeidsgiver: true,
@@ -90,31 +89,7 @@ if (mock.sykefraværsstatistikkApi) {
     mockGetAndLog('express:/sykefravarsstatistikk/api/publiseringsdato', () => {
         return getMockPubliseringsdatoer();
     });
-    mockGetAndLog(
-        'express:/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/summert',
-        (url) => {
-            const orgnr = url.match(/[0-9]{9}/)![0];
 
-            return (
-                getMockOrganisasjon(orgnr)?.summertSykefraværshistorikk ||
-                summertSykefraværshistorikkMockUtenData
-            );
-        },
-        {
-            delay: 1000 * delayfaktor,
-        }
-    );
-
-    mockGetAndLog(
-        'express:/sykefravarsstatistikk/api/:orgnr/bedriftsmetrikker',
-        (url) => {
-            const orgnr = url.match(/[0-9]{9}/)![0];
-            return getMockOrganisasjon(orgnr)?.bedriftsmetrikker || defaultBedriftsmetrikker;
-        },
-        {
-            delay: 1000 * delayfaktor,
-        }
-    );
     mockGetAndLog(
         '/sykefravarsstatistikk/api/organisasjoner/statistikk',
         getOrganisasjonerBrukerHarTilgangTilMock(),
@@ -140,26 +115,13 @@ if (mock.enhetsregisteret) {
     mockGetAndLog('begin:https://data.brreg.no/enhetsregisteret/api/underenheter/', (url) => {
         const orgnr = url.match(/[0-9]{9}/)![0];
         const defaultUnderenhetDto: UnderenhetDto = {
-            ...underenhetMock,
+            ...underenheterResponseMock,
             organisasjonsnummer: orgnr,
         };
-        const underenhetDto = getMockOrganisasjon(orgnr)?.underenhetDto;
+        const underenhetDto = getMockOrganisasjon(orgnr)?.underenhet;
         console.log('MOCK ENHETREGISTERET  / UNDERENHETER, underenhetDto: ', underenhetDto);
         return underenhetDto || defaultUnderenhetDto;
     });
-}
-
-if (mock.featureToggles) {
-    mockGetAndLog(
-        'begin:/sykefravarsstatistikk/api/feature',
-        {
-            'sykefravarsstatistikk.ab-test.tips': false,
-            'sykefravarsstatistikk.arbeidsmiljoportal': !(getMiljø() === 'labs-gcp'),
-        },
-        {
-            delay: 1000 * delayfaktor,
-        }
-    );
 }
 
 if (mock.iatjenester) {

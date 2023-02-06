@@ -50,7 +50,7 @@ jobs:
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/logging_kibana'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:

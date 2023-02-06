@@ -36,13 +36,13 @@ const levels = Object.freeze({
 
 //Denne listen må synces med predefinerte feilmeldinger i klientkoden
 const predefinerteFeilmeldinger = Object.freeze({
-  feilVedHentingAvAltinnOrganisasjoner: "Feil ved kall til Altinn for henting av organisasjoner",
-  virksomhetensEllerBransjensTallErNaN: "virksomhetens eller bransjens tall er NaN",
-  kunneIkkeParseAggregertDataFeil: "Kunne ikke parse aggregert data",
-  ukjentFeilMedAggregertData: "Ukjent feil med aggregert data",
-  brukerIkkeInloggetFeil: "Nettverkskall feilet da bruker ikke er innlogget",
-  brukerIkkeAutorisertFeil: "Nettverkskall feilet da bruker ikke er Autorisert",
-  feilVedNettverkskall: "Det er oppstått en feil ved nettverkskall"
+    feilVedHentingAvAltinnOrganisasjoner: 'Feil ved kall til Altinn for henting av organisasjoner',
+    virksomhetensOgBransjensTallErNaN: 'Virksomhetens og bransjens tall er NaN',
+    kunneIkkeParseAggregertDataFeil: 'Kunne ikke parse aggregert data',
+    ukjentFeilMedAggregertData: 'Ukjent feil med aggregert data',
+    brukerIkkeInloggetFeil: 'Nettverkskall feilet da bruker ikke er innlogget',
+    brukerIkkeAutorisertFeil: 'Nettverkskall feilet da bruker ikke er Autorisert',
+    feilVedNettverkskall: 'Det er oppstått en feil ved nettverkskall',
 });
 
 const tekniskeLoggFeil = Object.freeze({
