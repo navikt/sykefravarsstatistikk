@@ -21,8 +21,10 @@ import {
 } from './konstanter';
 import './App.less';
 import { Forside } from './Forside/Forside';
-import { Sammenligningspanel } from './Forside/Sammenligningspanel/Sammenligningspanel';
-import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/EkspanderbarSammenligning';
+import { Sammenligningspaneler } from './Forside/Sammenligningspanel/Sammenligningspaneler';
+import {
+    EkspanderbarSammenligning
+} from './Forside/EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import {
     KalkulatorRedirect,
@@ -49,31 +51,31 @@ interface Props {
 
 const App: FunctionComponent<Props> = ({ analyticsClient }) => {
     return (
-        <main id="maincontent">
-            <AppContent {...useSykefraværAppData()} analyticsClient={analyticsClient} />
-        </main>
+      <main id="maincontent">
+          <AppContent {...useSykefraværAppData()} analyticsClient={analyticsClient} />
+      </main>
     );
 };
 
 function dataLastesInn(
-    restOrganisasjoner: RestAltinnOrganisasjoner,
-    restAggregertStatistikk: RestAggregertStatistikk
+  restOrganisasjoner: RestAltinnOrganisasjoner,
+  restAggregertStatistikk: RestAggregertStatistikk
 ) {
     return (
-        restOrganisasjoner.status === RestStatus.LasterInn ||
-        restAggregertStatistikk.restStatus === RestStatus.LasterInn
+      restOrganisasjoner.status === RestStatus.LasterInn ||
+      restAggregertStatistikk.restStatus === RestStatus.LasterInn
     );
 }
 
 export const AppContent = ({
-    altinnOrganisasjoner,
-    altinnOrganisasjonerMedStatistikktilgang,
-    enhetsregisterdata,
-    sykefraværshistorikk,
-    aggregertStatistikk,
-    publiseringsdatoer,
-    analyticsClient,
-}: SykefraværAppData & {
+                               altinnOrganisasjoner,
+                               altinnOrganisasjonerMedStatistikktilgang,
+                               enhetsregisterdata,
+                               sykefraværshistorikk,
+                               aggregertStatistikk,
+                               publiseringsdatoer,
+                               analyticsClient,
+                           }: SykefraværAppData & {
     analyticsClient: AnalyticsClient;
 }) => {
     useAnalytics(analyticsClient);
@@ -84,10 +86,10 @@ export const AppContent = ({
 
     useEffect(() => {
         if (
-            sykefraværshistorikk.status === RestStatus.Suksess &&
-            aggregertStatistikk.restStatus === RestStatus.Suksess &&
-            enhetsregisterdata.restUnderenhet.status === RestStatus.Suksess &&
-            enhetsregisterdata.restOverordnetEnhet.status === RestStatus.Suksess
+          sykefraværshistorikk.status === RestStatus.Suksess &&
+          aggregertStatistikk.restStatus === RestStatus.Suksess &&
+          enhetsregisterdata.restUnderenhet.status === RestStatus.Suksess &&
+          enhetsregisterdata.restOverordnetEnhet.status === RestStatus.Suksess
         ) {
             const ekstradata = getEkstradata(aggregertStatistikk, enhetsregisterdata);
             analyticsClient?.setUserProperties({
@@ -114,72 +116,73 @@ export const AppContent = ({
     }
 
     const brukerHarIkkeTilgangTilNoenOrganisasjoner =
-        altinnOrganisasjoner.status === RestStatus.Suksess &&
-        altinnOrganisasjoner.data.length === 0;
+      altinnOrganisasjoner.status === RestStatus.Suksess &&
+      altinnOrganisasjoner.data.length === 0;
     if (brukerHarIkkeTilgangTilNoenOrganisasjoner) {
         return <ManglerRettighetRedirect />;
     }
 
     innhold = (
-        <Routes>
-            <Route
-                path={PATH_FORSIDE_BARNEHAGE}
-                element={<LegacyBarnehageSammenligningRedirect />}
-            />
-            <Route path={PATH_FORSIDE_GENERELL} element={<LegacySammenligningRedirect />} />
-            <Route path={PATH_KALKULATOR_REDIRECT} element={<KalkulatorRedirect />} />
-            <Route
-                path={PATH_FORSIDE}
-                element={
-                    <>
-                        <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                        <InnloggingssideWrapper aggregertStatistikk={aggregertStatistikk}>
-                            <Forside>
-                                <Sammenligningspanel
-                                    restStatus={aggregertStatistikk.restStatus}
-                                    restAltinnOrganisasjoner={altinnOrganisasjoner}
-                                >
-                                    <EkspanderbarSammenligning
-                                        aggregertStatistikk={aggregertStatistikk}
-                                        restPubliseringsdatoer={publiseringsdatoer}
-                                    />
-                                </Sammenligningspanel>
-                                <div className={'app__lenkepanelWrapper'}>
-                                    <Historikkpanel />
-                                    <Samtalestøttepanel />
-                                </div>
-                                <ArbeidsmiljøportalPanel
-                                    restUnderenhet={enhetsregisterdata.restUnderenhet}
+      <Routes>
+          <Route
+            path={PATH_FORSIDE_BARNEHAGE}
+            element={<LegacyBarnehageSammenligningRedirect />}
+          />
+          <Route path={PATH_FORSIDE_GENERELL} element={<LegacySammenligningRedirect />} />
+          <Route path={PATH_KALKULATOR_REDIRECT} element={<KalkulatorRedirect />} />
+          <Route
+            path={PATH_FORSIDE}
+            element={
+                <>
+                    <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
+                    <InnloggingssideWrapper aggregertStatistikk={aggregertStatistikk}>
+                        <Forside>
+                            <Sammenligningspaneler
+                              restStatus={aggregertStatistikk.restStatus}
+                              restAltinnOrganisasjoner={altinnOrganisasjoner}
+                              restAltinnOrganisasjonerMedStatistikktilgang={altinnOrganisasjonerMedStatistikktilgang}
+                            >
+                                <EkspanderbarSammenligning
+                                  aggregertStatistikk={aggregertStatistikk}
+                                  restPubliseringsdatoer={publiseringsdatoer}
                                 />
-                            </Forside>
-                        </InnloggingssideWrapper>
-                    </>
-                }
-            />
-            <Route
-                path={PATH_HISTORIKK}
-                element={
-                    <>
-                        <Brødsmulesti gjeldendeSide="historikk" />
-                        <GrafOgTabell
-                            restSykefraværsstatistikk={sykefraværshistorikk}
-                            restOrganisasjonerMedStatistikk={
-                                altinnOrganisasjonerMedStatistikktilgang
-                            }
-                        />
-                    </>
-                }
-            />
-        </Routes>
+                            </Sammenligningspaneler>
+                            <div className={'app__lenkepanelWrapper'}>
+                                <Historikkpanel />
+                                <Samtalestøttepanel />
+                            </div>
+                            <ArbeidsmiljøportalPanel
+                              restUnderenhet={enhetsregisterdata.restUnderenhet}
+                            />
+                        </Forside>
+                    </InnloggingssideWrapper>
+                </>
+            }
+          />
+          <Route
+            path={PATH_HISTORIKK}
+            element={
+                <>
+                    <Brødsmulesti gjeldendeSide="historikk" />
+                    <GrafOgTabell
+                      restSykefraværsstatistikk={sykefraværshistorikk}
+                      restOrganisasjonerMedStatistikk={
+                          altinnOrganisasjonerMedStatistikktilgang
+                      }
+                    />
+                </>
+            }
+          />
+      </Routes>
     );
     return (
-        <NotifikasjonWidgetProvider
-            miljo={getMiljø() === MILJØ.PROD ? 'prod' : 'dev'}
-            apiUrl="/sykefravarsstatistikk/notifikasjon-bruker-api"
-        >
-            {<Banner tittel="Sykefraværsstatistikk" restOrganisasjoner={altinnOrganisasjoner} />}
-            {innhold}
-        </NotifikasjonWidgetProvider>
+      <NotifikasjonWidgetProvider
+        miljo={getMiljø() === MILJØ.PROD ? 'prod' : 'dev'}
+        apiUrl="/sykefravarsstatistikk/notifikasjon-bruker-api"
+      >
+          {<Banner tittel="Sykefraværsstatistikk" restOrganisasjoner={altinnOrganisasjoner} />}
+          {innhold}
+      </NotifikasjonWidgetProvider>
     );
 };
 

@@ -2,7 +2,7 @@ import {AltinnOrganisasjon} from '../api/altinnorganisasjon-api';
 
 export const orgnrUtenTilgang = '100100100';
 
-const fleskOgFisk: AltinnOrganisasjon[] = [
+export const fleskOgFisk: AltinnOrganisasjon[] = [
   {
     Name: 'FLESK OG FISK AS',
     Type: 'Enterprise',
@@ -48,7 +48,7 @@ const ingenTilgangAs = [
   },
 ];
 
-const heiOgHåBarnehage: AltinnOrganisasjon[] = [
+export const heiOgHåBarnehage: AltinnOrganisasjon[] = [
   {
     Name: 'HEI OG HÅ BARNEHAGE',
     Type: 'Enterprise',
@@ -228,6 +228,6 @@ export const organisasjonerMock: AltinnOrganisasjon[] = [
 export const getOrganisasjonerMock = (): AltinnOrganisasjon[] => {
   return organisasjonerMock;
 };
-export const getOrganisasjonerBrukerHarTilgangTilMock = (): AltinnOrganisasjon[] => {
+export const getOrganisasjonerBrukerHarIaRettigheterTilMock = (): AltinnOrganisasjon[] => {
   return organisasjonerMock.filter((org) => org.OrganizationNumber !== orgnrUtenTilgang);
 };
