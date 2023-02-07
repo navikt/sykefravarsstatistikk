@@ -8,7 +8,7 @@ import fetchMock, {
 import { UnderenhetDto } from '../enhetsregisteret/api/underenheter-api';
 import { underenheterResponseMock } from '../enhetsregisteret/api/mocks/underenheter-api-mocks';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
-import { getOrganisasjonerBrukerHarTilgangTilMock, getOrganisasjonerMock } from './altinn-mock';
+import { getOrganisasjonerBrukerHarIaRettigheterTilMock, getOrganisasjonerMock } from './altinn-mock';
 import { getMiljø } from '../utils/miljøUtils';
 import { aggregertMockData } from './aggregert-mock';
 import { getMockPubliseringsdatoer } from './mock-publiseringsdatoer';
@@ -92,7 +92,7 @@ if (mock.sykefraværsstatistikkApi) {
 
     mockGetAndLog(
         '/sykefravarsstatistikk/api/organisasjoner/statistikk',
-        getOrganisasjonerBrukerHarTilgangTilMock(),
+        getOrganisasjonerBrukerHarIaRettigheterTilMock(),
         {
             delay: 1000 * delayfaktor,
         }
