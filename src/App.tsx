@@ -14,20 +14,16 @@ import {
     ER_VEDLIKEHOLD_AKTIVERT,
     MILJØ,
     PATH_FORSIDE,
-    PATH_FORSIDE_BARNEHAGE,
-    PATH_FORSIDE_GENERELL,
     PATH_HISTORIKK,
     PATH_KALKULATOR_REDIRECT,
 } from './konstanter';
 import './App.less';
 import { Forside } from './Forside/Forside';
-import { Sammenligningspanel } from './Forside/Sammenligningspanel/Sammenligningspanel';
+import { Sammenligningspaneler } from './Forside/Sammenligningspanel/Sammenligningspaneler';
 import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import {
     KalkulatorRedirect,
-    LegacyBarnehageSammenligningRedirect,
-    LegacySammenligningRedirect,
     ManglerRettighetRedirect,
 } from './utils/redirects';
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
@@ -94,7 +90,13 @@ export const AppContent = ({
                 ...ekstradata,
             });
         }
-    }, [sykefraværshistorikk, enhetsregisterdata, datakilder, analyticsClient, aggregertStatistikk]);
+    }, [
+        sykefraværshistorikk,
+        enhetsregisterdata,
+        datakilder,
+        analyticsClient,
+        aggregertStatistikk,
+    ]);
 
     let innhold;
     if (ER_VEDLIKEHOLD_AKTIVERT) {
@@ -122,11 +124,6 @@ export const AppContent = ({
 
     innhold = (
         <Routes>
-            <Route
-                path={PATH_FORSIDE_BARNEHAGE}
-                element={<LegacyBarnehageSammenligningRedirect />}
-            />
-            <Route path={PATH_FORSIDE_GENERELL} element={<LegacySammenligningRedirect />} />
             <Route path={PATH_KALKULATOR_REDIRECT} element={<KalkulatorRedirect />} />
             <Route
                 path={PATH_FORSIDE}
@@ -135,15 +132,18 @@ export const AppContent = ({
                         <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                         <InnloggingssideWrapper aggregertStatistikk={aggregertStatistikk}>
                             <Forside>
-                                <Sammenligningspanel
+                                <Sammenligningspaneler
                                     restStatus={aggregertStatistikk.restStatus}
                                     restAltinnOrganisasjoner={altinnOrganisasjoner}
+                                    restAltinnOrganisasjonerMedStatistikktilgang={
+                                        altinnOrganisasjonerMedStatistikktilgang
+                                    }
                                 >
                                     <EkspanderbarSammenligning
                                         aggregertStatistikk={aggregertStatistikk}
                                         restPubliseringsdatoer={publiseringsdatoer}
                                     />
-                                </Sammenligningspanel>
+                                </Sammenligningspaneler>
                                 <div className={'app__lenkepanelWrapper'}>
                                     <Historikkpanel />
                                     <Samtalestøttepanel />
