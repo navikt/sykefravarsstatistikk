@@ -14,8 +14,6 @@ import {
     ER_VEDLIKEHOLD_AKTIVERT,
     MILJØ,
     PATH_FORSIDE,
-    PATH_FORSIDE_BARNEHAGE,
-    PATH_FORSIDE_GENERELL,
     PATH_HISTORIKK,
     PATH_KALKULATOR_REDIRECT,
 } from './konstanter';
@@ -26,8 +24,6 @@ import { EkspanderbarSammenligning } from './Forside/EkspanderbarSammenligning/E
 import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import {
     KalkulatorRedirect,
-    LegacyBarnehageSammenligningRedirect,
-    LegacySammenligningRedirect,
     ManglerRettighetRedirect,
 } from './utils/redirects';
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
@@ -128,11 +124,6 @@ export const AppContent = ({
 
     innhold = (
         <Routes>
-            <Route
-                path={PATH_FORSIDE_BARNEHAGE}
-                element={<LegacyBarnehageSammenligningRedirect />}
-            />
-            <Route path={PATH_FORSIDE_GENERELL} element={<LegacySammenligningRedirect />} />
             <Route path={PATH_KALKULATOR_REDIRECT} element={<KalkulatorRedirect />} />
             <Route
                 path={PATH_FORSIDE}

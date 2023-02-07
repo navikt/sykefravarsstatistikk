@@ -1,8 +1,7 @@
 import React, { FunctionComponent, useRef } from 'react';
 import './Sammenligningspanel.less';
 import ReactToPrint from 'react-to-print';
-import { AlertStripeAdvarsel, AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { Alert } from "@navikt/ds-react";
+import { Alert } from '@navikt/ds-react';
 import { RestStatus } from '../../api/api-utils';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
@@ -39,12 +38,12 @@ export const Sammenligningspaneler: FunctionComponent<{
     return (
         <>
             {harFeil && (
-                <AlertStripeFeil className="sammenligningspanel__info-eller-feilmelding">
+                <Alert variant={'error'} className="sammenligningspanel__info-eller-feilmelding">
                     Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen senere.
-                </AlertStripeFeil>
+                </Alert>
             )}
             {!brukerHarIaRettighetTilValgtBedrift && (
-                <Alert variant={"warning"} className="sammenligningspanel__info-eller-feilmelding">
+                <Alert variant={'warning'} className="sammenligningspanel__info-eller-feilmelding">
                     Du mangler rettigheter til å se tallene for bedriften du har valgt.{' '}
                     <EksternLenke
                         href={
