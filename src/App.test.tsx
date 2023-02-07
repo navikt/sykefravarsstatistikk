@@ -6,7 +6,6 @@ import { RestRessurs, RestStatus } from './api/api-utils';
 import { BASE_PATH } from './konstanter';
 import { BrowserRouter } from 'react-router-dom';
 import { amplitudeMock } from './mocking/amplitude-mock';
-// import { useOrgnr } from './hooks/useOrgnr';
 import * as hooks from './hooks/useOrgnr';
 import { mapTilUnderenhet, RestUnderenhet } from './enhetsregisteret/api/underenheter-api';
 import { underenheterResponseMock } from './enhetsregisteret/api/mocks/underenheter-api-mocks';
@@ -52,17 +51,21 @@ describe('Viser advarsel-banner kun dersom rettigheter mangler', () => {
         data: heiOgHåBarnehage,
     };
 
+    function renderSammenlikningspaneler() {
+        return render(
+          <Sammenligningspaneler
+            restStatus={RestStatus.Suksess}
+            restAltinnOrganisasjoner={bedrifter}
+            restAltinnOrganisasjonerMedStatistikktilgang={bedrifterMedStatistikktilgang}
+          />
+        );
+    }
+
     it('Viser warning-banner dersom brukeren mangler IA-rettigheter til bedrift', () => {
         const valgtBedrift = fleskOgFisk[0].OrganizationNumber;
         jest.spyOn(hooks, 'useOrgnr').mockReturnValue(valgtBedrift);
 
-        const { getByRole } = render(
-            <Sammenligningspaneler
-                restStatus={RestStatus.Suksess}
-                restAltinnOrganisasjoner={bedrifter}
-                restAltinnOrganisasjonerMedStatistikktilgang={bedrifterMedStatistikktilgang}
-            />
-        );
+        const { getByRole } = renderSammenlikningspaneler()
 
         const beOmTilgangLenke = getByRole('link', {
             name: 'Be om tilgang EksternLenkeIkon.svg',
@@ -77,18 +80,11 @@ describe('Viser advarsel-banner kun dersom rettigheter mangler', () => {
         const valgtBedrift = heiOgHåBarnehage[0].OrganizationNumber;
         jest.spyOn(hooks, 'useOrgnr').mockReturnValue(valgtBedrift);
 
-        const { queryByText } = render(
-            <Sammenligningspaneler
-                restStatus={RestStatus.Suksess}
-                restAltinnOrganisasjoner={bedrifter}
-                restAltinnOrganisasjonerMedStatistikktilgang={bedrifterMedStatistikktilgang}
-            />
-        );
+        const { queryByText } = renderSammenlikningspaneler()
 
         const banner = queryByText(
             'Du mangler rettigheter til å se tallene for bedriften du har valgt'
         );
-
         expect(banner).not.toBeInTheDocument();
     });
 });
