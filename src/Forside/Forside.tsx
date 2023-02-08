@@ -4,12 +4,11 @@ import { EkspanderbarSammenligning } from './EkspanderbarSammenligning/Ekspander
 import Samtalestøttepanel from './Samtalestøttepanel/Samtalestøttepanel';
 import { ArbeidsmiljøportalPanel } from './ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import { SykefraværAppData } from '../hooks/useSykefraværAppData';
-import Brødsmulesti from '../Brødsmulesti/Brødsmulesti';
 import { RestStatus } from '../api/api-utils';
 import { ManglerRettigheterIAltinnSide } from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { useOrgnr } from '../hooks/useOrgnr';
 import './Forside.less';
-import { Historikkpanel } from "./Historikkpanel/Historikkpanel";
+import { Historikkpanel } from './Historikkpanel/Historikkpanel';
 
 export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     const orgnr = useOrgnr() || '';
@@ -20,38 +19,37 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
             .map((org) => org.OrganizationNumber)
             .includes(orgnr);
 
-    const innhold = !brukerHarIaRettighetTilValgtBedrift ? (
-        <ManglerRettigheterIAltinnSide
-            restOrganisasjonerMedStatistikk={appData.altinnOrganisasjonerMedStatistikktilgang}
-        />
-    ) : (
-        <>
-            <Sammenligningspaneler
-                restStatus={appData.aggregertStatistikk.restStatus}
-                restAltinnOrganisasjoner={appData.altinnOrganisasjoner}
-                restAltinnOrganisasjonerMedStatistikktilgang={
-                    appData.altinnOrganisasjonerMedStatistikktilgang
-                }
-            >
-                <EkspanderbarSammenligning
-                    aggregertStatistikk={appData.aggregertStatistikk}
-                    restPubliseringsdatoer={appData.publiseringsdatoer}
-                />
-            </Sammenligningspaneler>
-            <div className="lenkepanelWrapper">
-                <Historikkpanel />
-                <Samtalestøttepanel />
-            </div>
-            <ArbeidsmiljøportalPanel restUnderenhet={appData.enhetsregisterdata.restUnderenhet} />
-        </>
-    );
+    if (!brukerHarIaRettighetTilValgtBedrift) {
+        return (
+            <ManglerRettigheterIAltinnSide
+                restOrganisasjonerMedStatistikk={appData.altinnOrganisasjonerMedStatistikktilgang}
+            />
+        );
+    }
 
     return (
-        <>
-            <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-            <div className="forside__wrapper">
-                <div className="forside">{innhold}</div>
+        <div className="forside__wrapper">
+            <div className="forside">
+                <Sammenligningspaneler
+                    restStatus={appData.aggregertStatistikk.restStatus}
+                    restAltinnOrganisasjoner={appData.altinnOrganisasjoner}
+                    restAltinnOrganisasjonerMedStatistikktilgang={
+                        appData.altinnOrganisasjonerMedStatistikktilgang
+                    }
+                >
+                    <EkspanderbarSammenligning
+                        aggregertStatistikk={appData.aggregertStatistikk}
+                        restPubliseringsdatoer={appData.publiseringsdatoer}
+                    />
+                </Sammenligningspaneler>
+                <div className="lenkepanelWrapper">
+                    <Historikkpanel />
+                    <Samtalestøttepanel />
+                </div>
+                <ArbeidsmiljøportalPanel
+                    restUnderenhet={appData.enhetsregisterdata.restUnderenhet}
+                />
             </div>
-        </>
+        </div>
     );
 };

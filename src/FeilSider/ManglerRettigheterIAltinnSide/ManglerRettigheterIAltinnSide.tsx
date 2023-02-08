@@ -27,7 +27,7 @@ export const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = ({
                 </div>
 
                 <Normaltekst className="mangler-rettigheter-i-altinn__overskrift">
-                    Du har ikke Altinn-tilgangen du trenger for å se Sykefraværsstatistikk for denne
+                    Du har ikke Altinn-tilgangen du trenger for å se sykefraværsstatistikk for denne
                     virksomheten. Bytt til en virksomhet der du har tilgang eller be om tilgang i
                     Altinn for denne virksomheten.
                 </Normaltekst>

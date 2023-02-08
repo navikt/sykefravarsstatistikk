@@ -113,7 +113,10 @@ export const AppContent = (appData: SykefraværAppData & { analyticsClient: Anal
     innhold = (
         <Routes>
             <Route path={PATH_KALKULATOR_REDIRECT} element={<KalkulatorRedirect />} />
-            <Route path={PATH_FORSIDE} element={<Forside {...appData} />} />
+            <Route path={PATH_FORSIDE} element={
+                <>
+                    <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
+                    <Forside {...appData} /></>} />
             <Route
                 path={PATH_HISTORIKK}
                 element={
