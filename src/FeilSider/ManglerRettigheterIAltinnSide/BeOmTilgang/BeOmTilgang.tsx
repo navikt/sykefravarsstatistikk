@@ -26,7 +26,7 @@ export const BeOmTilgang: FunctionComponent = () => {
                     </Undertittel>
                     <Normaltekst tag="span">
                         Gå til Altinn og be om tilgang til tjenesten. Du kan velge hvem i
-                        virksomheten som for forespørselen.
+                        virksomheten som får forespørselen.
                     </Normaltekst>
                 </span>
             </span>
