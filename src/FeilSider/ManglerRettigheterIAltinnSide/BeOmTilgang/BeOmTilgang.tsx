@@ -1,24 +1,24 @@
-import React, {FunctionComponent} from 'react';
+import React, { FunctionComponent } from 'react';
 import Lenkepanel from 'nav-frontend-lenkepanel/lib';
-import {ReactComponent as AltinnLogo} from './altinn-logo.svg';
+import { ReactComponent as AltinnLogo } from './altinn-logo.svg';
 import './BeOmTilgang.less';
-import {Normaltekst, Undertittel} from 'nav-frontend-typografi';
-import {useOrgnr} from '../../../hooks/useOrgnr';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { useOrgnr } from '../../../hooks/useOrgnr';
 
 const beOmTilgangTilSykefraværsstatistikkIAltinnLink = (orgnr: string | undefined) =>
     'https://altinn.no/ui/DelegationRequest?offeredBy=' + orgnr + '&resources=3403_2';
 
 export const BeOmTilgang: FunctionComponent = () => {
-  const orgnr = useOrgnr();
-  return (
-      <Lenkepanel
-          border
-          tittelProps="normaltekst"
-          href={beOmTilgangTilSykefraværsstatistikkIAltinnLink(orgnr)}
-      >
+    const orgnr = useOrgnr();
+    return (
+        <Lenkepanel
+            border
+            tittelProps="normaltekst"
+            href={beOmTilgangTilSykefraværsstatistikkIAltinnLink(orgnr)}
+        >
             <span className="be-om-tilgang">
                 <span className="be-om-tilgang__svg">
-                    <AltinnLogo/>
+                    <AltinnLogo />
                 </span>
                 <span className="be-om-tilgang__tekst">
                     <Undertittel tag="span" className="be-om-tilgang__tittel">
@@ -30,6 +30,6 @@ export const BeOmTilgang: FunctionComponent = () => {
                     </Normaltekst>
                 </span>
             </span>
-      </Lenkepanel>
-  );
+        </Lenkepanel>
+    );
 };

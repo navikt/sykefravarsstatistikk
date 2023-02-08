@@ -6,6 +6,7 @@ import Lenke from 'nav-frontend-lenker';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import { OrganisasjonerMedTilgangListe } from './OrganisasjonerMedTilgangListe/OrganisasjonerMedTilgangListe';
 import { BeOmTilgang } from './BeOmTilgang/BeOmTilgang';
+import EksternLenke from "../../felleskomponenter/EksternLenke/EksternLenke";
 
 interface Props {
     restOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
@@ -21,7 +22,7 @@ export const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = ({
                     <img
                         src={informasjonsirkelSvg}
                         className="mangler-rettigheter-i-altinn__tekst_og_ikon__ikon"
-                        alt=""
+                        alt="altinn-logo"
                     />
                     <Systemtittel tag="h2">Du mangler rettigheter i Altinn</Systemtittel>
                 </div>
@@ -39,12 +40,12 @@ export const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = ({
                 <Element className="mangler-rettigheter-i-altinn__mer-info">
                     Lenker til mer informasjon
                 </Element>
-                <Lenke
+                <EksternLenke
                     className="mangler-rettigheter-i-altinn__lenke"
                     href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/informasjon-om-tilgangsstyring"
                 >
                     Les mer om hvordan tilgangsstyringen i Altinn fungerer
-                </Lenke>
+                </EksternLenke>
             </div>
         </div>
     );
