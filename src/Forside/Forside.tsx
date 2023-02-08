@@ -1,7 +1,6 @@
 import { default as React, FunctionComponent } from 'react';
 import { Sammenligningspaneler } from './Sammenligningspanel/Sammenligningspaneler';
 import { EkspanderbarSammenligning } from './EkspanderbarSammenligning/EkspanderbarSammenligning';
-import Historikkpanel from './Historikkpanel/Historikkpanel';
 import Samtalestøttepanel from './Samtalestøttepanel/Samtalestøttepanel';
 import { ArbeidsmiljøportalPanel } from './ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import { SykefraværAppData } from '../hooks/useSykefraværAppData';
@@ -10,6 +9,7 @@ import { RestStatus } from '../api/api-utils';
 import { ManglerRettigheterIAltinnSide } from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { useOrgnr } from '../hooks/useOrgnr';
 import './Forside.less';
+import { Historikkpanel } from "./Historikkpanel/Historikkpanel";
 
 export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     const orgnr = useOrgnr() || '';
