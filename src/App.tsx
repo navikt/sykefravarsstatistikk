@@ -39,12 +39,12 @@ const App: FunctionComponent<Props> = ({ analyticsClient }) => {
     );
 };
 
-function dataLastesInn(appData: Omit<SykefraværAppData, 'enhetsregisterdata'>) {
+function forsideDataLastesInn(appData: SykefraværAppData) {
     return [
         appData.aggregertStatistikk.restStatus,
         appData.altinnOrganisasjoner.status,
         appData.altinnOrganisasjonerMedStatistikktilgang.status,
-    ].some((e) => [RestStatus.LasterInn, RestStatus.IkkeLastet].includes(e));
+    ].some((status) => [RestStatus.LasterInn, RestStatus.IkkeLastet].includes(status));
 }
 
 export const AppContent = (appData: SykefraværAppData & { analyticsClient: AnalyticsClient }) => {
@@ -86,7 +86,7 @@ export const AppContent = (appData: SykefraværAppData & { analyticsClient: Anal
         return <VedlikeholdSide />;
     }
 
-    if (dataLastesInn(appData)) {
+    if (forsideDataLastesInn(appData)) {
         innhold = <Lasteside />;
     }
 
