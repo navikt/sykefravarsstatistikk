@@ -25,9 +25,7 @@ import {
 } from './hooks/useSykefraværAppData';
 import { AnalyticsClient } from './amplitude/client';
 import { useAnalytics } from './hooks/useAnalytics';
-import { RestAltinnOrganisasjoner } from './api/altinnorganisasjon-api';
 import { getMiljø } from './utils/miljøUtils';
-import { RestAggregertStatistikk } from './hooks/useAggregertStatistikk';
 
 interface Props {
     analyticsClient: AnalyticsClient;
@@ -41,14 +39,12 @@ const App: FunctionComponent<Props> = ({ analyticsClient }) => {
     );
 };
 
-function dataLastesInn(
-    restOrganisasjoner: RestAltinnOrganisasjoner,
-    restAggregertStatistikk: RestAggregertStatistikk
-) {
-    return (
-        restOrganisasjoner.status === RestStatus.LasterInn ||
-        restAggregertStatistikk.restStatus === RestStatus.LasterInn
-    );
+function dataLastesInn(appData: Omit<SykefraværAppData, 'enhetsregisterdata'>) {
+    return [
+        appData.aggregertStatistikk.restStatus,
+        appData.altinnOrganisasjoner.status,
+        appData.altinnOrganisasjonerMedStatistikktilgang.status,
+    ].some((e) => [RestStatus.LasterInn, RestStatus.IkkeLastet].includes(e));
 }
 
 export const AppContent = (appData: SykefraværAppData & { analyticsClient: AnalyticsClient }) => {
@@ -90,7 +86,7 @@ export const AppContent = (appData: SykefraværAppData & { analyticsClient: Anal
         return <VedlikeholdSide />;
     }
 
-    if (dataLastesInn(appData.altinnOrganisasjoner, appData.aggregertStatistikk)) {
+    if (dataLastesInn(appData)) {
         innhold = <Lasteside />;
     }
 
@@ -113,10 +109,15 @@ export const AppContent = (appData: SykefraværAppData & { analyticsClient: Anal
     innhold = (
         <Routes>
             <Route path={PATH_KALKULATOR_REDIRECT} element={<KalkulatorRedirect />} />
-            <Route path={PATH_FORSIDE} element={
-                <>
-                    <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                    <Forside {...appData} /></>} />
+            <Route
+                path={PATH_FORSIDE}
+                element={
+                    <>
+                        <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
+                        <Forside {...appData} />
+                    </>
+                }
+            />
             <Route
                 path={PATH_HISTORIKK}
                 element={
