@@ -1,11 +1,11 @@
-import { RestRessurs, RestStatus } from "../../api/api-utils";
-import { fleskOgFisk, heiOgHåBarnehage } from "../../mocking/altinn-mock";
+import { RestRessurs, RestStatus } from '../../api/api-utils';
+import { fleskOgFisk, heiOgHåBarnehage } from '../../mocking/altinn-mock';
 import { mockAllDatahentingStatusOk } from '../../mocking/use-analytics-test-mocks';
 import { Forside } from '../../Forside/Forside';
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import * as hooks from "../../hooks/useOrgnr";
-import { AltinnOrganisasjon } from "../../api/altinnorganisasjon-api";
+import * as hooks from '../../hooks/useOrgnr';
+import { AltinnOrganisasjon } from '../../api/altinnorganisasjon-api';
 
 describe('Tester side for manglende Altinn-rettigheter', () => {
     afterEach(() => {
@@ -67,9 +67,11 @@ describe('Tester side for manglende Altinn-rettigheter', () => {
         expect(forsidensOverskrift).toBeInTheDocument();
     });
 
-    it('Vises lenke til Min Side Arbeidsgiver', () => {
-        const valgtBedrift = fleskOgFisk[0].OrganizationNumber;
-        jest.spyOn(hooks, 'useOrgnr').mockReturnValue(valgtBedrift);
+    it('Viser lenke til Min Side Arbeidsgiver', () => {
+        const valgtBedriftUtenSykefraværsstatistikkRettigheter = fleskOgFisk[0].OrganizationNumber;
+        jest.spyOn(hooks, 'useOrgnr').mockReturnValue(
+            valgtBedriftUtenSykefraværsstatistikkRettigheter
+        );
 
         const { getByRole } = renderForside();
 
