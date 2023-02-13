@@ -4,15 +4,14 @@ import {
     tilSegmenteringAntallAnsatte,
     tilSegmenteringSykefraværsprosent,
 } from './segmentering';
-import { SykefraværVurdering } from '../Forside/Speedometer/Speedometer';
 import { RestStatus } from '../api/api-utils';
 import { mapTilPrivatEllerOffentligSektor, Sektor } from '../utils/sektorUtils';
 import { Enhetsregisterdata } from '../enhetsregisteret/hooks/useEnheter';
 import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 import { RestAggregertStatistikk } from '../hooks/useAggregertStatistikk';
-import { sammenliknSykefravær } from '../Forside/vurdering-utils';
-import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
-import { Næring } from "../enhetsregisteret/domene/underenhet";
+import { sammenliknSykefravær, SykefraværVurdering } from '../Forside/vurdering-utils';
+import { Næring } from '../enhetsregisteret/domene/underenhet';
+import { Statistikkategori } from '../domene/statistikkategori';
 
 export interface AmplitudeEkstradata {
     næring2siffer: string;
@@ -23,8 +22,8 @@ export interface AmplitudeEkstradata {
     sektor: Sektor;
 }
 
-function formaterNæring(næring?: Næring): string | "INGEN_INFO" {
-    return næring ? `${næring?.kode} ${næring?.beskrivelse}` : "INGEN_INFO";
+function formaterNæring(næring?: Næring): string | 'INGEN_INFO' {
+    return næring ? `${næring?.kode} ${næring?.beskrivelse}` : 'INGEN_INFO';
 }
 
 export const getEkstraDataFraEnhetsregisteret = (
@@ -73,7 +72,7 @@ export const getEkstraDataFraAggregertSykefravær = (
         );
         const prostsentsegmentering = tilSegmenteringSykefraværsprosent(
             Number(virksomhetsdataTotalt?.verdi),
-            speedometervurdering === SykefraværVurdering.MASKERT
+            speedometervurdering === 'MASKERT'
         );
 
         return {

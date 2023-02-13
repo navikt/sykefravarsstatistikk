@@ -1,14 +1,3 @@
-import {
-  RestSummertSykefraværshistorikk,
-  Statistikkategori,
-  SummertKorttidsOgLangtidsfravær,
-  SummertSykefravær,
-  SummertSykefraværshistorikk,
-} from '../api/summert-sykefraværshistorikk-api';
-import {SykefraværVurdering} from './Speedometer/Speedometer';
-import {RestStatus} from '../api/api-utils';
-import {ÅrstallOgKvartal} from '../utils/sykefraværshistorikk-utils';
-import {SammenligningsType} from './vurderingstekster';
 import { Statistikk } from '../hooks/useAggregertStatistikk';
 import { parseVerdi } from '../utils/app-utils';
 import { logger, predefinerteFeilmeldinger } from '../utils/logger';

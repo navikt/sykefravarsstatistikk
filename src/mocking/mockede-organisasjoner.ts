@@ -1,34 +1,21 @@
-import { KvartalsvisSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
-import { UnderenhetDto } from '../enhetsregisteret/api/underenheter-api';
+import { OverordnetEnhetDto } from "../enhetsregisteret/api/enheter-api";
+import { UnderenhetDto } from "../enhetsregisteret/api/underenheter-api";
 import {
     aggregertStatistikkMockGrønnBarnehage,
     aggregertStatistikkMockGulBarnehage,
     aggregertStatistikkMockMaskert,
     aggregertStatistikkMockMedBare2Kvartaler,
     aggregertStatistikkMockRødBarnehage,
-    lagAggregertStatistikkMockGul,
-} from './summert-sykefraværshistorikk-mock';
-import { OverordnetEnhetDto } from '../enhetsregisteret/api/enheter-api';
-import { KvartalsvisSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
-import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
-import { UnderenhetDto } from '../enhetsregisteret/api/underenheter-api';
-import {
-    aggregertStatistikkMockGrønnBarnehage,
-    aggregertStatistikkMockGulBarnehage,
-    aggregertStatistikkMockMaskert,
-    aggregertStatistikkMockMedBare2Kvartaler,
-    aggregertStatistikkMockRødBarnehage,
-    lagAggregertStatistikkMockGul,
-} from './summert-sykefraværshistorikk-mock';
-import { OverordnetEnhetDto } from '../enhetsregisteret/api/enheter-api';
+    lagAggregertStatistikkMockGul
+} from "./summert-sykefraværshistorikk-mock";
+import { Statistikkategori } from "../domene/statistikkategori";
 import {
     lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet,
     lagMaskertHistorikk,
-    lagMockHistorikkForBarnehage,
-} from './sykefraværshistorikk-mock';
-import { AggregertStatistikkResponse } from '../hooks/useAggregertStatistikk';
-import { Statistikkategori } from "../domene/statistikkategori";
-import { AggregertStatistikkResponse } from '../hooks/useAggregertStatistikk';
+    lagMockHistorikkForBarnehage
+} from "./sykefraværshistorikk-mock";
+import { KvartalsvisSykefraværshistorikk } from "../api/kvartalsvis-sykefraværshistorikk-api";
+import { AggregertStatistikkResponse } from "../hooks/useAggregertStatistikk";
 
 export interface OrganisasjonMock {
     orgnr: string;
