@@ -60,7 +60,14 @@ export const commonHandlers = [
         );
     }),
 
-    rest.post('/ia-tjenester-metrikker/innlogget/mottatt-iatjeneste', (_, res, ctx) => {
-        return res(ctx.status(201));
+    rest.post(
+        'sykefravarsstatistikk/proxy/ia-tjenester-metrikker/innlogget/mottatt-iatjeneste',
+        (_, res, ctx) => {
+            return res(ctx.status(201));
+        }
+    ),
+
+    rest.post('/sykefravarsstatistikk/notifikasjon-bruker-api', async (_) => {
+        // eget mock-bibliotek for notifikasjon-bruker-api, trenger ikke håndteres av MSW
     }),
 ];

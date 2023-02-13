@@ -39,12 +39,12 @@ describe('useAnalytics', () => {
     it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => {
         const eventname = 'dummyEvent';
         const eventData = {
-            ...defaultEventData,
             someKey: 'someValue',
         };
         sendAnalytics(eventname, eventData);
         expect(amplitudeMock.logEvent).toHaveBeenCalled();
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(eventname, {
+            ...defaultEventData,
             ...eventData,
         });
     });

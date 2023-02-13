@@ -1,6 +1,9 @@
 import { AggregertStatistikkResponse, Statistikk } from "../hooks/useAggregertStatistikk";
 import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
 import { Statistikkategori } from "../domene/statistikkategori";
+import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
+import { AggregertStatistikkResponse, Statistikk } from "../hooks/useAggregertStatistikk";
+import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
 
 const tomAggregertStatistikk: Partial<AggregertStatistikkResponse> = {
     prosentSiste4KvartalerTotalt: [],

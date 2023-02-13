@@ -9,6 +9,18 @@ import {
     lagAggregertStatistikkMockGul,
 } from './summert-sykefraværshistorikk-mock';
 import { OverordnetEnhetDto } from '../enhetsregisteret/api/enheter-api';
+import { KvartalsvisSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
+import { Statistikkategori } from '../api/summert-sykefraværshistorikk-api';
+import { UnderenhetDto } from '../enhetsregisteret/api/underenheter-api';
+import {
+    aggregertStatistikkMockGrønnBarnehage,
+    aggregertStatistikkMockGulBarnehage,
+    aggregertStatistikkMockMaskert,
+    aggregertStatistikkMockMedBare2Kvartaler,
+    aggregertStatistikkMockRødBarnehage,
+    lagAggregertStatistikkMockGul,
+} from './summert-sykefraværshistorikk-mock';
+import { OverordnetEnhetDto } from '../enhetsregisteret/api/enheter-api';
 import {
     lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet,
     lagMaskertHistorikk,
@@ -16,6 +28,7 @@ import {
 } from './sykefraværshistorikk-mock';
 import { AggregertStatistikkResponse } from '../hooks/useAggregertStatistikk';
 import { Statistikkategori } from "../domene/statistikkategori";
+import { AggregertStatistikkResponse } from '../hooks/useAggregertStatistikk';
 
 export interface OrganisasjonMock {
     orgnr: string;
