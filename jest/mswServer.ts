@@ -1,4 +1,4 @@
 import { setupServer } from 'msw/node';
-import { commonHandlers } from './commonMswHandlers';
+import { commonTestHandlers } from './commonMswHandlers';
 
-export const mswServer = setupServer(...commonHandlers);
+export const mswServer = setupServer(...commonTestHandlers);
