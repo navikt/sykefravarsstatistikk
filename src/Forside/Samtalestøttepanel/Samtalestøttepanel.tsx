@@ -1,24 +1,27 @@
 import React, { FunctionComponent } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import lampeSvg from './lampe.svg';
-import { Lenkepanel } from '../../felleskomponenter/Lenkepanel/Lenkepanel';
+import PanelBase from 'nav-frontend-paneler';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import { getSamtalestøtteUrl } from '../../utils/miljøUtils';
+import { PaneltittelMedIkon } from '../../felleskomponenter/PaneltittelMedIkon/PaneltittelMedIkon';
+import './Samtalestøttepanel.less';
 
-const Samtalestøttepanel: FunctionComponent = () => {
+export const Samtalestøttepanel: FunctionComponent = () => {
     const urlMedReferer = `${getSamtalestøtteUrl()}?referer=${window.location.href}`;
     return (
-        <Lenkepanel overskrift={'Forbered samtale med medarbeider!'} ikon={lampeSvg}>
-            <Normaltekst>
-                <p>
-                    Samtaler rundt sykefravær kan være vanskelige. Vi har laget et verktøy for
-                    arbeidsgivere for å gjøre det lettere å forberede seg.
-                </p>
+        <PanelBase className="samtalestøttepanel">
+            <PaneltittelMedIkon src={lampeSvg} alt={'samtalestøtteikon'}>
+                Forbered samtale med medarbeider!
+            </PaneltittelMedIkon>
+            <Normaltekst className="samtalestøttepanel__ingress">
+                Samtaler rundt sykefravær kan være vanskelige. Vi har laget et verktøy for
+                arbeidsgivere for å gjøre det lettere å forberede seg.
             </Normaltekst>
-            <p>
-                <EksternLenke href={urlMedReferer}>Gå til samtalestøtten</EksternLenke>
-            </p>
-        </Lenkepanel>
+            <EksternLenke href={urlMedReferer}>
+                Gå til samtalestøtten
+            </EksternLenke>
+        </PanelBase>
     );
 };
 

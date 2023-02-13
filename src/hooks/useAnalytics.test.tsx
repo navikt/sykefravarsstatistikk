@@ -113,7 +113,7 @@ describe('useAnalytics', () => {
     });
 
     it('Klikk på sammenlikningspanelene trigger events i amplitude', async () => {
-        render(<AppContentWithRouter {...mockAllDatahentingFeiler} />);
+        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
 
         const sammenlikningspanel_total = document.querySelector(
             '#ekspanderbart-sammenligningspanel__tittel-knapp-TOTALT'
