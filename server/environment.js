@@ -17,7 +17,7 @@ function appRunningOnDevGcp() {
 }
 
 function appRunningOnProdGcp() {
-    return getCurrentEnvironment() === "dev-gcp"
+    return getCurrentEnvironment() === "prod-gcp"
 }
 
 

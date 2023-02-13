@@ -2,7 +2,7 @@ import {AltinnOrganisasjon} from '../api/altinnorganisasjon-api';
 
 export const orgnrUtenTilgang = '100100100';
 
-const fleskOgFisk: AltinnOrganisasjon[] = [
+export const fleskOgFisk: AltinnOrganisasjon[] = [
   {
     Name: 'FLESK OG FISK AS',
     Type: 'Enterprise',
@@ -48,7 +48,7 @@ const ingenTilgangAs = [
   },
 ];
 
-const heiOgHåBarnehage: AltinnOrganisasjon[] = [
+export const heiOgHåBarnehage: AltinnOrganisasjon[] = [
   {
     Name: 'HEI OG HÅ BARNEHAGE',
     Type: 'Enterprise',
@@ -58,9 +58,9 @@ const heiOgHåBarnehage: AltinnOrganisasjon[] = [
     ParentOrganizationNumber: '',
   },
   {
-    Name: 'HEI OG HÅ BARNEHAGE',
+    Name: 'HEI OG HÅ BARNEHAGE - Gul',
     Type: 'Business',
-    OrganizationNumber: '888888888',
+    OrganizationNumber: '888888882',
     OrganizationForm: 'BEDR',
     Status: 'Active',
     ParentOrganizationNumber: '777777777',
@@ -101,14 +101,6 @@ const heiOgHåBarnehage: AltinnOrganisasjon[] = [
     Name: 'HEI OG HÅ BARNEHAGE - Grønn',
     Type: 'Business',
     OrganizationNumber: '888888883',
-    OrganizationForm: 'BEDR',
-    Status: 'Active',
-    ParentOrganizationNumber: '777777777',
-  },
-  {
-    Name: 'HEI OG HÅ BARNEHAGE - Gul',
-    Type: 'Business',
-    OrganizationNumber: '888888882',
     OrganizationForm: 'BEDR',
     Status: 'Active',
     ParentOrganizationNumber: '777777777',
@@ -236,6 +228,6 @@ export const organisasjonerMock: AltinnOrganisasjon[] = [
 export const getOrganisasjonerMock = (): AltinnOrganisasjon[] => {
   return organisasjonerMock;
 };
-export const getOrganisasjonerMedStatistikktilgangMock = (): AltinnOrganisasjon[] => {
+export const getOrganisasjonerBrukerHarIaRettigheterTilMock = (): AltinnOrganisasjon[] => {
   return organisasjonerMock.filter((org) => org.OrganizationNumber !== orgnrUtenTilgang);
 };

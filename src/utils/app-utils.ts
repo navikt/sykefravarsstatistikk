@@ -7,6 +7,11 @@ export const formaterProsent = (prosent: number | null | undefined): string => {
     return Number(prosent).toFixed(1).toString().replace('.', ',');
 };
 
+export const parseVerdi = (verdi: string) => {
+    return parseFloat(verdi.replace(",", "."));
+};
+
+
 export const tilIsoDatoMedUtcTimezoneUtenMillis = (dato: Date): String => {
     return dato.toISOString().split('.')[0] + 'Z';
 };

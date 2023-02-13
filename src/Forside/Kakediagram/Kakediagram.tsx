@@ -4,16 +4,9 @@ import {KakediagramGrønn} from './KakediagramGrønn';
 import {KakediagramGrå} from './KakediagramGrå';
 import {KakediagramGul} from './KakediagramGul';
 import {KakediagramRød} from './KakediagramRød';
+import { SykefraværVurdering } from "../vurdering-utils";
 
-export enum SykefraværVurdering {
-  UNDER = 'UNDER',
-  MIDDELS = 'MIDDELS',
-  OVER = 'OVER',
-  MASKERT = 'MASKERT',
-  INGEN_DATA = 'INGEN_DATA',
-  UFULLSTENDIG_DATA = 'UFULLSTENDIG_DATA',
-  FEIL = 'FEIL',
-}
+
 
 interface Props {
   resultat: SykefraværVurdering;
@@ -33,16 +26,15 @@ const KakediagramSvg: FunctionComponent<{
   resultat: SykefraværVurdering;
 }> = ({resultat}) => {
   switch (resultat) {
-    case SykefraværVurdering.UNDER:
+    case 'UNDER':
       return <KakediagramRød/>;
-    case SykefraværVurdering.MIDDELS:
+    case 'MIDDELS':
       return <KakediagramGul/>;
-    case SykefraværVurdering.OVER:
+    case 'OVER':
       return <KakediagramGrønn/>;
-    case SykefraværVurdering.MASKERT:
-    case SykefraværVurdering.INGEN_DATA:
-    case SykefraværVurdering.UFULLSTENDIG_DATA:
-    case SykefraværVurdering.FEIL:
+    case 'MASKERT':
+    case 'FEIL_ELLER_INGEN_DATA':
+    case 'UFULLSTENDIG_DATA':
       return <KakediagramGrå/>;
   }
 };

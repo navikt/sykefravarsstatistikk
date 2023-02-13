@@ -1,6 +1,4 @@
-import {UnderenhetDto} from '../api/enhetsregisteret-api';
-
-export const underenhetMock: UnderenhetDto = {
+export const underenheterResponseMock = {
   organisasjonsnummer: "999999999",
   navn: "HEI OG HÅ BARNEHAGE",
   organisasjonsform: {
@@ -15,12 +13,12 @@ export const underenhetMock: UnderenhetDto = {
   registreringsdatoEnhetsregisteret: "1990-01-01",
   registrertIMvaregisteret: false,
   naeringskode1: {
-    beskrivelse: "næring 1",
-    kode: "88.992"
+    beskrivelse: "næringskoden til barnehage",
+    kode: "88.911"
   },
   naeringskode2: {
-    beskrivelse: "barnehage",
-    kode: "77.777"
+    beskrivelse: "random næringskode",
+    kode: "88.992"
   },
   antallAnsatte: 62,
   overordnetEnhet: "999999991",
