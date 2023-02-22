@@ -4,32 +4,29 @@ const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
 const sykefraværsstatistikkApiProxy = require('./proxy');
 const iaTjenesterMetrikkerProxy = require('./iaTjenesterMetrikkerProxy');
-const buildPath = path.join(__dirname, '../build');
+const buildPath = path.join(__dirname, '../../build');
 const dotenv = require('dotenv');
-const { initTokenXClient } = require('./tokenx');
-const { initIdporten } = require('./idporten');
+const {initTokenXClient} = require('./tokenx');
+const {initIdporten} = require('./idporten');
 const cookieParser = require('cookie-parser');
-const { applyNotifikasjonMiddleware } = require('./brukerapi-proxy-middleware');
+const {applyNotifikasjonMiddleware} = require('./brukerapi-proxy-middleware');
 const log = require('./logging');
 const contentHeaders = require('./contentHeaders');
 const loggingHandler = require("./backend-logger");
+const requestLoggingMiddleware = require('./requestLogging')
 
-const { APP_INGRESS, LOGIN_URL, PORT = 3000 } = process.env;
-
-const app = express();
-
-dotenv.config();
-
-app.use(cookieParser());
-app.use(express.json())
-app.engine('html', mustacheExpress());
-app.set('view engine', 'mustache');
-app.set('views', buildPath);
+const {APP_INGRESS, LOGIN_URL, PORT = 3000} = process.env;
 
 const BASE_PATH = '/sykefravarsstatistikk';
 
+const app = express();
+dotenv.config();
+
 const renderAppMedDecorator = (decoratorFragments) => {
     return new Promise((resolve, reject) => {
+        app.engine('html', mustacheExpress());
+        app.set('view engine', 'mustache');
+        app.set('views', buildPath);
         app.render('index.html', decoratorFragments, (err, html) => {
             if (err) {
                 reject(err);
@@ -42,14 +39,21 @@ const renderAppMedDecorator = (decoratorFragments) => {
 
 const startServer = async (html) => {
     log.info('Starting server: server.js');
+    app.use(cookieParser());
 
     await Promise.all([initIdporten(), initTokenXClient()]);
 
     app.disable('x-powered-by');
     app.use(contentHeaders);
+    app.use(requestLoggingMiddleware)
+    app.use(sykefraværsstatistikkApiProxy);
+    app.use(iaTjenesterMetrikkerProxy);
+    applyNotifikasjonMiddleware(app);
 
-    app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
-    app.post(BASE_PATH + '/api/logger', loggingHandler )
+    app.use(BASE_PATH + '/', express.static(buildPath, {index: false}));
+
+    app.use(express.json())
+    app.post(BASE_PATH + '/api/logger', loggingHandler)
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
         const referrerUrl = `${APP_INGRESS}/success?redirect=${req.query.redirect}`;
@@ -69,11 +73,6 @@ const startServer = async (html) => {
 
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
-
-    app.use(sykefraværsstatistikkApiProxy);
-    app.use(iaTjenesterMetrikkerProxy);
-
-    applyNotifikasjonMiddleware(app);
 
     app.get(BASE_PATH, (req, res) => {
         res.send(html);
