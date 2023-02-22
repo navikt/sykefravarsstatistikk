@@ -12,10 +12,6 @@ export const parseVerdi = (verdi: string) => {
 };
 
 
-export const tilIsoDatoMedUtcTimezoneUtenMillis = (dato: Date): String => {
-    return dato.toISOString().split('.')[0] + 'Z';
-};
-
 const månedsnavn = [
     'januar',
     'februar',

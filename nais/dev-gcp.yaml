@@ -50,6 +50,9 @@ spec:
                   cluster: dev-fss
                 - application: notifikasjon-bruker-api
                   namespace: fager
+                - application: ia-tjenester-metrikker
+                  namespace: arbeidsgiver
+                  cluster: dev-gcp
             external:
                 - host: dekoratoren.dev.nav.no
                 - host: sykefravarsstatistikk-api.dev-fss-pub.nais.io
