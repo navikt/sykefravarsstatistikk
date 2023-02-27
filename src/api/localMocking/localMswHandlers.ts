@@ -1,35 +1,27 @@
 import { rest } from 'msw';
 import { lagMockHistorikkForNæring } from '../mockedApiResponses/sykefraværshistorikk-mock';
-import { aggregertMockData } from '../mockedApiResponses/aggregert-mock';
 import {
     getOrganisasjonerBrukerHarIaRettigheterTilMock,
     getOrganisasjonerMock,
 } from '../mockedApiResponses/altinn-mock';
 import { getMockPubliseringsdatoer } from '../mockedApiResponses/mock-publiseringsdatoer';
 import { underenheterResponseMock } from '../../enhetsregisteret/api/mocks/underenheter-api-mocks';
+import { getMockOrganisasjon } from './mockede-organisasjoner';
 
-export const defaultMswHandlers = [
-    rest.post('https://amplitude.nav.no/collect-auto', async (req, res, ctx) => {
-        await ctx.fetch(req);
-        return res(ctx.status(200));
-    }),
-
-    rest.post('https://amplitude.nav.no/collect', async (req, res, ctx) => {
-        await ctx.fetch(req);
-        return res(ctx.status(200));
-    }),
+export const localMswHandlers = [
+    rest.get(
+        '/sykefravarsstatistikk/api/:orgnr/v1/sykefravarshistorikk/aggregert',
+        (req, res, ctx) => {
+            const { orgnr } = req.params;
+            const aggregertStatisatikk = getMockOrganisasjon(orgnr.toString()).aggregertStatistikk;
+            return res(ctx.status(200), ctx.json(aggregertStatisatikk));
+        }
+    ),
 
     rest.get(
         '/sykefravarsstatistikk/api/:orgnr/sykefravarshistorikk/kvartalsvis',
         (_, res, ctx) => {
             return res(ctx.status(200), ctx.json(lagMockHistorikkForNæring()));
-        }
-    ),
-
-    rest.get(
-        '/sykefravarsstatistikk/api/:orgnr/v1/sykefravarshistorikk/aggregert',
-        (_, res, ctx) => {
-            return res(ctx.status(200), ctx.json(aggregertMockData));
         }
     ),
 
@@ -46,7 +38,7 @@ export const defaultMswHandlers = [
     }),
 
     rest.get('https://data.brreg.no/enhetsregisteret/api/enheter/:orgnr', (req, res, ctx) => {
-        const orgnr = req.url.toString().match(/[0-9]{9}/)![0];
+        const { orgnr } = req.params;
         return res(
             ctx.status(200),
             ctx.json({
@@ -77,5 +69,15 @@ export const defaultMswHandlers = [
     rest.post('/sykefravarsstatistikk/notifikasjon-bruker-api', async (req) => {
         // håndteres av "arbeidsgiver-notifikasjoner-brukerapi-mock"
         return req.passthrough();
+    }),
+
+    rest.post('https://amplitude.nav.no/collect-auto', async (req, res, ctx) => {
+        await ctx.fetch(req);
+        return res(ctx.status(200));
+    }),
+
+    rest.post('https://amplitude.nav.no/collect', async (req, res, ctx) => {
+        await ctx.fetch(req);
+        return res(ctx.status(200));
     }),
 ];

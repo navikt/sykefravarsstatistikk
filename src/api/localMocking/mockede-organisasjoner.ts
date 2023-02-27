@@ -25,7 +25,7 @@ export interface OrganisasjonMock {
     underenhet?: UnderenhetDto | number;
 }
 
-export const getMockOrganisasjon = (orgnr: string): OrganisasjonMock =>
+export const getMockOrganisasjon = (orgnr?: string): OrganisasjonMock =>
     mockedeOrganisasjoner.find((org) => org.orgnr === orgnr) ?? {
         orgnr: '101010101',
         sykefraværshistorikkKvartalsvis: 500,
@@ -195,7 +195,7 @@ const mockedeOrganisasjoner: OrganisasjonMock[] = [
         orgnr: '120000009',
         aggregertStatistikk: lagAggregertStatistikkMockGul(
             Statistikkategori.NÆRING,
-            'Produksjon av nærings- og nytelsesmidler'
+            'Flisespikkerinæringen'
         ),
     },
 ];
