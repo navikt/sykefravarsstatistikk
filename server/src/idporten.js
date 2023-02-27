@@ -17,14 +17,13 @@ let idportenIssuer;
 let _remoteJWKSet;
 
 const {
-    SYKEFRAVARSSTATISTIKK_API_AUDIENCE,
     IDPORTEN_WELL_KNOWN_URL,
     IDPORTEN_CLIENT_ID,
     FAKEDINGS_URL_IDPORTEN,
 } = process.env;
 
 async function initIdporten() {
-    if (appRunningOnLabsGcp()) {
+    if (appRunningOnLabsGcp() || appRunningLocally()) {
         // I labs så returnerer vi mock uansett
         return;
     }
