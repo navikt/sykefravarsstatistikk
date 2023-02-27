@@ -8,29 +8,18 @@ import { BASE_PATH } from './konstanter';
 import { BrowserRouter } from 'react-router-dom';
 import { amplitudeClient } from './amplitude/client';
 import '@navikt/ds-css';
+import {  startMockServiceWorker } from "./api/localMocking/config";
 
 async function main() {
     if (process.env.REACT_APP_MOCK || getMiljø() === 'labs-gcp') {
-        // msw krever "/" på slutten av url for å fungere sammen med "homepage"-config i CRA
-        if (window.location.pathname === '/sykefravarsstatistikk') {
-            window.location.pathname = '/sykefravarsstatistikk/';
-            return;
-        }
-        const { worker } = require('./mocking/browser');
-        await worker.start({
-            serviceWorker: {
-                url: '/sykefravarsstatistikk/mockServiceWorker.js',
-            },
-        });
+        await startMockServiceWorker()
     }
 
-
-
     ReactDOM.render(
-      <BrowserRouter basename={BASE_PATH}>
-          <App analyticsClient={amplitudeClient} />
-      </BrowserRouter>,
-      document.getElementById('root')
+        <BrowserRouter basename={BASE_PATH}>
+            <App analyticsClient={amplitudeClient} />
+        </BrowserRouter>,
+        document.getElementById('root')
     );
 }
 

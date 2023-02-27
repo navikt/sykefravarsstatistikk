@@ -1,5 +1,5 @@
 import { sendAnalytics, useAnalytics } from './useAnalytics';
-import { amplitudeMock } from '../mocking/amplitude-mock';
+import { amplitudeMock } from '../api/mockedApiResponses/amplitude-mock';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
@@ -8,7 +8,7 @@ import userEvent from '@testing-library/user-event';
 import { AppContent } from '../App';
 import '@testing-library/jest-dom';
 import { renderHook } from '@testing-library/react-hooks';
-import { mockAllDatahentingFeiler, mockAllDatahentingStatusOk } from '../mocking/use-analytics-test-mocks';
+import { mockAllDatahentingFeiler, mockAllDatahentingStatusOk } from '../api/mockedApiResponses/use-analytics-test-mocks';
 
 describe('useAnalytics', () => {
     const defaultEventData = {

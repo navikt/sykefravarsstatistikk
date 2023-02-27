@@ -1,0 +1,27 @@
+import { MockedRequest } from "msw";
+import { worker } from "./browser";
+
+
+export async function startMockServiceWorker() {
+  // msw krever "/" på slutten av url for å fungere sammen med "homepage"-config i CRA
+  if (window.location.pathname === '/sykefravarsstatistikk') {
+    window.location.pathname = '/sykefravarsstatistikk/';
+    return;
+  }
+  const { worker } = require('./browser');
+  await worker.start({
+    serviceWorker: {
+      url: '/sykefravarsstatistikk/mockServiceWorker.js',
+    },
+    onUnhandledRequest: ignoreStaticAssets(),
+  });
+}
+
+function ignoreStaticAssets() {
+  return (req: MockedRequest, print: { warning(): void }) => {
+    if (req.url.pathname.includes('/static/')) {
+      return;
+    }
+    print.warning();
+  };
+}

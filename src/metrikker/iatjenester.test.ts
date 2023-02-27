@@ -1,5 +1,5 @@
 import { sendIaTjenesteMetrikkMottatt, sendteMetrikker } from './iatjenester';
-import { iaTjenestemetrikkFeiletHandler } from './mswHandlers';
+import { iaTjenestemetrikkFeiletHandler } from './testMswHandlers';
 import { mswTestServer } from '../../jest/mswTestServer';
 
 beforeEach(() => {

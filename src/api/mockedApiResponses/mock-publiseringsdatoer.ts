@@ -1,4 +1,4 @@
-import { Publiseringsdatoer } from '../api/publiseringsdatoer-api';
+import { Publiseringsdatoer } from '../publiseringsdatoer-api';
 
 export function getMockPubliseringsdatoer(): Publiseringsdatoer {
     return {

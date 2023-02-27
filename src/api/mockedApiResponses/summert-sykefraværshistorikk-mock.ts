@@ -1,6 +1,6 @@
-import { AggregertStatistikkResponse, Statistikk } from "../hooks/useAggregertStatistikk";
-import { ÅrstallOgKvartal } from "../utils/sykefraværshistorikk-utils";
-import { Statistikkategori } from "../domene/statistikkategori";
+import { AggregertStatistikkResponse, Statistikk } from "../../hooks/useAggregertStatistikk";
+import { ÅrstallOgKvartal } from "../../utils/sykefraværshistorikk-utils";
+import { Statistikkategori } from "../../domene/statistikkategori";
 
 
 const tomAggregertStatistikk: Partial<AggregertStatistikkResponse> = {
