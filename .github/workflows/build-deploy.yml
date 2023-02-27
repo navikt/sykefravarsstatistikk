@@ -50,7 +50,7 @@ jobs:
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/fix_504'
+        if: github.ref == 'refs/heads/bedre_mocking'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
