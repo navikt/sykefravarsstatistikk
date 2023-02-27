@@ -1,5 +1,5 @@
-import { MockedRequest } from "msw";
-import { worker } from "./browser";
+import { MockedRequest, setupWorker } from "msw";
+import { localMswHandlers } from "./local-msw-handlers";
 
 
 export async function startMockServiceWorker() {
@@ -8,7 +8,7 @@ export async function startMockServiceWorker() {
     window.location.pathname = '/sykefravarsstatistikk/';
     return;
   }
-  const { worker } = require('./browser');
+  const worker = setupWorker(...localMswHandlers)
   await worker.start({
     serviceWorker: {
       url: '/sykefravarsstatistikk/mockServiceWorker.js',
