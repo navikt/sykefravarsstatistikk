@@ -76,7 +76,8 @@ export const defaultHandlers = [
     }
   ),
 
-  rest.post('/sykefravarsstatistikk/notifikasjon-bruker-api', async (_) => {
-    // eget mock-bibliotek for notifikasjon-bruker-api, trenger ikke håndteres av MSW
+  rest.post('/sykefravarsstatistikk/notifikasjon-bruker-api', async (req) => {
+    // håndteres av "arbeidsgiver-notifikasjoner-brukerapi-mock"
+    return req.passthrough()
   }),
 ];

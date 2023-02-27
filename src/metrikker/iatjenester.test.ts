@@ -1,6 +1,6 @@
 import { sendIaTjenesteMetrikkMottatt, sendteMetrikker } from './iatjenester';
 import { iaTjenestemetrikkFeiletHandler } from './mswHandlers';
-import { mswServer } from '../../jest/mswServer';
+import { mswTestServer } from '../../jest/mswTestServer';
 
 beforeEach(() => {
     resetSendteMetrikker();
@@ -25,7 +25,7 @@ describe('Tester vellykket utsendelse av ia-metrikk', () => {
 
 describe('Tester feilende utsendelse av IA-metrikk', () => {
     beforeEach(() => {
-        mswServer.use(iaTjenestemetrikkFeiletHandler);
+        mswTestServer.use(iaTjenestemetrikkFeiletHandler);
     });
 
     test('skal ikke legge til orgnummer i lista over sendte metrikker dersom kallet feiler', async () => {
