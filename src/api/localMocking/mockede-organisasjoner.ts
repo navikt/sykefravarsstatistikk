@@ -7,13 +7,13 @@ import {
     aggregertStatistikkMockMedBare2Kvartaler,
     aggregertStatistikkMockRødBarnehage,
     lagAggregertStatistikkMockGul
-} from "./summert-sykefraværshistorikk-mock";
+} from "../mockedApiResponses/summert-sykefraværshistorikk-mock";
 import { Statistikkategori } from "../../domene/statistikkategori";
 import {
     lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet,
     lagMaskertHistorikk,
     lagMockHistorikkForBarnehage
-} from "./sykefraværshistorikk-mock";
+} from "../mockedApiResponses/sykefraværshistorikk-mock";
 import { KvartalsvisSykefraværshistorikk } from "../kvartalsvis-sykefraværshistorikk-api";
 import { AggregertStatistikkResponse } from "../../hooks/useAggregertStatistikk";
 
