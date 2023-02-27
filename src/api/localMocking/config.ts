@@ -13,11 +13,11 @@ export async function startMockServiceWorker() {
     serviceWorker: {
       url: '/sykefravarsstatistikk/mockServiceWorker.js',
     },
-    onUnhandledRequest: ignoreStaticAssets(),
+    onUnhandledRequest: ignoreStaticAssetsOtherwiseWarn(),
   });
 }
 
-function ignoreStaticAssets() {
+function ignoreStaticAssetsOtherwiseWarn() {
   return (req: MockedRequest, print: { warning(): void }) => {
     if (req.url.pathname.includes('/static/')) {
       return;
