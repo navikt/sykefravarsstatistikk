@@ -65,7 +65,7 @@ jobs:
 
     deploy-to-labs-gcp:
         name: Deploy to labs-gcp
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/bedre_mocking'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
