@@ -5,7 +5,7 @@ import {RestStatus} from '../api/api-utils';
 import React from 'react';
 import {renderHook} from '@testing-library/react-hooks';
 import {MemoryRouter} from 'react-router-dom';
-import {aggregertMockData} from '../mocking/aggregert-mock';
+import {aggregertMockData} from '../api/mockedApiResponses/aggregert-mock';
 
 
 const wrapper: React.FC = ({children}) =>
