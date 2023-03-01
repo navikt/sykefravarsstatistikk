@@ -22,7 +22,7 @@
     "glob-parent": "^6.0.1",
     "https-proxy-agent": "^5.0.0",
     "immer": "^9.0.6",
-    "is-svg": "^4.3.2",
+    "is-svg": "^4.4.0",
     "lodash.throttle": "^4.1.1",
     "nav-frontend-alertstriper": "^4.0.2",
     "nav-frontend-alertstriper-style": "^3.0.2",
