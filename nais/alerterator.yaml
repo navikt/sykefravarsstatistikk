@@ -9,7 +9,7 @@ metadata:
 spec:
   receivers:
     slack:
-      channel: 'arbeidsgiver-teamia-utvikling'
+      channel: 'teamia-alerts'
       prependText: '<!here> | '
   alerts:
     - alert: Applikasjon nede
