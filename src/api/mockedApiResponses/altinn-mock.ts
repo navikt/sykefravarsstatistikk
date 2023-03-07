@@ -1,4 +1,4 @@
-import {AltinnOrganisasjon} from '../api/altinnorganisasjon-api';
+import {AltinnOrganisasjon} from '../altinnorganisasjon-api';
 
 export const orgnrUtenTilgang = '100100100';
 

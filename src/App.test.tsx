@@ -5,10 +5,10 @@ import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/Arb
 import { RestStatus } from './api/api-utils';
 import { BASE_PATH } from './konstanter';
 import { BrowserRouter } from 'react-router-dom';
-import { amplitudeMock } from './mocking/amplitude-mock';
+import { amplitudeMock } from './api/mockedApiResponses/amplitude-mock';
 import { mapTilUnderenhet, RestUnderenhet } from './enhetsregisteret/api/underenheter-api';
 import { underenheterResponseMock } from './enhetsregisteret/api/mocks/underenheter-api-mocks';
-import { mockAllDatahentingStatusOk } from './mocking/use-analytics-test-mocks';
+import { mockAllDatahentingStatusOk } from './api/mockedApiResponses/use-analytics-test-mocks';
 
 it('renders without crashing', async () => {
     await waitFor(() => {

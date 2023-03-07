@@ -1,7 +1,7 @@
 import {
   KvartalsvisSykefraværshistorikk,
   SykefraværshistorikkType,
-} from '../api/kvartalsvis-sykefraværshistorikk-api';
+} from '../kvartalsvis-sykefraværshistorikk-api';
 import {genererHistorikk, genererMaskertHistorikk} from './generering-av-historikk-mock';
 
 const lagHistorikkMedLandOgSektor = (): KvartalsvisSykefraværshistorikk[] => {

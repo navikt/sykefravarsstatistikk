@@ -1,6 +1,6 @@
 import { RestRessurs, RestStatus } from '../../api/api-utils';
-import { fleskOgFisk, heiOgHåBarnehage } from '../../mocking/altinn-mock';
-import { mockAllDatahentingStatusOk } from '../../mocking/use-analytics-test-mocks';
+import { fleskOgFisk, heiOgHåBarnehage } from '../../api/mockedApiResponses/altinn-mock';
+import { mockAllDatahentingStatusOk } from '../../api/mockedApiResponses/use-analytics-test-mocks';
 import { Forside } from '../../Forside/Forside';
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';

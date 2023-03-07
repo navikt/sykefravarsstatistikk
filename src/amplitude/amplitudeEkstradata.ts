@@ -9,9 +9,9 @@ import { mapTilPrivatEllerOffentligSektor, Sektor } from '../utils/sektorUtils';
 import { Enhetsregisterdata } from '../enhetsregisteret/hooks/useEnheter';
 import { ArbeidsmiljøportalenBransje } from '../utils/bransje-utils';
 import { RestAggregertStatistikk } from '../hooks/useAggregertStatistikk';
-import { sammenliknSykefravær, SykefraværVurdering } from "../Forside/vurdering-utils";
-import { Næring } from "../enhetsregisteret/domene/underenhet";
-import { Statistikkategori } from "../domene/statistikkategori";
+import { sammenliknSykefravær, SykefraværVurdering } from '../Forside/vurdering-utils';
+import { Næring } from '../enhetsregisteret/domene/underenhet';
+import { Statistikkategori } from '../domene/statistikkategori';
 
 export interface AmplitudeEkstradata {
     næring2siffer: string;
@@ -22,8 +22,8 @@ export interface AmplitudeEkstradata {
     sektor: Sektor;
 }
 
-function formaterNæring(næring?: Næring): string | "INGEN_INFO" {
-    return næring ? `${næring?.kode} ${næring?.beskrivelse}` : "INGEN_INFO";
+function formaterNæring(næring?: Næring): string | 'INGEN_INFO' {
+    return næring ? `${næring?.kode} ${næring?.beskrivelse}` : 'INGEN_INFO';
 }
 
 export const getEkstraDataFraEnhetsregisteret = (

@@ -1,10 +1,10 @@
 import {
     lagStatistikkMock,
-    siste4KvartalerMock,
     siste2KvartalerMock,
-} from '../mocking/summert-sykefraværshistorikk-mock';
+    siste4KvartalerMock,
+} from '../api/mockedApiResponses/summert-sykefraværshistorikk-mock';
 import { sammenliknSykefravær } from './vurdering-utils';
-import { Statistikkategori } from "../domene/statistikkategori";
+import { Statistikkategori } from '../domene/statistikkategori';
 
 function sykefraværVirksomhet(prosent: string) {
     return lagStatistikkMock(
@@ -25,14 +25,18 @@ function sykefraværBransje(prosent: string) {
 }
 
 it('sammenliknSykefravær skal gi riktig vurdering', () => {
-    expect(sammenliknSykefravær(sykefraværVirksomhet('5.51'), sykefraværBransje('5.0')))
-      .toEqual('OVER');
-    expect(sammenliknSykefravær(sykefraværVirksomhet('5.50'), sykefraværBransje('5.0')))
-      .toEqual('MIDDELS');
-    expect(sammenliknSykefravær(sykefraværVirksomhet('4.5'), sykefraværBransje('5.0')))
-      .toEqual('MIDDELS');
-    expect(sammenliknSykefravær(sykefraværVirksomhet('4.49'), sykefraværBransje('5.0')))
-      .toEqual('UNDER');
+    expect(sammenliknSykefravær(sykefraværVirksomhet('5.51'), sykefraværBransje('5.0'))).toEqual(
+        'OVER'
+    );
+    expect(sammenliknSykefravær(sykefraværVirksomhet('5.50'), sykefraværBransje('5.0'))).toEqual(
+        'MIDDELS'
+    );
+    expect(sammenliknSykefravær(sykefraværVirksomhet('4.5'), sykefraværBransje('5.0'))).toEqual(
+        'MIDDELS'
+    );
+    expect(sammenliknSykefravær(sykefraværVirksomhet('4.49'), sykefraværBransje('5.0'))).toEqual(
+        'UNDER'
+    );
 });
 
 it('sammenliknSykefravær skal gi vurdering INGEN_DATA hvis data tilsier det', () => {
