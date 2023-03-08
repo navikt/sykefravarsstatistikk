@@ -52,7 +52,9 @@ const startServer = async (html) => {
 
     app.use(BASE_PATH + '/', express.static(buildPath, {index: false}));
 
+    // consumes the payload, must be placed below the proxy middleware
     app.use(express.json())
+
     app.post(BASE_PATH + '/api/logger', loggingHandler)
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
