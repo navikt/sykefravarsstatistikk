@@ -93,16 +93,3 @@ jobs:
                   VAR: version=${{ env.IMAGE }}
                   RESOURCE: nais/prod-gcp.yaml
                   PRINT_PAYLOAD: true
-
-    deploy-alert-to-prod:
-        name: Deploy alert to prod
-        if: github.ref == 'refs/heads/master'
-        needs: compile-test-and-build
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v2
-            - uses: nais/deploy/actions/deploy@v1
-              env:
-                  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-                  CLUSTER: prod-gcp
-                  RESOURCE: nais/alerterator.yaml

@@ -1,0 +1,35 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: sykefravarsstatistikk-alert
+  namespace: arbeidsgiver
+  labels:
+    team: arbeidsgiver
+    created-by: teamia
+spec:
+  groups:
+    - name: sykefravarsstatistikk-alerts
+      rules:
+        - alert: ApplikasjonNede
+          expr: sum(up{container="sykefravarsstatistikk"}) == 0
+          for: 2m
+          annotations:
+            consequence: "Sykefravarsstatistikk frontend er utilgjengelig"
+            action: |-
+              Sjekk helsa til applikasjonen ved å kjøre
+              `kubectl describe pod <podname> -n arbeidsgiver` og 
+              `kubectl logs <podname> -n arbeidsgiver`"
+          labels:
+            namespace: teamia
+            severity: critical
+
+        - alert: ErrorLogRegistrert
+          expr: sum(increase(logd_messages_total{log_app="sykefravarsstatistikk", log_level="Error"}[10m])) > 0
+          annotations:
+            description: "Sykefravarsstatistikk frontend har logget en (eller flere) feil."
+            action: |-
+              Sjekk logs.adeo.no for logger, 
+              eller Grafana-dashboardet vårt: https://grafana.nais.io/dashboards/f/cvOhCMUnz/team-ia
+          labels:
+            namespace: teamia
+            severity: warning

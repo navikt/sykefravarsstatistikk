@@ -52,7 +52,7 @@ const startServer = async (html) => {
 
     app.use(BASE_PATH + '/', express.static(buildPath, {index: false}));
 
-    // consumes the payload, must be placed below the proxy middleware
+    // consumes the payload! Must be placed below the proxy middlewares
     app.use(express.json())
 
     app.post(BASE_PATH + '/api/logger', loggingHandler)
