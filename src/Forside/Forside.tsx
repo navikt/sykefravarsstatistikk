@@ -1,8 +1,6 @@
 import { default as React, FunctionComponent } from 'react';
 import { Sammenligningspaneler } from './Sammenligningspanel/Sammenligningspaneler';
 import { EkspanderbarSammenligning } from './EkspanderbarSammenligning/EkspanderbarSammenligning';
-import Samtalestøttepanel from './Samtalestøttepanel/Samtalestøttepanel';
-import { ArbeidsmiljøportalPanel } from './ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
 import { SykefraværAppData } from '../hooks/useSykefraværAppData';
 import { RestStatus } from '../api/api-utils';
 import { ManglerRettigheterIAltinnSide } from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
@@ -44,11 +42,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                 </Sammenligningspaneler>
                 <div className="lenkepanelWrapper">
                     <Historikkpanel />
-                    <Samtalestøttepanel />
                 </div>
-                <ArbeidsmiljøportalPanel
-                    restUnderenhet={appData.enhetsregisterdata.restUnderenhet}
-                />
             </div>
         </div>
     );

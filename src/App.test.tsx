@@ -1,33 +1,49 @@
 import React from 'react';
 import { AppContent } from './App';
-import { render, waitFor } from '@testing-library/react';
-import { ArbeidsmiljøportalPanel } from './Forside/ArbeidsmiljøportalPanel/ArbeidsmiljøportalPanel';
-import { RestStatus } from './api/api-utils';
-import { BASE_PATH } from './konstanter';
+import { act, render, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { amplitudeMock } from './api/mockedApiResponses/amplitude-mock';
-import { mapTilUnderenhet, RestUnderenhet } from './enhetsregisteret/api/underenheter-api';
-import { underenheterResponseMock } from './enhetsregisteret/api/mocks/underenheter-api-mocks';
 import { mockAllDatahentingStatusOk } from './api/mockedApiResponses/use-analytics-test-mocks';
+import { SykefraværAppData } from './hooks/useSykefraværAppData';
+
+beforeEach(() => {
+    jest.spyOn(amplitudeMock, 'setUserProperties');
+});
+
+afterEach(() => {
+    jest.resetAllMocks();
+});
 
 it('renders without crashing', async () => {
     await waitFor(() => {
-        render(
-            <BrowserRouter basename={BASE_PATH}>
-                <AppContent analyticsClient={amplitudeMock} {...mockAllDatahentingStatusOk} />
-            </BrowserRouter>
-        );
+        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
     });
 });
 
-it('ArbeidsmiljøportalenPanel rendrer med riktig link basert på bransje', () => {
-    const restUnderenhetMock: RestUnderenhet = {
-        status: RestStatus.Suksess,
-        data: mapTilUnderenhet(underenheterResponseMock),
-    };
-    const { getByText } = render(<ArbeidsmiljøportalPanel restUnderenhet={restUnderenhetMock} />);
+it('Amplitude-events sendes med riktige user properties', async () => {
+    act(() => {
+        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
+    });
 
-    const element = getByText('Gå til Arbeidsmiljøportalen') as HTMLAnchorElement;
-
-    expect(element.href).toBe('https://www.arbeidsmiljoportalen.no/bransje/barnehage');
+    act(() => {
+        expect(amplitudeMock.setUserProperties).toHaveBeenCalledTimes(1);
+    });
+    act(() => {
+        expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
+            antallAnsatte: '50-99',
+            bransje: 'BARNEHAGER',
+            sektor: 'offentlig',
+            næring2siffer: '88 Sosiale omsorgstjenester uten botilbud',
+            prosent: '10-12',
+            sykefraværsvurdering: 'UNDER',
+        });
+    });
 });
+
+const AppContentWithRouter = (data: SykefraværAppData) => {
+    return (
+        <BrowserRouter>
+            <AppContent {...data} analyticsClient={amplitudeMock} />
+        </BrowserRouter>
+    );
+};

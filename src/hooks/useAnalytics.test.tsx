@@ -1,6 +1,6 @@
 import { sendAnalytics, useAnalytics } from './useAnalytics';
 import { amplitudeMock } from '../api/mockedApiResponses/amplitude-mock';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { SykefraværAppData } from './useSykefraværAppData';
@@ -161,17 +161,6 @@ describe('useAnalytics', () => {
         );
     });
 
-    it('Klikk på lenke til Arbeidsmiljøportalen trigger event i amplitude', async () => {
-        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
-        userEvent.click(screen.getByText('Gå til Arbeidsmiljøportalen'));
-
-        expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith('navigere', {
-            ...defaultEventData,
-            lenketekst: 'Gå til Arbeidsmiljøportalen',
-            destinasjon: 'https://www.arbeidsmiljoportalen.no/bransje/barnehage',
-        });
-    });
-
     it('Klikk på sammenlikningspanel sender ikke feil panelnavn til amplitude', async () => {
         const result = render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
         expect(
@@ -192,27 +181,6 @@ describe('useAnalytics', () => {
                 app: 'sykefravarsstatistikk',
             })
         );
-    });
-
-    it('navigere-event kalles med riktige user properties', async () => {
-        act(() => {
-            render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
-            userEvent.click(screen.getByText('Gå til Arbeidsmiljøportalen'));
-        });
-
-        act(() => {
-            expect(amplitudeMock.setUserProperties).toHaveBeenCalledTimes(1);
-        });
-        act(() => {
-            expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
-                antallAnsatte: '50-99',
-                bransje: 'BARNEHAGER',
-                sektor: 'offentlig',
-                næring2siffer: '88 Sosiale omsorgstjenester uten botilbud',
-                prosent: '10-12',
-                sykefraværsvurdering: 'UNDER',
-            });
-        });
     });
 
     const AppContentWithRouter = (data: SykefraværAppData) => {
