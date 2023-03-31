@@ -1,6 +1,6 @@
-import {Line, Symbols} from 'recharts';
+import { Line, Symbols } from 'recharts';
 import React from 'react';
-import {getFarge, getSymbol, Linje} from './graf-utils';
+import { getFarge, getSymbol, Linje } from './graf-utils';
 
 const lineWidth = 2;
 const dotSize = 40;
@@ -14,7 +14,7 @@ const grafLinjer = (linjerSomSkalVises: Linje[]) =>
             stroke={getFarge(name)}
             strokeWidth={lineWidth}
             isAnimationActive={false}
-            dot={<Symbols type={getSymbol(name)} size={dotSize} fill={getFarge(name)}/>}
+            dot={<Symbols type={getSymbol(name)} size={dotSize} fill={getFarge(name)} />}
         />
     ));
 

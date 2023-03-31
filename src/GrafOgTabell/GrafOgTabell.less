@@ -1,92 +1,91 @@
 @import '../variables';
 
 .graf-og-tabell {
-  .typo-normal-mixin();
-  background-color: white;
-  margin: 0 auto 0;
-  border-radius: 0.25rem;
-  max-width: 60rem;
-  min-height: 30rem;
-
-  &__info-eller-feilmelding {
-    width: 100%;
-    margin: 0 auto 1.5rem;
+    .typo-normal-mixin();
+    background-color: white;
+    margin: 0 auto 0;
+    border-radius: 0.25rem;
     max-width: 60rem;
-  }
+    min-height: 30rem;
 
-  &__wrapper {
-    .sidewrapper-mixin();
-    padding-top: 1.5rem;
-  }
+    &__info-eller-feilmelding {
+        width: 100%;
+        margin: 0 auto 1.5rem;
+        max-width: 60rem;
+    }
 
-  &__overdel-wrapper {
-    padding: 2rem 2rem 0;
-  }
+    &__wrapper {
+        .sidewrapper-mixin();
+        padding-top: 1.5rem;
+    }
 
-  &__tittel {
-    padding-bottom: 1.5rem;
-  }
-
-  &__ingress {
-    max-width: 40rem;
-  }
-
-  &__endring-i-sykefraværsstatistikken {
-    padding: 1rem;
-  }
-
-  &__innhold {
-    margin-top: 1rem;
-    overflow: hidden;
-  }
-
-  &__knapper {
-    margin-top: 2rem;
-  }
-
-  &__spinner {
-    display: flex;
-    justify-content: center;
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-  }
-
-  &__feilside {
-    margin-left: 2rem;
-    margin-right: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  @media (min-width: @screen-sm-min) {
     &__overdel-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+        padding: 2rem 2rem 0;
     }
 
-    &__tekst-wrapper {
-      max-width: 60%;
+    &__tittel {
+        padding-bottom: 1.5rem;
     }
 
-    &__knapper {
-      max-width: calc(40% - 2rem);
-      margin-top: 0;
-      margin-left: 2rem;
+    &__ingress {
+        max-width: 40rem;
+    }
+
+    &__endring-i-sykefraværsstatistikken {
+        padding: 1rem;
     }
 
     &__innhold {
-      width: 100%;
-    }
-  }
-
-  @media print {
-    &__endring-i-sykefraværsstatistikken {
-      display: none;
+        margin-top: 1rem;
+        overflow: hidden;
     }
 
-    &__info-eller-feilmelding {
-      display: none;
+    &__knapper {
+        margin-top: 2rem;
     }
 
-  }
+    &__spinner {
+        display: flex;
+        justify-content: center;
+        margin-top: 5rem;
+        margin-bottom: 5rem;
+    }
+
+    &__feilside {
+        margin-left: 2rem;
+        margin-right: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        &__overdel-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        &__tekst-wrapper {
+            max-width: 60%;
+        }
+
+        &__knapper {
+            max-width: calc(40% - 2rem);
+            margin-top: 0;
+            margin-left: 2rem;
+        }
+
+        &__innhold {
+            width: 100%;
+        }
+    }
+
+    @media print {
+        &__endring-i-sykefraværsstatistikken {
+            display: none;
+        }
+
+        &__info-eller-feilmelding {
+            display: none;
+        }
+    }
 }

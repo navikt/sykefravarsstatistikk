@@ -1,164 +1,163 @@
 @import 'src/variables';
 
 .ekspanderbart-sammenligningspanel {
-  + .ekspanderbart-sammenligningspanel {
-    margin-top: 2rem;
-  }
-
-  &__gradert_intro {
-    margin-top: 2rem;
-  }
-
-  &__loading-skeleton {
-    margin-top: 2rem;
-  }
-
-  &__feil {
-    margin-top: 2rem;
-  }
-
-  &__tittel-wrapper {
-    display: inline-flex;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-  }
-
-  &__tittel {
-    padding-bottom: 0.5rem;
-  }
-
-  &__tittel-forklaring {
-    padding-top: 0.25rem;
-  }
-
-  &__les-mer {
-    text-decoration: underline;
-    color: @navBla;
-    padding-top: 0.5rem;
-  }
-
-  &__les-mer--åpen {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  &__les-mer-gradert-eksempel {
-    margin-bottom: 1rem;
-    margin-top: 0.5rem;
-
-    &__innhold {
-      padding-top: 1rem;
-      border-top: 1px solid @navLysGra;
-      margin-top: 1rem;
-      max-width: 30rem;
-      padding-bottom: 1rem;
+    + .ekspanderbart-sammenligningspanel {
+        margin-top: 2rem;
     }
-  }
 
-  &__forklaring-av-vurdering {
-    margin-top: 2.5rem;
-  }
+    &__gradert_intro {
+        margin-top: 2rem;
+    }
 
-  &__panel {
-    border: 1px solid black;
-  }
+    &__loading-skeleton {
+        margin-top: 2rem;
+    }
 
-  &__bilde {
-    margin-top: -0.25rem;
-    margin-right: 0.75rem;
-  }
+    &__feil {
+        margin-top: 2rem;
+    }
 
-  &__tips-tittel {
-    margin-top: 4rem;
-    display: flex;
-    align-items: center;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid @navLysGra;
-  }
-
-  &__tips {
-    margin-top: 2rem;
-  }
-
-  &__lukk-knapp {
-    .lenke-mixin();
-    display: block;
-    background: none;
-    border: none;
-    padding: 0;
-    margin-top: 2rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  &__lukk-chevron {
-    color: @navBla;
-    margin-left: 0.5rem;
-  }
-
-  &__utregningsforklring-tekst {
-    padding: 1rem 0 0.5rem 0;
-
-  }
-
-  @media print, (min-width: @screen-sm-min) {
     &__tittel-wrapper {
-      flex-direction: row;
-      padding-right: 1rem;
-      padding-left: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
     }
 
-    &__tittel-tekst {
-      margin-left: 1.5rem;
+    &__tittel {
+        padding-bottom: 0.5rem;
     }
 
-    &__forklaring-av-periode {
-      flex-grow: 2;
+    &__tittel-forklaring {
+        padding-top: 0.25rem;
     }
 
-    &__detaljert-visning {
-      flex-grow: 1;
+    &__les-mer {
+        text-decoration: underline;
+        color: @navBla;
+        padding-top: 0.5rem;
     }
 
-    .ekspanderbartPanel__innhold {
-      padding-bottom: 2rem;
-      padding-right: 2rem;
-      padding-left: 2rem;
+    &__les-mer--åpen {
+        color: inherit;
+        text-decoration: none;
     }
 
-    &__data-og-detaljert-visning-sykefravær {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      margin-top: 2rem;
+    &__les-mer-gradert-eksempel {
+        margin-bottom: 1rem;
+        margin-top: 0.5rem;
+
+        &__innhold {
+            padding-top: 1rem;
+            border-top: 1px solid @navLysGra;
+            margin-top: 1rem;
+            max-width: 30rem;
+            padding-bottom: 1rem;
+        }
     }
 
-    &__kakediagram {
-      margin-right: 1rem;
-      margin-left: 1rem;
+    &__forklaring-av-vurdering {
+        margin-top: 2.5rem;
+    }
+
+    &__panel {
+        border: 1px solid black;
+    }
+
+    &__bilde {
+        margin-top: -0.25rem;
+        margin-right: 0.75rem;
+    }
+
+    &__tips-tittel {
+        margin-top: 4rem;
+        display: flex;
+        align-items: center;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid @navLysGra;
+    }
+
+    &__tips {
+        margin-top: 2rem;
     }
 
     &__lukk-knapp {
-      margin-top: 3rem;
+        .lenke-mixin();
+        display: block;
+        background: none;
+        border: none;
+        padding: 0;
+        margin-top: 2rem;
+        margin-left: auto;
+        margin-right: auto;
     }
-  }
 
-  &__print-innhold {
-    display: none;
-  }
+    &__lukk-chevron {
+        color: @navBla;
+        margin-left: 0.5rem;
+    }
 
-  @media print {
+    &__utregningsforklring-tekst {
+        padding: 1rem 0 0.5rem 0;
+    }
+
+    @media print, (min-width: @screen-sm-min) {
+        &__tittel-wrapper {
+            flex-direction: row;
+            padding-right: 1rem;
+            padding-left: 0.5rem;
+        }
+
+        &__tittel-tekst {
+            margin-left: 1.5rem;
+        }
+
+        &__forklaring-av-periode {
+            flex-grow: 2;
+        }
+
+        &__detaljert-visning {
+            flex-grow: 1;
+        }
+
+        .ekspanderbartPanel__innhold {
+            padding-bottom: 2rem;
+            padding-right: 2rem;
+            padding-left: 2rem;
+        }
+
+        &__data-og-detaljert-visning-sykefravær {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        &__kakediagram {
+            margin-right: 1rem;
+            margin-left: 1rem;
+        }
+
+        &__lukk-knapp {
+            margin-top: 3rem;
+        }
+    }
+
     &__print-innhold {
-      display: block;
+        display: none;
     }
 
-    &__innhold {
-      display: none;
+    @media print {
+        &__print-innhold {
+            display: block;
+        }
+
+        &__innhold {
+            display: none;
+        }
     }
-  }
 }
 
 .ekspanderbartPanel__hode span.ekspanderbartPanel__tittel {
-  width: 100%;
+    width: 100%;
 }

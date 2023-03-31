@@ -1,60 +1,60 @@
 @import 'src/variables';
 
 .sammenligningspanel {
-  padding: 2rem 1.5rem;
-  width: 100%;
-  background: white;
-  border-radius: 0.25rem;
-  position: relative;
-
-  &__info-eller-feilmelding {
+    padding: 2rem 1.5rem;
     width: 100%;
-    margin-bottom: 1.5rem;
-  }
-
-  &__info_om_oppdateringer {
-    width: 100%;
-    margin-bottom: 1.5rem;
-    align-items: center;
-  }
-
-  &__knapp {
-    display: none;
-  }
-
-  &__print-header {
-    display: none;
-  }
-
-  @media print, (min-width: @screen-sm-min) {
-    padding: 2rem;
-
-    &__knapp {
-      display: block;
-      position: absolute;
-      right: 2rem;
-    }
-  }
-
-  @media print {
-    &__knapp {
-      display: none;
-    }
+    background: white;
+    border-radius: 0.25rem;
+    position: relative;
 
     &__info-eller-feilmelding {
-      display: none;
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    &__info_om_oppdateringer {
+        width: 100%;
+        margin-bottom: 1.5rem;
+        align-items: center;
+    }
+
+    &__knapp {
+        display: none;
     }
 
     &__print-header {
-      display: block;
+        display: none;
     }
 
-    &__href {
-      padding-bottom: 1rem;
+    @media print, (min-width: @screen-sm-min) {
+        padding: 2rem;
+
+        &__knapp {
+            display: block;
+            position: absolute;
+            right: 2rem;
+        }
     }
 
-    &__print-tittel {
-      padding-bottom: 1rem;
+    @media print {
+        &__knapp {
+            display: none;
+        }
+
+        &__info-eller-feilmelding {
+            display: none;
+        }
+
+        &__print-header {
+            display: block;
+        }
+
+        &__href {
+            padding-bottom: 1rem;
+        }
+
+        &__print-tittel {
+            padding-bottom: 1rem;
+        }
     }
-  }
 }

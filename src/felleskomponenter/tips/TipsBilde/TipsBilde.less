@@ -3,17 +3,17 @@
 @bredde: 16rem;
 
 .tips-bilde {
-  max-height: 100%;
-  max-width: 100%;
-
-  &__wrapper {
-    width: @bredde;
+    max-height: 100%;
     max-width: 100%;
-  }
 
-  @media (min-width: @screen-sm-min) {
     &__wrapper {
-      min-width: @bredde;
+        width: @bredde;
+        max-width: 100%;
     }
-  }
+
+    @media (min-width: @screen-sm-min) {
+        &__wrapper {
+            min-width: @bredde;
+        }
+    }
 }

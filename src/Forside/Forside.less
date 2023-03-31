@@ -1,27 +1,26 @@
 @import '../variables';
 
 .forside {
-  max-width: 60rem;
-  margin: 0 auto 0;
+    max-width: 60rem;
+    margin: 0 auto 0;
 
-  display: flex;
-  flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
 
-  &__wrapper {
-    background-color: @navLysGra;
-    min-height: 50rem;
-    padding: 1.5rem 1rem 5rem;
-  }
+    &__wrapper {
+        background-color: @navLysGra;
+        min-height: 50rem;
+        padding: 1.5rem 1rem 5rem;
+    }
 }
 
 .lenkepanelWrapper {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(1, 1fr);
-  margin: 1rem 0 1rem 0;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(1, 1fr);
+    margin: 1rem 0 1rem 0;
 
-  @media (min-width: @screen-sm-min) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+    @media (min-width: @screen-sm-min) {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
-

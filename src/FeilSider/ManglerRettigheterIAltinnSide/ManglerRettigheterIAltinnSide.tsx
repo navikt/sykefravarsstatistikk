@@ -5,7 +5,7 @@ import './ManglerRettigheterIAltinnSide.less';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import { OrganisasjonerMedTilgangListe } from './OrganisasjonerMedTilgangListe/OrganisasjonerMedTilgangListe';
 import { BeOmTilgang } from './BeOmTilgang/BeOmTilgang';
-import EksternLenke from "../../felleskomponenter/EksternLenke/EksternLenke";
+import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 
 interface Props {
     restOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
