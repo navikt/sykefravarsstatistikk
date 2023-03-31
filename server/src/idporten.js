@@ -74,5 +74,5 @@ async function exchangeIdportenToken(req, targetApp) {
 
 module.exports = {
     initIdporten,
-    exchangeIdportenToken
+    exchangeIdportenToken,
 };

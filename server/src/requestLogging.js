@@ -1,13 +1,13 @@
-const morgan = require('morgan')
+const morgan = require('morgan');
 
 const requestLoggingMiddleware = morgan(
     (tokens, req, res) => {
         return JSON.stringify({
-            level: "info",
+            level: 'info',
             message: writeRequestLogMessage(tokens, req, res),
         });
     },
-    {skip: internalRequests}
+    { skip: internalRequests }
 );
 
 function writeRequestLogMessage(tokens, req, res) {
@@ -15,15 +15,13 @@ function writeRequestLogMessage(tokens, req, res) {
         tokens.method(req, res),
         tokens.url(req, res),
         tokens.status(req, res),
-        "(" + tokens.res(req, res, "content-length") + ")",
-        "- " + tokens["response-time"](req, res) + "ms",
-    ].join(" ");
+        '(' + tokens.res(req, res, 'content-length') + ')',
+        '- ' + tokens['response-time'](req, res) + 'ms',
+    ].join(' ');
 }
 
 function internalRequests(req) {
-    return (
-        req.originalUrl?.includes("/internal/") || req.originalUrl?.includes("/media/")
-    );
+    return req.originalUrl?.includes('/internal/') || req.originalUrl?.includes('/media/');
 }
 
-module.exports = requestLoggingMiddleware
+module.exports = requestLoggingMiddleware;

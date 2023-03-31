@@ -27,4 +27,4 @@ const log = new Proxy(
     }
 );
 
-module.exports = log ;
+module.exports = log;

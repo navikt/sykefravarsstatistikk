@@ -7,11 +7,7 @@ const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fet
 let tokenxClient;
 
 async function initTokenXClient() {
-    const {
-        TOKEN_X_CLIENT_ID,
-        TOKEN_X_PRIVATE_JWK,
-        TOKEN_X_WELL_KNOWN_URL
-    } = process.env;
+    const { TOKEN_X_CLIENT_ID, TOKEN_X_PRIVATE_JWK, TOKEN_X_WELL_KNOWN_URL } = process.env;
 
     if (appRunningOnDevGcp() || appRunningOnProdGcp()) {
         const tokenxIssuer = await Issuer.discover(TOKEN_X_WELL_KNOWN_URL);
@@ -28,10 +24,7 @@ async function initTokenXClient() {
 }
 
 async function getFakeAccessToken() {
-    const {
-        FAKEDINGS_URL_TOKENX,
-        SYKEFRAVARSSTATISTIKK_API_AUDIENCE,
-    } = process.env;
+    const { FAKEDINGS_URL_TOKENX, SYKEFRAVARSSTATISTIKK_API_AUDIENCE } = process.env;
 
     const tokenXToken = await (
         await fetch(
