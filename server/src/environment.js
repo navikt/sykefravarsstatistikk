@@ -1,15 +1,30 @@
-const { NAIS_CLUSTER_NAME = 'local' } = process.env;
+const getDecorator = require("./decorator")
 
 function getCurrentEnvironment() {
-    return NAIS_CLUSTER_NAME;
+    const { MILJO = 'local' } = process.env
+    return MILJO;
 }
 
+function getDekoratørUrl() {
+    const { DEKORATOR_URL = 'https://dekoratoren.ekstern.dev.nav.no' } = process.env
+    return DEKORATOR_URL
+}
+
+function getFrontendEnvs() {
+    const {
+        MILJO = 'local',
+        MIN_SIDE_ARBEIDSGIVER_URL = "https://arbeidsgiver.ekstern.dev.nav.no/min-side-arbeidsgiver",
+        FOREBYGGE_FRAVAR_URL = "https://arbeidsgiver.ekstern.dev.nav.no/forebygge-fravar"
+    } = process.env
+
+    return {MILJO, MIN_SIDE_ARBEIDSGIVER_URL, FOREBYGGE_FRAVAR_URL}
+}
 function appRunningLocally() {
     return getCurrentEnvironment() === "local"
 }
 
-function appRunningOnLabsGcp() {
-    return getCurrentEnvironment() === "labs-gcp"
+function appRunningOnDevGcpEkstern() {
+    return getCurrentEnvironment() === "dev-gcp-ekstern"
 }
 
 function appRunningOnDevGcp() {
@@ -20,6 +35,11 @@ function appRunningOnProdGcp() {
     return getCurrentEnvironment() === "prod-gcp"
 }
 
+async function getTemplateValues() {
+    const frontendEnvs = getFrontendEnvs();
+    const decoratorParts = await getDecorator(getDekoratørUrl());
+    return {...frontendEnvs, ...decoratorParts};
+}
 
 
-module.exports = { appRunningLocally, appRunningOnLabsGcp, appRunningOnDevGcp, appRunningOnProdGcp };
+module.exports = { appRunningLocally, appRunningOnDevGcpEkstern, appRunningOnDevGcp, appRunningOnProdGcp, getTemplateValues };

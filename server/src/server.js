@@ -1,6 +1,5 @@
 const path = require('path');
 const express = require('express');
-const getDecorator = require('./decorator');
 const mustacheExpress = require('mustache-express');
 const sykefraværsstatistikkApiProxy = require('./proxy');
 const iaTjenesterMetrikkerProxy = require('./iaTjenesterMetrikkerProxy');
@@ -14,20 +13,20 @@ const log = require('./logging');
 const contentHeaders = require('./contentHeaders');
 const loggingHandler = require("./backend-logger");
 const requestLoggingMiddleware = require('./requestLogging')
-
-const {APP_INGRESS, LOGIN_URL, PORT = 3000} = process.env;
-
-const BASE_PATH = '/sykefravarsstatistikk';
+const { getTemplateValues } = require('./environment')
 
 const app = express();
 dotenv.config();
 
-const renderAppMedDecorator = (decoratorFragments) => {
+const {APP_INGRESS, LOGIN_URL, PORT = 3000} = process.env;
+const BASE_PATH = '/sykefravarsstatistikk';
+
+const renderAppMedTemplateValues = (templateValues) => {
     return new Promise((resolve, reject) => {
         app.engine('html', mustacheExpress());
         app.set('view engine', 'mustache');
         app.set('views', buildPath);
-        app.render('index.html', decoratorFragments, (err, html) => {
+        app.render('index.html', templateValues, (err, html) => {
             if (err) {
                 reject(err);
             } else {
@@ -89,8 +88,8 @@ const startServer = async (html) => {
     });
 };
 
-getDecorator()
-    .then(renderAppMedDecorator, (error) => {
+getTemplateValues()
+    .then(renderAppMedTemplateValues, (error) => {
         log.error('Kunne ikke hente dekoratør ', error);
         process.exit(1);
     })

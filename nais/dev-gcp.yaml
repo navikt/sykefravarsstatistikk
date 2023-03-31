@@ -36,6 +36,12 @@ spec:
           value: "dev-gcp:arbeidsgiver:ia-tjenester-metrikker"
         - name: NOTIFIKASJON_API_AUDIENCE
           value: "dev-gcp:fager:notifikasjon-bruker-api"
+        - name: MILJO
+          value: dev-gcp
+        - name: MIN_SIDE_ARBEIDSGIVER_URL
+          value: https://min-side-arbeidsgiver.dev.nav.no/min-side-arbeidsgiver
+        - name: FOREBYGGE_FRAVAR_URL
+          value: https://forebygge-fravar.dev.nav.no/forebygge-fravar
     tokenx:
         enabled: true
     idporten:

@@ -1,27 +1,28 @@
 const { exchangeIdportenToken } = require('./idporten');
 const { createProxyMiddleware } = require('http-proxy-middleware');
-const { appRunningOnLabsGcp } = require('./environment');
+const { appRunningOnDevGcpEkstern } = require('./environment');
 
-const { NOTIFIKASJON_API_AUDIENCE } = process.env;
-
-const proxyConfig = {
-    target: 'http://notifikasjon-bruker-api.fager.svc.cluster.local',
-    changeOrigin: true,
-    pathRewrite: { '/sykefravarsstatistikk/notifikasjon-bruker-api': '/api/graphql' },
-    router: async (req) => {
-        const tokenSet = await exchangeIdportenToken(req, NOTIFIKASJON_API_AUDIENCE);
-        if (!tokenSet?.expired() && tokenSet?.access_token) {
-            req.headers['authorization'] = `Bearer ${tokenSet.access_token}`;
-        }
-        return undefined;
-    },
-    secure: true,
-    xfwd: true,
-    logLevel: 'info',
-};
+function getProxyConfig() {
+    const { NOTIFIKASJON_API_AUDIENCE } = process.env;
+    return {
+        target: 'http://notifikasjon-bruker-api.fager.svc.cluster.local',
+        changeOrigin: true,
+        pathRewrite: { '/sykefravarsstatistikk/notifikasjon-bruker-api': '/api/graphql' },
+        router: async (req) => {
+            const tokenSet = await exchangeIdportenToken(req, NOTIFIKASJON_API_AUDIENCE);
+            if (!tokenSet?.expired() && tokenSet?.access_token) {
+                req.headers['authorization'] = `Bearer ${tokenSet.access_token}`;
+            }
+            return undefined;
+        },
+        secure: true,
+        xfwd: true,
+        logLevel: 'info',
+    };
+}
 
 function applyNotifikasjonMiddleware(app) {
-    if (appRunningOnLabsGcp()) {
+    if (appRunningOnDevGcpEkstern()) {
         const {
             applyNotifikasjonMockMiddleware,
         } = require('@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock');
@@ -32,7 +33,7 @@ function applyNotifikasjonMiddleware(app) {
     } else {
         const notifikasjonBrukerApiProxy = createProxyMiddleware(
             '/sykefravarsstatistikk/notifikasjon-bruker-api',
-            proxyConfig
+            getProxyConfig()
         );
         app.use(notifikasjonBrukerApiProxy);
     }

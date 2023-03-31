@@ -50,7 +50,7 @@ jobs:
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/legg_tilbake_proxy_for_legemeldt_sykefraværsprosent'
+        if: github.ref == 'refs/heads/ekstern_dev'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
@@ -63,9 +63,9 @@ jobs:
                   RESOURCE: nais/dev-gcp.yaml
                   PRINT_PAYLOAD: true
 
-    deploy-to-labs-gcp:
-        name: Deploy to labs-gcp
-        if: github.ref == 'refs/heads/legg_tilbake_proxy_for_legemeldt_sykefraværsprosent'
+    deploy-to-dev-gcp-ekstern:
+        name: Deploy to dev-gcp-ekstern
+        if: github.ref == 'refs/heads/ekstern_dev'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
@@ -73,11 +73,10 @@ jobs:
             - uses: nais/deploy/actions/deploy@v1
               env:
                   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-                  CLUSTER: labs-gcp
+                  CLUSTER: dev-gcp
                   VAR: version=${{ env.IMAGE }}
-                  RESOURCE: nais/labs-gcp.yaml
+                  RESOURCE: nais/dev-gcp-ekstern.yaml
                   PRINT_PAYLOAD: true
-                  DEPLOY_SERVER: deploy.nais.io:443
 
     deploy-to-prod-gcp:
         name: Deploy to prod-gcp

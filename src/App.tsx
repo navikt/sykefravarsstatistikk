@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useMemo } from 'react';
+import React, {FunctionComponent, useContext, useEffect, useMemo} from 'react';
 import { NotifikasjonWidgetProvider } from '@navikt/arbeidsgiver-notifikasjon-widget';
 import Banner from './Banner/Banner';
 import { Route, Routes } from 'react-router-dom';
@@ -25,7 +25,7 @@ import {
 } from './hooks/useSykefraværAppData';
 import { AnalyticsClient } from './amplitude/client';
 import { useAnalytics } from './hooks/useAnalytics';
-import { getMiljø } from './utils/miljøUtils';
+import { EnvironmentContext } from "./Context/EnvironmentContext";
 
 interface Props {
     analyticsClient: AnalyticsClient;
@@ -48,6 +48,7 @@ function forsideDataLastesInn(appData: SykefraværAppData) {
 }
 
 export const AppContent = (appData: SykefraværAppData & { analyticsClient: AnalyticsClient }) => {
+    const { MILJØ: miljø } = useContext(EnvironmentContext)
     useAnalytics(appData.analyticsClient);
 
     const datakilder = useMemo(() => {
@@ -136,7 +137,7 @@ export const AppContent = (appData: SykefraværAppData & { analyticsClient: Anal
     );
     return (
         <NotifikasjonWidgetProvider
-            miljo={getMiljø() === MILJØ.PROD ? 'prod' : 'dev'}
+            miljo={miljø === MILJØ.PROD ? 'prod' : 'dev'}
             apiUrl="/sykefravarsstatistikk/notifikasjon-bruker-api"
         >
             {

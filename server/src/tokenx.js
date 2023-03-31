@@ -6,15 +6,13 @@ const { Issuer, TokenSet } = require('openid-client');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 let tokenxClient;
 
-const {
-    TOKEN_X_CLIENT_ID,
-    TOKEN_X_PRIVATE_JWK,
-    TOKEN_X_WELL_KNOWN_URL,
-    FAKEDINGS_URL_TOKENX,
-    SYKEFRAVARSSTATISTIKK_API_AUDIENCE,
-} = process.env;
-
 async function initTokenXClient() {
+    const {
+        TOKEN_X_CLIENT_ID,
+        TOKEN_X_PRIVATE_JWK,
+        TOKEN_X_WELL_KNOWN_URL
+    } = process.env;
+
     if (appRunningOnDevGcp() || appRunningOnProdGcp()) {
         const tokenxIssuer = await Issuer.discover(TOKEN_X_WELL_KNOWN_URL);
         tokenxClient = new tokenxIssuer.Client(
@@ -30,6 +28,11 @@ async function initTokenXClient() {
 }
 
 async function getFakeAccessToken() {
+    const {
+        FAKEDINGS_URL_TOKENX,
+        SYKEFRAVARSSTATISTIKK_API_AUDIENCE,
+    } = process.env;
+
     const tokenXToken = await (
         await fetch(
             FAKEDINGS_URL_TOKENX +

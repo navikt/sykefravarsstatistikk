@@ -3,15 +3,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './index.less';
-import { getMiljø } from './utils/miljøUtils';
-import { BASE_PATH } from './konstanter';
+import {BASE_PATH, MILJØ} from './konstanter';
 import { BrowserRouter } from 'react-router-dom';
 import { amplitudeClient } from './amplitude/client';
 import '@navikt/ds-css';
 import {  startMockServiceWorker } from "./api/localMocking/config";
+import { getEnvironmentContext} from "./Context/EnvironmentContext";
 
 async function main() {
-    if (process.env.REACT_APP_MOCK || getMiljø() === 'labs-gcp') {
+    const { MILJØ: miljø } = getEnvironmentContext()
+    if (process.env.REACT_APP_MOCK || miljø === MILJØ.DEV_EKSTERN) {
         await startMockServiceWorker()
     }
 

@@ -3,8 +3,7 @@ const axios = require('axios');
 
 const {JSDOM} = jsdom;
 
-const url =
-    'https://www.nav.no/dekoratoren/?context=arbeidsgiver&redirectToApp=true&feedback=false';
+const queryString = '/?context=arbeidsgiver&redirectToApp=true&feedback=false';
 
 function getDecoratorValuesFromBody(body) {
   const {document} = new JSDOM(body).window;
@@ -19,8 +18,8 @@ function getDecoratorValuesFromBody(body) {
   };
 }
 
-async function getDecorator() {
-  const {data: body} = await axios.get(url);
+async function getDecorator(url) {
+  const {data: body} = await axios.get(url+queryString);
   return getDecoratorValuesFromBody(body);
 }
 

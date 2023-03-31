@@ -2,7 +2,7 @@ const { exchangeToken } = require('./tokenx');
 const {
     appRunningLocally,
     appRunningOnDevGcp,
-    appRunningOnLabsGcp,
+    appRunningOnDevGcpEkstern,
     appRunningOnProdGcp,
 } = require('./environment');
 
@@ -16,15 +16,11 @@ const acceptedSigningAlgorithm = 'RS256';
 let idportenIssuer;
 let _remoteJWKSet;
 
-const {
-    IDPORTEN_WELL_KNOWN_URL,
-    IDPORTEN_CLIENT_ID,
-    FAKEDINGS_URL_IDPORTEN,
-} = process.env;
-
 async function initIdporten() {
-    if (appRunningOnLabsGcp() || appRunningLocally()) {
-        // I labs så returnerer vi mock uansett
+    const { IDPORTEN_WELL_KNOWN_URL } = process.env;
+
+    if (appRunningOnDevGcpEkstern() || appRunningLocally()) {
+        // I dev-gcp-ekstern så returnerer vi mock uansett
         return;
     }
     idportenIssuer = await Issuer.discover(IDPORTEN_WELL_KNOWN_URL);
@@ -32,6 +28,8 @@ async function initIdporten() {
 }
 
 async function verifiserIdportenSubjectToken(token) {
+    const { IDPORTEN_CLIENT_ID } = process.env;
+
     const { payload } = await jwtVerify(token, _remoteJWKSet, {
         algorithms: [acceptedSigningAlgorithm],
         issuer: idportenIssuer.metadata.issuer,
@@ -53,6 +51,8 @@ async function verifiserIdportenSubjectToken(token) {
 }
 
 async function getMockTokenFromIdporten() {
+    const { FAKEDINGS_URL_IDPORTEN } = process.env;
+
     return await (await fetch(FAKEDINGS_URL_IDPORTEN + '?acr=Level=4')).text();
 }
 
