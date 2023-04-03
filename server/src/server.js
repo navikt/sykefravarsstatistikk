@@ -5,20 +5,20 @@ const sykefraværsstatistikkApiProxy = require('./proxy');
 const iaTjenesterMetrikkerProxy = require('./iaTjenesterMetrikkerProxy');
 const buildPath = path.join(__dirname, '../../build');
 const dotenv = require('dotenv');
-const {initTokenXClient} = require('./tokenx');
-const {initIdporten} = require('./idporten');
+const { initTokenXClient } = require('./tokenx');
+const { initIdporten } = require('./idporten');
 const cookieParser = require('cookie-parser');
-const {applyNotifikasjonMiddleware} = require('./brukerapi-proxy-middleware');
+const { applyNotifikasjonMiddleware } = require('./brukerapi-proxy-middleware');
 const log = require('./logging');
 const contentHeaders = require('./contentHeaders');
-const loggingHandler = require("./backend-logger");
-const requestLoggingMiddleware = require('./requestLogging')
-const { getTemplateValues } = require('./environment')
+const loggingHandler = require('./backend-logger');
+const requestLoggingMiddleware = require('./requestLogging');
+const { getTemplateValues } = require('./environment');
 
 const app = express();
 dotenv.config();
 
-const {APP_INGRESS, LOGIN_URL, PORT = 3000} = process.env;
+const { APP_INGRESS, LOGIN_URL, PORT = 3000 } = process.env;
 const BASE_PATH = '/sykefravarsstatistikk';
 
 const renderAppMedTemplateValues = (templateValues) => {
@@ -44,17 +44,17 @@ const startServer = async (html) => {
 
     app.disable('x-powered-by');
     app.use(contentHeaders);
-    app.use(requestLoggingMiddleware)
+    app.use(requestLoggingMiddleware);
     app.use(sykefraværsstatistikkApiProxy);
     app.use(iaTjenesterMetrikkerProxy);
     applyNotifikasjonMiddleware(app);
 
-    app.use(BASE_PATH + '/', express.static(buildPath, {index: false}));
+    app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
     // consumes the payload! Must be placed below the proxy middlewares
-    app.use(express.json())
+    app.use(express.json());
 
-    app.post(BASE_PATH + '/api/logger', loggingHandler)
+    app.post(BASE_PATH + '/api/logger', loggingHandler);
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
         const referrerUrl = `${APP_INGRESS}/success?redirect=${req.query.redirect}`;
