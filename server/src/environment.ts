@@ -19,7 +19,7 @@ function getCurrentEnvironment() {
 }
 
 function getDekoratørUrl() {
-    const { DEKORATOR_URL = 'https://dekoratoren.ekstern.dev.nav.no' } = process.env;
+    const { DEKORATOR_URL = 'https://www.nav.no/dekoratoren' } = process.env;
     return DEKORATOR_URL;
 }
 function errorMap(issue: z.ZodIssueOptionalMessage, ctx: z.ErrorMapCtx): { message: string } {

@@ -31,6 +31,8 @@ spec:
           value: /etc/ssl/ca-bundle.pem
         - name: LOGIN_URL
           value: https://loginservice.nav.no/login?redirect=
+        - name: DEKORATOR_URL
+          value: https://www.nav.no/dekoratoren
         - name: APP_INGRESS
           value: https://arbeidsgiver.nav.no/sykefravarsstatistikk
         - name: SYKEFRAVARSSTATISTIKK_API_AUDIENCE
