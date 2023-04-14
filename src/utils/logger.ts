@@ -10,6 +10,9 @@ export const predefinerteFeilmeldinger = {
     brukerIkkeInloggetFeil: 'Nettverkskall feilet da bruker ikke er innlogget',
     brukerIkkeAutorisertFeil: 'Nettverkskall feilet da bruker ikke er Autorisert',
     feilVedNettverkskall: 'Det er oppstått en feil ved nettverkskall',
+    feilVedParsingAvMiljøvariabler: "Kunne ikke parse miljøvariabler, bruker fallback verdier",
+    fantIkkeMiljøvariabler: "Fant ikke script med miljøvariabler",
+    finnerIkkeDocumentElement: "Dokumentelement er undefined"
 };
 
 // This logger is isomorphic, and can be imported from anywhere in the app

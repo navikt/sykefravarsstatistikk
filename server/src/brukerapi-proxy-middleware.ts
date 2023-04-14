@@ -1,6 +1,9 @@
-const { exchangeIdportenToken } = require('./idporten');
-const { createProxyMiddleware } = require('http-proxy-middleware');
-const { appRunningOnDevGcpEkstern } = require('./environment');
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import { exchangeIdportenToken } from './idporten.js';
+import { appRunningOnDevGcpEkstern } from './environment.js';
+import { applyNotifikasjonMockMiddleware } from '@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock';
+
+export const NOTIFIKASJON_API_PATH = '/sykefravarsstatistikk/notifikasjon-bruker-api';
 
 function getProxyConfig() {
     const { NOTIFIKASJON_API_AUDIENCE } = process.env;
@@ -17,15 +20,12 @@ function getProxyConfig() {
         },
         secure: true,
         xfwd: true,
-        logLevel: 'info',
+        logLevel: 'info' as const,
     };
 }
 
-function applyNotifikasjonMiddleware(app) {
+export function applyNotifikasjonMiddleware(app) {
     if (appRunningOnDevGcpEkstern()) {
-        const {
-            applyNotifikasjonMockMiddleware,
-        } = require('@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock');
         applyNotifikasjonMockMiddleware({
             app,
             path: '/sykefravarsstatistikk/notifikasjon-bruker-api',
@@ -38,8 +38,3 @@ function applyNotifikasjonMiddleware(app) {
         app.use(notifikasjonBrukerApiProxy);
     }
 }
-
-module.exports = {
-    applyNotifikasjonMiddleware,
-    NOTIFIKASJON_API_PATH: '/sykefravarsstatistikk/notifikasjon-bruker-api',
-};

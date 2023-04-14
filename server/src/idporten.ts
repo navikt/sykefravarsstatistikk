@@ -1,14 +1,14 @@
-const { exchangeToken } = require('./tokenx');
-const {
+import { exchangeToken } from './tokenx.js';
+import {
     appRunningLocally,
     appRunningOnDevGcp,
     appRunningOnDevGcpEkstern,
     appRunningOnProdGcp,
-} = require('./environment');
+} from './environment.js';
 
-const { Issuer } = require('openid-client');
-const { createRemoteJWKSet, jwtVerify } = require('jose');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+import { Issuer } from 'openid-client';
+import { createRemoteJWKSet, jwtVerify } from 'jose';
+import fetch from 'node-fetch';
 
 const acceptedAcrLevel = 'Level4';
 const acceptedSigningAlgorithm = 'RS256';
@@ -16,8 +16,9 @@ const acceptedSigningAlgorithm = 'RS256';
 let idportenIssuer;
 let _remoteJWKSet;
 
-async function initIdporten() {
+export async function initIdporten() {
     const { IDPORTEN_WELL_KNOWN_URL } = process.env;
+    console.log('IDPORTEN_WELL_KNOWN_URL =', IDPORTEN_WELL_KNOWN_URL);
 
     if (appRunningOnDevGcpEkstern() || appRunningLocally()) {
         // I dev-gcp-ekstern så returnerer vi mock uansett
@@ -56,7 +57,7 @@ async function getMockTokenFromIdporten() {
     return await (await fetch(FAKEDINGS_URL_IDPORTEN + '?acr=Level=4')).text();
 }
 
-async function exchangeIdportenToken(req, targetApp) {
+export async function exchangeIdportenToken(req, targetApp) {
     let subjectToken = req.headers.authorization?.split(' ')[1];
 
     if (!subjectToken) {
@@ -71,8 +72,3 @@ async function exchangeIdportenToken(req, targetApp) {
 
     return await exchangeToken(subjectToken, targetApp);
 }
-
-module.exports = {
-    initIdporten,
-    exchangeIdportenToken,
-};

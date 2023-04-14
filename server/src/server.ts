@@ -1,25 +1,34 @@
-const path = require('path');
-const express = require('express');
-const mustacheExpress = require('mustache-express');
-const sykefraværsstatistikkApiProxy = require('./proxy');
-const iaTjenesterMetrikkerProxy = require('./iaTjenesterMetrikkerProxy');
-const buildPath = path.join(__dirname, '../../build');
-const dotenv = require('dotenv');
-const { initTokenXClient } = require('./tokenx');
-const { initIdporten } = require('./idporten');
-const cookieParser = require('cookie-parser');
-const { applyNotifikasjonMiddleware } = require('./brukerapi-proxy-middleware');
-const log = require('./logging');
-const contentHeaders = require('./contentHeaders');
-const loggingHandler = require('./backend-logger');
-const requestLoggingMiddleware = require('./requestLogging');
-const { getTemplateValues } = require('./environment');
+import path from 'path';
+import express from 'express';
+import mustacheExpress from 'mustache-express';
+import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+import Prometheus from 'prom-client';
+import { sykefraværsstatistikkApiProxy } from './proxy.js';
+import { iaTjenesterMetrikkerProxy } from './iaTjenesterMetrikkerProxy.js';
+import { initTokenXClient } from './tokenx.js';
+import { initIdporten } from './idporten.js';
+import { applyNotifikasjonMiddleware } from './brukerapi-proxy-middleware.js';
+import { contentHeaders } from './contentHeaders.js';
+import { loggingHandler, logger } from './backend-logger.js';
+import { requestLoggingMiddleware } from './requestLogging.js';
+import { getTemplateValues } from './environment.js';
+import { fileURLToPath } from 'node:url';
+import * as z from 'zod';
+
+const buildPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../build');
 
 const app = express();
 dotenv.config();
 
 const { APP_INGRESS, LOGIN_URL, PORT = 3000 } = process.env;
 const BASE_PATH = '/sykefravarsstatistikk';
+
+//Prometheus.collectDefaultMetrics();
+
+function isAppIngressRedirect(candidate: unknown): candidate is string {
+    return z.string().startsWith(APP_INGRESS).safeParse(candidate).success;
+}
 
 const renderAppMedTemplateValues = (templateValues) => {
     return new Promise((resolve, reject) => {
@@ -37,7 +46,6 @@ const renderAppMedTemplateValues = (templateValues) => {
 };
 
 const startServer = async (html) => {
-    log.info('Starting server: server.js');
     app.use(cookieParser());
 
     await Promise.all([initIdporten(), initTokenXClient()]);
@@ -54,7 +62,9 @@ const startServer = async (html) => {
     // consumes the payload! Must be placed below the proxy middlewares
     app.use(express.json());
 
-    app.post(BASE_PATH + '/api/logger', loggingHandler);
+    app.post(BASE_PATH + '/logger', (req, res) => {
+        loggingHandler(req, res);
+    });
 
     app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
         const referrerUrl = `${APP_INGRESS}/success?redirect=${req.query.redirect}`;
@@ -63,9 +73,10 @@ const startServer = async (html) => {
 
     app.get(`${BASE_PATH}/success`, (req, res) => {
         const loginserviceToken = req.cookies['selvbetjening-idtoken'];
-        if (loginserviceToken && req.query.redirect.startsWith(APP_INGRESS)) {
+
+        if (loginserviceToken && isAppIngressRedirect(req.query.redirect)) {
             res.redirect(req.query.redirect);
-        } else if (req.query.redirect.startsWith(APP_INGRESS)) {
+        } else if (isAppIngressRedirect(req.query.redirect)) {
             res.redirect(`${LOGIN_URL}${req.query.redirect}`);
         } else {
             res.redirect(`${LOGIN_URL}${APP_INGRESS}`);
@@ -74,6 +85,11 @@ const startServer = async (html) => {
 
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
+    app.get(`${BASE_PATH}/metrics`, async (req, res) => {
+        const metrics = await Prometheus.register.metrics();
+        res.set('Content-Type', Prometheus.register.contentType);
+        res.send(metrics);
+    });
 
     app.get(BASE_PATH, (req, res) => {
         res.send(html);
@@ -84,16 +100,16 @@ const startServer = async (html) => {
     });
 
     app.listen(PORT, () => {
-        log.info('Server listening on port', PORT);
+        logger.info({ PORT }, `Server listening on port ${PORT}`);
     });
 };
 
 getTemplateValues()
     .then(renderAppMedTemplateValues, (error) => {
-        log.error('Kunne ikke hente dekoratør ', error);
+        logger.error({ error }, 'Kunne ikke hente Template verdier');
         process.exit(1);
     })
     .then(startServer, (error) => {
-        log.error('Kunne ikke rendre app ', error);
+        logger.error({ error }, 'Kunne ikke rendre app ');
         process.exit(1);
     });

@@ -1,6 +1,6 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
-const { exchangeIdportenToken } = require('./idporten');
-const { appRunningOnDevGcpEkstern } = require('./environment');
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import { exchangeIdportenToken } from './idporten.js';
+import { appRunningOnDevGcpEkstern } from './environment.js';
 
 const FRONTEND_API_PATH = '/sykefravarsstatistikk/api';
 const BACKEND_API_PATH = '/sykefravarsstatistikk-api';
@@ -45,10 +45,11 @@ function getProxyConfig() {
         },
         secure: true,
         xfwd: true,
-        logLevel: 'info',
+        logLevel: 'info' as const,
     };
 }
 
-const sykefraværsstatistikkApiProxy = createProxyMiddleware(FRONTEND_API_PATH, getProxyConfig());
-
-module.exports = sykefraværsstatistikkApiProxy;
+export const sykefraværsstatistikkApiProxy = createProxyMiddleware(
+    FRONTEND_API_PATH,
+    getProxyConfig()
+);

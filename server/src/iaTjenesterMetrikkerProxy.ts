@@ -1,7 +1,7 @@
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
-import { exchangeIdportenToken } from './idporten';
-import { appRunningOnDevGcpEkstern } from './environment';
-import * as log from './logging';
+import { exchangeIdportenToken } from './idporten.js';
+import { appRunningOnDevGcpEkstern } from './environment.js';
+import { logger } from './backend-logger.js';
 
 function getProxyConfig(): Options {
     const {
@@ -27,15 +27,14 @@ function getProxyConfig(): Options {
         secure: true,
         xfwd: true,
         logLevel: 'info',
-        logProvider: () => log,
+        logProvider: () => logger,
         onError: (err) => {
-            log.error('Error in ia-tjenester-metrikker proxy: ' + err);
+            logger.error('Error in ia-tjenester-metrikker proxy: ' + err);
         },
     };
 }
 
-const iaTjenesterMetrikkerProxy = createProxyMiddleware(
+export const iaTjenesterMetrikkerProxy = createProxyMiddleware(
     '/sykefravarsstatistikk/proxy/ia-tjenester-metrikker',
     getProxyConfig()
 );
-module.exports = iaTjenesterMetrikkerProxy;

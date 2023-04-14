@@ -19,6 +19,9 @@ spec:
     readiness:
         path: /sykefravarsstatistikk/internal/isReady
         initialDelay: 10
+    prometheus:
+        enabled: true
+        path: /sykefravarsstatistikk/metrics
     env:
         - name: IDPORTEN_WELL_KNOWN_URL
           value: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration

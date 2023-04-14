@@ -1,5 +1,5 @@
-const jsdom = require('jsdom');
-const axios = require('axios');
+import jsdom from 'jsdom';
+import axios from 'axios';
 
 const { JSDOM } = jsdom;
 
@@ -23,4 +23,4 @@ async function getDecorator(url) {
     return getDecoratorValuesFromBody(body);
 }
 
-module.exports = getDecorator;
+export default getDecorator;
