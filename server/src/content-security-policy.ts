@@ -56,10 +56,8 @@ const contentSecurityPolicy = {
     'worker-src': ["'self'", 'blob:'],
 };
 
-function getCspValue() {
+export function getCspValue() {
     return Object.entries(contentSecurityPolicy)
         .map((entry) => `${entry[0]} ${entry[1].join(' ')}`)
         .join('; ');
 }
-
-module.exports = getCspValue;

@@ -1,20 +1,13 @@
-const { appRunningOnDevGcp, appRunningOnProdGcp } = require('./environment');
+import { Issuer, TokenSet } from 'openid-client';
+import fetch from 'node-fetch';
+import { appRunningOnDevGcp, appRunningOnProdGcp } from './environment.js';
+import { logger } from './backend-logger.js';
 
-const log = require('./logging');
-
-const { Issuer, TokenSet } = require('openid-client');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 let tokenxClient;
 
-const {
-    TOKEN_X_CLIENT_ID,
-    TOKEN_X_PRIVATE_JWK,
-    TOKEN_X_WELL_KNOWN_URL,
-    FAKEDINGS_URL_TOKENX,
-    SYKEFRAVARSSTATISTIKK_API_AUDIENCE,
-} = process.env;
+export async function initTokenXClient() {
+    const { TOKEN_X_CLIENT_ID, TOKEN_X_PRIVATE_JWK, TOKEN_X_WELL_KNOWN_URL } = process.env;
 
-async function initTokenXClient() {
     if (appRunningOnDevGcp() || appRunningOnProdGcp()) {
         const tokenxIssuer = await Issuer.discover(TOKEN_X_WELL_KNOWN_URL);
         tokenxClient = new tokenxIssuer.Client(
@@ -30,6 +23,8 @@ async function initTokenXClient() {
 }
 
 async function getFakeAccessToken() {
+    const { FAKEDINGS_URL_TOKENX, SYKEFRAVARSSTATISTIKK_API_AUDIENCE } = process.env;
+    //const { default: fetch } = await import('node-fetch')
     const tokenXToken = await (
         await fetch(
             FAKEDINGS_URL_TOKENX +
@@ -52,7 +47,7 @@ function getClientAssertionClaims() {
     };
 }
 
-async function exchangeToken(subjectToken, targetApp) {
+export async function exchangeToken(subjectToken, targetApp) {
     if (!(appRunningOnProdGcp() || appRunningOnDevGcp())) {
         return getFakeAccessToken();
     }
@@ -68,12 +63,7 @@ async function exchangeToken(subjectToken, targetApp) {
             getClientAssertionClaims()
         );
     } catch (err) {
-        log.error(`Feil under token exchange: ${err}`);
+        logger.error(err, `Feil under token exchange.`);
         return Promise.reject(err);
     }
 }
-
-module.exports = {
-    initTokenXClient,
-    exchangeToken,
-};

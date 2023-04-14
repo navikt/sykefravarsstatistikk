@@ -4,7 +4,7 @@ import { getRestStatus, RestStatus } from '../api/api-utils';
 import { useOrgnr } from './useOrgnr';
 import { BASE_PATH } from '../konstanter';
 import { Statistikkategori } from '../domene/statistikkategori';
-import {logger, predefinerteFeilmeldinger} from "../utils/logger";
+import { logger, predefinerteFeilmeldinger } from '../utils/logger';
 
 /**
  * Antagelser:
@@ -147,7 +147,7 @@ function useAggregertStatistikk(
     }
 
     if (data && getRestStatus(data.status) === RestStatus.IngenTilgang) {
-        logger.warn(predefinerteFeilmeldinger.brukerIkkeAutorisertFeil)
+        logger.warn(predefinerteFeilmeldinger.brukerIkkeAutorisertFeil);
         return {
             restStatus: RestStatus.IngenTilgang,
             aggregertData: undefined,
@@ -155,7 +155,7 @@ function useAggregertStatistikk(
     }
 
     if (data && getRestStatus(data.status) === RestStatus.IkkeInnlogget) {
-        logger.warn(predefinerteFeilmeldinger.brukerIkkeInloggetFeil)
+        logger.warn(predefinerteFeilmeldinger.brukerIkkeInloggetFeil);
         return {
             restStatus: RestStatus.IkkeInnlogget,
             aggregertData: undefined,
@@ -169,12 +169,13 @@ function useAggregertStatistikk(
         };
     } catch (e) {
         if (data) {
-            logger.error(predefinerteFeilmeldinger.kunneIkkeParseAggregertDataFeil)
+            logger.error(predefinerteFeilmeldinger.kunneIkkeParseAggregertDataFeil);
             return {
                 restStatus: RestStatus.Feil,
                 error: new Error('Kunne ikke parse aggregert data', { cause: e as Error }),
             };
-        }logger.error(predefinerteFeilmeldinger.ukjentFeilMedAggregertData)
+        }
+        logger.error(predefinerteFeilmeldinger.ukjentFeilMedAggregertData);
         return {
             restStatus: RestStatus.Feil,
             error: e,

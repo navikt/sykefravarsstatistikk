@@ -1,6 +1,4 @@
-import {
-    formaterProsent,
-} from './app-utils';
+import { formaterProsent } from './app-utils';
 
 it('formater tall med komma i stedet for punktum', () => {
     expect(formaterProsent(99.9)).toEqual('99,9');

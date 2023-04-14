@@ -1,0 +1,53 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+    name: sykefravarsstatistikk-mock
+    namespace: arbeidsgiver
+    labels:
+        team: arbeidsgiver
+spec:
+    image: {{ image }}
+    team: arbeidsgiver
+    port: 3000
+    vault:
+        enabled: false
+    ingresses:
+        - https://arbeidsgiver.ekstern.dev.nav.no/sykefravarsstatistikk
+    liveness:
+        path: /sykefravarsstatistikk/internal/isReady
+        initialDelay: 10
+    readiness:
+        path: /sykefravarsstatistikk/internal/isReady
+        initialDelay: 10
+    prometheus:
+        enabled: true
+        path: /sykefravarsstatistikk/metrics
+    env:
+        - name: IDPORTEN_WELL_KNOWN_URL
+          value: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration
+        - name: FAKEDINGS_URL_TOKENX
+          value: https://fakedings.dev-gcp.nais.io/fake/tokenx
+        - name: FAKEDINGS_URL_IDPORTEN
+          value: https://fakedings.dev-gcp.nais.io/fake/idporten?pid=01065500791
+        - name: LOGIN_URL
+          value: https://loginservice.dev.nav.no/login?redirect=
+        - name: DEKORATOR_URL
+          value: https://dekoratoren.ekstern.dev.nav.no
+        - name: APP_INGRESS
+          value: https://arbeidsgiver.ekstern.dev.nav.no/sykefravarsstatistikk
+        - name: SYKEFRAVARSSTATISTIKK_API_AUDIENCE
+          value: "dev-fss:arbeidsgiver:sykefravarsstatistikk-api"
+        - name: IA_TJENESTER_METRIKKER_AUDIENCE
+          value: "dev-gcp:arbeidsgiver:ia-tjenester-metrikker"
+        - name: NOTIFIKASJON_API_AUDIENCE
+          value: "dev-gcp:fager:notifikasjon-bruker-api"
+        - name: MILJO
+          value: dev-gcp-ekstern
+        - name: MIN_SIDE_ARBEIDSGIVER_URL
+          value: https://arbeidsgiver.ekstern.dev.nav.no/min-side-arbeidsgiver
+        - name: FOREBYGGE_FRAVAR_URL
+          value: https://arbeidsgiver.ekstern.dev.nav.no/forebygge-fravar
+    accessPolicy:
+        outbound:
+            external:
+                - host: dekoratoren.ekstern.dev.nav.no

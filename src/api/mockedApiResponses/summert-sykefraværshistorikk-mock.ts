@@ -1,7 +1,6 @@
-import { AggregertStatistikkResponse, Statistikk } from "../../hooks/useAggregertStatistikk";
-import { ÅrstallOgKvartal } from "../../utils/sykefraværshistorikk-utils";
-import { Statistikkategori } from "../../domene/statistikkategori";
-
+import { AggregertStatistikkResponse, Statistikk } from '../../hooks/useAggregertStatistikk';
+import { ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
+import { Statistikkategori } from '../../domene/statistikkategori';
 
 const tomAggregertStatistikk: Partial<AggregertStatistikkResponse> = {
     prosentSiste4KvartalerTotalt: [],
@@ -18,7 +17,7 @@ export const siste4KvartalerMock: ÅrstallOgKvartal[] = [
     { årstall: 2022, kvartal: 2 },
 ];
 
-export const siste2KvartalerMock: ÅrstallOgKvartal[]  = [
+export const siste2KvartalerMock: ÅrstallOgKvartal[] = [
     { årstall: 2022, kvartal: 1 },
     { årstall: 2022, kvartal: 2 },
 ];

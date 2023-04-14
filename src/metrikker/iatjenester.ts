@@ -1,8 +1,8 @@
-import {BASE_PATH} from '../konstanter';
+import { BASE_PATH } from '../konstanter';
 
 export type Virksomhet = { orgnr: string };
 
-export const sendteMetrikker: Virksomhet[] = [{orgnr: ''}];
+export const sendteMetrikker: Virksomhet[] = [{ orgnr: '' }];
 
 interface IaTjenesteMetrikk {
     orgnr: String;
@@ -15,7 +15,7 @@ export const sendIaTjenesteMetrikkMottatt = async (orgnr?: string): Promise<Virk
     if (orgnr !== undefined && !erIaTjenesterMetrikkerSendtForBedrift(orgnr)) {
         const erSendt = await post(iaTjenesteMetrikk);
         if (erSendt) {
-            sendteMetrikker.push({orgnr: orgnr});
+            sendteMetrikker.push({ orgnr: orgnr });
         }
     }
     return Promise.resolve(sendteMetrikker);

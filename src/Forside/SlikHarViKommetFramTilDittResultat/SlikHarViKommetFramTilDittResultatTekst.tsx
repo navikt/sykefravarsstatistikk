@@ -5,7 +5,7 @@ import './SlikHarViKommetFramTilDittResultatTekst.less';
 import { LenkeTilHistorikk } from '../../felleskomponenter/LenkeTilHistorikk';
 import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
 import { PeriodeForBeskrivelse } from './PeriodeForBeskrivelse';
-import { SykefraværVurdering } from "../vurdering-utils";
+import { SykefraværVurdering } from '../vurdering-utils';
 
 interface Props {
     resultat: SykefraværVurdering;
@@ -77,7 +77,8 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                         som NAV og Statistisk sentralbyrå (SSB) utarbeider.
                     </Normaltekst>
                     <Normaltekst>
-                       Vi klarte ikke å hente dine tall. Neste publiseringsdato for sykefraværsstatistikk er:
+                        Vi klarte ikke å hente dine tall. Neste publiseringsdato for
+                        sykefraværsstatistikk er:
                     </Normaltekst>
                     <PeriodeForBeskrivelse restPubliseringsdatoer={restPubliseringsdatoer} />
                 </>

@@ -18,7 +18,7 @@ describe('tester for enhetsregisteret-api', () => {
                 beskrivelse: 'Sosiale omsorgstjenester uten botilbud',
                 kode: '88',
             },
-            bransje: "BARNEHAGER",
+            bransje: 'BARNEHAGER',
             antallAnsatte: 62,
         });
     });

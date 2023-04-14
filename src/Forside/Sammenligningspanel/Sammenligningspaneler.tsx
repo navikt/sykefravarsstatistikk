@@ -18,43 +18,43 @@ export const Sammenligningspaneler: FunctionComponent<{
     const harFeil = restStatus === RestStatus.Feil;
     const orgnr = useOrgnr() || '';
     const navnPåVirksomhet =
-      restAltinnOrganisasjoner.status === RestStatus.Suksess &&
-      restAltinnOrganisasjoner.data.find(
-        (organisasjon) => organisasjon.OrganizationNumber === orgnr
-      )?.Name;
+        restAltinnOrganisasjoner.status === RestStatus.Suksess &&
+        restAltinnOrganisasjoner.data.find(
+            (organisasjon) => organisasjon.OrganizationNumber === orgnr
+        )?.Name;
 
     return (
-      <>
-          {harFeil && (
-            <Alert variant={'error'} className="sammenligningspanel__info-eller-feilmelding">
-                Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen senere.
-            </Alert>
-          )}
-          <div className="sammenligningspanel" ref={panelRef}>
-              <div className="sammenligningspanel__print-header">
-                  <Normaltekst className="sammenligningspanel__href">
-                      {window.location.href}
-                  </Normaltekst>
-                  <Systemtittel tag="h1" className="sammenligningspanel__print-tittel">
-                      Sykefraværsstatistikk for {navnPåVirksomhet} ({orgnr})
-                  </Systemtittel>
-              </div>
-              <ReactToPrint
-                onBeforePrint={() => sendKnappEvent('skriv ut')}
-                onAfterPrint={() => {
-                    if (lastNedKnappRef.current) {
-                        lastNedKnappRef.current.focus();
-                    }
-                }}
-                content={() => panelRef.current}
-                trigger={() => (
-                  <button ref={lastNedKnappRef} className="sammenligningspanel__knapp knapp">
-                      Last ned
-                  </button>
-                )}
-              />
-              {children}
-          </div>
-      </>
+        <>
+            {harFeil && (
+                <Alert variant={'error'} className="sammenligningspanel__info-eller-feilmelding">
+                    Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen senere.
+                </Alert>
+            )}
+            <div className="sammenligningspanel" ref={panelRef}>
+                <div className="sammenligningspanel__print-header">
+                    <Normaltekst className="sammenligningspanel__href">
+                        {window.location.href}
+                    </Normaltekst>
+                    <Systemtittel tag="h1" className="sammenligningspanel__print-tittel">
+                        Sykefraværsstatistikk for {navnPåVirksomhet} ({orgnr})
+                    </Systemtittel>
+                </div>
+                <ReactToPrint
+                    onBeforePrint={() => sendKnappEvent('skriv ut')}
+                    onAfterPrint={() => {
+                        if (lastNedKnappRef.current) {
+                            lastNedKnappRef.current.focus();
+                        }
+                    }}
+                    content={() => panelRef.current}
+                    trigger={() => (
+                        <button ref={lastNedKnappRef} className="sammenligningspanel__knapp knapp">
+                            Last ned
+                        </button>
+                    )}
+                />
+                {children}
+            </div>
+        </>
     );
 };

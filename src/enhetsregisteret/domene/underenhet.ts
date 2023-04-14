@@ -1,4 +1,4 @@
-import { ArbeidsmiljøportalenBransje } from "../../utils/bransje-utils";
+import { ArbeidsmiljøportalenBransje } from '../../utils/bransje-utils';
 
 export interface Beliggenhetsadresse {
     kommune: string;

@@ -13,46 +13,48 @@ export type BrødsmulestiConfig = Brødsmule[];
 export const medOrgnrQuery = (href: string, orgnr: string | undefined): string =>
     orgnr ? href + '?bedrift=' + orgnr : href;
 
-export const defaultBrødsmulestiConfig: BrødsmulestiConfig = [
-  {
-    side: 'minSideArbeidsgiver',
-    lenketekst: 'Min side – arbeidsgiver',
-    overordnetSide: undefined,
-    href: '/min-side-arbeidsgiver/',
-    handleMedReactRouter: false,
-  },
-  {
-    side: 'sykefraværsstatistikk',
-    overordnetSide: 'minSideArbeidsgiver',
-    lenketekst: 'Sykefraværsstatistikk',
-    href: BASE_PATH + PATH_FORSIDE,
-    handleMedReactRouter: true,
-  },
-  {
-    side: 'historikk',
-    overordnetSide: 'sykefraværsstatistikk',
-    lenketekst: 'Sykefraværshistorikk',
-    href: BASE_PATH + PATH_HISTORIKK,
-    handleMedReactRouter: true,
-  },
-];
+export const getdefaultBrødsmulestiConfig = (minSideUrl?: string): BrødsmulestiConfig => {
+    return [
+        {
+            side: 'minSideArbeidsgiver',
+            lenketekst: 'Min side – arbeidsgiver',
+            overordnetSide: undefined,
+            href: minSideUrl ? minSideUrl : '/min-side-arbeidsgiver/',
+            handleMedReactRouter: false,
+        },
+        {
+            side: 'sykefraværsstatistikk',
+            overordnetSide: 'minSideArbeidsgiver',
+            lenketekst: 'Sykefraværsstatistikk',
+            href: BASE_PATH + PATH_FORSIDE,
+            handleMedReactRouter: true,
+        },
+        {
+            side: 'historikk',
+            overordnetSide: 'sykefraværsstatistikk',
+            lenketekst: 'Sykefraværshistorikk',
+            href: BASE_PATH + PATH_HISTORIKK,
+            handleMedReactRouter: true,
+        },
+    ];
+};
 
 export const finnBrødsmule = (side: string, config: BrødsmulestiConfig): Brødsmule => {
-  return config.filter((smule) => smule.side === side)[0];
+    return config.filter((smule) => smule.side === side)[0];
 };
 
 export const getBrødsmulesti = (
     gjeldendeBrødsmule: Brødsmule,
     config: BrødsmulestiConfig
 ): Brødsmule[] => {
-  const sti = [gjeldendeBrødsmule];
+    const sti = [gjeldendeBrødsmule];
 
-  let overordnetSide = gjeldendeBrødsmule.overordnetSide;
-  while (overordnetSide) {
-    const brødsmule = finnBrødsmule(overordnetSide, config);
-    sti.push(brødsmule);
-    overordnetSide = brødsmule.overordnetSide;
-  }
-  sti.reverse();
-  return sti;
+    let overordnetSide = gjeldendeBrødsmule.overordnetSide;
+    while (overordnetSide) {
+        const brødsmule = finnBrødsmule(overordnetSide, config);
+        sti.push(brødsmule);
+        overordnetSide = brødsmule.overordnetSide;
+    }
+    sti.reverse();
+    return sti;
 };

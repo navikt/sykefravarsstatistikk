@@ -8,9 +8,8 @@ export const formaterProsent = (prosent: number | null | undefined): string => {
 };
 
 export const parseVerdi = (verdi: string) => {
-    return parseFloat(verdi.replace(",", "."));
+    return parseFloat(verdi.replace(',', '.'));
 };
-
 
 const månedsnavn = [
     'januar',

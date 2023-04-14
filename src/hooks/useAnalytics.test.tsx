@@ -8,7 +8,10 @@ import userEvent from '@testing-library/user-event';
 import { AppContent } from '../App';
 import '@testing-library/jest-dom';
 import { renderHook } from '@testing-library/react-hooks';
-import { mockAllDatahentingFeiler, mockAllDatahentingStatusOk } from '../api/mockedApiResponses/use-analytics-test-mocks';
+import {
+    mockAllDatahentingFeiler,
+    mockAllDatahentingStatusOk,
+} from '../api/mockedApiResponses/use-analytics-test-mocks';
 
 describe('useAnalytics', () => {
     const defaultEventData = {

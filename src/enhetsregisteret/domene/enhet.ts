@@ -1,6 +1,6 @@
 export interface InstitusjonellSektorkode {
-  kode: string;
-  beskrivelse: string;
+    kode: string;
+    beskrivelse: string;
 }
 
 export interface OverordnetEnhet {

@@ -1,7 +1,7 @@
-const getCspValue = require('./content-security-policy');
-const { appRunningLocally } = require('./environment');
+import { getCspValue } from './content-security-policy.js';
+import { appRunningLocally } from './environment.js';
 
-const contentHeaders = (req, res, next) => {
+export const contentHeaders = (req, res, next) => {
     res.header('X-Frame-Options', 'SAMEORIGIN');
     res.header('X-Xss-Protection', '1; mode=block');
     res.header('X-Content-Type-Options', 'nosniff');
@@ -21,5 +21,3 @@ const contentHeaders = (req, res, next) => {
     }
     next();
 };
-
-module.exports = contentHeaders;
