@@ -24,7 +24,7 @@ dotenv.config();
 const { APP_INGRESS, LOGIN_URL, PORT = 3000 } = process.env;
 const BASE_PATH = '/sykefravarsstatistikk';
 
-//Prometheus.collectDefaultMetrics();
+Prometheus.collectDefaultMetrics();
 
 function isAppIngressRedirect(candidate: unknown): candidate is string {
     return z.string().startsWith(APP_INGRESS).safeParse(candidate).success;

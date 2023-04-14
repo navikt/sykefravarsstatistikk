@@ -19,6 +19,9 @@ spec:
     readiness:
         path: /sykefravarsstatistikk/internal/isReady
         initialDelay: 20
+    prometheus:
+        enabled: true
+        path: /sykefravarsstatistikk/metrics
     env:
         - name: BACKEND_API_BASE_URL
           value: https://sykefravarsstatistikk-api.prod-fss-pub.nais.io
