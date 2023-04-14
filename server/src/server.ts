@@ -4,6 +4,8 @@ import mustacheExpress from 'mustache-express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import Prometheus from 'prom-client';
+import * as z from 'zod';
+import { fileURLToPath } from 'node:url';
 import { sykefraværsstatistikkApiProxy } from './proxy.js';
 import { iaTjenesterMetrikkerProxy } from './iaTjenesterMetrikkerProxy.js';
 import { initTokenXClient } from './tokenx.js';
@@ -13,8 +15,6 @@ import { contentHeaders } from './contentHeaders.js';
 import { loggingHandler, logger } from './backend-logger.js';
 import { requestLoggingMiddleware } from './requestLogging.js';
 import { getTemplateValues } from './environment.js';
-import { fileURLToPath } from 'node:url';
-import * as z from 'zod';
 
 const buildPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../build');
 
@@ -46,6 +46,7 @@ const renderAppMedTemplateValues = (templateValues) => {
 };
 
 const startServer = async (html) => {
+    logger.info('Starting server: server.ts');
     app.use(cookieParser());
 
     await Promise.all([initIdporten(), initTokenXClient()]);

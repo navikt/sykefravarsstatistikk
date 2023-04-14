@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { createContext } from 'react';
 import { MILJØ } from '../konstanter';
-import {logger, predefinerteFeilmeldinger} from "../utils/logger";
+import { logger, predefinerteFeilmeldinger } from '../utils/logger';
 
 const notEmptyTemplateString = z
     .string()
@@ -29,22 +29,22 @@ const fallbackData: Data = {
     MIN_SIDE_ARBEIDSGIVER_URL: '',
 };
 export const getEnvironmentContext = (): Data => {
-    if (typeof document === 'undefined'){
-        logger.warn(predefinerteFeilmeldinger.finnerIkkeDocumentElement);
+    if (typeof document === 'undefined') {
+        logger.error(predefinerteFeilmeldinger.finnerIkkeMiljøvariabler);
         return fallbackData;
     }
 
     const dataElement = document.getElementById('data');
 
     if (dataElement === null || !isHtmlScriptElement(dataElement)) {
-        logger.warn(predefinerteFeilmeldinger.fantIkkeMiljøvariabler);
+        logger.error(predefinerteFeilmeldinger.finnerIkkeMiljøvariabler);
         return fallbackData;
     }
 
     try {
         return Data.parse(JSON.parse(dataElement.text));
     } catch (e) {
-        logger.warn(predefinerteFeilmeldinger.feilVedParsingAvMiljøvariabler);
+        logger.error(predefinerteFeilmeldinger.finnerIkkeMiljøvariabler);
         return fallbackData;
     }
 };
