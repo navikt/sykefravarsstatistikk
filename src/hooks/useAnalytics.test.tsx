@@ -1,41 +1,36 @@
 import { sendAnalytics, useAnalytics } from './useAnalytics';
 import { amplitudeMock } from '../api/mockedApiResponses/amplitude-mock';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, renderHook } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { SykefraværAppData } from './useSykefraværAppData';
 import userEvent from '@testing-library/user-event';
 import { AppContent } from '../App';
 import '@testing-library/jest-dom';
-import { renderHook } from '@testing-library/react-hooks';
 import {
     mockAllDatahentingFeiler,
     mockAllDatahentingStatusOk,
 } from '../api/mockedApiResponses/use-analytics-test-mocks';
+import { MockResizeObserver } from '../../jest/MockResizeObserver';
 
 describe('useAnalytics', () => {
     const defaultEventData = {
         app: 'sykefravarsstatistikk',
         team: 'teamia',
     };
-    const { ResizeObserver } = window;
+
+    const MockObserver = new MockResizeObserver();
     beforeEach(() => {
         jest.spyOn(amplitudeMock, 'setUserProperties');
         jest.spyOn(amplitudeMock, 'logEvent');
         renderHook(() => useAnalytics(amplitudeMock));
 
-        // @ts-expect-error
-        delete window.ResizeObserver;
-        window.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        MockObserver.startmock();
     });
 
     afterEach(() => {
         jest.resetAllMocks();
-        window.ResizeObserver = ResizeObserver;
+        MockObserver.stopmock();
         jest.restoreAllMocks();
     });
 
@@ -62,13 +57,13 @@ describe('useAnalytics', () => {
         render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
 
         const virksomhetsvelger = await screen.findByLabelText(/Velg aktiv virksomhet/i);
-        userEvent.click(virksomhetsvelger);
+        await userEvent.click(virksomhetsvelger);
 
         const ønsketOverenhet = await screen.findByText(/111111111/i);
-        userEvent.click(ønsketOverenhet);
+        await userEvent.click(ønsketOverenhet);
 
         const ønsketVirsomhet = await screen.findByText(/444444444/i);
-        userEvent.click(ønsketVirsomhet);
+        await userEvent.click(ønsketVirsomhet);
         await waitFor(() => {
             expect(amplitudeMock.logEvent).toHaveBeenLastCalledWith(
                 'bedrift valgt',
@@ -84,7 +79,7 @@ describe('useAnalytics', () => {
             name: 'Slik har vi kommet fram til ditt resultat',
         });
 
-        userEvent.click(lesMerPanel);
+        await userEvent.click(lesMerPanel);
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
             'panel-ekspander',
             expect.objectContaining({
@@ -100,13 +95,13 @@ describe('useAnalytics', () => {
             name: 'Slik har vi kommet fram til ditt resultat',
         });
 
-        userEvent.click(lesMerPanel);
+        await userEvent.click(lesMerPanel);
         expect(amplitudeMock.logEvent).not.toHaveBeenCalledWith(
             'panel-kollaps',
             expect.objectContaining({})
         );
 
-        userEvent.click(lesMerPanel);
+        await userEvent.click(lesMerPanel);
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
             'panel-kollaps',
             expect.objectContaining({
@@ -131,7 +126,13 @@ describe('useAnalytics', () => {
             '#ekspanderbart-sammenligningspanel__tittel-knapp-KORTTID'
         );
 
-        userEvent.click(sammenlikningspanel_total!);
+        await Promise.all([
+            userEvent.click(sammenlikningspanel_total!),
+            userEvent.click(sammenlikningspanel_gradert!),
+            userEvent.click(sammenlikningspanel_langtid!),
+            userEvent.click(sammenlikningspanel_korttid!),
+        ]);
+
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
             'panel-ekspander',
             expect.objectContaining({
@@ -139,7 +140,6 @@ describe('useAnalytics', () => {
             })
         );
 
-        userEvent.click(sammenlikningspanel_gradert!);
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
             'panel-ekspander',
             expect.objectContaining({
@@ -147,7 +147,6 @@ describe('useAnalytics', () => {
             })
         );
 
-        userEvent.click(sammenlikningspanel_langtid!);
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
             'panel-ekspander',
             expect.objectContaining({
@@ -155,7 +154,6 @@ describe('useAnalytics', () => {
             })
         );
 
-        userEvent.click(sammenlikningspanel_korttid!);
         expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
             'panel-ekspander',
             expect.objectContaining({
@@ -175,7 +173,7 @@ describe('useAnalytics', () => {
         const panel = result.container.querySelector(
             '#ekspanderbart-sammenligningspanel__tittel-knapp-GRADERT'
         );
-        userEvent.click(panel!);
+        await userEvent.click(panel!);
 
         expect(amplitudeMock.logEvent).not.toHaveBeenCalledWith(
             'panel-ekspander',

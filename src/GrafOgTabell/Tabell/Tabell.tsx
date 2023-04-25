@@ -1,61 +1,71 @@
 import React, { FunctionComponent } from 'react';
-import { KvartalsvisSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
-import './Tabell.less';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Table } from '@navikt/ds-react';
 import Tabellrader from './Tabellrader';
 import {
-    getHistorikkLabels,
-    historikkHarBransje,
-    historikkHarOverordnetEnhet,
+    BransjeEllerNæringLabel,
     HistorikkLabels,
+    KvartalsvisSammenligning,
 } from '../../utils/sykefraværshistorikk-utils';
 
-interface Props {
-    sykefraværshistorikk: KvartalsvisSykefraværshistorikk[];
+interface TabellProps {
+    kvartalsvisSammenligning: KvartalsvisSammenligning[];
+    harOverordnetEnhet: boolean;
+    bransjeEllerNæringLabel: BransjeEllerNæringLabel;
+    historikkLabels: HistorikkLabels;
 }
 
-const Tabell: FunctionComponent<Props> = (props) => {
-    const harBransje = historikkHarBransje(props.sykefraværshistorikk);
-    const næringEllerBransjeTabellLabel = harBransje ? 'Bransje' : 'Næring';
-    const labels: HistorikkLabels = getHistorikkLabels(props.sykefraværshistorikk);
-
+const Tabell: FunctionComponent<TabellProps> = ({
+    kvartalsvisSammenligning,
+    historikkLabels,
+    bransjeEllerNæringLabel,
+    harOverordnetEnhet,
+}) => {
     const headerOverordnetEnhet = () => {
-        if (historikkHarOverordnetEnhet(props.sykefraværshistorikk)) {
+        if (harOverordnetEnhet) {
             return (
-                <th scope="col">
+                <Table.HeaderCell scope="col" align="right">
                     <Element>Overordnet enhet</Element>
-                    <Normaltekst>{labels.overordnetEnhet}</Normaltekst>
-                </th>
+                    <Normaltekst>{historikkLabels.overordnetEnhet}</Normaltekst>
+                </Table.HeaderCell>
             );
         }
     };
 
     return (
         <div className="graf-tabell__wrapper">
-            <table className="graf-tabell tabell tabell--stripet">
-                <thead>
-                    <tr>
-                        <th scope="col">År</th>
-                        <th scope="col">Kvartal</th>
-                        <th scope="col">
+            <Table zebraStripes={true}>
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell scope={'col'}>År</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Kvartal</Table.HeaderCell>
+                        <Table.HeaderCell scope="col" align="right">
                             <Element>Din virksomhet</Element>{' '}
-                            <Normaltekst>{labels.virksomhet}</Normaltekst>
-                        </th>
+                            <Normaltekst>{historikkLabels.virksomhet}</Normaltekst>
+                        </Table.HeaderCell>
                         {headerOverordnetEnhet()}
-                        <th scope="col">
-                            <Element>{næringEllerBransjeTabellLabel}</Element>{' '}
-                            <Normaltekst>{labels.næringEllerBransje}</Normaltekst>
-                        </th>
-                        <th scope="col">
-                            <Element>Sektor</Element> <Normaltekst>{labels.sektor}</Normaltekst>
-                        </th>
-                        <th scope="col">{labels.land}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <Tabellrader kvartalsvisSykefraværshistorikk={props.sykefraværshistorikk} />
-                </tbody>
-            </table>
+                        <Table.HeaderCell scope="col" align="right">
+                            <Element>{bransjeEllerNæringLabel}</Element>{' '}
+                            <Normaltekst>{historikkLabels.næringEllerBransje}</Normaltekst>
+                        </Table.HeaderCell>
+                        <Table.HeaderCell scope="col" align="right">
+                            <Element>Sektor</Element>{' '}
+                            <Normaltekst>{historikkLabels.sektor}</Normaltekst>
+                        </Table.HeaderCell>
+                        <Table.HeaderCell scope="col" align="right">
+                            {historikkLabels.land}
+                        </Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                    {
+                        <Tabellrader
+                            kvartalsvisSammenligning={kvartalsvisSammenligning}
+                            harOverordnetEnhet={harOverordnetEnhet}
+                        />
+                    }
+                </Table.Body>
+            </Table>
         </div>
     );
 };

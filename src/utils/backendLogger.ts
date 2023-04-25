@@ -2,6 +2,7 @@ import pino from 'pino';
 
 export const backendLogger = (defaultConfig = {}): pino.Logger =>
     pino({
+        enabled: process.env['NODE_ENV'] !== 'test',
         ...defaultConfig,
         timestamp: false,
         formatters: {

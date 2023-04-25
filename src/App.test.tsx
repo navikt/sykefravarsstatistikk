@@ -5,45 +5,51 @@ import { BrowserRouter } from 'react-router-dom';
 import { amplitudeMock } from './api/mockedApiResponses/amplitude-mock';
 import { mockAllDatahentingStatusOk } from './api/mockedApiResponses/use-analytics-test-mocks';
 import { SykefraværAppData } from './hooks/useSykefraværAppData';
+import { MockResizeObserver } from '../jest/MockResizeObserver';
 
-beforeEach(() => {
-    jest.spyOn(amplitudeMock, 'setUserProperties');
-});
-
-afterEach(() => {
-    jest.resetAllMocks();
-});
-
-it('renders without crashing', async () => {
-    await waitFor(() => {
-        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
-    });
-});
-
-it('Amplitude-events sendes med riktige user properties', async () => {
-    act(() => {
-        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
+describe('App', () => {
+    const MockObserver = new MockResizeObserver();
+    beforeEach(() => {
+        jest.spyOn(amplitudeMock, 'setUserProperties');
+        MockObserver.startmock();
     });
 
-    act(() => {
-        expect(amplitudeMock.setUserProperties).toHaveBeenCalledTimes(1);
+    afterEach(() => {
+        MockObserver.stopmock();
+        jest.resetAllMocks();
     });
-    act(() => {
-        expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
-            antallAnsatte: '50-99',
-            bransje: 'BARNEHAGER',
-            sektor: 'offentlig',
-            næring2siffer: '88 Sosiale omsorgstjenester uten botilbud',
-            prosent: '10-12',
-            sykefraværsvurdering: 'UNDER',
+
+    it('renders without crashing', async () => {
+        await waitFor(() => {
+            render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
         });
     });
-});
 
-const AppContentWithRouter = (data: SykefraværAppData) => {
-    return (
-        <BrowserRouter>
-            <AppContent {...data} analyticsClient={amplitudeMock} />
-        </BrowserRouter>
-    );
-};
+    it('Amplitude-events sendes med riktige user properties', async () => {
+        await waitFor(() => {
+            render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
+        });
+
+        await waitFor(() => {
+            expect(amplitudeMock.setUserProperties).toHaveBeenCalledTimes(1);
+        });
+        await waitFor(() => {
+            expect(amplitudeMock.setUserProperties).toHaveBeenCalledWith({
+                antallAnsatte: '50-99',
+                bransje: 'BARNEHAGER',
+                sektor: 'offentlig',
+                næring2siffer: '88 Sosiale omsorgstjenester uten botilbud',
+                prosent: '10-12',
+                sykefraværsvurdering: 'UNDER',
+            });
+        });
+    });
+
+    const AppContentWithRouter = (data: SykefraværAppData) => {
+        return (
+            <BrowserRouter>
+                <AppContent {...data} analyticsClient={amplitudeMock} />
+            </BrowserRouter>
+        );
+    };
+});

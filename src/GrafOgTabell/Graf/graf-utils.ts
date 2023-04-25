@@ -1,28 +1,20 @@
-import { KvartalsvisSammenligning, ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
 import {
-    KvartalsvisSykefraværshistorikk,
-    SykefraværshistorikkType,
-} from '../../api/kvartalsvis-sykefraværshistorikk-api';
+    BransjeEllerNæringLabel,
+    HistorikkLabel,
+    HistorikkLabels,
+    isHistorikkLabel,
+    KvartalsvisSammenligning,
+    ÅrstallOgKvartal,
+} from '../../utils/sykefraværshistorikk-utils';
+import { isDefined } from '../../utils/app-utils';
 
 export type SymbolType = 'circle' | 'cross' | 'diamond' | 'square' | 'star' | 'triangle' | 'wye';
-
-export type Linje =
-    | 'virksomhet'
-    | 'overordnetEnhet'
-    | 'næringEllerBransje'
-    | 'sektor'
-    | 'land'
-    | string;
-
-export type LabelsForLinjer = {
-    [linje in Linje]: string; // eslint-disable-line @typescript-eslint/no-unused-vars
-};
 
 interface GrafConfig {
     tooltipsnavn: any;
     farger: any;
     symboler: any;
-    linjer: Linje[];
+    linjer: HistorikkLabel[];
 }
 
 export const grafConfig: GrafConfig = {
@@ -52,12 +44,15 @@ export const grafConfig: GrafConfig = {
 export const getSymbol = (name: string): SymbolType =>
     name in grafConfig.symboler ? grafConfig.symboler[name] : 'circle';
 
-export const getFarge = (name: Linje): SymbolType =>
+export const getFarge = (name: HistorikkLabel): SymbolType =>
     name in grafConfig.farger ? grafConfig.farger[name] : 'black';
 
-export const getTooltipsnavn = (name: Linje, harBransje: boolean): string => {
+export const getTooltipsnavn = (
+    name: HistorikkLabel,
+    bransjeEllerNæringLabel: BransjeEllerNæringLabel
+): string => {
     if (name === 'næringEllerBransje') {
-        return harBransje ? 'Bransje' : 'Næring';
+        return bransjeEllerNæringLabel;
     }
     return name in grafConfig.tooltipsnavn ? grafConfig.tooltipsnavn[name] : 'Prosent';
 };
@@ -75,79 +70,20 @@ export const hentFørsteKvartalFraAlleÅreneIDatagrunnlaget = (
 export const lagTickString = (årstall: number, kvartal: number) =>
     årstall + ', ' + kvartal + '. kvartal';
 
-export const getLinjerSomHistorikkenHarDataFor = (
-    sykefraværshistorikk: KvartalsvisSykefraværshistorikk[]
-): Linje[] => {
-    let linjer: Linje[] = [...grafConfig.linjer];
-
-    const harHistorikkForOverordnetEnhet = !!sykefraværshistorikk.find(
-        (historikk) =>
-            historikk.type === SykefraværshistorikkType.OVERORDNET_ENHET &&
-            historikk.kvartalsvisSykefraværsprosent.length > 0
-    );
-    const harHistorikkForVirksomhet = !!sykefraværshistorikk.find(
-        (historikk) =>
-            historikk.type === SykefraværshistorikkType.VIRKSOMHET &&
-            historikk.kvartalsvisSykefraværsprosent.length > 0
-    );
-
-    if (!harHistorikkForOverordnetEnhet) {
-        linjer = linjer.filter((name) => name !== 'overordnetEnhet');
-    }
-    if (!harHistorikkForVirksomhet) {
-        linjer = linjer.filter((name) => name !== 'virksomhet');
-    }
-
-    return linjer;
-};
-
-export const finnesBransjeIHistorikken = (
-    sykefraværshistorikk: KvartalsvisSykefraværshistorikk[]
-): boolean =>
-    !!sykefraværshistorikk.find((historikk) => historikk.type === SykefraværshistorikkType.BRANSJE);
-
-export const getLabelsForLinjene = (
-    sykefraværshistorikk: KvartalsvisSykefraværshistorikk[]
-): LabelsForLinjer => {
-    const labelForType = (type: SykefraværshistorikkType): string => {
-        return sykefraværshistorikk.find((historikk) => historikk.type === type)!
-            ? sykefraværshistorikk.find((historikk) => historikk.type === type)!.label
-            : 'Ingen tilgjengelig data';
-    };
-
-    const harBransje = finnesBransjeIHistorikken(sykefraværshistorikk);
-
-    return {
-        virksomhet: labelForType(SykefraværshistorikkType.VIRKSOMHET),
-        overordnetEnhet: labelForType(SykefraværshistorikkType.OVERORDNET_ENHET),
-        næringEllerBransje: labelForType(
-            harBransje ? SykefraværshistorikkType.BRANSJE : SykefraværshistorikkType.NÆRING
-        ),
-        sektor: labelForType(SykefraværshistorikkType.SEKTOR),
-        land: labelForType(SykefraværshistorikkType.LAND),
-    };
-};
-
 export const getLinjerSomHarData = (
-    sykefraværshistorikk: KvartalsvisSykefraværshistorikk[]
-): Linje[] => {
-    const harData = (type: SykefraværshistorikkType) => {
-        const historikk = sykefraværshistorikk.find((historikk) => historikk.type === type);
-        if (!historikk) {
-            return false;
-        }
-        return !!historikk.kvartalsvisSykefraværsprosent.find(
-            (prosent) => prosent !== null && prosent !== undefined
-        );
-    };
+    sykefraværshistorikk: KvartalsvisSammenligning[]
+): HistorikkLabel[] => {
+    const linjer = new Set();
+    const keysSize = Object.keys(HistorikkLabels).length;
+    for (const historikk of sykefraværshistorikk) {
+        if (linjer.size === keysSize) break;
 
-    const linjerSomHarData: Linje[] = [];
-    if (harData(SykefraværshistorikkType.VIRKSOMHET)) linjerSomHarData.push('virksomhet');
-    if (harData(SykefraværshistorikkType.OVERORDNET_ENHET))
-        linjerSomHarData.push('overordnetEnhet');
-    if (harData(SykefraværshistorikkType.BRANSJE) || harData(SykefraværshistorikkType.NÆRING))
-        linjerSomHarData.push('næringEllerBransje');
-    if (harData(SykefraværshistorikkType.SEKTOR)) linjerSomHarData.push('sektor');
-    if (harData(SykefraværshistorikkType.LAND)) linjerSomHarData.push('land');
-    return linjerSomHarData;
+        const { årstall, kvartal, ...data } = historikk;
+
+        for (const [label, prosent] of Object.entries(data)) {
+            if (isDefined(prosent.prosent)) linjer.add(label);
+        }
+    }
+
+    return Array.from(linjer).filter(isHistorikkLabel);
 };

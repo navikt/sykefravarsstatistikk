@@ -1,4 +1,5 @@
 import 'core-js';
+import 'core-js/es/array/to-reversed';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';

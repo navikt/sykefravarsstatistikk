@@ -1,14 +1,21 @@
 import { fetchMedFeilhåndtering, RestRessurs, RestStatus } from './api-utils';
 import { BASE_PATH } from '../konstanter';
 
-export enum SykefraværshistorikkType {
-    LAND = 'LAND',
-    SEKTOR = 'SEKTOR',
-    NÆRING = 'NÆRING',
-    BRANSJE = 'BRANSJE',
-    VIRKSOMHET = 'VIRKSOMHET',
-    OVERORDNET_ENHET = 'OVERORDNET_ENHET',
-}
+export const SykefraværshistorikkType = {
+    LAND: 'LAND',
+    SEKTOR: 'SEKTOR',
+    NÆRING: 'NÆRING',
+    BRANSJE: 'BRANSJE',
+    VIRKSOMHET: 'VIRKSOMHET',
+    OVERORDNET_ENHET: 'OVERORDNET_ENHET',
+} as const;
+export type SykefraværshistorikkType =
+    typeof SykefraværshistorikkType[keyof typeof SykefraværshistorikkType];
+export const isSykefraværshistorikkType = (
+    maybeLabel: string
+): maybeLabel is SykefraværshistorikkType => {
+    return SykefraværshistorikkType.hasOwnProperty(maybeLabel);
+};
 
 export type KvartalsvisSykefraværsprosent = {
     kvartal: number;
