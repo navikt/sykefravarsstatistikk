@@ -26,9 +26,10 @@
         "@types/mustache-express": "^1.2.2",
         "@types/node": "^16.11.12",
         "nodemon": "^2.0.15",
-        "pino-pretty": "^10.0.0"
+        "ts-node": "^10.9.1"
     },
     "scripts": {
+        "startLocal": "ts-node --esm src/server.ts",
         "watch": "DEBUG=express:* NODE_ENV=development nodemon src/server.js"
     },
     "resolutions": {

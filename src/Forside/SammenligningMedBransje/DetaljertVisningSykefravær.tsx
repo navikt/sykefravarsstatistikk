@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { Ingress, Systemtittel } from 'nav-frontend-typografi';
 import { Prosent } from '../Prosent';
 import './DetaljertVisningSykefravær.less';
@@ -7,7 +7,7 @@ import classNames from 'classnames';
 interface Props {
     overskrift: string;
     prosent: string | undefined | null;
-    visingAntallKvartaller: ReactElement | undefined | null;
+    visingAntallKvartaller: ReactNode;
     className?: string;
 }
 

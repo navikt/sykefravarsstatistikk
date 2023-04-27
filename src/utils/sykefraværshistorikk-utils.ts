@@ -14,6 +14,7 @@ export const HistorikkLabels = {
     land: 'land',
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type HistorikkLabels = Record<keyof typeof HistorikkLabels, string>;
 
 export type HistorikkLabel = keyof HistorikkLabels;

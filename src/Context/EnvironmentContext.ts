@@ -10,7 +10,6 @@ const notEmptyTemplateString = z
 const Data = z.object({
     MILJØ: notEmptyTemplateString.refine((value) => isMiljø(value)),
     MIN_SIDE_ARBEIDSGIVER_URL: notEmptyTemplateString,
-    FOREBYGGE_FRAVÆR_URL: notEmptyTemplateString,
 });
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -24,7 +23,6 @@ const isMiljø = (value: string): value is MILJØ => {
 };
 
 const fallbackData: Data = {
-    FOREBYGGE_FRAVÆR_URL: '',
     MILJØ: MILJØ.LOCAL,
     MIN_SIDE_ARBEIDSGIVER_URL: '',
 };

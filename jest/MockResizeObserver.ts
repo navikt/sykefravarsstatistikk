@@ -1,10 +1,10 @@
 export class MockResizeObserver {
-    private readonly ResizeObserver
+    private readonly ResizeObserver;
 
     constructor() {
         this.ResizeObserver = window.ResizeObserver;
     }
-    startmock(){
+    startmock() {
         // @ts-expect-error
         delete window.ResizeObserver;
         window.ResizeObserver = jest.fn().mockImplementation(() => ({
@@ -12,8 +12,8 @@ export class MockResizeObserver {
             unobserve: jest.fn(),
             disconnect: jest.fn(),
         }));
-    };
-    stopmock(){
+    }
+    stopmock() {
         window.ResizeObserver = this.ResizeObserver;
-    };
+    }
 }

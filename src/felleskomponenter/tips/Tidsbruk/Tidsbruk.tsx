@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 import klokkeSvg from './klokke.svg';
@@ -6,6 +6,7 @@ import './Tidsbruk.less';
 
 interface Props {
     className?: string;
+    children: ReactNode;
 }
 
 export const Tidsbruk: FunctionComponent<Props> = ({ children, className }) => {

@@ -2,12 +2,12 @@ import '@testing-library/jest-dom';
 import useAggregertStatistikk from './useAggregertStatistikk';
 import { Fetcher, SWRConfig } from 'swr';
 import { RestStatus } from '../api/api-utils';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { renderHook, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { aggregertMockData } from '../api/mockedApiResponses/aggregert-mock';
 
-const wrapper: React.FC = ({ children }) => (
+const wrapper: React.FC<{ children: ReactNode }> = ({ children }) => (
     <SWRConfig value={{ provider: () => new Map() }}>
         <MemoryRouter>{children}</MemoryRouter>;
     </SWRConfig>

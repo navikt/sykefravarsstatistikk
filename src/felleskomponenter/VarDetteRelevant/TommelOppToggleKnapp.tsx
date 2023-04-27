@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import './TommelOppToggleKnapp.less';
 import { Flatknapp } from 'nav-frontend-knapper';
 import { ReactComponent as TommelOpp } from './tommel-opp.svg';
@@ -8,6 +8,7 @@ interface Props {
     retning: 'opp' | 'ned';
     pressed: boolean;
     onClick: () => void;
+    children: ReactNode;
 }
 
 export const TommelOppToggleKnapp: FunctionComponent<Props> = (props) => {

@@ -9,6 +9,7 @@ export const SykefraværshistorikkType = {
     VIRKSOMHET: 'VIRKSOMHET',
     OVERORDNET_ENHET: 'OVERORDNET_ENHET',
 } as const;
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type SykefraværshistorikkType =
     typeof SykefraværshistorikkType[keyof typeof SykefraværshistorikkType];
 export const isSykefraværshistorikkType = (

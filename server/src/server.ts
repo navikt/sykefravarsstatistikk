@@ -14,7 +14,7 @@ import { applyNotifikasjonMiddleware } from './brukerapi-proxy-middleware.js';
 import { contentHeaders } from './contentHeaders.js';
 import { loggingHandler, logger } from './backend-logger.js';
 import { requestLoggingMiddleware } from './requestLogging.js';
-import { getTemplateValues } from './environment.js';
+import { getKalkulatorRedirectUrl, getTemplateValues } from './environment.js';
 
 const buildPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../build');
 
@@ -59,6 +59,13 @@ const startServer = async (html) => {
     applyNotifikasjonMiddleware(app);
 
     app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
+
+    app.get(BASE_PATH + '/historikk', (req, res) => {
+        res.redirect(BASE_PATH + '/');
+    });
+    app.get(BASE_PATH + '/kalkulator', (req, res) => {
+        res.redirect(getKalkulatorRedirectUrl());
+    });
 
     // consumes the payload! Must be placed below the proxy middlewares
     app.use(express.json());

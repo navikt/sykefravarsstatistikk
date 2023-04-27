@@ -31,7 +31,6 @@ function getFrontendEnvs() {
             .object({
                 MILJO: z.string().refine(isMiljø),
                 MIN_SIDE_ARBEIDSGIVER_URL: z.string().url(),
-                FOREBYGGE_FRAVAR_URL: z.string().url(),
             })
             .parse(process.env, { errorMap: errorMap });
     } catch (err) {
@@ -40,13 +39,25 @@ function getFrontendEnvs() {
                 MILJO: MILJØ.LOCAL,
                 MIN_SIDE_ARBEIDSGIVER_URL:
                     'https://arbeidsgiver.ekstern.dev.nav.no/min-side-arbeidsgiver',
-                FOREBYGGE_FRAVAR_URL: 'https://arbeidsgiver.ekstern.dev.nav.no/forebygge-fravar',
             };
         }
         //Fail fast if not dev
         throw err;
     }
 }
+
+export function getKalkulatorRedirectUrl() {
+    try {
+        return z.string().url().parse(process.env.FOREBYGGE_FRAVAR_URL) + '/kalkulator';
+    } catch (err) {
+        if (process.env.NODE_ENV === 'development') {
+            return 'https://arbeidsgiver.ekstern.dev.nav.no/forebygge-fravar/kalkulator';
+        }
+        //Fail fast if not dev
+        throw err;
+    }
+}
+
 export function appRunningLocally() {
     return getCurrentEnvironment() === 'local';
 }

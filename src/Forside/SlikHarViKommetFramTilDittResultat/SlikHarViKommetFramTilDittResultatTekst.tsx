@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import { ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
 import './SlikHarViKommetFramTilDittResultatTekst.less';
-import { LenkeTilHistorikk } from '../../felleskomponenter/LenkeTilHistorikk';
 import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
 import { PeriodeForBeskrivelse } from './PeriodeForBeskrivelse';
 import { SykefraværVurdering } from '../vurdering-utils';
@@ -33,7 +32,6 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                     </Normaltekst>
                     <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
                     <Kvartalsliste kvartaler={kvartaler} />
-                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
         case 'MASKERT':
@@ -50,7 +48,6 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                         Bransjens tall er beregnet på sykefraværsstatistikk fra:
                     </Normaltekst>
                     <PeriodeForBeskrivelse restPubliseringsdatoer={restPubliseringsdatoer} />
-                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
         case 'UFULLSTENDIG_DATA':
@@ -66,7 +63,6 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                         Bransjens tall er beregnet på sykefraværsstatistikk fra:
                     </Normaltekst>
                     <PeriodeForBeskrivelse restPubliseringsdatoer={restPubliseringsdatoer} />
-                    <LenkeTilHistorikk kildeSomSendesMedEvent="les mer total" />
                 </>
             );
         case 'FEIL_ELLER_INGEN_DATA':
