@@ -1,7 +1,7 @@
 import 'core-js';
 import 'core-js/es/array/to-reversed';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './App';
 import './index.less';
 import { BASE_PATH, MILJØ } from './konstanter';
@@ -11,18 +11,20 @@ import '@navikt/ds-css';
 import { startMockServiceWorker } from './api/localMocking/config';
 import { getEnvironmentContext } from './Context/EnvironmentContext';
 
-async function main() {
+async function main(): Promise<void> {
     const { MILJØ: miljø } = getEnvironmentContext();
     if (process.env.REACT_APP_MOCK || miljø === MILJØ.DEV_EKSTERN) {
         await startMockServiceWorker();
     }
 
-    ReactDOM.render(
+    const container = document.getElementById('root');
+    const root = createRoot(container!);
+
+    root.render(
         <BrowserRouter basename={BASE_PATH}>
             <App analyticsClient={amplitudeClient} />
-        </BrowserRouter>,
-        document.getElementById('root')
+        </BrowserRouter>
     );
 }
 
-main();
+main().then(/*main returnerer ingenting*/);
