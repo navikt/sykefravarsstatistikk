@@ -12,7 +12,7 @@ spec:
     vault:
         enabled: true
     ingresses:
-        - https://arbeidsgiver-gcp.dev.nav.no/sykefravarsstatistikk
+        - https://sykefravarsstatistikk.intern.dev.nav.no/sykefravarsstatistikk
     liveness:
         path: /sykefravarsstatistikk/internal/isAlive
         initialDelay: 10
@@ -34,7 +34,7 @@ spec:
         - name: DEKORATOR_URL
           value: https://www.dev.nav.no/dekoratoren
         - name: APP_INGRESS
-          value: https://arbeidsgiver-gcp.dev.nav.no/sykefravarsstatistikk
+          value: https://sykefravarsstatistikk.intern.dev.nav.no/sykefravarsstatistikk
         - name: SYKEFRAVARSSTATISTIKK_API_AUDIENCE
           value: "dev-fss:arbeidsgiver:sykefravarsstatistikk-api"
         - name: IA_TJENESTER_METRIKKER_AUDIENCE
@@ -44,9 +44,9 @@ spec:
         - name: MILJO
           value: dev-gcp
         - name: MIN_SIDE_ARBEIDSGIVER_URL
-          value: https://min-side-arbeidsgiver.dev.nav.no/min-side-arbeidsgiver
+          value: https://min-side-arbeidsgiver.intern.dev.nav.no/min-side-arbeidsgiver
         - name: FOREBYGGE_FRAVAR_URL
-          value: https://forebygge-fravar.dev.nav.no/forebygge-fravar
+          value: https://forebygge-fravar.intern.dev.nav.no/forebygge-fravar
     tokenx:
         enabled: true
     idporten:
