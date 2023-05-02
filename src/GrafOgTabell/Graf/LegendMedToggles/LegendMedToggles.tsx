@@ -1,20 +1,24 @@
 import React, { FunctionComponent } from 'react';
 import { CheckboxGruppe } from 'nav-frontend-skjema';
-import { LabelsForLinjer, Linje } from '../graf-utils';
 import { LegendCheckbox } from './LegendChechbox/LegendCheckbox';
 import './LegendMedToggles.less';
+import {
+    BransjeEllerNæringLabel,
+    HistorikkLabel,
+    HistorikkLabels,
+} from '../../../utils/sykefraværshistorikk-utils';
 
 interface Props {
-    labels: LabelsForLinjer;
-    harBransje: boolean;
-    linjerSomKanVises: Linje[];
-    linjerSomSkalVises: Linje[];
-    setLinjerSomSkalVises: (linjer: Linje[]) => void;
+    labels: HistorikkLabels;
+    bransjeEllerNæringLabel: BransjeEllerNæringLabel;
+    linjerSomKanVises: HistorikkLabel[];
+    linjerSomSkalVises: HistorikkLabel[];
+    setLinjerSomSkalVises: (linjer: HistorikkLabel[]) => void;
 }
 
 export const LegendMedToggles: FunctionComponent<Props> = ({
     labels,
-    harBransje,
+    bransjeEllerNæringLabel,
     linjerSomKanVises,
     linjerSomSkalVises,
     setLinjerSomSkalVises,
@@ -35,11 +39,12 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
     };
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const prefikser: { [linje in Linje]: string } = {
+    const prefikser: { [linje in HistorikkLabel]: string } = {
         virksomhet: 'Virksomhet:',
         overordnetEnhet: 'Overordnet enhet:',
-        næringEllerBransje: harBransje ? 'Bransje:' : 'Næring:',
+        næringEllerBransje: bransjeEllerNæringLabel + ':',
         sektor: 'Sektor:',
+        land: '',
     };
 
     return (

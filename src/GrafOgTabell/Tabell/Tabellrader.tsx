@@ -1,41 +1,27 @@
-import {
-    KvartalsvisSykefraværshistorikk,
-    Sykefraværsprosent,
-} from '../../api/kvartalsvis-sykefraværshistorikk-api';
+import { Sykefraværsprosent } from '../../api/kvartalsvis-sykefraværshistorikk-api';
 import React, { FunctionComponent } from 'react';
-import {
-    historikkHarOverordnetEnhet,
-    konverterTilKvartalsvisSammenligning,
-} from '../../utils/sykefraværshistorikk-utils';
-
-interface Props {
-    kvartalsvisSykefraværshistorikk: KvartalsvisSykefraværshistorikk[];
-}
-
-const formaterProsent = (prosent: Sykefraværsprosent): string => {
-    if (prosent.erMaskert) {
-        return '***';
-    } else if (prosent.prosent === undefined) {
-        return '';
-    } else {
-        return (prosent.prosent + ' %').replace('.', ',');
-    }
-};
+import { KvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
+import { formaterProsent } from './tabell-utils';
+import { Table } from '@navikt/ds-react';
 
 const kolonneOverordnetEnhet = (
     overordnetEnhet: Sykefraværsprosent,
     harOverordnetEnhet: boolean
 ) => {
     if (harOverordnetEnhet) {
-        return <td>{formaterProsent(overordnetEnhet)}</td>;
+        return <Table.DataCell align={'right'}>{formaterProsent(overordnetEnhet)}</Table.DataCell>;
     }
 };
 
-const Tabellrader: FunctionComponent<Props> = (props) => {
-    const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
-        props.kvartalsvisSykefraværshistorikk
-    );
-    kvartalsvisSammenligning.reverse();
+type TabellRadProps = {
+    kvartalsvisSammenligning: KvartalsvisSammenligning[];
+    harOverordnetEnhet: boolean;
+};
+
+export const Tabellrader: FunctionComponent<TabellRadProps> = ({
+    kvartalsvisSammenligning,
+    harOverordnetEnhet,
+}: TabellRadProps) => {
     return (
         <>
             {kvartalsvisSammenligning.map((rad) => {
@@ -49,18 +35,19 @@ const Tabellrader: FunctionComponent<Props> = (props) => {
                     land,
                 } = rad;
                 return (
-                    <tr key={årstall + '-' + kvartal}>
-                        <td>{årstall}</td>
-                        <td>{kvartal}</td>
-                        <td>{formaterProsent(virksomhet)}</td>
-                        {kolonneOverordnetEnhet(
-                            overordnetEnhet,
-                            historikkHarOverordnetEnhet(props.kvartalsvisSykefraværshistorikk)
-                        )}
-                        <td>{formaterProsent(næringEllerBransje)}</td>
-                        <td>{formaterProsent(sektor)}</td>
-                        <td>{formaterProsent(land)}</td>
-                    </tr>
+                    <Table.Row key={årstall + '-' + kvartal}>
+                        <Table.DataCell>{årstall}</Table.DataCell>
+                        <Table.DataCell>{kvartal}</Table.DataCell>
+                        <Table.DataCell align={'right'}>
+                            {formaterProsent(virksomhet)}
+                        </Table.DataCell>
+                        {kolonneOverordnetEnhet(overordnetEnhet, harOverordnetEnhet)}
+                        <Table.DataCell align={'right'}>
+                            {formaterProsent(næringEllerBransje)}
+                        </Table.DataCell>
+                        <Table.DataCell align={'right'}>{formaterProsent(sektor)}</Table.DataCell>
+                        <Table.DataCell align={'right'}>{formaterProsent(land)}</Table.DataCell>
+                    </Table.Row>
                 );
             })}
         </>

@@ -2,42 +2,48 @@ import React, { FunctionComponent, useState } from 'react';
 
 import './Graf.less';
 import 'nav-frontend-tabell-style';
-import { KvartalsvisSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
-import {
-    finnesBransjeIHistorikken,
-    getLabelsForLinjene,
-    getLinjerSomHarData,
-    Linje,
-} from './graf-utils';
+import { getLinjerSomHarData } from './graf-utils';
 import { LegendMedToggles } from './LegendMedToggles/LegendMedToggles';
 import GrafVisning from './GrafVisning';
+import { listFilterBuilder } from '../../utils/app-utils';
+import {
+    BransjeEllerNæringLabel,
+    HistorikkLabel,
+    HistorikkLabels,
+    KvartalsvisSammenligning,
+} from '../../utils/sykefraværshistorikk-utils';
 
 interface Props {
-    sykefraværshistorikk: KvartalsvisSykefraværshistorikk[];
+    kvartalsvisSammenligning: KvartalsvisSammenligning[];
+    bransjeEllerNæringLabel: BransjeEllerNæringLabel;
+    historikkLabels: HistorikkLabels;
 }
 
+const defaultLinjer: readonly HistorikkLabel[] = [
+    'virksomhet',
+    'overordnetEnhet',
+    'næringEllerBransje',
+] as const;
+
 const Graf: FunctionComponent<Props> = (props) => {
-    const labelsForLinjer = getLabelsForLinjene(props.sykefraværshistorikk);
-    const linjerSomKanVises = getLinjerSomHarData(props.sykefraværshistorikk);
-    const [linjerSomSkalVises, setLinjerSomSkalVises] = useState<Linje[]>(
-        ['virksomhet', 'overordnetEnhet', 'næringEllerBransje'].filter((linje) =>
-            linjerSomKanVises.includes(linje)
-        )
+    const linjerSomKanVises = getLinjerSomHarData(props.kvartalsvisSammenligning);
+    const linjeFilter = listFilterBuilder(linjerSomKanVises);
+    const [linjerSomSkalVises, setLinjerSomSkalVises] = useState<HistorikkLabel[]>(
+        defaultLinjer.filter(linjeFilter)
     );
-    const harBransje = finnesBransjeIHistorikken(props.sykefraværshistorikk);
 
     return (
         <>
             <LegendMedToggles
-                labels={labelsForLinjer}
-                harBransje={harBransje}
+                labels={props.historikkLabels}
+                bransjeEllerNæringLabel={props.bransjeEllerNæringLabel}
                 linjerSomKanVises={linjerSomKanVises}
                 linjerSomSkalVises={linjerSomSkalVises}
                 setLinjerSomSkalVises={setLinjerSomSkalVises}
             />
             <GrafVisning
-                sykefraværshistorikk={props.sykefraværshistorikk}
-                harBransje={harBransje}
+                kvartalsvisSammenligning={props.kvartalsvisSammenligning}
+                bransjeEllerNæringLabel={props.bransjeEllerNæringLabel}
                 linjerSomSkalVises={linjerSomSkalVises}
             />
         </>

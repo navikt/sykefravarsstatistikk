@@ -3,6 +3,7 @@ import { BASE_PATH } from '../konstanter';
 
 export const frontendLogger = (): pino.Logger =>
     pino({
+        enabled: process.env['NODE_ENV'] !== 'test',
         browser: {
             transmit: {
                 send: async (_, logEvent) => {

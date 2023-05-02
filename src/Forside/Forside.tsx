@@ -6,7 +6,7 @@ import { RestStatus } from '../api/api-utils';
 import { ManglerRettigheterIAltinnSide } from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { useOrgnr } from '../hooks/useOrgnr';
 import './Forside.less';
-import { Historikkpanel } from './Historikkpanel/Historikkpanel';
+import GrafOgTabell from '../GrafOgTabell/GrafOgTabell';
 
 export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     const orgnr = useOrgnr() || '';
@@ -40,9 +40,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                         restPubliseringsdatoer={appData.publiseringsdatoer}
                     />
                 </Sammenligningspaneler>
-                <div className="lenkepanelWrapper">
-                    <Historikkpanel />
-                </div>
+                <GrafOgTabell restSykefraværsstatistikk={appData.sykefraværshistorikk} />
             </div>
         </div>
     );

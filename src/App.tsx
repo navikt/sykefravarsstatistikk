@@ -7,16 +7,9 @@ import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
-import GrafOgTabell from './GrafOgTabell/GrafOgTabell';
-import {
-    ER_VEDLIKEHOLD_AKTIVERT,
-    MILJØ,
-    PATH_FORSIDE,
-    PATH_HISTORIKK,
-    PATH_KALKULATOR_REDIRECT,
-} from './konstanter';
+import { ER_VEDLIKEHOLD_AKTIVERT, MILJØ, PATH_FORSIDE } from './konstanter';
 import { Forside } from './Forside/Forside';
-import { KalkulatorRedirect, ManglerRettighetRedirect } from './utils/redirects';
+import { ManglerRettighetRedirect } from './utils/redirects';
 import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 import {
     getEkstradata,
@@ -109,27 +102,12 @@ export const AppContent = (appData: SykefraværAppData & { analyticsClient: Anal
 
     innhold = (
         <Routes>
-            <Route path={PATH_KALKULATOR_REDIRECT} element={<KalkulatorRedirect />} />
             <Route
                 path={PATH_FORSIDE}
                 element={
                     <>
                         <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
                         <Forside {...appData} />
-                    </>
-                }
-            />
-            <Route
-                path={PATH_HISTORIKK}
-                element={
-                    <>
-                        <Brødsmulesti gjeldendeSide="historikk" />
-                        <GrafOgTabell
-                            restSykefraværsstatistikk={appData.sykefraværshistorikk}
-                            restOrganisasjonerMedStatistikk={
-                                appData.altinnOrganisasjonerMedStatistikktilgang
-                            }
-                        />
                     </>
                 }
             />

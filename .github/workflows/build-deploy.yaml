@@ -36,7 +36,7 @@ jobs:
             - name: Build application
               run: yarn run build
               env:
-                  CI: false
+                  CI: true
             - name: Login to GitHub Docker Registry
               uses: docker/login-action@v2
               with:
@@ -65,7 +65,7 @@ jobs:
 
     deploy-to-dev-gcp-ekstern:
         name: Deploy to dev-gcp-ekstern
-        if: github.ref == 'refs/heads/ekstern_dev'
+        if: github.ref == 'refs/heads/Flytt_tabell_og_graf_plus_div_fiks'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:

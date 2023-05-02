@@ -1,11 +1,12 @@
 import { Line, Symbols } from 'recharts';
 import React from 'react';
-import { getFarge, getSymbol, Linje } from './graf-utils';
+import { getFarge, getSymbol } from './graf-utils';
+import { HistorikkLabel } from '../../utils/sykefraværshistorikk-utils';
 
 const lineWidth = 2;
 const dotSize = 40;
 
-const grafLinjer = (linjerSomSkalVises: Linje[]) =>
+const grafLinjer = (linjerSomSkalVises: HistorikkLabel[]) =>
     linjerSomSkalVises.map((name) => (
         <Line
             key={name}

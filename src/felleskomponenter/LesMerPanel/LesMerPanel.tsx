@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import InfoToggler from './InfoToggler/InfoToggler';
 import { Normaltekst } from 'nav-frontend-typografi';
 import './LesMerPanel.less';
@@ -12,6 +12,7 @@ interface Props {
     lukkLabel?: string;
     className?: string;
     onÅpne?: () => void;
+    children: ReactNode;
 }
 
 const LesMerPanel: React.FunctionComponent<Props> = ({

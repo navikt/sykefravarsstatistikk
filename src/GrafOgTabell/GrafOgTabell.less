@@ -1,5 +1,9 @@
 @import '../variables';
 
+.csv-download-link {
+    float: right;
+}
+
 .graf-og-tabell {
     .typo-normal-mixin();
     background-color: white;
@@ -15,12 +19,14 @@
     }
 
     &__wrapper {
-        .sidewrapper-mixin();
-        padding-top: 1.5rem;
+        width: 100%;
+        background-color: white;
+        min-height: 50rem;
+        padding: 2rem 1.5rem;
     }
 
     &__overdel-wrapper {
-        padding: 2rem 2rem 0;
+        padding: 2rem 0 0;
     }
 
     &__tittel {
@@ -58,6 +64,9 @@
     }
 
     @media (min-width: @screen-sm-min) {
+        &__wrapper {
+            padding: 2rem;
+        }
         &__overdel-wrapper {
             display: flex;
             flex-wrap: wrap;

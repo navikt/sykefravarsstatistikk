@@ -1,10 +1,11 @@
 import React, { FunctionComponent } from 'react';
-import { getFarge, getSymbol, Linje } from '../graf-utils';
+import { getFarge, getSymbol } from '../graf-utils';
 import SymbolSvg from './SymbolSvg';
 import classNames from 'classnames';
+import { HistorikkLabel } from '../../../utils/sykefraværshistorikk-utils';
 
 interface Props {
-    linje: Linje;
+    linje: HistorikkLabel;
     className?: string;
 }
 

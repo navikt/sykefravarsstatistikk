@@ -6,8 +6,11 @@ import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import * as hooks from '../../hooks/useOrgnr';
 import { AltinnOrganisasjon } from '../../api/altinnorganisasjon-api';
+import { MockResizeObserver } from '../../../jest/MockResizeObserver';
 
 describe('Tester side for manglende Altinn-rettigheter', () => {
+    const MockObserver = new MockResizeObserver();
+
     afterEach(() => {
         jest.resetAllMocks();
     });
@@ -52,6 +55,8 @@ describe('Tester side for manglende Altinn-rettigheter', () => {
     });
 
     it('Vises ikke dersom valgt bedrift har IA-rettigheter', () => {
+        MockObserver.startmock();
+
         const valgtBedriftMedSykefraværsstatistikkRettigheter =
             heiOgHåBarnehage[0].OrganizationNumber;
 
@@ -64,6 +69,9 @@ describe('Tester side for manglende Altinn-rettigheter', () => {
         const forsidensOverskrift = getByRole('heading', {
             name: 'Hvor er ditt potensial?',
         });
+
+        MockObserver.stopmock();
+
         expect(forsidensOverskrift).toBeInTheDocument();
     });
 

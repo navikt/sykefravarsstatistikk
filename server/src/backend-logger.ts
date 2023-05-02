@@ -24,7 +24,8 @@ const predefinerteFeilmeldinger = {
     brukerIkkeInloggetFeil: 'Nettverkskall feilet da bruker ikke er innlogget',
     brukerIkkeAutorisertFeil: 'Nettverkskall feilet da bruker ikke er Autorisert',
     feilVedNettverkskall: 'Det er oppstått en feil ved nettverkskall',
-    finnerIkkeMiljøvariabler: 'Finner ikke URL i miljøvariabler - klienten vil mangle korrekte lenker.',
+    finnerIkkeMiljøvariabler:
+        'Finner ikke URL i miljøvariabler - klienten vil mangle korrekte lenker.',
 } as const;
 
 const tekniskeLoggFeil = {

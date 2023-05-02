@@ -1,4 +1,4 @@
-import { BASE_PATH, PATH_FORSIDE, PATH_HISTORIKK } from '../konstanter';
+import { BASE_PATH, PATH_FORSIDE } from '../konstanter';
 
 export interface Brødsmule {
     side: string;
@@ -27,13 +27,6 @@ export const getdefaultBrødsmulestiConfig = (minSideUrl?: string): Brødsmulest
             overordnetSide: 'minSideArbeidsgiver',
             lenketekst: 'Sykefraværsstatistikk',
             href: BASE_PATH + PATH_FORSIDE,
-            handleMedReactRouter: true,
-        },
-        {
-            side: 'historikk',
-            overordnetSide: 'sykefraværsstatistikk',
-            lenketekst: 'Sykefraværshistorikk',
-            href: BASE_PATH + PATH_HISTORIKK,
             handleMedReactRouter: true,
         },
     ];

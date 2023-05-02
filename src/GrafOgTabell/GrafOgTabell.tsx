@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import { ToggleGruppePure } from 'nav-frontend-toggle';
 import Graf from './Graf/Graf';
@@ -8,56 +8,27 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { scrollToBanner } from '../utils/scrollUtils';
-import { RestAltinnOrganisasjoner } from '../api/altinnorganisasjon-api';
 import { sendIaTjenesteMetrikkMottatt } from '../metrikker/iatjenester';
 import { useOrgnr } from '../hooks/useOrgnr';
-import { ManglerRettighetRedirect } from '../utils/redirects';
+import {
+    getBransjeEllerNæringLabel,
+    getHistorikkLabels,
+    historikkHarOverordnetEnhet,
+    konverterTilKvartalsvisSammenligning,
+} from '../utils/sykefraværshistorikk-utils';
+import { CsvDownloadLink } from './CsvDownloadLink';
+import { sendKnappEvent } from '../amplitude/events';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
-    restOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
 }
 
 const GrafOgTabell: FunctionComponent<Props> = (props) => {
-    useEffect(() => {
-        scrollToBanner();
-    }, []);
-
     const orgnr = useOrgnr();
     const { restSykefraværsstatistikk } = props;
     const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
 
-    let innhold;
-
     sendIaTjenesteMetrikkMottatt(orgnr);
-
-    if (restSykefraværsstatistikk.status === RestStatus.IngenTilgang) {
-        return <ManglerRettighetRedirect />;
-    }
-    if (
-        restSykefraværsstatistikk.status === RestStatus.LasterInn ||
-        restSykefraværsstatistikk.status === RestStatus.IkkeLastet
-    ) {
-        innhold = (
-            <div className="graf-og-tabell__spinner">
-                <NavFrontendSpinner type={'XXL'} />
-            </div>
-        );
-    } else if (restSykefraværsstatistikk.status !== RestStatus.Suksess) {
-        innhold = (
-            <AlertStripe type="feil" className="graf-og-tabell__feilside">
-                Det skjedde en feil da vi prøvde å hente statistikken.
-            </AlertStripe>
-        );
-    } else {
-        innhold =
-            grafEllerTabell === 'graf' ? (
-                <Graf sykefraværshistorikk={restSykefraværsstatistikk.data} />
-            ) : (
-                <Tabell sykefraværshistorikk={restSykefraværsstatistikk.data} />
-            );
-    }
 
     return (
         <div className="graf-og-tabell__wrapper">
@@ -91,10 +62,86 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
                         ]}
                     />
                 </div>
-                <div className="graf-og-tabell__innhold">{innhold}</div>
+                <div className="graf-og-tabell__innhold">
+                    <GrafOgTabellInnhold
+                        restSykefraværsstatistikk={restSykefraværsstatistikk}
+                        grafEllerTabell={grafEllerTabell}
+                    />
+                </div>
             </div>
         </div>
     );
+};
+
+type GrafOgTabellInnholdProps = {
+    restSykefraværsstatistikk: RestSykefraværshistorikk;
+    grafEllerTabell: 'graf' | 'tabell';
+};
+const GrafOgTabellInnhold = ({
+    restSykefraværsstatistikk,
+    grafEllerTabell,
+}: GrafOgTabellInnholdProps) => {
+    switch (restSykefraværsstatistikk.status) {
+        case RestStatus.LasterInn:
+        case RestStatus.IkkeLastet: {
+            return (
+                <div className="graf-og-tabell__spinner">
+                    <NavFrontendSpinner type={'XXL'} />
+                </div>
+            );
+        }
+
+        case RestStatus.Feil:
+        case RestStatus.IkkeInnlogget:
+        case RestStatus.IngenTilgang: {
+            return (
+                <AlertStripe type="feil" className="graf-og-tabell__feilside">
+                    Det skjedde en feil da vi prøvde å hente statistikken.
+                </AlertStripe>
+            );
+        }
+
+        case RestStatus.Suksess: {
+            const harOverordnetEnhet = historikkHarOverordnetEnhet(restSykefraværsstatistikk.data);
+            const bransjeEllerNæringLabel = getBransjeEllerNæringLabel(
+                restSykefraværsstatistikk.data
+            );
+            const historikkLabels = getHistorikkLabels(restSykefraværsstatistikk.data);
+            const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
+                restSykefraværsstatistikk.data
+            );
+            const kvartalsvisSammenligningReversed = kvartalsvisSammenligning.toReversed();
+
+            const GrafEllerTabell =
+                grafEllerTabell === 'graf' ? (
+                    <Graf
+                        kvartalsvisSammenligning={kvartalsvisSammenligning}
+                        bransjeEllerNæringLabel={bransjeEllerNæringLabel}
+                        historikkLabels={historikkLabels}
+                    />
+                ) : (
+                    <Tabell
+                        kvartalsvisSammenligning={kvartalsvisSammenligningReversed}
+                        historikkLabels={historikkLabels}
+                        bransjeEllerNæringLabel={bransjeEllerNæringLabel}
+                        harOverordnetEnhet={harOverordnetEnhet}
+                    />
+                );
+
+            return (
+                <>
+                    {GrafEllerTabell}
+                    <CsvDownloadLink
+                        kvartalsvisSammenligning={kvartalsvisSammenligningReversed}
+                        harOverordnetEnhet={harOverordnetEnhet}
+                        bransjeEllerNæringLabel={bransjeEllerNæringLabel}
+                        historikkLabels={historikkLabels}
+                        onClick={() => sendKnappEvent('last ned csv')}
+                    />
+                </>
+            );
+        }
+    }
 };
 
 export default GrafOgTabell;

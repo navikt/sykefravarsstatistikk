@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useRef } from 'react';
+import React, { FunctionComponent, ReactNode, useRef } from 'react';
 import './Sammenligningspanel.less';
 import ReactToPrint from 'react-to-print';
 import { Alert } from '@navikt/ds-react';
@@ -12,6 +12,7 @@ export const Sammenligningspaneler: FunctionComponent<{
     restAltinnOrganisasjoner: RestAltinnOrganisasjoner;
     restAltinnOrganisasjonerMedStatistikktilgang: RestAltinnOrganisasjoner;
     restStatus: RestStatus;
+    children?: ReactNode;
 }> = ({ restAltinnOrganisasjoner, restStatus, children }) => {
     const panelRef = useRef<HTMLDivElement>(null);
     const lastNedKnappRef = useRef<HTMLButtonElement>(null);

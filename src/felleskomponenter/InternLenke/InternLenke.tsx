@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './InternLenke.less';
 import classNames from 'classnames';
@@ -9,6 +9,7 @@ interface Props {
     className?: string;
     onClick?: (e: any) => any;
     ariaCurrentLocation?: boolean;
+    children: ReactNode;
 }
 
 const InternLenke: FunctionComponent<Props> = ({ children: lenketekst, ...props }) => {

@@ -1,16 +1,16 @@
 import React, { FunctionComponent } from 'react';
-import { LabelsForLinjer, Linje } from '../../graf-utils';
 import { GrafSymbol } from '../../GrafSymbol/GrafSymbol';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Checkbox } from 'nav-frontend-skjema';
 import './LegendChechbox.less';
+import { HistorikkLabel, HistorikkLabels } from '../../../../utils/sykefraværshistorikk-utils';
 
 interface Props {
-    linje: Linje;
+    linje: HistorikkLabel;
     prefiks?: string;
-    linjerSomSkalVises: Linje[];
+    linjerSomSkalVises: HistorikkLabel[];
     onChange: (event: any) => void;
-    labels: LabelsForLinjer;
+    labels: HistorikkLabels;
 }
 
 export const LegendCheckbox: FunctionComponent<Props> = ({

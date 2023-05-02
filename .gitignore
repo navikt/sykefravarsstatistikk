@@ -12,6 +12,9 @@
 /build
 /server/build
 
+# Webpack Analyze
+/report
+
 # misc
 .DS_Store
 

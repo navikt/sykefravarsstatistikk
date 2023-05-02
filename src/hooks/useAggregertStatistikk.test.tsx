@@ -2,12 +2,12 @@ import '@testing-library/jest-dom';
 import useAggregertStatistikk from './useAggregertStatistikk';
 import { Fetcher, SWRConfig } from 'swr';
 import { RestStatus } from '../api/api-utils';
-import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import React, { ReactNode } from 'react';
+import { renderHook, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { aggregertMockData } from '../api/mockedApiResponses/aggregert-mock';
 
-const wrapper: React.FC = ({ children }) => (
+const wrapper: React.FC<{ children: ReactNode }> = ({ children }) => (
     <SWRConfig value={{ provider: () => new Map() }}>
         <MemoryRouter>{children}</MemoryRouter>;
     </SWRConfig>
@@ -43,91 +43,86 @@ const notAuthorizedFetcher: Fetcher<{ data: any; status: number }> = async (_: s
     return { data: aggregertMockData, status: 403 };
 };
 
-it('Should succeed and parse correctly', async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useAggregertStatistikk(happyFetcher), {
-        wrapper,
+describe('AggregertStatistikkTest', () => {
+    it('Should succeed and parse correctly', async () => {
+        const { result } = renderHook(() => useAggregertStatistikk(happyFetcher), {
+            wrapper,
+        });
+
+        expect(result.current.restStatus).toBe(RestStatus.LasterInn);
+
+        await waitFor(() => {
+            expect(result.current.restStatus).toBe(RestStatus.Suksess);
+            expect(result.current.error).toBe(undefined);
+            expect(result.current.aggregertData).toStrictEqual(happyMap);
+        });
+
+        jest.resetModules();
     });
 
-    expect(result.current.restStatus).toBe(RestStatus.LasterInn);
+    it('Should return IkkeInnlogget if status code is 401', async () => {
+        const { result } = renderHook(() => useAggregertStatistikk(notLoggedInFetcher), {
+            wrapper,
+        });
 
-    await waitForNextUpdate();
+        expect(result.current.restStatus).toBe(RestStatus.LasterInn);
 
-    expect(result.current.restStatus).toBe(RestStatus.Suksess);
-    expect(result.current.error).toBe(undefined);
-    expect(result.current.aggregertData).toStrictEqual(happyMap);
+        await waitFor(() => {
+            expect(result.current.restStatus).toBe(RestStatus.IkkeInnlogget);
+            expect(result.current.aggregertData).toBe(undefined);
+        });
+    });
 
-    jest.resetModules();
-});
+    it('Should return IngenTilgang if status code is 403', async () => {
+        const { result } = renderHook(() => useAggregertStatistikk(notAuthorizedFetcher), {
+            wrapper,
+        });
 
-it('Should return IkkeInnlogget if status code is 401', async () => {
-    const { result, waitForNextUpdate } = renderHook(
-        () => useAggregertStatistikk(notLoggedInFetcher),
-        { wrapper }
-    );
+        expect(result.current.restStatus).toBe(RestStatus.LasterInn);
 
-    expect(result.current.restStatus).toBe(RestStatus.LasterInn);
+        await waitFor(() => {
+            expect(result.current.restStatus).toBe(RestStatus.IngenTilgang);
+            expect(result.current.aggregertData).toBe(undefined);
+        });
+    });
 
-    await waitForNextUpdate();
+    it('Should fail if status code is not 2xx', async () => {
+        const { result } = renderHook(() => useAggregertStatistikk(invalidStatusFetcher), {
+            wrapper,
+        });
 
-    expect(result.current.restStatus).toBe(RestStatus.IkkeInnlogget);
-    expect(result.current.aggregertData).toBe(undefined);
-});
+        expect(result.current.restStatus).toBe(RestStatus.LasterInn);
 
-it('Should return IngenTilgang if status code is 403', async () => {
-    const { result, waitForNextUpdate } = renderHook(
-        () => useAggregertStatistikk(notAuthorizedFetcher),
-        { wrapper }
-    );
+        await waitFor(() => {
+            expect(result.current.restStatus).toBe(RestStatus.Feil);
+            expect(result.current.aggregertData).toBe(undefined);
+        });
+    });
 
-    expect(result.current.restStatus).toBe(RestStatus.LasterInn);
+    it('Should fail if data fails validation', async () => {
+        const { result } = renderHook(() => useAggregertStatistikk(invalidDataFetcher), {
+            wrapper,
+        });
 
-    await waitForNextUpdate();
+        expect(result.current.restStatus).toBe(RestStatus.LasterInn);
 
-    expect(result.current.restStatus).toBe(RestStatus.IngenTilgang);
-    expect(result.current.aggregertData).toBe(undefined);
-});
+        await waitFor(() => {
+            expect(result.current.restStatus).toBe(RestStatus.Feil);
+            expect(result.current.error.message).toBe('Kunne ikke parse aggregert data');
+            expect(result.current.aggregertData).toBe(undefined);
+        });
+    });
 
-it('Should fail if status code is not 2xx', async () => {
-    const { result, waitForNextUpdate } = renderHook(
-        () => useAggregertStatistikk(invalidStatusFetcher),
-        { wrapper }
-    );
+    it('Should fail and return thrown error', async () => {
+        const { result } = renderHook(() => useAggregertStatistikk(explodingFetcher), { wrapper });
 
-    expect(result.current.restStatus).toBe(RestStatus.LasterInn);
+        expect(result.current.restStatus).toBe(RestStatus.LasterInn);
 
-    await waitForNextUpdate();
-
-    expect(result.current.restStatus).toBe(RestStatus.Feil);
-    expect(result.current.aggregertData).toBe(undefined);
-});
-
-it('Should fail if data fails validation', async () => {
-    const { result, waitForNextUpdate } = renderHook(
-        () => useAggregertStatistikk(invalidDataFetcher),
-        { wrapper }
-    );
-
-    expect(result.current.restStatus).toBe(RestStatus.LasterInn);
-
-    await waitForNextUpdate();
-
-    expect(result.current.restStatus).toBe(RestStatus.Feil);
-    expect(result.current.error.message).toBe('Kunne ikke parse aggregert data');
-    expect(result.current.aggregertData).toBe(undefined);
-});
-
-it('Should fail and return thrown error', async () => {
-    const { result, waitForNextUpdate } = renderHook(
-        () => useAggregertStatistikk(explodingFetcher),
-        { wrapper }
-    );
-
-    expect(result.current.restStatus).toBe(RestStatus.LasterInn);
-
-    await waitForNextUpdate();
-
-    expect(result.current.restStatus).toBe(RestStatus.Feil);
-    expect(result.current.error).toStrictEqual(Error('KABOOM!'));
+        await waitFor(() => {
+            expect(result.current.restStatus).toBe(RestStatus.Feil);
+            expect(result.current.error).toStrictEqual(Error('KABOOM!'));
+        });
+    });
 });
 
 const happyMap = new Map([

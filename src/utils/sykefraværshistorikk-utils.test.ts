@@ -104,7 +104,7 @@ describe('Tester for graf-og-tabell-utils', () => {
                     { årstall: 2000, kvartal: 1 },
                 ]),
             ]).virksomhet
-        ).toEqual('ikke tilgang til virksomhet');
+        ).toEqual('Ingen tilgjengelig data');
     });
 
     test('historikkUtenOverOrdnetEnhetVilIkkeKrasje', () => {
@@ -123,7 +123,7 @@ describe('Tester for graf-og-tabell-utils', () => {
                     { årstall: 2000, kvartal: 1 },
                 ]),
             ]).overordnetEnhet
-        ).toEqual('ikke tilgang til overornetenhet');
+        ).toEqual('Ingen tilgjengelig data');
     });
 });
 

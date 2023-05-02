@@ -1,23 +1,32 @@
 import {
+    isSykefraværshistorikkType,
     KvartalsvisSykefraværshistorikk,
     SykefraværshistorikkType,
     Sykefraværsprosent,
 } from '../api/kvartalsvis-sykefraværshistorikk-api';
+import { isString } from './app-utils';
 
-export interface KvartalsvisSammenligning {
+export const HistorikkLabels = {
+    virksomhet: 'virksomhet',
+    overordnetEnhet: 'overordnetEnhet',
+    næringEllerBransje: 'næringEllerBransje',
+    sektor: 'sektor',
+    land: 'land',
+} as const;
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type HistorikkLabels = Record<keyof typeof HistorikkLabels, string>;
+
+export type HistorikkLabel = keyof HistorikkLabels;
+
+export type ÅrstallOgKvartal = {
     årstall: number;
     kvartal: number;
-    virksomhet: Sykefraværsprosent;
-    overordnetEnhet: Sykefraværsprosent;
-    næringEllerBransje: Sykefraværsprosent;
-    sektor: Sykefraværsprosent;
-    land: Sykefraværsprosent;
-}
+};
 
-export interface ÅrstallOgKvartal {
-    årstall: number;
-    kvartal: number;
-}
+export type KvartalsvisSammenligning = ÅrstallOgKvartal & {
+    [Property in HistorikkLabel]: Sykefraværsprosent;
+};
 
 const TOM_PROSENT: Sykefraværsprosent = {
     erMaskert: false,
@@ -68,11 +77,17 @@ const mapTilKvartalsvisSammenligning = (
 export const beregnHvilkeÅrstallOgKvartalerSomSkalVises = (
     historikkListe: KvartalsvisSykefraværshistorikk[]
 ): ÅrstallOgKvartal[] => {
-    return historikkListe
-        .find((historikk) => historikk.type === SykefraværshistorikkType.LAND)!
-        .kvartalsvisSykefraværsprosent.map((prosent) => {
-            return { årstall: prosent.årstall, kvartal: prosent.kvartal };
-        });
+    if (historikkListe.length === 0) return [];
+
+    const historikk = historikkListe.find(
+        (historikk) => historikk.type === SykefraværshistorikkType.LAND
+    );
+
+    if (historikk === undefined) return [];
+
+    return historikk.kvartalsvisSykefraværsprosent.map((prosent) => {
+        return { årstall: prosent.årstall, kvartal: prosent.kvartal };
+    });
 };
 export const konverterTilKvartalsvisSammenligning = (
     historikkListe: KvartalsvisSykefraværshistorikk[]
@@ -85,6 +100,16 @@ export const konverterTilKvartalsvisSammenligning = (
 export const historikkHarBransje = (historikkListe: KvartalsvisSykefraværshistorikk[]): boolean =>
     !!historikkListe.find((historikk) => historikk.type === SykefraværshistorikkType.BRANSJE);
 
+export type BransjeEllerNæringLabel = 'Bransje' | 'Næring';
+export const getBransjeEllerNæringLabel = (
+    historikkListe: KvartalsvisSykefraværshistorikk[]
+): BransjeEllerNæringLabel => {
+    if (historikkListe.find((historikk) => historikk.type === SykefraværshistorikkType.BRANSJE)) {
+        return 'Bransje';
+    }
+    return 'Næring';
+};
+
 export const historikkHarOverordnetEnhet = (
     historikkListe: KvartalsvisSykefraværshistorikk[]
 ): boolean =>
@@ -94,34 +119,41 @@ export const historikkHarOverordnetEnhet = (
             historikk.kvartalsvisSykefraværsprosent.length > 0
     );
 
-export interface HistorikkLabels {
-    virksomhet: string;
-    overordnetEnhet?: string;
-    næringEllerBransje: string;
-    sektor: string;
-    land: string;
-}
+const emptyHistorikkLabels = Object.fromEntries(
+    Object.keys(HistorikkLabels).map((key) => [key, 'Ingen tilgjengelig data'])
+) as HistorikkLabels;
+
+export const isHistorikkLabel = (maybeLabel: unknown): maybeLabel is HistorikkLabel => {
+    if (!isString(maybeLabel)) return false;
+    return HistorikkLabels.hasOwnProperty(maybeLabel);
+};
+
+const historikkTypeToLabel = (type: SykefraværshistorikkType): HistorikkLabel => {
+    switch (type) {
+        case SykefraværshistorikkType.VIRKSOMHET:
+            return HistorikkLabels.virksomhet;
+        case SykefraværshistorikkType.LAND:
+            return HistorikkLabels.land;
+        case SykefraværshistorikkType.SEKTOR:
+            return HistorikkLabels.sektor;
+        case SykefraværshistorikkType.NÆRING:
+            return HistorikkLabels.næringEllerBransje;
+        case SykefraværshistorikkType.BRANSJE:
+            return HistorikkLabels.næringEllerBransje;
+        case SykefraværshistorikkType.OVERORDNET_ENHET:
+            return HistorikkLabels.overordnetEnhet;
+    }
+};
 
 export const getHistorikkLabels = (
     historikkListe: KvartalsvisSykefraværshistorikk[]
 ): HistorikkLabels => {
-    const getHistorikk = (
-        type: SykefraværshistorikkType
-    ): KvartalsvisSykefraværshistorikk | undefined =>
-        historikkListe.find((historikk) => historikk.type === type);
-    return {
-        virksomhet:
-            getHistorikk(SykefraværshistorikkType.VIRKSOMHET) !== undefined
-                ? getHistorikk(SykefraværshistorikkType.VIRKSOMHET)!.label
-                : 'ikke tilgang til virksomhet',
-        overordnetEnhet:
-            getHistorikk(SykefraværshistorikkType.OVERORDNET_ENHET) !== undefined
-                ? getHistorikk(SykefraværshistorikkType.OVERORDNET_ENHET)!.label
-                : 'ikke tilgang til overornetenhet',
-        næringEllerBransje: historikkHarBransje(historikkListe)
-            ? getHistorikk(SykefraværshistorikkType.BRANSJE)!.label
-            : getHistorikk(SykefraværshistorikkType.NÆRING)!.label,
-        sektor: getHistorikk(SykefraværshistorikkType.SEKTOR)!.label,
-        land: getHistorikk(SykefraværshistorikkType.LAND)!.label,
-    };
+    const labels: Partial<HistorikkLabels> = {};
+    for (const historikk of historikkListe) {
+        if (isSykefraværshistorikkType(historikk.type)) {
+            labels[historikkTypeToLabel(historikk.type)] = historikk.label;
+        }
+    }
+
+    return { ...emptyHistorikkLabels, ...labels };
 };

@@ -3,14 +3,17 @@ import { Tooltip } from 'recharts';
 import './grafTooltip.less';
 import { getTooltipsnavn } from '../graf-utils';
 import { GrafSymbol } from '../GrafSymbol/GrafSymbol';
+import { BransjeEllerNæringLabel } from '../../../utils/sykefraværshistorikk-utils';
 
-const grafTooltip = (harBransje: boolean) => (
+const grafTooltip = (bransjeEllerNæringLabel: BransjeEllerNæringLabel) => (
     <Tooltip
         formatter={(value: any, name: any, _) => [
             <span className="tooltip__item-wrapper" key={`tooltip-${name}`}>
                 <GrafSymbol linje={name} className="tooltip__ikon" />
                 <div className="tooltip__item-navn-og-verdi">
-                    <span className="tooltip__item-navn">{getTooltipsnavn(name, harBransje)}</span>
+                    <span className="tooltip__item-navn">
+                        {getTooltipsnavn(name, bransjeEllerNæringLabel)}
+                    </span>
                     <span className="tooltip__item-verdi">{value + ' %'}</span>
                 </div>
             </span>,
