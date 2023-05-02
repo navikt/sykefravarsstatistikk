@@ -30,7 +30,7 @@ spec:
         - name: NODE_EXTRA_CA_CERTS
           value: /etc/ssl/ca-bundle.pem
         - name: LOGIN_URL
-          value: https://loginservice.dev.nav.no/login?redirect=
+          value: https://loginservice.intern.dev.nav.no/login?redirect=
         - name: DEKORATOR_URL
           value: https://www.dev.nav.no/dekoratoren
         - name: APP_INGRESS
