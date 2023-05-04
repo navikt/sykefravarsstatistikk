@@ -1,5 +1,6 @@
 import jsdom from 'jsdom';
 import axios from 'axios';
+import { logger } from "./backend-logger";
 
 const { JSDOM } = jsdom;
 
@@ -19,7 +20,9 @@ function getDecoratorValuesFromBody(body) {
 }
 
 async function getDecorator(url) {
-    const { data: body } = await axios.get(url + queryString);
+    logger.info(`Henter dekoratør fra ${url}`)
+    const { status, data: body } = await axios.get(url + queryString);
+    logger.info(`Henting av dekoratør fullført med status '${status}'`);
     return getDecoratorValuesFromBody(body);
 }
 

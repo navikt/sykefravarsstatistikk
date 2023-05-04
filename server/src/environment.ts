@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import getDecorator from './decorator.js';
+import { logger } from "./backend-logger";
 
 export const MILJØ = {
     PROD: 'prod-gcp',
@@ -41,7 +42,7 @@ function getFrontendEnvs() {
                     'https://arbeidsgiver.ekstern.dev.nav.no/min-side-arbeidsgiver',
             };
         }
-        //Fail fast if not dev
+        logger.error("Failed to parse frontend envs", err);
         throw err;
     }
 }
