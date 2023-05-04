@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import getDecorator from './decorator.js';
-import { logger } from "./backend-logger";
+import { logger } from "./backend-logger.js";
 
 export const MILJØ = {
     PROD: 'prod-gcp',

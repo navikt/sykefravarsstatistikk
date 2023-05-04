@@ -1,6 +1,6 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import { exchangeToken } from './authentication/tokenx';
 import { Express } from 'express';
+import { exchangeToken } from './authentication/tokenx.js';
 
 function getProxyConfig() {
     const { NOTIFIKASJON_API_AUDIENCE } = process.env;

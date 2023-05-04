@@ -1,31 +1,26 @@
 import path from 'path';
 import express from 'express';
 import mustacheExpress from 'mustache-express';
-import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import Prometheus from 'prom-client';
 import { fileURLToPath } from 'node:url';
 import { sykefraværsstatistikkApiProxy } from './proxy.js';
 import { iaTjenesterMetrikkerProxy } from './iaTjenesterMetrikkerProxy.js';
-import {  applyNotifikasjonMiddleware } from "./brukerapi-proxy-middleware.js";
+import { applyNotifikasjonMiddleware } from './brukerapi-proxy-middleware.js';
 import { contentHeaders } from './contentHeaders.js';
 import { loggingHandler, logger } from './backend-logger.js';
 import { requestLoggingMiddleware } from './requestLogging.js';
-import {
-    getKalkulatorRedirectUrl,
-    getTemplateValues,
-} from './environment.js';
-import { applyWonderwallLoginRedirect } from "./authentication/wonderwall";
-import { initIdporten } from "./authentication/idporten";
-import { initTokenXClient } from "./authentication/tokenx";
+import { getKalkulatorRedirectUrl, getTemplateValues } from './environment.js';
+import { applyWonderwallLoginRedirect } from './authentication/wonderwall.js';
+import { initIdporten } from './authentication/idporten.js';
+import { initTokenXClient } from './authentication/tokenx.js';
+import { BASE_PATH } from './common.js';
 
 const buildPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../build');
 
 const app = express();
-dotenv.config();
 
 const { PORT = 3000 } = process.env;
-const BASE_PATH = '/sykefravarsstatistikk';
 
 Prometheus.collectDefaultMetrics();
 
@@ -72,7 +67,6 @@ const startServer = async (html) => {
 
     // consumes the payload! Must be placed below the proxy middlewares
     app.use(express.json());
-    
 
     app.post(BASE_PATH + '/logger', (req, res) => {
         loggingHandler(req, res);

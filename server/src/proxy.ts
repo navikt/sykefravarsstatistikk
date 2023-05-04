@@ -1,5 +1,5 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import { exchangeToken } from "./authentication/tokenx";
+import { exchangeToken } from './authentication/tokenx.js';
 
 const FRONTEND_API_PATH = '/sykefravarsstatistikk/api';
 const BACKEND_API_PATH = '/sykefravarsstatistikk-api';
