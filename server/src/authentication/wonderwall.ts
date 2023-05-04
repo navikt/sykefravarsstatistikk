@@ -1,5 +1,6 @@
 import { Express } from "express";
-import { BASE_PATH } from "../../../src/konstanter";
+import { BASE_PATH } from "../common.js";
+
 
 export function applyWonderwallLoginRedirect(app: Express) {
   app.get(`${BASE_PATH}/redirect-til-login`, (request, response) => {

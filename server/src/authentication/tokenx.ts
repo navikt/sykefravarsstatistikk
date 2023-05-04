@@ -1,6 +1,6 @@
 import { Issuer } from 'openid-client';
 import { IncomingMessage } from "http";
-import { verifiserAccessToken } from "./idporten";
+import { verifiserAccessToken } from "./idporten.js";
 
 let tokenxClient: any;
 

@@ -1,6 +1,6 @@
 import jsdom from 'jsdom';
 import axios from 'axios';
-import { logger } from "./backend-logger";
+import { logger } from "./backend-logger.js";
 
 const { JSDOM } = jsdom;
 

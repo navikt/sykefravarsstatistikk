@@ -1,6 +1,6 @@
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
 import { logger } from './backend-logger.js';
-import { exchangeToken } from "./authentication/tokenx";
+import { exchangeToken } from "./authentication/tokenx.js";
 
 function getProxyConfig(): Options {
     const {
