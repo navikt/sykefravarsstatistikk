@@ -6,6 +6,7 @@ import Lenke from 'nav-frontend-lenker';
 import './Innloggingsside.less';
 import Sidetittel from 'nav-frontend-typografi/lib/sidetittel';
 import { EnvironmentContext } from '../Context/EnvironmentContext';
+import { BASE_PATH } from "../konstanter";
 
 interface Props {
     redirectUrl: string;
@@ -14,7 +15,7 @@ interface Props {
 const Innloggingsside: React.FunctionComponent<Props> = ({ redirectUrl }) => {
     const { MIN_SIDE_ARBEIDSGIVER_URL } = useContext(EnvironmentContext);
     const redirectTilLogin = () => {
-        window.location.href = `/sykefravarsstatistikk/redirect-til-login?redirect=${redirectUrl}`;
+        window.location.href = `${BASE_PATH}/redirect-til-login?redirect=${redirectUrl}`;
     };
 
     return (
