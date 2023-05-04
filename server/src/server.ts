@@ -4,7 +4,6 @@ import mustacheExpress from 'mustache-express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import Prometheus from 'prom-client';
-import * as z from 'zod';
 import { fileURLToPath } from 'node:url';
 import { sykefraværsstatistikkApiProxy } from './proxy.js';
 import { iaTjenesterMetrikkerProxy } from './iaTjenesterMetrikkerProxy.js';
@@ -21,14 +20,10 @@ const buildPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../..
 const app = express();
 dotenv.config();
 
-const { APP_INGRESS, LOGIN_URL, PORT = 3000 } = process.env;
+const { PORT = 3000 } = process.env;
 const BASE_PATH = '/sykefravarsstatistikk';
 
 Prometheus.collectDefaultMetrics();
-
-function isAppIngressRedirect(candidate: unknown): candidate is string {
-    return z.string().startsWith(APP_INGRESS).safeParse(candidate).success;
-}
 
 const renderAppMedTemplateValues = (templateValues) => {
     return new Promise((resolve, reject) => {
@@ -74,21 +69,11 @@ const startServer = async (html) => {
         loggingHandler(req, res);
     });
 
-    app.get(`${BASE_PATH}/redirect-til-login`, (req, res) => {
-        const referrerUrl = `${APP_INGRESS}/success?redirect=${req.query.redirect}`;
-        res.redirect(BASE_PATH + `/oauth2/login?redirect=${referrerUrl}`);
-    });
-
-    app.get(`${BASE_PATH}/success`, (req, res) => {
-        const loginserviceToken = req.cookies['selvbetjening-idtoken'];
-
-        if (loginserviceToken && isAppIngressRedirect(req.query.redirect)) {
-            res.redirect(req.query.redirect);
-        } else if (isAppIngressRedirect(req.query.redirect)) {
-            res.redirect(`${LOGIN_URL}${req.query.redirect}`);
-        } else {
-            res.redirect(`${LOGIN_URL}${APP_INGRESS}`);
-        }
+    app.get(`${BASE_PATH}/redirect-til-login`, (request, response) => {
+        const wonderwallLoginEndpoint = `${BASE_PATH}/oauth2/login?redirect=${
+            request.query.redirect as string
+        }`;
+        response.redirect(wonderwallLoginEndpoint);
     });
 
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
