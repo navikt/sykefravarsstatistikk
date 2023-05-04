@@ -1,6 +1,5 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import { exchangeIdportenToken } from './idporten.js';
-import { appRunningOnDevGcpEkstern } from './environment.js';
+import { exchangeToken } from "./authentication/tokenx";
 
 const FRONTEND_API_PATH = '/sykefravarsstatistikk/api';
 const BACKEND_API_PATH = '/sykefravarsstatistikk-api';
@@ -33,11 +32,7 @@ function getProxyConfig() {
             return BACKEND_API_PATH + '/not-found';
         },
         router: async (req) => {
-            if (appRunningOnDevGcpEkstern()) {
-                // I dev-gcp-ekstern så returnerer vi mock uansett
-                return undefined;
-            }
-            const tokenSet = await exchangeIdportenToken(req, SYKEFRAVARSSTATISTIKK_API_AUDIENCE);
+            const tokenSet = await exchangeToken(req, SYKEFRAVARSSTATISTIKK_API_AUDIENCE);
             if (!tokenSet?.expired() && tokenSet?.access_token) {
                 req.headers['authorization'] = `Bearer ${tokenSet.access_token}`;
             }

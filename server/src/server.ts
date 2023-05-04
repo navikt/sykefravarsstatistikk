@@ -7,13 +7,17 @@ import Prometheus from 'prom-client';
 import { fileURLToPath } from 'node:url';
 import { sykefraværsstatistikkApiProxy } from './proxy.js';
 import { iaTjenesterMetrikkerProxy } from './iaTjenesterMetrikkerProxy.js';
-import { initTokenXClient } from './tokenx.js';
-import { initIdporten } from './idporten.js';
-import { applyNotifikasjonMiddleware } from './brukerapi-proxy-middleware.js';
+import {  applyNotifikasjonMiddleware } from "./brukerapi-proxy-middleware.js";
 import { contentHeaders } from './contentHeaders.js';
 import { loggingHandler, logger } from './backend-logger.js';
 import { requestLoggingMiddleware } from './requestLogging.js';
-import { getKalkulatorRedirectUrl, getTemplateValues } from './environment.js';
+import {
+    getKalkulatorRedirectUrl,
+    getTemplateValues,
+} from './environment.js';
+import { applyWonderwallLoginRedirect } from "./authentication/wonderwall";
+import { initIdporten } from "./authentication/idporten";
+import { initTokenXClient } from "./authentication/tokenx";
 
 const buildPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../build');
 
@@ -44,14 +48,18 @@ const startServer = async (html) => {
     logger.info('Starting server: server.ts');
     app.use(cookieParser());
 
-    await Promise.all([initIdporten(), initTokenXClient()]);
+    await initIdporten();
+    await initTokenXClient();
+
+    app.use(sykefraværsstatistikkApiProxy);
+    app.use(iaTjenesterMetrikkerProxy);
+
+    applyWonderwallLoginRedirect(app);
+    applyNotifikasjonMiddleware(app);
 
     app.disable('x-powered-by');
     app.use(contentHeaders);
     app.use(requestLoggingMiddleware);
-    app.use(sykefraværsstatistikkApiProxy);
-    app.use(iaTjenesterMetrikkerProxy);
-    applyNotifikasjonMiddleware(app);
 
     app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
 
@@ -64,16 +72,10 @@ const startServer = async (html) => {
 
     // consumes the payload! Must be placed below the proxy middlewares
     app.use(express.json());
+    
 
     app.post(BASE_PATH + '/logger', (req, res) => {
         loggingHandler(req, res);
-    });
-
-    app.get(`${BASE_PATH}/redirect-til-login`, (request, response) => {
-        const wonderwallLoginEndpoint = `${BASE_PATH}/oauth2/login?redirect=${
-            request.query.redirect as string
-        }`;
-        response.redirect(wonderwallLoginEndpoint);
     });
 
     app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
