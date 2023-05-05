@@ -32,7 +32,7 @@ spec:
         - name: LOGIN_URL
           value: https://loginservice.intern.dev.nav.no/login?redirect=
         - name: DEKORATOR_URL
-          value: https://www.dev.nav.no/dekoratoren
+          value: https://dekoratoren.ekstern.dev.nav.no
         - name: APP_INGRESS
           value: https://sykefravarsstatistikk.intern.dev.nav.no/sykefravarsstatistikk
         - name: SYKEFRAVARSSTATISTIKK_API_AUDIENCE
@@ -65,6 +65,6 @@ spec:
                   namespace: arbeidsgiver
                   cluster: dev-gcp
             external:
-                - host: dekoratoren.dev.nav.no
+                - host: dekoratoren.ekstern.dev.nav.no
                 - host: sykefravarsstatistikk-api.dev-fss-pub.nais.io
                 - host: loginservice.dev.nav.no
