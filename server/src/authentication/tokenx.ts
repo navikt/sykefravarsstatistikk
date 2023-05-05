@@ -1,7 +1,7 @@
 import { Issuer, Client, TokenSet } from "openid-client";
 import { IncomingMessage } from 'http';
 import { verifiserIdportenSubjectToken } from './idporten.js';
-import { logger } from '../backend-logger';
+import { logger } from '../backend-logger.js';
 
 let tokenxClient: Client;
 
