@@ -1,6 +1,6 @@
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
 import { logger } from './backend-logger.js';
-import { exchangeToken } from "./authentication/tokenx.js";
+import { exchangeIdportenSubjectToken } from "./authentication/tokenx.js";
 
 function getProxyConfig(): Options {
     const {
@@ -13,7 +13,7 @@ function getProxyConfig(): Options {
         changeOrigin: true,
         pathRewrite: { '/sykefravarsstatistikk/proxy/ia-tjenester-metrikker': '' },
         router: async (req) => {
-            const tokenSet = await exchangeToken(req, IA_TJENESTER_METRIKKER_AUDIENCE);
+            const tokenSet = await exchangeIdportenSubjectToken(req, IA_TJENESTER_METRIKKER_AUDIENCE);
             if (!tokenSet?.expired() && tokenSet?.access_token) {
                 req.headers['authorization'] = `Bearer ${tokenSet.access_token}`;
             }

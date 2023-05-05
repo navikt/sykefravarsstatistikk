@@ -1,7 +1,15 @@
-import { Issuer, Client, TokenSet } from "openid-client";
+import { Issuer, Client, TokenSet } from 'openid-client';
 import { IncomingMessage } from 'http';
 import { verifiserIdportenSubjectToken } from './idporten.js';
 import { logger } from '../backend-logger';
+import { RequestHandler } from "express";
+
+export function tokenExchangeMiddleware(audience: string): RequestHandler {
+  return async (req, _res, next) => {
+    await exchangeIdportenSubjectToken(req, audience);
+    next();
+  };
+}
 
 let tokenxClient: Client;
 
@@ -18,7 +26,31 @@ export async function initTokenXClient() {
     );
 }
 
-async function getTokenXToken(token: string, audience: string): Promise<TokenSet | null> {
+async function exchangeIdportenSubjectToken(
+    request: IncomingMessage,
+    audience: string
+): Promise<void> {
+    let subjectToken = request.headers.authorization?.split(' ')[1];
+
+    if (!subjectToken) {
+        return;
+    }
+
+    try {
+        await verifiserIdportenSubjectToken(subjectToken);
+
+        let tokenSet = await tokenExchange(subjectToken, audience);
+
+        if (!tokenSet?.expired() && tokenSet?.access_token) {
+            request.headers['authorization'] = `Bearer ${tokenSet.access_token}`;
+        }
+    } catch (error) {
+        // Handle the error appropriately, e.g., log it or return an error response
+        error.error('Error during exchangeIdportenSubjectToken:', error);
+    }
+}
+
+async function tokenExchange(token: string, audience: string): Promise<TokenSet | null> {
     return await tokenxClient
         ?.grant(
             {
@@ -38,18 +70,6 @@ async function getTokenXToken(token: string, audience: string): Promise<TokenSet
         )
         .catch((err: any) => {
             logger.error('Noe gikk galt med token exchange', err);
-            return null
+            return null;
         });
-}
-
-export async function exchangeToken(request: IncomingMessage, audience: string) {
-    let accessToken = request.headers.authorization?.split(' ')[1];
-
-    if (!accessToken) {
-        // Brukeren er ikke autorisert
-        return;
-    }
-    await verifiserIdportenSubjectToken(accessToken);
-
-    return await getTokenXToken(accessToken, audience);
 }
