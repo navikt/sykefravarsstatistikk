@@ -1,12 +1,11 @@
 import path from 'path';
 import express from 'express';
 import mustacheExpress from 'mustache-express';
-import cookieParser from 'cookie-parser';
 import Prometheus from 'prom-client';
 import { fileURLToPath } from 'node:url';
-import { sykefraværsstatistikkApiProxy } from './proxy.js';
-import { iaTjenesterMetrikkerProxy } from './iaTjenesterMetrikkerProxy.js';
-import { applyNotifikasjonMiddleware } from './brukerapi-proxy-middleware.js';
+import { applySykefraværsstatistikkApiProxyMiddlewares } from './proxy.js';
+import { applyIaTjenesterMetrikkerProxyMiddlewares } from './iaTjenesterMetrikkerProxy.js';
+import { applyNotifikasjonProxyMiddlewares } from './brukerapi-proxy-middleware.js';
 import { contentHeaders } from './contentHeaders.js';
 import { loggingHandler, logger } from './backend-logger.js';
 import { requestLoggingMiddleware } from './requestLogging.js';
@@ -41,16 +40,15 @@ const renderAppMedTemplateValues = (templateValues) => {
 
 const startServer = async (html) => {
     logger.info('Starting server: server.ts');
-    app.use(cookieParser());
 
     await initIdporten();
     await initTokenXClient();
 
-    app.use(sykefraværsstatistikkApiProxy);
-    app.use(iaTjenesterMetrikkerProxy);
-
     applyWonderwallLoginRedirect(app);
-    applyNotifikasjonMiddleware(app);
+
+    applySykefraværsstatistikkApiProxyMiddlewares(app);
+    applyIaTjenesterMetrikkerProxyMiddlewares(app);
+    applyNotifikasjonProxyMiddlewares(app);
 
     app.disable('x-powered-by');
     app.use(contentHeaders);
