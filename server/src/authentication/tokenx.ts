@@ -1,4 +1,4 @@
-import { Issuer, Client } from 'openid-client';
+import { Issuer, Client, TokenSet } from "openid-client";
 import { IncomingMessage } from 'http';
 import { verifiserIdportenSubjectToken } from './idporten.js';
 import { logger } from '../backend-logger';
@@ -18,7 +18,7 @@ export async function initTokenXClient() {
     );
 }
 
-async function getTokenXToken(token: string, audience: string) {
+async function getTokenXToken(token: string, audience: string): Promise<TokenSet | null> {
     return await tokenxClient
         ?.grant(
             {
@@ -38,6 +38,7 @@ async function getTokenXToken(token: string, audience: string) {
         )
         .catch((err: any) => {
             logger.error('Noe gikk galt med token exchange', err);
+            return null
         });
 }
 
