@@ -1,15 +1,12 @@
 import { Issuer } from 'openid-client';
-import { createRemoteJWKSet, FlattenedJWSInput, JWSHeaderParameters, jwtVerify, KeyLike } from "jose";
+import { createRemoteJWKSet, FlattenedJWSInput, JWSHeaderParameters, jwtVerify } from "jose";
 import { GetKeyFunction } from "jose/dist/types/types";
 
 const acceptedAcrLevel = 'Level4';
 const acceptedSigningAlgorithm = 'RS256';
 
 let idportenIssuer: Issuer;
-let _remoteJWKSet:
-  | KeyLike
-  | Uint8Array
-  | GetKeyFunction<JWSHeaderParameters, FlattenedJWSInput>;
+let _remoteJWKSet: GetKeyFunction<JWSHeaderParameters, FlattenedJWSInput>;
 
 export async function initIdporten() {
     idportenIssuer = await Issuer.discover(process.env.IDPORTEN_WELL_KNOWN_URL!);
@@ -18,7 +15,7 @@ export async function initIdporten() {
     );
 }
 
-export async function verifiserAccessToken(token: any) {
+export async function verifiserIdportenSubjectToken(token: string | Uint8Array) {
     // @ts-ignore
     const { payload } = await jwtVerify(token, _remoteJWKSet, {
         algorithms: [acceptedSigningAlgorithm],
