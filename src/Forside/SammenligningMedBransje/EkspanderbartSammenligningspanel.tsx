@@ -4,27 +4,20 @@ import './EkspanderbartSammenligningspanel.less';
 import { Speedometer } from '../Speedometer/Speedometer';
 import {
     getForklaringAvVurdering,
-    sammenliknSykefraværstekst,
     SammenligningsType,
+    sammenliknSykefraværstekst,
 } from '../vurderingstekster';
-import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import { ForklaringAvPeriode } from './ForklaringAvPeriode';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
-import { TipsVisning } from '../../felleskomponenter/tips/TipsVisning';
-import { getTips, Tips } from '../../felleskomponenter/tips/tips';
-import lyspære from './lyspære-liten.svg';
 import classNames from 'classnames';
-import { OppChevron } from 'nav-frontend-chevron';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
 import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { OmGradertSykmelding } from '../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
-import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from '../../amplitude/events';
-import { useOrgnr } from '../../hooks/useOrgnr';
-import { sendIaTjenesteMetrikkMottatt } from '../../metrikker/iatjenester';
 import { Statistikk } from '../../hooks/useAggregertStatistikk';
 import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
 import { sammenliknSykefravær } from '../vurdering-utils';
 import { parseVerdi } from '../../utils/app-utils';
+import { Panel } from '@navikt/ds-react';
 
 interface Props {
     sammenligningsType: SammenligningsType;
@@ -44,15 +37,11 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     sammenligningsType,
     harBransje,
     defaultÅpen,
-    className,
     virksomhetStatistikk,
     bransjeEllerNæringStatistikk,
     restPubliseringsdatoer,
 }) => {
-    const [erÅpen, setErÅpen] = useState<boolean>(!!defaultÅpen);
-    const panelknappID = 'ekspanderbart-sammenligningspanel__tittel-knapp-' + sammenligningsType;
-    const orgnr = useOrgnr();
-
+    const [erÅpen] = useState<boolean>(!!defaultÅpen);
     const sykefraværVurdering = sammenliknSykefravær(
         virksomhetStatistikk,
         bransjeEllerNæringStatistikk
@@ -119,10 +108,6 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
             )}
         </>
     );
-
-    const tipsliste: Tips[] = getTips(sammenligningsType);
-    const harTips = tipsliste.length > 0;
-
     const vurderingstekst = sammenliknSykefraværstekst(
         sykefraværVurdering,
         sammenligningsType,
@@ -143,84 +128,36 @@ export const EkspanderbartSammenligningspanel: FunctionComponent<Props> = ({
     };
 
     return (
-        <div className={classNames('ekspanderbart-sammenligningspanel', className)}>
-            <EkspanderbartpanelBase
-                onClick={() => {
-                    const skalPaneletÅpnes = !erÅpen;
-                    setErÅpen(skalPaneletÅpnes);
-                    if (skalPaneletÅpnes) {
-                        sendPanelEkspanderEvent(sammenligningsType);
-                        sendIaTjenesteMetrikkMottatt(orgnr);
-                    } else {
-                        sendPanelKollapsEvent(sammenligningsType);
-                    }
-                }}
-                apen={erÅpen}
-                id={panelknappID}
-                tittel={
-                    <div className="ekspanderbart-sammenligningspanel__tittel-wrapper">
-                        {SammenligningsType.GRADERT === sammenligningsType ? (
-                            <Kakediagram
-                                resultat={sykefraværVurdering}
-                                className={'ekspanderbart-sammenligningspanel__kakediagram'}
-                            />
-                        ) : (
-                            <Speedometer resultat={sykefraværVurdering} inline />
-                        )}
-                        <div className="ekspanderbart-sammenligningspanel__tittel-tekst">
-                            <Systemtittel tag="h2">{getPaneltittel()}</Systemtittel>
-                            {sammenligningsType !== SammenligningsType.TOTALT && (
-                                <Normaltekst className="ekspanderbart-sammenligningspanel__tittel-forklaring">
-                                    {vurderingstekst}
-                                </Normaltekst>
-                            )}
-                            <Normaltekst
-                                className={classNames(
-                                    'ekspanderbart-sammenligningspanel__les-mer',
-                                    'ekspanderbart-sammenligningspanel__les-mer--' +
-                                        (erÅpen ? 'åpen' : 'lukket')
-                                )}
-                            >
-                                Les mer om tallene
-                            </Normaltekst>
-                        </div>
-                    </div>
-                }
-                className="ekspanderbart-sammenligningspanel__panel"
-            >
-                <div className="ekspanderbart-sammenligningspanel__innhold">
-                    {innhold}
-                    {harTips && (
-                        <div className="ekspanderbart-sammenligningspanel__tips-tittel">
-                            <img
-                                className="ekspanderbart-sammenligningspanel__bilde"
-                                src={lyspære}
-                                alt=""
-                            />
-                            <Ingress>Dette kan du gjøre</Ingress>
-                        </div>
+        <Panel className="ekspanderbart-sammenligningspanel" border>
+            <div className="ekspanderbart-sammenligningspanel__tittel-wrapper">
+                {SammenligningsType.GRADERT === sammenligningsType ? (
+                    <Kakediagram
+                        resultat={sykefraværVurdering}
+                        className={'ekspanderbart-sammenligningspanel__kakediagram'}
+                    />
+                ) : (
+                    <Speedometer resultat={sykefraværVurdering} inline />
+                )}
+                <div className="ekspanderbart-sammenligningspanel__tittel-tekst">
+                    <Systemtittel tag="h2">{getPaneltittel()}</Systemtittel>
+                    {sammenligningsType !== SammenligningsType.TOTALT && (
+                        <Normaltekst className="ekspanderbart-sammenligningspanel__tittel-forklaring">
+                            {vurderingstekst}
+                        </Normaltekst>
                     )}
-                    {tipsliste.map((tips) => (
-                        <TipsVisning
-                            key={tips.id}
-                            tips={tips}
-                            className={'ekspanderbart-sammenligningspanel__tips'}
-                        />
-                    ))}
-                    <button
-                        className="ekspanderbart-sammenligningspanel__lukk-knapp"
-                        onClick={() => {
-                            setErÅpen(false);
-                            const panelknapp = document.getElementById(panelknappID);
-                            panelknapp && panelknapp.scrollIntoView({ behavior: 'smooth' });
-                        }}
+                    <Normaltekst
+                        className={classNames(
+                            'ekspanderbart-sammenligningspanel__les-mer',
+                            'ekspanderbart-sammenligningspanel__les-mer--' +
+                                (erÅpen ? 'åpen' : 'lukket')
+                        )}
                     >
-                        <span className="typo-normal ">Lukk</span>
-                        <OppChevron className="ekspanderbart-sammenligningspanel__lukk-chevron" />
-                    </button>
+                        Les mer om tallene
+                    </Normaltekst>
                 </div>
-            </EkspanderbartpanelBase>
+            </div>
+            <div className="ekspanderbart-sammenligningspanel__innhold">{innhold}</div>
             <div className="ekspanderbart-sammenligningspanel__print-innhold">{innhold}</div>
-        </div>
+        </Panel>
     );
 };
