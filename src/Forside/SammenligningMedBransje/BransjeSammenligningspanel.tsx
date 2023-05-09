@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './BransjeSammenligningspanel.less';
 import { Speedometer } from '../Speedometer/Speedometer';
@@ -105,7 +105,7 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
         harBransje
     );
 
-    const getPaneltittel = (): ReactElement | string => {
+    const getPaneltittel = (): JSX.Element | string => {
         switch (sammenligningsType) {
             case SammenligningsType.TOTALT:
                 return vurderingstekst;
