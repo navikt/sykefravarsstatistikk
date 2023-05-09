@@ -19,7 +19,7 @@ For å kunne laste ned pakker fra Github Package Registry må du logge inn på n
 npm login --registry https://npm.pkg.github.com
 ```
 - USERNAME: Din GitHub-bruker
-- PASSWORD: Et [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-personal-access-token-classic) med `packages:read`-scope
+- PASSWORD: Et [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-personal-access-token-classic) med `packages:read`-scope, som må være autorisert for `navikt`-organisasjonen i github (med SSO)
 - E-MAIL: En e-post du har koplet til GitHub
 
 Installer avhengigheter med `yarn`
