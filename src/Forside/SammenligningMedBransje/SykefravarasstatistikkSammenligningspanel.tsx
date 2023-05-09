@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement, useState } from 'react';
+import React, { FunctionComponent, ReactElement } from 'react';
 import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './SykefravarsstatistikkSammenligningspanel.less';
 import { Speedometer } from '../Speedometer/Speedometer';
@@ -9,9 +9,7 @@ import {
 } from '../vurderingstekster';
 import { ForklaringAvPeriode } from './ForklaringAvPeriode';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
-import classNames from 'classnames';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
-import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 import { OmGradertSykmelding } from '../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
 import { Statistikk } from '../../hooks/useAggregertStatistikk';
 import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
@@ -36,12 +34,10 @@ const antallKvartalerTekst = (antallKvartaler?: number) => {
 export const SykefravarasstatistikkSammenligningspanel: FunctionComponent<Props> = ({
     sammenligningsType,
     harBransje,
-    defaultÅpen,
     virksomhetStatistikk,
     bransjeEllerNæringStatistikk,
     restPubliseringsdatoer,
 }) => {
-    const [erÅpen] = useState<boolean>(!!defaultÅpen);
     const sykefraværVurdering = sammenliknSykefravær(
         virksomhetStatistikk,
         bransjeEllerNæringStatistikk
@@ -59,16 +55,11 @@ export const SykefravarasstatistikkSammenligningspanel: FunctionComponent<Props>
                         hvor stor andel disse utgjør av alle legemeldte fraværsdager i din
                         virksomhet.
                     </Normaltekst>
-                    <LesMerPanel
-                        åpneLabel={'Se eksempel'}
-                        className="sykefravarsstatistikk-sammenligningspanel__les-mer-gradert-eksempel"
-                    >
-                        <Normaltekst className="sykefravarsstatistikk-sammenligningspanel__les-mer-gradert-eksempel__innhold">
-                            La oss si du har 7,5% sykefravær, dette utgjør 100 tapte dagsverk i din
-                            virksomhet. Det ble benyttet gradert sykmelding i 20 dager, da får du
-                            20% gradert sykmelding.
-                        </Normaltekst>
-                    </LesMerPanel>
+                    <Normaltekst className="sykefravarsstatistikk-sammenligningspanel__les-mer-gradert-eksempel__innhold">
+                        La oss si du har 7,5% sykefravær, dette utgjør 100 tapte dagsverk i din
+                        virksomhet. Det ble benyttet gradert sykmelding i 20 dager, da får du 20%
+                        gradert sykmelding.
+                    </Normaltekst>
                 </div>
             )}
             <div className="sykefravarsstatistikk-sammenligningspanel__data-og-detaljert-visning-sykefravær">
@@ -145,15 +136,6 @@ export const SykefravarasstatistikkSammenligningspanel: FunctionComponent<Props>
                             {vurderingstekst}
                         </Normaltekst>
                     )}
-                    <Normaltekst
-                        className={classNames(
-                            'sykefravarsstatistikk-sammenligningspanel__les-mer',
-                            'sykefravarsstatistikk-sammenligningspanel__les-mer--' +
-                                (erÅpen ? 'åpen' : 'lukket')
-                        )}
-                    >
-                        Les mer om tallene
-                    </Normaltekst>
                 </div>
             </div>
             <div className="sykefravarsstatistikk-sammenligningspanel__innhold">{innhold}</div>
