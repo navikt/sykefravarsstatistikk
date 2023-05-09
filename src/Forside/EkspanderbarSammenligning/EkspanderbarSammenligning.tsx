@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { SykefravarasstatistikkSammenligningspanel } from '../SammenligningMedBransje/SykefravarasstatistikkSammenligningspanel';
+import { BransjeSammenligningspanel } from '../SammenligningMedBransje/BransjeSammenligningspanel';
 import { RestStatus } from '../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
 import { SammenligningsType } from '../vurderingstekster';
@@ -77,7 +77,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             <Element className="ekspanderbar-sammenligning__undertittel">
                 Overordnet sammenligning:
             </Element>
-            <SykefravarasstatistikkSammenligningspanel
+            <BransjeSammenligningspanel
                 className="ekspanderbar-sammenligning__sammenligning-totalt"
                 virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerTotalt}
                 bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerTotalt}
@@ -88,21 +88,21 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             <Element className="ekspanderbar-sammenligning__undertittel">
                 Detaljert sammenligning:
             </Element>
-            <SykefravarasstatistikkSammenligningspanel
+            <BransjeSammenligningspanel
                 virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerGradert}
                 bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerGradert}
                 sammenligningsType={SammenligningsType.GRADERT}
                 harBransje={harBransje}
                 restPubliseringsdatoer={restPubliseringsdatoer}
             />
-            <SykefravarasstatistikkSammenligningspanel
+            <BransjeSammenligningspanel
                 virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerKorttid}
                 bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerKorttid}
                 sammenligningsType={SammenligningsType.KORTTID}
                 harBransje={harBransje}
                 restPubliseringsdatoer={restPubliseringsdatoer}
             />
-            <SykefravarasstatistikkSammenligningspanel
+            <BransjeSammenligningspanel
                 virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerLangtid}
                 bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerLangtid}
                 sammenligningsType={SammenligningsType.LANGTID}
