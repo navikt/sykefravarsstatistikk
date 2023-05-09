@@ -7,6 +7,7 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import { useOrgnr } from '../../hooks/useOrgnr';
 import { sendKnappEvent } from '../../amplitude/events';
+import {sendIaTjenesteMetrikkMottatt} from "../../metrikker/iatjenester";
 
 export const Sammenligningspaneler: FunctionComponent<{
     restAltinnOrganisasjoner: RestAltinnOrganisasjoner;
@@ -41,7 +42,10 @@ export const Sammenligningspaneler: FunctionComponent<{
                     </Systemtittel>
                 </div>
                 <ReactToPrint
-                    onBeforePrint={() => sendKnappEvent('skriv ut')}
+                    onBeforePrint={() => {
+                        sendKnappEvent('skriv ut');
+                        sendIaTjenesteMetrikkMottatt(orgnr);
+                    }}
                     onAfterPrint={() => {
                         if (lastNedKnappRef.current) {
                             lastNedKnappRef.current.focus();
