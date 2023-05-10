@@ -1,8 +1,7 @@
 import { Issuer, Client, TokenSet } from 'openid-client';
-import { IncomingMessage } from 'http';
 import { verifiserIdportenSubjectToken } from './idporten.js';
 import { logger } from '../backend-logger';
-import { RequestHandler } from "express";
+import { RequestHandler, Request } from "express";
 
 export function tokenExchangeMiddleware(audience: string): RequestHandler {
   return async (req, _res, next) => {
@@ -27,10 +26,10 @@ export async function initTokenXClient() {
 }
 
 async function exchangeIdportenSubjectToken(
-    request: IncomingMessage,
+    request: Request,
     audience: string
 ): Promise<void> {
-    let subjectToken = request.headers.authorization?.split(' ')[1];
+    let subjectToken = request.headers['authorization']?.split(' ')[1];
 
     if (!subjectToken) {
         return;
