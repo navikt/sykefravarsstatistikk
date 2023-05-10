@@ -66,5 +66,6 @@ spec:
                   namespace: arbeidsgiver
             external:
                 - host: www.nav.no
+                - host: dekoratoren.nav.no
                 - host: sykefravarsstatistikk-api.prod-fss-pub.nais.io
                 - host: loginservice.nav.no
