@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactNode, useRef } from 'react';
-import './Sammenligningspanel.less';
+import './Sammenligningspaneler.less';
 import ReactToPrint from 'react-to-print';
 import { Alert } from '@navikt/ds-react';
 import { RestStatus } from '../../api/api-utils';
@@ -7,6 +7,7 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import { useOrgnr } from '../../hooks/useOrgnr';
 import { sendKnappEvent } from '../../amplitude/events';
+import { sendIaTjenesteMetrikkMottatt } from '../../metrikker/iatjenester';
 
 export const Sammenligningspaneler: FunctionComponent<{
     restAltinnOrganisasjoner: RestAltinnOrganisasjoner;
@@ -27,21 +28,24 @@ export const Sammenligningspaneler: FunctionComponent<{
     return (
         <>
             {harFeil && (
-                <Alert variant={'error'} className="sammenligningspanel__info-eller-feilmelding">
+                <Alert variant={'error'} className="sammenligningspaneler__info-eller-feilmelding">
                     Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen senere.
                 </Alert>
             )}
-            <div className="sammenligningspanel" ref={panelRef}>
-                <div className="sammenligningspanel__print-header">
-                    <Normaltekst className="sammenligningspanel__href">
+            <div className="sammenligningspaneler" ref={panelRef}>
+                <div className="sammenligningspaneler__print-header">
+                    <Normaltekst className="sammenligningspaneler__href">
                         {window.location.href}
                     </Normaltekst>
-                    <Systemtittel tag="h1" className="sammenligningspanel__print-tittel">
+                    <Systemtittel tag="h1" className="sammenligningspaneler__print-tittel">
                         Sykefraværsstatistikk for {navnPåVirksomhet} ({orgnr})
                     </Systemtittel>
                 </div>
                 <ReactToPrint
-                    onBeforePrint={() => sendKnappEvent('skriv ut')}
+                    onBeforePrint={() => {
+                        sendKnappEvent('skriv ut');
+                        sendIaTjenesteMetrikkMottatt(orgnr);
+                    }}
                     onAfterPrint={() => {
                         if (lastNedKnappRef.current) {
                             lastNedKnappRef.current.focus();
@@ -49,7 +53,10 @@ export const Sammenligningspaneler: FunctionComponent<{
                     }}
                     content={() => panelRef.current}
                     trigger={() => (
-                        <button ref={lastNedKnappRef} className="sammenligningspanel__knapp knapp">
+                        <button
+                            ref={lastNedKnappRef}
+                            className="sammenligningspaneler__knapp knapp"
+                        >
                             Last ned
                         </button>
                     )}

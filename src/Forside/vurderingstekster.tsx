@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { getGrønnGrense, getRødGrense, SykefraværVurdering } from './vurdering-utils';
 import { formaterProsent } from '../utils/app-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -14,7 +14,7 @@ export const sammenliknSykefraværstekst = (
     sykefraværResultat: SykefraværVurdering,
     sammenligningsType: SammenligningsType,
     harBransje: boolean
-): ReactElement | string => {
+): JSX.Element => {
     switch (sammenligningsType) {
         case SammenligningsType.TOTALT:
             return sammenliknSykefraværstekstTotalt(sykefraværResultat, harBransje);
@@ -29,7 +29,7 @@ export const sammenliknSykefraværstekst = (
 const sammenliknSykefraværstekstGradert = (
     sykefraværResultat: SykefraværVurdering,
     harBransje: boolean
-): ReactElement | string => {
+): JSX.Element => {
     const bransjeEllerNæringTekst = harBransje ? 'bransje' : 'næring';
     switch (sykefraværResultat) {
         case 'OVER':
@@ -79,7 +79,7 @@ const sammenliknSykefraværstekstGradert = (
 const sammenliknSykefraværstekstTotalt = (
     sykefraværResultat: SykefraværVurdering,
     harBransje: boolean
-): ReactElement | string => {
+): JSX.Element => {
     const bransjeEllerNæringTekst = harBransje ? 'bransjen' : 'næringen';
     switch (sykefraværResultat) {
         case 'UNDER':
@@ -126,7 +126,10 @@ const sammenliknSykefraværstekstTotalt = (
     }
 };
 
-const sammenliknSykefraværstekstKorttid = (resultat: SykefraværVurdering, harBransje: boolean) => {
+const sammenliknSykefraværstekstKorttid = (
+    resultat: SykefraværVurdering,
+    harBransje: boolean
+): JSX.Element => {
     const bransjeEllerNæringTekst = harBransje ? 'bransjen' : 'næringen';
     switch (resultat) {
         case 'UNDER':
@@ -164,7 +167,7 @@ const sammenliknSykefraværstekstKorttid = (resultat: SykefraværVurdering, harB
 export const sammenliknSykefraværstekstLangtid = (
     resultat: SykefraværVurdering,
     harBransje: boolean
-) => {
+): JSX.Element => {
     const bransjeEllerNæringTekst = harBransje ? 'bransjen' : 'næringen';
     switch (resultat) {
         case 'UNDER':

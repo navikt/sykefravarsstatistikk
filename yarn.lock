@@ -8516,16 +8516,6 @@ nav-frontend-core@^6.0.1:
   resolved "https://registry.yarnpkg.com/nav-frontend-core/-/nav-frontend-core-6.0.1.tgz#81feef412890cb84074d329a2e3a8b6bca4ba314"
   integrity sha512-zFAPRXgmS3Nhu5SyafsTnCFg2/PEbrUF+g1xGo+pKIxGfJgCeLi47gPSe7Kjeh3IwIo0ex3cA7tfbUIWOY65dQ==
 
-nav-frontend-ekspanderbartpanel-style@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel-style/-/nav-frontend-ekspanderbartpanel-style-2.0.2.tgz#a78c610ccacc408a59406981f62254b8b5949964"
-  integrity sha512-p2enXZfqvM+mXMcyG5ASonQ79Pz3h0x3RN7Bncsp1PSspDrj2uBJvyfD0y/SwLMlo04yH8Gm5JMAeP1q/wqhwg==
-
-nav-frontend-ekspanderbartpanel@^4.0.4:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/nav-frontend-ekspanderbartpanel/-/nav-frontend-ekspanderbartpanel-4.0.4.tgz#34c777b405b787c4b8809e76a4778a3f2084e1b0"
-  integrity sha512-MNIhCAcHH0K6LMvmLAcqjSUAyH54dSZvDLgXE3UPtmAwlhgTIoHarB1nsoNHauoBvByLosR3pclrX4VY9Wc8Rw==
-
 nav-frontend-hjelpetekst-style@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/nav-frontend-hjelpetekst-style/-/nav-frontend-hjelpetekst-style-3.0.2.tgz#5025ea63e58bac8b9882da686393c89c3b762a2e"
