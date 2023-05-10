@@ -7,7 +7,7 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import { useOrgnr } from '../../hooks/useOrgnr';
 import { sendKnappEvent } from '../../amplitude/events';
-import {sendIaTjenesteMetrikkMottatt} from "../../metrikker/iatjenester";
+import { sendIaTjenesteMetrikkMottatt } from '../../metrikker/iatjenester';
 
 export const Sammenligningspaneler: FunctionComponent<{
     restAltinnOrganisasjoner: RestAltinnOrganisasjoner;
