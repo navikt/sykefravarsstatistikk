@@ -28,8 +28,6 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
     const { restSykefraværsstatistikk } = props;
     const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
 
-    sendIaTjenesteMetrikkMottatt(orgnr);
-
     return (
         <div className="graf-og-tabell__wrapper">
             <div className="graf-og-tabell">
