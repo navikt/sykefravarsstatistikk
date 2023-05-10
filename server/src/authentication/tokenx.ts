@@ -1,6 +1,6 @@
 import { Issuer, Client, TokenSet } from 'openid-client';
 import { verifiserIdportenSubjectToken } from './idporten.js';
-import { logger } from '../backend-logger';
+import { logger } from '../backend-logger.js';
 import { RequestHandler, Request } from "express";
 
 export function tokenExchangeMiddleware(audience: string): RequestHandler {
