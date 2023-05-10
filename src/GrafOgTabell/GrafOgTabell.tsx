@@ -8,8 +8,6 @@ import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { sendIaTjenesteMetrikkMottatt } from '../metrikker/iatjenester';
-import { useOrgnr } from '../hooks/useOrgnr';
 import {
     getBransjeEllerNæringLabel,
     getHistorikkLabels,
@@ -24,7 +22,6 @@ interface Props {
 }
 
 const GrafOgTabell: FunctionComponent<Props> = (props) => {
-    const orgnr = useOrgnr();
     const { restSykefraværsstatistikk } = props;
     const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
 
