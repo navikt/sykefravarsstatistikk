@@ -1,12 +1,12 @@
-import { tokenExchangeMiddleware } from './authentication/tokenx.js';
 import { Express } from 'express';
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
+import { idportenTokenExchangeMiddleware } from "@navikt/tokenx-middleware";
 
 export function applySykefraværsstatistikkApiProxyMiddlewares(app: Express) {
     const backendApiProxyMiddleware = createProxyMiddleware(proxyConfig);
     app.use(
         FRONTEND_API_PATH,
-        tokenExchangeMiddleware(SYKEFRAVARSSTATISTIKK_API_AUDIENCE),
+        idportenTokenExchangeMiddleware(SYKEFRAVARSSTATISTIKK_API_AUDIENCE),
         backendApiProxyMiddleware
     );
 }

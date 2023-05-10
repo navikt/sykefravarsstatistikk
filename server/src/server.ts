@@ -10,10 +10,8 @@ import { contentHeaders } from './contentHeaders.js';
 import { loggingHandler, logger } from './backend-logger.js';
 import { requestLoggingMiddleware } from './requestLogging.js';
 import { getKalkulatorRedirectUrl, getTemplateValues } from './environment.js';
-import { applyWonderwallLoginRedirect } from './authentication/wonderwall.js';
-import { initIdporten } from './authentication/idporten.js';
-import { initTokenXClient } from './authentication/tokenx.js';
 import { BASE_PATH } from './common.js';
+import { applyWonderwallLoginRedirect } from "./wonderwall.js";
 
 const buildPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../build');
 
@@ -40,9 +38,6 @@ const renderAppMedTemplateValues = (templateValues) => {
 
 const startServer = async (html) => {
     logger.info('Starting server: server.ts');
-
-    await initIdporten();
-    await initTokenXClient();
 
     applyWonderwallLoginRedirect(app);
 

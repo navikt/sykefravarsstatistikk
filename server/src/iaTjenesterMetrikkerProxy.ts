@@ -1,13 +1,13 @@
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
 import { logger } from './backend-logger.js';
-import { tokenExchangeMiddleware } from './authentication/tokenx.js';
 import { Express } from 'express';
+import { idportenTokenExchangeMiddleware } from "@navikt/tokenx-middleware";
 
 export function applyIaTjenesterMetrikkerProxyMiddlewares(server: Express) {
     const iaTjenesterMetrikkerProxy = createProxyMiddleware(proxyConfig);
     server.use(
         '/sykefravarsstatistikk/proxy/ia-tjenester-metrikker',
-        tokenExchangeMiddleware(IA_TJENESTER_METRIKKER_AUDIENCE),
+        idportenTokenExchangeMiddleware(IA_TJENESTER_METRIKKER_AUDIENCE),
         iaTjenesterMetrikkerProxy
     );
 }

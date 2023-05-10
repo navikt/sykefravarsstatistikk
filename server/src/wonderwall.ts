@@ -1,5 +1,5 @@
 import { Express } from "express";
-import { BASE_PATH } from "../common.js";
+import { BASE_PATH } from "./common.js";
 
 
 export function applyWonderwallLoginRedirect(app: Express) {

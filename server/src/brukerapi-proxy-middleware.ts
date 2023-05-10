@@ -1,6 +1,6 @@
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
 import { Express } from 'express';
-import { tokenExchangeMiddleware } from './authentication/tokenx.js';
+import { idportenTokenExchangeMiddleware } from "@navikt/tokenx-middleware";
 
 export function applyNotifikasjonProxyMiddlewares(app: Express) {
     const { NOTIFIKASJON_API_AUDIENCE } = process.env;
@@ -8,7 +8,7 @@ export function applyNotifikasjonProxyMiddlewares(app: Express) {
 
     app.use(
         '/sykefravarsstatistikk/notifikasjon-bruker-api',
-        tokenExchangeMiddleware(NOTIFIKASJON_API_AUDIENCE),
+        idportenTokenExchangeMiddleware(NOTIFIKASJON_API_AUDIENCE),
         notifikasjonBrukerApiProxy
     );
 }
