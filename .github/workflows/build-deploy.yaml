@@ -50,7 +50,7 @@ jobs:
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/loginservice'
+        if: github.ref == 'refs/heads/åpne-opp-paneler'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
@@ -65,7 +65,7 @@ jobs:
 
     deploy-to-dev-gcp-ekstern:
         name: Deploy to dev-gcp-ekstern
-        if: github.ref == 'refs/heads/Flytt_tabell_og_graf_plus_div_fiks'
+        if: github.ref == 'refs/heads/master'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:

@@ -1,5 +1,5 @@
 import { default as React, FunctionComponent } from 'react';
-import { Sammenligningspaneler } from './Sammenligningspanel/Sammenligningspaneler';
+import { Sammenligningspaneler } from './Sammenligningspaneler/Sammenligningspaneler';
 import { EkspanderbarSammenligning } from './EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { SykefraværAppData } from '../hooks/useSykefraværAppData';
 import { RestStatus } from '../api/api-utils';

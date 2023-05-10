@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactNode, useEffect, useRef } from 'react';
-import './Sammenligningspanel.less';
+import './Sammenligningspaneler.less';
 import ReactToPrint from 'react-to-print';
 import { Alert } from '@navikt/ds-react';
 import { RestStatus } from '../../api/api-utils';
@@ -33,16 +33,16 @@ export const Sammenligningspaneler: FunctionComponent<{
     return (
         <>
             {harFeil && (
-                <Alert variant={'error'} className="sammenligningspanel__info-eller-feilmelding">
+                <Alert variant={'error'} className="sammenligningspaneler__info-eller-feilmelding">
                     Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen senere.
                 </Alert>
             )}
-            <div className="sammenligningspanel" ref={panelRef}>
-                <div className="sammenligningspanel__print-header">
-                    <Normaltekst className="sammenligningspanel__href">
+            <div className="sammenligningspaneler" ref={panelRef}>
+                <div className="sammenligningspaneler__print-header">
+                    <Normaltekst className="sammenligningspaneler__href">
                         {window.location.href}
                     </Normaltekst>
-                    <Systemtittel tag="h1" className="sammenligningspanel__print-tittel">
+                    <Systemtittel tag="h1" className="sammenligningspaneler__print-tittel">
                         Sykefraværsstatistikk for {navnPåVirksomhet} ({orgnr})
                     </Systemtittel>
                 </div>
@@ -58,7 +58,10 @@ export const Sammenligningspaneler: FunctionComponent<{
                     }}
                     content={() => panelRef.current}
                     trigger={() => (
-                        <button ref={lastNedKnappRef} className="sammenligningspanel__knapp knapp">
+                        <button
+                            ref={lastNedKnappRef}
+                            className="sammenligningspaneler__knapp knapp"
+                        >
                             Last ned
                         </button>
                     )}
