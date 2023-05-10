@@ -28,7 +28,7 @@ export const Sammenligningspaneler: FunctionComponent<{
     useEffect(() => {
         const timer = setTimeout(() => sendIaTjenesteMetrikkMottatt(orgnr), 5000);
         return () => clearTimeout(timer);
-    });
+    }, [orgnr]);
 
     return (
         <>
