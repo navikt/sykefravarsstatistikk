@@ -63,6 +63,7 @@ spec:
                   namespace: arbeidsgiver
                   cluster: prod-gcp
             external:
+                - host: nav.no
                 - host: dekoratoren.nav.no
                 - host: sykefravarsstatistikk-api.prod-fss-pub.nais.io
                 - host: loginservice.nav.no
