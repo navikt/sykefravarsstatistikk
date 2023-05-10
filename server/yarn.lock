@@ -211,10 +211,10 @@
     casual "^1.6.2"
     graphql "^16.6.0"
 
-"@navikt/tokenx-middleware@^0.0.2":
-  version "0.0.2"
-  resolved "https://npm.pkg.github.com/download/@navikt/tokenx-middleware/0.0.2/896ffd5075c0f6b51cd7be343f5b7531bfff4d0b#896ffd5075c0f6b51cd7be343f5b7531bfff4d0b"
-  integrity sha512-begBb8+LlTFB8jb12MixAr54lTpiLt2XoS8d9qFj+zOSj9r5225N0RPq4PXEjijuGueCzJPaUT/Nxnx2ReWXbg==
+"@navikt/tokenx-middleware@^0.0.3":
+  version "0.0.3"
+  resolved "https://npm.pkg.github.com/download/@navikt/tokenx-middleware/0.0.3/a54900afa8f56c07eabed1e549528b1a743da792#a54900afa8f56c07eabed1e549528b1a743da792"
+  integrity sha512-ICd0ecIqx4RECuXZtJIWsrDIozJCAVkURC/GixFpKxcEkMBxIaRj6HK5J6+3KiXl0qk4eDpSL/J0PNvuGcsM6Q==
   dependencies:
     openid-client "^5.4.2"
 
