@@ -62,7 +62,9 @@ spec:
                 - application: ia-tjenester-metrikker
                   namespace: arbeidsgiver
                   cluster: prod-gcp
+                - application: nav-dekoratoren
+                  namespace: arbeidsgiver
             external:
-                - host: dekoratoren.nav.no
+                - host: www.nav.no
                 - host: sykefravarsstatistikk-api.prod-fss-pub.nais.io
                 - host: loginservice.nav.no
