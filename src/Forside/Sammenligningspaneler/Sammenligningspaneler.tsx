@@ -1,9 +1,8 @@
 import React, { FunctionComponent, ReactNode, useRef } from 'react';
 import './Sammenligningspaneler.less';
 import ReactToPrint from 'react-to-print';
-import { Alert } from '@navikt/ds-react';
+import { Alert, BodyShort, Heading } from '@navikt/ds-react';
 import { RestStatus } from '../../api/api-utils';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import { useOrgnr } from '../../hooks/useOrgnr';
 import { sendKnappEvent } from '../../amplitude/events';
@@ -33,13 +32,13 @@ export const Sammenligningspaneler: FunctionComponent<{
                 </Alert>
             )}
             <div className="sammenligningspaneler" ref={panelRef}>
-                <div className="sammenligningspaneler__print-header">
-                    <Normaltekst className="sammenligningspaneler__href">
+                <div className="sammenligningspaneler__header">
+                    <BodyShort className="sammenligningspaneler__href">
                         {window.location.href}
-                    </Normaltekst>
-                    <Systemtittel tag="h1" className="sammenligningspaneler__print-tittel">
+                    </BodyShort>
+                    <Heading size="medium" level="1">
                         Sykefraværsstatistikk for {navnPåVirksomhet} ({orgnr})
-                    </Systemtittel>
+                    </Heading>
                 </div>
                 <ReactToPrint
                     onBeforePrint={() => {
