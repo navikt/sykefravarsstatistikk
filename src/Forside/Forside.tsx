@@ -1,4 +1,4 @@
-import { default as React, FunctionComponent } from 'react';
+import { default as React, FunctionComponent, useEffect } from 'react';
 import { Sammenligningspaneler } from './Sammenligningspanel/Sammenligningspaneler';
 import { EkspanderbarSammenligning } from './EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { SykefraværAppData } from '../hooks/useSykefraværAppData';

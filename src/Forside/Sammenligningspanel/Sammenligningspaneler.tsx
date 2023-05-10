@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, useRef } from 'react';
+import React, { FunctionComponent, ReactNode, useEffect, useRef } from 'react';
 import './Sammenligningspanel.less';
 import ReactToPrint from 'react-to-print';
 import { Alert } from '@navikt/ds-react';
@@ -24,6 +24,11 @@ export const Sammenligningspaneler: FunctionComponent<{
         restAltinnOrganisasjoner.data.find(
             (organisasjon) => organisasjon.OrganizationNumber === orgnr
         )?.Name;
+
+    useEffect(() => {
+        const timer = setTimeout(() => sendIaTjenesteMetrikkMottatt(orgnr), 5000);
+        return () => clearTimeout(timer);
+    });
 
     return (
         <>
