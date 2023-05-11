@@ -34,7 +34,7 @@ const renderAppMedTemplateValues = (templateValues) => {
 };
 
 const startServer = async (html) => {
-    logger.info('Starting server: server.ts');
+    logger.info('Starting server');
 
     Prometheus.collectDefaultMetrics();
     applyWonderwallLoginRedirect(app);

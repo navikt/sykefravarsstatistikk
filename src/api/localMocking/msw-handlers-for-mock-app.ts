@@ -7,8 +7,9 @@ import {
 import { getMockPubliseringsdatoer } from '../mockedApiResponses/mock-publiseringsdatoer';
 import { underenheterResponseMock } from '../../enhetsregisteret/api/mocks/underenheter-api-mocks';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
+import { logger } from "../../utils/logger";
 
-export const localMswHandlers = [
+export const mswHandlersForMockApp = [
     rest.get(
         '/sykefravarsstatistikk/api/:orgnr/v1/sykefravarshistorikk/aggregert',
         (req, res, ctx) => {
@@ -80,4 +81,13 @@ export const localMswHandlers = [
         await ctx.fetch(req);
         return res(ctx.status(200));
     }),
+
+    rest.get('/sykefravarsstatistikk/internal/isReady', (_req, res, ctx) => {
+        return res(ctx.status(200));
+    }),
+
+    rest.get('/sykefravarsstatistikk/internal/isAlive', (_req, res, ctx) => {
+        return res(ctx.status(200));
+    }),
+
 ];
