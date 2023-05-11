@@ -2238,10 +2238,10 @@
     casual "^1.6.2"
     graphql "^16.6.0"
 
-"@navikt/bedriftsmeny@^6.3.0":
-  version "6.3.0"
-  resolved "https://npm.pkg.github.com/download/@navikt/bedriftsmeny/6.3.0/1e959e418d097188e0ae93e9ff4eafa59d07d047#1e959e418d097188e0ae93e9ff4eafa59d07d047"
-  integrity sha512-BOCG7AJPUzLabKt4mTf/kfpWGdh8xAP3U+Re4+CXotlH8wRMP81P+0m0dK7xt4rzIO0behCB7W+iQl6HchDx7A==
+"@navikt/bedriftsmeny@^6.4.4-rc1":
+  version "6.4.4-rc3"
+  resolved "https://npm.pkg.github.com/download/@navikt/bedriftsmeny/6.4.4-rc3/fbff124f74811c6312ddf3975ff9108f9984e438#fbff124f74811c6312ddf3975ff9108f9984e438"
+  integrity sha512-JLj+e0zZ8LuWf3G3Tik4Bf8JBhCF5mKBCZiFGeF98QyqXviHxr0VOmNxE2AfvR5aMhAK1FcXJRD/jEqbBVttgw==
   dependencies:
     "@types/amplitude-js" "^8.9.4"
     fuzzysort "^1.1.4"

@@ -50,7 +50,7 @@ jobs:
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
-        if: github.ref == 'refs/heads/åpne-opp-paneler'
+        if: github.ref == 'refs/heads/verifiser-bedriftsvelger'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
