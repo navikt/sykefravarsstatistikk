@@ -13,6 +13,7 @@ import { getEnvironmentContext } from './Context/EnvironmentContext';
 
 async function main(): Promise<void> {
     const { MILJØ: miljø } = getEnvironmentContext();
+    console.log("Miljø: ", miljø)
     if (process.env.REACT_APP_MOCK || miljø === MILJØ.DEV_EKSTERN) {
         await startMockServiceWorker();
     }
