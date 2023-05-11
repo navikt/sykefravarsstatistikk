@@ -7,7 +7,6 @@ import {
 import { getMockPubliseringsdatoer } from '../mockedApiResponses/mock-publiseringsdatoer';
 import { underenheterResponseMock } from '../../enhetsregisteret/api/mocks/underenheter-api-mocks';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
-import { logger } from "../../utils/logger";
 
 export const mswHandlersForMockApp = [
     rest.get(
@@ -89,5 +88,4 @@ export const mswHandlersForMockApp = [
     rest.get('/sykefravarsstatistikk/internal/isAlive', (_req, res, ctx) => {
         return res(ctx.status(200));
     }),
-
 ];
