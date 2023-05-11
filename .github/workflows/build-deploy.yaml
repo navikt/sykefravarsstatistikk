@@ -46,7 +46,7 @@ jobs:
             - name: Build and push the Docker image
               run: |
                   docker build . -t ${IMAGE} 
-                  docker push ${IMAGE}
+                  docker push ${IMAGE} 
 
     deploy-to-dev-gcp:
         name: Deploy to dev-gcp
