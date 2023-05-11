@@ -11,15 +11,13 @@ import { loggingHandler, logger } from './backend-logger.js';
 import { requestLoggingMiddleware } from './requestLogging.js';
 import { getKalkulatorRedirectUrl, getTemplateValues } from './environment.js';
 import { BASE_PATH } from './common.js';
-import { applyWonderwallLoginRedirect } from "./wonderwall.js";
+import { applyWonderwallLoginRedirect } from './wonderwall.js';
 
 const buildPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../build');
 
 const app = express();
 
-const { PORT = 3000 } = process.env;
-
-Prometheus.collectDefaultMetrics();
+const { PORT = 3000, NAIS_APP_NAME = 'local' } = process.env;
 
 const renderAppMedTemplateValues = (templateValues) => {
     return new Promise((resolve, reject) => {
@@ -38,6 +36,7 @@ const renderAppMedTemplateValues = (templateValues) => {
 
 const startServer = async (html) => {
     logger.info('Starting server: server.ts');
+    Prometheus.collectDefaultMetrics();
 
     applyWonderwallLoginRedirect(app);
 
@@ -86,12 +85,18 @@ const startServer = async (html) => {
     });
 };
 
-getTemplateValues()
-    .then(renderAppMedTemplateValues, (error) => {
-        logger.error({ error }, 'Kunne ikke hente Template verdier');
-        process.exit(1);
-    })
-    .then(startServer, (error) => {
-        logger.error({ error }, 'Kunne ikke rendre app ');
-        process.exit(1);
-    });
+async function main() {
+    const templateValues = await getTemplateValues();
+    const html = await renderAppMedTemplateValues(templateValues);
+
+    if (NAIS_APP_NAME === 'sykefravarsstatistikk-mock') {
+        logger.info('App running on "ekstern dev". Will not start the server.');
+    } else {
+        await startServer(html);
+    }
+}
+
+main().catch((error) => {
+    logger.error({ error }, 'Kunne ikke hente eller rendre app');
+    process.exit(1);
+});
