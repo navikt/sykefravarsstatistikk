@@ -80,12 +80,4 @@ export const mswHandlersForMockApp = [
         await ctx.fetch(req);
         return res(ctx.status(200));
     }),
-
-    rest.get('/sykefravarsstatistikk/internal/isReady', (_req, res, ctx) => {
-        return res(ctx.status(200));
-    }),
-
-    rest.get('/sykefravarsstatistikk/internal/isAlive', (_req, res, ctx) => {
-        return res(ctx.status(200));
-    }),
 ];
