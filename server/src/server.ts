@@ -12,6 +12,8 @@ import { requestLoggingMiddleware } from './requestLogging.js';
 import { getKalkulatorRedirectUrl, getTemplateValues } from './environment.js';
 import { BASE_PATH } from './common.js';
 import { applyWonderwallLoginRedirect } from './wonderwall.js';
+import { setupIsAlive, setupIsReady } from './healthcheck.js';
+import { setupMetricsEndpoint } from './prometheus.js';
 
 const buildPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../build');
 
@@ -36,6 +38,7 @@ const renderAppMedTemplateValues = (templateValues) => {
 
 const startServer = async (html) => {
     logger.info('Starting server: server.ts');
+
     Prometheus.collectDefaultMetrics();
 
     applyWonderwallLoginRedirect(app);
@@ -64,13 +67,9 @@ const startServer = async (html) => {
         loggingHandler(req, res);
     });
 
-    app.get(`${BASE_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
-    app.get(`${BASE_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
-    app.get(`${BASE_PATH}/metrics`, async (req, res) => {
-        const metrics = await Prometheus.register.metrics();
-        res.set('Content-Type', Prometheus.register.contentType);
-        res.send(metrics);
-    });
+    await setupIsAlive(app);
+    await setupIsReady(app);
+    await setupMetricsEndpoint(app);
 
     app.get(BASE_PATH, (req, res) => {
         res.send(html);

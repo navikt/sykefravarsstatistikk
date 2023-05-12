@@ -1,6 +1,11 @@
 import { Express } from 'express';
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
-import { idportenTokenExchangeMiddleware } from "@navikt/tokenx-middleware";
+import { idportenTokenExchangeMiddleware } from '@navikt/tokenx-middleware';
+
+const FRONTEND_API_PATH = '/sykefravarsstatistikk/api';
+const BACKEND_API_PATH = '/sykefravarsstatistikk-api';
+const { BACKEND_API_BASE_URL = 'http://localhost:8080', SYKEFRAVARSSTATISTIKK_API_AUDIENCE } =
+    process.env;
 
 export function applySykefraværsstatistikkApiProxyMiddlewares(app: Express) {
     const backendApiProxyMiddleware = createProxyMiddleware(proxyConfig);
@@ -10,12 +15,6 @@ export function applySykefraværsstatistikkApiProxyMiddlewares(app: Express) {
         backendApiProxyMiddleware
     );
 }
-
-const FRONTEND_API_PATH = '/sykefravarsstatistikk/api';
-const BACKEND_API_PATH = '/sykefravarsstatistikk-api';
-
-const { BACKEND_API_BASE_URL = 'http://localhost:8080', SYKEFRAVARSSTATISTIKK_API_AUDIENCE } =
-    process.env;
 
 const proxyConfig: Options = {
     target: BACKEND_API_BASE_URL,
