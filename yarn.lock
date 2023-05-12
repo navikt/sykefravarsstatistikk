@@ -2239,9 +2239,9 @@
     graphql "^16.6.0"
 
 "@navikt/bedriftsmeny@^6.3.0":
-  version "6.3.0"
-  resolved "https://npm.pkg.github.com/download/@navikt/bedriftsmeny/6.3.0/1e959e418d097188e0ae93e9ff4eafa59d07d047#1e959e418d097188e0ae93e9ff4eafa59d07d047"
-  integrity sha512-BOCG7AJPUzLabKt4mTf/kfpWGdh8xAP3U+Re4+CXotlH8wRMP81P+0m0dK7xt4rzIO0behCB7W+iQl6HchDx7A==
+  version "6.4.3"
+  resolved "https://npm.pkg.github.com/download/@navikt/bedriftsmeny/6.4.3/cf0cba649f5e1a0a01992c5a13f233dbbffb1983#cf0cba649f5e1a0a01992c5a13f233dbbffb1983"
+  integrity sha512-sMis0btzUFtsqSO3YIrcan/4sV4HbhtGYF1/vnBjQSJEP+Icoay3n1Ib1uGeijty1FYGJzsU/3sY7HM+wRUU5g==
   dependencies:
     "@types/amplitude-js" "^8.9.4"
     fuzzysort "^1.1.4"
