@@ -34,6 +34,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                     restAltinnOrganisasjonerMedStatistikktilgang={
                         appData.altinnOrganisasjonerMedStatistikktilgang
                     }
+                    restSykefraværshistorikk={appData.sykefraværshistorikk}
                 >
                     <EkspanderbarSammenligning
                         aggregertStatistikk={appData.aggregertStatistikk}

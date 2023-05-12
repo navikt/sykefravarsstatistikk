@@ -148,6 +148,10 @@
     }
 
     @media print {
+        ~ .bransje-sammenligningspanel:nth-of-type(odd) {
+          page-break-after: always;
+        }
+
         &__print-innhold {
             display: block;
         }

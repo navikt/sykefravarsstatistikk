@@ -8,7 +8,7 @@ import {
     KvartalsvisSammenligning,
 } from '../../utils/sykefraværshistorikk-utils';
 
-interface TabellProps {
+export interface TabellProps {
     kvartalsvisSammenligning: KvartalsvisSammenligning[];
     harOverordnetEnhet: boolean;
     bransjeEllerNæringLabel: BransjeEllerNæringLabel;
