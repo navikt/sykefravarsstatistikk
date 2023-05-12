@@ -1,6 +1,6 @@
 import * as z from 'zod';
 import pino from 'pino';
-import { log_events_counter } from './metrikker.js';
+import { log_events_counter } from './prometheus.js';
 
 type NonEmptyArray<T> = [T, ...T[]];
 export type Levels = {
