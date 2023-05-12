@@ -7,6 +7,10 @@
     border-radius: 0.25rem;
     position: relative;
 
+    &__kun-print {
+        display: none;
+    }
+
     &__info-eller-feilmelding {
         width: 100%;
         margin-bottom: 1.5rem;
@@ -37,6 +41,9 @@
     }
 
     @media print {
+        &__kun-print {
+            display: block;
+        }
         &__knapp {
             display: none;
         }

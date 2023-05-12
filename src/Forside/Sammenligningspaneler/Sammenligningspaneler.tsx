@@ -72,7 +72,11 @@ export const Sammenligningspaneler: FunctionComponent<{
                     )}
                 />
                 {children}
-                {!!tabellProps && <Tabell {...tabellProps} />}
+                {!!tabellProps && (
+                    <div className="sammenligningspaneler__kun-print">
+                        <Tabell {...tabellProps} />
+                    </div>
+                )}
             </div>
         </>
     );
