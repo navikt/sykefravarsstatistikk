@@ -1,6 +1,6 @@
 import * as Prometheus from 'prom-client';
 import { Express } from "express";
-import { BASE_PATH } from "./common";
+import { BASE_PATH } from "./common.js";
 
 export const setupMetricsEndpoint = async (app: Express) => {
     app.get(`${BASE_PATH}/metrics`, async (req, res) => {
