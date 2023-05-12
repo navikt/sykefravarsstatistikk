@@ -1,8 +1,6 @@
 export const BASE_PATH = '/sykefravarsstatistikk';
 
 export const PATH_FORSIDE = '/';
-export const PATH_KALKULATOR_REDIRECT = '/kalkulator';
-export const PATH_HISTORIKK = '/historikk';
 
 export const MILJØ = {
     PROD: 'prod-gcp',

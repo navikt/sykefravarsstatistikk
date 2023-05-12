@@ -36,8 +36,8 @@ const renderAppMedTemplateValues = (templateValues) => {
     });
 };
 
-const startServer = async (html) => {
-    logger.info('Starting server: server.ts');
+const startProductionServer = async (html) => {
+    logger.info('Starting production server');
 
     Prometheus.collectDefaultMetrics();
 
@@ -84,14 +84,46 @@ const startServer = async (html) => {
     });
 };
 
+const startEksternDevServer = async (html: unknown) => {
+    logger.info('Starting server for ekstern dev-gcp');
+    app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
+
+    app.get(BASE_PATH, (req, res) => {
+        res.send(html);
+    });
+    app.get(BASE_PATH + '/*', (req, res) => {
+        res.send(html);
+    });
+    // consumes the payload! Must be placed below the proxy middlewares
+    app.use(express.json());
+    app.post(BASE_PATH + '/logger', (req, res) => {
+        loggingHandler(req, res);
+    });
+
+    app.get(BASE_PATH, (req, res) => {
+        res.send(html);
+    });
+
+    app.get(BASE_PATH + '/*', (req, res) => {
+        res.send(html);
+    });
+
+    await setupIsAlive(app);
+    await setupIsReady(app);
+
+    app.listen(PORT, () => {
+        logger.info({ PORT }, `Server listening on port ${PORT}`);
+    });
+};
+
 async function main() {
     const templateValues = await getTemplateValues();
     const html = await renderAppMedTemplateValues(templateValues);
 
     if (NAIS_APP_NAME === 'sykefravarsstatistikk-mock') {
-        logger.info('App running on "ekstern dev". Will not start the server.');
+        await startEksternDevServer(html);
     } else {
-        await startServer(html);
+        await startProductionServer(html);
     }
 }
 
