@@ -60,7 +60,7 @@ export const mswHandlersForMockApp = [
     }),
 
     rest.post(
-        '/sykefravarsstatistikk/proxy/ia-tjenester-metrikker/innlogget/mottatt-iatjeneste',
+        '/sykefravarsstatistikk/ia-tjenester-metrikker/innlogget/mottatt-iatjeneste',
         (_, res, ctx) => {
             return res(ctx.status(201));
         }

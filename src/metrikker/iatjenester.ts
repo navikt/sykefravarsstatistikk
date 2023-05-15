@@ -26,7 +26,7 @@ export const erIaTjenesterMetrikkerSendtForBedrift = (orgnr: string): boolean =>
 };
 
 const getIaTjenesterMetrikkerUrl = () => {
-    return `${BASE_PATH}/proxy/ia-tjenester-metrikker`;
+    return `${BASE_PATH}/ia-tjenester-metrikker`;
 };
 
 export const iaTjenesterMetrikkerApiUrl = `${getIaTjenesterMetrikkerUrl()}/innlogget/mottatt-iatjeneste`;
