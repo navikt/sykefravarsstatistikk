@@ -35,7 +35,7 @@ const renderAppMedTemplateValues = (templateValues, app) => {
 };
 
 
-export async function setupDecoratorInjection(app: Express) {
+export async function renderWithDecorator(app: Express) {
 
     const templateValues = await getTemplateValues();
 

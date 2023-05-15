@@ -9,7 +9,7 @@ import notifikasjonBrukerApiController from './controllers/notifikasjon-bruker-a
 import apiController from './controllers/api-controller.js';
 import iaTjenesterMetrikkerController from './controllers/ia-tjenester-metrikker-controller.js';
 import legacyRedirectController from './controllers/legacy-redirect-controller.js';
-import { setupDecoratorInjection } from "./decorator-renderer.js";
+import { renderWithDecorator } from "./decorator-renderer.js";
 import { logger } from './backend-logger.js';
 import { appRunningOnProdGcp, appRunningOnDevGcp } from './environment.js';
 import { BASE_PATH } from './common.js';
@@ -44,7 +44,7 @@ baseRouter.use(
 
 baseRouter.use('/internal', internalController(prometheus.register));
 
-const html = await setupDecoratorInjection(app);
+const html = await renderWithDecorator(app);
 
 baseRouter.get('(/.*)?', (req, res) => {
     res.send(html);
