@@ -1,4 +1,4 @@
-import express, { Express, IRouter } from "express";
+import express, { Express } from "express";
 import path from 'path';
 import { fileURLToPath } from 'node:url';
 import mustacheExpress from 'mustache-express';
@@ -6,13 +6,14 @@ import getDecorator from "./decorator.js";
 import { getFrontendEnvs } from "./environment.js";
 
 const buildPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../build');
+console.log(buildPath);
 
 function getDekoratørUrl() {
     const { DEKORATOR_URL = 'https://www.nav.no/dekoratoren' } = process.env;
     return DEKORATOR_URL;
 }
 
-async function getTemplateValues() {
+export async function getTemplateValues() {
     const frontendEnvs = getFrontendEnvs();
     const decoratorParts = await getDecorator(getDekoratørUrl());
     return { ...frontendEnvs, ...decoratorParts };
