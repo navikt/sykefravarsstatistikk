@@ -20,6 +20,7 @@ import path from "path";
 prometheus.collectDefaultMetrics();
 
 const useProductionVersion = appRunningOnProdGcp() || appRunningOnDevGcp();
+logger.info("use prod?", useProductionVersion)
 const { PORT = 3000 } = process.env;
 
 logger.info('Starting server');
