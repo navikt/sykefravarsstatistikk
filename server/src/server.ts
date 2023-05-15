@@ -9,14 +9,14 @@ import notifikasjonBrukerApiController from './controllers/notifikasjon-bruker-a
 import apiController from './controllers/api-controller.js';
 import iaTjenesterMetrikkerController from './controllers/ia-tjenester-metrikker-controller.js';
 import legacyRedirectController from './controllers/legacy-redirect-controller.js';
-import setupDecoratorRendering from './decorator-renderer.js';
+import decoratorRenderer from './decorator-renderer.js';
 import { logger } from './backend-logger.js';
 import { appRunningOnProdGcp, appRunningOnDevGcp } from './environment.js';
-import { BASE_PATH } from "./common.js";
+import { BASE_PATH } from './common.js';
 
 prometheus.collectDefaultMetrics();
 
-const useProductionVersion = appRunningOnProdGcp() || appRunningOnDevGcp()
+const useProductionVersion = appRunningOnProdGcp() || appRunningOnDevGcp();
 const { PORT = 3000 } = process.env;
 
 logger.info('Starting server');
@@ -27,7 +27,6 @@ const baseRouter = express.Router({ caseSensitive: false });
 
 app.use(BASE_PATH, baseRouter);
 
-
 if (useProductionVersion) {
     baseRouter.use('/redirect-til-login', redirectTilLoginController());
     baseRouter.use('/notifikasjon-bruker-api', notifikasjonBrukerApiController());
@@ -35,16 +34,15 @@ if (useProductionVersion) {
     baseRouter.use('/ia-tjenester-metrikker', iaTjenesterMetrikkerController());
 }
 
-baseRouter.use('/internal', internalController(prometheus.register));
-
 baseRouter.use(
     contentHeaders,
     requestLoggingMiddleware,
     legacyRedirectController(),
+    decoratorRenderer(),
     express.json() // OBS: consumes the payload, and must this be placed below the proxy middlewares
 );
 
-setupDecoratorRendering(app);
+baseRouter.use('/internal', internalController(prometheus.register));
 
 app.listen(PORT, () => {
     logger.info({ PORT }, `Server listening on port ${PORT}`);

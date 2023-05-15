@@ -21,6 +21,5 @@
   "plugins": [
       ],
       "extends": [
-    "react-app"
   ]
 }
