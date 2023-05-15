@@ -9,22 +9,19 @@ import notifikasjonBrukerApiController from './controllers/notifikasjon-bruker-a
 import apiController from './controllers/api-controller.js';
 import iaTjenesterMetrikkerController from './controllers/ia-tjenester-metrikker-controller.js';
 import legacyRedirectController from './controllers/legacy-redirect-controller.js';
-import { getTemplateValues, renderDecorator } from "./decorator-renderer.js";
+import { setupDecoratorInjection } from "./decorator-renderer.js";
 import { logger } from './backend-logger.js';
 import { appRunningOnProdGcp, appRunningOnDevGcp } from './environment.js';
 import { BASE_PATH } from './common.js';
-import mustacheExpress from "mustache-express";
-import { fileURLToPath } from "node:url";
-import path from "path";
 
 prometheus.collectDefaultMetrics();
 
 const useProductionVersion = appRunningOnProdGcp() || appRunningOnDevGcp();
-logger.info("use prod?", useProductionVersion)
 const { PORT = 3000 } = process.env;
+const app = express();
 
 logger.info('Starting server');
-const app = express();
+
 app.disable('x-powered-by');
 
 const baseRouter = express.Router({ caseSensitive: false });
@@ -47,17 +44,9 @@ baseRouter.use(
 
 baseRouter.use('/internal', internalController(prometheus.register));
 
-// const html = decoratorRenderer(app)
-
-
-
-
-
-const html = await renderDecorator(app);
-
+const html = await setupDecoratorInjection(app);
 
 baseRouter.get('(/.*)?', (req, res) => {
-    console.log("er inne i baseRouter.get('(/.*)?'")
     res.send(html);
 });
 
