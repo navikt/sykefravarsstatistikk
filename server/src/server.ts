@@ -13,6 +13,7 @@ import decoratorRenderer from './decorator-renderer.js';
 import { logger } from './backend-logger.js';
 import { appRunningOnProdGcp, appRunningOnDevGcp } from './environment.js';
 import { BASE_PATH } from './common.js';
+import { logError } from "source-map-explorer/bin/cli";
 
 prometheus.collectDefaultMetrics();
 
@@ -45,8 +46,20 @@ baseRouter.use('/internal', internalController(prometheus.register));
 
 const html = decoratorRenderer(app)
 
-logger.info(html)
+logger.info("rendered HTML", html)
 baseRouter.get('(/.*)?', (req, res) => {
+    console.log("er inne i baseRouter.get('(/.*)?'")
+    res.send(html);
+});
+
+
+baseRouter.get('/', (req, res) => {
+    console.log("er inne i baseRouter.get('/'")
+    res.send(html);
+});
+
+app.get(BASE_PATH + '/', (req, res) => {
+    console.log("er inne i app.get(BASE_PATH + '/'")
     res.send(html);
 });
 
