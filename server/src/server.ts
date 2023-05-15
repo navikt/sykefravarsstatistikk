@@ -9,7 +9,7 @@ import notifikasjonBrukerApiController from './controllers/notifikasjon-bruker-a
 import apiController from './controllers/api-controller.js';
 import iaTjenesterMetrikkerController from './controllers/ia-tjenester-metrikker-controller.js';
 import legacyRedirectController from './controllers/legacy-redirect-controller.js';
-import { getTemplateValues } from "./decorator-renderer.js";
+import { getTemplateValues, renderDecorator } from "./decorator-renderer.js";
 import { logger } from './backend-logger.js';
 import { appRunningOnProdGcp, appRunningOnDevGcp } from './environment.js';
 import { BASE_PATH } from './common.js';
@@ -53,45 +53,8 @@ baseRouter.use('/internal', internalController(prometheus.register));
 
 
 
+const html = await renderDecorator(app);
 
-
-const buildPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../build');
-logger.info("BuildPath:", buildPath);
-const renderAppMedTemplateValues = (templateValues) => {
-    return new Promise((resolve, reject) => {
-        app.engine('html', mustacheExpress());
-        app.set('view engine', 'mustache');
-        app.set('views', buildPath);
-        app.render('index.html', templateValues, (err, html) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(html);
-            }
-        });
-    });
-};
-
-const templateValues = await getTemplateValues();
-
-const html = await renderAppMedTemplateValues(templateValues);
-
-app.get(BASE_PATH, (req, res) => {
-    res.send(html);
-});
-
-app.get(BASE_PATH + '/*', (req, res) => {
-    res.send(html);
-});
-
-
-
-
-
-
-
-
-logger.info("rendered HTML", html)
 
 baseRouter.get('(/.*)?', (req, res) => {
     console.log("er inne i baseRouter.get('(/.*)?'")

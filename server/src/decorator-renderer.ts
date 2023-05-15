@@ -4,6 +4,8 @@ import { fileURLToPath } from 'node:url';
 import mustacheExpress from 'mustache-express';
 import getDecorator from "./decorator.js";
 import { getFrontendEnvs } from "./environment.js";
+import { logger } from "./backend-logger";
+import { BASE_PATH } from "./common";
 
 const buildPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../build');
 console.log(buildPath);
@@ -41,4 +43,31 @@ export default function setup(app: Express) {
     const templateValues = getTemplateValues();
 
     return renderAppMedTemplateValues(templateValues, app);
+}
+
+
+export async function renderDecorator(app: Express) {
+    const buildPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../build');
+    logger.info('BuildPath:', buildPath);
+    const renderAppMedTemplateValues = (templateValues) => {
+        return new Promise((resolve, reject) => {
+            app.engine('html', mustacheExpress());
+            app.set('view engine', 'mustache');
+            app.set('views', buildPath);
+            app.render('index.html', templateValues, (err, html) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(html);
+                }
+            });
+        });
+    };
+
+    const templateValues = await getTemplateValues();
+
+    const html = await renderAppMedTemplateValues(templateValues);
+
+    app.use(BASE_PATH + '/', express.static(buildPath, { index: false }));
+    return html;
 }
