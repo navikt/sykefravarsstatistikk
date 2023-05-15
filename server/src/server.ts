@@ -38,11 +38,17 @@ baseRouter.use(
     contentHeaders,
     requestLoggingMiddleware,
     legacyRedirectController(),
-    decoratorRenderer(),
     express.json() // OBS: consumes the payload, and must this be placed below the proxy middlewares
 );
 
 baseRouter.use('/internal', internalController(prometheus.register));
+
+const html = decoratorRenderer(app)
+
+logger.info(html)
+baseRouter.get('(/.*)?', (req, res) => {
+    res.send(html);
+});
 
 app.listen(PORT, () => {
     logger.info({ PORT }, `Server listening on port ${PORT}`);
