@@ -4,8 +4,8 @@ import { fileURLToPath } from 'node:url';
 import mustacheExpress from 'mustache-express';
 import getDecorator from "./decorator.js";
 import { getFrontendEnvs } from "./environment.js";
-import { logger } from "./backend-logger";
-import { BASE_PATH } from "./common";
+import { logger } from "./backend-logger.js";
+import { BASE_PATH } from "./common.js";
 
 const buildPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../build');
 console.log(buildPath);
