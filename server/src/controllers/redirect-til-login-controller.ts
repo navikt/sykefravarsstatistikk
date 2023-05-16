@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { BASE_PATH } from '../common.js';
 
-function redirectTilLogin(request: Request, response: Response) {
+function redirectToWonderwall(request: Request, response: Response) {
     const wonderwallLoginEndpoint = `${BASE_PATH}/oauth2/login?redirect=${
         request.query.redirect as string
     }`;
@@ -11,7 +11,7 @@ function redirectTilLogin(request: Request, response: Response) {
 export function redirectTilLoginController() {
     const router = express.Router({ caseSensitive: false });
 
-    router.get('/', redirectTilLogin);
+    router.get('/', redirectToWonderwall);
 
     return router;
 }

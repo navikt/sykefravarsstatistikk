@@ -13,14 +13,12 @@ const proxyConfig: Options = {
     logLevel: 'info' as const,
 };
 
-const notifikasjonBrukerApiProxy = createProxyMiddleware(proxyConfig);
-
 export function notifikasjonBrukerApiController() {
     const router = express.Router({ caseSensitive: false });
 
     router.use(
         idportenTokenExchangeMiddleware(NOTIFIKASJON_API_AUDIENCE),
-        notifikasjonBrukerApiProxy
+        createProxyMiddleware(proxyConfig)
     );
 
     return router;

@@ -23,9 +23,11 @@ const proxyConfig: Options = {
 
 export function iaTjenesterMetrikkerController() {
     const router = express.Router();
+
     router.use(
         idportenTokenExchangeMiddleware(IA_TJENESTER_METRIKKER_AUDIENCE),
         createProxyMiddleware(proxyConfig)
     );
+
     return router;
 }

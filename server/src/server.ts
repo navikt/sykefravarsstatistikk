@@ -20,9 +20,9 @@ import { BASE_PATH } from './common.js';
 
 prometheus.collectDefaultMetrics();
 
-const useMockVersion = appRunningLocally() || appRunningOnDevGcpEkstern();
-const { PORT = 3000 } = process.env;
 const app = express();
+const { PORT = 3000 } = process.env;
+const useProductionVersion = !(appRunningLocally() || appRunningOnDevGcpEkstern());
 
 logger.info('Starting server');
 
@@ -32,7 +32,7 @@ const baseRouter = express.Router({ caseSensitive: false });
 
 app.use(BASE_PATH, baseRouter);
 
-if (!useMockVersion) {
+if (useProductionVersion) {
     baseRouter.use('/redirect-til-login', redirectTilLoginController());
     baseRouter.use('/notifikasjon-bruker-api', notifikasjonBrukerApiController());
     baseRouter.use('/api', apiController());
