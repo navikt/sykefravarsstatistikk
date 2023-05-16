@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import getDecorator from './decorator.js';
 import { logger } from "./backend-logger.js";
 
 export const MILJØ = {
@@ -19,14 +18,10 @@ function getCurrentEnvironment() {
     return MILJO;
 }
 
-function getDekoratørUrl() {
-    const { DEKORATOR_URL = 'https://www.nav.no/dekoratoren' } = process.env;
-    return DEKORATOR_URL;
-}
 function errorMap(issue: z.ZodIssueOptionalMessage, ctx: z.ErrorMapCtx): { message: string } {
     return { message: `Kunne ikke parse miljøvariabler. [${ctx.defaultError}]` };
 }
-function getFrontendEnvs() {
+export function getFrontendEnvs() {
     try {
         return z
             .object({
@@ -47,18 +42,6 @@ function getFrontendEnvs() {
     }
 }
 
-export function getKalkulatorRedirectUrl() {
-    try {
-        return z.string().url().parse(process.env.FOREBYGGE_FRAVAR_URL) + '/kalkulator';
-    } catch (err) {
-        if (process.env.NODE_ENV === 'development') {
-            return 'https://arbeidsgiver.ekstern.dev.nav.no/forebygge-fravar/kalkulator';
-        }
-        //Fail fast if not dev
-        throw err;
-    }
-}
-
 export function appRunningLocally() {
     return getCurrentEnvironment() === 'local';
 }
@@ -73,10 +56,4 @@ export function appRunningOnDevGcp() {
 
 export function appRunningOnProdGcp() {
     return getCurrentEnvironment() === 'prod-gcp';
-}
-
-export async function getTemplateValues() {
-    const frontendEnvs = getFrontendEnvs();
-    const decoratorParts = await getDecorator(getDekoratørUrl());
-    return { ...frontendEnvs, ...decoratorParts };
 }
