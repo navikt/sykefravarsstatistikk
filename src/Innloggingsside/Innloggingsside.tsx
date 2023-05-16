@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import { Button } from "@navikt/ds-react";
+import { Button, Link } from "@navikt/ds-react";
 import illustrasjonSvg from './statistikk-ikon.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
-import Lenke from 'nav-frontend-lenker';
 import './Innloggingsside.less';
 import Sidetittel from 'nav-frontend-typografi/lib/sidetittel';
 import { EnvironmentContext } from '../Context/EnvironmentContext';
@@ -33,12 +32,12 @@ const Innloggingsside: React.FunctionComponent<Props> = ({ redirectUrl }) => {
                     gjennom Altinn.
                 </Normaltekst>
 
-                <Lenke
+                <Link
                     className="innloggingsside__lenke"
                     href={MIN_SIDE_ARBEIDSGIVER_URL + '/informasjon-om-tilgangsstyring'}
                 >
                     Les mer om roller og tilganger
-                </Lenke>
+                </Link>
 
                 <Button
                     variant="primary"

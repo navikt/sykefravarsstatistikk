@@ -1,11 +1,12 @@
 import React, { FunctionComponent } from 'react';
-import Lenke, { Props } from 'nav-frontend-lenker';
+import { Link, LinkProps } from '@navikt/ds-react';
 import { ReactComponent as EksternLenkeIkon } from './EksternLenkeIkon.svg';
 import './EksternLenke.less';
 import classNames from 'classnames';
 import { sendNavigereEvent } from '../../amplitude/events';
+import { WithRequired } from '../../utils/app-utils';
 
-const EksternLenke: FunctionComponent<Props> = ({
+const EksternLenke: FunctionComponent<WithRequired<LinkProps, 'href'>> = ({
     children: lenketekst,
     className,
     ...lenkeProperties
@@ -15,7 +16,7 @@ const EksternLenke: FunctionComponent<Props> = ({
     }
 
     return (
-        <Lenke
+        <Link
             {...lenkeProperties}
             className={classNames('ekstern-lenke', className)}
             target="_blank"
@@ -26,7 +27,7 @@ const EksternLenke: FunctionComponent<Props> = ({
         >
             {lenketekst}
             <EksternLenkeIkon className="ekstern-lenke__ikon" />
-        </Lenke>
+        </Link>
     );
 };
 

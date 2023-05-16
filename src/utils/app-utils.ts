@@ -75,3 +75,5 @@ export const pickBuilder = <Key extends string | number | symbol>(keys: Key[] | 
 // Convenience funksjon så array metoder ikke slenger med currentIndex og array
 // argumenter inn i Math.max
 export const getMax = (a: number, b: number) => Math.max(a, b);
+
+export type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
