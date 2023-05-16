@@ -15,10 +15,6 @@ export const SammenligningIngress: FunctionComponent<{
                 Du kan få hjelp til å forstå det ved å sammenligne deg med andre i din{' '}
                 {bransjeEllerNæringTekst}. Vi har laget en oversikt for deg.
             </Normaltekst>
-            <Normaltekst className="sammenligning-ingress__tilbakemelding-tekst">
-                Vi bruker tilbakemeldingsfunksjoner på siden for å gjøre tjenestene bedre.
-                Tilbakemeldingene kan ikke knyttes til deg eller din virksomhet.
-            </Normaltekst>
         </div>
     );
 };
