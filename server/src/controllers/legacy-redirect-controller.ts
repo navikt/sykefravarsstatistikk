@@ -15,7 +15,7 @@ function getKalkulatorRedirectUrl() {
   }
 }
 
-export default function setup() {
+export function legacyRedirectController() {
   const router = express.Router();
 
   router.get('/historikk', (req, res) => {

@@ -8,7 +8,7 @@ function redirectTilLogin(request: Request, response: Response) {
     response.redirect(wonderwallLoginEndpoint);
 }
 
-export default function setup() {
+export function redirectTilLoginController() {
     const router = express.Router({ caseSensitive: false });
 
     router.get('/', redirectTilLogin);

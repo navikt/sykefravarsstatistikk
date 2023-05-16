@@ -17,7 +17,7 @@ function metrics(registry: Registry): RequestHandler {
     };
 }
 
-export default function setup(registry: Registry) {
+export function internalController(registry: Registry) {
     const router = express.Router({ caseSensitive: false });
 
     router.get('/isAlive', isAlive);

@@ -21,7 +21,7 @@ const proxyConfig: Options = {
     },
 };
 
-export default function setup() {
+export function iaTjenesterMetrikkerController() {
     const router = express.Router();
     router.use(
         idportenTokenExchangeMiddleware(IA_TJENESTER_METRIKKER_AUDIENCE),

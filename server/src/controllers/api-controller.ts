@@ -1,4 +1,4 @@
-import express, { IRouter } from 'express';
+import express from 'express';
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
 import { idportenTokenExchangeMiddleware } from '@navikt/tokenx-middleware';
 
@@ -36,7 +36,7 @@ const erWhitelistet = (path: string) => {
     return whitelist.some((regexp) => regexp.test(path));
 };
 
-export default function setup() {
+export function apiController() {
     const router = express.Router();
 
     router.use(

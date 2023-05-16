@@ -15,7 +15,7 @@ const proxyConfig: Options = {
 
 const notifikasjonBrukerApiProxy = createProxyMiddleware(proxyConfig);
 
-export default function setup() {
+export function notifikasjonBrukerApiController() {
     const router = express.Router({ caseSensitive: false });
 
     router.use(
