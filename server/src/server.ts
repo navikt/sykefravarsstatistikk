@@ -1,4 +1,4 @@
-import express, { Response, Request } from 'express';
+import express from 'express';
 import prometheus from 'prom-client';
 
 import { contentHeaders } from './contentHeaders.js';
@@ -9,10 +9,11 @@ import notifikasjonBrukerApiController from './controllers/notifikasjon-bruker-a
 import apiController from './controllers/api-controller.js';
 import iaTjenesterMetrikkerController from './controllers/ia-tjenester-metrikker-controller.js';
 import legacyRedirectController from './controllers/legacy-redirect-controller.js';
+import frontpageController from './controllers/frontpage-controller.js';
 import { renderWithDecorator } from './decorator-renderer.js';
 import { logger } from './backend-logger.js';
 import { appRunningOnProdGcp, appRunningOnDevGcp } from './environment.js';
-import { BASE_PATH, buildPath } from './common.js';
+import { BASE_PATH } from './common.js';
 
 prometheus.collectDefaultMetrics();
 
@@ -44,15 +45,9 @@ baseRouter.use(
 
 baseRouter.use('/internal', internalController(prometheus.register));
 
-const html = await renderWithDecorator(app);
+const decoratedHtml = await renderWithDecorator(app);
 
-baseRouter.get(
-    '(/.*)?',
-    express.static(buildPath, { index: false }),
-    (req: Request, res: Response) => {
-        res.send(html);
-    }
-);
+baseRouter.use('/', frontpageController(decoratedHtml));
 
 app.listen(PORT, () => {
     logger.info({ PORT }, `Server listening on port ${PORT}`);

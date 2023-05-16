@@ -2,6 +2,7 @@ import { Express } from 'express';
 import mustacheExpress from 'mustache-express';
 import getDecorator from './decorator.js';
 import { getFrontendEnvs } from './environment.js';
+import { buildPath } from "./common.js";
 
 function getDekoratørUrl() {
     const { DEKORATOR_URL = 'https://www.nav.no/dekoratoren' } = process.env;
@@ -14,7 +15,7 @@ async function getTemplateValues() {
     return { ...frontendEnvs, ...decoratorParts };
 }
 
-const renderAppMedTemplateValues = (templateValues, app) => {
+const renderAppMedTemplateValues = (templateValues, app): Promise<string> => {
     return new Promise((resolve, reject) => {
         app.engine('html', mustacheExpress());
         app.set('view engine', 'mustache');
