@@ -7,7 +7,7 @@ import './GrafOgTabell.less';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import AlertStripe from 'nav-frontend-alertstriper';
+import { Alert } from "@navikt/ds-react";
 import {
     getBransjeEllerNæringLabel,
     getHistorikkLabels,
@@ -90,9 +90,9 @@ const GrafOgTabellInnhold = ({
         case RestStatus.IkkeInnlogget:
         case RestStatus.IngenTilgang: {
             return (
-                <AlertStripe type="feil" className="graf-og-tabell__feilside">
+                <Alert variant="error" className="graf-og-tabell__feilside">
                     Det skjedde en feil da vi prøvde å hente statistikken.
-                </AlertStripe>
+                </Alert>
             );
         }
 

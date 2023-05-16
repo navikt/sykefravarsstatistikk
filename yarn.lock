@@ -2238,10 +2238,10 @@
     casual "^1.6.2"
     graphql "^16.6.0"
 
-"@navikt/bedriftsmeny@^6.3.0":
-  version "6.4.3"
-  resolved "https://npm.pkg.github.com/download/@navikt/bedriftsmeny/6.4.3/cf0cba649f5e1a0a01992c5a13f233dbbffb1983#cf0cba649f5e1a0a01992c5a13f233dbbffb1983"
-  integrity sha512-sMis0btzUFtsqSO3YIrcan/4sV4HbhtGYF1/vnBjQSJEP+Icoay3n1Ib1uGeijty1FYGJzsU/3sY7HM+wRUU5g==
+"@navikt/bedriftsmeny@^6.5.2":
+  version "6.5.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/bedriftsmeny/6.5.2/6ada38bdd54c0c35844f5d2214c4a06b2dd2d5c0#6ada38bdd54c0c35844f5d2214c4a06b2dd2d5c0"
+  integrity sha512-Q097j7fwZ9pNPhtrSUVPmIUVSgbZ70pnN7X4jyAHeGPqQpgPaB3HDTSFOPyw3n+n7O4QndPHssxWU1a2aKL/vg==
   dependencies:
     "@types/amplitude-js" "^8.9.4"
     fuzzysort "^1.1.4"
@@ -8495,11 +8495,6 @@ nav-frontend-alertstriper-style@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-3.0.2.tgz#b64261ee633a59fecbfe3e10f18ece2962e516f9"
   integrity sha512-Mv2tTSjClDgo7E5PsTt4uOu8kxTae1yejBF5P1RU6Ba0LP32cFsxgPp44u/cssSYaOO09sHi0vcwhnFHCFmYIQ==
-
-nav-frontend-alertstriper@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper/-/nav-frontend-alertstriper-4.0.2.tgz#fdf60caa4f2e1b508f6cff780cf48d6ff17bcdd1"
-  integrity sha512-1J5PpubJA+C0mstt5DWf7bateMlze4Pehrb79TCSWc+mm69TYjhQPjt/mEBT8C9/U9Jnpr6x86aaUGi+ZZnSxw==
 
 nav-frontend-chevron-style@^1.0.4:
   version "1.0.4"
