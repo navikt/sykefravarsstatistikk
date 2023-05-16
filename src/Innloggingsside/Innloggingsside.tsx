@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Button } from "@navikt/ds-react";
 import illustrasjonSvg from './statistikk-ikon.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
@@ -40,12 +40,12 @@ const Innloggingsside: React.FunctionComponent<Props> = ({ redirectUrl }) => {
                     Les mer om roller og tilganger
                 </Lenke>
 
-                <Hovedknapp
+                <Button
+                    variant="primary"
                     onClick={redirectTilLogin}
-                    className="innloggingsside__loginKnapp-wrapper"
-                >
+                    className="innloggingsside__loginKnapp-wrapper">
                     Logg inn
-                </Hovedknapp>
+                </Button>
             </div>
         </div>
     );

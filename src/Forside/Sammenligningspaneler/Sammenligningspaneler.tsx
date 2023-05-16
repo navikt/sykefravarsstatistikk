@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactNode, useEffect, useRef } from 'react';
 import './Sammenligningspaneler.less';
 import ReactToPrint from 'react-to-print';
-import { Alert, BodyShort, Heading } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
 import { RestStatus } from '../../api/api-utils';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import { useOrgnr } from '../../hooks/useOrgnr';
@@ -57,12 +57,13 @@ export const Sammenligningspaneler: FunctionComponent<{
                     }}
                     content={() => panelRef.current}
                     trigger={() => (
-                        <button
+                        <Button
+                            variant="secondary"
                             ref={lastNedKnappRef}
                             className="sammenligningspaneler__knapp knapp"
                         >
                             Last ned
-                        </button>
+                        </Button>
                     )}
                 />
                 {children}

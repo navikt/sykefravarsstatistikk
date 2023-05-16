@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import './TommelOppToggleKnapp.less';
-import { Flatknapp } from 'nav-frontend-knapper';
+import { Button } from "@navikt/ds-react";
 import { ReactComponent as TommelOpp } from './tommel-opp.svg';
 import { ReactComponent as TommelOppFylt } from './tommel-opp-fylt.svg';
 
@@ -15,9 +15,9 @@ export const TommelOppToggleKnapp: FunctionComponent<Props> = (props) => {
     const modifier = props.retning;
 
     return (
-        <Flatknapp
-            mini
-            kompakt
+        <Button
+            variant="tertiary"
+            size="xsmall"
             onClick={props.onClick}
             className="tommel-opp-toggle-knapp"
             aria-pressed={props.pressed}
@@ -34,6 +34,6 @@ export const TommelOppToggleKnapp: FunctionComponent<Props> = (props) => {
                 )}
             </div>
             {props.children}
-        </Flatknapp>
+        </Button>
     );
 };
