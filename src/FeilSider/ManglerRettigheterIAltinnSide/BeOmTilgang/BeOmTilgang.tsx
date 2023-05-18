@@ -28,11 +28,6 @@ export const BeOmTilgang: FunctionComponent = () => {
                     </span>
                 </span>
             </LinkPanel.Title>
-            {
-                // TODO: sjekk at LinkPanel.Title og LinkPanel.Description er satt riktig,
-                // transform kan ikke programatisk skille hva som skal være hva
-                // hvis du brukte tittelprops eller linkCreator så er du nødt til å fikse opp dette selv da programatisk migrering der er utenfor scope.
-            }
         </LinkPanel>
     );
 };

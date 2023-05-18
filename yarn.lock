@@ -8533,11 +8533,6 @@ nav-frontend-lenkepanel-style@^2.0.2:
   resolved "https://registry.yarnpkg.com/nav-frontend-lenkepanel-style/-/nav-frontend-lenkepanel-style-2.0.2.tgz#18cb58835a013363fa4db10b8dc6c2dbe859ae7b"
   integrity sha512-JG0Eb4w432C5YuI6qyzHq9Bkv3DfD7nepazd2UQ85Mii6BUJxX68FQE5Q8u9QWxyZAXYd8buygfuO+RK6tWv0g==
 
-nav-frontend-lenkepanel@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/nav-frontend-lenkepanel/-/nav-frontend-lenkepanel-2.0.2.tgz#754047f8cc0d5d30848533c9ae2fdc7e3c93b534"
-  integrity sha512-Rk0x7ikUHl+HQKWbkvkOs4YNlmik7cMaUlBbDcZnpntWBKWnLa30L3ag1EJ7kEAMo0VsYq1c7EIyqH9IrHj46g==
-
 nav-frontend-lenker-style@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/nav-frontend-lenker-style/-/nav-frontend-lenker-style-2.0.2.tgz#88b6ec89de238576a116f0fe0dec33b0c98379d0"
