@@ -8553,11 +8553,6 @@ nav-frontend-popover-style@^2.0.2:
   resolved "https://registry.yarnpkg.com/nav-frontend-popover-style/-/nav-frontend-popover-style-2.0.2.tgz#3ff19f7b6bfa6572fd2fa3e63e21670bd636bbd1"
   integrity sha512-Vyw8tntnRfTSIgsPo/IGqZ6M/WwuDyIR+cMXvskk2gjT3wthCt/r9f+2WzKRPEZ8T84R6ALcvvnZjwcfdNXuAQ==
 
-nav-frontend-popover@^2.0.2:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/nav-frontend-popover/-/nav-frontend-popover-2.0.4.tgz#542ffd5efddb1b112e3210e1f1e0e1b61b30eb9e"
-  integrity sha512-MRjqSKmwZMqGKJC2QQx/ideCRgSPJ5ChWCivQwTOrYwSRc4oVFbbXFyw595tA56FdmOVNcNwfj7i5v4Oy7+lQg==
-
 nav-frontend-skjema-style@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/nav-frontend-skjema-style/-/nav-frontend-skjema-style-3.0.3.tgz#ecb3ca762b7c04d603a3772f5dcf910c6715a7f5"
