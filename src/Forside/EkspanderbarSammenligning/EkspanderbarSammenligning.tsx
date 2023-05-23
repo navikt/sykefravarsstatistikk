@@ -56,56 +56,46 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
             harBransje ? Statistikkategori.BRANSJE : Statistikkategori.NÆRING
         ),
     ];
-  return (
-      <div className="ekspanderbar-sammenligning">
-          <SlikHarViKommetFramTilDittResultat
-              resultat={sammenliknSykefravær(
-                  virksomhet?.prosentSiste4KvartalerTotalt,
-                  bransjeEllerNæring?.prosentSiste4KvartalerTotalt
-              )}
-              kvartaler={virksomhet?.prosentSiste4KvartalerTotalt?.kvartalerIBeregningen}
-              restPubliseringsdatoer={restPubliseringsdatoer}
-          />
-          <DinNæringEllerBransje
-              restStatus={aggregertStatistikk.restStatus}
-              statistikKategori={statistikKategori}
-              label={bransjeEllerNæring?.prosentSiste4KvartalerTotalt?.label || ''}
-          />
-          <Element className="ekspanderbar-sammenligning__undertittel">
-              Overordnet sammenligning:
-          </Element>
-          <BransjeSammenligningspanel
-              className="ekspanderbar-sammenligning__sammenligning-totalt"
-              virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerTotalt}
-              bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerTotalt}
-              sammenligningsType={SammenligningsType.TOTALT}
-              harBransje={harBransje}
-
-          />
-          <Element className="ekspanderbar-sammenligning__undertittel">
-              Detaljert sammenligning:
-          </Element>
-          <BransjeSammenligningspanel
-              virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerGradert}
-              bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerGradert}
-              sammenligningsType={SammenligningsType.GRADERT}
-              harBransje={harBransje}
-
-          />
-          <BransjeSammenligningspanel
-              virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerKorttid}
-              bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerKorttid}
-              sammenligningsType={SammenligningsType.KORTTID}
-              harBransje={harBransje}
-
-          />
-          <BransjeSammenligningspanel
-              virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerLangtid}
-              bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerLangtid}
-              sammenligningsType={SammenligningsType.LANGTID}
-              harBransje={harBransje}
-
-          />
-      </div>
-  );
+    return (
+        <div className="ekspanderbar-sammenligning">
+            <SlikHarViKommetFramTilDittResultat
+                resultat={sammenliknSykefravær(
+                    virksomhet?.prosentSiste4KvartalerTotalt,
+                    bransjeEllerNæring?.prosentSiste4KvartalerTotalt
+                )}
+                kvartaler={virksomhet?.prosentSiste4KvartalerTotalt?.kvartalerIBeregningen}
+                restPubliseringsdatoer={restPubliseringsdatoer}
+            />
+            <DinNæringEllerBransje
+                restStatus={aggregertStatistikk.restStatus}
+                statistikKategori={statistikKategori}
+                label={bransjeEllerNæring?.prosentSiste4KvartalerTotalt?.label || ''}
+            />
+            <BransjeSammenligningspanel
+                className="ekspanderbar-sammenligning__sammenligning-totalt"
+                virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerTotalt}
+                bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerTotalt}
+                sammenligningsType={SammenligningsType.TOTALT}
+                harBransje={harBransje}
+            />
+            <BransjeSammenligningspanel
+                virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerGradert}
+                bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerGradert}
+                sammenligningsType={SammenligningsType.GRADERT}
+                harBransje={harBransje}
+            />
+            <BransjeSammenligningspanel
+                virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerKorttid}
+                bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerKorttid}
+                sammenligningsType={SammenligningsType.KORTTID}
+                harBransje={harBransje}
+            />
+            <BransjeSammenligningspanel
+                virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerLangtid}
+                bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerLangtid}
+                sammenligningsType={SammenligningsType.LANGTID}
+                harBransje={harBransje}
+            />
+        </div>
+    );
 };
