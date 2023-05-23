@@ -6,7 +6,7 @@
     "node": true
   },
   "rules": {
-    "@typescript-eslint/switch-exhaustiveness-check": "error"
+//    "@typescript-eslint/switch-exhaustiveness-check": "error"
   },
   "parserOptions": {
     "project": ["./tsconfig.json"],

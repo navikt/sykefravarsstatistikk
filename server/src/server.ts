@@ -24,7 +24,7 @@ const app = express();
 const { PORT = 3000 } = process.env;
 const useProductionVersion = !(appRunningLocally() || appRunningOnDevGcpEkstern());
 
-logger.info('Starting server');
+logger.info(`Starting ${useProductionVersion ? "production" : "mock"} server`);
 
 app.disable('x-powered-by');
 

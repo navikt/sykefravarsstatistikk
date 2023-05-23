@@ -23,7 +23,6 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = (pro
             <div className="slik-har-vi-kommet-fram-til-ditt-resultat__innhold">
                 <SlikHarViKommetFramTilDittResultatTekst
                     resultat={props.resultat}
-                    kvartaler={props.kvartaler}
                     restPubliseringsdatoer={props.restPubliseringsdatoer}
                 />
             </div>

@@ -38,6 +38,7 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
                             sammenligne sykefraværet deres med næringen og sektoren dere tilhører.
                         </Normaltekst>
                     </div>
+                    {/*TODO: Bytt ut med aksel for å bedre UU*/}
                     <ToggleGruppePure
                         aria-label="Hvis du bruker skjermleser, bør du velge tabell"
                         className="graf-og-tabell__knapper"

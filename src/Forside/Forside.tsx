@@ -31,9 +31,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                 <Sammenligningspaneler
                     restStatus={appData.aggregertStatistikk.restStatus}
                     restAltinnOrganisasjoner={appData.altinnOrganisasjoner}
-                    restAltinnOrganisasjonerMedStatistikktilgang={
-                        appData.altinnOrganisasjonerMedStatistikktilgang
-                    }
+                    restPubliseringsdatoer={appData.publiseringsdatoer}
                     restSykefraværshistorikk={appData.sykefraværshistorikk}
                 >
                     <EkspanderbarSammenligning

@@ -15,14 +15,23 @@ import {
     konverterTilKvartalsvisSammenligning,
 } from '../../utils/sykefraværshistorikk-utils';
 import Tabell, { TabellProps } from '../../GrafOgTabell/Tabell/Tabell';
+import { PubliseringsdatoOppdateringsinfo } from '../SammenligningMedBransje/PubliseringsdatoOppdateringsinfo';
+import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
+import { PeriodeForStatistikk } from '../SammenligningMedBransje/PeriodeForStatistikk';
 
 export const Sammenligningspaneler: FunctionComponent<{
     restAltinnOrganisasjoner: RestAltinnOrganisasjoner;
-    restAltinnOrganisasjonerMedStatistikktilgang: RestAltinnOrganisasjoner;
+    restPubliseringsdatoer: RestPubliseringsdatoer;
     restStatus: RestStatus;
     children?: ReactNode;
     restSykefraværshistorikk: RestSykefraværshistorikk;
-}> = ({ restAltinnOrganisasjoner, restStatus, children, restSykefraværshistorikk }) => {
+}> = ({
+    restAltinnOrganisasjoner,
+    restPubliseringsdatoer,
+    restStatus,
+    children,
+    restSykefraværshistorikk,
+}) => {
     const panelRef = useRef<HTMLDivElement>(null);
     const lastNedKnappRef = useRef<HTMLButtonElement>(null);
     const harFeil = restStatus === RestStatus.Feil;
@@ -51,9 +60,13 @@ export const Sammenligningspaneler: FunctionComponent<{
                     <BodyShort className="sammenligningspaneler__href">
                         {window.location.href}
                     </BodyShort>
-                    <Heading size="medium" level="1">
+                    <Heading spacing size="medium" level="1">
                         Sykefraværsstatistikk for {navnPåVirksomhet} ({orgnr})
                     </Heading>
+                    <PeriodeForStatistikk restPubliseringsdatoer={restPubliseringsdatoer} />
+                    <PubliseringsdatoOppdateringsinfo
+                        restPubliseringsdatoer={restPubliseringsdatoer}
+                    />
                 </div>
                 <ReactToPrint
                     onBeforePrint={() => {
