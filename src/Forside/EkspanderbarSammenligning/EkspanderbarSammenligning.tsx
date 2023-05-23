@@ -5,24 +5,16 @@ import Skeleton from 'react-loading-skeleton';
 import { SammenligningsType } from '../vurderingstekster';
 import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
 import './EkspanderbarSammenligning.less';
-import { DinNæringEllerBransje } from './DinNæringEllerBransje/DinNæringEllerBransje';
-import { Element } from 'nav-frontend-typografi';
 import { RestAggregertStatistikk } from '../../hooks/useAggregertStatistikk';
 import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
 import { sammenliknSykefravær } from '../vurdering-utils';
 import { Statistikkategori } from '../../domene/statistikkategori';
+import { getBransjeEllerNæringKategori } from './GetBransjeEllerNæringKategori';
 
 interface Props {
     aggregertStatistikk: RestAggregertStatistikk;
     restPubliseringsdatoer: RestPubliseringsdatoer;
 }
-
-const getBransjeEllerNæringKategori = (aggregertStatistikk: RestAggregertStatistikk) => {
-    const bransjedata = aggregertStatistikk.aggregertData?.get(Statistikkategori.BRANSJE)
-        ?.prosentSiste4KvartalerTotalt?.verdi;
-    if (bransjedata !== undefined) return Statistikkategori.BRANSJE;
-    return Statistikkategori.NÆRING;
-};
 
 export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
     aggregertStatistikk,
@@ -65,11 +57,6 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
                 )}
                 kvartaler={virksomhet?.prosentSiste4KvartalerTotalt?.kvartalerIBeregningen}
                 restPubliseringsdatoer={restPubliseringsdatoer}
-            />
-            <DinNæringEllerBransje
-                restStatus={aggregertStatistikk.restStatus}
-                statistikKategori={statistikKategori}
-                label={bransjeEllerNæring?.prosentSiste4KvartalerTotalt?.label || ''}
             />
             <BransjeSammenligningspanel
                 className="ekspanderbar-sammenligning__sammenligning-totalt"

@@ -15,7 +15,6 @@ import {
     konverterTilKvartalsvisSammenligning,
 } from '../../utils/sykefraværshistorikk-utils';
 import Tabell, { TabellProps } from '../../GrafOgTabell/Tabell/Tabell';
-import { PubliseringsdatoOppdateringsinfo } from '../SammenligningMedBransje/PubliseringsdatoOppdateringsinfo';
 import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
 import { PeriodeForStatistikk } from '../SammenligningMedBransje/PeriodeForStatistikk';
 
@@ -64,9 +63,6 @@ export const Sammenligningspaneler: FunctionComponent<{
                         Sykefraværsstatistikk for {navnPåVirksomhet} ({orgnr})
                     </Heading>
                     <PeriodeForStatistikk restPubliseringsdatoer={restPubliseringsdatoer} />
-                    <PubliseringsdatoOppdateringsinfo
-                        restPubliseringsdatoer={restPubliseringsdatoer}
-                    />
                 </div>
                 <ReactToPrint
                     onBeforePrint={() => {

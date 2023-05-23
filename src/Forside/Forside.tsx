@@ -7,6 +7,10 @@ import { ManglerRettigheterIAltinnSide } from '../FeilSider/ManglerRettigheterIA
 import { useOrgnr } from '../hooks/useOrgnr';
 import './Forside.less';
 import GrafOgTabell from '../GrafOgTabell/GrafOgTabell';
+import { Normaltekst } from 'nav-frontend-typografi';
+import { PubliseringsdatoOppdateringsinfo } from './SammenligningMedBransje/PubliseringsdatoOppdateringsinfo';
+import { getBransjeEllerNæringKategori } from './EkspanderbarSammenligning/GetBransjeEllerNæringKategori';
+import { Statistikkategori } from '../domene/statistikkategori';
 
 export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     const orgnr = useOrgnr() || '';
@@ -25,6 +29,13 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
         );
     }
 
+    const statistikKategori = getBransjeEllerNæringKategori(appData.aggregertStatistikk);
+    const harBransje = statistikKategori === Statistikkategori.BRANSJE;
+
+    const bransjeEllerNæring = appData.aggregertStatistikk.aggregertData?.get(
+        harBransje ? Statistikkategori.BRANSJE : Statistikkategori.NÆRING
+    );
+
     return (
         <div className="forside__wrapper">
             <div className="forside">
@@ -34,6 +45,13 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                     restPubliseringsdatoer={appData.publiseringsdatoer}
                     restSykefraværshistorikk={appData.sykefraværshistorikk}
                 >
+                    <PubliseringsdatoOppdateringsinfo
+                        restPubliseringsdatoer={appData.publiseringsdatoer}
+                    />
+                    <Normaltekst>
+                        <strong>Du tilhører {harBransje ? 'bransjen' : 'næringen'}:</strong>{' '}
+                        {bransjeEllerNæring?.prosentSiste4KvartalerTotalt?.label}
+                    </Normaltekst>
                     <EkspanderbarSammenligning
                         aggregertStatistikk={appData.aggregertStatistikk}
                         restPubliseringsdatoer={appData.publiseringsdatoer}
