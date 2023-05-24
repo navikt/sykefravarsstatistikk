@@ -1,5 +1,4 @@
-import { default as React, FunctionComponent } from 'react';
-import { Sammenligningspaneler } from './Sammenligningspaneler/Sammenligningspaneler';
+import { default as React, FunctionComponent, useRef } from 'react';
 import { EkspanderbarSammenligning } from './EkspanderbarSammenligning/EkspanderbarSammenligning';
 import { SykefraværAppData } from '../hooks/useSykefraværAppData';
 import { RestStatus } from '../api/api-utils';
@@ -7,13 +6,19 @@ import { ManglerRettigheterIAltinnSide } from '../FeilSider/ManglerRettigheterIA
 import { useOrgnr } from '../hooks/useOrgnr';
 import './Forside.less';
 import GrafOgTabell from '../GrafOgTabell/GrafOgTabell';
-import { Normaltekst } from 'nav-frontend-typografi';
 import { PubliseringsdatoOppdateringsinfo } from './SammenligningMedBransje/PubliseringsdatoOppdateringsinfo';
 import { getBransjeEllerNæringKategori } from './EkspanderbarSammenligning/GetBransjeEllerNæringKategori';
 import { Statistikkategori } from '../domene/statistikkategori';
+import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
+import { PeriodeForStatistikk } from './SammenligningMedBransje/PeriodeForStatistikk';
+import ReactToPrint from 'react-to-print';
+import { sendKnappEvent } from '../amplitude/events';
+import { sendIaTjenesteMetrikkMottatt } from '../metrikker/iatjenester';
+import Tabell, { hentTabellProps } from '../GrafOgTabell/Tabell/Tabell';
 
 export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     const orgnr = useOrgnr() || '';
+    const harFeil = appData.aggregertStatistikk.restStatus === RestStatus.Feil;
 
     const brukerHarIaRettighetTilValgtBedrift =
         appData.altinnOrganisasjonerMedStatistikktilgang.status === RestStatus.Suksess &&
@@ -28,6 +33,8 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
             />
         );
     }
+    const innholdRef = useRef<HTMLDivElement>(null);
+    const lastNedKnappRef = useRef<HTMLButtonElement>(null);
 
     const statistikKategori = getBransjeEllerNæringKategori(appData.aggregertStatistikk);
     const harBransje = statistikKategori === Statistikkategori.BRANSJE;
@@ -35,29 +42,81 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     const bransjeEllerNæring = appData.aggregertStatistikk.aggregertData?.get(
         harBransje ? Statistikkategori.BRANSJE : Statistikkategori.NÆRING
     );
+    const navnPåVirksomhet =
+        appData.altinnOrganisasjoner.status === RestStatus.Suksess &&
+        appData.altinnOrganisasjoner.data.find(
+            (organisasjon) => organisasjon.OrganizationNumber === orgnr
+        )?.Name;
+    const tabellProps = hentTabellProps(appData.sykefraværshistorikk);
 
     return (
         <div className="forside__wrapper">
             <div className="forside">
-                <Sammenligningspaneler
-                    restStatus={appData.aggregertStatistikk.restStatus}
-                    restAltinnOrganisasjoner={appData.altinnOrganisasjoner}
-                    restPubliseringsdatoer={appData.publiseringsdatoer}
-                    restSykefraværshistorikk={appData.sykefraværshistorikk}
-                >
+                {harFeil && (
+                    <Alert
+                        variant={'error'}
+                        className="sammenligningspaneler__info-eller-feilmelding"
+                    >
+                        Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen
+                        senere.
+                    </Alert>
+                )}
+                <div className="forside__innhold" ref={innholdRef}>
+                    <div className="forside__innhold__header">
+                        <BodyShort className="forside__innhold__href">
+                            {window.location.href}
+                        </BodyShort>
+                    </div>
+                    <Heading spacing size="medium" level="1">
+                        Sykefraværsstatistikk for {navnPåVirksomhet}
+                    </Heading>
+                    <ReactToPrint
+                        onBeforePrint={() => {
+                            sendKnappEvent('skriv ut');
+                            sendIaTjenesteMetrikkMottatt(orgnr);
+                        }}
+                        onAfterPrint={() => {
+                            if (lastNedKnappRef.current) {
+                                lastNedKnappRef.current.focus();
+                            }
+                        }}
+                        content={() => innholdRef.current}
+                        trigger={() => (
+                            <Button
+                                variant="secondary"
+                                lang="nb"
+                                aria-label="Last ned sykefraværsstatistikken"
+                                ref={lastNedKnappRef}
+                                className="forside__innhold__knapp knapp"
+                            >
+                                Last ned
+                            </Button>
+                        )}
+                    />
+                    <BodyShort aria-label={`Organisasjonsnummer: ${orgnr.split('').join(' ')}`}>
+                        <strong>Organisasjonsnummer: {orgnr}</strong>
+                    </BodyShort>
+                    <BodyShort spacing>
+                        <strong>
+                            {harBransje ? 'Bransje' : 'Næring'}:{' '}
+                            {bransjeEllerNæring?.prosentSiste4KvartalerTotalt?.label}
+                        </strong>
+                    </BodyShort>
+                    <PeriodeForStatistikk restPubliseringsdatoer={appData.publiseringsdatoer} />
                     <PubliseringsdatoOppdateringsinfo
                         restPubliseringsdatoer={appData.publiseringsdatoer}
                     />
-                    <Normaltekst>
-                        <strong>Du tilhører {harBransje ? 'bransjen' : 'næringen'}:</strong>{' '}
-                        {bransjeEllerNæring?.prosentSiste4KvartalerTotalt?.label}
-                    </Normaltekst>
                     <EkspanderbarSammenligning
                         aggregertStatistikk={appData.aggregertStatistikk}
                         restPubliseringsdatoer={appData.publiseringsdatoer}
                     />
-                </Sammenligningspaneler>
-                <GrafOgTabell restSykefraværsstatistikk={appData.sykefraværshistorikk} />
+                    {!!tabellProps && (
+                        <div className="forside__innhold__kun-print">
+                            <Tabell {...tabellProps} />
+                        </div>
+                    )}
+                    <GrafOgTabell restSykefraværsstatistikk={appData.sykefraværshistorikk} />
+                </div>
             </div>
         </div>
     );

@@ -26,7 +26,7 @@ interface Props {
 
 const App: FunctionComponent<Props> = ({ analyticsClient }) => {
     return (
-        <main id="maincontent">
+        <main id="maincontent" role="main">
             <AppContent {...useSykefraværAppData()} analyticsClient={analyticsClient} />
         </main>
     );

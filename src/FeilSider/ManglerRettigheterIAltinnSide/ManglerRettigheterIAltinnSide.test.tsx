@@ -67,7 +67,7 @@ describe('Tester side for manglende Altinn-rettigheter', () => {
         const { getByRole } = renderForside();
 
         const forsidensOverskrift = getByRole('heading', {
-            name: 'Sykefraværsstatistikk for HEI OG HÅ BARNEHAGE (777777777)',
+            name: 'Sykefraværsstatistikk for HEI OG HÅ BARNEHAGE',
         });
 
         MockObserver.stopmock();

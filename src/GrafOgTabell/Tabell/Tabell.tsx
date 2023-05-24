@@ -4,9 +4,15 @@ import { Table } from '@navikt/ds-react';
 import Tabellrader from './Tabellrader';
 import {
     BransjeEllerNæringLabel,
+    getBransjeEllerNæringLabel,
+    getHistorikkLabels,
+    historikkHarOverordnetEnhet,
     HistorikkLabels,
+    konverterTilKvartalsvisSammenligning,
     KvartalsvisSammenligning,
 } from '../../utils/sykefraværshistorikk-utils';
+import { RestSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
+import { RestStatus } from '../../api/api-utils';
 
 export interface TabellProps {
     kvartalsvisSammenligning: KvartalsvisSammenligning[];
@@ -69,5 +75,26 @@ const Tabell: FunctionComponent<TabellProps> = ({
         </div>
     );
 };
+
+export function hentTabellProps(
+    restSykefraværsstatistikk: RestSykefraværshistorikk
+): TabellProps | undefined {
+    if (restSykefraværsstatistikk.status === RestStatus.Suksess) {
+        const harOverordnetEnhet = historikkHarOverordnetEnhet(restSykefraværsstatistikk.data);
+        const bransjeEllerNæringLabel = getBransjeEllerNæringLabel(restSykefraværsstatistikk.data);
+        const historikkLabels = getHistorikkLabels(restSykefraværsstatistikk.data);
+        const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
+            restSykefraværsstatistikk.data
+        );
+        const kvartalsvisSammenligningReversed = kvartalsvisSammenligning.toReversed();
+
+        return {
+            harOverordnetEnhet,
+            bransjeEllerNæringLabel,
+            historikkLabels,
+            kvartalsvisSammenligning: kvartalsvisSammenligningReversed,
+        };
+    }
+}
 
 export default Tabell;

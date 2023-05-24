@@ -6,10 +6,14 @@
     "node": true
   },
   "rules": {
-//    "@typescript-eslint/switch-exhaustiveness-check": "error"
+    //    "@typescript-eslint/switch-exhaustiveness-check": "error"
+    "@typescript-eslint/no-redeclare": "error",
+    "@typescript-eslint/no-unused-vars": "error"
   },
   "parserOptions": {
-    "project": ["./tsconfig.json"],
+    "project": [
+      "./tsconfig.json"
+    ],
     "ecmaVersion": 2018,
     "sourceType": "module",
     "ecmaFeatures": {
@@ -19,7 +23,9 @@
     "warnOnUnsupportedTypeScriptVersion": true
   },
   "plugins": [
-      ],
-      "extends": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "plugin:@typescript-eslint/recommended"
   ]
 }

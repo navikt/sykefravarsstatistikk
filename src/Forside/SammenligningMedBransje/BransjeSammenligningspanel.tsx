@@ -12,7 +12,7 @@ import { Kakediagram } from '../Kakediagram/Kakediagram';
 import { Statistikk } from '../../hooks/useAggregertStatistikk';
 import { sammenliknSykefravær } from '../vurdering-utils';
 import { parseVerdi } from '../../utils/app-utils';
-import { Panel } from '@navikt/ds-react';
+import { Heading, Panel } from '@navikt/ds-react';
 
 interface Props {
     sammenligningsType: SammenligningsType;
@@ -24,7 +24,11 @@ interface Props {
 }
 
 const antallKvartalerTekst = (antallKvartaler?: number) => {
-    return <strong> {antallKvartaler || 0} av 4 kvartaler</strong>;
+    return (
+        <Heading size="small" as="p">
+            <strong> {antallKvartaler || 0} av 4 kvartaler</strong>
+        </Heading>
+    );
 };
 
 export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
@@ -73,16 +77,17 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
                     </Normaltekst>
                 </div>
             )}
-            {sammenligningsType !== SammenligningsType.GRADERT && sykefraværVurdering !== 'MASKERT' && (
-              <div className="bransje-sammenligningspanel__forklaring-av-vurdering">
-                  {getForklaringAvVurdering(
-                    sykefraværVurdering,
-                    bransjeEllerNæringStatistikk?.verdi
-                      ? parseVerdi(bransjeEllerNæringStatistikk?.verdi)
-                      : undefined
-                  )}
-              </div>
-            )}
+            {sammenligningsType !== SammenligningsType.GRADERT &&
+                sykefraværVurdering !== 'MASKERT' && (
+                    <div className="bransje-sammenligningspanel__forklaring-av-vurdering">
+                        {getForklaringAvVurdering(
+                            sykefraværVurdering,
+                            bransjeEllerNæringStatistikk?.verdi
+                                ? parseVerdi(bransjeEllerNæringStatistikk?.verdi)
+                                : undefined
+                        )}
+                    </div>
+                )}
         </>
     );
     const vurderingstekst = sammenliknSykefraværstekst(
