@@ -66,10 +66,10 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                         <BodyShort className="forside__innhold__href">
                             {window.location.href}
                         </BodyShort>
+                        <Heading spacing size="medium" level="1">
+                            Sykefraværsstatistikk for {navnPåVirksomhet}
+                        </Heading>
                     </div>
-                    <Heading spacing size="medium" level="1">
-                        Sykefraværsstatistikk for {navnPåVirksomhet}
-                    </Heading>
                     <ReactToPrint
                         onBeforePrint={() => {
                             sendKnappEvent('skriv ut');
@@ -93,7 +93,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                             </Button>
                         )}
                     />
-                    <BodyShort aria-label={`Organisasjonsnummer: ${orgnr.split('').join(' ')}`}>
+                    <BodyShort>
                         <strong>Organisasjonsnummer: {orgnr}</strong>
                     </BodyShort>
                     <BodyShort spacing>
