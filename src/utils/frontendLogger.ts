@@ -9,7 +9,7 @@ export const frontendLogger = (): pino.Logger =>
                 send: async (_, logEvent) => {
                     try {
                         // If your app uses a basePath, you'll need to add it to the path here
-                        await fetch(`${BASE_PATH}/logger`, {
+                        await fetch(`${BASE_PATH}/internal/logger`, {
                             method: 'POST',
                             headers: { 'content-type': 'application/json' },
                             body: JSON.stringify(logEvent),

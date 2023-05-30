@@ -7,15 +7,12 @@ import {
     SammenligningsType,
     sammenliknSykefraværstekst,
 } from '../vurderingstekster';
-import { ForklaringAvPeriode } from './ForklaringAvPeriode';
 import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
-import { OmGradertSykmelding } from '../../felleskomponenter/OmGradertSykmelding/OmGradertSykmelding';
 import { Statistikk } from '../../hooks/useAggregertStatistikk';
-import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
 import { sammenliknSykefravær } from '../vurdering-utils';
 import { parseVerdi } from '../../utils/app-utils';
-import { Panel } from '@navikt/ds-react';
+import { Heading, Panel } from '@navikt/ds-react';
 
 interface Props {
     sammenligningsType: SammenligningsType;
@@ -24,11 +21,14 @@ interface Props {
     harBransje: boolean;
     defaultÅpen?: boolean;
     className?: string;
-    restPubliseringsdatoer: RestPubliseringsdatoer;
 }
 
 const antallKvartalerTekst = (antallKvartaler?: number) => {
-    return <strong> {antallKvartaler || 0} av 4 kvartaler</strong>;
+    return (
+        <Heading size="small" as="p">
+            <strong> {antallKvartaler || 0} av 4 kvartaler</strong>
+        </Heading>
+    );
 };
 
 export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
@@ -36,7 +36,6 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
     harBransje,
     virksomhetStatistikk,
     bransjeEllerNæringStatistikk,
-    restPubliseringsdatoer,
 }) => {
     const sykefraværVurdering = sammenliknSykefravær(
         virksomhetStatistikk,
@@ -47,6 +46,22 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
 
     const innhold = (
         <>
+            <div className="bransje-sammenligningspanel__data-og-detaljert-visning-sykefravær">
+                <DetaljertVisningSykefravær
+                    overskrift="Din virksomhet:"
+                    prosent={virksomhetStatistikk?.verdi}
+                    visingAntallKvartaller={antallKvartalerTekst(
+                        virksomhetStatistikk?.kvartalerIBeregningen.length
+                    )}
+                />
+                <DetaljertVisningSykefravær
+                    overskrift={overskriftForTallForNæringEllerBransje}
+                    prosent={bransjeEllerNæringStatistikk?.verdi}
+                    visingAntallKvartaller={antallKvartalerTekst(
+                        bransjeEllerNæringStatistikk?.kvartalerIBeregningen.length
+                    )}
+                />
+            </div>
             {sammenligningsType === SammenligningsType.GRADERT && (
                 <div className="bransje-sammenligningspanel__gradert_intro">
                     <Ingress>Slik regner vi ut prosenten på gradert sykmelding:</Ingress>
@@ -62,41 +77,17 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
                     </Normaltekst>
                 </div>
             )}
-            <div className="bransje-sammenligningspanel__data-og-detaljert-visning-sykefravær">
-                <ForklaringAvPeriode
-                    className="bransje-sammenligningspanel__forklaring-av-periode"
-                    sammenligningsType={sammenligningsType}
-                    restPubliseringsdatoer={restPubliseringsdatoer}
-                />
-                <DetaljertVisningSykefravær
-                    className="bransje-sammenligningspanel__detaljert-visning"
-                    overskrift="Din virksomhet:"
-                    prosent={virksomhetStatistikk?.verdi}
-                    visingAntallKvartaller={antallKvartalerTekst(
-                        virksomhetStatistikk?.kvartalerIBeregningen.length
-                    )}
-                />
-                <DetaljertVisningSykefravær
-                    className="bransje-sammenligningspanel__detaljert-visning"
-                    overskrift={overskriftForTallForNæringEllerBransje}
-                    prosent={bransjeEllerNæringStatistikk?.verdi}
-                    visingAntallKvartaller={antallKvartalerTekst(
-                        bransjeEllerNæringStatistikk?.kvartalerIBeregningen.length
-                    )}
-                />
-            </div>
-            {sammenligningsType === SammenligningsType.GRADERT ? (
-                <OmGradertSykmelding vurdering={sykefraværVurdering} />
-            ) : (
-                <div className="bransje-sammenligningspanel__forklaring-av-vurdering">
-                    {getForklaringAvVurdering(
-                        sykefraværVurdering,
-                        bransjeEllerNæringStatistikk?.verdi
-                            ? parseVerdi(bransjeEllerNæringStatistikk?.verdi)
-                            : undefined
-                    )}
-                </div>
-            )}
+            {sammenligningsType !== SammenligningsType.GRADERT &&
+                sykefraværVurdering !== 'MASKERT' && (
+                    <div className="bransje-sammenligningspanel__forklaring-av-vurdering">
+                        {getForklaringAvVurdering(
+                            sykefraværVurdering,
+                            bransjeEllerNæringStatistikk?.verdi
+                                ? parseVerdi(bransjeEllerNæringStatistikk?.verdi)
+                                : undefined
+                        )}
+                    </div>
+                )}
         </>
     );
     const vurderingstekst = sammenliknSykefraværstekst(
@@ -108,13 +99,13 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
     const getPaneltittel = (): JSX.Element | string => {
         switch (sammenligningsType) {
             case SammenligningsType.TOTALT:
-                return vurderingstekst;
+                return 'Legemeldt sykefravær';
             case SammenligningsType.KORTTID:
-                return 'Legemeldt korttidsfravær:';
+                return 'Legemeldt korttidsfravær fra 1. til 16. dag';
             case SammenligningsType.LANGTID:
-                return 'Legemeldt langtidsfravær:';
+                return 'Legemeldt langtidsfravær fra 17. dag';
             case SammenligningsType.GRADERT:
-                return 'Gradert sykmelding:';
+                return 'Gradert sykmelding';
         }
     };
 
@@ -131,11 +122,9 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
                 )}
                 <div className="bransje-sammenligningspanel__tittel-tekst">
                     <Systemtittel tag="h2">{getPaneltittel()}</Systemtittel>
-                    {sammenligningsType !== SammenligningsType.TOTALT && (
-                        <Normaltekst className="bransje-sammenligningspanel__tittel-forklaring">
-                            {vurderingstekst}
-                        </Normaltekst>
-                    )}
+                    <Normaltekst className="bransje-sammenligningspanel__tittel-forklaring">
+                        {vurderingstekst}
+                    </Normaltekst>
                 </div>
             </div>
             <div className="bransje-sammenligningspanel__innhold">{innhold}</div>

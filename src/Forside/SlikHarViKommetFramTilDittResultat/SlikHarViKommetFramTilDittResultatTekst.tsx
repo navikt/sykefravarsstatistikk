@@ -14,7 +14,6 @@ interface Props {
 
 export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> = ({
     resultat,
-    kvartaler,
     restPubliseringsdatoer,
 }) => {
     switch (resultat) {
@@ -30,8 +29,6 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                     <Normaltekst className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__paragraf">
                         Sammenligningen tar ikke ta hensyn til din virksomhetens størrelse.
                     </Normaltekst>
-                    <Normaltekst>Tallene er beregnet på sykefraværsstatistikk fra:</Normaltekst>
-                    <Kvartalsliste kvartaler={kvartaler} />
                 </>
             );
         case 'MASKERT':
@@ -57,8 +54,6 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
                         Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken
                         som NAV og Statistisk sentralbyrå (SSB) utarbeider.
                     </Normaltekst>
-                    <Normaltekst>Dine tall er beregnet på sykefraværsstatistikk fra:</Normaltekst>
-                    <Kvartalsliste kvartaler={kvartaler} />
                     <Normaltekst>
                         Bransjens tall er beregnet på sykefraværsstatistikk fra:
                     </Normaltekst>
@@ -83,13 +78,3 @@ export const SlikHarViKommetFramTilDittResultatTekst: FunctionComponent<Props> =
             return null;
     }
 };
-
-const Kvartalsliste: FunctionComponent<{ kvartaler?: ÅrstallOgKvartal[] }> = ({ kvartaler }) => (
-    <ul className="slik-har-vi-kommet-fram-til-ditt-resultat-tekst__kvartalsliste">
-        {kvartaler?.map((kvartal, index) => (
-            <Normaltekst tag="li" key={index}>
-                {kvartal.kvartal}. kvartal {kvartal.årstall}
-            </Normaltekst>
-        ))}
-    </ul>
-);

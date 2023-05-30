@@ -19,9 +19,6 @@ spec:
     readiness:
         path: /sykefravarsstatistikk/internal/isReady
         initialDelay: 10
-    prometheus:
-        enabled: true
-        path: /sykefravarsstatistikk/metrics
     env:
         - name: DEKORATOR_URL
           value: https://dekoratoren.ekstern.dev.nav.no

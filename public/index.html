@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html lang="nb">
+<html lang='nb'>
 <head>
-  <meta charset="utf-8"/>
-  <link href="%PUBLIC_URL%/favicon.ico" rel="shortcut icon"/>
-  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
-  <meta content="#000000" name="theme-color"/>
-  {{{NAV_SCRIPTS}}} {{{NAV_MENU_RESOURCES}}} {{{NAV_STYLES}}}
-  <script id="data" type="application/json">
-    {
-        "MILJØ": "{{MILJO}}",
-        "MIN_SIDE_ARBEIDSGIVER_URL": "{{{MIN_SIDE_ARBEIDSGIVER_URL}}}"
-    }
-  </script>
-  <title>Sykefraværsstatistikk</title>
+    <meta charset='utf-8' />
+    <link href='%PUBLIC_URL%/favicon.ico' rel='shortcut icon' />
+    <meta content='width=device-width, initial-scale=1, shrink-to-fit=no' name='viewport' />
+    <meta content='#000000' name='theme-color' />
+    {{{NAV_SCRIPTS}}} {{{NAV_MENU_RESOURCES}}} {{{NAV_STYLES}}}
+    <script id='data' type='application/json'>
+        {
+            "MILJØ": "{{MILJO}}",
+            "MIN_SIDE_ARBEIDSGIVER_URL": "{{{MIN_SIDE_ARBEIDSGIVER_URL}}}"
+        }
+    </script>
+    <title>Sykefraværsstatistikk</title>
 </head>
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>
 {{{NAV_HEADING}}}
-<div id="root"></div>
+<main id='maincontent' role='main' tabindex='-1'>
+    <div id='root'></div>
+</main>
 {{{NAV_FOOTER}}}
 </body>
 </html>

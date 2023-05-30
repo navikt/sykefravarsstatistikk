@@ -11,7 +11,8 @@ export const PeriodeForStatistikk: FunctionComponent<{
     if (restPubliseringsdatoer.status === RestStatus.Suksess) {
         return (
             <Normaltekst>
-                {`Periode: ` + getPeriodeMedDato(restPubliseringsdatoer.data.gjeldendePeriode)}
+                {`Sykefraværsstatistikken er fra perioden ` +
+                    getPeriodeMedDato(restPubliseringsdatoer.data.gjeldendePeriode)}
             </Normaltekst>
         );
     } else if (

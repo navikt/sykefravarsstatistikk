@@ -1,7 +1,7 @@
 import React from 'react';
 import { getGrønnGrense, getRødGrense, SykefraværVurdering } from './vurdering-utils';
 import { formaterProsent } from '../utils/app-utils';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { BodyShort } from '@navikt/ds-react';
 
 export enum SammenligningsType {
     TOTALT = 'TOTALT',
@@ -34,44 +34,44 @@ const sammenliknSykefraværstekstGradert = (
     switch (sykefraværResultat) {
         case 'OVER':
             return (
-                <>
+                <BodyShort size="small">
                     Markert grønn: Du bruker <strong>mer gradert sykmelding</strong> enn andre i din{' '}
                     {bransjeEllerNæringTekst}
-                </>
+                </BodyShort>
             );
         case 'MIDDELS':
             return (
-                <>
+                <BodyShort size="small">
                     Markert gul: Du bruker <strong>omtrent like mye gradert sykmelding</strong> som
                     andre i din {bransjeEllerNæringTekst}
-                </>
+                </BodyShort>
             );
         case 'UNDER':
             return (
-                <>
+                <BodyShort size="small">
                     Markert rød: Du bruker <strong>mindre gradert sykmelding</strong> enn andre i
                     din {bransjeEllerNæringTekst}
-                </>
-            );
-        case 'UFULLSTENDIG_DATA':
-            return (
-                <>
-                    Markert grå: <strong>Vi mangler dine tall for deler av perioden</strong> med
-                    sammenligning.
-                </>
+                </BodyShort>
             );
         case 'MASKERT':
             return (
-                <>
-                    Markert grå: Du har <strong>for lave tall</strong> til at vi kan vise
-                    statistikken din.
-                </>
+                <BodyShort size="small">
+                    Markert grå: Det er <strong>for få</strong> som har denne typen sykemelding i
+                    din bedrift til at vi kan vise statistikken.
+                </BodyShort>
+            );
+        case 'UFULLSTENDIG_DATA':
+            return (
+                <BodyShort size="small">
+                    Markert grå: <strong>Vi mangler dine tall for deler av perioden</strong> med
+                    sammenligning.
+                </BodyShort>
             );
         case 'FEIL_ELLER_INGEN_DATA':
             return (
-                <>
+                <BodyShort size="small">
                     Markert grå: Vi <strong>kan ikke finne tall</strong> for virksomheten din.
-                </>
+                </BodyShort>
             );
     }
 };
@@ -84,44 +84,44 @@ const sammenliknSykefraværstekstTotalt = (
     switch (sykefraværResultat) {
         case 'UNDER':
             return (
-                <>
+                <BodyShort size="small">
                     Markert grønn: Du har <strong>lavere sykefravær</strong> enn{' '}
                     {bransjeEllerNæringTekst}
-                </>
+                </BodyShort>
             );
         case 'MIDDELS':
             return (
-                <>
+                <BodyShort size="small">
                     Markert gul: Du har <strong>omtrent likt sykefravær</strong> som{' '}
                     {bransjeEllerNæringTekst}
-                </>
+                </BodyShort>
             );
         case 'OVER':
             return (
-                <>
+                <BodyShort size="small">
                     Markert rød: Du har <strong>høyere sykefravær</strong> enn{' '}
                     {bransjeEllerNæringTekst}
-                </>
-            );
-        case 'UFULLSTENDIG_DATA':
-            return (
-                <>
-                    Markert grå: <strong>Vi mangler dine tall for deler av perioden</strong> med
-                    sammenligning.
-                </>
+                </BodyShort>
             );
         case 'MASKERT':
             return (
-                <>
-                    Markert grå: Du har <strong>for lite tallgrunnlag</strong> til at vi kan vise
-                    statistikken din.
-                </>
+                <BodyShort size="small">
+                    Markert grå: Det er <strong>for få</strong> som har denne typen sykemelding i
+                    din bedrift til at vi kan vise statistikken.
+                </BodyShort>
+            );
+        case 'UFULLSTENDIG_DATA':
+            return (
+                <BodyShort size="small">
+                    Markert grå: <strong>Vi mangler dine tall for deler av perioden</strong> med
+                    sammenligning.
+                </BodyShort>
             );
         case 'FEIL_ELLER_INGEN_DATA':
             return (
-                <>
+                <BodyShort size="small">
                     Markert grå: Vi <strong>finner ikke tall</strong> for virksomheten din.
-                </>
+                </BodyShort>
             );
     }
 };
@@ -134,32 +134,39 @@ const sammenliknSykefraværstekstKorttid = (
     switch (resultat) {
         case 'UNDER':
             return (
-                <>
+                <BodyShort size="small">
                     Markert grønn: Du har et <strong>lavere legemeldt korttidsfravær</strong> enn{' '}
                     {bransjeEllerNæringTekst}
-                </>
+                </BodyShort>
             );
         case 'MIDDELS':
             return (
-                <>
+                <BodyShort size="small">
                     Markert gul: Du har <strong>omtrent likt legemeldt korttidsfravær</strong> som{' '}
                     {bransjeEllerNæringTekst}
-                </>
+                </BodyShort>
             );
         case 'OVER':
             return (
-                <>
+                <BodyShort size="small">
                     Markert rød: Du har et <strong>høyere legemeldt korttidsfravær</strong> enn{' '}
                     {bransjeEllerNæringTekst}
-                </>
+                </BodyShort>
+            );
+        case 'MASKERT':
+            return (
+                <BodyShort size="small">
+                    Markert grå: Det er <strong>for få</strong> som har denne typen sykemelding i
+                    din bedrift til at vi kan vise statistikken.
+                </BodyShort>
             );
         case 'UFULLSTENDIG_DATA':
-        case 'MASKERT':
         case 'FEIL_ELLER_INGEN_DATA':
             return (
-                <>
-                    Markert grå: Andel <strong>legemeldt korttidsfravær</strong> fra 1. til 16. dag:
-                </>
+                <BodyShort size="small">
+                    Markert grå: <strong>Vi mangler dine tall for deler av perioden</strong> med
+                    sammenligning.
+                </BodyShort>
             );
     }
 };
@@ -172,32 +179,39 @@ export const sammenliknSykefraværstekstLangtid = (
     switch (resultat) {
         case 'UNDER':
             return (
-                <>
+                <BodyShort size="small">
                     Markert grønn: Du har et <strong>lavere langtidsfravær</strong> enn{' '}
                     {bransjeEllerNæringTekst}
-                </>
+                </BodyShort>
             );
         case 'MIDDELS':
             return (
-                <>
+                <BodyShort size="small">
                     Markert gul: Du har <strong>omtrent likt langtidsfravær</strong> som{' '}
                     {bransjeEllerNæringTekst}
-                </>
+                </BodyShort>
             );
         case 'OVER':
             return (
-                <>
+                <BodyShort size="small">
                     Markert rød: Du har et <strong>høyere langtidsfravær</strong> enn{' '}
                     {bransjeEllerNæringTekst}
-                </>
+                </BodyShort>
+            );
+        case 'MASKERT':
+            return (
+                <BodyShort size="small">
+                    Markert grå: Det er <strong>for få</strong> som har denne typen sykemelding i
+                    din bedrift til at vi kan vise statistikken.
+                </BodyShort>
             );
         case 'UFULLSTENDIG_DATA':
-        case 'MASKERT':
         case 'FEIL_ELLER_INGEN_DATA':
             return (
-                <>
-                    Markert grå: Andel <strong>langtidsfravær</strong> fra 17. dag:
-                </>
+                <BodyShort size="small">
+                    Markert grå: <strong>Vi mangler dine tall for deler av perioden</strong> med
+                    sammenligning.
+                </BodyShort>
             );
     }
 };
@@ -208,94 +222,72 @@ export const getForklaringAvVurdering = (
 ) => {
     if (bransjensProsent === null || bransjensProsent === undefined) {
         return (
-            <Normaltekst>
+            <BodyShort>
                 Sammenligningen din er blitt markert som grå fordi vi ikke finner tall for
                 bransjen/næringen din. Vi viser dine tall når de publiseres.
-            </Normaltekst>
+            </BodyShort>
         );
     }
 
     switch (resultat) {
         case 'UNDER':
             return (
-                <Normaltekst>
-                    Sammenligningen din er blitt markert som grønn på en skala grønn, gul og rød.
-                    <br />
-                    Dette skjer når ditt sykefravær er lavere enn{' '}
-                    {formaterProsent(getGrønnGrense(bransjensProsent))} prosent.
-                </Normaltekst>
+                <>
+                    <BodyShort size="small">
+                        Sammenligningen din er blitt markert som grønn på en skala grønn, gul og
+                        rød.
+                    </BodyShort>
+                    <BodyShort size="small">
+                        Dette skjer når ditt sykefravær er lavere enn{' '}
+                        {formaterProsent(getGrønnGrense(bransjensProsent))} prosent.
+                    </BodyShort>
+                </>
             );
         case 'MIDDELS':
             return (
-                <Normaltekst>
-                    Sammenligningen din er blitt markert som gul på en skala grønn, gul og rød.
-                    <br />
-                    Dette skjer når ditt sykefravær er mellom{' '}
-                    {formaterProsent(getGrønnGrense(bransjensProsent))} og{' '}
-                    {formaterProsent(getRødGrense(bransjensProsent))} prosent.
-                </Normaltekst>
+                <>
+                    <BodyShort size="small">
+                        Sammenligningen din er blitt markert som gul på en skala grønn, gul og rød.
+                    </BodyShort>
+                    <BodyShort size="small">
+                        Dette skjer når ditt sykefravær er mellom{' '}
+                        {formaterProsent(getGrønnGrense(bransjensProsent))} og{' '}
+                        {formaterProsent(getRødGrense(bransjensProsent))} prosent.
+                    </BodyShort>
+                </>
             );
         case 'OVER':
             return (
-                <Normaltekst>
-                    Sammenligningen din er blitt markert som rød på en skala grønn, gul og rød.
-                    <br />
-                    Dette skjer når ditt sykefravær er høyere enn{' '}
-                    {formaterProsent(getRødGrense(bransjensProsent))} prosent.
-                </Normaltekst>
+                <>
+                    <BodyShort size="small">
+                        Sammenligningen din er blitt markert som rød på en skala grønn, gul og rød.
+                    </BodyShort>
+                    <BodyShort size="small">
+                        Dette skjer når ditt sykefravær er høyere enn{' '}
+                        {formaterProsent(getRødGrense(bransjensProsent))} prosent.
+                    </BodyShort>
+                </>
+            );
+        case 'MASKERT':
+            return (
+                <BodyShort size="small">
+                    Markert grå: Det er <strong>for få</strong> som har denne typen sykemelding i
+                    din bedrift til at vi kan vise statistikken.
+                </BodyShort>
             );
         case 'UFULLSTENDIG_DATA':
             return (
-                <Normaltekst>
+                <BodyShort size="small">
                     Sammenligningen blir markert grå fordi vi mangler dine tall for deler av
                     perioden. Sammenligningen lages når vi har tall for alle perioder.
-                </Normaltekst>
-            );
-        case 'MASKERT':
-            return (
-                <Normaltekst>
-                    Sammenligningen din er blitt markert som grå fordi du har for lave tall til at
-                    vi kan vise statistikken din.
-                </Normaltekst>
+                </BodyShort>
             );
         case 'FEIL_ELLER_INGEN_DATA':
             return (
-                <Normaltekst>
+                <BodyShort size="small">
                     Sammenligningen din er blitt markert som grå fordi vi ikke finner tall for
                     virksomheten din. Vi viser dine tall når de publiseres.
-                </Normaltekst>
+                </BodyShort>
             );
-    }
-};
-
-export const getTilpassetTittelOgTekstOmGradertSykmelding = (
-    resultat: SykefraværVurdering
-): { tittel: String; tekst: String } => {
-    switch (resultat) {
-        case 'OVER':
-            return {
-                tittel: 'Du bruker mer gradert sykmelding enn andre i din næring',
-                tekst: 'Det er positivt å bruke gradert sykmelding. Vurder bruken av gradert sykmelding sammen med langtidsfraværet. Er fraværet høyt eller lavt totalt sett? ',
-            };
-        case 'UNDER':
-            return {
-                tittel: 'Du bruker mindre gradert sykmelding enn andre i din næring',
-                tekst: 'Vurder bruken av gradert sykmelding sammen med langtidsfraværet. Er fraværet høyt eller lavt? Økt bruk av gradert sykmelding er et av flere virkemidler for å forebygge og redusere langtidsfravær. ',
-            };
-        case 'MIDDELS':
-            return {
-                tittel: 'Du bruker omtrent like mye gradert sykmelding som andre i din bransje/næring',
-                tekst: 'Vurder bruken av gradert sykmelding sammen med langtidsfraværet. Er fraværet høyt eller lavt? Økt bruk av gradert sykmelding er et av flere virkemidler for å forebygge og redusere langtidsfravær.',
-            };
-        case 'UFULLSTENDIG_DATA':
-        case 'MASKERT':
-        case 'FEIL_ELLER_INGEN_DATA':
-            return {
-                tittel: 'Vurder bruken av gradert sykmelding sammen med langtidsfraværet',
-                tekst: 'Vi kan ikke sammenligne deg med andre, bruk gjerne egen erfaring. Er fraværet høyt eller lavt? Økt bruk av gradert sykmelding er et av flere virkemidler for å forebygge og redusere langtidsfravær.',
-            };
-
-        default:
-            return { tittel: '', tekst: '' };
     }
 };

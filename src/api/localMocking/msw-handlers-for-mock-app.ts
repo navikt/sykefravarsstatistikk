@@ -8,7 +8,7 @@ import { getMockPubliseringsdatoer } from '../mockedApiResponses/mock-publiserin
 import { underenheterResponseMock } from '../../enhetsregisteret/api/mocks/underenheter-api-mocks';
 import { getMockOrganisasjon } from './mockede-organisasjoner';
 
-export const localMswHandlers = [
+export const mswHandlersForMockApp = [
     rest.get(
         '/sykefravarsstatistikk/api/:orgnr/v1/sykefravarshistorikk/aggregert',
         (req, res, ctx) => {
@@ -60,7 +60,7 @@ export const localMswHandlers = [
     }),
 
     rest.post(
-        '/sykefravarsstatistikk/proxy/ia-tjenester-metrikker/innlogget/mottatt-iatjeneste',
+        '/sykefravarsstatistikk/ia-tjenester-metrikker/innlogget/mottatt-iatjeneste',
         (_, res, ctx) => {
             return res(ctx.status(201));
         }

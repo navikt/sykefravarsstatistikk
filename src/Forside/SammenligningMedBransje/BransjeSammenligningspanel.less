@@ -57,7 +57,7 @@
     }
 
     &__forklaring-av-vurdering {
-        margin-top: 2.5rem;
+        margin-top: 2rem;
     }
 
     &__panel {
@@ -104,8 +104,6 @@
     @media print, (min-width: @screen-sm-min) {
         &__tittel-wrapper {
             flex-direction: row;
-            padding-right: 1rem;
-            padding-left: 0.5rem;
         }
 
         &__tittel-tekst {
@@ -116,10 +114,6 @@
             flex-grow: 2;
         }
 
-        &__detaljert-visning {
-            flex-grow: 1;
-        }
-
         .ekspanderbartPanel__innhold {
             padding-bottom: 2rem;
             padding-right: 2rem;
@@ -127,9 +121,10 @@
         }
 
         &__data-og-detaljert-visning-sykefravær {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+            max-width: 500px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
             margin-top: 2rem;
         }
 

@@ -25,11 +25,7 @@ interface Props {
 }
 
 const App: FunctionComponent<Props> = ({ analyticsClient }) => {
-    return (
-        <main id="maincontent">
-            <AppContent {...useSykefraværAppData()} analyticsClient={analyticsClient} />
-        </main>
-    );
+    return <AppContent {...useSykefraværAppData()} analyticsClient={analyticsClient} />;
 };
 
 function forsideDataLastesInn(appData: SykefraværAppData) {

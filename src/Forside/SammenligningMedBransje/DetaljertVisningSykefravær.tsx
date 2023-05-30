@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactNode } from 'react';
-import { Ingress, Systemtittel } from 'nav-frontend-typografi';
+import { Ingress } from 'nav-frontend-typografi';
 import { Prosent } from '../Prosent';
 import './DetaljertVisningSykefravær.less';
 import classNames from 'classnames';
@@ -22,13 +22,8 @@ export const DetaljertVisningSykefravær: FunctionComponent<Props> = ({
             <Ingress className="detaljert-visning-sykefravær__tittel" tag="span">
                 {overskrift}
             </Ingress>
-            <Systemtittel
-                tag="p"
-                className="detaljert-visning-sykefravær__prosent-og-antall-kvartaller"
-            >
-                <Prosent prosent={prosent} />
-                {visingAntallKvartaller}
-            </Systemtittel>
+            <Prosent prosent={prosent} />
+            {visingAntallKvartaller}
         </div>
     );
 };
