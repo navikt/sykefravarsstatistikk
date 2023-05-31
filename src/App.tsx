@@ -7,10 +7,9 @@ import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
-import { ER_VEDLIKEHOLD_AKTIVERT, MILJØ, PATH_FORSIDE } from './konstanter';
+import { MILJØ, PATH_FORSIDE } from './konstanter';
 import { Forside } from './Forside/Forside';
 import { ManglerRettighetRedirect } from './utils/redirects';
-import VedlikeholdSide from './FeilSider/Vedlikehold/VedlikeholdSide';
 import {
     getEkstradata,
     SykefraværAppData,
@@ -72,9 +71,6 @@ export const AppContent = (appData: SykefraværAppData & { analyticsClient: Anal
     ]);
 
     let innhold;
-    if (ER_VEDLIKEHOLD_AKTIVERT) {
-        return <VedlikeholdSide />;
-    }
 
     if (forsideDataLastesInn(appData)) {
         innhold = <Lasteside />;
