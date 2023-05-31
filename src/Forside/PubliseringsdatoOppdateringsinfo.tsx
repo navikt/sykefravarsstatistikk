@@ -1,10 +1,9 @@
 import React, { FunctionComponent } from 'react';
-import { Normaltekst } from 'nav-frontend-typografi';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { BodyShort } from "@navikt/ds-react";
-import { RestStatus } from "../api/api-utils";
-import { formatterDatoMedMånedNavn } from "../utils/app-utils";
-import { RestPubliseringsdatoer } from "../api/publiseringsdatoer-api";
+import { BodyShort } from '@navikt/ds-react';
+import { RestStatus } from '../api/api-utils';
+import { formatterDatoMedMånedNavn } from '../utils/app-utils';
+import { RestPubliseringsdatoer } from '../api/publiseringsdatoer-api';
 
 export const PubliseringsdatoOppdateringsinfo: FunctionComponent<{
     restPubliseringsdatoer: RestPubliseringsdatoer;
@@ -19,13 +18,13 @@ export const PubliseringsdatoOppdateringsinfo: FunctionComponent<{
                             new Date(publiseringsdatoer.sistePubliseringsdato)
                         )}
                 </BodyShort>
-                <Normaltekst>
+                <BodyShort>
                     {isFinite(new Date(publiseringsdatoer.nestePubliseringsdato).getDate()) &&
                         `Neste oppdatering: ` +
                             formatterDatoMedMånedNavn(
                                 new Date(publiseringsdatoer.nestePubliseringsdato)
                             )}
-                </Normaltekst>
+                </BodyShort>
             </div>
         );
     } else if (
