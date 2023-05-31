@@ -36,17 +36,13 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
                             sammenligne sykefraværet deres med næringen og sektoren dere tilhører.
                         </Normaltekst>
                     </div>
-                    {/*TODO: Bytt ut med aksel for å bedre UU*/}
-
-                    {// TODO: toggleknapper støtter fremdeles onClick, men det er anbefalt å bruke det nye apiet til 'ToggleGroup'
-                    // TODO: sørg for å legge til value prop i 'ToggleGroup.Item'
-                    }
                     <ToggleGroup
                         aria-label="Hvis du bruker skjermleser, bør du velge tabell"
                         className="graf-og-tabell__knapper"
+                        onChange={setGrafEllerTabell}
                     >
-                        <ToggleGroup.Item onClick={() => setGrafEllerTabell('graf')}>Graf</ToggleGroup.Item>
-                        <ToggleGroup.Item onClick={() => {setGrafEllerTabell('tabell');}}>Tabell</ToggleGroup.Item>
+                        <ToggleGroup.Item value='graf'>Graf</ToggleGroup.Item>
+                        <ToggleGroup.Item value='tabell'>Tabell</ToggleGroup.Item>
                     </ToggleGroup>
                 </div>
                 <div className="graf-og-tabell__innhold">
