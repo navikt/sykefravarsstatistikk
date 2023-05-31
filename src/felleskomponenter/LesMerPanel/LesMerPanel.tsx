@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { ReactNode, useState } from 'react';
 import InfoToggler from './InfoToggler/InfoToggler';
-import { Normaltekst } from 'nav-frontend-typografi';
 import './LesMerPanel.less';
 import { UnmountClosed } from 'react-collapse';
 import classNames from 'classnames';
 import { sendPanelEkspanderEvent, sendPanelKollapsEvent } from '../../amplitude/events';
+import { BodyShort } from "@navikt/ds-react";
 
 interface Props {
     åpneLabel: string;
@@ -53,7 +53,7 @@ const LesMerPanel: React.FunctionComponent<Props> = ({
                     }}
                     åpen={åpen}
                 >
-                    <Normaltekst tag="span">{åpen ? lukkTekst : åpneLabel}</Normaltekst>
+                    <BodyShort as="span">{åpen ? lukkTekst : åpneLabel}</BodyShort>
                 </InfoToggler>
             </div>
             <div className="les-mer-panel__innhold">

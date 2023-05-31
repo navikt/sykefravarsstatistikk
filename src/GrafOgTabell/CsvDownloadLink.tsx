@@ -4,8 +4,7 @@ import {
     KvartalsvisSammenligning,
 } from '../utils/sykefraværshistorikk-utils';
 import React, { FunctionComponent } from 'react';
-import { Link } from '@navikt/ds-react';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Label, Link } from '@navikt/ds-react';
 import { FileCsvIcon } from '@navikt/aksel-icons';
 import { isDefined } from '../utils/app-utils';
 import { formaterProsent } from './Tabell/tabell-utils';
@@ -74,9 +73,9 @@ export const CsvDownloadLink: FunctionComponent<CsvDownloadLinkProps> = ({
             target={'_self'}
             onClick={onClick}
         >
-            <Normaltekst>
+            <Label size="small">
                 Last ned CSV <FileCsvIcon aria-hidden="true" />
-            </Normaltekst>
+            </Label>
         </Link>
     );
 };

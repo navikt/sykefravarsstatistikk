@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
-import { Button, Link } from "@navikt/ds-react";
+import { BodyShort, Button, Heading, Link } from '@navikt/ds-react';
 import illustrasjonSvg from './statistikk-ikon.svg';
-import { Normaltekst } from 'nav-frontend-typografi';
 import './Innloggingsside.less';
-import Sidetittel from 'nav-frontend-typografi/lib/sidetittel';
 import { EnvironmentContext } from '../Context/EnvironmentContext';
-import { BASE_PATH } from "../konstanter";
+import { BASE_PATH } from '../konstanter';
+import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
 
 interface Props {
     redirectUrl: string;
@@ -21,30 +20,22 @@ const Innloggingsside: React.FunctionComponent<Props> = ({ redirectUrl }) => {
         <div className="innloggingsside__wrapper">
             <div className="innloggingsside">
                 <img src={illustrasjonSvg} className="innloggingsside__illustrasjon" alt="" />
-
-                <Sidetittel className="innloggingsside__sidetittel">
+                <Heading spacing level="2" size="large">
                     Sykefraværsstatistikk
-                </Sidetittel>
-
-                <Normaltekst className="innloggingsside__overskrift">
+                </Heading>
+                <BodyShort spacing>
                     Se statistikk om sykefraværet i din virksomhet og sammenligne dere med andre
                     virksomheter. For å se statistikken må du logge inn. Tilgangstyringen skjer
                     gjennom Altinn.
-                </Normaltekst>
-
-                <Link
-                    className="innloggingsside__lenke"
-                    href={MIN_SIDE_ARBEIDSGIVER_URL + '/informasjon-om-tilgangsstyring'}
-                >
+                </BodyShort>
+                <EksternLenke href={MIN_SIDE_ARBEIDSGIVER_URL + '/informasjon-om-tilgangsstyring'}>
                     Les mer om roller og tilganger
-                </Link>
-
-                <Button
-                    variant="primary"
-                    onClick={redirectTilLogin}
-                    className="innloggingsside__loginKnapp-wrapper">
-                    Logg inn
-                </Button>
+                </EksternLenke>
+                <div className="innloggingsside__loginKnapp-wrapper">
+                    <Button variant="primary" onClick={redirectTilLogin}>
+                        Logg inn
+                    </Button>
+                </div>
             </div>
         </div>
     );

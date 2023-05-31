@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Alert } from "@navikt/ds-react";
+import { Alert, Link } from '@navikt/ds-react';
 import './FeilFraAltinnSide.less';
 
 const FeilFraAltinnSide: FunctionComponent = () => {
@@ -7,10 +7,7 @@ const FeilFraAltinnSide: FunctionComponent = () => {
         <div className="feil-fra-altinn-side">
             <Alert variant="error" className="feil-fra-altinn-side__alertstripe">
                 Vi opplever ustabilitet med Altinn. Hvis du mener at du har roller i Altinn kan du
-                prøve å{' '}
-                <a href={document.location.href} className="feil-fra-altinn-side__lenke">
-                    laste siden på nytt
-                </a>
+                prøve å <Link href={document.location.href}>laste siden på nytt</Link>
             </Alert>
         </div>
     );

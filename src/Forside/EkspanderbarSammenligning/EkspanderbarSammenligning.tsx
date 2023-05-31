@@ -3,7 +3,6 @@ import { BransjeSammenligningspanel } from '../SammenligningMedBransje/BransjeSa
 import { RestStatus } from '../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
 import { SammenligningsType } from '../vurderingstekster';
-import './EkspanderbarSammenligning.less';
 import { RestAggregertStatistikk } from '../../hooks/useAggregertStatistikk';
 import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
 import { Statistikkategori } from '../../domene/statistikkategori';
@@ -43,9 +42,8 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({ aggregertS
         ),
     ];
     return (
-        <div className="ekspanderbar-sammenligning">
+        <>
             <BransjeSammenligningspanel
-                className="ekspanderbar-sammenligning__sammenligning-totalt"
                 virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerTotalt}
                 bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerTotalt}
                 sammenligningsType={SammenligningsType.TOTALT}
@@ -65,6 +63,6 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({ aggregertS
                 bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerLangtid}
                 sammenligningsType={SammenligningsType.LANGTID}
             />
-        </div>
+        </>
     );
 };
