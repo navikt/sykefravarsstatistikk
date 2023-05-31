@@ -1,11 +1,11 @@
 import { default as React, FunctionComponent } from 'react';
-import NavFrontendSpinner from 'nav-frontend-spinner';
+import { Loader } from "@navikt/ds-react";
 import './Lasteside.less';
 
 const Lasteside: FunctionComponent = () => {
     return (
         <div className="lasteside">
-            <NavFrontendSpinner type={'XXL'} />
+            <Loader size="2xlarge" />
         </div>
     );
 };

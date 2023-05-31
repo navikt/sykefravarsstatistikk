@@ -6,8 +6,7 @@ import Tabell from './Tabell/Tabell';
 import './GrafOgTabell.less';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestStatus } from '../api/api-utils';
-import NavFrontendSpinner from 'nav-frontend-spinner';
-import { Alert } from "@navikt/ds-react";
+import { Alert, Loader } from "@navikt/ds-react";
 import {
     getBransjeEllerNæringLabel,
     getHistorikkLabels,
@@ -82,7 +81,7 @@ const GrafOgTabellInnhold = ({
         case RestStatus.IkkeLastet: {
             return (
                 <div className="graf-og-tabell__spinner">
-                    <NavFrontendSpinner type={'XXL'} />
+                    <Loader size="2xlarge" />
                 </div>
             );
         }
