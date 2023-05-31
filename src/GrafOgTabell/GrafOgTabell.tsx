@@ -1,12 +1,11 @@
 import React, { FunctionComponent, useState } from 'react';
 import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
-import { ToggleGruppePure } from 'nav-frontend-toggle';
 import Graf from './Graf/Graf';
 import Tabell from './Tabell/Tabell';
 import './GrafOgTabell.less';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestStatus } from '../api/api-utils';
-import { Alert, Loader } from "@navikt/ds-react";
+import { Alert, Loader, ToggleGroup } from "@navikt/ds-react";
 import {
     getBransjeEllerNæringLabel,
     getHistorikkLabels,
@@ -38,24 +37,17 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
                         </Normaltekst>
                     </div>
                     {/*TODO: Bytt ut med aksel for å bedre UU*/}
-                    <ToggleGruppePure
+
+                    {// TODO: toggleknapper støtter fremdeles onClick, men det er anbefalt å bruke det nye apiet til 'ToggleGroup'
+                    // TODO: sørg for å legge til value prop i 'ToggleGroup.Item'
+                    }
+                    <ToggleGroup
                         aria-label="Hvis du bruker skjermleser, bør du velge tabell"
                         className="graf-og-tabell__knapper"
-                        toggles={[
-                            {
-                                children: 'Graf',
-                                pressed: grafEllerTabell === 'graf',
-                                onClick: () => setGrafEllerTabell('graf'),
-                            },
-                            {
-                                children: 'Tabell',
-                                pressed: grafEllerTabell === 'tabell',
-                                onClick: () => {
-                                    setGrafEllerTabell('tabell');
-                                },
-                            },
-                        ]}
-                    />
+                    >
+                        <ToggleGroup.Item onClick={() => setGrafEllerTabell('graf')}>Graf</ToggleGroup.Item>
+                        <ToggleGroup.Item onClick={() => {setGrafEllerTabell('tabell');}}>Tabell</ToggleGroup.Item>
+                    </ToggleGroup>
                 </div>
                 <div className="graf-og-tabell__innhold">
                     <GrafOgTabellInnhold
