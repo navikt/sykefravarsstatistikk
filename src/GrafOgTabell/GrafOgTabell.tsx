@@ -38,7 +38,7 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
                     <ToggleGroup
                         aria-label="Hvis du bruker skjermleser, bør du velge tabell"
                         className="graf-og-tabell__knapper"
-                        onChange={setGrafEllerTabell}
+                        onChange={value => setGrafEllerTabell((value as 'graf'|'tabell'))}
                     >
                         <ToggleGroup.Item value='graf'>Graf</ToggleGroup.Item>
                         <ToggleGroup.Item value='tabell'>Tabell</ToggleGroup.Item>
