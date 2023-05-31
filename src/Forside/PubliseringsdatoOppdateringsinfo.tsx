@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react';
-import { RestStatus } from '../../api/api-utils';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { formatterDatoMedMånedNavn } from '../../utils/app-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
 import { BodyShort } from "@navikt/ds-react";
+import { RestStatus } from "../api/api-utils";
+import { formatterDatoMedMånedNavn } from "../utils/app-utils";
+import { RestPubliseringsdatoer } from "../api/publiseringsdatoer-api";
 
 export const PubliseringsdatoOppdateringsinfo: FunctionComponent<{
     restPubliseringsdatoer: RestPubliseringsdatoer;
@@ -13,7 +13,7 @@ export const PubliseringsdatoOppdateringsinfo: FunctionComponent<{
         const publiseringsdatoer = restPubliseringsdatoer.data;
         return (
             <div>
-                <BodyShort size="small">
+                <BodyShort>
                     {`Sist oppdatert: ` +
                         formatterDatoMedMånedNavn(
                             new Date(publiseringsdatoer.sistePubliseringsdato)

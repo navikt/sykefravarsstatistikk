@@ -7,33 +7,23 @@ import {
     SammenligningsType,
     sammenliknSykefraværstekst,
 } from '../vurderingstekster';
-import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
 import { Statistikk } from '../../hooks/useAggregertStatistikk';
 import { sammenliknSykefravær } from '../vurdering-utils';
 import { parseVerdi } from '../../utils/app-utils';
-import { Heading, Panel } from '@navikt/ds-react';
+import { Label, Panel } from '@navikt/ds-react';
+import { Prosent } from '../Prosent';
 
 interface Props {
     sammenligningsType: SammenligningsType;
     virksomhetStatistikk?: Statistikk;
     bransjeEllerNæringStatistikk?: Statistikk;
-    harBransje: boolean;
     defaultÅpen?: boolean;
     className?: string;
 }
 
-const antallKvartalerTekst = (antallKvartaler?: number) => {
-    return (
-        <Heading size="small" as="p">
-            <strong> {antallKvartaler || 0} av 4 kvartaler</strong>
-        </Heading>
-    );
-};
-
 export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
     sammenligningsType,
-    harBransje,
     virksomhetStatistikk,
     bransjeEllerNæringStatistikk,
 }) => {
@@ -42,25 +32,25 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
         bransjeEllerNæringStatistikk
     );
 
-    const overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
+    const antallKvartalerVirksomhet = virksomhetStatistikk?.kvartalerIBeregningen.length || 0;
 
     const innhold = (
         <>
-            <div className="bransje-sammenligningspanel__data-og-detaljert-visning-sykefravær">
-                <DetaljertVisningSykefravær
-                    overskrift="Din virksomhet:"
-                    prosent={virksomhetStatistikk?.verdi}
-                    visingAntallKvartaller={antallKvartalerTekst(
-                        virksomhetStatistikk?.kvartalerIBeregningen.length
-                    )}
-                />
-                <DetaljertVisningSykefravær
-                    overskrift={overskriftForTallForNæringEllerBransje}
-                    prosent={bransjeEllerNæringStatistikk?.verdi}
-                    visingAntallKvartaller={antallKvartalerTekst(
-                        bransjeEllerNæringStatistikk?.kvartalerIBeregningen.length
-                    )}
-                />
+            <div className="bransje-sammenligningspanel__wrapper">
+                <div className={'bransje-sammenligningspanel__detaljert-visning-sykefravær'}>
+                    <Ingress className="detaljert-visning-sykefravær__tittel" tag="span">
+                        Din virksomhet:
+                    </Ingress>
+                    <Prosent prosent={virksomhetStatistikk?.verdi} />
+                    <Label>{`${virksomhetStatistikk?.kvartalerIBeregningen.length} av 4 kvartaler`}</Label>
+                </div>
+                <div className={'bransje-sammenligningspanel__detaljert-visning-sykefravær'}>
+                    <Ingress className="detaljert-visning-sykefravær__tittel" tag="span">
+                        Din bransje:
+                    </Ingress>
+                    <Prosent prosent={bransjeEllerNæringStatistikk?.verdi} />
+                    <Label>4 av 4 kvartaler</Label>
+                </div>
             </div>
             {sammenligningsType === SammenligningsType.GRADERT && (
                 <div className="bransje-sammenligningspanel__gradert_intro">
@@ -84,17 +74,14 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
                             sykefraværVurdering,
                             bransjeEllerNæringStatistikk?.verdi
                                 ? parseVerdi(bransjeEllerNæringStatistikk?.verdi)
-                                : undefined
+                                : undefined,
+                            antallKvartalerVirksomhet
                         )}
                     </div>
                 )}
         </>
     );
-    const vurderingstekst = sammenliknSykefraværstekst(
-        sykefraværVurdering,
-        sammenligningsType,
-        harBransje
-    );
+    const vurderingstekst = sammenliknSykefraværstekst(sykefraværVurdering, sammenligningsType);
 
     const getPaneltittel = (): JSX.Element | string => {
         switch (sammenligningsType) {
