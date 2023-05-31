@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { Table } from '@navikt/ds-react';
+import { Table, Label, BodyLong } from "@navikt/ds-react";
 import Tabellrader from './Tabellrader';
 import {
     BransjeEllerNæringLabel,
@@ -31,8 +30,8 @@ const Tabell: FunctionComponent<TabellProps> = ({
         if (harOverordnetEnhet) {
             return (
                 <Table.HeaderCell scope="col" align="right">
-                    <Element>Overordnet enhet</Element>
-                    <Normaltekst>{historikkLabels.overordnetEnhet}</Normaltekst>
+                    <Label>Overordnet enhet</Label>
+                    <BodyLong>{historikkLabels.overordnetEnhet}</BodyLong>
                 </Table.HeaderCell>
             );
         }
@@ -46,17 +45,17 @@ const Tabell: FunctionComponent<TabellProps> = ({
                         <Table.HeaderCell scope={'col'}>År</Table.HeaderCell>
                         <Table.HeaderCell scope="col">Kvartal</Table.HeaderCell>
                         <Table.HeaderCell scope="col" align="right">
-                            <Element>Din virksomhet</Element>{' '}
-                            <Normaltekst>{historikkLabels.virksomhet}</Normaltekst>
+                            <Label>Din virksomhet</Label>{' '}
+                            <BodyLong>{historikkLabels.virksomhet}</BodyLong>
                         </Table.HeaderCell>
                         {headerOverordnetEnhet()}
                         <Table.HeaderCell scope="col" align="right">
-                            <Element>{bransjeEllerNæringLabel}</Element>{' '}
-                            <Normaltekst>{historikkLabels.næringEllerBransje}</Normaltekst>
+                            <Label>{bransjeEllerNæringLabel}</Label>{' '}
+                            <BodyLong>{historikkLabels.næringEllerBransje}</BodyLong>
                         </Table.HeaderCell>
                         <Table.HeaderCell scope="col" align="right">
-                            <Element>Sektor</Element>{' '}
-                            <Normaltekst>{historikkLabels.sektor}</Normaltekst>
+                            <Label>Sektor</Label>{' '}
+                            <BodyLong>{historikkLabels.sektor}</BodyLong>
                         </Table.HeaderCell>
                         <Table.HeaderCell scope="col" align="right">
                             {historikkLabels.land}

@@ -3,9 +3,8 @@ import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistor
 import Graf from './Graf/Graf';
 import Tabell from './Tabell/Tabell';
 import './GrafOgTabell.less';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestStatus } from '../api/api-utils';
-import { Alert, Loader, ToggleGroup } from "@navikt/ds-react";
+import { Alert, Loader, ToggleGroup, BodyLong, Heading } from "@navikt/ds-react";
 import {
     getBransjeEllerNæringLabel,
     getHistorikkLabels,
@@ -28,13 +27,13 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
             <div className="graf-og-tabell">
                 <div className="graf-og-tabell__overdel-wrapper">
                     <div className="graf-og-tabell__tekst-wrapper">
-                        <Systemtittel tag="h2" className="graf-og-tabell__tittel">
+                        <Heading className="graf-og-tabell__tittel" size="medium" level="2">
                             Se sykefraværet over tid
-                        </Systemtittel>
-                        <Normaltekst className="graf-og-tabell__ingress">
+                        </Heading>
+                        <BodyLong className="graf-og-tabell__ingress">
                             Se hvordan det legemeldte sykefraværet utvikler seg over tid. Du kan
                             sammenligne sykefraværet deres med næringen og sektoren dere tilhører.
-                        </Normaltekst>
+                        </BodyLong>
                     </div>
                     <ToggleGroup
                         aria-label="Hvis du bruker skjermleser, bør du velge tabell"

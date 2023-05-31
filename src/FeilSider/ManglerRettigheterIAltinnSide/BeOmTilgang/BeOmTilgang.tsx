@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { LinkPanel } from '@navikt/ds-react';
+import { LinkPanel, BodyLong, Heading } from "@navikt/ds-react";
 import { ReactComponent as AltinnLogo } from './altinn-logo.svg';
 import './BeOmTilgang.less';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { useOrgnr } from '../../../hooks/useOrgnr';
 
 const beOmTilgangTilSykefraværsstatistikkIAltinnLink = (orgnr: string | undefined) =>
@@ -18,13 +17,13 @@ export const BeOmTilgang: FunctionComponent = () => {
                         <AltinnLogo />
                     </span>
                     <span className="be-om-tilgang__tekst">
-                        <Undertittel tag="span" className="be-om-tilgang__tittel">
+                        <Heading className="be-om-tilgang__tittel" size="small" as="span">
                             Be om tilgang i Altinn
-                        </Undertittel>
-                        <Normaltekst tag="span">
+                        </Heading>
+                        <BodyLong as="span">
                             Gå til Altinn og be om tilgang til tjenesten. Du kan velge hvem i
                             virksomheten som får forespørselen.
-                        </Normaltekst>
+                        </BodyLong>
                     </span>
                 </span>
             </LinkPanel.Title>
