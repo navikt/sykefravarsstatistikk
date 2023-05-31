@@ -1,26 +1,24 @@
 import React, { FunctionComponent } from 'react';
 import { RestStatus } from '../../api/api-utils';
-import { Normaltekst } from 'nav-frontend-typografi';
 import { getPeriodeMedDato } from '../../utils/app-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
+import { BodyShort } from '@navikt/ds-react';
 
 export const PeriodeForStatistikk: FunctionComponent<{
     restPubliseringsdatoer: RestPubliseringsdatoer;
 }> = ({ restPubliseringsdatoer }) => {
-    if (restPubliseringsdatoer.status === RestStatus.Suksess) {
+    const status = restPubliseringsdatoer.status;
+    if (status === RestStatus.Suksess) {
         return (
-            <Normaltekst>
+            <BodyShort size="small">
                 {`Sykefraværsstatistikken er fra perioden ` +
                     getPeriodeMedDato(restPubliseringsdatoer.data.gjeldendePeriode)}
-            </Normaltekst>
+            </BodyShort>
         );
-    } else if (
-        restPubliseringsdatoer.status === RestStatus.IkkeLastet ||
-        restPubliseringsdatoer.status === RestStatus.LasterInn
-    ) {
+    } else if (status === RestStatus.IkkeLastet || status === RestStatus.LasterInn) {
         return <NavFrontendSpinner />;
     } else {
-        return <Normaltekst>{''}</Normaltekst>;
+        return <BodyShort>{''}</BodyShort>;
     }
 };

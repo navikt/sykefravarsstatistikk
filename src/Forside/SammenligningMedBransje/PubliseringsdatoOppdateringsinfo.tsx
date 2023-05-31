@@ -4,6 +4,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { formatterDatoMedMånedNavn } from '../../utils/app-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
 import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
+import { BodyShort } from "@navikt/ds-react";
 
 export const PubliseringsdatoOppdateringsinfo: FunctionComponent<{
     restPubliseringsdatoer: RestPubliseringsdatoer;
@@ -12,12 +13,12 @@ export const PubliseringsdatoOppdateringsinfo: FunctionComponent<{
         const publiseringsdatoer = restPubliseringsdatoer.data;
         return (
             <div>
-                <Normaltekst>
+                <BodyShort size="small">
                     {`Sist oppdatert: ` +
                         formatterDatoMedMånedNavn(
                             new Date(publiseringsdatoer.sistePubliseringsdato)
                         )}
-                </Normaltekst>
+                </BodyShort>
                 <Normaltekst>
                     {isFinite(new Date(publiseringsdatoer.nestePubliseringsdato).getDate()) &&
                         `Neste oppdatering: ` +
@@ -33,6 +34,6 @@ export const PubliseringsdatoOppdateringsinfo: FunctionComponent<{
     ) {
         return <NavFrontendSpinner />;
     } else {
-        return <Normaltekst>{''}</Normaltekst>;
+        return <BodyShort>{''}</BodyShort>;
     }
 };

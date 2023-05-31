@@ -18,7 +18,7 @@ const EksternLenke: FunctionComponent<WithRequired<LinkProps, 'href'>> = ({
     return (
         <Link
             {...lenkeProperties}
-            className={classNames('ekstern-lenke', className)}
+            className={classNames(className)}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => {

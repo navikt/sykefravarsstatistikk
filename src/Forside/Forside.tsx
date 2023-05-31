@@ -52,16 +52,13 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     return (
         <div className="forside__wrapper">
             <div className="forside">
-                {harFeil && (
-                    <Alert
-                        variant={'error'}
-                        className="sammenligningspaneler__info-eller-feilmelding"
-                    >
-                        Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen
-                        senere.
-                    </Alert>
-                )}
                 <div className="forside__innhold" ref={innholdRef}>
+                    {harFeil && (
+                        <Alert variant={'error'} className="forside__innhold__info-eller-feilmelding">
+                            Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen
+                            senere.
+                        </Alert>
+                    )}
                     <div className="forside__innhold__header">
                         <BodyShort className="forside__innhold__href">
                             {window.location.href}

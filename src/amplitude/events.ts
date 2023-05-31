@@ -22,11 +22,3 @@ export function sendPanelEkspanderEvent(panelnavn: string) {
 export function sendPanelKollapsEvent(panelnavn: string) {
     sendAnalytics('panel-kollaps', { panelnavn });
 }
-
-export function sendTilbakemeldingFraBrukerEvent(id: string, type?: string, verdi?: any) {
-    sendAnalytics('tilbakemelding-fra-bruker', {
-        id,
-        type,
-        verdi,
-    });
-}
