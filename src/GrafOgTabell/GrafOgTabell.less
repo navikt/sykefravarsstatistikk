@@ -5,13 +5,6 @@
 }
 
 .graf-og-tabell {
-  .typo-normal-mixin();
-  background-color: white;
-  margin: 0 auto 0;
-  border-radius: 0.25rem;
-  max-width: 60rem;
-  min-height: 30rem;
-
   &__info-eller-feilmelding {
     width: 100%;
     margin: 0 auto 1.5rem;
@@ -42,10 +35,6 @@
     overflow: hidden;
   }
 
-  &__knapper {
-    margin-top: 2rem;
-  }
-
   &__spinner {
     display: flex;
     justify-content: center;
@@ -57,6 +46,11 @@
     margin-left: 2rem;
     margin-right: 2rem;
     margin-bottom: 2rem;
+  }
+
+  &__toggle-group {
+    height: fit-content;
+    align-self: end;
   }
 
   @media (min-width: @screen-sm-min) {
@@ -71,13 +65,7 @@
     }
 
     &__tekst-wrapper {
-      max-width: 60%;
-    }
-
-    &__knapper {
-      max-width: calc(40% - 2rem);
-      margin-top: 0;
-      margin-left: 2rem;
+      max-width: 70%;
     }
 
     &__innhold {

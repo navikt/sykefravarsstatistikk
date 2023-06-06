@@ -3,7 +3,6 @@ import 'core-js/es/array/to-reversed';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import './index.less';
 import { BASE_PATH, MILJØ } from './konstanter';
 import { BrowserRouter } from 'react-router-dom';
 import { amplitudeClient } from './amplitude/client';

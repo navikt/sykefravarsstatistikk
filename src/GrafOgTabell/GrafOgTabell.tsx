@@ -4,7 +4,7 @@ import Graf from './Graf/Graf';
 import Tabell from './Tabell/Tabell';
 import './GrafOgTabell.less';
 import { RestStatus } from '../api/api-utils';
-import { BodyShort, Loader, ToggleGroup, Heading, Alert } from "@navikt/ds-react";
+import { BodyShort, Loader, ToggleGroup, Heading, Alert } from '@navikt/ds-react';
 import {
     getBransjeEllerNæringLabel,
     getHistorikkLabels,
@@ -36,12 +36,13 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
                         </BodyShort>
                     </div>
                     <ToggleGroup
+                        className="graf-og-tabell__toggle-group"
+                        defaultValue="graf"
                         aria-label="Hvis du bruker skjermleser, bør du velge tabell"
-                        className="graf-og-tabell__knapper"
-                        onChange={value => setGrafEllerTabell((value as 'graf'|'tabell'))}
+                        onChange={(value) => setGrafEllerTabell(value as 'graf' | 'tabell')}
                     >
-                        <ToggleGroup.Item value='graf'>Graf</ToggleGroup.Item>
-                        <ToggleGroup.Item value='tabell'>Tabell</ToggleGroup.Item>
+                        <ToggleGroup.Item value="graf">Graf</ToggleGroup.Item>
+                        <ToggleGroup.Item value="tabell">Tabell</ToggleGroup.Item>
                     </ToggleGroup>
                 </div>
                 <div className="graf-og-tabell__innhold">

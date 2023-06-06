@@ -1,14 +1,4 @@
 @import 'nav-frontend-core/less/core.less';
-@import 'nav-frontend-typografi-style/src/index';
-@import 'nav-frontend-lenker-style/src/lenker-mixins.less';
-
-@mobile-breakpoint: 576px;
-@tablet-breakpoint: @container-tablet;
-@desktop-breakpoint: @container-desktop;
-@content-max-width: 43.75rem;
-
-@arbeidsgiver-bla: @navBlaLighten80;
-@button-height: 46px;
 
 .sideinnhold-mixin() {
     background-color: white;
@@ -16,15 +6,4 @@
     margin: 0 auto 0;
     border-radius: 0.25rem;
     max-width: 60rem;
-}
-
-.panel-mixin() {
-    background: white;
-    border-radius: 0.25rem;
-    padding: 2rem 1.5rem;
-    width: 100%;
-
-    @media (min-width: @screen-sm-min) {
-        padding: 2rem;
-    }
 }
