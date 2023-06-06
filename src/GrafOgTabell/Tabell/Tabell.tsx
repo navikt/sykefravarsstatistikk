@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Table, Label, BodyShort } from "@navikt/ds-react";
+import { Table, Label, BodyShort } from '@navikt/ds-react';
 import Tabellrader from './Tabellrader';
 import {
     BransjeEllerNæringLabel,
@@ -30,8 +30,8 @@ const Tabell: FunctionComponent<TabellProps> = ({
         if (harOverordnetEnhet) {
             return (
                 <Table.HeaderCell scope="col" align="right">
-                    <Label>Overordnet enhet</Label>
-                    <BodyShort>{historikkLabels.overordnetEnhet}</BodyShort>
+                    <Label size="small">Overordnet enhet</Label>
+                    <BodyShort size="small">{historikkLabels.overordnetEnhet}</BodyShort>
                 </Table.HeaderCell>
             );
         }
@@ -42,12 +42,12 @@ const Tabell: FunctionComponent<TabellProps> = ({
             <Table zebraStripes={true}>
                 <Table.Header>
                     <Table.Row>
-                        <BodyShort size="small">
-                            <Table.HeaderCell scope={'col'}>År</Table.HeaderCell>
-                        </BodyShort>
-                        <BodyShort size="small">
-                            <Table.HeaderCell scope="col">Kvartal</Table.HeaderCell>
-                        </BodyShort>
+                        <Table.HeaderCell scope={'col'}>
+                            <Label size="small">År</Label>
+                        </Table.HeaderCell>
+                        <Table.HeaderCell scope="col">
+                            <Label size="small">Kvartal</Label>
+                        </Table.HeaderCell>
                         <Table.HeaderCell scope="col" align="right">
                             <Label size="small">Din virksomhet</Label>{' '}
                             <BodyShort size="small">{historikkLabels.virksomhet}</BodyShort>
