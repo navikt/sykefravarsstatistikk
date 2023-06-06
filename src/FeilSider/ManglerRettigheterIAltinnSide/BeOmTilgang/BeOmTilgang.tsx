@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { BodyShort, Label, LinkPanel } from "@navikt/ds-react";
+import { BodyShort, Label, LinkPanel, BodyLong, Heading } from "@navikt/ds-react";
 import { ReactComponent as AltinnLogo } from './altinn-logo.svg';
 import './BeOmTilgang.less';
 import { useOrgnr } from '../../../hooks/useOrgnr';

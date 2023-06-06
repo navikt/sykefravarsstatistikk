@@ -1,12 +1,10 @@
 import React, { FunctionComponent, useState } from 'react';
 import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
-import { ToggleGruppePure } from 'nav-frontend-toggle';
 import Graf from './Graf/Graf';
 import Tabell from './Tabell/Tabell';
 import './GrafOgTabell.less';
 import { RestStatus } from '../api/api-utils';
-import NavFrontendSpinner from 'nav-frontend-spinner';
-import { Alert, BodyShort, Heading } from "@navikt/ds-react";
+import { BodyShort, Loader, ToggleGroup, Heading, Alert } from "@navikt/ds-react";
 import {
     getBransjeEllerNæringLabel,
     getHistorikkLabels,
@@ -37,25 +35,14 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
                             sammenligne sykefraværet deres med næringen og sektoren dere tilhører.
                         </BodyShort>
                     </div>
-                    {/*TODO: Bytt ut med aksel for å bedre UU*/}
-                    <ToggleGruppePure
+                    <ToggleGroup
                         aria-label="Hvis du bruker skjermleser, bør du velge tabell"
                         className="graf-og-tabell__knapper"
-                        toggles={[
-                            {
-                                children: 'Graf',
-                                pressed: grafEllerTabell === 'graf',
-                                onClick: () => setGrafEllerTabell('graf'),
-                            },
-                            {
-                                children: 'Tabell',
-                                pressed: grafEllerTabell === 'tabell',
-                                onClick: () => {
-                                    setGrafEllerTabell('tabell');
-                                },
-                            },
-                        ]}
-                    />
+                        onChange={value => setGrafEllerTabell((value as 'graf'|'tabell'))}
+                    >
+                        <ToggleGroup.Item value='graf'>Graf</ToggleGroup.Item>
+                        <ToggleGroup.Item value='tabell'>Tabell</ToggleGroup.Item>
+                    </ToggleGroup>
                 </div>
                 <div className="graf-og-tabell__innhold">
                     <GrafOgTabellInnhold
@@ -81,7 +68,7 @@ const GrafOgTabellInnhold = ({
         case RestStatus.IkkeLastet: {
             return (
                 <div className="graf-og-tabell__spinner">
-                    <NavFrontendSpinner type={'XXL'} />
+                    <Loader size="2xlarge" />
                 </div>
             );
         }

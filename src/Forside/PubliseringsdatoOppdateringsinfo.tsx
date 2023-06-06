@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import NavFrontendSpinner from 'nav-frontend-spinner';
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Loader } from '@navikt/ds-react';
 import { RestStatus } from '../api/api-utils';
 import { formatterDatoMedMånedNavn } from '../utils/app-utils';
 import { RestPubliseringsdatoer } from '../api/publiseringsdatoer-api';
@@ -31,7 +30,7 @@ export const PubliseringsdatoOppdateringsinfo: FunctionComponent<{
         restPubliseringsdatoer.status === RestStatus.LasterInn ||
         restPubliseringsdatoer.status === RestStatus.IkkeLastet
     ) {
-        return <NavFrontendSpinner />;
+        return <Loader />;
     } else {
         return <BodyShort>{''}</BodyShort>;
     }

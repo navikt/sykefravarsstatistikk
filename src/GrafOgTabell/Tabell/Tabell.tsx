@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { BodyShort, Label, Table } from '@navikt/ds-react';
+import { Table, Label, BodyShort } from "@navikt/ds-react";
 import Tabellrader from './Tabellrader';
 import {
     BransjeEllerNæringLabel,
@@ -30,8 +30,8 @@ const Tabell: FunctionComponent<TabellProps> = ({
         if (harOverordnetEnhet) {
             return (
                 <Table.HeaderCell scope="col" align="right">
-                    <Label size="small">Overordnet enhet</Label>
-                    <BodyShort size="small">{historikkLabels.overordnetEnhet}</BodyShort>
+                    <Label>Overordnet enhet</Label>
+                    <BodyShort>{historikkLabels.overordnetEnhet}</BodyShort>
                 </Table.HeaderCell>
             );
         }
