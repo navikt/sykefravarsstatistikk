@@ -20,7 +20,7 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = (pro
             <div className="slik-har-vi-kommet-fram-til-ditt-resultat__innhold">
                 <BodyShort spacing>
                     Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken som
-                    NAV og Statistisk sentralbyrå (SSB) utarbeider.
+                    NAV og Statistisk sentralbyrå (SSB) utarbeider. Vi viser ikke egenmeldt sykefravær.
                 </BodyShort>
                 <BodyShort spacing>
                     Vi regner ut prosenten som et gjennomsnitt av de fire siste kvartalene som er
@@ -29,8 +29,7 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = (pro
                     kvartaler.
                 </BodyShort>
                 <BodyShort spacing>
-                    Vi viser kun legemeldt sykefravær. Sammenligningen tar ikke hensyn til
-                    størrelsen på din virksomhet.
+                    Sammenligningen tar ikke hensyn til størrelsen på din virksomhet.
                 </BodyShort>
                 <BodyShort spacing>Din bransje er hentet fra Altinn.</BodyShort>
                 <EksternLenke href="https://www.altinn.no/skjemaoversikt/bronnoysundregistrene/samordnet-registermelding---registrering-av-nye-og-endring-av-eksisterende-foretak-og-enheter/">
