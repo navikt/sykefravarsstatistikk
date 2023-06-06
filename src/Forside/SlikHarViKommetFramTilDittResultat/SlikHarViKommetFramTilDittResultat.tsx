@@ -25,12 +25,13 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = (pro
                 <BodyShort spacing>
                     Vi regner ut prosenten som et gjennomsnitt av de fire siste kvartalene som er
                     publisert. Hvis vi mangler ett eller flere kvartaler, så bruker vi de som er
-                    tilgjengelig. Du får sammenlikning når du har tall for fire kvartaler.
+                    tilgjengelig. Du får sammenlikning med bransjen når du har tall for fire
+                    kvartaler.
                 </BodyShort>
                 <BodyShort spacing>
-                    Sammenligningen tar ikke ta hensyn til størrelsen på din virksomhet.
+                    Vi viser kun legemeldt sykefravær. Sammenligningen tar ikke hensyn til
+                    størrelsen på din virksomhet.
                 </BodyShort>
-                <BodyShort spacing>Vi viser ikke egenmeldt sykefravær i sammenligningen.</BodyShort>
                 <BodyShort spacing>Din bransje er hentet fra Altinn.</BodyShort>
                 <EksternLenke href="https://www.altinn.no/skjemaoversikt/bronnoysundregistrene/samordnet-registermelding---registrering-av-nye-og-endring-av-eksisterende-foretak-og-enheter/">
                     Endre næringskode i Altinn

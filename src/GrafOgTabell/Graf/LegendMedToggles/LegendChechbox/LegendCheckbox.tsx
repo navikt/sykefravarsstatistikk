@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { GrafSymbol } from '../../GrafSymbol/GrafSymbol';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Checkbox } from 'nav-frontend-skjema';
 import './LegendChechbox.less';
 import { HistorikkLabel, HistorikkLabels } from '../../../../utils/sykefraværshistorikk-utils';
+import { BodyShort, Label } from "@navikt/ds-react";
 
 interface Props {
     linje: HistorikkLabel;
@@ -28,11 +28,11 @@ export const LegendCheckbox: FunctionComponent<Props> = ({
             <div className="legend-checkbox">
                 <GrafSymbol linje={linje} className="legend-checkbox__symbol" />
                 {prefiks && (
-                    <Element tag="span" className="legend-checkbox__prefiks">
+                    <Label as="span" className="legend-checkbox__prefiks">
                         {prefiks}
-                    </Element>
+                    </Label>
                 )}
-                <Normaltekst tag="span">{labels[linje]}</Normaltekst>
+                <BodyShort>{labels[linje]}</BodyShort>
             </div>
         }
     />

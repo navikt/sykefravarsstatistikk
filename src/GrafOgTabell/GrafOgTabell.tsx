@@ -4,10 +4,9 @@ import { ToggleGruppePure } from 'nav-frontend-toggle';
 import Graf from './Graf/Graf';
 import Tabell from './Tabell/Tabell';
 import './GrafOgTabell.less';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestStatus } from '../api/api-utils';
 import NavFrontendSpinner from 'nav-frontend-spinner';
-import { Alert } from "@navikt/ds-react";
+import { Alert, BodyShort, Heading } from "@navikt/ds-react";
 import {
     getBransjeEllerNæringLabel,
     getHistorikkLabels,
@@ -30,13 +29,13 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
             <div className="graf-og-tabell">
                 <div className="graf-og-tabell__overdel-wrapper">
                     <div className="graf-og-tabell__tekst-wrapper">
-                        <Systemtittel tag="h2" className="graf-og-tabell__tittel">
+                        <Heading spacing level="2" size="medium">
                             Se sykefraværet over tid
-                        </Systemtittel>
-                        <Normaltekst className="graf-og-tabell__ingress">
+                        </Heading>
+                        <BodyShort className="graf-og-tabell__ingress">
                             Se hvordan det legemeldte sykefraværet utvikler seg over tid. Du kan
                             sammenligne sykefraværet deres med næringen og sektoren dere tilhører.
-                        </Normaltekst>
+                        </BodyShort>
                     </div>
                     {/*TODO: Bytt ut med aksel for å bedre UU*/}
                     <ToggleGruppePure
