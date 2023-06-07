@@ -57,11 +57,11 @@ const GrafVisning: FunctionComponent<Props> = ({
         innerWidth < SCREEN_SM_MIN
             ? { top: 0, right: 0, left: 10, bottom: 20 }
             : { top: 0, right: 0, left: 10, bottom: 50 };
-    const tickMargin = innerWidth < SCREEN_SM_MIN ? 5 : 20;
+    const tickMargin = innerWidth < SCREEN_SM_MIN ? 7 : 24;
     const getTickWidth = (percent: number) => {
         const threshold = { threeDigit: 80, twoDigit: 8 };
-        const digitWidth = innerWidth < SCREEN_SM_MIN ? 7 : 8;
-        const percentageWidth = innerWidth < SCREEN_SM_MIN ? 10 : 13;
+        const digitWidth = innerWidth < SCREEN_SM_MIN ? 9 : 11;
+        const percentageWidth = innerWidth < SCREEN_SM_MIN ? 12 : 15;
 
         if (percent > threshold.threeDigit) {
             return digitWidth * 3 + percentageWidth + tickMargin;
