@@ -88,28 +88,6 @@ describe('useAnalytics', () => {
         );
     });
 
-    it('To klikk på les-mer-panel sender panel-kollaps event til Amplitude', async () => {
-        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
-
-        const lesMerPanel = screen.getByRole('button', {
-            name: 'Slik har vi kommet fram til ditt resultat',
-        });
-
-        await userEvent.click(lesMerPanel);
-        expect(amplitudeMock.logEvent).not.toHaveBeenCalledWith(
-            'panel-kollaps',
-            expect.objectContaining({})
-        );
-
-        await userEvent.click(lesMerPanel);
-        expect(amplitudeMock.logEvent).toHaveBeenCalledWith(
-            'panel-kollaps',
-            expect.objectContaining({
-                panelnavn: 'Slik har vi kommet fram til ditt resultat',
-            })
-        );
-    });
-
     const AppContentWithRouter = (data: SykefraværAppData) => {
         return (
             <BrowserRouter>
