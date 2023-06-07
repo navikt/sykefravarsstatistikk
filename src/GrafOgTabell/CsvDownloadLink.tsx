@@ -1,5 +1,4 @@
 import {
-    BransjeEllerNæringLabel,
     HistorikkLabels,
     KvartalsvisSammenligning,
 } from '../utils/sykefraværshistorikk-utils';
@@ -12,7 +11,6 @@ import { formaterProsent } from './Tabell/tabell-utils';
 const buildCsvDataUrl = (
     labels: HistorikkLabels,
     data: KvartalsvisSammenligning[],
-    bransjeEllerNæringLabel: string,
     harOverordnetEnhet: boolean
 ) => {
     const csvHeaders = [
@@ -20,7 +18,7 @@ const buildCsvDataUrl = (
         'Kvartal',
         `Din virksomhet ${labels.virksomhet}`,
         harOverordnetEnhet ? labels.overordnetEnhet : undefined,
-        `${bransjeEllerNæringLabel} ${labels.næringEllerBransje}`,
+        `Bransje ${labels.næringEllerBransje}`,
         `Sektor ${labels.sektor}`,
         labels.land,
     ]
@@ -49,14 +47,12 @@ const buildCsvDataUrl = (
 type CsvDownloadLinkProps = {
     kvartalsvisSammenligning: KvartalsvisSammenligning[];
     harOverordnetEnhet: boolean;
-    bransjeEllerNæringLabel: BransjeEllerNæringLabel;
     historikkLabels: HistorikkLabels;
     onClick?: () => void;
 };
 export const CsvDownloadLink: FunctionComponent<CsvDownloadLinkProps> = ({
     kvartalsvisSammenligning,
     harOverordnetEnhet,
-    bransjeEllerNæringLabel,
     historikkLabels,
     onClick,
 }) => {
@@ -66,7 +62,6 @@ export const CsvDownloadLink: FunctionComponent<CsvDownloadLinkProps> = ({
             href={buildCsvDataUrl(
                 historikkLabels,
                 kvartalsvisSammenligning,
-                bransjeEllerNæringLabel,
                 harOverordnetEnhet
             )}
             download={`${historikkLabels.virksomhet}_Sykefraværsstatistikk.csv`}

@@ -37,7 +37,7 @@ export const grafConfig: GrafConfig = {
         virksomhet: 'Virksomhet',
         overordnetEnhet: 'Overordnet enhet',
         sektor: 'Sektor',
-        land: 'Norge',
+        land: ' Norge ',
     },
 };
 
@@ -78,6 +78,7 @@ export const getLinjerSomHarData = (
     for (const historikk of sykefraværshistorikk) {
         if (linjer.size === keysSize) break;
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { årstall, kvartal, ...data } = historikk;
 
         for (const [label, prosent] of Object.entries(data)) {

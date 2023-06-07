@@ -1,9 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { Table, Label, BodyShort } from '@navikt/ds-react';
+import { Table } from '@navikt/ds-react';
 import Tabellrader from './Tabellrader';
 import {
-    BransjeEllerNæringLabel,
-    getBransjeEllerNæringLabel,
     getHistorikkLabels,
     historikkHarOverordnetEnhet,
     HistorikkLabels,
@@ -16,22 +14,19 @@ import { RestStatus } from '../../api/api-utils';
 export interface TabellProps {
     kvartalsvisSammenligning: KvartalsvisSammenligning[];
     harOverordnetEnhet: boolean;
-    bransjeEllerNæringLabel: BransjeEllerNæringLabel;
     historikkLabels: HistorikkLabels;
 }
 
 const Tabell: FunctionComponent<TabellProps> = ({
     kvartalsvisSammenligning,
     historikkLabels,
-    bransjeEllerNæringLabel,
     harOverordnetEnhet,
 }) => {
     const headerOverordnetEnhet = () => {
         if (harOverordnetEnhet) {
             return (
                 <Table.HeaderCell scope="col" align="right">
-                    <Label size="small">Overordnet enhet</Label>
-                    <BodyShort size="small">{historikkLabels.overordnetEnhet}</BodyShort>
+                    Overordnet enhet: {historikkLabels.overordnetEnhet}
                 </Table.HeaderCell>
             );
         }
@@ -39,30 +34,27 @@ const Tabell: FunctionComponent<TabellProps> = ({
 
     return (
         <div className="graf-tabell__wrapper">
-            <Table zebraStripes={true}>
+            <Table size="small" zebraStripes={true}>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell scope={'col'}>
-                            <Label size="small">År</Label>
+                            År
                         </Table.HeaderCell>
                         <Table.HeaderCell scope="col">
-                            <Label size="small">Kvartal</Label>
+                            Kvartal
                         </Table.HeaderCell>
                         <Table.HeaderCell scope="col" align="right">
-                            <Label size="small">Din virksomhet</Label>{' '}
-                            <BodyShort size="small">{historikkLabels.virksomhet}</BodyShort>
+                            {historikkLabels.virksomhet}
                         </Table.HeaderCell>
                         {headerOverordnetEnhet()}
                         <Table.HeaderCell scope="col" align="right">
-                            <Label size="small">{bransjeEllerNæringLabel}</Label>{' '}
-                            <BodyShort size="small">{historikkLabels.næringEllerBransje}</BodyShort>
+                            Bransje: {historikkLabels.næringEllerBransje}
                         </Table.HeaderCell>
                         <Table.HeaderCell scope="col" align="right">
-                            <Label size="small">Sektor</Label>{' '}
-                            <BodyShort size="small">{historikkLabels.sektor}</BodyShort>
+                            Sektor: {historikkLabels.sektor}
                         </Table.HeaderCell>
                         <Table.HeaderCell scope="col" align="right">
-                            <BodyShort size="small">{historikkLabels.land}</BodyShort>
+                            {historikkLabels.land}
                         </Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
@@ -84,7 +76,6 @@ export function hentTabellProps(
 ): TabellProps | undefined {
     if (restSykefraværsstatistikk.status === RestStatus.Suksess) {
         const harOverordnetEnhet = historikkHarOverordnetEnhet(restSykefraværsstatistikk.data);
-        const bransjeEllerNæringLabel = getBransjeEllerNæringLabel(restSykefraværsstatistikk.data);
         const historikkLabels = getHistorikkLabels(restSykefraværsstatistikk.data);
         const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
             restSykefraværsstatistikk.data
@@ -93,7 +84,6 @@ export function hentTabellProps(
 
         return {
             harOverordnetEnhet,
-            bransjeEllerNæringLabel,
             historikkLabels,
             kvartalsvisSammenligning: kvartalsvisSammenligningReversed,
         };

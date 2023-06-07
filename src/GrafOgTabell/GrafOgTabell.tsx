@@ -106,7 +106,6 @@ const GrafOgTabellInnhold = ({
                     <Tabell
                         kvartalsvisSammenligning={kvartalsvisSammenligningReversed}
                         historikkLabels={historikkLabels}
-                        bransjeEllerNæringLabel={bransjeEllerNæringLabel}
                         harOverordnetEnhet={harOverordnetEnhet}
                     />
                 );
@@ -117,7 +116,6 @@ const GrafOgTabellInnhold = ({
                     <CsvDownloadLink
                         kvartalsvisSammenligning={kvartalsvisSammenligningReversed}
                         harOverordnetEnhet={harOverordnetEnhet}
-                        bransjeEllerNæringLabel={bransjeEllerNæringLabel}
                         historikkLabels={historikkLabels}
                         onClick={() => sendKnappEvent('last ned csv')}
                     />
