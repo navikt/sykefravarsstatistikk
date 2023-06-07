@@ -24,7 +24,6 @@
     "https-proxy-agent": "^5.0.0",
     "immer": "^9.0.6",
     "is-svg": "^4.4.0",
-    "nav-frontend-core": "^6.0.1",
     "nth-check": "^2.0.1",
     "pino": "^8.8.0",
     "react": "^18.2.0",

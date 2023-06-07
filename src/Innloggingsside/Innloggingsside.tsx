@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { BodyShort, Button, Heading, Link } from '@navikt/ds-react';
+import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import illustrasjonSvg from './statistikk-ikon.svg';
 import './Innloggingsside.less';
 import { EnvironmentContext } from '../Context/EnvironmentContext';

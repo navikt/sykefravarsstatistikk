@@ -14,7 +14,7 @@ interface Props {
 
 const Banner: React.FunctionComponent<Props> = (props) => {
     const { tittel, restOrganisasjoner } = props;
-    let altinnOrganisasjoner: AltinnOrganisasjon[] =
+    const altinnOrganisasjoner: AltinnOrganisasjon[] =
         restOrganisasjoner.status === RestStatus.Suksess ? restOrganisasjoner.data : [];
 
     const [bedriftValgtManueltFraLista, setBedriftValgtManueltFraLista] = useState(false);
