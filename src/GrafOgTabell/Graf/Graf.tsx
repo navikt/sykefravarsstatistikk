@@ -6,7 +6,6 @@ import { LegendMedToggles } from './LegendMedToggles/LegendMedToggles';
 import GrafVisning from './GrafVisning';
 import { listFilterBuilder } from '../../utils/app-utils';
 import {
-    BransjeEllerNæringLabel,
     HistorikkLabel,
     HistorikkLabels,
     KvartalsvisSammenligning,
@@ -14,7 +13,6 @@ import {
 
 interface Props {
     kvartalsvisSammenligning: KvartalsvisSammenligning[];
-    bransjeEllerNæringLabel: BransjeEllerNæringLabel;
     historikkLabels: HistorikkLabels;
 }
 
@@ -35,14 +33,12 @@ const Graf: FunctionComponent<Props> = (props) => {
         <>
             <LegendMedToggles
                 labels={props.historikkLabels}
-                bransjeEllerNæringLabel={props.bransjeEllerNæringLabel}
                 linjerSomKanVises={linjerSomKanVises}
                 linjerSomSkalVises={linjerSomSkalVises}
                 setLinjerSomSkalVises={setLinjerSomSkalVises}
             />
             <GrafVisning
                 kvartalsvisSammenligning={props.kvartalsvisSammenligning}
-                bransjeEllerNæringLabel={props.bransjeEllerNæringLabel}
                 linjerSomSkalVises={linjerSomSkalVises}
             />
         </>

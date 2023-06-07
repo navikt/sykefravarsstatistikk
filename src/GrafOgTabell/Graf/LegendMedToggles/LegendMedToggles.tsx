@@ -1,16 +1,11 @@
 import React, { FunctionComponent } from 'react';
-import { CheckboxGruppe } from 'nav-frontend-skjema';
-import { LegendCheckbox } from './LegendChechbox/LegendCheckbox';
+import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import './LegendMedToggles.less';
-import {
-    BransjeEllerNæringLabel,
-    HistorikkLabel,
-    HistorikkLabels,
-} from '../../../utils/sykefraværshistorikk-utils';
+import { HistorikkLabel, HistorikkLabels } from '../../../utils/sykefraværshistorikk-utils';
+import { GrafSymbol } from '../GrafSymbol/GrafSymbol';
 
 interface Props {
     labels: HistorikkLabels;
-    bransjeEllerNæringLabel: BransjeEllerNæringLabel;
     linjerSomKanVises: HistorikkLabel[];
     linjerSomSkalVises: HistorikkLabel[];
     setLinjerSomSkalVises: (linjer: HistorikkLabel[]) => void;
@@ -18,7 +13,6 @@ interface Props {
 
 export const LegendMedToggles: FunctionComponent<Props> = ({
     labels,
-    bransjeEllerNæringLabel,
     linjerSomKanVises,
     linjerSomSkalVises,
     setLinjerSomSkalVises,
@@ -32,33 +26,28 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
         }
     };
 
-    const checkboxProps = {
-        linjerSomSkalVises,
-        labels,
-        onChange,
-    };
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const prefikser: { [linje in HistorikkLabel]: string } = {
         virksomhet: 'Virksomhet:',
         overordnetEnhet: 'Overordnet enhet:',
-        næringEllerBransje: bransjeEllerNæringLabel + ':',
+        næringEllerBransje: 'Bransje:',
         sektor: 'Sektor:',
         land: '',
     };
 
     return (
-        <div className="legend-med-toggles">
-            <CheckboxGruppe>
-                {linjerSomKanVises.map((linje) => (
-                    <LegendCheckbox
-                        key={linje}
-                        {...checkboxProps}
-                        linje={linje}
-                        prefiks={prefikser[linje]}
-                    />
-                ))}
-            </CheckboxGruppe>
-        </div>
+        <CheckboxGroup legend="Velg linjer som skal vises i grafen">
+            {linjerSomKanVises.map((linje) => (
+                <Checkbox
+                    checked={linjerSomSkalVises.includes(linje)}
+                    value={linje}
+                    onChange={onChange}
+                >
+                    <div className="legend-med-toggles__symbol_og_tekst_wrapper">
+                        <GrafSymbol linje={linje} className="legend-med-toggles__symbol" />
+                        {prefikser[linje]} {labels[linje]}
+                    </div>
+                </Checkbox>
+            ))}
+        </CheckboxGroup>
     );
 };

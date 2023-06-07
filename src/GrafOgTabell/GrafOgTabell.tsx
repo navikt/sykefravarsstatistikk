@@ -6,7 +6,6 @@ import './GrafOgTabell.less';
 import { RestStatus } from '../api/api-utils';
 import { BodyShort, Loader, ToggleGroup, Heading, Alert } from '@navikt/ds-react';
 import {
-    getBransjeEllerNæringLabel,
     getHistorikkLabels,
     historikkHarOverordnetEnhet,
     konverterTilKvartalsvisSammenligning,
@@ -86,9 +85,6 @@ const GrafOgTabellInnhold = ({
 
         case RestStatus.Suksess: {
             const harOverordnetEnhet = historikkHarOverordnetEnhet(restSykefraværsstatistikk.data);
-            const bransjeEllerNæringLabel = getBransjeEllerNæringLabel(
-                restSykefraværsstatistikk.data
-            );
             const historikkLabels = getHistorikkLabels(restSykefraværsstatistikk.data);
             const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
                 restSykefraværsstatistikk.data
@@ -99,7 +95,6 @@ const GrafOgTabellInnhold = ({
                 grafEllerTabell === 'graf' ? (
                     <Graf
                         kvartalsvisSammenligning={kvartalsvisSammenligning}
-                        bransjeEllerNæringLabel={bransjeEllerNæringLabel}
                         historikkLabels={historikkLabels}
                     />
                 ) : (

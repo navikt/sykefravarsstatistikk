@@ -8,7 +8,6 @@ import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString } from '.
 import XAkseTick from './XAkseTick';
 import { useInnerWidth } from '../../utils/innerWidth-hook';
 import {
-    BransjeEllerNæringLabel,
     HistorikkLabel,
     KvartalsvisSammenligning,
 } from '../../utils/sykefraværshistorikk-utils';
@@ -16,7 +15,6 @@ import YAkseTick from './YAkseTick';
 
 interface Props {
     kvartalsvisSammenligning: KvartalsvisSammenligning[];
-    bransjeEllerNæringLabel: BransjeEllerNæringLabel;
     linjerSomSkalVises: HistorikkLabel[];
 }
 
@@ -24,7 +22,6 @@ const SCREEN_SM_MIN = 768;
 
 const GrafVisning: FunctionComponent<Props> = ({
     kvartalsvisSammenligning,
-    bransjeEllerNæringLabel,
     linjerSomSkalVises,
 }) => {
     const innerWidth = useInnerWidth();
@@ -79,7 +76,7 @@ const GrafVisning: FunctionComponent<Props> = ({
                     tick={YAkseTick}
                     width={tickWidth}
                 />
-                {grafTooltip(bransjeEllerNæringLabel)}
+                {grafTooltip()}
                 {grafLinjer(linjerSomSkalVises)}
             </LineChart>
         </ResponsiveContainer>

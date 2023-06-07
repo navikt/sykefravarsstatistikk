@@ -1,5 +1,4 @@
 import {
-    BransjeEllerNæringLabel,
     HistorikkLabel,
     HistorikkLabels,
     isHistorikkLabel,
@@ -49,11 +48,7 @@ export const getFarge = (name: HistorikkLabel): SymbolType =>
 
 export const getTooltipsnavn = (
     name: HistorikkLabel,
-    bransjeEllerNæringLabel: BransjeEllerNæringLabel
 ): string => {
-    if (name === 'næringEllerBransje') {
-        return bransjeEllerNæringLabel;
-    }
     return name in grafConfig.tooltipsnavn ? grafConfig.tooltipsnavn[name] : 'Prosent';
 };
 
