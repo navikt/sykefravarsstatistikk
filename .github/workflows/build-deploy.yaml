@@ -65,7 +65,7 @@ jobs:
 
     deploy-to-dev-gcp-ekstern:
         name: Deploy to dev-gcp-ekstern
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/ekstern-dev-fiks'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/codemod_migration'
         needs: compile-test-and-build
         runs-on: Ubuntu-20.04
         steps:
