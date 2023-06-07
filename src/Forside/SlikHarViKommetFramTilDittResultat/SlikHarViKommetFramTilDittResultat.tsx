@@ -1,26 +1,22 @@
 import React, { FunctionComponent } from 'react';
-import { ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
-import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 import './SlikHarViKommetFramTilDittResultat.less';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, ReadMore } from '@navikt/ds-react';
+import { sendPanelEkspanderEvent} from "../../amplitude/events";
 
-interface Props {
-    kvartaler?: ÅrstallOgKvartal[];
-    onÅpne?: () => void;
-}
-
-export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = (props) => {
+export const SlikHarViKommetFramTilDittResultat: FunctionComponent = () => {
+    const panelHeader = 'Slik har vi kommet fram til ditt resultat';
     return (
-        <LesMerPanel
+        <ReadMore
+            header={panelHeader}
             className="slik-har-vi-kommet-fram-til-ditt-resultat"
-            åpneLabel="Slik har vi kommet fram til ditt resultat"
-            onÅpne={props.onÅpne}
+            onClick={() => sendPanelEkspanderEvent(panelHeader)}
         >
             <div className="slik-har-vi-kommet-fram-til-ditt-resultat__innhold">
                 <BodyShort spacing>
                     Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken som
-                    NAV og Statistisk sentralbyrå (SSB) utarbeider. Vi viser ikke egenmeldt sykefravær.
+                    NAV og Statistisk sentralbyrå (SSB) utarbeider. Vi viser ikke egenmeldt
+                    sykefravær.
                 </BodyShort>
                 <BodyShort spacing>
                     Vi regner ut prosenten som et gjennomsnitt av de fire siste kvartalene som er
@@ -32,13 +28,16 @@ export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = (pro
                     Sammenligningen tar ikke hensyn til størrelsen på din virksomhet.
                 </BodyShort>
                 <BodyShort spacing>Din bransje er hentet fra Altinn.</BodyShort>
-                <EksternLenke href="https://www.altinn.no/skjemaoversikt/bronnoysundregistrene/samordnet-registermelding---registrering-av-nye-og-endring-av-eksisterende-foretak-og-enheter/">
-                    Endre næringskode i Altinn
+                <EksternLenke
+                    className="slik-har-vi-kommet-fram-til-ditt-resultat__margin-bottom_075rem"
+                    href="https://www.altinn.no/skjemaoversikt/bronnoysundregistrene/samordnet-registermelding---registrering-av-nye-og-endring-av-eksisterende-foretak-og-enheter/"
+                >
+                    Trykk her for å endre næringskode i Altinn
                 </EksternLenke>
                 <EksternLenke href="https://www.brreg.no/bedrift/naeringskoder/">
-                    Om næringskoder i Brønnøysundregistrene
+                    Les mer om næringskoder i Brønnøysundregistrene
                 </EksternLenke>
             </div>
-        </LesMerPanel>
+        </ReadMore>
     );
 };
