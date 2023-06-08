@@ -1,10 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Table } from '@navikt/ds-react';
 import Tabellrader from './Tabellrader';
 import {
-    BransjeEllerNæringLabel,
-    getBransjeEllerNæringLabel,
     getHistorikkLabels,
     historikkHarOverordnetEnhet,
     HistorikkLabels,
@@ -17,22 +14,19 @@ import { RestStatus } from '../../api/api-utils';
 export interface TabellProps {
     kvartalsvisSammenligning: KvartalsvisSammenligning[];
     harOverordnetEnhet: boolean;
-    bransjeEllerNæringLabel: BransjeEllerNæringLabel;
     historikkLabels: HistorikkLabels;
 }
 
 const Tabell: FunctionComponent<TabellProps> = ({
     kvartalsvisSammenligning,
     historikkLabels,
-    bransjeEllerNæringLabel,
     harOverordnetEnhet,
 }) => {
     const headerOverordnetEnhet = () => {
         if (harOverordnetEnhet) {
             return (
                 <Table.HeaderCell scope="col" align="right">
-                    <Element>Overordnet enhet</Element>
-                    <Normaltekst>{historikkLabels.overordnetEnhet}</Normaltekst>
+                    Overordnet enhet: {historikkLabels.overordnetEnhet}
                 </Table.HeaderCell>
             );
         }
@@ -40,23 +34,24 @@ const Tabell: FunctionComponent<TabellProps> = ({
 
     return (
         <div className="graf-tabell__wrapper">
-            <Table zebraStripes={true}>
+            <Table size="small" zebraStripes={true}>
                 <Table.Header>
                     <Table.Row>
-                        <Table.HeaderCell scope={'col'}>År</Table.HeaderCell>
-                        <Table.HeaderCell scope="col">Kvartal</Table.HeaderCell>
+                        <Table.HeaderCell scope={'col'}>
+                            År
+                        </Table.HeaderCell>
+                        <Table.HeaderCell scope="col">
+                            Kvartal
+                        </Table.HeaderCell>
                         <Table.HeaderCell scope="col" align="right">
-                            <Element>Din virksomhet</Element>{' '}
-                            <Normaltekst>{historikkLabels.virksomhet}</Normaltekst>
+                            {historikkLabels.virksomhet}
                         </Table.HeaderCell>
                         {headerOverordnetEnhet()}
                         <Table.HeaderCell scope="col" align="right">
-                            <Element>{bransjeEllerNæringLabel}</Element>{' '}
-                            <Normaltekst>{historikkLabels.næringEllerBransje}</Normaltekst>
+                            Bransje: {historikkLabels.næringEllerBransje}
                         </Table.HeaderCell>
                         <Table.HeaderCell scope="col" align="right">
-                            <Element>Sektor</Element>{' '}
-                            <Normaltekst>{historikkLabels.sektor}</Normaltekst>
+                            Sektor: {historikkLabels.sektor}
                         </Table.HeaderCell>
                         <Table.HeaderCell scope="col" align="right">
                             {historikkLabels.land}
@@ -81,7 +76,6 @@ export function hentTabellProps(
 ): TabellProps | undefined {
     if (restSykefraværsstatistikk.status === RestStatus.Suksess) {
         const harOverordnetEnhet = historikkHarOverordnetEnhet(restSykefraværsstatistikk.data);
-        const bransjeEllerNæringLabel = getBransjeEllerNæringLabel(restSykefraværsstatistikk.data);
         const historikkLabels = getHistorikkLabels(restSykefraværsstatistikk.data);
         const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
             restSykefraværsstatistikk.data
@@ -90,7 +84,6 @@ export function hentTabellProps(
 
         return {
             harOverordnetEnhet,
-            bransjeEllerNæringLabel,
             historikkLabels,
             kvartalsvisSammenligning: kvartalsvisSammenligningReversed,
         };

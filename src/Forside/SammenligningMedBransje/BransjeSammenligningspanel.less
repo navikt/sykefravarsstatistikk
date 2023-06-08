@@ -1,8 +1,10 @@
 @import '../../variables';
 
 .bransje-sammenligningspanel {
-    + .bransje-sammenligningspanel {
-        margin-top: 2rem;
+    margin-top: 2rem;
+
+    &__extra-padding-desktop {
+        padding: 0;
     }
 
     &__gradert_intro {
@@ -32,78 +34,17 @@
         padding-top: 0.25rem;
     }
 
-    &__les-mer {
-        text-decoration: underline;
-        color: @navBla;
-        padding-top: 0.5rem;
-    }
-
-    &__les-mer--åpen {
-        color: inherit;
-        text-decoration: none;
-    }
-
-    &__les-mer-gradert-eksempel {
-        margin-bottom: 1rem;
-        margin-top: 0.5rem;
-
-        &__innhold {
-            padding-top: 1rem;
-            border-top: 1px solid @navLysGra;
-            margin-top: 1rem;
-            max-width: 30rem;
-            padding-bottom: 1rem;
-        }
-    }
-
     &__forklaring-av-vurdering {
         margin-top: 2rem;
-    }
-
-    &__panel {
-        border: 1px solid black;
-    }
-
-    &__bilde {
-        margin-top: -0.25rem;
-        margin-right: 0.75rem;
-    }
-
-    &__tips-tittel {
-        margin-top: 4rem;
-        display: flex;
-        align-items: center;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid @navLysGra;
-    }
-
-    &__tips {
-        margin-top: 2rem;
-    }
-
-    &__lukk-knapp {
-        .lenke-mixin();
-        display: block;
-        background: none;
-        border: none;
-        padding: 0;
-        margin-top: 2rem;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    &__lukk-chevron {
-        color: @navBla;
-        margin-left: 0.5rem;
-    }
-
-    &__utregningsforklring-tekst {
-        padding: 1rem 0 0.5rem 0;
     }
 
     @media print, (min-width: @screen-sm-min) {
         &__tittel-wrapper {
             flex-direction: row;
+        }
+
+        &__extra-padding-desktop {
+            padding: 1rem;
         }
 
         &__tittel-tekst {
@@ -120,14 +61,6 @@
             padding-left: 2rem;
         }
 
-        &__data-og-detaljert-visning-sykefravær {
-            max-width: 500px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto;
-            margin-top: 2rem;
-        }
-
         &__kakediagram {
             margin-right: 1rem;
             margin-left: 1rem;
@@ -137,6 +70,15 @@
             margin-top: 3rem;
         }
     }
+
+    &__wrapper {
+        max-width: 500px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        margin-top: 2rem;
+    }
+
 
     &__print-innhold {
         display: none;

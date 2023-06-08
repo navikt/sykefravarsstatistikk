@@ -84,7 +84,7 @@ describe('Tester side for manglende Altinn-rettigheter', () => {
         const { getByRole } = renderForside();
 
         const merInfoLenke = getByRole('link', {
-            name: 'Les mer om hvordan tilgangsstyringen i Altinn fungerer EksternLenkeIkon.svg',
+            name: 'Les mer om hvordan tilgangsstyringen i Altinn fungerer',
         }) as HTMLAnchorElement;
         expect(merInfoLenke.href).toBe(
             'https://arbeidsgiver.nav.no/min-side-arbeidsgiver/informasjon-om-tilgangsstyring'

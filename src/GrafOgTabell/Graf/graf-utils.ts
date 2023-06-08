@@ -1,5 +1,4 @@
 import {
-    BransjeEllerNæringLabel,
     HistorikkLabel,
     HistorikkLabels,
     isHistorikkLabel,
@@ -37,7 +36,7 @@ export const grafConfig: GrafConfig = {
         virksomhet: 'Virksomhet',
         overordnetEnhet: 'Overordnet enhet',
         sektor: 'Sektor',
-        land: 'Norge',
+        land: ' Norge ',
     },
 };
 
@@ -49,11 +48,7 @@ export const getFarge = (name: HistorikkLabel): SymbolType =>
 
 export const getTooltipsnavn = (
     name: HistorikkLabel,
-    bransjeEllerNæringLabel: BransjeEllerNæringLabel
 ): string => {
-    if (name === 'næringEllerBransje') {
-        return bransjeEllerNæringLabel;
-    }
     return name in grafConfig.tooltipsnavn ? grafConfig.tooltipsnavn[name] : 'Prosent';
 };
 
@@ -78,6 +73,7 @@ export const getLinjerSomHarData = (
     for (const historikk of sykefraværshistorikk) {
         if (linjer.size === keysSize) break;
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { årstall, kvartal, ...data } = historikk;
 
         for (const [label, prosent] of Object.entries(data)) {

@@ -1,15 +1,11 @@
 import React, { FunctionComponent, useState } from 'react';
 import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
-import { ToggleGruppePure } from 'nav-frontend-toggle';
 import Graf from './Graf/Graf';
 import Tabell from './Tabell/Tabell';
 import './GrafOgTabell.less';
-import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { RestStatus } from '../api/api-utils';
-import NavFrontendSpinner from 'nav-frontend-spinner';
-import AlertStripe from 'nav-frontend-alertstriper';
+import { BodyShort, Loader, ToggleGroup, Heading, Alert } from '@navikt/ds-react';
 import {
-    getBransjeEllerNæringLabel,
     getHistorikkLabels,
     historikkHarOverordnetEnhet,
     konverterTilKvartalsvisSammenligning,
@@ -30,33 +26,23 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
             <div className="graf-og-tabell">
                 <div className="graf-og-tabell__overdel-wrapper">
                     <div className="graf-og-tabell__tekst-wrapper">
-                        <Systemtittel tag="h2" className="graf-og-tabell__tittel">
+                        <Heading spacing level="2" size="medium">
                             Se sykefraværet over tid
-                        </Systemtittel>
-                        <Normaltekst className="graf-og-tabell__ingress">
+                        </Heading>
+                        <BodyShort className="graf-og-tabell__ingress">
                             Se hvordan det legemeldte sykefraværet utvikler seg over tid. Du kan
                             sammenligne sykefraværet deres med næringen og sektoren dere tilhører.
-                        </Normaltekst>
+                        </BodyShort>
                     </div>
-                    {/*TODO: Bytt ut med aksel for å bedre UU*/}
-                    <ToggleGruppePure
+                    <ToggleGroup
+                        className="graf-og-tabell__toggle-group"
+                        defaultValue="graf"
                         aria-label="Hvis du bruker skjermleser, bør du velge tabell"
-                        className="graf-og-tabell__knapper"
-                        toggles={[
-                            {
-                                children: 'Graf',
-                                pressed: grafEllerTabell === 'graf',
-                                onClick: () => setGrafEllerTabell('graf'),
-                            },
-                            {
-                                children: 'Tabell',
-                                pressed: grafEllerTabell === 'tabell',
-                                onClick: () => {
-                                    setGrafEllerTabell('tabell');
-                                },
-                            },
-                        ]}
-                    />
+                        onChange={(value) => setGrafEllerTabell(value as 'graf' | 'tabell')}
+                    >
+                        <ToggleGroup.Item value="graf">Graf</ToggleGroup.Item>
+                        <ToggleGroup.Item value="tabell">Tabell</ToggleGroup.Item>
+                    </ToggleGroup>
                 </div>
                 <div className="graf-og-tabell__innhold">
                     <GrafOgTabellInnhold
@@ -82,7 +68,7 @@ const GrafOgTabellInnhold = ({
         case RestStatus.IkkeLastet: {
             return (
                 <div className="graf-og-tabell__spinner">
-                    <NavFrontendSpinner type={'XXL'} />
+                    <Loader size="2xlarge" />
                 </div>
             );
         }
@@ -91,17 +77,14 @@ const GrafOgTabellInnhold = ({
         case RestStatus.IkkeInnlogget:
         case RestStatus.IngenTilgang: {
             return (
-                <AlertStripe type="feil" className="graf-og-tabell__feilside">
+                <Alert variant="error" className="graf-og-tabell__feilside">
                     Det skjedde en feil da vi prøvde å hente statistikken.
-                </AlertStripe>
+                </Alert>
             );
         }
 
         case RestStatus.Suksess: {
             const harOverordnetEnhet = historikkHarOverordnetEnhet(restSykefraværsstatistikk.data);
-            const bransjeEllerNæringLabel = getBransjeEllerNæringLabel(
-                restSykefraværsstatistikk.data
-            );
             const historikkLabels = getHistorikkLabels(restSykefraværsstatistikk.data);
             const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
                 restSykefraværsstatistikk.data
@@ -112,14 +95,12 @@ const GrafOgTabellInnhold = ({
                 grafEllerTabell === 'graf' ? (
                     <Graf
                         kvartalsvisSammenligning={kvartalsvisSammenligning}
-                        bransjeEllerNæringLabel={bransjeEllerNæringLabel}
                         historikkLabels={historikkLabels}
                     />
                 ) : (
                     <Tabell
                         kvartalsvisSammenligning={kvartalsvisSammenligningReversed}
                         historikkLabels={historikkLabels}
-                        bransjeEllerNæringLabel={bransjeEllerNæringLabel}
                         harOverordnetEnhet={harOverordnetEnhet}
                     />
                 );
@@ -130,7 +111,6 @@ const GrafOgTabellInnhold = ({
                     <CsvDownloadLink
                         kvartalsvisSammenligning={kvartalsvisSammenligningReversed}
                         harOverordnetEnhet={harOverordnetEnhet}
-                        bransjeEllerNæringLabel={bransjeEllerNæringLabel}
                         historikkLabels={historikkLabels}
                         onClick={() => sendKnappEvent('last ned csv')}
                     />

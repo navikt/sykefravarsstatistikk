@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import { Ingress, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './BransjeSammenligningspanel.less';
 import { Speedometer } from '../Speedometer/Speedometer';
 import {
@@ -7,33 +6,23 @@ import {
     SammenligningsType,
     sammenliknSykefraværstekst,
 } from '../vurderingstekster';
-import { DetaljertVisningSykefravær } from './DetaljertVisningSykefravær';
 import { Kakediagram } from '../Kakediagram/Kakediagram';
 import { Statistikk } from '../../hooks/useAggregertStatistikk';
 import { sammenliknSykefravær } from '../vurdering-utils';
 import { parseVerdi } from '../../utils/app-utils';
-import { Heading, Panel } from '@navikt/ds-react';
+import { BodyShort, Heading, Ingress, Label, Panel } from '@navikt/ds-react';
+import { Prosent } from '../Prosent';
 
 interface Props {
     sammenligningsType: SammenligningsType;
     virksomhetStatistikk?: Statistikk;
     bransjeEllerNæringStatistikk?: Statistikk;
-    harBransje: boolean;
     defaultÅpen?: boolean;
     className?: string;
 }
 
-const antallKvartalerTekst = (antallKvartaler?: number) => {
-    return (
-        <Heading size="small" as="p">
-            <strong> {antallKvartaler || 0} av 4 kvartaler</strong>
-        </Heading>
-    );
-};
-
 export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
     sammenligningsType,
-    harBransje,
     virksomhetStatistikk,
     bransjeEllerNæringStatistikk,
 }) => {
@@ -42,39 +31,37 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
         bransjeEllerNæringStatistikk
     );
 
-    const overskriftForTallForNæringEllerBransje = harBransje ? 'Din bransje:' : 'Din næring:';
+    const antallKvartalerVirksomhet = virksomhetStatistikk?.kvartalerIBeregningen.length || 0;
 
     const innhold = (
         <>
-            <div className="bransje-sammenligningspanel__data-og-detaljert-visning-sykefravær">
-                <DetaljertVisningSykefravær
-                    overskrift="Din virksomhet:"
-                    prosent={virksomhetStatistikk?.verdi}
-                    visingAntallKvartaller={antallKvartalerTekst(
-                        virksomhetStatistikk?.kvartalerIBeregningen.length
-                    )}
-                />
-                <DetaljertVisningSykefravær
-                    overskrift={overskriftForTallForNæringEllerBransje}
-                    prosent={bransjeEllerNæringStatistikk?.verdi}
-                    visingAntallKvartaller={antallKvartalerTekst(
-                        bransjeEllerNæringStatistikk?.kvartalerIBeregningen.length
-                    )}
-                />
+            <div className="bransje-sammenligningspanel__wrapper">
+                <div>
+                    <Ingress as="span">Din virksomhet:</Ingress>
+                    <Prosent prosent={virksomhetStatistikk?.verdi} />
+                    <Label>{`${virksomhetStatistikk?.kvartalerIBeregningen.length} av 4 kvartaler`}</Label>
+                </div>
+                <div>
+                    <Ingress as="span">Din bransje:</Ingress>
+                    <Prosent prosent={bransjeEllerNæringStatistikk?.verdi} />
+                    <Label>4 av 4 kvartaler</Label>
+                </div>
             </div>
             {sammenligningsType === SammenligningsType.GRADERT && (
                 <div className="bransje-sammenligningspanel__gradert_intro">
-                    <Ingress>Slik regner vi ut prosenten på gradert sykmelding:</Ingress>
-                    <Normaltekst className="bransje-sammenligningspanel__utregningsforklring-tekst">
+                    <BodyShort spacing>
+                        <u>Slik regner vi ut prosenten på gradert sykmelding:</u>
+                    </BodyShort>
+                    <BodyShort spacing>
                         Vi teller antall fraværsdager med bruk av gradert sykmelding. Så beregner vi
                         hvor stor andel disse utgjør av alle legemeldte fraværsdager i din
                         virksomhet.
-                    </Normaltekst>
-                    <Normaltekst className="bransje-sammenligningspanel__les-mer-gradert-eksempel__innhold">
-                        La oss si du har 7,5% sykefravær, dette utgjør 100 tapte dagsverk i din
-                        virksomhet. Det ble benyttet gradert sykmelding i 20 dager, da får du 20%
-                        gradert sykmelding.
-                    </Normaltekst>
+                    </BodyShort>
+                    <BodyShort spacing>
+                        Som et eksempel, la oss si du har 7,5% sykefravær. Dette utgjør 100 tapte
+                        dagsverk i din virksomhet. Det ble benyttet gradert sykmelding i 20 dager,
+                        da får du 20% gradert sykmelding.
+                    </BodyShort>
                 </div>
             )}
             {sammenligningsType !== SammenligningsType.GRADERT &&
@@ -84,17 +71,14 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
                             sykefraværVurdering,
                             bransjeEllerNæringStatistikk?.verdi
                                 ? parseVerdi(bransjeEllerNæringStatistikk?.verdi)
-                                : undefined
+                                : undefined,
+                            antallKvartalerVirksomhet
                         )}
                     </div>
                 )}
         </>
     );
-    const vurderingstekst = sammenliknSykefraværstekst(
-        sykefraværVurdering,
-        sammenligningsType,
-        harBransje
-    );
+    const vurderingstekst = sammenliknSykefraværstekst(sykefraværVurdering, sammenligningsType);
 
     const getPaneltittel = (): JSX.Element | string => {
         switch (sammenligningsType) {
@@ -110,25 +94,26 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
     };
 
     return (
-        <Panel className="bransje-sammenligningspanel" border>
-            <div className="bransje-sammenligningspanel__tittel-wrapper">
-                {SammenligningsType.GRADERT === sammenligningsType ? (
-                    <Kakediagram
-                        resultat={sykefraværVurdering}
-                        className={'bransje-sammenligningspanel__kakediagram'}
-                    />
-                ) : (
-                    <Speedometer resultat={sykefraværVurdering} inline />
-                )}
-                <div className="bransje-sammenligningspanel__tittel-tekst">
-                    <Systemtittel tag="h2">{getPaneltittel()}</Systemtittel>
-                    <Normaltekst className="bransje-sammenligningspanel__tittel-forklaring">
-                        {vurderingstekst}
-                    </Normaltekst>
+        <Panel border className="bransje-sammenligningspanel">
+            <div className="bransje-sammenligningspanel__extra-padding-desktop">
+                <div className="bransje-sammenligningspanel__tittel-wrapper">
+                    {SammenligningsType.GRADERT === sammenligningsType ? (
+                        <Kakediagram resultat={sykefraværVurdering} />
+                    ) : (
+                        <Speedometer resultat={sykefraværVurdering} inline />
+                    )}
+                    <div className="bransje-sammenligningspanel__tittel-tekst">
+                        <Heading level="2" size="medium">
+                            {getPaneltittel()}
+                        </Heading>
+                        <BodyShort className="bransje-sammenligningspanel__tittel-forklaring">
+                            {vurderingstekst}
+                        </BodyShort>
+                    </div>
                 </div>
+                <div className="bransje-sammenligningspanel__innhold">{innhold}</div>
+                <div className="bransje-sammenligningspanel__print-innhold">{innhold}</div>
             </div>
-            <div className="bransje-sammenligningspanel__innhold">{innhold}</div>
-            <div className="bransje-sammenligningspanel__print-innhold">{innhold}</div>
         </Panel>
     );
 };

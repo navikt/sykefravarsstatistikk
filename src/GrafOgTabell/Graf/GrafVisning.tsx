@@ -4,21 +4,17 @@ import grafTooltip from './grafTooltip/grafTooltip';
 import grafLinjer from './grafLinjer';
 
 import './Graf.less';
-import 'nav-frontend-tabell-style';
 import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString } from './graf-utils';
 import XAkseTick from './XAkseTick';
 import { useInnerWidth } from '../../utils/innerWidth-hook';
 import {
-    BransjeEllerNæringLabel,
     HistorikkLabel,
     KvartalsvisSammenligning,
 } from '../../utils/sykefraværshistorikk-utils';
-import { getMax, pickBuilder } from '../../utils/app-utils';
 import YAkseTick from './YAkseTick';
 
 interface Props {
     kvartalsvisSammenligning: KvartalsvisSammenligning[];
-    bransjeEllerNæringLabel: BransjeEllerNæringLabel;
     linjerSomSkalVises: HistorikkLabel[];
 }
 
@@ -26,7 +22,6 @@ const SCREEN_SM_MIN = 768;
 
 const GrafVisning: FunctionComponent<Props> = ({
     kvartalsvisSammenligning,
-    bransjeEllerNæringLabel,
     linjerSomSkalVises,
 }) => {
     const innerWidth = useInnerWidth();
@@ -49,29 +44,20 @@ const GrafVisning: FunctionComponent<Props> = ({
         kvartalsvisSammenligning
     ).map((årstallOgKvartal) => lagTickString(årstallOgKvartal.årstall, årstallOgKvartal.kvartal));
 
-    const picker = pickBuilder(linjerSomSkalVises);
-    const maxProsent = kvartalsvisSammenligningData.flatMap(picker).reduce(getMax, 0);
-
     const YAxisPadding = { top: 16 };
     const margin =
         innerWidth < SCREEN_SM_MIN
-            ? { top: 0, right: 0, left: 10, bottom: 20 }
-            : { top: 0, right: 0, left: 10, bottom: 50 };
-    const tickMargin = innerWidth < SCREEN_SM_MIN ? 5 : 20;
-    const getTickWidth = (percent: number) => {
-        const threshold = { threeDigit: 80, twoDigit: 8 };
-        const digitWidth = innerWidth < SCREEN_SM_MIN ? 7 : 8;
-        const percentageWidth = innerWidth < SCREEN_SM_MIN ? 10 : 13;
+            ? { top: 0, right: 0, left: 14, bottom: 20 }
+            : { top: 0, right: 0, left: 5, bottom: 50 };
+    const tickMargin = innerWidth < SCREEN_SM_MIN ? 7 : 24;
 
-        if (percent > threshold.threeDigit) {
-            return digitWidth * 3 + percentageWidth + tickMargin;
-        }
-        if (percent > threshold.twoDigit) {
-            return digitWidth * 2 + percentageWidth + tickMargin;
-        }
-        return digitWidth + percentageWidth + tickMargin;
+    const getTickWidth = () => {
+        const digitWidth = innerWidth < SCREEN_SM_MIN ? 9 : 11;
+        const percentageWidth = innerWidth < SCREEN_SM_MIN ? 12 : 15;
+
+        return digitWidth * 2 + percentageWidth + tickMargin;
     };
-    const tickWidth = getTickWidth(maxProsent);
+    const tickWidth = getTickWidth();
 
     return (
         <ResponsiveContainer minHeight={400}>
@@ -90,7 +76,7 @@ const GrafVisning: FunctionComponent<Props> = ({
                     tick={YAkseTick}
                     width={tickWidth}
                 />
-                {grafTooltip(bransjeEllerNæringLabel)}
+                {grafTooltip()}
                 {grafLinjer(linjerSomSkalVises)}
             </LineChart>
         </ResponsiveContainer>

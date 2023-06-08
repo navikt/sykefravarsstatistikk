@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import Lenkepanel from 'nav-frontend-lenkepanel/lib';
+import { BodyShort, Label, LinkPanel } from "@navikt/ds-react";
 import { ReactComponent as AltinnLogo } from './altinn-logo.svg';
 import './BeOmTilgang.less';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { useOrgnr } from '../../../hooks/useOrgnr';
 
 const beOmTilgangTilSykefraværsstatistikkIAltinnLink = (orgnr: string | undefined) =>
@@ -11,25 +10,23 @@ const beOmTilgangTilSykefraværsstatistikkIAltinnLink = (orgnr: string | undefin
 export const BeOmTilgang: FunctionComponent = () => {
     const orgnr = useOrgnr();
     return (
-        <Lenkepanel
-            border
-            tittelProps="normaltekst"
-            href={beOmTilgangTilSykefraværsstatistikkIAltinnLink(orgnr)}
-        >
-            <span className="be-om-tilgang">
-                <span className="be-om-tilgang__svg">
-                    <AltinnLogo />
+        <LinkPanel border href={beOmTilgangTilSykefraværsstatistikkIAltinnLink(orgnr)}>
+            <LinkPanel.Title>
+                <span className="be-om-tilgang">
+                    <span className="be-om-tilgang__svg">
+                        <AltinnLogo />
+                    </span>
+                    <span className="be-om-tilgang__tekst">
+                        <Label size="medium" className="be-om-tilgang__tittel">
+                            Be om tilgang i Altinn
+                        </Label>
+                        <BodyShort>
+                            Gå til Altinn og be om tilgang til tjenesten. Du kan velge hvem i
+                            virksomheten som får forespørselen.
+                        </BodyShort>
+                    </span>
                 </span>
-                <span className="be-om-tilgang__tekst">
-                    <Undertittel tag="span" className="be-om-tilgang__tittel">
-                        Be om tilgang i Altinn
-                    </Undertittel>
-                    <Normaltekst tag="span">
-                        Gå til Altinn og be om tilgang til tjenesten. Du kan velge hvem i
-                        virksomheten som får forespørselen.
-                    </Normaltekst>
-                </span>
-            </span>
-        </Lenkepanel>
+            </LinkPanel.Title>
+        </LinkPanel>
     );
 };

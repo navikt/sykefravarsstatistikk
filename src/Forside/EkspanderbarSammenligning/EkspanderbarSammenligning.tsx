@@ -3,11 +3,8 @@ import { BransjeSammenligningspanel } from '../SammenligningMedBransje/BransjeSa
 import { RestStatus } from '../../api/api-utils';
 import Skeleton from 'react-loading-skeleton';
 import { SammenligningsType } from '../vurderingstekster';
-import { SlikHarViKommetFramTilDittResultat } from '../SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
-import './EkspanderbarSammenligning.less';
 import { RestAggregertStatistikk } from '../../hooks/useAggregertStatistikk';
 import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
-import { sammenliknSykefravær } from '../vurdering-utils';
 import { Statistikkategori } from '../../domene/statistikkategori';
 import { getBransjeEllerNæringKategori } from './GetBransjeEllerNæringKategori';
 
@@ -16,10 +13,7 @@ interface Props {
     restPubliseringsdatoer: RestPubliseringsdatoer;
 }
 
-export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
-    aggregertStatistikk,
-    restPubliseringsdatoer,
-}) => {
+export const EkspanderbarSammenligning: FunctionComponent<Props> = ({ aggregertStatistikk }) => {
     if (
         aggregertStatistikk.restStatus === RestStatus.IngenTilgang ||
         aggregertStatistikk.restStatus === RestStatus.IkkeInnlogget
@@ -39,8 +33,7 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
         );
     }
 
-    const statistikKategori = getBransjeEllerNæringKategori(aggregertStatistikk);
-    const harBransje = statistikKategori === Statistikkategori.BRANSJE;
+  const harBransje = getBransjeEllerNæringKategori(aggregertStatistikk) === Statistikkategori.BRANSJE;
 
     const [virksomhet, bransjeEllerNæring] = [
         aggregertStatistikk.aggregertData?.get(Statistikkategori.VIRKSOMHET),
@@ -49,40 +42,27 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
         ),
     ];
     return (
-        <div className="ekspanderbar-sammenligning">
-            <SlikHarViKommetFramTilDittResultat
-                resultat={sammenliknSykefravær(
-                    virksomhet?.prosentSiste4KvartalerTotalt,
-                    bransjeEllerNæring?.prosentSiste4KvartalerTotalt
-                )}
-                kvartaler={virksomhet?.prosentSiste4KvartalerTotalt?.kvartalerIBeregningen}
-                restPubliseringsdatoer={restPubliseringsdatoer}
-            />
+        <>
             <BransjeSammenligningspanel
-                className="ekspanderbar-sammenligning__sammenligning-totalt"
                 virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerTotalt}
                 bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerTotalt}
                 sammenligningsType={SammenligningsType.TOTALT}
-                harBransje={harBransje}
             />
             <BransjeSammenligningspanel
                 virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerGradert}
                 bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerGradert}
                 sammenligningsType={SammenligningsType.GRADERT}
-                harBransje={harBransje}
             />
             <BransjeSammenligningspanel
                 virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerKorttid}
                 bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerKorttid}
                 sammenligningsType={SammenligningsType.KORTTID}
-                harBransje={harBransje}
             />
             <BransjeSammenligningspanel
                 virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerLangtid}
                 bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerLangtid}
                 sammenligningsType={SammenligningsType.LANGTID}
-                harBransje={harBransje}
             />
-        </div>
+        </>
     );
 };

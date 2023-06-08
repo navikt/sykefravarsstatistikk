@@ -1,30 +1,37 @@
-@import 'nav-frontend-core/less/core.less';
-@import 'nav-frontend-typografi-style/src/index';
-@import 'nav-frontend-lenker-style/src/lenker-mixins.less';
+/*
+---------------
+FARGER
+---------------
+*/
 
-@mobile-breakpoint: 576px;
-@tablet-breakpoint: @container-tablet;
-@desktop-breakpoint: @container-desktop;
-@content-max-width: 43.75rem;
+@navMorkGra: #262626;
+@navLysGra: #f1f1f1;
 
-@arbeidsgiver-bla: @navBlaLighten80;
-@button-height: 46px;
+@navLysBlaLighten80: #d8f9ff;
+@navLysBlaLighten60: #b5f1ff;
 
-.sideinnhold-mixin() {
-    background-color: white;
-    padding: 2rem 2rem 3rem;
-    margin: 0 auto 0;
-    border-radius: 0.25rem;
-    max-width: 60rem;
-}
+@navBlaLighten80: #cce1ff;
+@navBlaLighten60: #99c3ff;
 
-.panel-mixin() {
-    background: white;
-    border-radius: 0.25rem;
-    padding: 2rem 1.5rem;
-    width: 100%;
+/*
+---------------
+BREKKPUNKTER
+---------------
+*/
 
-    @media (min-width: @screen-sm-min) {
-        padding: 2rem;
-    }
-}
+// Small screen / tablet
+@screen-sm: 768px;
+@screen-sm-min: @screen-sm;
+// ** Deprecated `@screen-tablet` as of v3.0.1
+@screen-tablet: @screen-sm-min;
+
+// Medium screen / desktop
+@screen-md: 992px;
+@screen-md-min: @screen-md;
+// ** Deprecated `@screen-desktop` as of v3.0.1
+@screen-desktop: @screen-md-min;
+
+// Large screen / wide desktop
+@screen-lg: 1200px;
+@screen-lg-min: @screen-lg;
+@screen-lg-desktop: @screen-lg-min;

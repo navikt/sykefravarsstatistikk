@@ -1,9 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import { RestStatus } from '../../api/api-utils';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { formatterDatoMedMånedNavn } from '../../utils/app-utils';
-import NavFrontendSpinner from 'nav-frontend-spinner';
-import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
+import { BodyShort, Loader } from '@navikt/ds-react';
+import { RestStatus } from '../api/api-utils';
+import { formatterDatoMedMånedNavn } from '../utils/app-utils';
+import { RestPubliseringsdatoer } from '../api/publiseringsdatoer-api';
 
 export const PubliseringsdatoOppdateringsinfo: FunctionComponent<{
     restPubliseringsdatoer: RestPubliseringsdatoer;
@@ -12,27 +11,27 @@ export const PubliseringsdatoOppdateringsinfo: FunctionComponent<{
         const publiseringsdatoer = restPubliseringsdatoer.data;
         return (
             <div>
-                <Normaltekst>
+                <BodyShort>
                     {`Sist oppdatert: ` +
                         formatterDatoMedMånedNavn(
                             new Date(publiseringsdatoer.sistePubliseringsdato)
                         )}
-                </Normaltekst>
-                <Normaltekst>
+                </BodyShort>
+                <BodyShort>
                     {isFinite(new Date(publiseringsdatoer.nestePubliseringsdato).getDate()) &&
                         `Neste oppdatering: ` +
                             formatterDatoMedMånedNavn(
                                 new Date(publiseringsdatoer.nestePubliseringsdato)
                             )}
-                </Normaltekst>
+                </BodyShort>
             </div>
         );
     } else if (
         restPubliseringsdatoer.status === RestStatus.LasterInn ||
         restPubliseringsdatoer.status === RestStatus.IkkeLastet
     ) {
-        return <NavFrontendSpinner />;
+        return <Loader />;
     } else {
-        return <Normaltekst>{''}</Normaltekst>;
+        return <BodyShort>{''}</BodyShort>;
     }
 };

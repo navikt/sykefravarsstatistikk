@@ -1,44 +1,43 @@
 import React, { FunctionComponent } from 'react';
-import { ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
-import { SlikHarViKommetFramTilDittResultatTekst } from './SlikHarViKommetFramTilDittResultatTekst';
-import LesMerPanel from '../../felleskomponenter/LesMerPanel/LesMerPanel';
 import './SlikHarViKommetFramTilDittResultat.less';
-import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
-import { SykefraværVurdering } from '../vurdering-utils';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
+import { BodyShort, ReadMore } from '@navikt/ds-react';
+import { sendPanelEkspanderEvent} from "../../amplitude/events";
 
-interface Props {
-    resultat: SykefraværVurdering;
-    kvartaler?: ÅrstallOgKvartal[];
-    onÅpne?: () => void;
-    restPubliseringsdatoer: RestPubliseringsdatoer;
-}
-
-export const SlikHarViKommetFramTilDittResultat: FunctionComponent<Props> = (props) => {
+export const SlikHarViKommetFramTilDittResultat: FunctionComponent = () => {
+    const panelHeader = 'Slik har vi kommet fram til ditt resultat';
     return (
-        <LesMerPanel
+        <ReadMore
+            header={panelHeader}
             className="slik-har-vi-kommet-fram-til-ditt-resultat"
-            åpneLabel="Slik har vi kommet fram til ditt resultat"
-            onÅpne={props.onÅpne}
+            onClick={() => sendPanelEkspanderEvent(panelHeader)}
         >
             <div className="slik-har-vi-kommet-fram-til-ditt-resultat__innhold">
-                <SlikHarViKommetFramTilDittResultatTekst
-                    resultat={props.resultat}
-                    restPubliseringsdatoer={props.restPubliseringsdatoer}
-                />
+                <BodyShort spacing>
+                    Legemeldt sykefravær i sammenligningen er hentet fra sykefraværsstatistikken som
+                    NAV og Statistisk sentralbyrå (SSB) utarbeider. Vi viser ikke egenmeldt
+                    sykefravær.
+                </BodyShort>
+                <BodyShort spacing>
+                    Vi regner ut prosenten som et gjennomsnitt av de fire siste kvartalene som er
+                    publisert. Hvis vi mangler ett eller flere kvartaler, så bruker vi de som er
+                    tilgjengelig. Du får sammenlikning med bransjen når du har tall for fire
+                    kvartaler.
+                </BodyShort>
+                <BodyShort spacing>
+                    Sammenligningen tar ikke hensyn til størrelsen på din virksomhet.
+                </BodyShort>
+                <BodyShort spacing>Din bransje er hentet fra Altinn.</BodyShort>
                 <EksternLenke
-                    style={{ display: 'block' }}
+                    className="slik-har-vi-kommet-fram-til-ditt-resultat__margin-bottom_075rem"
                     href="https://www.altinn.no/skjemaoversikt/bronnoysundregistrene/samordnet-registermelding---registrering-av-nye-og-endring-av-eksisterende-foretak-og-enheter/"
                 >
-                    Endre næringskode i Altinn
+                    Trykk her for å endre næringskode i Altinn
                 </EksternLenke>
-                <EksternLenke
-                    style={{ display: 'block' }}
-                    href="https://www.brreg.no/bedrift/naeringskoder/"
-                >
-                    Om næringskoder i Brønnøysundregistrene
+                <EksternLenke href="https://www.brreg.no/bedrift/naeringskoder/">
+                    Les mer om næringskoder i Brønnøysundregistrene
                 </EksternLenke>
             </div>
-        </LesMerPanel>
+        </ReadMore>
     );
 };

@@ -6,15 +6,18 @@ import { ManglerRettigheterIAltinnSide } from '../FeilSider/ManglerRettigheterIA
 import { useOrgnr } from '../hooks/useOrgnr';
 import './Forside.less';
 import GrafOgTabell from '../GrafOgTabell/GrafOgTabell';
-import { PubliseringsdatoOppdateringsinfo } from './SammenligningMedBransje/PubliseringsdatoOppdateringsinfo';
 import { getBransjeEllerNæringKategori } from './EkspanderbarSammenligning/GetBransjeEllerNæringKategori';
 import { Statistikkategori } from '../domene/statistikkategori';
 import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
-import { PeriodeForStatistikk } from './SammenligningMedBransje/PeriodeForStatistikk';
 import ReactToPrint from 'react-to-print';
 import { sendKnappEvent } from '../amplitude/events';
 import { sendIaTjenesteMetrikkMottatt } from '../metrikker/iatjenester';
 import Tabell, { hentTabellProps } from '../GrafOgTabell/Tabell/Tabell';
+import {
+    SlikHarViKommetFramTilDittResultat
+} from "./SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat";
+import { PeriodeForStatistikk } from "./PeriodeForStatistikk";
+import { PubliseringsdatoOppdateringsinfo } from "./PubliseringsdatoOppdateringsinfo";
 
 export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     const orgnr = useOrgnr() || '';
@@ -52,21 +55,18 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     return (
         <div className="forside__wrapper">
             <div className="forside">
-                {harFeil && (
-                    <Alert
-                        variant={'error'}
-                        className="sammenligningspaneler__info-eller-feilmelding"
-                    >
-                        Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen
-                        senere.
-                    </Alert>
-                )}
                 <div className="forside__innhold" ref={innholdRef}>
+                    {harFeil && (
+                        <Alert variant={'error'} className="forside__innhold__info-eller-feilmelding">
+                            Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen
+                            senere.
+                        </Alert>
+                    )}
                     <div className="forside__innhold__header">
                         <BodyShort className="forside__innhold__href">
                             {window.location.href}
                         </BodyShort>
-                        <Heading spacing size="medium" level="1">
+                        <Heading spacing size="medium" level="2">
                             Sykefraværsstatistikk for {navnPåVirksomhet}
                         </Heading>
                     </div>
@@ -106,6 +106,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                     <PubliseringsdatoOppdateringsinfo
                         restPubliseringsdatoer={appData.publiseringsdatoer}
                     />
+                    <SlikHarViKommetFramTilDittResultat />
                     <EkspanderbarSammenligning
                         aggregertStatistikk={appData.aggregertStatistikk}
                         restPubliseringsdatoer={appData.publiseringsdatoer}

@@ -1,11 +1,11 @@
 import React from 'react';
 import informasjonsirkelSvg from './informasjon-sirkel.svg';
-import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import './ManglerRettigheterIAltinnSide.less';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import { OrganisasjonerMedTilgangListe } from './OrganisasjonerMedTilgangListe/OrganisasjonerMedTilgangListe';
 import { BeOmTilgang } from './BeOmTilgang/BeOmTilgang';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
+import { BodyShort, Heading } from "@navikt/ds-react";
 
 interface Props {
     restOrganisasjonerMedStatistikk: RestAltinnOrganisasjoner;
@@ -23,24 +23,20 @@ export const ManglerRettigheterIAltinnSide: React.FunctionComponent<Props> = ({
                         className="mangler-rettigheter-i-altinn__tekst_og_ikon__ikon"
                         alt="altinn-logo"
                     />
-                    <Systemtittel tag="h2">Du mangler rettigheter i Altinn</Systemtittel>
+                    <Heading level="2" size={"medium"}>Du mangler rettigheter i Altinn</Heading>
                 </div>
 
-                <Normaltekst className="mangler-rettigheter-i-altinn__overskrift">
+                <BodyShort className="mangler-rettigheter-i-altinn__overskrift">
                     Du har ikke Altinn-tilgangen du trenger for å se sykefraværsstatistikk for denne
                     virksomheten. Bytt til en virksomhet der du har tilgang eller be om tilgang i
                     Altinn for denne virksomheten.
-                </Normaltekst>
+                </BodyShort>
                 <BeOmTilgang />
 
                 <OrganisasjonerMedTilgangListe
                     restOrganisasjonerMedStatistikk={restOrganisasjonerMedStatistikk}
                 />
-                <Element className="mangler-rettigheter-i-altinn__mer-info">
-                    Lenker til mer informasjon
-                </Element>
                 <EksternLenke
-                    className="mangler-rettigheter-i-altinn__lenke"
                     href="https://arbeidsgiver.nav.no/min-side-arbeidsgiver/informasjon-om-tilgangsstyring"
                 >
                     Les mer om hvordan tilgangsstyringen i Altinn fungerer

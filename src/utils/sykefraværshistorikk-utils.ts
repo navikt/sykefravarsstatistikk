@@ -97,19 +97,6 @@ export const konverterTilKvartalsvisSammenligning = (
     return mapTilKvartalsvisSammenligning(historikkListe, årstallOgKvartalerSomSkalVises);
 };
 
-export const historikkHarBransje = (historikkListe: KvartalsvisSykefraværshistorikk[]): boolean =>
-    !!historikkListe.find((historikk) => historikk.type === SykefraværshistorikkType.BRANSJE);
-
-export type BransjeEllerNæringLabel = 'Bransje' | 'Næring';
-export const getBransjeEllerNæringLabel = (
-    historikkListe: KvartalsvisSykefraværshistorikk[]
-): BransjeEllerNæringLabel => {
-    if (historikkListe.find((historikk) => historikk.type === SykefraværshistorikkType.BRANSJE)) {
-        return 'Bransje';
-    }
-    return 'Næring';
-};
-
 export const historikkHarOverordnetEnhet = (
     historikkListe: KvartalsvisSykefraværshistorikk[]
 ): boolean =>

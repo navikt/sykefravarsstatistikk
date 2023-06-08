@@ -11,7 +11,7 @@ interface Props {
 
 export const GrafSymbol: FunctionComponent<Props> = ({ linje, className }) => (
     <SymbolSvg
-        size={20}
+        size={18}
         symbolType={getSymbol(linje)}
         fill={getFarge(linje)}
         className={classNames(className)}

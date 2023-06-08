@@ -1,11 +1,9 @@
 import {
-    BransjeEllerNæringLabel,
     HistorikkLabels,
     KvartalsvisSammenligning,
 } from '../utils/sykefraværshistorikk-utils';
 import React, { FunctionComponent } from 'react';
-import { Link } from '@navikt/ds-react';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Label, Link } from '@navikt/ds-react';
 import { FileCsvIcon } from '@navikt/aksel-icons';
 import { isDefined } from '../utils/app-utils';
 import { formaterProsent } from './Tabell/tabell-utils';
@@ -13,7 +11,6 @@ import { formaterProsent } from './Tabell/tabell-utils';
 const buildCsvDataUrl = (
     labels: HistorikkLabels,
     data: KvartalsvisSammenligning[],
-    bransjeEllerNæringLabel: string,
     harOverordnetEnhet: boolean
 ) => {
     const csvHeaders = [
@@ -21,7 +18,7 @@ const buildCsvDataUrl = (
         'Kvartal',
         `Din virksomhet ${labels.virksomhet}`,
         harOverordnetEnhet ? labels.overordnetEnhet : undefined,
-        `${bransjeEllerNæringLabel} ${labels.næringEllerBransje}`,
+        `Bransje ${labels.næringEllerBransje}`,
         `Sektor ${labels.sektor}`,
         labels.land,
     ]
@@ -50,14 +47,12 @@ const buildCsvDataUrl = (
 type CsvDownloadLinkProps = {
     kvartalsvisSammenligning: KvartalsvisSammenligning[];
     harOverordnetEnhet: boolean;
-    bransjeEllerNæringLabel: BransjeEllerNæringLabel;
     historikkLabels: HistorikkLabels;
     onClick?: () => void;
 };
 export const CsvDownloadLink: FunctionComponent<CsvDownloadLinkProps> = ({
     kvartalsvisSammenligning,
     harOverordnetEnhet,
-    bransjeEllerNæringLabel,
     historikkLabels,
     onClick,
 }) => {
@@ -67,16 +62,15 @@ export const CsvDownloadLink: FunctionComponent<CsvDownloadLinkProps> = ({
             href={buildCsvDataUrl(
                 historikkLabels,
                 kvartalsvisSammenligning,
-                bransjeEllerNæringLabel,
                 harOverordnetEnhet
             )}
             download={`${historikkLabels.virksomhet}_Sykefraværsstatistikk.csv`}
             target={'_self'}
             onClick={onClick}
         >
-            <Normaltekst>
+            <Label size="small">
                 Last ned CSV <FileCsvIcon aria-hidden="true" />
-            </Normaltekst>
+            </Label>
         </Link>
     );
 };

@@ -11,5 +11,3 @@ export const MILJØ = {
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export type MILJØ = typeof MILJØ[keyof typeof MILJØ];
-
-export const ER_VEDLIKEHOLD_AKTIVERT = false;
