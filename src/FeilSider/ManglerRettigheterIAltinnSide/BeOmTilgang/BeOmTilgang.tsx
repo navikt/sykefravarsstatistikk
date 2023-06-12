@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { BodyShort, Label, LinkPanel } from "@navikt/ds-react";
 import { ReactComponent as AltinnLogo } from './altinn-logo.svg';
-import './BeOmTilgang.less';
+import './BeOmTilgang.css';
 import { useOrgnr } from '../../../hooks/useOrgnr';
 
 const beOmTilgangTilSykefraværsstatistikkIAltinnLink = (orgnr: string | undefined) =>
@@ -17,7 +17,7 @@ export const BeOmTilgang: FunctionComponent = () => {
                         <AltinnLogo />
                     </span>
                     <span className="be-om-tilgang__tekst">
-                        <Label size="medium" className="be-om-tilgang__tittel">
+                        <Label size="medium" className="be-om-tilgang__tittel" spacing>
                             Be om tilgang i Altinn
                         </Label>
                         <BodyShort>

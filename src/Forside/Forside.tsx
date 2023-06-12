@@ -4,20 +4,18 @@ import { SykefraværAppData } from '../hooks/useSykefraværAppData';
 import { RestStatus } from '../api/api-utils';
 import { ManglerRettigheterIAltinnSide } from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { useOrgnr } from '../hooks/useOrgnr';
-import './Forside.less';
-import GrafOgTabell from '../GrafOgTabell/GrafOgTabell';
+import './Forside.css';
+import Historikk from '../Historikk/Historikk';
 import { getBransjeEllerNæringKategori } from './EkspanderbarSammenligning/GetBransjeEllerNæringKategori';
 import { Statistikkategori } from '../domene/statistikkategori';
 import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
 import ReactToPrint from 'react-to-print';
 import { sendKnappEvent } from '../amplitude/events';
 import { sendIaTjenesteMetrikkMottatt } from '../metrikker/iatjenester';
-import Tabell, { hentTabellProps } from '../GrafOgTabell/Tabell/Tabell';
-import {
-    SlikHarViKommetFramTilDittResultat
-} from "./SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat";
-import { PeriodeForStatistikk } from "./PeriodeForStatistikk";
-import { PubliseringsdatoOppdateringsinfo } from "./PubliseringsdatoOppdateringsinfo";
+import Tabell, { hentTabellProps } from '../Historikk/Tabell/Tabell';
+import { SlikHarViKommetFramTilDittResultat } from './SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
+import { PeriodeForStatistikk } from './PeriodeForStatistikk';
+import { PubliseringsdatoOppdateringsinfo } from './PubliseringsdatoOppdateringsinfo';
 
 export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     const orgnr = useOrgnr() || '';
@@ -57,7 +55,10 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
             <div className="forside">
                 <div className="forside__innhold" ref={innholdRef}>
                     {harFeil && (
-                        <Alert variant={'error'} className="forside__innhold__info-eller-feilmelding">
+                        <Alert
+                            variant={'error'}
+                            className="forside__innhold__info-eller-feilmelding"
+                        >
                             Kan ikke vise sykefraværsstatistikken akkurat nå. Vennligst prøv igjen
                             senere.
                         </Alert>
@@ -116,7 +117,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                             <Tabell {...tabellProps} />
                         </div>
                     )}
-                    <GrafOgTabell restSykefraværsstatistikk={appData.sykefraværshistorikk} />
+                    <Historikk restSykefraværsstatistikk={appData.sykefraværshistorikk} />
                 </div>
             </div>
         </div>

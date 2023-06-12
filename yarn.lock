@@ -2288,11 +2288,6 @@
     react-day-picker "8.3.4"
     react-modal "3.15.1"
 
-"@navikt/ds-tokens@^4.1.3":
-  version "4.1.3"
-  resolved "https://npm.pkg.github.com/download/@navikt/ds-tokens/4.1.3/dcf82dda7010c87081cfbde1a5f030306755fb72#dcf82dda7010c87081cfbde1a5f030306755fb72"
-  integrity sha512-IC6BTP7MVP+eTiiAODATmUVKzIfR97vlguSScJiFF1fceP5rRKeMXMTrcGe9F415jkWOZrPmhUXKWm4/s5ZR8A==
-
 "@navikt/fnrvalidator@^1.1.3":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@navikt/fnrvalidator/-/fnrvalidator-1.3.0.tgz#3653dedeed860bb85dac5c30462f762dc99f6c01"

@@ -3,7 +3,6 @@ import { NotifikasjonWidgetProvider } from '@navikt/arbeidsgiver-notifikasjon-wi
 import Banner from './Banner/Banner';
 import { Route, Routes } from 'react-router-dom';
 import { RestStatus } from './api/api-utils';
-import Lasteside from './Lasteside/Lasteside';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
 import FeilFraAltinnSide from './FeilSider/FeilFraAltinnSide/FeilFraAltinnSide';
@@ -26,14 +25,6 @@ interface Props {
 const App: FunctionComponent<Props> = ({ analyticsClient }) => {
     return <AppContent {...useSykefraværAppData()} analyticsClient={analyticsClient} />;
 };
-
-function forsideDataLastesInn(appData: SykefraværAppData) {
-    return [
-        appData.aggregertStatistikk.restStatus,
-        appData.altinnOrganisasjoner.status,
-        appData.altinnOrganisasjonerMedStatistikktilgang.status,
-    ].some((status) => [RestStatus.LasterInn, RestStatus.IkkeLastet].includes(status));
-}
 
 export const AppContent = (appData: SykefraværAppData & { analyticsClient: AnalyticsClient }) => {
     const { MILJØ: miljø } = useContext(EnvironmentContext);
@@ -71,10 +62,6 @@ export const AppContent = (appData: SykefraværAppData & { analyticsClient: Anal
     ]);
 
     let innhold;
-
-    if (forsideDataLastesInn(appData)) {
-        innhold = <Lasteside />;
-    }
 
     if (appData.altinnOrganisasjoner.status === RestStatus.IkkeInnlogget) {
         return <Innloggingsside redirectUrl={window.location.href} />;

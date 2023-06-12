@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './Banner.less';
 import Bedriftsmeny, { ForebyggeSykefravaer } from '@navikt/bedriftsmeny';
 import '@navikt/bedriftsmeny/lib/bedriftsmeny.css';
 import { RestStatus } from '../api/api-utils';

@@ -1,0 +1,21 @@
+.be-om-tilgang {
+    display: flex;
+    flex-direction: column;
+
+}
+.be-om-tilgang__tekst {
+    display: flex;
+    flex-direction: column;
+}
+
+.be-om-tilgang__svg {
+    width: 106px;
+    margin-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .be-om-tilgang {
+        flex-direction: row;
+        align-items: center;
+    }
+}

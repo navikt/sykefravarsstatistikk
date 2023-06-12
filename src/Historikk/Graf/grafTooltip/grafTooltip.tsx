@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tooltip } from 'recharts';
-import './grafTooltip.less';
+import './grafTooltip.css';
 import { getTooltipsnavn } from '../graf-utils';
 import { GrafSymbol } from '../GrafSymbol/GrafSymbol';
 

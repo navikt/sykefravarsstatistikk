@@ -1,0 +1,29 @@
+.innloggingsside {
+    max-width: 40rem;
+    margin: 0 auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 3rem 1.5rem 1.5rem;
+}
+
+.innloggingsside__wrapper {
+    background: white;
+    min-height: 100vh;
+    padding-bottom: 5rem;
+}
+
+.innloggingsside__illustrasjon {
+    margin-bottom: 2.5rem;
+}
+
+.innloggingsside__loginKnapp-wrapper {
+    margin-top: 2.5rem;
+}
+
+@media (min-width: 768px) {
+    .innloggingsside {
+        padding: 4rem;
+    }
+}

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import illustrasjonSvg from './statistikk-ikon.svg';
-import './Innloggingsside.less';
+import './Innloggingsside.css';
 import { EnvironmentContext } from '../Context/EnvironmentContext';
 import { BASE_PATH } from '../konstanter';
 import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';

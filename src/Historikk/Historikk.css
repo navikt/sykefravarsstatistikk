@@ -1,0 +1,78 @@
+.csv-download-link {
+    float: right;
+    margin-top: 20px;
+}
+
+.historikk__info-eller-feilmelding {
+    width: 100%;
+    margin: 0 auto 1.5rem;
+    max-width: 60rem;
+}
+
+.historikk__wrapper {
+    width: 100%;
+    background-color: white;
+    min-height: 50rem;
+    padding: 2rem 0;
+}
+
+.historikk__overdel-wrapper {
+    padding: 2rem 0 0;
+}
+
+.historikk__ingress {
+    max-width: 40rem;
+}
+
+.historikk__endring-i-sykefraværsstatistikken {
+    padding: 1rem;
+}
+
+.historikk__innhold {
+    padding-top: 30px;
+    padding-bottom: 15px;
+}
+
+.historikk__spinner {
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+
+.historikk__feilside {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+}
+
+.historikk__toggle-group {
+    height: fit-content;
+    align-self: end;
+}
+
+@media (min-width: 768px) {
+    .historikk__wrapper {
+        padding: 2rem 0;
+    }
+
+    .historikk__overdel-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .historikk__tekst-wrapper {
+        max-width: 70%;
+    }
+
+    .historikk__innhold {
+        width: 100%;
+    }
+}
+
+@media print {
+    .historikk {
+        display: none;
+    }
+}

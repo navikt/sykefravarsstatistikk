@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { RestAltinnOrganisasjoner } from '../../../api/altinnorganisasjon-api';
 import { RestStatus } from '../../../api/api-utils';
-import './OrganisasjonerMedTilgangListe.less';
+import './OrganisasjonerMedTilgangListe.css';
 import { Accordion } from '@navikt/ds-react';
 
 interface Props {

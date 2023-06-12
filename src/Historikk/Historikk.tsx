@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState } from 'react';
 import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
 import Graf from './Graf/Graf';
 import Tabell from './Tabell/Tabell';
-import './GrafOgTabell.less';
+import './Historikk.css';
 import { RestStatus } from '../api/api-utils';
 import { BodyShort, Loader, ToggleGroup, Heading, Alert } from '@navikt/ds-react';
 import {
@@ -17,25 +17,25 @@ interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
 }
 
-const GrafOgTabell: FunctionComponent<Props> = (props) => {
+const Historikk: FunctionComponent<Props> = (props) => {
     const { restSykefraværsstatistikk } = props;
     const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
 
     return (
-        <div className="graf-og-tabell__wrapper">
-            <div className="graf-og-tabell">
-                <div className="graf-og-tabell__overdel-wrapper">
-                    <div className="graf-og-tabell__tekst-wrapper">
+        <div className="historikk__wrapper">
+            <div className="historikk">
+                <div className="historikk__overdel-wrapper">
+                    <div className="historikk__tekst-wrapper">
                         <Heading spacing level="2" size="medium">
                             Se sykefraværet over tid
                         </Heading>
-                        <BodyShort className="graf-og-tabell__ingress">
+                        <BodyShort className="historikk__ingress">
                             Se hvordan det legemeldte sykefraværet utvikler seg over tid. Du kan
                             sammenligne sykefraværet deres med næringen og sektoren dere tilhører.
                         </BodyShort>
                     </div>
                     <ToggleGroup
-                        className="graf-og-tabell__toggle-group"
+                        className="historikk__toggle-group"
                         defaultValue="graf"
                         aria-label="Hvis du bruker skjermleser, bør du velge tabell"
                         onChange={(value) => setGrafEllerTabell(value as 'graf' | 'tabell')}
@@ -44,7 +44,7 @@ const GrafOgTabell: FunctionComponent<Props> = (props) => {
                         <ToggleGroup.Item value="tabell">Tabell</ToggleGroup.Item>
                     </ToggleGroup>
                 </div>
-                <div className="graf-og-tabell__innhold">
+                <div className="historikk__innhold">
                     <GrafOgTabellInnhold
                         restSykefraværsstatistikk={restSykefraværsstatistikk}
                         grafEllerTabell={grafEllerTabell}
@@ -67,7 +67,7 @@ const GrafOgTabellInnhold = ({
         case RestStatus.LasterInn:
         case RestStatus.IkkeLastet: {
             return (
-                <div className="graf-og-tabell__spinner">
+                <div className="historikk__spinner">
                     <Loader size="2xlarge" />
                 </div>
             );
@@ -77,7 +77,7 @@ const GrafOgTabellInnhold = ({
         case RestStatus.IkkeInnlogget:
         case RestStatus.IngenTilgang: {
             return (
-                <Alert variant="error" className="graf-og-tabell__feilside">
+                <Alert variant="error" className="historikk__feilside">
                     Det skjedde en feil da vi prøvde å hente statistikken.
                 </Alert>
             );
@@ -120,4 +120,4 @@ const GrafOgTabellInnhold = ({
     }
 };
 
-export default GrafOgTabell;
+export default Historikk;
