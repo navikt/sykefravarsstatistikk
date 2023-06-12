@@ -3,7 +3,7 @@ import { CartesianGrid, LineChart, ResponsiveContainer, XAxis, YAxis } from 'rec
 import grafTooltip from './grafTooltip/grafTooltip';
 import grafLinjer from './grafLinjer';
 
-import './Graf.less';
+import './Graf.css';
 import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString } from './graf-utils';
 import XAkseTick from './XAkseTick';
 import { useInnerWidth } from '../../utils/innerWidth-hook';

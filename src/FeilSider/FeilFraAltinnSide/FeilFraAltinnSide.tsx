@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Alert, Link } from '@navikt/ds-react';
-import './FeilFraAltinnSide.less';
+import './FeilFraAltinnSide.css';
 
 const FeilFraAltinnSide: FunctionComponent = () => {
     return (

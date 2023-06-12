@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 
-import './Graf.less';
+import './Graf.css';
 import { getLinjerSomHarData } from './graf-utils';
 import { LegendMedToggles } from './LegendMedToggles/LegendMedToggles';
 import GrafVisning from './GrafVisning';
