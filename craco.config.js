@@ -2,7 +2,6 @@ const {
     applyNotifikasjonMockMiddleware,
 } = require('@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock');
 const SourcemapExplorer = require('source-map-explorer');
-const CracoLessPlugin = require('craco-less');
 
 class sourcemapExplorerPlugin {
     apply(compiler) {
@@ -20,13 +19,6 @@ module.exports = {
           ? []
           : [new sourcemapExplorerPlugin()],
     },
-    plugins: [{ plugin: CracoLessPlugin }],
-    rules: [
-        {
-            test: /\.less$/i,
-            use: ['style-loader', 'css-loader', 'less-loader'],
-        },
-    ],
     devServer: {
         proxy: {
             '/sykefravarsstatistikk/api': {

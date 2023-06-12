@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import './BransjeSammenligningspanel.less';
+import './BransjeSammenligningspanel.css';
 import { Speedometer } from '../Speedometer/Speedometer';
 import {
     getForklaringAvVurdering,

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import './SlikHarViKommetFramTilDittResultat.less';
+import './SlikHarViKommetFramTilDittResultat.css';
 import EksternLenke from '../../felleskomponenter/EksternLenke/EksternLenke';
 import { BodyShort, ReadMore } from '@navikt/ds-react';
 import { sendPanelEkspanderEvent} from "../../amplitude/events";

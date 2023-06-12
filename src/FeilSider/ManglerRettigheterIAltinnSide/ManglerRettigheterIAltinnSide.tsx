@@ -1,6 +1,6 @@
 import React from 'react';
 import informasjonsirkelSvg from './informasjon-sirkel.svg';
-import './ManglerRettigheterIAltinnSide.less';
+import './ManglerRettigheterIAltinnSide.css';
 import { RestAltinnOrganisasjoner } from '../../api/altinnorganisasjon-api';
 import { OrganisasjonerMedTilgangListe } from './OrganisasjonerMedTilgangListe/OrganisasjonerMedTilgangListe';
 import { BeOmTilgang } from './BeOmTilgang/BeOmTilgang';

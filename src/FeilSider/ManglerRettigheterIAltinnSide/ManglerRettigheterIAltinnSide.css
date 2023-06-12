@@ -1,0 +1,45 @@
+.mangler-rettigheter-i-altinn {
+    max-width: 50rem;
+    margin: 0 auto 2rem;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0.25rem;
+
+}
+.mangler-rettigheter-i-altinn__wrapper {
+    padding-top: 2rem;
+    padding-bottom: 5rem;
+    min-height: 40rem;
+    background-color: var(--a-gray-100);
+}
+
+.mangler-rettigheter-i-altinn__tekst_og_ikon {
+    display: flex;
+    padding-bottom: 2rem;
+    justify-content: center;
+
+}
+.mangler-rettigheter-i-altinn__tekst_og_ikon__ikon {
+    margin-right: 1rem;
+}
+
+.mangler-rettigheter-i-altinn__overskrift {
+    margin-bottom: 1.5rem;
+}
+
+.mangler-rettigheter-i-altinn__tekst-wrapper {
+    justify-content: center;
+}
+
+.mangler-rettigheter-i-altinn__list-wrapper {
+    margin-bottom: 2rem;
+}
+
+.mangler-rettigheter-i-altinn__mer-info {
+    padding-top: 2rem;
+    padding-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    padding: 3rem;
+}

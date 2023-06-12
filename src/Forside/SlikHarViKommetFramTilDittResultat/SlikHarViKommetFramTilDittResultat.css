@@ -1,0 +1,22 @@
+.slik-har-vi-kommet-fram-til-ditt-resultat {
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+}
+
+@media print {
+    .slik-har-vi-kommet-fram-til-ditt-resultat {
+        display: none;
+    } 
+}
+
+.slik-har-vi-kommet-fram-til-ditt-resultat__innhold {
+    padding-top: 1rem;
+    border-top: 1px solid var(--a-gray-100);
+    margin-top: 1rem;
+    max-width: 40rem;
+    padding-bottom: 1rem;
+}
+
+.slik-har-vi-kommet-fram-til-ditt-resultat__margin-bottom_075rem {
+    margin-bottom: 0.75rem;
+}
