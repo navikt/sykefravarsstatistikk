@@ -1,8 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Link, LinkProps } from '@navikt/ds-react';
-import {
-    ExternalLinkIcon
-} from '@navikt/aksel-icons';
+import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import classNames from 'classnames';
 import { sendNavigereEvent } from '../../amplitude/events';
 import { WithRequired } from '../../utils/app-utils';
@@ -27,7 +25,7 @@ const EksternLenke: FunctionComponent<WithRequired<LinkProps, 'href'>> = ({
             }}
         >
             {lenketekst}
-            <ExternalLinkIcon  />
+            <ExternalLinkIcon aria-hidden />
         </Link>
     );
 };

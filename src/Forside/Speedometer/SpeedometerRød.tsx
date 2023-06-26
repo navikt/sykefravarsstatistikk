@@ -8,6 +8,7 @@ export const SpeedometerRød: FunctionComponent<SpeedometerSvgProps> = ({ størr
         viewBox="0 0 215 118"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        role="img"
     >
         <title>Rødt speedometer der pilen indikerer et høyt tall</title>
         <path

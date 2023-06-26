@@ -7,6 +7,7 @@ export const KakediagramRød: FunctionComponent = () => (
         viewBox="0 0 122 123"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        role="img"
     >
         <title>Rødt kakediagram der sektoren indikerer et lavt tall</title>
         <mask id="path-1-inside-1" fill="white">
