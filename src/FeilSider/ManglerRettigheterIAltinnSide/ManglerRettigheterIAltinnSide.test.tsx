@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import * as hooks from '../../hooks/useOrgnr';
 import { AltinnOrganisasjon } from '../../api/altinnorganisasjon-api';
 import { MockResizeObserver } from '../../../jest/MockResizeObserver';
+import { axe } from 'jest-axe';
 
 describe('Tester side for manglende Altinn-rettigheter', () => {
     const MockObserver = new MockResizeObserver();
@@ -89,5 +90,12 @@ describe('Tester side for manglende Altinn-rettigheter', () => {
         expect(merInfoLenke.href).toBe(
             'https://arbeidsgiver.nav.no/min-side-arbeidsgiver/informasjon-om-tilgangsstyring'
         );
+    });
+
+    it('Har ingen uu-feil fra axe', async () => {
+        const { container } = renderForside();
+        const results = await axe(container);
+
+        expect(results).toHaveNoViolations();
     });
 });
