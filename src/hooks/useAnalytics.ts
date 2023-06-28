@@ -12,7 +12,7 @@ export const useAnalytics = <T extends AnalyticsData>(client: AnalyticsClient) =
     useEffect(() => {
         const listener = (event: Event) => {
             event.stopImmediatePropagation();
-            let {
+            const {
                 detail: { eventProperties, eventname },
             } = event as CustomEvent<T>;
             client.logEvent(eventname, eventProperties);

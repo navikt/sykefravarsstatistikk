@@ -112,7 +112,7 @@ const emptyHistorikkLabels = Object.fromEntries(
 
 export const isHistorikkLabel = (maybeLabel: unknown): maybeLabel is HistorikkLabel => {
     if (!isString(maybeLabel)) return false;
-    return HistorikkLabels.hasOwnProperty(maybeLabel);
+    return Object.prototype.hasOwnProperty.call(HistorikkLabels, maybeLabel);
 };
 
 const historikkTypeToLabel = (type: SykefraværshistorikkType): HistorikkLabel => {

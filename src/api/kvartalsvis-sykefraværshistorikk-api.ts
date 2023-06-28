@@ -15,7 +15,7 @@ export type SykefraværshistorikkType =
 export const isSykefraværshistorikkType = (
     maybeLabel: string
 ): maybeLabel is SykefraværshistorikkType => {
-    return SykefraværshistorikkType.hasOwnProperty(maybeLabel);
+    return Object.prototype.hasOwnProperty.call(SykefraværshistorikkType, maybeLabel);
 };
 
 export type KvartalsvisSykefraværsprosent = {
@@ -108,7 +108,7 @@ const harSammeSykefraværshistorikk = (
         return false;
     }
 
-    let harFunnetMinstEnUlikSykefraværprosent: boolean = false;
+    let harFunnetMinstEnUlikSykefraværprosent = false;
     sykefraværProsentListe1.forEach((sykefraværProsent1) => {
         if (
             !sykefraværProsentListe2.some(

@@ -26,7 +26,7 @@ export const genererHistorikk = (
     randomness: number,
     vekst: number
 ): KvartalsvisSykefraværsprosent[] => {
-    let historikk: KvartalsvisSykefraværsprosent[] = [];
+    const historikk: KvartalsvisSykefraværsprosent[] = [];
 
     let årstallOgKvartal = { ...startÅrstallOgKvartal };
     let prosent = startprosent;
@@ -55,7 +55,7 @@ export const genererMaskertHistorikk = (
     startÅrstallOgKvartal: ÅrstallOgKvartal,
     antallKvartaler: number
 ): KvartalsvisSykefraværsprosent[] => {
-    let historikk: KvartalsvisSykefraværsprosent[] = [];
+    const historikk: KvartalsvisSykefraværsprosent[] = [];
     let årstallOgKvartal = { ...startÅrstallOgKvartal };
 
     for (let i = 0; i < antallKvartaler; i += 1) {

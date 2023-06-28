@@ -39,6 +39,7 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
             {linjerSomKanVises.map((linje) => (
                 <Checkbox
                     checked={linjerSomSkalVises.includes(linje)}
+                    key={linje}
                     value={linje}
                     onChange={onChange}
                 >

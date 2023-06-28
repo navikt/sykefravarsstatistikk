@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppContent } from './App';
-import { act, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { amplitudeMock } from './api/mockedApiResponses/amplitude-mock';
 import { mockAllDatahentingStatusOk } from './api/mockedApiResponses/use-analytics-test-mocks';
@@ -20,15 +20,11 @@ describe('App', () => {
     });
 
     it('renders without crashing', async () => {
-        await waitFor(() => {
-            render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
-        });
+        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
     });
 
     it('Amplitude-events sendes med riktige user properties', async () => {
-        await waitFor(() => {
-            render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
-        });
+        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
 
         await waitFor(() => {
             expect(amplitudeMock.setUserProperties).toHaveBeenCalledTimes(1);

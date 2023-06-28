@@ -5,8 +5,8 @@ export type Virksomhet = { orgnr: string };
 export const sendteMetrikker: Virksomhet[] = [{ orgnr: '' }];
 
 interface IaTjenesteMetrikk {
-    orgnr: String;
-    type: String;
+    orgnr: string;
+    type: string;
     kilde: 'SYKEFRAVÆRSSTATISTIKK';
 }
 
@@ -41,7 +41,7 @@ function byggIaTjenesteMottattMetrikk(nåværendeOrgnr?: string) {
 }
 
 const post = async (iatjeneste: IaTjenesteMetrikk) => {
-    const settings = {
+    const settings: RequestInit = {
         method: 'POST',
         credentials: 'include',
         body: JSON.stringify(iatjeneste),
@@ -51,7 +51,6 @@ const post = async (iatjeneste: IaTjenesteMetrikk) => {
         },
     };
     try {
-        // @ts-ignore
         const fetchResponse = await fetch(`${iaTjenesterMetrikkerApiUrl}`, settings);
         const data = await fetchResponse.json();
         return data.status === 'created';

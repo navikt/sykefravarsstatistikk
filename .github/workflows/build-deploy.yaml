@@ -10,9 +10,9 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    compile-test-and-build:
+    build_and_push:
         name: Build and run tests
-        runs-on: Ubuntu-20.04
+        runs-on: Ubuntu-latest
         steps:
             - uses: actions/checkout@v3
             - uses: actions/setup-node@v3
