@@ -1,4 +1,4 @@
-import { idportenTokenXMiddleware } from '@navikt/tokenx-middleware';
+import { idportenTokenExchangeMiddleware } from '@navikt/tokenx-middleware';
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
 import express from 'express';
 
@@ -17,7 +17,7 @@ export function notifikasjonBrukerApiController() {
     const router = express.Router({ caseSensitive: false });
 
     router.use(
-        idportenTokenXMiddleware(NOTIFIKASJON_API_AUDIENCE),
+        idportenTokenExchangeMiddleware(NOTIFIKASJON_API_AUDIENCE),
         createProxyMiddleware(proxyConfig)
     );
 
