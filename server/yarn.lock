@@ -221,10 +221,10 @@
     openid-client "^5.3.1"
     zod "^3.20.2"
 
-"@navikt/tokenx-middleware@^1.2.1":
-  version "1.2.1"
-  resolved "https://npm.pkg.github.com/download/@navikt/tokenx-middleware/1.2.1/77ae9925c34412a578ea127f4cc6e6b68fe0b77f#77ae9925c34412a578ea127f4cc6e6b68fe0b77f"
-  integrity sha512-gm0JxYdUUlBR1wRJ3NkFam0Yt1pG4GZnu6o2trHX9E8uaDMn+/8QT59+a/oTUubGhQklXr3XEXnLV2wxxXXxNg==
+"@navikt/tokenx-middleware@^1.2.2":
+  version "1.2.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/tokenx-middleware/1.2.2/354cfe5f0de7899c32b69d377789a8157d253a53#354cfe5f0de7899c32b69d377789a8157d253a53"
+  integrity sha512-1repyJNmaGAgNH4vQW787lxl32c3A6gtkKgGPzGsfdvdXJMPqKG1IOvAlfFVNpYHooVPPq+dSz3PTlCpEJzteg==
   dependencies:
     "@navikt/next-auth-wonderwall" "^1.4.0"
 
