@@ -87,7 +87,10 @@
   "eslintConfig": {
     "extends": [
       "@navikt/eslint-config-teamia"
-    ]
+    ],
+    "rules": {
+      "@next/next/no-img-element": "off"
+    }
   },
   "browserslist": {
     "production": [
