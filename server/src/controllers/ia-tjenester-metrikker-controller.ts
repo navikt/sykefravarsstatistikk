@@ -1,7 +1,7 @@
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
 import { logger } from '../backend-logger.js';
 import express from 'express';
-import { idportenTokenXMiddleware } from '@navikt/tokenx-middleware';
+import { idportenTokenExchangeMiddleware } from '@navikt/tokenx-middleware';
 
 const {
     IA_TJENESTER_METRIKKER_BASE_URL = 'http://localhost:9090/ia-tjenester-metrikker',
@@ -25,7 +25,7 @@ export function iaTjenesterMetrikkerController() {
     const router = express.Router();
 
     router.use(
-        idportenTokenXMiddleware(IA_TJENESTER_METRIKKER_AUDIENCE),
+        idportenTokenExchangeMiddleware(IA_TJENESTER_METRIKKER_AUDIENCE),
         createProxyMiddleware(proxyConfig)
     );
 
