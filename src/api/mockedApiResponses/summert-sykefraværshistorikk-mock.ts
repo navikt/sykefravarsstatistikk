@@ -46,7 +46,7 @@ const statistikkBarnehage = lagStatistikkMock(
 
 function aggregertStatistikkBarnehage(
     statistikkVirksomhet: Statistikk,
-    gradertVerdi: string = '10.0'
+    gradertVerdi = '10.0'
 ): Partial<AggregertStatistikkResponse> {
     return {
         prosentSiste4KvartalerTotalt: [statistikkVirksomhet, statistikkBarnehage],

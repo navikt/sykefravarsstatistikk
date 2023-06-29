@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { logger } from "./backend-logger.js";
+import { logger } from './backend-logger.js';
 
 export const MILJØ = {
     PROD: 'prod-gcp',
@@ -8,8 +8,7 @@ export const MILJØ = {
     LOCAL: 'local',
 } as const;
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export type MILJØ = typeof MILJØ[keyof typeof MILJØ];
+export type MILJØ = (typeof MILJØ)[keyof typeof MILJØ];
 const isMiljø = (value: string): value is MILJØ => {
     return (Object.values(MILJØ) as string[]).includes(value);
 };
@@ -37,7 +36,7 @@ export function getFrontendEnvs() {
                     'https://arbeidsgiver.ekstern.dev.nav.no/min-side-arbeidsgiver',
             };
         }
-        logger.error("Failed to parse frontend envs", err);
+        logger.error('Failed to parse frontend envs', err);
         throw err;
     }
 }

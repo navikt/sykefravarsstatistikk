@@ -46,9 +46,7 @@ export const getSymbol = (name: string): SymbolType =>
 export const getFarge = (name: HistorikkLabel): SymbolType =>
     name in grafConfig.farger ? grafConfig.farger[name] : 'black';
 
-export const getTooltipsnavn = (
-    name: HistorikkLabel,
-): string => {
+export const getTooltipsnavn = (name: HistorikkLabel): string => {
     return name in grafConfig.tooltipsnavn ? grafConfig.tooltipsnavn[name] : 'Prosent';
 };
 
@@ -73,11 +71,10 @@ export const getLinjerSomHarData = (
     for (const historikk of sykefraværshistorikk) {
         if (linjer.size === keysSize) break;
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { årstall, kvartal, ...data } = historikk;
+        const { ...data } = historikk;
 
         for (const [label, prosent] of Object.entries(data)) {
-            if (isDefined(prosent.prosent)) linjer.add(label);
+            if (isDefined(prosent)) linjer.add(label);
         }
     }
 

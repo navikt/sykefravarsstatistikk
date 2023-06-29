@@ -27,6 +27,9 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
             .map((org) => org.OrganizationNumber)
             .includes(orgnr);
 
+    const innholdRef = useRef<HTMLDivElement>(null);
+    const lastNedKnappRef = useRef<HTMLButtonElement>(null);
+
     if (!brukerHarIaRettighetTilValgtBedrift) {
         return (
             <ManglerRettigheterIAltinnSide
@@ -34,8 +37,6 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
             />
         );
     }
-    const innholdRef = useRef<HTMLDivElement>(null);
-    const lastNedKnappRef = useRef<HTMLButtonElement>(null);
 
     const statistikKategori = getBransjeEllerNæringKategori(appData.aggregertStatistikk);
     const harBransje = statistikKategori === Statistikkategori.BRANSJE;

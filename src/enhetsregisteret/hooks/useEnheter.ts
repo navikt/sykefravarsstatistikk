@@ -6,7 +6,7 @@ import { hentInformasjonOmOverordnetEnhet, RestOverordnetEnhet } from '../api/en
 import { OverordnetEnhet } from '../domene/enhet';
 import { Underenhet } from '../domene/underenhet';
 
-const useRestDataForFlereVirksomheter = <T extends Object>(
+const useRestDataForFlereVirksomheter = <T>(
     hentData: (orgnr: string) => Promise<RestRessurs<T>>,
     orgnr: string | undefined
 ): [RestRessurs<T>, DataForVirksomhet<T>[]] => {

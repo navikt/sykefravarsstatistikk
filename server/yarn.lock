@@ -211,12 +211,22 @@
     casual "^1.6.2"
     graphql "^16.6.0"
 
-"@navikt/tokenx-middleware@^0.0.3":
-  version "0.0.3"
-  resolved "https://npm.pkg.github.com/download/@navikt/tokenx-middleware/0.0.3/a54900afa8f56c07eabed1e549528b1a743da792#a54900afa8f56c07eabed1e549528b1a743da792"
-  integrity sha512-ICd0ecIqx4RECuXZtJIWsrDIozJCAVkURC/GixFpKxcEkMBxIaRj6HK5J6+3KiXl0qk4eDpSL/J0PNvuGcsM6Q==
+"@navikt/next-auth-wonderwall@^1.4.0":
+  version "1.4.0"
+  resolved "https://npm.pkg.github.com/download/@navikt/next-auth-wonderwall/1.4.0/ec8c6949bab113f7eb7d9e4467fcb71a9b7e300b#ec8c6949bab113f7eb7d9e4467fcb71a9b7e300b"
+  integrity sha512-eggk3TJKZccF/NJcE03/ZesNft/9PI9n2NpzviVPKRFdXhEI8cTYH8bpiCPWF+3EON7s5MksjymRpxEWbwamOQ==
   dependencies:
-    openid-client "^5.4.2"
+    jose "^4.11.2"
+    node-cache "^5.1.2"
+    openid-client "^5.3.1"
+    zod "^3.20.2"
+
+"@navikt/tokenx-middleware@^1.2.2":
+  version "1.2.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/tokenx-middleware/1.2.2/354cfe5f0de7899c32b69d377789a8157d253a53#354cfe5f0de7899c32b69d377789a8157d253a53"
+  integrity sha512-1repyJNmaGAgNH4vQW787lxl32c3A6gtkKgGPzGsfdvdXJMPqKG1IOvAlfFVNpYHooVPPq+dSz3PTlCpEJzteg==
+  dependencies:
+    "@navikt/next-auth-wonderwall" "^1.4.0"
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
@@ -957,6 +967,11 @@ clone-response@^1.0.2:
   dependencies:
     mimic-response "^1.0.0"
 
+clone@2.x:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
+  integrity sha512-3Pe/CF1Nn94hyhIYpjtiLhdCoEoz0DqQ+988E9gmeEdQZlojxnOb74wctFyuwWQHzqyf9X7C7MG8juUpqBJT8w==
+
 color-convert@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-2.0.1.tgz#72d3a68d598c9bdb3af2ad1e84f21d896abd4de3"
@@ -1663,7 +1678,7 @@ jose@^4.10.0:
   resolved "https://registry.yarnpkg.com/jose/-/jose-4.13.1.tgz#449111bb5ab171db85c03f1bd2cb1647ca06db1c"
   integrity sha512-MSJQC5vXco5Br38mzaQKiq9mwt7lwj2eXpgpRyQYNHYt2lq1PjkWa7DLXX0WVcQLE9HhMh3jPiufS7fhJf+CLQ==
 
-jose@^4.14.1:
+jose@^4.11.2, jose@^4.14.1:
   version "4.14.4"
   resolved "https://registry.yarnpkg.com/jose/-/jose-4.14.4.tgz#59e09204e2670c3164ee24cbfe7115c6f8bff9ca"
   integrity sha512-j8GhLiKmUAh+dsFXlX1aJCbt5KMibuKb+d7j1JaOJG6s2UjX1PQlW+OKB/sD4a/5ZYF4RcmYmLSndOoU3Lt/3g==
@@ -1915,6 +1930,13 @@ node-abort-controller@^3.0.1:
   resolved "https://registry.yarnpkg.com/node-abort-controller/-/node-abort-controller-3.0.1.tgz#f91fa50b1dee3f909afabb7e261b1e1d6b0cb74e"
   integrity sha512-/ujIVxthRs+7q6hsdjHMaj8hRG9NuWmwrz+JdRwZ14jdFoKSkm+vDsCbF9PLpnSqjaWQJuTmVtcWHNLr+vrOFw==
 
+node-cache@^5.1.2:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/node-cache/-/node-cache-5.1.2.tgz#f264dc2ccad0a780e76253a694e9fd0ed19c398d"
+  integrity sha512-t1QzWwnk4sjLWaQAS8CHgOJ+RAfmHpxFWmc36IWTiWHQfs0w5JDMBS1b1ZxQteo0vVVuWJvIUKHDkkeK7vIGCg==
+  dependencies:
+    clone "2.x"
+
 node-domexception@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/node-domexception/-/node-domexception-1.0.0.tgz#6888db46a1f71c0b76b3f7555016b63fe64766e5"
@@ -2018,6 +2040,16 @@ once@^1.3.1, once@^1.4.0:
   dependencies:
     wrappy "1"
 
+openid-client@^5.3.1:
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-5.4.2.tgz#8692bcc2a40ef3426c5ba5c11f7493599e93ccc7"
+  integrity sha512-lIhsdPvJ2RneBm3nGBBhQchpe3Uka//xf7WPHTIglery8gnckvW7Bd9IaQzekzXJvWthCMyi/xVEyGW0RFPytw==
+  dependencies:
+    jose "^4.14.1"
+    lru-cache "^6.0.0"
+    object-hash "^2.2.0"
+    oidc-token-hash "^5.0.3"
+
 openid-client@^5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-5.4.0.tgz#77f1cda14e2911446f16ea3f455fc7c405103eac"
@@ -2027,16 +2059,6 @@ openid-client@^5.4.0:
     lru-cache "^6.0.0"
     object-hash "^2.0.1"
     oidc-token-hash "^5.0.1"
-
-openid-client@^5.4.2:
-  version "5.4.2"
-  resolved "https://registry.yarnpkg.com/openid-client/-/openid-client-5.4.2.tgz#8692bcc2a40ef3426c5ba5c11f7493599e93ccc7"
-  integrity sha512-lIhsdPvJ2RneBm3nGBBhQchpe3Uka//xf7WPHTIglery8gnckvW7Bd9IaQzekzXJvWthCMyi/xVEyGW0RFPytw==
-  dependencies:
-    jose "^4.14.1"
-    lru-cache "^6.0.0"
-    object-hash "^2.2.0"
-    oidc-token-hash "^5.0.3"
 
 optionator@^0.8.1:
   version "0.8.3"

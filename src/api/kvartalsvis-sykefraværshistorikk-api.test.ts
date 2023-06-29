@@ -61,11 +61,10 @@ describe('Tester for utils funksjoner', () => {
             filtrerBortOverordnetEnhetshistorikkHvisDenErLikUnderenhet([historikkOverordnetEnhet]);
         expect(result.length).toBe(1);
         expect(
-            // @ts-ignore
             result.find(
                 (sykefraværshistorikk) =>
                     sykefraværshistorikk.type === SykefraværshistorikkType.OVERORDNET_ENHET
-            ).kvartalsvisSykefraværsprosent.length
+            )!.kvartalsvisSykefraværsprosent.length
         ).toBe(2);
     });
 
@@ -77,18 +76,16 @@ describe('Tester for utils funksjoner', () => {
             ]);
         expect(result.length).toBe(2);
         expect(
-            // @ts-ignore
             result.find(
                 (sykefraværshistorikk) =>
                     sykefraværshistorikk.type === SykefraværshistorikkType.VIRKSOMHET
-            ).kvartalsvisSykefraværsprosent.length
+            )!.kvartalsvisSykefraværsprosent.length
         ).toBe(2);
         expect(
-            // @ts-ignore
             result.find(
                 (sykefraværshistorikk) =>
                     sykefraværshistorikk.type === SykefraværshistorikkType.OVERORDNET_ENHET
-            ).kvartalsvisSykefraværsprosent.length
+            )!.kvartalsvisSykefraværsprosent.length
         ).toBe(0);
     });
 });
