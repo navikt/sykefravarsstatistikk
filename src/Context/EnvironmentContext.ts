@@ -12,7 +12,6 @@ const Data = z.object({
     MIN_SIDE_ARBEIDSGIVER_URL: notEmptyTemplateString,
 });
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 type Data = z.infer<typeof Data>;
 const isHtmlScriptElement = (element: HTMLElement): element is HTMLScriptElement => {
     return element.tagName === 'SCRIPT';

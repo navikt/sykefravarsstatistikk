@@ -24,7 +24,6 @@ describe('useAnalytics', () => {
     beforeEach(() => {
         jest.spyOn(amplitudeMock, 'setUserProperties');
         jest.spyOn(amplitudeMock, 'logEvent');
-        renderHook(() => useAnalytics(amplitudeMock));
 
         MockObserver.startmock();
     });
@@ -36,6 +35,8 @@ describe('useAnalytics', () => {
     });
 
     it('Trigger AnalyticsClient#logEvent når sendAnalytics blir kalt', async () => {
+        renderHook(() => useAnalytics(amplitudeMock));
+
         const eventname = 'dummyEvent';
         const eventData = {
             someKey: 'someValue',

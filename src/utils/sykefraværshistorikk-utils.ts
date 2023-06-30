@@ -14,7 +14,6 @@ export const HistorikkLabels = {
     land: 'land',
 } as const;
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type HistorikkLabels = Record<keyof typeof HistorikkLabels, string>;
 
 export type HistorikkLabel = keyof HistorikkLabels;
@@ -112,7 +111,7 @@ const emptyHistorikkLabels = Object.fromEntries(
 
 export const isHistorikkLabel = (maybeLabel: unknown): maybeLabel is HistorikkLabel => {
     if (!isString(maybeLabel)) return false;
-    return HistorikkLabels.hasOwnProperty(maybeLabel);
+    return Object.prototype.hasOwnProperty.call(HistorikkLabels, maybeLabel);
 };
 
 const historikkTypeToLabel = (type: SykefraværshistorikkType): HistorikkLabel => {

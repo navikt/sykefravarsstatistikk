@@ -13,32 +13,32 @@ const wrapper: React.FC<{ children: ReactNode }> = ({ children }) => (
     </SWRConfig>
 );
 
-const happyFetcher: Fetcher<{ data: any; status: number }> = async (_: string) => {
+const happyFetcher: Fetcher<{ data: any; status: number }> = async () => {
     await new Promise((resolve) => setTimeout(resolve, 10));
     return { data: aggregertMockData, status: 200 };
 };
 
-const explodingFetcher: Fetcher<{ data: any; status: number }> = async (_: string) => {
+const explodingFetcher: Fetcher<{ data: any; status: number }> = async () => {
     await new Promise((resolve) => setTimeout(resolve, 10));
     throw new Error('KABOOM!');
 };
 
-const invalidDataFetcher: Fetcher<{ data: any; status: number }> = async (_: string) => {
+const invalidDataFetcher: Fetcher<{ data: any; status: number }> = async () => {
     await new Promise((resolve) => setTimeout(resolve, 10));
     return { data: { some: { other: { data: ['structure'] } } }, status: 200 };
 };
 
-const invalidStatusFetcher: Fetcher<{ data: any; status: number }> = async (_: string) => {
+const invalidStatusFetcher: Fetcher<{ data: any; status: number }> = async () => {
     await new Promise((resolve) => setTimeout(resolve, 10));
     return { data: aggregertMockData, status: 500 };
 };
 
-const notLoggedInFetcher: Fetcher<{ data: any; status: number }> = async (_: string) => {
+const notLoggedInFetcher: Fetcher<{ data: any; status: number }> = async () => {
     await new Promise((resolve) => setTimeout(resolve, 10));
     return { data: aggregertMockData, status: 401 };
 };
 
-const notAuthorizedFetcher: Fetcher<{ data: any; status: number }> = async (_: string) => {
+const notAuthorizedFetcher: Fetcher<{ data: any; status: number }> = async () => {
     await new Promise((resolve) => setTimeout(resolve, 10));
     return { data: aggregertMockData, status: 403 };
 };
@@ -53,9 +53,10 @@ describe('AggregertStatistikkTest', () => {
 
         await waitFor(() => {
             expect(result.current.restStatus).toBe(RestStatus.Suksess);
-            expect(result.current.error).toBe(undefined);
-            expect(result.current.aggregertData).toStrictEqual(happyMap);
         });
+
+        expect(result.current.error).toBe(undefined);
+        expect(result.current.aggregertData).toStrictEqual(happyMap);
 
         jest.resetModules();
     });
@@ -69,8 +70,8 @@ describe('AggregertStatistikkTest', () => {
 
         await waitFor(() => {
             expect(result.current.restStatus).toBe(RestStatus.IkkeInnlogget);
-            expect(result.current.aggregertData).toBe(undefined);
         });
+        expect(result.current.aggregertData).toBe(undefined);
     });
 
     it('Should return IngenTilgang if status code is 403', async () => {
@@ -82,8 +83,8 @@ describe('AggregertStatistikkTest', () => {
 
         await waitFor(() => {
             expect(result.current.restStatus).toBe(RestStatus.IngenTilgang);
-            expect(result.current.aggregertData).toBe(undefined);
         });
+        expect(result.current.aggregertData).toBe(undefined);
     });
 
     it('Should fail if status code is not 2xx', async () => {
@@ -95,8 +96,8 @@ describe('AggregertStatistikkTest', () => {
 
         await waitFor(() => {
             expect(result.current.restStatus).toBe(RestStatus.Feil);
-            expect(result.current.aggregertData).toBe(undefined);
         });
+        expect(result.current.aggregertData).toBe(undefined);
     });
 
     it('Should fail if data fails validation', async () => {
@@ -108,9 +109,9 @@ describe('AggregertStatistikkTest', () => {
 
         await waitFor(() => {
             expect(result.current.restStatus).toBe(RestStatus.Feil);
-            expect(result.current.error.message).toBe('Kunne ikke parse aggregert data');
-            expect(result.current.aggregertData).toBe(undefined);
         });
+        expect(result.current.error.message).toBe('Kunne ikke parse aggregert data');
+        expect(result.current.aggregertData).toBe(undefined);
     });
 
     it('Should fail and return thrown error', async () => {
@@ -120,8 +121,8 @@ describe('AggregertStatistikkTest', () => {
 
         await waitFor(() => {
             expect(result.current.restStatus).toBe(RestStatus.Feil);
-            expect(result.current.error).toStrictEqual(Error('KABOOM!'));
         });
+        expect(result.current.error).toStrictEqual(Error('KABOOM!'));
     });
 });
 

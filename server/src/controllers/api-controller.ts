@@ -1,6 +1,6 @@
 import express from 'express';
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
-import { idportenTokenExchangeMiddleware } from '@navikt/tokenx-middleware';
+import { idportenTokenXMiddleware } from '@navikt/tokenx-middleware';
 
 const FRONTEND_API_PATH = '/sykefravarsstatistikk/api';
 const BACKEND_API_PATH = '/sykefravarsstatistikk-api';
@@ -40,7 +40,7 @@ export function apiController() {
     const router = express.Router();
 
     router.use(
-        idportenTokenExchangeMiddleware(SYKEFRAVARSSTATISTIKK_API_AUDIENCE),
+        idportenTokenXMiddleware(SYKEFRAVARSSTATISTIKK_API_AUDIENCE),
         createProxyMiddleware(proxyConfig)
     );
 

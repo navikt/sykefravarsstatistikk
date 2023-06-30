@@ -21,15 +21,11 @@ describe('App', () => {
     });
 
     it('renders without crashing', async () => {
-        await waitFor(() => {
-            render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
-        });
+        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
     });
 
     it('Amplitude-events sendes med riktige user properties', async () => {
-        await waitFor(() => {
-            render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
-        });
+        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
 
         await waitFor(() => {
             expect(amplitudeMock.setUserProperties).toHaveBeenCalledTimes(1);

@@ -2,7 +2,7 @@ import { RestRessurs, RestStatus } from '../../api/api-utils';
 import { fleskOgFisk, heiOgHåBarnehage } from '../../api/mockedApiResponses/altinn-mock';
 import { mockAllDatahentingStatusOk } from '../../api/mockedApiResponses/use-analytics-test-mocks';
 import { Forside } from '../../Forside/Forside';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import * as hooks from '../../hooks/useOrgnr';
 import { AltinnOrganisasjon } from '../../api/altinnorganisasjon-api';
@@ -44,9 +44,9 @@ describe('Tester side for manglende Altinn-rettigheter', () => {
         const valgtOrgnr = fleskOgFisk[1].OrganizationNumber;
         jest.spyOn(hooks, 'useOrgnr').mockReturnValue(valgtOrgnr);
 
-        const { getByRole } = renderForside();
+        renderForside();
 
-        const beOmTilgangLenke = getByRole('link', {
+        const beOmTilgangLenke = screen.getByRole('link', {
             name: 'altinn-logo.svg Be om tilgang i Altinn Gå til Altinn og be om tilgang til tjenesten. Du kan velge hvem i virksomheten som får forespørselen.',
         }) as HTMLAnchorElement;
 
@@ -65,9 +65,9 @@ describe('Tester side for manglende Altinn-rettigheter', () => {
             valgtBedriftMedSykefraværsstatistikkRettigheter
         );
 
-        const { getByRole } = renderForside();
+        renderForside();
 
-        const forsidensOverskrift = getByRole('heading', {
+        const forsidensOverskrift = screen.getByRole('heading', {
             name: 'Sykefraværsstatistikk for HEI OG HÅ BARNEHAGE',
         });
 
@@ -82,9 +82,9 @@ describe('Tester side for manglende Altinn-rettigheter', () => {
             valgtBedriftUtenSykefraværsstatistikkRettigheter
         );
 
-        const { getByRole } = renderForside();
+        renderForside();
 
-        const merInfoLenke = getByRole('link', {
+        const merInfoLenke = screen.getByRole('link', {
             name: 'Les mer om hvordan tilgangsstyringen i Altinn fungerer',
         }) as HTMLAnchorElement;
         expect(merInfoLenke.href).toBe(
