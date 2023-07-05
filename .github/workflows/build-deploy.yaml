@@ -50,7 +50,7 @@ jobs:
 
   deploy-to-dev-gcp:
     name: Deploy to dev-gcp
-    if: github.ref == 'refs/heads/linting'
+    if: github.ref == 'refs/heads/core-web-vitals'
     needs: compile-test-and-build
     runs-on: ubuntu-latest
     steps:
