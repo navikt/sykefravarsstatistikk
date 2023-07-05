@@ -12,8 +12,9 @@ import { getEnvironmentContext } from './Context/EnvironmentContext';
 import { doInitializeFaro } from './utils/faroUtils';
 
 async function main(): Promise<void> {
-    const { MILJØ: miljø, GRAFANA_AGENT_COLLECTOR_URL: grafanaUrl } = getEnvironmentContext();
-    doInitializeFaro(grafanaUrl);
+    const { MILJØ: miljø } = getEnvironmentContext();
+    doInitializeFaro('https://telemetry.ekstern.dev.nav.no/collect');
+    console.log('process.env', process.env);
     if (process.env.REACT_APP_MOCK || miljø === MILJØ.DEV_EKSTERN) {
         await startMockServiceWorker();
     }
