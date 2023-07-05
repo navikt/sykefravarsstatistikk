@@ -10,6 +10,7 @@ const notEmptyTemplateString = z
 const Data = z.object({
     MILJØ: notEmptyTemplateString.refine((value) => isMiljø(value)),
     MIN_SIDE_ARBEIDSGIVER_URL: notEmptyTemplateString,
+    GRAFANA_AGENT_COLLECTOR_URL: notEmptyTemplateString,
 });
 
 type Data = z.infer<typeof Data>;
@@ -24,6 +25,7 @@ const isMiljø = (value: string): value is MILJØ => {
 const fallbackData: Data = {
     MILJØ: MILJØ.LOCAL,
     MIN_SIDE_ARBEIDSGIVER_URL: '',
+    GRAFANA_AGENT_COLLECTOR_URL: 'http://localhost:12347/collect',
 };
 export const getEnvironmentContext = (): Data => {
     if (typeof document === 'undefined') {

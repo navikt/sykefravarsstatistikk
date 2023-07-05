@@ -11,10 +11,9 @@ import { startMockServiceWorker } from './api/localMocking/config';
 import { getEnvironmentContext } from './Context/EnvironmentContext';
 import { doInitializeFaro } from './utils/faroUtils';
 
-doInitializeFaro();
-
 async function main(): Promise<void> {
-    const { MILJØ: miljø } = getEnvironmentContext();
+    const { MILJØ: miljø, GRAFANA_AGENT_COLLECTOR_URL: grafanaUrl } = getEnvironmentContext();
+    doInitializeFaro(grafanaUrl);
     if (process.env.REACT_APP_MOCK || miljø === MILJØ.DEV_EKSTERN) {
         await startMockServiceWorker();
     }

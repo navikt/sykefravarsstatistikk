@@ -13,11 +13,10 @@ import {
     ReactIntegration,
     ReactRouterVersion,
 } from '@grafana/faro-react';
-const { GRAFANA_AGENT_COLLECTOR_URL = 'http://localhost:12347/collect' } = process.env;
 
-export function doInitializeFaro() {
+export function doInitializeFaro(grafanaUrl: string) {
     initializeFaro({
-        url: GRAFANA_AGENT_COLLECTOR_URL, // required, see below
+        url: grafanaUrl,
         app: {
             name: 'sykefraværsstatistikk',
             version: 'dev',
