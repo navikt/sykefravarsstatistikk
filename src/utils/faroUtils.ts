@@ -13,12 +13,15 @@ import {
     ReactIntegration,
     ReactRouterVersion,
 } from '@grafana/faro-react';
-import nais from '../nais.js';
+const { GRAFANA_AGENT_COLLECTOR_URL = 'http://localhost:12347/collect' } = process.env;
 
 export function doInitializeFaro() {
     initializeFaro({
-        url: nais.telemetryCollectorURL, // required, see below
-        app: nais.app,
+        url: GRAFANA_AGENT_COLLECTOR_URL, // required, see below
+        app: {
+            name: 'sykefraværsstatistikk',
+            version: 'dev',
+        },
         instrumentations: [
             ...getWebInstrumentations(),
             new TracingInstrumentation(),

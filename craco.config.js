@@ -15,10 +15,7 @@ class sourcemapExplorerPlugin {
 
 module.exports = {
     webpack: {
-        plugins: (process.env.CI === 'true')
-          ? []
-          : [new sourcemapExplorerPlugin()],
-          externals: {'./nais.js': 'excludedFile'}
+        plugins: process.env.CI === 'true' ? [] : [new sourcemapExplorerPlugin()],
     },
     devServer: {
         proxy: {
