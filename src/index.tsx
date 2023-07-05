@@ -9,6 +9,9 @@ import { amplitudeClient } from './amplitude/client';
 import '@navikt/ds-css';
 import { startMockServiceWorker } from './api/localMocking/config';
 import { getEnvironmentContext } from './Context/EnvironmentContext';
+import { doInitializeFaro } from './utils/faroUtils';
+
+doInitializeFaro();
 
 async function main(): Promise<void> {
     const { MILJØ: miljø } = getEnvironmentContext();

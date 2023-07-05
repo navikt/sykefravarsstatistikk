@@ -18,6 +18,7 @@ module.exports = {
         plugins: (process.env.CI === 'true')
           ? []
           : [new sourcemapExplorerPlugin()],
+          externals: {'./nais.js': 'excludedFile'}
     },
     devServer: {
         proxy: {

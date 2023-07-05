@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppContent } from './App';
 import { render, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes } from 'react-router-dom';
 import { amplitudeMock } from './api/mockedApiResponses/amplitude-mock';
 import { mockAllDatahentingStatusOk } from './api/mockedApiResponses/use-analytics-test-mocks';
 import { SykefraværAppData } from './hooks/useSykefraværAppData';
@@ -44,7 +44,7 @@ describe('App', () => {
     const AppContentWithRouter = (data: SykefraværAppData) => {
         return (
             <BrowserRouter>
-                <AppContent {...data} analyticsClient={amplitudeMock} />
+                <AppContent {...data} analyticsClient={amplitudeMock} RoutesComponent={Routes} />
             </BrowserRouter>
         );
     };

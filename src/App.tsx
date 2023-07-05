@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useContext, useEffect, useMemo } from 'react';
 import { NotifikasjonWidgetProvider } from '@navikt/arbeidsgiver-notifikasjon-widget';
 import Banner from './Banner/Banner';
-import { Route, Routes } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { RestStatus } from './api/api-utils';
 import Innloggingsside from './Innloggingsside/Innloggingsside';
 import Brødsmulesti from './Brødsmulesti/Brødsmulesti';
@@ -17,16 +17,30 @@ import {
 import { AnalyticsClient } from './amplitude/client';
 import { useAnalytics } from './hooks/useAnalytics';
 import { EnvironmentContext } from './Context/EnvironmentContext';
+import { FaroRoutes, ReactRouterV6RoutesProps, withFaroErrorBoundary } from '@grafana/faro-react';
 
 interface Props {
     analyticsClient: AnalyticsClient;
+    RoutesComponent?: React.FunctionComponent;
 }
 
-const App: FunctionComponent<Props> = ({ analyticsClient }) => {
-    return <AppContent {...useSykefraværAppData()} analyticsClient={analyticsClient} />;
+const App: FunctionComponent<Props> = ({ analyticsClient, RoutesComponent = FaroRoutes }) => {
+    return (
+        <AppContent
+            {...useSykefraværAppData()}
+            analyticsClient={analyticsClient}
+            RoutesComponent={RoutesComponent}
+        />
+    );
 };
 
-export const AppContent = (appData: SykefraværAppData & { analyticsClient: AnalyticsClient }) => {
+export const AppContent = ({
+    RoutesComponent,
+    ...appData
+}: SykefraværAppData & {
+    analyticsClient: AnalyticsClient;
+    RoutesComponent: React.FunctionComponent | ((props: ReactRouterV6RoutesProps) => JSX.Element);
+}) => {
     const { MILJØ: miljø } = useContext(EnvironmentContext);
     useAnalytics(appData.analyticsClient);
 
@@ -80,7 +94,7 @@ export const AppContent = (appData: SykefraværAppData & { analyticsClient: Anal
     }
 
     innhold = (
-        <Routes>
+        <RoutesComponent>
             <Route
                 path={PATH_FORSIDE}
                 element={
@@ -90,7 +104,7 @@ export const AppContent = (appData: SykefraværAppData & { analyticsClient: Anal
                     </>
                 }
             />
-        </Routes>
+        </RoutesComponent>
     );
     return (
         <NotifikasjonWidgetProvider
@@ -108,4 +122,4 @@ export const AppContent = (appData: SykefraværAppData & { analyticsClient: Anal
     );
 };
 
-export default App;
+export default withFaroErrorBoundary(App, {});

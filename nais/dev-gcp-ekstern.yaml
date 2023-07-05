@@ -9,6 +9,9 @@ spec:
     image: {{ image }}
     team: arbeidsgiver
     port: 3000
+    frontend:
+      generatedConfig:
+        mountPath: /usr/share/nginx/html/js/nais.js
     vault:
         enabled: false
     ingresses:
