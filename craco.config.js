@@ -15,7 +15,9 @@ class sourcemapExplorerPlugin {
 
 module.exports = {
     webpack: {
-        plugins: process.env.CI === 'true' ? [] : [new sourcemapExplorerPlugin()],
+        plugins: (process.env.CI === 'true')
+          ? []
+          : [new sourcemapExplorerPlugin()],
     },
     devServer: {
         proxy: {
