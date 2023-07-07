@@ -29,13 +29,17 @@ const fallbackData: Data = {
 };
 export const getEnvironmentContext = (): Data => {
     if (typeof document === 'undefined') {
+        console.log('finner ikke document, document :>> ', document);
         logger.error(predefinerteFeilmeldinger.finnerIkkeMiljøvariabler);
         return fallbackData;
     }
 
     const dataElement = document.getElementById('data');
 
+    console.log('dataElement :>> ', dataElement);
+
     if (dataElement === null || !isHtmlScriptElement(dataElement)) {
+        console.log('finner ikke dataElement');
         logger.error(predefinerteFeilmeldinger.finnerIkkeMiljøvariabler);
         return fallbackData;
     }
@@ -43,6 +47,7 @@ export const getEnvironmentContext = (): Data => {
     try {
         return Data.parse(JSON.parse(dataElement.text));
     } catch (e) {
+        console.log('catch e :>> ', e);
         logger.error(predefinerteFeilmeldinger.finnerIkkeMiljøvariabler);
         return fallbackData;
     }
