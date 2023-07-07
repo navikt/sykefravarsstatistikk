@@ -41,11 +41,7 @@ export const AppContent = ({
     analyticsClient: AnalyticsClient;
     RoutesComponent: React.FunctionComponent | ((props: ReactRouterV6RoutesProps) => JSX.Element);
 }) => {
-    const envCont = useContext(EnvironmentContext);
-    const { MILJØ: miljø } = envCont;
-    console.log('envCont :>> ', envCont);
-    console.log('process.env', process.env);
-    console.log('appData :>> ', appData);
+    const { MILJØ: miljø } = useContext(EnvironmentContext);
     useAnalytics(appData.analyticsClient);
 
     const datakilder = useMemo(() => {
