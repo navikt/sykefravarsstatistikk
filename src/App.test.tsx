@@ -3,7 +3,10 @@ import { AppContent } from './App';
 import { render, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { amplitudeMock } from './api/mockedApiResponses/amplitude-mock';
-import { mockAllDatahentingStatusOk } from './api/mockedApiResponses/use-analytics-test-mocks';
+import {
+    mockAllDatahentingStatusLaster,
+    mockAllDatahentingStatusOk,
+} from './api/mockedApiResponses/use-analytics-test-mocks';
 import { SykefraværAppData } from './hooks/useSykefraværAppData';
 import { MockResizeObserver } from '../jest/MockResizeObserver';
 
@@ -21,6 +24,10 @@ describe('App', () => {
 
     it('renders without crashing', async () => {
         render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
+    });
+
+    it('renders without data without crashing', async () => {
+        render(<AppContentWithRouter {...mockAllDatahentingStatusLaster} />);
     });
 
     it('Amplitude-events sendes med riktige user properties', async () => {

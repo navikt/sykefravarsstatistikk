@@ -79,19 +79,22 @@ export const AppContent = (appData: SykefraværAppData & { analyticsClient: Anal
         return <ManglerRettighetRedirect />;
     }
 
-    innhold = (
-        <Routes>
-            <Route
-                path={PATH_FORSIDE}
-                element={
-                    <>
-                        <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                        <Forside {...appData} />
-                    </>
-                }
-            />
-        </Routes>
-    );
+    if (innhold === undefined) {
+        innhold = (
+            <Routes>
+                <Route
+                    path={PATH_FORSIDE}
+                    element={
+                        <>
+                            <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
+                            <Forside {...appData} />
+                        </>
+                    }
+                />
+            </Routes>
+        );
+    }
+
     return (
         <NotifikasjonWidgetProvider
             miljo={miljø === MILJØ.PROD ? 'prod' : 'dev'}

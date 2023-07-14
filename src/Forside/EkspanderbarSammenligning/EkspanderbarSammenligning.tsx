@@ -1,16 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import { BransjeSammenligningspanel } from '../SammenligningMedBransje/BransjeSammenligningspanel';
 import { RestStatus } from '../../api/api-utils';
-import Skeleton from 'react-loading-skeleton';
 import { SammenligningsType } from '../vurderingstekster';
 import { RestAggregertStatistikk } from '../../hooks/useAggregertStatistikk';
-import { RestPubliseringsdatoer } from '../../api/publiseringsdatoer-api';
 import { Statistikkategori } from '../../domene/statistikkategori';
 import { getBransjeEllerNæringKategori } from './GetBransjeEllerNæringKategori';
+import { Skeleton } from '@navikt/ds-react';
 
 interface Props {
     aggregertStatistikk: RestAggregertStatistikk;
-    restPubliseringsdatoer: RestPubliseringsdatoer;
 }
 
 export const EkspanderbarSammenligning: FunctionComponent<Props> = ({ aggregertStatistikk }) => {
@@ -26,14 +24,33 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({ aggregertS
         aggregertStatistikk.restStatus === RestStatus.IkkeLastet
     ) {
         return (
-            <Skeleton
-                className="ekspanderbart-sammenligningspanel__loading-skeleton"
-                height={355}
-            />
+            <>
+                <Skeleton
+                    className="bransje-sammenligningspanel__loading-skeleton"
+                    variant="rectangle"
+                    height={352}
+                />
+                <Skeleton
+                    className="bransje-sammenligningspanel__loading-skeleton"
+                    variant="rectangle"
+                    height={500}
+                />
+                <Skeleton
+                    className="bransje-sammenligningspanel__loading-skeleton"
+                    variant="rectangle"
+                    height={351}
+                />
+                <Skeleton
+                    className="bransje-sammenligningspanel__loading-skeleton"
+                    variant="rectangle"
+                    height={352}
+                />
+            </>
         );
     }
 
-  const harBransje = getBransjeEllerNæringKategori(aggregertStatistikk) === Statistikkategori.BRANSJE;
+    const harBransje =
+        getBransjeEllerNæringKategori(aggregertStatistikk) === Statistikkategori.BRANSJE;
 
     const [virksomhet, bransjeEllerNæring] = [
         aggregertStatistikk.aggregertData?.get(Statistikkategori.VIRKSOMHET),

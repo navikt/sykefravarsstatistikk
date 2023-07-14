@@ -4,7 +4,7 @@ import Graf from './Graf/Graf';
 import Tabell from './Tabell/Tabell';
 import './Historikk.css';
 import { RestStatus } from '../api/api-utils';
-import { BodyShort, Loader, ToggleGroup, Heading, Alert } from '@navikt/ds-react';
+import { BodyShort, ToggleGroup, Heading, Alert, Skeleton } from '@navikt/ds-react';
 import {
     getHistorikkLabels,
     historikkHarOverordnetEnhet,
@@ -67,9 +67,15 @@ const GrafOgTabellInnhold = ({
         case RestStatus.LasterInn:
         case RestStatus.IkkeLastet: {
             return (
-                <div className="historikk__spinner">
-                    <Loader size="2xlarge" />
-                </div>
+                <>
+                    <Skeleton width="20%" />
+                    <Skeleton width="40%" />
+                    <Skeleton width="35%" />
+                    <Skeleton width="55%" />
+                    <Skeleton width="25%" />
+                    <Skeleton width="60%" />
+                    <Skeleton variant="rectangle" width="100%" height={400} />
+                </>
             );
         }
 

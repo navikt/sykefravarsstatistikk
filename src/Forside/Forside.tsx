@@ -8,7 +8,7 @@ import './Forside.css';
 import Historikk from '../Historikk/Historikk';
 import { getBransjeEllerNæringKategori } from './EkspanderbarSammenligning/GetBransjeEllerNæringKategori';
 import { Statistikkategori } from '../domene/statistikkategori';
-import { Alert, BodyShort, Button, Heading } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Heading, Skeleton } from '@navikt/ds-react';
 import ReactToPrint from 'react-to-print';
 import { sendKnappEvent } from '../amplitude/events';
 import { sendIaTjenesteMetrikkMottatt } from '../metrikker/iatjenester';
@@ -29,6 +29,69 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
 
     const innholdRef = useRef<HTMLDivElement>(null);
     const lastNedKnappRef = useRef<HTMLButtonElement>(null);
+
+    const loading = React.useMemo(() => {
+        return [
+            appData.aggregertStatistikk.restStatus,
+            appData.altinnOrganisasjoner.status,
+            appData.altinnOrganisasjonerMedStatistikktilgang.status,
+            appData.enhetsregisterdata.restOverordnetEnhet.status,
+            appData.enhetsregisterdata.restUnderenhet.status,
+            appData.publiseringsdatoer.status,
+            appData.sykefraværshistorikk.status,
+        ].some((status) => [RestStatus.LasterInn, RestStatus.IkkeLastet].includes(status));
+    }, [
+        appData.aggregertStatistikk.restStatus,
+        appData.altinnOrganisasjoner.status,
+        appData.altinnOrganisasjonerMedStatistikktilgang.status,
+        appData.enhetsregisterdata.restOverordnetEnhet.status,
+        appData.enhetsregisterdata.restUnderenhet.status,
+        appData.publiseringsdatoer.status,
+        appData.sykefraværshistorikk.status,
+    ]);
+
+    if (loading) {
+        return (
+            <div className="forside__wrapper">
+                <div className="forside">
+                    <div className="forside__innhold">
+                        <div className="forside__innhold__header">
+                            <BodyShort className="forside__innhold__href">
+                                {window.location.href}
+                            </BodyShort>
+                            <Heading spacing size="medium" level="2">
+                                <Skeleton width="65%" />
+                            </Heading>
+                        </div>
+                        <Skeleton
+                            variant="rectangle"
+                            width={105}
+                            height={48}
+                            className="forside__innhold__knapp"
+                        />
+                        <BodyShort>
+                            <strong>
+                                <Skeleton width="40%" />
+                            </strong>
+                        </BodyShort>
+                        <BodyShort spacing>
+                            <strong>
+                                <Skeleton width="30%" />
+                            </strong>
+                        </BodyShort>
+                        <Skeleton width="60%" />
+                        <Skeleton width="30%" />
+                        <Skeleton width="45%" />
+                        <Skeleton width="50%" />
+                        <EkspanderbarSammenligning
+                            aggregertStatistikk={{ restStatus: RestStatus.IkkeLastet }}
+                        />
+                        <Historikk restSykefraværsstatistikk={{ status: RestStatus.IkkeLastet }} />
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     if (!brukerHarIaRettighetTilValgtBedrift) {
         return (
@@ -109,10 +172,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                         restPubliseringsdatoer={appData.publiseringsdatoer}
                     />
                     <SlikHarViKommetFramTilDittResultat />
-                    <EkspanderbarSammenligning
-                        aggregertStatistikk={appData.aggregertStatistikk}
-                        restPubliseringsdatoer={appData.publiseringsdatoer}
-                    />
+                    <EkspanderbarSammenligning aggregertStatistikk={appData.aggregertStatistikk} />
                     {!!tabellProps && (
                         <div className="forside__innhold__kun-print">
                             <Tabell {...tabellProps} />
