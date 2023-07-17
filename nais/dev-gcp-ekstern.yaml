@@ -36,8 +36,6 @@ spec:
           value: https://arbeidsgiver.ekstern.dev.nav.no/min-side-arbeidsgiver
         - name: FOREBYGGE_FRAVAR_URL
           value: https://arbeidsgiver.ekstern.dev.nav.no/forebygge-fravar
-        - name: GRAFANA_AGENT_COLLECTOR_URL
-          value: https://telemetry.ekstern.dev.nav.no/collect
     accessPolicy:
         outbound:
             external:

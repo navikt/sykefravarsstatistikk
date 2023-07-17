@@ -1,5 +1,3 @@
-import { OTELApi, faro } from '@grafana/faro-web-sdk';
-import { TracingInstrumentation } from '@grafana/faro-web-tracing';
 import {
     createRoutesFromChildren,
     matchRoutes,
@@ -14,16 +12,15 @@ import {
     ReactRouterVersion,
 } from '@grafana/faro-react';
 
-export function doInitializeFaro(grafanaUrl: string) {
+export function doInitializeFaro(grafanaUrl: string, appVersion: string) {
     initializeFaro({
         url: grafanaUrl,
         app: {
             name: 'sykefraværsstatistikk',
-            version: 'dev',
+            version: appVersion,
         },
         instrumentations: [
             ...getWebInstrumentations(),
-            new TracingInstrumentation(),
             new ReactIntegration({
                 router: {
                     version: ReactRouterVersion.V6,
@@ -37,17 +34,5 @@ export function doInitializeFaro(grafanaUrl: string) {
                 },
             }),
         ],
-    });
-
-    const { trace, context } = faro.api.getOTEL() as OTELApi;
-
-    const tracer = trace.getTracer('default');
-    const span = tracer.startSpan('some business process');
-
-    const someBusinessProcess = () => {};
-
-    context.with(trace.setSpan(context.active(), span), () => {
-        someBusinessProcess();
-        span.end();
     });
 }
