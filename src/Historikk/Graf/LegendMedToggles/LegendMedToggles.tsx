@@ -17,15 +17,6 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
     linjerSomSkalVises,
     setLinjerSomSkalVises,
 }) => {
-    const onChange = (event: any) => {
-        const linje = event.target.value;
-        if (linjerSomSkalVises.includes(linje)) {
-            setLinjerSomSkalVises(linjerSomSkalVises.filter((enLinje) => enLinje !== linje));
-        } else {
-            setLinjerSomSkalVises([...linjerSomSkalVises, linje]);
-        }
-    };
-
     const prefikser: { [linje in HistorikkLabel]: string } = {
         virksomhet: 'Virksomhet:',
         overordnetEnhet: 'Overordnet enhet:',
@@ -35,14 +26,13 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
     };
 
     return (
-        <CheckboxGroup legend="Velg linjer som skal vises i grafen">
+        <CheckboxGroup
+            legend="Velg linjer som skal vises i grafen"
+            value={linjerSomSkalVises}
+            onChange={setLinjerSomSkalVises}
+        >
             {linjerSomKanVises.map((linje) => (
-                <Checkbox
-                    checked={linjerSomSkalVises.includes(linje)}
-                    key={linje}
-                    value={linje}
-                    onChange={onChange}
-                >
+                <Checkbox key={linje} value={linje}>
                     <div className="legend-med-toggles__symbol_og_tekst_wrapper">
                         <GrafSymbol linje={linje} className="legend-med-toggles__symbol" />
                         {prefikser[linje]} {labels[linje]}
