@@ -67,7 +67,11 @@ export const AppContent = (appData: SykefraværAppData & { analyticsClient: Anal
         return <Innloggingsside redirectUrl={window.location.href} />;
     }
 
-    if (appData.altinnOrganisasjoner.status !== RestStatus.Suksess) {
+    if (
+        ![RestStatus.LasterInn, RestStatus.IkkeLastet, RestStatus.Suksess].includes(
+            appData.altinnOrganisasjoner.status
+        )
+    ) {
         innhold = <FeilFraAltinnSide />;
     }
 

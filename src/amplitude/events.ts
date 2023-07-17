@@ -22,3 +22,9 @@ export function sendPanelEkspanderEvent(panelnavn: string) {
 export function sendPanelKollapsEvent(panelnavn: string) {
     sendAnalytics('panel-kollaps', { panelnavn });
 }
+
+export function sendLastetInnloggingssideEvent() {
+    const harVirksomhetsvelgerILocalStorage =
+        localStorage.getItem('virksomhetsvelger_bedrift') !== null;
+    sendAnalytics('lastet innloggingsside', { harVirksomhetsvelgerILocalStorage });
+}

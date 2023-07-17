@@ -7,10 +7,7 @@ import './Graf.css';
 import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString } from './graf-utils';
 import XAkseTick from './XAkseTick';
 import { useInnerWidth } from '../../utils/innerWidth-hook';
-import {
-    HistorikkLabel,
-    KvartalsvisSammenligning,
-} from '../../utils/sykefraværshistorikk-utils';
+import { HistorikkLabel, KvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
 import YAkseTick from './YAkseTick';
 
 interface Props {
@@ -61,7 +58,12 @@ const GrafVisning: FunctionComponent<Props> = ({
 
     return (
         <ResponsiveContainer minHeight={400}>
-            <LineChart data={kvartalsvisSammenligningData} margin={margin}>
+            <LineChart
+                data={kvartalsvisSammenligningData}
+                margin={margin}
+                role="img"
+                title="Graf som viser sykefraværet over tid. Kan også sees som tabell."
+            >
                 <CartesianGrid strokeDasharray="3 3" stroke="#C6C2BF" />
                 <XAxis
                     dataKey="name"
