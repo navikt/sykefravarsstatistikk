@@ -51,6 +51,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     ]);
 
     if (loading) {
+        console.log('loading: appData :>> ', appData);
         return (
             <div className="forside__wrapper">
                 <div className="forside">
