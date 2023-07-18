@@ -5,6 +5,7 @@ import './Innloggingsside.css';
 import { EnvironmentContext } from '../Context/EnvironmentContext';
 import { BASE_PATH } from '../konstanter';
 import EksternLenke from '../felleskomponenter/EksternLenke/EksternLenke';
+import { sendLastetInnloggingssideEvent } from '../amplitude/events';
 
 interface Props {
     redirectUrl: string;
@@ -15,6 +16,10 @@ const Innloggingsside: React.FunctionComponent<Props> = ({ redirectUrl }) => {
     const redirectTilLogin = () => {
         window.location.href = `${BASE_PATH}/redirect-til-login?redirect=${redirectUrl}`;
     };
+
+    React.useEffect(() => {
+        sendLastetInnloggingssideEvent();
+    });
 
     return (
         <div className="innloggingsside__wrapper">
