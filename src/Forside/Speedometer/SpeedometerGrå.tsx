@@ -8,6 +8,7 @@ export const SpeedometerGrå: FunctionComponent<SpeedometerSvgProps> = ({ størr
         viewBox="0 0 225 133"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        role="img"
     >
         <title>Grått speedometer der pilen ikke indikerer noe</title>
         <path

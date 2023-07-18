@@ -12,6 +12,7 @@ import {
     mockAllDatahentingStatusOk,
 } from '../api/mockedApiResponses/use-analytics-test-mocks';
 import { MockResizeObserver } from '../../jest/MockResizeObserver';
+import { axe } from 'jest-axe';
 
 describe('useAnalytics', () => {
     const defaultEventData = {
@@ -87,6 +88,12 @@ describe('useAnalytics', () => {
                 panelnavn: 'Slik har vi kommet fram til ditt resultat',
             })
         );
+    });
+
+    it('Har ingen uu-feil fra axe', async () => {
+        const { container } = render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
+        const results = await axe(container);
+        expect(results).toHaveNoViolations();
     });
 
     const AppContentWithRouter = (data: SykefraværAppData) => {

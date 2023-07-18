@@ -81,7 +81,11 @@ export const AppContent = ({
         return <Innloggingsside redirectUrl={window.location.href} />;
     }
 
-    if (appData.altinnOrganisasjoner.status !== RestStatus.Suksess) {
+    if (
+        ![RestStatus.LasterInn, RestStatus.IkkeLastet, RestStatus.Suksess].includes(
+            appData.altinnOrganisasjoner.status
+        )
+    ) {
         innhold = <FeilFraAltinnSide />;
     }
 
@@ -93,19 +97,22 @@ export const AppContent = ({
         return <ManglerRettighetRedirect />;
     }
 
-    innhold = (
-        <RoutesComponent>
-            <Route
-                path={PATH_FORSIDE}
-                element={
-                    <>
-                        <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
-                        <Forside {...appData} />
-                    </>
-                }
-            />
-        </RoutesComponent>
-    );
+    if (innhold === undefined) {
+        innhold = (
+            <RoutesComponent>
+                <Route
+                    path={PATH_FORSIDE}
+                    element={
+                        <>
+                            <Brødsmulesti gjeldendeSide="sykefraværsstatistikk" />
+                            <Forside {...appData} />
+                        </>
+                    }
+                />
+            </RoutesComponent>
+        );
+    }
+
     return (
         <NotifikasjonWidgetProvider
             miljo={miljø === MILJØ.PROD ? 'prod' : 'dev'}

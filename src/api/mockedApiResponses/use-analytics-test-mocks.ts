@@ -55,6 +55,24 @@ export const mockAllDatahentingStatusOk: SykefraværAppData = {
     sykefraværshistorikk: { status: RestStatus.Suksess, data: [] },
 };
 
+export const mockAllDatahentingStatusLaster: SykefraværAppData = {
+    aggregertStatistikk: { restStatus: RestStatus.LasterInn },
+    altinnOrganisasjoner: { status: RestStatus.LasterInn },
+    altinnOrganisasjonerMedStatistikktilgang: {
+        status: RestStatus.LasterInn,
+    },
+    enhetsregisterdata: {
+        restUnderenhet: {
+            status: RestStatus.LasterInn,
+        },
+        restOverordnetEnhet: {
+            status: RestStatus.LasterInn,
+        },
+    },
+    publiseringsdatoer: { status: RestStatus.Suksess, data: getMockPubliseringsdatoer() },
+    sykefraværshistorikk: { status: RestStatus.Suksess, data: [] },
+};
+
 export const mockAllDatahentingFeiler: SykefraværAppData = {
     aggregertStatistikk: { restStatus: RestStatus.Feil },
     altinnOrganisasjoner: { status: RestStatus.Feil },
