@@ -35,8 +35,6 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
             appData.aggregertStatistikk.restStatus,
             appData.altinnOrganisasjoner.status,
             appData.altinnOrganisasjonerMedStatistikktilgang.status,
-            appData.enhetsregisterdata.restOverordnetEnhet.status,
-            appData.enhetsregisterdata.restUnderenhet.status,
             appData.publiseringsdatoer.status,
             appData.sykefraværshistorikk.status,
         ].some((status) => [RestStatus.LasterInn, RestStatus.IkkeLastet].includes(status));
@@ -44,14 +42,11 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
         appData.aggregertStatistikk.restStatus,
         appData.altinnOrganisasjoner.status,
         appData.altinnOrganisasjonerMedStatistikktilgang.status,
-        appData.enhetsregisterdata.restOverordnetEnhet.status,
-        appData.enhetsregisterdata.restUnderenhet.status,
         appData.publiseringsdatoer.status,
         appData.sykefraværshistorikk.status,
     ]);
 
     if (loading) {
-        console.log('loading: appData :>> ', appData);
         return (
             <div className="forside__wrapper">
                 <div className="forside">
