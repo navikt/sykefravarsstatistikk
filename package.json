@@ -17,7 +17,7 @@
     "@babel/runtime": "^7.20.6",
     "@navikt/aksel-icons": "^4.6.1",
     "@navikt/arbeidsgiver-notifikasjon-widget": "5.4.3-rc",
-    "@navikt/bedriftsmeny": "^6.5.2",
+    "@navikt/bedriftsmeny": "^6.10.0",
     "@navikt/ds-css": "^4.6.1",
     "@navikt/ds-icons": "^3.4.3",
     "@navikt/ds-react": "^4.6.1",

@@ -2146,7 +2146,7 @@
     casual "^1.6.2"
     graphql "^16.6.0"
 
-"@navikt/bedriftsmeny@^6.5.2":
+"@navikt/bedriftsmeny@^6.10.0":
   version "6.10.0"
   resolved "https://npm.pkg.github.com/download/@navikt/bedriftsmeny/6.10.0/376e5d17f292ef0f8d24e3bf523d5df19dada005#376e5d17f292ef0f8d24e3bf523d5df19dada005"
   integrity sha512-u6DpuyvST1OqKFEYKyWss/HjsxxmLmtQ4uscYd/qRCylPtvlLVQ9evjMVuXbfWtNakTxkMu2n7GVZHN0/6WnRg==
