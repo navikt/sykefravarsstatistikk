@@ -15,6 +15,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.6",
+    "@grafana/faro-react": "^1.1.1",
+    "@grafana/faro-web-sdk": "^1.1.1",
+    "@grafana/faro-web-tracing": "^1.1.1",
     "@navikt/aksel-icons": "^4.6.1",
     "@navikt/arbeidsgiver-notifikasjon-widget": "5.4.3-rc",
     "@navikt/bedriftsmeny": "^6.10.0",

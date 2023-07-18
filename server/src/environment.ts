@@ -26,6 +26,7 @@ export function getFrontendEnvs() {
             .object({
                 MILJO: z.string().refine(isMiljø),
                 MIN_SIDE_ARBEIDSGIVER_URL: z.string().url(),
+                GRAFANA_AGENT_COLLECTOR_URL: z.string().url(),
             })
             .parse(process.env, { errorMap: errorMap });
     } catch (err) {
@@ -34,6 +35,7 @@ export function getFrontendEnvs() {
                 MILJO: MILJØ.LOCAL,
                 MIN_SIDE_ARBEIDSGIVER_URL:
                     'https://arbeidsgiver.ekstern.dev.nav.no/min-side-arbeidsgiver',
+                GRAFANA_AGENT_COLLECTOR_URL: 'https://telemetry.ekstern.dev.nav.no/collect',
             };
         }
         logger.error('Failed to parse frontend envs', err);

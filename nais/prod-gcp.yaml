@@ -45,6 +45,8 @@ spec:
           value: https://arbeidsgiver.nav.no/min-side-arbeidsgiver
         - name: FOREBYGGE_FRAVAR_URL
           value: https://arbeidsgiver.nav.no/forebygge-fravar
+        - name: GRAFANA_AGENT_COLLECTOR_URL
+          value: https://telemetry.nav.no/collect
     tokenx:
         enabled: true
     idporten:

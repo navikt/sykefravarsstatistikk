@@ -80,4 +80,15 @@ export const mswHandlersForMockApp = [
         await ctx.fetch(req);
         return res(ctx.status(200));
     }),
+
+    rest.post('http://localhost:12347/collect', async (_, res, ctx) => {
+        return res(ctx.status(202));
+    }),
+
+    /*
+    // Use this if you are using local core web vitals tracking.
+    rest.post('http://localhost:12347/collect', async (req) => {
+        return req.passthrough();
+    }),
+    */
 ];

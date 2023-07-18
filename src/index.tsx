@@ -4,14 +4,20 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import { BASE_PATH, MILJØ } from './konstanter';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes as RRDRoutes } from 'react-router-dom';
 import { amplitudeClient } from './amplitude/client';
 import '@navikt/ds-css';
 import { startMockServiceWorker } from './api/localMocking/config';
 import { getEnvironmentContext } from './Context/EnvironmentContext';
+import { doInitializeFaro } from './utils/faroUtils';
+import { FaroRoutes } from '@grafana/faro-react';
 
 async function main(): Promise<void> {
-    const { MILJØ: miljø } = getEnvironmentContext();
+    const { MILJØ: miljø, GRAFANA_AGENT_COLLECTOR_URL } = getEnvironmentContext();
+    const shouldUseFaro = GRAFANA_AGENT_COLLECTOR_URL?.length > 0;
+    if (shouldUseFaro) {
+        doInitializeFaro(GRAFANA_AGENT_COLLECTOR_URL, miljø);
+    }
     if (process.env.REACT_APP_MOCK || miljø === MILJØ.DEV_EKSTERN) {
         await startMockServiceWorker();
     }
@@ -21,7 +27,10 @@ async function main(): Promise<void> {
 
     root.render(
         <BrowserRouter basename={BASE_PATH}>
-            <App analyticsClient={amplitudeClient} />
+            <App
+                analyticsClient={amplitudeClient}
+                RoutesComponent={shouldUseFaro ? FaroRoutes : RRDRoutes}
+            />
         </BrowserRouter>
     );
 }
