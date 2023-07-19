@@ -1,6 +1,5 @@
 import { Statistikk } from '../hooks/useAggregertStatistikk';
 import { parseVerdi } from '../utils/app-utils';
-import { logger, predefinerteFeilmeldinger } from '../utils/logger';
 
 export type SykefraværVurdering =
     | 'UNDER'
@@ -15,7 +14,7 @@ export const sammenliknSykefravær = (
     bransjeEllerNæring?: Statistikk
 ): SykefraværVurdering => {
     if (statistikk === undefined && bransjeEllerNæring === undefined) {
-        logger.warn(predefinerteFeilmeldinger.virksomhetensOgBransjensTallErNaN);
+        console.warn('Virksomhetens og bransjens tall er NaN');
         return 'FEIL_ELLER_INGEN_DATA';
     }
     if (statistikk === undefined && bransjeEllerNæring !== undefined) return 'MASKERT';

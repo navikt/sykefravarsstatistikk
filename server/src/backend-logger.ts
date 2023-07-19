@@ -15,17 +15,10 @@ export const levels: Levels = {
     fatal: { label: 'fatal', value: 60 },
 } as const;
 
-//Denne listen må synces med predefinerte feilmeldinger i klientkoden
+// Liste over feilmeldinger backend har tilgang til å sende.
 const predefinerteFeilmeldinger = {
     feilVedHentingAvAltinnOrganisasjoner: 'Feil ved kall til Altinn for henting av organisasjoner',
-    virksomhetensOgBransjensTallErNaN: 'Virksomhetens og bransjens tall er NaN',
-    kunneIkkeParseAggregertDataFeil: 'Kunne ikke parse aggregert data',
-    ukjentFeilMedAggregertData: 'Ukjent feil med aggregert data',
-    brukerIkkeInloggetFeil: 'Nettverkskall feilet da bruker ikke er innlogget',
-    brukerIkkeAutorisertFeil: 'Nettverkskall feilet da bruker ikke er Autorisert',
     feilVedNettverkskall: 'Det er oppstått en feil ved nettverkskall',
-    finnerIkkeMiljøvariabler:
-        'Finner ikke URL i miljøvariabler - klienten vil mangle korrekte lenker.',
 } as const;
 
 const tekniskeLoggFeil = {

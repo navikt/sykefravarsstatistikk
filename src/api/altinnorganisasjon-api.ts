@@ -1,5 +1,5 @@
 import { getRestStatus, RestRessurs, RestStatus } from './api-utils';
-import { logger, predefinerteFeilmeldinger } from '../utils/logger';
+import { backendLogger } from '../utils/backendLogger';
 
 export type RestAltinnOrganisasjoner = RestRessurs<AltinnOrganisasjon[]>;
 
@@ -39,7 +39,7 @@ export const hentAltinnOrganisasjoner = async (
         };
     } catch (error: any) {
         if (error.status === RestStatus.Feil || !error.status) {
-            logger.error(predefinerteFeilmeldinger.feilVedHentingAvAltinnOrganisasjoner);
+            backendLogger.error('Feil ved kall til Altinn for henting av organisasjoner');
             return { status: RestStatus.Feil };
         }
         return { status: error.status };

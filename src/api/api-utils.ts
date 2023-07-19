@@ -1,4 +1,4 @@
-import { logger, predefinerteFeilmeldinger } from '../utils/logger';
+import { backendLogger } from '../utils/backendLogger';
 
 export enum RestStatus {
     IkkeLastet = 'IkkeLastet',
@@ -78,7 +78,7 @@ export const fetchMedFeilhåndtering = async <T>(
         };
     }
     if (restStatus === RestStatus.Feil) {
-        logger.error(predefinerteFeilmeldinger.feilVedNettverkskall);
+        backendLogger.error('Det er oppstått en feil ved nettverkskall');
 
         try {
             const body = await response.json();
