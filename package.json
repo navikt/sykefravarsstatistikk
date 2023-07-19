@@ -66,6 +66,9 @@
     "source-map-explorer": "^2.5.3",
     "typescript": "^5.1.6"
   },
+  "resolutions": {
+    "**/@babel/runtime": "7.13.10"
+  },
   "eslintConfig": {
     "extends": [
       "@navikt/eslint-config-teamia"
