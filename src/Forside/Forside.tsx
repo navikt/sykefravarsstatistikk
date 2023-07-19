@@ -65,12 +65,12 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                             height={48}
                             className="forside__innhold__knapp"
                         />
-                        <BodyShort>
+                        <BodyShort as="div">
                             <strong>
                                 <Skeleton width="40%" />
                             </strong>
                         </BodyShort>
-                        <BodyShort spacing>
+                        <BodyShort spacing as="div">
                             <strong>
                                 <Skeleton width="30%" />
                             </strong>
