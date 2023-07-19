@@ -59,6 +59,10 @@ export const mswHandlersForMockApp = [
         );
     }),
 
+    rest.get('/sykefravarsstatistikk/favicon.ico', (req) => {
+        return req.passthrough();
+    }),
+
     rest.post(
         '/sykefravarsstatistikk/ia-tjenester-metrikker/innlogget/mottatt-iatjeneste',
         (_, res, ctx) => {
