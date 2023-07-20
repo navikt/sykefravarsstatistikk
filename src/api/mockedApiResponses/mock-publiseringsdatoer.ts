@@ -6,7 +6,7 @@ export function getMockPubliseringsdatoer(): Publiseringsdatoer {
             årstall: 2022,
             kvartal: 2,
         },
-        nestePubliseringsdato: '2022-12-01',
-        sistePubliseringsdato: '2022-09-08',
+        nestePubliseringsdato: new Date('2022-12-01'),
+        sistePubliseringsdato: new Date('2022-09-08'),
     };
 }

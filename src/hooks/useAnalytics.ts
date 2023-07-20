@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 interface AnalyticsData {
     eventname: string;
-    eventProperties: any;
+    eventProperties: unknown;
 }
 
 const ANALYTICS_EVENT = 'amplitude';
@@ -32,7 +32,12 @@ const defaultEventProperties = () => {
     };
 };
 
-export const sendAnalytics = (eventname: string, additionalEventProperties?: any) => {
+export const sendAnalytics = (
+    eventname: string,
+    additionalEventProperties?: {
+        [key: string]: unknown;
+    }
+) => {
     const analyticsEvent = new CustomEvent<AnalyticsData>(ANALYTICS_EVENT, {
         detail: {
             eventname,

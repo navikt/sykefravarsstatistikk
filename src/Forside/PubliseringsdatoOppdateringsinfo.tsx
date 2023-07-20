@@ -5,7 +5,10 @@ import { formatterDatoMedMånedNavn } from '../utils/app-utils';
 import { RestPubliseringsdatoer } from '../api/publiseringsdatoer-api';
 
 export const PubliseringsdatoOppdateringsinfo: FunctionComponent<{
-    restPubliseringsdatoer: RestPubliseringsdatoer;
+    restPubliseringsdatoer: RestPubliseringsdatoer<{
+        sistePubliseringsdato: Date;
+        nestePubliseringsdato: Date;
+    }>;
 }> = ({ restPubliseringsdatoer }) => {
     if (restPubliseringsdatoer.status === RestStatus.Suksess) {
         const publiseringsdatoer = restPubliseringsdatoer.data;

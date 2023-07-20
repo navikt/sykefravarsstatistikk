@@ -1,4 +1,4 @@
-import useSWR, { Fetcher } from 'swr';
+import useSWR, { BareFetcher, Fetcher } from 'swr';
 import { z } from 'zod';
 import { getRestStatus, RestStatus } from '../api/api-utils';
 import { useOrgnr } from './useOrgnr';
@@ -53,10 +53,10 @@ export type Statistikk = z.infer<typeof StatistikkValidator>;
 export type RestAggregertStatistikk = {
     restStatus: RestStatus;
     aggregertData?: Map<Statistikkategori, AggregertStatistikk>;
-    error?: any;
+    error?: unknown;
 };
 
-const defaultFetcher: Fetcher<{ data: any; status: number }> = async (input: RequestInfo) => {
+const defaultFetcher: Fetcher<{ data: unknown; status: number }> = async (input: RequestInfo) => {
     const res = await fetch(input, { method: 'GET', credentials: 'include' });
 
     if (!res.ok) {
@@ -105,7 +105,13 @@ export const groupByCategory = (aggregertStatistikk: AggregertStatistikkResponse
     return map;
 };
 
-function useFetch(orgnr: string, fetcher?: Fetcher<{ data: any; status: number }>) {
+function useFetch(
+    orgnr: string,
+    fetcher?: BareFetcher<{
+        data: unknown;
+        status: number;
+    }>
+) {
     const _fetcher = fetcher ? fetcher : defaultFetcher;
     const { data, error } = useSWR(
         `${BASE_PATH}/api/${orgnr}/v1/sykefravarshistorikk/aggregert`,
@@ -127,7 +133,10 @@ function useFetch(orgnr: string, fetcher?: Fetcher<{ data: any; status: number }
 }
 
 function useAggregertStatistikk(
-    fetcher?: Fetcher<{ data: any; status: number }>
+    fetcher?: BareFetcher<{
+        data: unknown;
+        status: number;
+    }>
 ): RestAggregertStatistikk {
     const orgnr = useOrgnr() || '';
     const { data, isLoading, isError } = useFetch(orgnr, fetcher);

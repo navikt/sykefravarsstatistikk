@@ -37,6 +37,7 @@ export const hentAltinnOrganisasjoner = async (
             status: RestStatus.Suksess,
             data: altinnOrganisasjoner,
         };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         if (error.status === RestStatus.Feil || !error.status) {
             backendLogger.error('Feil ved kall til Altinn for henting av organisasjoner');

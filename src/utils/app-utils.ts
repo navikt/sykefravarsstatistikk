@@ -68,7 +68,7 @@ export const listFilterBuilder = <T, U extends T>(
 // const picker = pickBuilder(["a","c","e"])
 // const picked: aVal|cVal|eVal[] = picker({a: aVal, b: bVal, c: cVal ...})
 export const pickBuilder = <Key extends string | number | symbol>(keys: Key[] | readonly Key[]) => {
-    return <T extends Record<Key, any>>(record: T) =>
+    return <T extends Record<Key, unknown>>(record: T) =>
         keys.map((key) => record[key]).filter(isDefined);
 };
 

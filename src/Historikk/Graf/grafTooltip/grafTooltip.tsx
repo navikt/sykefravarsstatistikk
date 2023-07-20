@@ -3,11 +3,11 @@ import { Tooltip } from 'recharts';
 import './grafTooltip.css';
 import { getTooltipsnavn } from '../graf-utils';
 import { GrafSymbol } from '../GrafSymbol/GrafSymbol';
+import { HistorikkLabel } from '../../../utils/sykefraværshistorikk-utils';
 
 const grafTooltip = () => (
     <Tooltip
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        formatter={(value: any, name: any, _) => [
+        formatter={(value: number, name: HistorikkLabel) => [
             <span className="tooltip__item-wrapper" key={`tooltip-${name}`}>
                 <GrafSymbol linje={name} className="tooltip__ikon" />
                 <div className="tooltip__item-navn-og-verdi">

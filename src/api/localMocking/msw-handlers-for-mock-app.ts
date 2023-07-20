@@ -49,7 +49,7 @@ export const mswHandlersForMockApp = [
     }),
 
     rest.get('https://data.brreg.no/enhetsregisteret/api/underenheter/:orgnr', (req, res, ctx) => {
-        const orgnr = req.url.toString().match(/[0-9]{9}/)![0];
+        const orgnr = req.url.toString().match(/[0-9]{9}/)?.[0];
         return res(
             ctx.status(200),
             ctx.json({

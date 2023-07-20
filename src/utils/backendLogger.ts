@@ -7,6 +7,7 @@ export const backendLogger = pino({
         level: (label) => {
             return { level: label };
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         log: (object: any) => {
             if (object.err) {
                 // backendlogger has an Error-instance, frontendlogger has already serialized it
