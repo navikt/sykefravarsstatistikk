@@ -44,6 +44,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@craco/craco": "^7.1.0",
     "@craco/types": "^7.1.0",
     "@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock": "^5.4.10",
@@ -64,7 +65,7 @@
     "postcss": "^8.4.26",
     "prettier": "^3.0.0",
     "source-map-explorer": "^2.5.3",
-    "typescript": "^5.1.6"
+    "typescript": "5.0.4"
   },
   "resolutions": {
     "**/@babel/runtime": "7.13.10"
@@ -74,7 +75,8 @@
       "@navikt/eslint-config-teamia"
     ],
     "rules": {
-      "@next/next/no-img-element": "off"
+      "@next/next/no-img-element": "off",
+      "@next/next/no-html-link-for-pages": "off"
     }
   },
   "browserslist": {
