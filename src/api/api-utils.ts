@@ -1,4 +1,4 @@
-import { backendLogger } from '../utils/backendLogger';
+import { LogLevel, faro } from '@grafana/faro-web-sdk';
 
 export enum RestStatus {
     IkkeLastet = 'IkkeLastet',
@@ -78,7 +78,9 @@ export const fetchMedFeilhåndtering = async <T>(
         };
     }
     if (restStatus === RestStatus.Feil) {
-        backendLogger.error('Det er oppstått en feil ved nettverkskall');
+        faro.api?.pushLog(['Det er oppstått en feil ved nettverkskall'], {
+            level: LogLevel.ERROR,
+        });
 
         try {
             const body = await response.json();

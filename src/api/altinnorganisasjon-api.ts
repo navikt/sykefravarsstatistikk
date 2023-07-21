@@ -1,5 +1,5 @@
 import { getRestStatus, RestRessurs, RestStatus } from './api-utils';
-import { backendLogger } from '../utils/backendLogger';
+import { faro, LogLevel } from '@grafana/faro-web-sdk';
 
 export type RestAltinnOrganisasjoner = RestRessurs<AltinnOrganisasjon[]>;
 
@@ -40,7 +40,9 @@ export const hentAltinnOrganisasjoner = async (
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         if (error.status === RestStatus.Feil || !error.status) {
-            backendLogger.error('Feil ved kall til Altinn for henting av organisasjoner');
+            faro.api?.pushLog(['Feil ved kall til Altinn for henting av organisasjoner'], {
+                level: LogLevel.ERROR,
+            });
             return { status: RestStatus.Feil };
         }
         return { status: error.status };
