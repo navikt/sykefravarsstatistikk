@@ -2,13 +2,10 @@ import React, { FunctionComponent } from 'react';
 import { BodyShort, Loader } from '@navikt/ds-react';
 import { RestStatus } from '../api/api-utils';
 import { formatterDatoMedMånedNavn } from '../utils/app-utils';
-import { RestPubliseringsdatoer } from '../api/publiseringsdatoer-api';
+import { Publiseringsdatoer, RestPubliseringsdatoer } from '../api/publiseringsdatoer-api';
 
 export const PubliseringsdatoOppdateringsinfo: FunctionComponent<{
-    restPubliseringsdatoer: RestPubliseringsdatoer<{
-        sistePubliseringsdato: Date;
-        nestePubliseringsdato: Date;
-    }>;
+    restPubliseringsdatoer: RestPubliseringsdatoer<Publiseringsdatoer>;
 }> = ({ restPubliseringsdatoer }) => {
     if (restPubliseringsdatoer.status === RestStatus.Suksess) {
         const publiseringsdatoer = restPubliseringsdatoer.data;

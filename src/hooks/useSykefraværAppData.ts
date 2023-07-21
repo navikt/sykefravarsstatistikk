@@ -10,9 +10,8 @@ import {
     getEkstraDataFraAggregertSykefravær,
 } from '../amplitude/amplitudeEkstradata';
 import useAggregertStatistikk, { RestAggregertStatistikk } from './useAggregertStatistikk';
-import { RestPubliseringsdatoer } from '../api/publiseringsdatoer-api';
+import { Publiseringsdatoer, RestPubliseringsdatoer } from '../api/publiseringsdatoer-api';
 import { usePubliseringsdatoer } from './usePubliseringsdatoer';
-import { ÅrstallOgKvartal } from '../utils/sykefraværshistorikk-utils';
 
 export interface SykefraværAppData {
     altinnOrganisasjoner: RestAltinnOrganisasjoner;
@@ -20,11 +19,7 @@ export interface SykefraværAppData {
     enhetsregisterdata: Enhetsregisterdata;
     sykefraværshistorikk: RestSykefraværshistorikk;
     aggregertStatistikk: RestAggregertStatistikk;
-    publiseringsdatoer: RestPubliseringsdatoer<{
-        gjeldendePeriode: ÅrstallOgKvartal;
-        sistePubliseringsdato: Date;
-        nestePubliseringsdato: Date;
-    }>;
+    publiseringsdatoer: RestPubliseringsdatoer<Publiseringsdatoer>;
 }
 
 export function useSykefraværAppData(): SykefraværAppData {
