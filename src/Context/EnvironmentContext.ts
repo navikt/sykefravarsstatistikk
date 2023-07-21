@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import { createContext } from 'react';
 import { MILJØ } from '../konstanter';
-import { logger, predefinerteFeilmeldinger } from '../utils/logger';
 
 const notEmptyTemplateString = z
     .string()
@@ -29,21 +28,29 @@ const fallbackData: Data = {
 };
 export const getEnvironmentContext = (): Data => {
     if (typeof document === 'undefined') {
-        logger.error(predefinerteFeilmeldinger.finnerIkkeMiljøvariabler);
+        console.error(
+            `Finner ikke URL i miljøvariabler - klienten vil mangle korrekte lenker: document er undefined`
+        );
         return fallbackData;
     }
 
     const dataElement = document.getElementById('data');
 
     if (dataElement === null || !isHtmlScriptElement(dataElement)) {
-        logger.error(predefinerteFeilmeldinger.finnerIkkeMiljøvariabler);
+        console.error(
+            `Finner ikke URL i miljøvariabler - klienten vil mangle korrekte lenker: data element er null eller ikke et scriptelement`
+        );
         return fallbackData;
     }
 
     try {
         return Data.parse(JSON.parse(dataElement.text));
     } catch (e) {
-        logger.error(predefinerteFeilmeldinger.finnerIkkeMiljøvariabler);
+        console.error(
+            `Finner ikke URL i miljøvariabler - klienten vil mangle korrekte lenker: ${JSON.stringify(
+                e
+            )}`
+        );
         return fallbackData;
     }
 };

@@ -106,7 +106,10 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
                         <Heading level="2" size="medium">
                             {getPaneltittel()}
                         </Heading>
-                        <BodyShort className="bransje-sammenligningspanel__tittel-forklaring">
+                        <BodyShort
+                            className="bransje-sammenligningspanel__tittel-forklaring"
+                            as="div"
+                        >
                             {vurderingstekst}
                         </BodyShort>
                     </div>

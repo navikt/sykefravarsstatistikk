@@ -64,7 +64,7 @@ describe('Tester for utils funksjoner', () => {
             result.find(
                 (sykefraværshistorikk) =>
                     sykefraværshistorikk.type === SykefraværshistorikkType.OVERORDNET_ENHET
-            )!.kvartalsvisSykefraværsprosent.length
+            )?.kvartalsvisSykefraværsprosent.length
         ).toBe(2);
     });
 
@@ -79,13 +79,13 @@ describe('Tester for utils funksjoner', () => {
             result.find(
                 (sykefraværshistorikk) =>
                     sykefraværshistorikk.type === SykefraværshistorikkType.VIRKSOMHET
-            )!.kvartalsvisSykefraværsprosent.length
+            )?.kvartalsvisSykefraværsprosent.length
         ).toBe(2);
         expect(
             result.find(
                 (sykefraværshistorikk) =>
                     sykefraværshistorikk.type === SykefraværshistorikkType.OVERORDNET_ENHET
-            )!.kvartalsvisSykefraværsprosent.length
+            )?.kvartalsvisSykefraværsprosent.length
         ).toBe(0);
     });
 });

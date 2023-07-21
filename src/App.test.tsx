@@ -24,11 +24,15 @@ describe('App', () => {
     });
 
     it('renders without crashing', async () => {
-        render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
+        const { container } = render(<AppContentWithRouter {...mockAllDatahentingStatusOk} />);
+        const results = await axe(container);
+        expect(results).toHaveNoViolations();
     });
 
     it('renders without data without crashing', async () => {
-        render(<AppContentWithRouter {...mockAllDatahentingStatusLaster} />);
+        const { container } = render(<AppContentWithRouter {...mockAllDatahentingStatusLaster} />);
+        const results = await axe(container);
+        expect(results).toHaveNoViolations();
     });
 
     it('Amplitude-events sendes med riktige user properties', async () => {

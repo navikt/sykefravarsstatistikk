@@ -1,6 +1,5 @@
 import { Registry } from 'prom-client';
 import express, { Request, RequestHandler, Response } from 'express';
-import { loggingHandler } from '../backend-logger.js';
 
 function isAlive(request: Request, response: Response) {
     response.send('Application is UP');
@@ -23,7 +22,6 @@ export function internalController(registry: Registry) {
     router.get('/isAlive', isAlive);
     router.get('/isReady', isReady);
     router.get('/metrics', metrics(registry));
-    router.post('/logger', loggingHandler);
 
     return router;
 }

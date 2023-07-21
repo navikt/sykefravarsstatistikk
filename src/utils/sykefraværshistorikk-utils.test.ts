@@ -63,10 +63,10 @@ describe('Tester for graf-og-tabell-utils', () => {
 
         const resultat = kvartalsvisSammenligning.find(
             (sammenligning) => sammenligning.årstall === 2000 && sammenligning.kvartal === 1
-        )!.virksomhet;
+        )?.virksomhet;
 
-        expect(resultat.erMaskert).toBeFalsy();
-        expect(resultat.prosent).toEqual(undefined);
+        expect(resultat?.erMaskert).toBeFalsy();
+        expect(resultat?.prosent).toEqual(undefined);
     });
 
     test('konverterTilKvartalsvisSammenligning skal sette feltet næringEllerBransje til næring hvis historikken ikke inneholder tall for bransje', () => {

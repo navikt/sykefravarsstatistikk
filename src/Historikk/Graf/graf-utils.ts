@@ -8,11 +8,12 @@ import {
 import { isDefined } from '../../utils/app-utils';
 
 export type SymbolType = 'circle' | 'cross' | 'diamond' | 'square' | 'star' | 'triangle' | 'wye';
+type HexFargeType = `#${string}`;
 
 interface GrafConfig {
-    tooltipsnavn: any;
-    farger: any;
-    symboler: any;
+    tooltipsnavn: { [key: string]: string };
+    farger: { [key: string]: HexFargeType };
+    symboler: { [key: string]: SymbolType };
     linjer: HistorikkLabel[];
 }
 
@@ -43,7 +44,7 @@ export const grafConfig: GrafConfig = {
 export const getSymbol = (name: string): SymbolType =>
     name in grafConfig.symboler ? grafConfig.symboler[name] : 'circle';
 
-export const getFarge = (name: HistorikkLabel): SymbolType =>
+export const getFarge = (name: HistorikkLabel): string =>
     name in grafConfig.farger ? grafConfig.farger[name] : 'black';
 
 export const getTooltipsnavn = (name: HistorikkLabel): string => {

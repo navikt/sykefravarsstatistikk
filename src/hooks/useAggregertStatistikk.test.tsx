@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import useAggregertStatistikk from './useAggregertStatistikk';
-import { Fetcher, SWRConfig } from 'swr';
+import { BareFetcher, SWRConfig } from 'swr';
 import { RestStatus } from '../api/api-utils';
 import React, { ReactNode } from 'react';
 import { renderHook, waitFor } from '@testing-library/react';
@@ -13,32 +13,50 @@ const wrapper: React.FC<{ children: ReactNode }> = ({ children }) => (
     </SWRConfig>
 );
 
-const happyFetcher: Fetcher<{ data: any; status: number }> = async () => {
+const happyFetcher: BareFetcher<{
+    data: unknown;
+    status: number;
+}> = async () => {
     await new Promise((resolve) => setTimeout(resolve, 10));
     return { data: aggregertMockData, status: 200 };
 };
 
-const explodingFetcher: Fetcher<{ data: any; status: number }> = async () => {
+const explodingFetcher: BareFetcher<{
+    data: unknown;
+    status: number;
+}> = async () => {
     await new Promise((resolve) => setTimeout(resolve, 10));
     throw new Error('KABOOM!');
 };
 
-const invalidDataFetcher: Fetcher<{ data: any; status: number }> = async () => {
+const invalidDataFetcher: BareFetcher<{
+    data: unknown;
+    status: number;
+}> = async () => {
     await new Promise((resolve) => setTimeout(resolve, 10));
     return { data: { some: { other: { data: ['structure'] } } }, status: 200 };
 };
 
-const invalidStatusFetcher: Fetcher<{ data: any; status: number }> = async () => {
+const invalidStatusFetcher: BareFetcher<{
+    data: unknown;
+    status: number;
+}> = async () => {
     await new Promise((resolve) => setTimeout(resolve, 10));
     return { data: aggregertMockData, status: 500 };
 };
 
-const notLoggedInFetcher: Fetcher<{ data: any; status: number }> = async () => {
+const notLoggedInFetcher: BareFetcher<{
+    data: unknown;
+    status: number;
+}> = async () => {
     await new Promise((resolve) => setTimeout(resolve, 10));
     return { data: aggregertMockData, status: 401 };
 };
 
-const notAuthorizedFetcher: Fetcher<{ data: any; status: number }> = async () => {
+const notAuthorizedFetcher: BareFetcher<{
+    data: unknown;
+    status: number;
+}> = async () => {
     await new Promise((resolve) => setTimeout(resolve, 10));
     return { data: aggregertMockData, status: 403 };
 };
@@ -110,7 +128,9 @@ describe('AggregertStatistikkTest', () => {
         await waitFor(() => {
             expect(result.current.restStatus).toBe(RestStatus.Feil);
         });
-        expect(result.current.error.message).toBe('Kunne ikke parse aggregert data');
+        expect((result.current.error as { message: string }).message).toBe(
+            'Kunne ikke parse aggregert data'
+        );
         expect(result.current.aggregertData).toBe(undefined);
     });
 

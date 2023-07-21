@@ -8,6 +8,7 @@ import {
 import {
     getWebInstrumentations,
     initializeFaro,
+    LogLevel,
     ReactIntegration,
     ReactRouterVersion,
 } from '@grafana/faro-react';
@@ -20,7 +21,15 @@ export function doInitializeFaro(grafanaUrl: string, appVersion: string) {
             version: appVersion,
         },
         instrumentations: [
-            ...getWebInstrumentations(),
+            ...getWebInstrumentations({
+                captureConsole: true,
+                captureConsoleDisabledLevels: [
+                    LogLevel.TRACE,
+                    LogLevel.DEBUG,
+                    LogLevel.INFO,
+                    LogLevel.LOG,
+                ],
+            }),
             new ReactIntegration({
                 router: {
                     version: ReactRouterVersion.V6,

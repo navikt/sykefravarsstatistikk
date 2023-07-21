@@ -55,7 +55,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                             <BodyShort className="forside__innhold__href">
                                 {window.location.href}
                             </BodyShort>
-                            <Heading spacing size="medium" level="2">
+                            <Heading spacing size="medium" level="2" as="span">
                                 <Skeleton width="65%" />
                             </Heading>
                         </div>
@@ -65,12 +65,12 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                             height={48}
                             className="forside__innhold__knapp"
                         />
-                        <BodyShort>
+                        <BodyShort as="div">
                             <strong>
                                 <Skeleton width="40%" />
                             </strong>
                         </BodyShort>
-                        <BodyShort spacing>
+                        <BodyShort spacing as="div">
                             <strong>
                                 <Skeleton width="30%" />
                             </strong>

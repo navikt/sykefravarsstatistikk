@@ -4,7 +4,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import { BASE_PATH, MILJØ } from './konstanter';
-import { BrowserRouter, Routes as RRDRoutes } from 'react-router-dom';
+import { BrowserRouter, Routes as ReactRouterDomRoutes } from 'react-router-dom';
 import { amplitudeClient } from './amplitude/client';
 import '@navikt/ds-css';
 import { startMockServiceWorker } from './api/localMocking/config';
@@ -23,13 +23,14 @@ async function main(): Promise<void> {
     }
 
     const container = document.getElementById('root');
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const root = createRoot(container!);
 
     root.render(
         <BrowserRouter basename={BASE_PATH}>
             <App
                 analyticsClient={amplitudeClient}
-                RoutesComponent={shouldUseFaro ? FaroRoutes : RRDRoutes}
+                RoutesComponent={shouldUseFaro ? FaroRoutes : ReactRouterDomRoutes}
             />
         </BrowserRouter>
     );
