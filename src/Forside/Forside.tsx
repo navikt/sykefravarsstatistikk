@@ -81,6 +81,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                         <Skeleton width="50%" />
                         <EkspanderbarSammenligning
                             aggregertStatistikk={{ restStatus: RestStatus.IkkeLastet }}
+                            orgnr={orgnr}
                         />
                         <Historikk restSykefraværsstatistikk={{ status: RestStatus.IkkeLastet }} />
                     </div>
@@ -168,7 +169,10 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                         restPubliseringsdatoer={appData.publiseringsdatoer}
                     />
                     <SlikHarViKommetFramTilDittResultat />
-                    <EkspanderbarSammenligning aggregertStatistikk={appData.aggregertStatistikk} />
+                    <EkspanderbarSammenligning
+                        aggregertStatistikk={appData.aggregertStatistikk}
+                        orgnr={orgnr}
+                    />
                     {!!tabellProps && (
                         <div className="forside__innhold__kun-print">
                             <Tabell {...tabellProps} />

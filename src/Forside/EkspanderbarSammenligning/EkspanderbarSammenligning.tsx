@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { BransjeSammenligningspanel } from '../SammenligningMedBransje/BransjeSammenligningspanel';
 import { RestStatus } from '../../api/api-utils';
 import { SammenligningsType } from '../vurderingstekster';
@@ -6,12 +6,22 @@ import { RestAggregertStatistikk } from '../../hooks/useAggregertStatistikk';
 import { Statistikkategori } from '../../domene/statistikkategori';
 import { getBransjeEllerNæringKategori } from './GetBransjeEllerNæringKategori';
 import { Skeleton } from '@navikt/ds-react';
+import { sendIaTjenesteMetrikkMottatt } from '../../metrikker/iatjenester';
 
 interface Props {
     aggregertStatistikk: RestAggregertStatistikk;
+    orgnr: string;
 }
 
-export const EkspanderbarSammenligning: FunctionComponent<Props> = ({ aggregertStatistikk }) => {
+export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
+    aggregertStatistikk,
+    orgnr,
+}) => {
+    useEffect(() => {
+        const timer = setTimeout(() => sendIaTjenesteMetrikkMottatt(orgnr), 5000);
+        return () => clearTimeout(timer);
+    }, [orgnr]);
+
     if (
         aggregertStatistikk.restStatus === RestStatus.IngenTilgang ||
         aggregertStatistikk.restStatus === RestStatus.IkkeInnlogget
