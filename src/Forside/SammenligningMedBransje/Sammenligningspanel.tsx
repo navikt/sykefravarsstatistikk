@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import './BransjeSammenligningspanel.css';
+import './Sammenligningspanel.css';
 import { Speedometer } from '../Speedometer/Speedometer';
 import {
     getForklaringAvVurdering,
@@ -21,7 +21,7 @@ interface Props {
     className?: string;
 }
 
-export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
+export const Sammenligningspanel: FunctionComponent<Props> = ({
     sammenligningsType,
     virksomhetStatistikk,
     bransjeEllerNæringStatistikk,
@@ -35,7 +35,7 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
 
     const innhold = (
         <>
-            <div className="bransje-sammenligningspanel__wrapper">
+            <div className="sammenligningspanel__wrapper">
                 <div>
                     <Ingress as="span">Din virksomhet:</Ingress>
                     <Prosent prosent={virksomhetStatistikk?.verdi} />
@@ -48,7 +48,7 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
                 </div>
             </div>
             {sammenligningsType === SammenligningsType.GRADERT && (
-                <div className="bransje-sammenligningspanel__gradert_intro">
+                <div className="sammenligningspanel__gradert_intro">
                     <BodyShort spacing>
                         <u>Slik regner vi ut prosenten på gradert sykmelding:</u>
                     </BodyShort>
@@ -66,7 +66,7 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
             )}
             {sammenligningsType !== SammenligningsType.GRADERT &&
                 sykefraværVurdering !== 'MASKERT' && (
-                    <div className="bransje-sammenligningspanel__forklaring-av-vurdering">
+                    <div className="sammenligningspanel__forklaring-av-vurdering">
                         {getForklaringAvVurdering(
                             sykefraværVurdering,
                             bransjeEllerNæringStatistikk?.verdi
@@ -94,28 +94,25 @@ export const BransjeSammenligningspanel: FunctionComponent<Props> = ({
     };
 
     return (
-        <Panel border className="bransje-sammenligningspanel">
-            <div className="bransje-sammenligningspanel__extra-padding-desktop">
-                <div className="bransje-sammenligningspanel__tittel-wrapper">
+        <Panel border className="sammenligningspanel">
+            <div className="sammenligningspanel__extra-padding-desktop">
+                <div className="sammenligningspanel__tittel-wrapper">
                     {SammenligningsType.GRADERT === sammenligningsType ? (
                         <Kakediagram resultat={sykefraværVurdering} />
                     ) : (
                         <Speedometer resultat={sykefraværVurdering} inline />
                     )}
-                    <div className="bransje-sammenligningspanel__tittel-tekst">
+                    <div className="sammenligningspanel__tittel-tekst">
                         <Heading level="2" size="medium">
                             {getPaneltittel()}
                         </Heading>
-                        <BodyShort
-                            className="bransje-sammenligningspanel__tittel-forklaring"
-                            as="div"
-                        >
+                        <BodyShort className="sammenligningspanel__tittel-forklaring" as="div">
                             {vurderingstekst}
                         </BodyShort>
                     </div>
                 </div>
-                <div className="bransje-sammenligningspanel__innhold">{innhold}</div>
-                <div className="bransje-sammenligningspanel__print-innhold">{innhold}</div>
+                <div className="sammenligningspanel__innhold">{innhold}</div>
+                <div className="sammenligningspanel__print-innhold">{innhold}</div>
             </div>
         </Panel>
     );

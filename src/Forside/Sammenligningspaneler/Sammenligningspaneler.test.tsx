@@ -11,7 +11,7 @@ import * as hooks from '../../hooks/useOrgnr';
 import * as metrikker from '../../metrikker/iatjenester';
 import { act } from 'react-dom/test-utils';
 
-describe('EkspanderbarSammenligning', () => {
+describe('Sammenligningspaneler', () => {
     const MockObserver = new MockResizeObserver();
 
     beforeEach(() => {

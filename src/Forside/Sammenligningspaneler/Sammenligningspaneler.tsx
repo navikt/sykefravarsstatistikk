@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect } from 'react';
-import { BransjeSammenligningspanel } from '../SammenligningMedBransje/BransjeSammenligningspanel';
+import { Sammenligningspanel } from '../SammenligningMedBransje/Sammenligningspanel';
 import { RestStatus } from '../../api/api-utils';
 import { SammenligningsType } from '../vurderingstekster';
 import { RestAggregertStatistikk } from '../../hooks/useAggregertStatistikk';
@@ -13,10 +13,7 @@ interface Props {
     orgnr: string;
 }
 
-export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
-    aggregertStatistikk,
-    orgnr,
-}) => {
+export const Sammenligningspaneler: FunctionComponent<Props> = ({ aggregertStatistikk, orgnr }) => {
     useEffect(() => {
         const timer = setTimeout(() => sendIaTjenesteMetrikkMottatt(orgnr), 5000);
         return () => clearTimeout(timer);
@@ -70,22 +67,22 @@ export const EkspanderbarSammenligning: FunctionComponent<Props> = ({
     ];
     return (
         <>
-            <BransjeSammenligningspanel
+            <Sammenligningspanel
                 virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerTotalt}
                 bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerTotalt}
                 sammenligningsType={SammenligningsType.TOTALT}
             />
-            <BransjeSammenligningspanel
+            <Sammenligningspanel
                 virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerGradert}
                 bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerGradert}
                 sammenligningsType={SammenligningsType.GRADERT}
             />
-            <BransjeSammenligningspanel
+            <Sammenligningspanel
                 virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerKorttid}
                 bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerKorttid}
                 sammenligningsType={SammenligningsType.KORTTID}
             />
-            <BransjeSammenligningspanel
+            <Sammenligningspanel
                 virksomhetStatistikk={virksomhet?.prosentSiste4KvartalerLangtid}
                 bransjeEllerNæringStatistikk={bransjeEllerNæring?.prosentSiste4KvartalerLangtid}
                 sammenligningsType={SammenligningsType.LANGTID}
