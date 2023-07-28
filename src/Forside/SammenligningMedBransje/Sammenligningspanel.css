@@ -1,56 +1,56 @@
-.bransje-sammenligningspanel {
+.sammenligningspanel {
     margin-top: 2rem;
 }
 
-.bransje-sammenligningspanel__extra-padding-desktop {
+.sammenligningspanel__extra-padding-desktop {
     padding: 0;
 }
 
-.bransje-sammenligningspanel__gradert_intro {
+.sammenligningspanel__gradert_intro {
     margin-top: 2rem;
 }
 
-.bransje-sammenligningspanel__loading-skeleton {
+.sammenligningspanel__loading-skeleton {
     margin-top: 2rem;
 }
 
-.bransje-sammenligningspanel__feil {
+.sammenligningspanel__feil {
     margin-top: 2rem;
 }
 
-.bransje-sammenligningspanel__tittel-wrapper {
+.sammenligningspanel__tittel-wrapper {
     display: inline-flex;
     align-items: center;
     flex-direction: column;
     width: 100%;
 }
 
-.bransje-sammenligningspanel__tittel {
+.sammenligningspanel__tittel {
     padding-bottom: 0.5rem;
 }
 
-.bransje-sammenligningspanel__tittel-forklaring {
+.sammenligningspanel__tittel-forklaring {
     padding-top: 0.25rem;
 }
 
-.bransje-sammenligningspanel__forklaring-av-vurdering {
+.sammenligningspanel__forklaring-av-vurdering {
     margin-top: 2rem;
 }
 
 @media print, (min-width: 768px) {
-    .bransje-sammenligningspanel__tittel-wrapper {
+    .sammenligningspanel__tittel-wrapper {
         flex-direction: row;
     }
 
-    .bransje-sammenligningspanel__extra-padding-desktop {
+    .sammenligningspanel__extra-padding-desktop {
         padding: 1rem;
     }
 
-    .bransje-sammenligningspanel__tittel-tekst {
+    .sammenligningspanel__tittel-tekst {
         margin-left: 1.5rem;
     }
 
-    .bransje-sammenligningspanel__forklaring-av-periode {
+    .sammenligningspanel__forklaring-av-periode {
         flex-grow: 2;
     }
 
@@ -60,17 +60,17 @@
         padding-left: 2rem;
     }
 
-    .bransje-sammenligningspanel__kakediagram {
+    .sammenligningspanel__kakediagram {
         margin-right: 1rem;
         margin-left: 1rem;
     }
 
-    .bransje-sammenligningspanel__lukk-knapp {
+    .sammenligningspanel__lukk-knapp {
         margin-top: 3rem;
     }
 }
 
-.bransje-sammenligningspanel__wrapper {
+.sammenligningspanel__wrapper {
     max-width: 500px;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -79,16 +79,16 @@
 }
 
 
-.bransje-sammenligningspanel__print-innhold {
+.sammenligningspanel__print-innhold {
     display: none;
 }
 
 @media print {
-    .bransje-sammenligningspanel__print-innhold {
+    .sammenligningspanel__print-innhold {
         display: block;
     }
 
-    .bransje-sammenligningspanel__innhold {
+    .sammenligningspanel__innhold {
         display: none;
     }
 }

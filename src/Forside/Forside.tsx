@@ -1,12 +1,12 @@
 import { default as React, FunctionComponent, useRef } from 'react';
-import { EkspanderbarSammenligning } from './EkspanderbarSammenligning/EkspanderbarSammenligning';
+import { Sammenligningspaneler } from './Sammenligningspaneler/Sammenligningspaneler';
 import { SykefraværAppData } from '../hooks/useSykefraværAppData';
 import { RestStatus } from '../api/api-utils';
 import { ManglerRettigheterIAltinnSide } from '../FeilSider/ManglerRettigheterIAltinnSide/ManglerRettigheterIAltinnSide';
 import { useOrgnr } from '../hooks/useOrgnr';
 import './Forside.css';
 import Historikk from '../Historikk/Historikk';
-import { getBransjeEllerNæringKategori } from './EkspanderbarSammenligning/GetBransjeEllerNæringKategori';
+import { getBransjeEllerNæringKategori } from './Sammenligningspaneler/GetBransjeEllerNæringKategori';
 import { Statistikkategori } from '../domene/statistikkategori';
 import { Alert, BodyShort, Button, Heading, Skeleton } from '@navikt/ds-react';
 import ReactToPrint from 'react-to-print';
@@ -79,8 +79,9 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                         <Skeleton width="30%" />
                         <Skeleton width="45%" />
                         <Skeleton width="50%" />
-                        <EkspanderbarSammenligning
+                        <Sammenligningspaneler
                             aggregertStatistikk={{ restStatus: RestStatus.IkkeLastet }}
+                            orgnr={orgnr}
                         />
                         <Historikk restSykefraværsstatistikk={{ status: RestStatus.IkkeLastet }} />
                     </div>
@@ -168,7 +169,10 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                         restPubliseringsdatoer={appData.publiseringsdatoer}
                     />
                     <SlikHarViKommetFramTilDittResultat />
-                    <EkspanderbarSammenligning aggregertStatistikk={appData.aggregertStatistikk} />
+                    <Sammenligningspaneler
+                        aggregertStatistikk={appData.aggregertStatistikk}
+                        orgnr={orgnr}
+                    />
                     {!!tabellProps && (
                         <div className="forside__innhold__kun-print">
                             <Tabell {...tabellProps} />
