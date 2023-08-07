@@ -2244,10 +2244,10 @@
     "@apollo/client" "3.6.9"
     graphql "^16.6.0"
 
-"@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock@^5.4.10":
-  version "5.4.10"
-  resolved "https://npm.pkg.github.com/download/@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock/5.4.10/41533f323bcfdd0ee8929077ebf3982348b7a903#41533f323bcfdd0ee8929077ebf3982348b7a903"
-  integrity sha512-TGZnhBNWzD6n8BMT5dZW8ZJcdeJGQyzqhJtYthSkGzislUKd/IoCPlQWvweYiNlCaHDS6UpnLHYZT/WCK1FMoA==
+"@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock@^6.2.2":
+  version "6.2.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock/6.2.2/21c05e5e7c662cdfb522a97f7457a698dd1e1ac2#21c05e5e7c662cdfb522a97f7457a698dd1e1ac2"
+  integrity sha512-d9GL3sH5SFnzcNBm4CL8cle1ZelkN4raSMRsNX/fu9Na2XmvgY48e4pf0l0x/P7EMa7QQbFZPb+XM6XMqI9yVg==
   dependencies:
     apollo-server "^3.10.2"
     apollo-server-core "^3.10.2"
