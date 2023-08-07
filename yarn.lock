@@ -2236,10 +2236,10 @@
   resolved "https://npm.pkg.github.com/download/@navikt/aksel-icons/4.7.0/a82f601c5bf91f3e2e1c4636e305d3f5bc361363#a82f601c5bf91f3e2e1c4636e305d3f5bc361363"
   integrity sha512-HPyH9XafehwYIX4NFfHzr2ebMWi7WHM9gpJwk5R16xS9ZfODzV9fG8eVSRVR13GPSTiorfihPEZBxvUGygDDVA==
 
-"@navikt/arbeidsgiver-notifikasjon-widget@^5.4.10":
-  version "5.4.10"
-  resolved "https://npm.pkg.github.com/download/@navikt/arbeidsgiver-notifikasjon-widget/5.4.10/a1095795f5a8f9cf2314d7bddee98d9792113255#a1095795f5a8f9cf2314d7bddee98d9792113255"
-  integrity sha512-5X4kBusxEWQ/+tf4i7xCuXw2ymZ9fkjOFhgG0W9QJn35HfY9fKjpoNfj8itNFN9o8m7hbx1aWlKIfIsW9zJEQQ==
+"@navikt/arbeidsgiver-notifikasjon-widget@^6.2.2":
+  version "6.2.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/arbeidsgiver-notifikasjon-widget/6.2.2/dcdddc97504fbbb5d6a6f97e002f07d3ac733dea#dcdddc97504fbbb5d6a6f97e002f07d3ac733dea"
+  integrity sha512-b9hBc5I8b4C+NfrWqSAI1J3ua+QiGOCe0DLwbCdxJgv7R1T+IOPiwJ7uodDgw246DIqL19nqddUnVZd8ADs+jg==
   dependencies:
     "@apollo/client" "3.6.9"
     graphql "^16.6.0"
