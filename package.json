@@ -15,7 +15,6 @@
     "msw:init": "msw init ./public"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.6",
     "@grafana/faro-react": "^1.1.2",
     "@grafana/faro-web-sdk": "^1.1.2",
     "@grafana/faro-web-tracing": "^1.1.2",
@@ -66,9 +65,6 @@
     "prettier": "^3.0.0",
     "source-map-explorer": "^2.5.3",
     "typescript": "5.0.4"
-  },
-  "resolutions": {
-    "**/@babel/runtime": "7.13.10"
   },
   "eslintConfig": {
     "extends": [
