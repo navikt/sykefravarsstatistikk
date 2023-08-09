@@ -20,6 +20,7 @@ export interface SykefraværAppData {
     sykefraværshistorikk: RestSykefraværshistorikk;
     aggregertStatistikk: RestAggregertStatistikk;
     publiseringsdatoer: RestPubliseringsdatoer<Publiseringsdatoer>;
+    skalSendeMetrikkerAutomatisk?: boolean;
 }
 
 export function useSykefraværAppData(): SykefraværAppData {
