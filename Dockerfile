@@ -1,11 +1,13 @@
-FROM cgr.dev/chainguard/node:18
+FROM ghcr.io/navikt/baseimages/node-express:16
 
-COPY --chown=node:node build/ build/
-COPY --chown=node:node server/ server/
-COPY --chown=node:node server/node_modules server/node_modules
+WORKDIR /var
 
-WORKDIR /app/server/build
+COPY build/ build/
+COPY server/ server/
+COPY server/node_modules server/node_modules
+
+WORKDIR /var/server/build
 
 ENV NODE_ENV production
 EXPOSE 3000
-ENTRYPOINT ["server.js"]
+ENTRYPOINT ["node", "server.js"]
