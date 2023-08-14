@@ -1,33 +1,35 @@
 name: Build and deploy
+run-name: Build and deploy || ${{ github.event.head_commit.message }}
 
 on: [ push ]
 
-env:
-  IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
-
 concurrency:
-  group: build-deploy-on-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  compile-test-and-build:
-    name: Build and run tests
+  docker-build-push:
+    name: Build, test and push docker image
+    permissions:
+      contents: read
+      id-token: write
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: '16'
-          registry-url: https://npm.pkg.github.com/
-          cache: 'yarn'
+          node-version: 16
+          registry-url: https://npm.pkg.github.com
+          cache: yarn
           cache-dependency-path: |
             yarn.lock
             server/yarn.lock
-      - name: Install dependencies for server
+      - name: Install server dependencies
         run: cd server && yarn install --frozen-lockfile --prefer-offline
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-      - name: Install dependencies
+      - name: Install client dependencies
         run: yarn install --frozen-lockfile --prefer-offline
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
@@ -35,60 +37,57 @@ jobs:
         run: yarn test
       - name: Build application
         run: yarn build
-        env:
-          CI: false
-      - name: Login to GitHub Docker Registry
-        uses: docker/login-action@v2
+      - name: Push to Google Artifact Registry
+        uses: nais/docker-build-push@v0
+        id: docker-push
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push the Docker image
-        run: |
-          docker build . -t ${IMAGE} 
-          docker push ${IMAGE}
+          team: teamia
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          salsa: false
+    outputs:
+      image: ${{ steps.docker-push.outputs.image }}
 
   deploy-to-dev-gcp:
     name: Deploy to dev-gcp
-    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/session-metric-v2'
-    needs: compile-test-and-build
+    if: github.ref == 'refs/heads/gar'
+    needs: docker-build-push
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: nais/deploy/actions/deploy@v1
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          VAR: version=${{ env.IMAGE }}
-          RESOURCE: nais/dev-gcp.yaml
-          PRINT_PAYLOAD: true
+          IMAGE: ${{ needs.docker-build-push.outputs.image }}
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          RESOURCE: nais/dev.yaml
 
   deploy-to-dev-gcp-ekstern:
-    name: Deploy to dev-gcp-ekstern
-    if: github.ref == 'refs/heads/master'
-    needs: compile-test-and-build
+    name: Deploy to dev-gcp (ekstern)
+    if: github.ref == 'refs/heads/main'
+    needs: docker-build-push
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: nais/deploy/actions/deploy@v1
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          VAR: version=${{ env.IMAGE }}
-          RESOURCE: nais/dev-gcp-ekstern.yaml
-          PRINT_PAYLOAD: true
+          IMAGE: ${{ needs.docker-build-push.outputs.image }}
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
 
   deploy-to-prod-gcp:
     name: Deploy to prod-gcp
-    if: github.ref == 'refs/heads/master'
-    needs: compile-test-and-build
+    if: github.ref == 'refs/heads/main'
+    needs: docker-build-push
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: nais/deploy/actions/deploy@v1
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
-          VAR: version=${{ env.IMAGE }}
+          IMAGE: ${{ needs.docker-build-push.outputs.image }}
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: nais/prod-gcp.yaml
-          PRINT_PAYLOAD: true
