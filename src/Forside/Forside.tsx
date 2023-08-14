@@ -20,6 +20,7 @@ import { PubliseringsdatoOppdateringsinfo } from './PubliseringsdatoOppdaterings
 export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     const orgnr = useOrgnr() || '';
     const harFeil = appData.aggregertStatistikk.restStatus === RestStatus.Feil;
+    const { skalSendeMetrikkerAutomatisk = true } = appData; // Vi må kunne disable autoutsending for å teste utsending ved print-klikk (src/Metrikker.test.tsx)
 
     const brukerHarIaRettighetTilValgtBedrift =
         appData.altinnOrganisasjonerMedStatistikktilgang.status === RestStatus.Suksess &&
@@ -170,6 +171,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                     />
                     <SlikHarViKommetFramTilDittResultat />
                     <Sammenligningspaneler
+                        skalSendeMetrikkerAutomatisk={skalSendeMetrikkerAutomatisk}
                         aggregertStatistikk={appData.aggregertStatistikk}
                         orgnr={orgnr}
                     />
