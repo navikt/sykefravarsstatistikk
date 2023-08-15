@@ -11,7 +11,7 @@ describe('Tester vellykket utsendelse av ia-metrikk', () => {
         const nyttOrgnr = '99999999';
         const leverteIaTjenester = await sendIaTjenesteMetrikkMottatt(nyttOrgnr);
 
-        expect(leverteIaTjenester).toEqual([{ orgnr: '' }, { orgnr: '99999999' }]);
+        expect(leverteIaTjenester).toEqual([{ orgnr: '99999999' }]);
     });
 
     test('skal ikke sende levert ia-tjeneste to ganger for samme virksomhet', async () => {
@@ -19,7 +19,7 @@ describe('Tester vellykket utsendelse av ia-metrikk', () => {
         await sendIaTjenesteMetrikkMottatt(nyttOrgnr);
         const leverteIaTjenester = await sendIaTjenesteMetrikkMottatt(nyttOrgnr);
 
-        expect(leverteIaTjenester).toEqual([{ orgnr: '' }, { orgnr: '888888882' }]);
+        expect(leverteIaTjenester).toEqual([{ orgnr: '888888882' }]);
     });
 });
 
@@ -32,11 +32,10 @@ describe('Tester feilende utsendelse av IA-metrikk', () => {
         const nyttOrgnr = '99999999';
 
         const leverteIaTjenester = await sendIaTjenesteMetrikkMottatt(nyttOrgnr);
-        expect(leverteIaTjenester).toEqual([{ orgnr: '' }]);
+        expect(leverteIaTjenester).toEqual([]);
     });
 });
 
 function resetSendteMetrikker() {
     sendteMetrikker.length = 0;
-    sendteMetrikker.push({ orgnr: '' });
 }
