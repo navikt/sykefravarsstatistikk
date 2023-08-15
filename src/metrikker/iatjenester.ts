@@ -2,7 +2,7 @@ import { BASE_PATH } from '../konstanter';
 
 export type Virksomhet = { orgnr: string };
 
-export const sendteMetrikker: Virksomhet[] = [{ orgnr: '' }];
+export const sendteMetrikker: Virksomhet[] = [];
 
 interface IaTjenesteMetrikk {
     orgnr: string;
@@ -52,8 +52,7 @@ const post = async (iatjeneste: IaTjenesteMetrikk) => {
     };
     try {
         const fetchResponse = await fetch(`${iaTjenesterMetrikkerApiUrl}`, settings);
-        const data = await fetchResponse.json();
-        return data.status === 'created';
+        return fetchResponse.status === 201;
     } catch (e) {
         return false;
     }
