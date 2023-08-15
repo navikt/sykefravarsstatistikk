@@ -76,6 +76,7 @@ jobs:
           CLUSTER: dev-gcp
           IMAGE: ${{ needs.docker-build-push.outputs.image }}
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          RESOURCE: nais/dev-ekstern.yaml
 
   deploy-to-prod-gcp:
     name: Deploy to prod-gcp
