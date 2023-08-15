@@ -65,7 +65,7 @@ jobs:
 
   deploy-to-dev-gcp-ekstern:
     name: Deploy to dev-gcp (ekstern)
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master'
     needs: docker-build-push
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -79,7 +79,7 @@ jobs:
 
   deploy-to-prod-gcp:
     name: Deploy to prod-gcp
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master'
     needs: docker-build-push
     runs-on: ubuntu-latest
     timeout-minutes: 5
