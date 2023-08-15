@@ -50,7 +50,7 @@ jobs:
 
   deploy-to-dev-gcp:
     name: Deploy to dev-gcp
-    if: github.ref == 'refs/heads/gar'
+    if: github.ref == 'refs/heads/master'
     needs: docker-build-push
     runs-on: ubuntu-latest
     timeout-minutes: 5
