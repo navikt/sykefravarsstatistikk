@@ -16,6 +16,7 @@ import Tabell, { hentTabellProps } from '../Historikk/Tabell/Tabell';
 import { SlikHarViKommetFramTilDittResultat } from './SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
 import { PeriodeForStatistikk } from './PeriodeForStatistikk';
 import { PubliseringsdatoOppdateringsinfo } from './PubliseringsdatoOppdateringsinfo';
+import TestVersjonBanner from '../Banner/TestVersjonBanner';
 
 export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     const orgnr = useOrgnr() || '';
@@ -51,6 +52,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
         return (
             <div className="forside__wrapper">
                 <div className="forside">
+                    <TestVersjonBanner />
                     <div className="forside__innhold">
                         <div className="forside__innhold__header">
                             <BodyShort className="forside__innhold__href">
@@ -115,6 +117,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     return (
         <div className="forside__wrapper">
             <div className="forside">
+                <TestVersjonBanner />
                 <div className="forside__innhold" ref={innholdRef}>
                     {harFeil && (
                         <Alert
