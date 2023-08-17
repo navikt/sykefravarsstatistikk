@@ -21,7 +21,7 @@ const TestVersjonBanner = () => {
                 Dette er en testversjon
             </Heading>
             <BodyShort>
-                Her kan du bli bedre kjent med siden Samtalestøtte for arbeidsgiver.
+                Her kan du bli bedre kjent med samtalestøtte for arbeidsgiver.
                 {prodUrl?.length ? (
                     <Link href={prodUrl}>Klikk her for å gå til den vanlige siden.</Link>
                 ) : null}
