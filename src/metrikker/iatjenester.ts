@@ -1,4 +1,19 @@
 import { BASE_PATH } from '../konstanter';
+import {
+    getIaMetrikkerApiUrl,
+    MetrikkKilde,
+    MetrikkType,
+    sendIaMetrikk,
+} from '@navikt/ia-metrikker-client';
+
+export const sendIaTjenesteMetrikk = async (orgnr: string) => {
+    return sendIaMetrikk(
+        orgnr,
+        MetrikkType.DIGITAL_IA_TJENESTE,
+        MetrikkKilde.SYKEFRAVÆRSSTATISTIKK,
+        getIaMetrikkerApiUrl(BASE_PATH)
+    );
+};
 
 export type Virksomhet = { orgnr: string };
 

@@ -11,7 +11,7 @@ import { Statistikkategori } from '../domene/statistikkategori';
 import { Alert, BodyShort, Button, Heading, Skeleton } from '@navikt/ds-react';
 import ReactToPrint from 'react-to-print';
 import { sendKnappEvent } from '../amplitude/events';
-import { sendIaTjenesteMetrikkMottatt } from '../metrikker/iatjenester';
+import { sendIaTjenesteMetrikk } from '../metrikker/iatjenester';
 import Tabell, { hentTabellProps } from '../Historikk/Tabell/Tabell';
 import { SlikHarViKommetFramTilDittResultat } from './SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
 import { PeriodeForStatistikk } from './PeriodeForStatistikk';
@@ -136,7 +136,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                     <ReactToPrint
                         onBeforePrint={() => {
                             sendKnappEvent('skriv ut');
-                            sendIaTjenesteMetrikkMottatt(orgnr);
+                            sendIaTjenesteMetrikk(orgnr);
                         }}
                         onAfterPrint={() => {
                             if (lastNedKnappRef.current) {
