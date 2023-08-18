@@ -32,12 +32,14 @@ export function getFrontendEnvs() {
 
         let shape: {
             GRAFANA_AGENT_COLLECTOR_URL: ZodString | ZodOptional<ZodString>;
+            PROD_URL: ZodString | ZodOptional<ZodString>;
             MIN_SIDE_ARBEIDSGIVER_URL: ZodString;
             MILJO: ZodEffects<ZodString>;
         } = {
             MILJO: z.string().refine(isMiljø),
             MIN_SIDE_ARBEIDSGIVER_URL: z.string().url(),
             GRAFANA_AGENT_COLLECTOR_URL: z.string().url(),
+            PROD_URL: z.string().url(),
         };
 
         if (miljø.MILJO === MILJØ.DEV_EKSTERN) {
@@ -45,6 +47,7 @@ export function getFrontendEnvs() {
                 MILJO: z.string().refine(isMiljø),
                 MIN_SIDE_ARBEIDSGIVER_URL: z.string().url(),
                 GRAFANA_AGENT_COLLECTOR_URL: z.string().url().optional(),
+                PROD_URL: z.string().url().optional(),
             };
         }
 
@@ -56,6 +59,7 @@ export function getFrontendEnvs() {
                 MIN_SIDE_ARBEIDSGIVER_URL:
                     'https://arbeidsgiver.ekstern.dev.nav.no/min-side-arbeidsgiver',
                 GRAFANA_AGENT_COLLECTOR_URL: 'https://telemetry.ekstern.dev.nav.no/collect',
+                PROD_URL: 'https://arbeidsgiver.nav.no/sykefravarsstatistikk',
             };
         }
         logger.error('Failed to parse frontend envs', err);
