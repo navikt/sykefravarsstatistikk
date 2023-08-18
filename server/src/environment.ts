@@ -39,7 +39,7 @@ export function getFrontendEnvs() {
             MILJO: z.string().refine(isMiljø),
             MIN_SIDE_ARBEIDSGIVER_URL: z.string().url(),
             GRAFANA_AGENT_COLLECTOR_URL: z.string().url(),
-            PROD_URL: z.string().url(),
+            PROD_URL: z.string().url().optional(),
         };
 
         if (miljø.MILJO === MILJØ.DEV_EKSTERN) {
