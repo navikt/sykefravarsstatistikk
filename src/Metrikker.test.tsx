@@ -22,7 +22,7 @@ describe('Metrikkutsendelser', () => {
         jest.spyOn(hooks, 'useOrgnr').mockReturnValue(
             valgtBedriftMedSykefraværsstatistikkRettigheter
         );
-        spy = jest.spyOn(metrikker, 'sendIaTjenesteMetrikkMottatt');
+        spy = jest.spyOn(metrikker, 'sendIaTjenesteMetrikk');
     });
 
     afterEach(() => {

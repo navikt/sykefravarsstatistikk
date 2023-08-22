@@ -6,7 +6,7 @@ import { RestAggregertStatistikk } from '../../hooks/useAggregertStatistikk';
 import { Statistikkategori } from '../../domene/statistikkategori';
 import { getBransjeEllerNæringKategori } from './GetBransjeEllerNæringKategori';
 import { Skeleton } from '@navikt/ds-react';
-import { sendIaTjenesteMetrikkMottatt } from '../../metrikker/iatjenester';
+import { sendIaTjenesteMetrikk } from '../../metrikker/iatjenester';
 
 interface Props {
     aggregertStatistikk: RestAggregertStatistikk;
@@ -22,7 +22,7 @@ export const Sammenligningspaneler: FunctionComponent<Props> = ({
     useEffect(() => {
         const timer = setTimeout(() => {
             if (skalSendeMetrikkerAutomatisk) {
-                sendIaTjenesteMetrikkMottatt(orgnr);
+                sendIaTjenesteMetrikk(orgnr);
             }
         }, 5000);
         return () => clearTimeout(timer);
