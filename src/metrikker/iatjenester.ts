@@ -1,12 +1,10 @@
 import { BASE_PATH } from '../konstanter';
-
-const {
+import {
     getIaMetrikkerApiUrl,
     MetrikkKilde,
     MetrikkType,
     sendIaMetrikk,
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-} = require('@navikt/ia-metrikker-client');
+} from '@navikt/ia-metrikker-client';
 
 export const sendIaTjenesteMetrikk = async (orgnr: string) => {
     return sendIaMetrikk(
