@@ -41,7 +41,6 @@
     "react-to-print": "^2.14.13",
     "recharts": "2.7.2",
     "swr": "^2.2.0",
-    "uuid": "^9.0.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
