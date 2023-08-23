@@ -4,7 +4,7 @@ import { iaTjenesterMetrikkerApiUrl } from '../src/metrikker/iatjenester';
 export const commonTestHandlers = [
     // Mock suksessfult kall til IA-metrikker
     rest.post(iaTjenesterMetrikkerApiUrl, async (_, res, ctx) => {
-        return res(ctx.json({ status: 'created' }));
+        return res(ctx.status(201), ctx.json({ status: 'created' }));
     }),
 
     rest.post('https://amplitude.nav.no/collect-auto', async (req, res, ctx) => {

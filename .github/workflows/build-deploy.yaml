@@ -50,7 +50,7 @@ jobs:
 
   deploy-to-dev-gcp:
     name: Deploy to dev-gcp
-    if: github.ref == 'refs/heads/gar'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/use-metrics-package'
     needs: docker-build-push
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -65,7 +65,7 @@ jobs:
 
   deploy-to-dev-gcp-ekstern:
     name: Deploy to dev-gcp (ekstern)
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master'
     needs: docker-build-push
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -76,10 +76,11 @@ jobs:
           CLUSTER: dev-gcp
           IMAGE: ${{ needs.docker-build-push.outputs.image }}
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          RESOURCE: nais/dev-ekstern.yaml
 
   deploy-to-prod-gcp:
     name: Deploy to prod-gcp
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master'
     needs: docker-build-push
     runs-on: ubuntu-latest
     timeout-minutes: 5

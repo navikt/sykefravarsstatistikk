@@ -200,10 +200,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock@^5.4.8":
-  version "5.4.8"
-  resolved "https://npm.pkg.github.com/download/@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock/5.4.8/107798604a18ad23334b566a6a198f82cf646e95#107798604a18ad23334b566a6a198f82cf646e95"
-  integrity sha512-hHY5rIlRd3tpPj+9n1uua4dqqn0k7p1bkiW1PMqYOlRr1S9c651ziz3b0a/3Fwjitjjq74QDdaeFG5P0Q2w8jw==
+"@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock@^6.2.2":
+  version "6.2.2"
+  resolved "https://npm.pkg.github.com/download/@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock/6.2.2/21c05e5e7c662cdfb522a97f7457a698dd1e1ac2#21c05e5e7c662cdfb522a97f7457a698dd1e1ac2"
+  integrity sha512-d9GL3sH5SFnzcNBm4CL8cle1ZelkN4raSMRsNX/fu9Na2XmvgY48e4pf0l0x/P7EMa7QQbFZPb+XM6XMqI9yVg==
   dependencies:
     apollo-server "^3.10.2"
     apollo-server-core "^3.10.2"

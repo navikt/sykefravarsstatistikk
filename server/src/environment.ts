@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z, ZodEffects, ZodOptional, ZodString } from 'zod';
 import { logger } from './backend-logger.js';
 
 export const MILJØ = {
@@ -12,6 +12,7 @@ export type MILJØ = (typeof MILJØ)[keyof typeof MILJØ];
 const isMiljø = (value: string): value is MILJØ => {
     return (Object.values(MILJØ) as string[]).includes(value);
 };
+
 function getCurrentEnvironment() {
     const { MILJO = 'local' } = process.env;
     return MILJO;
@@ -20,15 +21,37 @@ function getCurrentEnvironment() {
 function errorMap(issue: z.ZodIssueOptionalMessage, ctx: z.ErrorMapCtx): { message: string } {
     return { message: `Kunne ikke parse miljøvariabler. [${ctx.defaultError}]` };
 }
+
 export function getFrontendEnvs() {
     try {
-        return z
+        const miljø = z
             .object({
                 MILJO: z.string().refine(isMiljø),
-                MIN_SIDE_ARBEIDSGIVER_URL: z.string().url(),
-                GRAFANA_AGENT_COLLECTOR_URL: z.string().url(),
             })
             .parse(process.env, { errorMap: errorMap });
+
+        let shape: {
+            GRAFANA_AGENT_COLLECTOR_URL: ZodString | ZodOptional<ZodString>;
+            PROD_URL: ZodString | ZodOptional<ZodString>;
+            MIN_SIDE_ARBEIDSGIVER_URL: ZodString;
+            MILJO: ZodEffects<ZodString>;
+        } = {
+            MILJO: z.string().refine(isMiljø),
+            MIN_SIDE_ARBEIDSGIVER_URL: z.string().url(),
+            GRAFANA_AGENT_COLLECTOR_URL: z.string().url(),
+            PROD_URL: z.string().url().optional(),
+        };
+
+        if (miljø.MILJO === MILJØ.DEV_EKSTERN) {
+            shape = {
+                MILJO: z.string().refine(isMiljø),
+                MIN_SIDE_ARBEIDSGIVER_URL: z.string().url(),
+                GRAFANA_AGENT_COLLECTOR_URL: z.string().url().optional(),
+                PROD_URL: z.string().url().optional(),
+            };
+        }
+
+        return z.object(shape).parse(process.env, { errorMap: errorMap });
     } catch (err) {
         if (process.env.NODE_ENV === 'development') {
             return {
@@ -36,6 +59,7 @@ export function getFrontendEnvs() {
                 MIN_SIDE_ARBEIDSGIVER_URL:
                     'https://arbeidsgiver.ekstern.dev.nav.no/min-side-arbeidsgiver',
                 GRAFANA_AGENT_COLLECTOR_URL: 'https://telemetry.ekstern.dev.nav.no/collect',
+                PROD_URL: 'https://arbeidsgiver.nav.no/sykefravarsstatistikk',
             };
         }
         logger.error('Failed to parse frontend envs', err);

@@ -6,17 +6,27 @@ import { RestAggregertStatistikk } from '../../hooks/useAggregertStatistikk';
 import { Statistikkategori } from '../../domene/statistikkategori';
 import { getBransjeEllerNæringKategori } from './GetBransjeEllerNæringKategori';
 import { Skeleton } from '@navikt/ds-react';
-import { sendIaTjenesteMetrikkMottatt } from '../../metrikker/iatjenester';
+import { sendIaTjenesteMetrikk } from '../../metrikker/iatjenester';
 
 interface Props {
     aggregertStatistikk: RestAggregertStatistikk;
     orgnr: string;
+    skalSendeMetrikkerAutomatisk?: boolean;
 }
 
-export const Sammenligningspaneler: FunctionComponent<Props> = ({ aggregertStatistikk, orgnr }) => {
+export const Sammenligningspaneler: FunctionComponent<Props> = ({
+    aggregertStatistikk,
+    orgnr,
+    skalSendeMetrikkerAutomatisk = true,
+}) => {
     useEffect(() => {
-        const timer = setTimeout(() => sendIaTjenesteMetrikkMottatt(orgnr), 5000);
+        const timer = setTimeout(() => {
+            if (skalSendeMetrikkerAutomatisk) {
+                sendIaTjenesteMetrikk(orgnr);
+            }
+        }, 5000);
         return () => clearTimeout(timer);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [orgnr]);
 
     if (
