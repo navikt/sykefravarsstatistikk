@@ -2,7 +2,7 @@ import {
     lagStatistikkMock,
     siste2KvartalerMock,
     siste4KvartalerMock,
-} from '../api/mockedApiResponses/summert-sykefraværshistorikk-mock';
+} from '../api/mockedApiResponses/aggregert-statistikk-response-mock';
 import { sammenliknSykefravær } from './vurdering-utils';
 import { Statistikkategori } from '../domene/statistikkategori';
 

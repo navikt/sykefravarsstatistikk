@@ -28,9 +28,6 @@ const erWhitelistet = (path: string) => {
         new RegExp('^' + FRONTEND_API_PATH + '/organisasjoner'),
         new RegExp('^' + FRONTEND_API_PATH + '/[0-9]{9}/v1/sykefravarshistorikk/aggregert'),
         new RegExp('^' + FRONTEND_API_PATH + '/publiseringsdato'),
-        new RegExp(
-            '^' + FRONTEND_API_PATH + '/[0-9]{9}/sykefravarshistorikk/legemeldtsykefravarsprosent'
-        ),
     ];
 
     return whitelist.some((regexp) => regexp.test(path));
