@@ -2,14 +2,6 @@ import { AggregertStatistikkResponse, Statistikk } from '../../hooks/useAggreger
 import { ÅrstallOgKvartal } from '../../utils/sykefraværshistorikk-utils';
 import { Statistikkategori } from '../../domene/statistikkategori';
 
-const tomAggregertStatistikk: Partial<AggregertStatistikkResponse> = {
-    prosentSiste4KvartalerTotalt: [],
-    prosentSiste4KvartalerGradert: [],
-    prosentSiste4KvartalerKorttid: [],
-    prosentSiste4KvartalerLangtid: [],
-    trendTotalt: [],
-};
-
 export const siste4KvartalerMock: ÅrstallOgKvartal[] = [
     { årstall: 2021, kvartal: 3 },
     { årstall: 2021, kvartal: 4 },
@@ -70,9 +62,6 @@ export const aggregertStatistikkMockMaskert: Partial<AggregertStatistikkResponse
     prosentSiste4KvartalerGradert: [statistikkBarnehage],
     trendTotalt: [],
 };
-
-export const aggregertStatistikkMockUtenData: Partial<AggregertStatistikkResponse> =
-    tomAggregertStatistikk;
 
 export function aggregertStatistikkMockMedBare2Kvartaler(): Partial<AggregertStatistikkResponse> {
     const statistikkVirksomhet = lagStatistikkMock(

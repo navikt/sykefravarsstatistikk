@@ -1,5 +1,5 @@
 import { AggregertStatistikk } from '../../hooks/useAggregertStatistikk';
-import { siste4KvartalerMock } from './summert-sykefraværshistorikk-mock';
+import { siste4KvartalerMock } from './aggregert-statistikk-response-mock';
 import { SykefraværAppData } from '../../hooks/useSykefraværAppData';
 import { RestStatus } from '../api-utils';
 import {

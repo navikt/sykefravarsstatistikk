@@ -7,7 +7,7 @@ import {
     aggregertStatistikkMockMedBare2Kvartaler,
     aggregertStatistikkMockRødBarnehage,
     lagAggregertStatistikkMockGul,
-} from '../mockedApiResponses/summert-sykefraværshistorikk-mock';
+} from '../mockedApiResponses/aggregert-statistikk-response-mock';
 import { Statistikkategori } from '../../domene/statistikkategori';
 import {
     lagHistorikkMedLandSektorOgNæringMenIngenDataForOverordnetEnhetEllerUnderenhet,
