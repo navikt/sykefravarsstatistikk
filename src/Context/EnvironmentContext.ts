@@ -5,11 +5,15 @@ import { MILJØ } from '../konstanter';
 const notEmptyTemplateString = z
     .string()
     .refine((value) => !value.startsWith('{{') || !value.endsWith('}}'));
+const optionalTemplateString = z.optional(
+    z.string().refine((value) => !value.startsWith('{{') || !value.endsWith('}}'))
+);
 
 const Data = z.object({
     MILJØ: notEmptyTemplateString.refine((value) => isMiljø(value)),
     MIN_SIDE_ARBEIDSGIVER_URL: notEmptyTemplateString,
     GRAFANA_AGENT_COLLECTOR_URL: notEmptyTemplateString,
+    PROD_URL: optionalTemplateString,
 });
 
 type Data = z.infer<typeof Data>;
@@ -25,6 +29,7 @@ const fallbackData: Data = {
     MILJØ: MILJØ.LOCAL,
     MIN_SIDE_ARBEIDSGIVER_URL: '',
     GRAFANA_AGENT_COLLECTOR_URL: '',
+    PROD_URL: 'https://arbeidsgiver.nav.no/sykefravarsstatistikk',
 };
 export const getEnvironmentContext = (): Data => {
     if (typeof document === 'undefined') {
