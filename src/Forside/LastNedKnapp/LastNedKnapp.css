@@ -1,0 +1,7 @@
+.forside__last-ned-knapp > span {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
