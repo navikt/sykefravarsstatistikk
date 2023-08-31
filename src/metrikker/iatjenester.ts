@@ -8,7 +8,7 @@ import {
 
 export const iaTjenesterMetrikkerApiUrl = getIaMetrikkerApiUrl(BASE_PATH);
 
-export const sendIaTjenesteMetrikk = async (orgnr: string) => {
+export const sendSykefraværsstatistikkIaMetrikk = async (orgnr: string) => {
     return sendIaMetrikk(
         orgnr,
         MetrikkType.DIGITAL_IA_TJENESTE,
