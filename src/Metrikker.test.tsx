@@ -88,9 +88,17 @@ describe('Metrikkutsendelser', () => {
 
     it('Sender it-metrikk når feltere i historikkgrafen toggles', async () => {
         renderForside(false);
-        const checkbox = screen.getByRole('checkbox');
 
-        expect(checkbox).toBeDefined();
+        const checkbox = screen.getByRole('checkbox', {
+            name: /bransje: produksjon av nærings\- og nytelsesmidler/i,
+        });
+
+        expect(spy).not.toHaveBeenCalled();
+
+        fireEvent.click(checkbox);
+        await waitFor(() => {
+            expect(spy).toHaveBeenCalled();
+        });
     });
 
     it('Sender ia-tjenestermetrikk ved print-klikk', async () => {
