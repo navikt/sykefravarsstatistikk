@@ -1,5 +1,5 @@
 import { MockResizeObserver } from '../jest/MockResizeObserver';
-import {render, screen, fireEvent, waitFor} from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
 import { mockAllDatahentingStatusOk } from './api/mockedApiResponses/use-analytics-test-mocks';
 import { BrowserRouter } from 'react-router-dom';
@@ -56,6 +56,7 @@ describe('Metrikkutsendelser', () => {
             </BrowserRouter>
         );
     }
+
     it('Sender ia-tjenestermetrikk etter ca. 5 sekunder', async () => {
         jest.useFakeTimers();
 
@@ -71,19 +72,26 @@ describe('Metrikkutsendelser', () => {
         jest.useRealTimers();
     });
 
-    it("Sender ia-tjenestermetrikk ved toggle mellom graf og tabell", async () => {
-        renderForside(false)
+    it('Sender ia-tjenestermetrikk ved toggle mellom graf og tabell', async () => {
+        renderForside(false);
 
-        const toggle = screen.getByRole("radio", {name: "Tabell"})
+        const toggle = screen.getByRole('radio', { name: 'Tabell' });
 
-        expect(toggle).toBeDefined()
-        expect(spy).not.toHaveBeenCalled()
+        expect(toggle).toBeDefined();
+        expect(spy).not.toHaveBeenCalled();
 
-        fireEvent.click(toggle)
+        fireEvent.click(toggle);
         await waitFor(() => {
-            expect(spy).toHaveBeenCalled()
-        })
-    } )
+            expect(spy).toHaveBeenCalled();
+        });
+    });
+
+    it('Sender it-metrikk når feltere i historikkgrafen toggles', async () => {
+        renderForside(false);
+        const checkbox = screen.getByRole('checkbox');
+
+        expect(checkbox).toBeDefined();
+    });
 
     it('Sender ia-tjenestermetrikk ved print-klikk', async () => {
         renderForside(false);

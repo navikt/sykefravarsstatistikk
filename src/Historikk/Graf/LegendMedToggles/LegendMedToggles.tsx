@@ -3,6 +3,9 @@ import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import './LegendMedToggles.css';
 import { HistorikkLabel, HistorikkLabels } from '../../../utils/sykefraværshistorikk-utils';
 import { GrafSymbol } from '../GrafSymbol/GrafSymbol';
+import { sendCheckboxHuketAv, sendCheckboxHuketBort } from '../../../amplitude/events';
+import { sendSykefraværsstatistikkIaMetrikk } from '../../../metrikker/iatjenester';
+import { useOrgnr } from '../../../hooks/useOrgnr';
 
 interface Props {
     labels: HistorikkLabels;
@@ -25,11 +28,26 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
         land: '',
     };
 
+    const orgnr = useOrgnr() || '';
+
     return (
         <CheckboxGroup
             legend="Velg linjer som skal vises i grafen"
             value={linjerSomSkalVises}
-            onChange={setLinjerSomSkalVises}
+            onChange={(value) => {
+                sendSykefraværsstatistikkIaMetrikk(orgnr);
+                if (value.length > linjerSomSkalVises.length) {
+                    // Brukeren har lagt til noe
+                    const verdiHuketAv = value.find((v) => linjerSomKanVises.indexOf(v) === -1);
+                    sendCheckboxHuketAv(verdiHuketAv);
+                } else if (value.length < linjerSomSkalVises.length) {
+                    // Brukeren har fjernet noe
+                    const verdiHuketBort = linjerSomSkalVises.find((v) => value.indexOf(v) === -1);
+                    sendCheckboxHuketBort(verdiHuketBort);
+                }
+
+                setLinjerSomSkalVises(value);
+            }}
         >
             {linjerSomKanVises.map((linje) => (
                 <Checkbox key={linje} value={linje}>
