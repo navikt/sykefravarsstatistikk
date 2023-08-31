@@ -2,8 +2,20 @@ import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { LegendMedToggles } from './LegendMedToggles';
 import { HistorikkLabel, HistorikkLabels } from '../../../utils/sykefraværshistorikk-utils';
+import * as hooks from '../../../hooks/useOrgnr';
+import { heiOgHåBarnehage } from '../../../api/mockedApiResponses/altinn-mock';
 
 describe('LegendMedToggles', () => {
+    beforeEach(() => {
+        const valgtBedriftMedSykefraværsstatistikkRettigheter =
+            heiOgHåBarnehage[0].OrganizationNumber;
+        jest.spyOn(hooks, 'useOrgnr').mockReturnValue(
+            valgtBedriftMedSykefraværsstatistikkRettigheter
+        );
+    });
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
     const labels: HistorikkLabels = {
         virksomhet: 'Virksomhet',
         overordnetEnhet: 'Overordnet enhet',
