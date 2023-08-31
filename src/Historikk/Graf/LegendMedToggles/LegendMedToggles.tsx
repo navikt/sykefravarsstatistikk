@@ -38,7 +38,7 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
                 sendSykefraværsstatistikkIaMetrikk(orgnr);
                 if (value.length > linjerSomSkalVises.length) {
                     // Brukeren har lagt til noe
-                    const verdiHuketAv = value.find((v) => linjerSomKanVises.indexOf(v) === -1);
+                    const verdiHuketAv = value.find((v) => linjerSomSkalVises.indexOf(v) === -1);
                     sendCheckboxHuketAv(verdiHuketAv);
                 } else if (value.length < linjerSomSkalVises.length) {
                     // Brukeren har fjernet noe
