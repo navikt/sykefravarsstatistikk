@@ -2197,18 +2197,18 @@
   resolved "https://npm.pkg.github.com/download/@navikt/aksel-icons/4.8.0/b691d1351a8c084cb76a243e300a381107805d2f#b691d1351a8c084cb76a243e300a381107805d2f"
   integrity sha512-6IOnCTE6iHA6b8NqVVOLjM7E1TCkladwDD6569lVm66j04Khg4dkXTCzTjktDaI0Mxszd/8uc5m0oRTFiZjFWg==
 
-"@navikt/arbeidsgiver-notifikasjon-widget@^6.2.2":
-  version "6.2.2"
-  resolved "https://npm.pkg.github.com/download/@navikt/arbeidsgiver-notifikasjon-widget/6.2.2/dcdddc97504fbbb5d6a6f97e002f07d3ac733dea#dcdddc97504fbbb5d6a6f97e002f07d3ac733dea"
-  integrity sha512-b9hBc5I8b4C+NfrWqSAI1J3ua+QiGOCe0DLwbCdxJgv7R1T+IOPiwJ7uodDgw246DIqL19nqddUnVZd8ADs+jg==
+"@navikt/arbeidsgiver-notifikasjon-widget@^6.2.3":
+  version "6.3.9"
+  resolved "https://npm.pkg.github.com/download/@navikt/arbeidsgiver-notifikasjon-widget/6.3.9/901114d7aabc5617ed16a127739f9bde1c7fe941#901114d7aabc5617ed16a127739f9bde1c7fe941"
+  integrity sha512-49UMswCOJudP5eunEuTM3mlELZpJ7uDGn0CWj6yO90/LR5vnWarfy6t5hhkKsoPDJmQ2lfnmjuswZfpMY2d8Nw==
   dependencies:
     "@apollo/client" "3.6.9"
     graphql "^16.6.0"
 
-"@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock@^6.2.2":
-  version "6.2.2"
-  resolved "https://npm.pkg.github.com/download/@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock/6.2.2/21c05e5e7c662cdfb522a97f7457a698dd1e1ac2#21c05e5e7c662cdfb522a97f7457a698dd1e1ac2"
-  integrity sha512-d9GL3sH5SFnzcNBm4CL8cle1ZelkN4raSMRsNX/fu9Na2XmvgY48e4pf0l0x/P7EMa7QQbFZPb+XM6XMqI9yVg==
+"@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock@^6.2.3":
+  version "6.3.9"
+  resolved "https://npm.pkg.github.com/download/@navikt/arbeidsgiver-notifikasjoner-brukerapi-mock/6.3.9/6256f30dc7199a16c4670a8d4d9b31216b2a9e05#6256f30dc7199a16c4670a8d4d9b31216b2a9e05"
+  integrity sha512-ee0mEdp79xaB9zO9QSngLv5zLLOTdO7+nF4s4CAXf/AnOoKLxgkpeZtEZTkzNXQsCmD63e0wA4ZI+02qt7ikmA==
   dependencies:
     apollo-server "^3.10.2"
     apollo-server-core "^3.10.2"
