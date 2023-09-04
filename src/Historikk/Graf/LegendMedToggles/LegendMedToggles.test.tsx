@@ -19,8 +19,8 @@ describe('LegendMedToggles', () => {
         jest.spyOn(iatjenester, 'sendSykefraværsstatistikkIaMetrikk').mockReturnValue(
             Promise.resolve([])
         );
-        jest.spyOn(amplitudeEvents, 'sendCheckboxHuketAv').mockReturnValue(undefined);
-        jest.spyOn(amplitudeEvents, 'sendCheckboxHuketBort').mockReturnValue(undefined);
+        jest.spyOn(amplitudeEvents, 'sendCheckboxLagtTil').mockReturnValue(undefined);
+        jest.spyOn(amplitudeEvents, 'sendCheckboxFjernet').mockReturnValue(undefined);
     });
     const labels: HistorikkLabels = {
         virksomhet: 'Virksomhet',

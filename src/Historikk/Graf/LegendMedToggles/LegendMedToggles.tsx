@@ -3,7 +3,7 @@ import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import './LegendMedToggles.css';
 import { HistorikkLabel, HistorikkLabels } from '../../../utils/sykefraværshistorikk-utils';
 import { GrafSymbol } from '../GrafSymbol/GrafSymbol';
-import { sendCheckboxHuketAv, sendCheckboxHuketBort } from '../../../amplitude/events';
+import { sendCheckboxLagtTil, sendCheckboxFjernet } from '../../../amplitude/events';
 import { sendSykefraværsstatistikkIaMetrikk } from '../../../metrikker/iatjenester';
 import { useOrgnr } from '../../../hooks/useOrgnr';
 
@@ -39,11 +39,11 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
                 if (value.length > linjerSomSkalVises.length) {
                     // Brukeren har lagt til noe
                     const verdiHuketAv = value.find((v) => linjerSomSkalVises.indexOf(v) === -1);
-                    sendCheckboxHuketAv(verdiHuketAv);
+                    sendCheckboxLagtTil(verdiHuketAv);
                 } else if (value.length < linjerSomSkalVises.length) {
                     // Brukeren har fjernet noe
                     const verdiHuketBort = linjerSomSkalVises.find((v) => value.indexOf(v) === -1);
-                    sendCheckboxHuketBort(verdiHuketBort);
+                    sendCheckboxFjernet(verdiHuketBort);
                 }
 
                 setLinjerSomSkalVises(value);
