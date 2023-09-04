@@ -1,9 +1,13 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen, renderHook } from '@testing-library/react';
 import { LegendMedToggles } from './LegendMedToggles';
 import { HistorikkLabel, HistorikkLabels } from '../../../utils/sykefraværshistorikk-utils';
 import * as hooks from '../../../hooks/useOrgnr';
+import * as amplitudeEvents from '../../../amplitude/events';
 import { heiOgHåBarnehage } from '../../../api/mockedApiResponses/altinn-mock';
+import { useAnalytics } from '../../../hooks/useAnalytics';
+import { amplitudeMock } from '../../../api/mockedApiResponses/amplitude-mock';
+import * as iatjenester from '../../../metrikker/iatjenester';
 
 describe('LegendMedToggles', () => {
     beforeEach(() => {
@@ -12,9 +16,11 @@ describe('LegendMedToggles', () => {
         jest.spyOn(hooks, 'useOrgnr').mockReturnValue(
             valgtBedriftMedSykefraværsstatistikkRettigheter
         );
-    });
-    afterEach(() => {
-        jest.resetAllMocks();
+        jest.spyOn(iatjenester, 'sendSykefraværsstatistikkIaMetrikk').mockReturnValue(
+            Promise.resolve([])
+        );
+        jest.spyOn(amplitudeEvents, 'sendCheckboxHuketAv').mockReturnValue(undefined);
+        jest.spyOn(amplitudeEvents, 'sendCheckboxHuketBort').mockReturnValue(undefined);
     });
     const labels: HistorikkLabels = {
         virksomhet: 'Virksomhet',
@@ -41,6 +47,7 @@ describe('LegendMedToggles', () => {
                 setLinjerSomSkalVises={() => {}}
             />
         );
+        renderHook(() => useAnalytics(amplitudeMock));
 
         expect(screen.getByLabelText(`Virksomhet: Virksomhet`)).toBeInTheDocument();
         expect(screen.getByLabelText(`Overordnet enhet: Overordnet enhet`)).toBeInTheDocument();
@@ -52,6 +59,7 @@ describe('LegendMedToggles', () => {
     it('Kaller setLinjerSomSkalVises med rikgig verdi på check', () => {
         const setLinjerSomSkalVises = jest.fn();
 
+        renderHook(() => useAnalytics(amplitudeMock));
         render(
             <LegendMedToggles
                 labels={labels}
@@ -68,6 +76,7 @@ describe('LegendMedToggles', () => {
 
     it('Kaller setLinjerSomSkalVises med rikgig verdi check med eksisterende verdi', () => {
         const setLinjerSomSkalVises = jest.fn();
+        renderHook(() => useAnalytics(amplitudeMock));
 
         render(
             <LegendMedToggles
@@ -85,6 +94,7 @@ describe('LegendMedToggles', () => {
 
     it('Kaller setLinjerSomSkalVises med rikgig verdi på uncheck', () => {
         const setLinjerSomSkalVises = jest.fn();
+        renderHook(() => useAnalytics(amplitudeMock));
 
         render(
             <LegendMedToggles
