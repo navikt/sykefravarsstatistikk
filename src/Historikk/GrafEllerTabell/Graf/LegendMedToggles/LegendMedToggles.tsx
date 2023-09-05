@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import './LegendMedToggles.css';
-import { HistorikkLabel, HistorikkLabels } from '../../../utils/sykefraværshistorikk-utils';
+import { HistorikkLabel, HistorikkLabels } from '../../../../utils/sykefraværshistorikk-utils';
 import { GrafSymbol } from '../GrafSymbol/GrafSymbol';
-import { sendCheckboxLagtTil, sendCheckboxFjernet } from '../../../amplitude/events';
-import { sendSykefraværsstatistikkIaMetrikk } from '../../../metrikker/iatjenester';
-import { useOrgnr } from '../../../hooks/useOrgnr';
+import { sendCheckboxLagtTil, sendCheckboxFjernet } from '../../../../amplitude/events';
+import { sendSykefraværsstatistikkIaMetrikk } from '../../../../metrikker/iatjenester';
+import { useOrgnr } from '../../../../hooks/useOrgnr';
 
 interface Props {
     labels: HistorikkLabels;

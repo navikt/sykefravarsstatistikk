@@ -7,9 +7,9 @@ import {
     HistorikkLabels,
     konverterTilKvartalsvisSammenligning,
     KvartalsvisSammenligning,
-} from '../../utils/sykefraværshistorikk-utils';
-import { RestSykefraværshistorikk } from '../../api/kvartalsvis-sykefraværshistorikk-api';
-import { RestStatus } from '../../api/api-utils';
+} from '../../../utils/sykefraværshistorikk-utils';
+import { RestSykefraværshistorikk } from '../../../api/kvartalsvis-sykefraværshistorikk-api';
+import { RestStatus } from '../../../api/api-utils';
 
 export interface TabellProps {
     kvartalsvisSammenligning: KvartalsvisSammenligning[];
@@ -37,12 +37,8 @@ const Tabell: FunctionComponent<TabellProps> = ({
             <Table size="small" zebraStripes={true}>
                 <Table.Header>
                     <Table.Row>
-                        <Table.HeaderCell scope={'col'}>
-                            År
-                        </Table.HeaderCell>
-                        <Table.HeaderCell scope="col">
-                            Kvartal
-                        </Table.HeaderCell>
+                        <Table.HeaderCell scope={'col'}>År</Table.HeaderCell>
+                        <Table.HeaderCell scope="col">Kvartal</Table.HeaderCell>
                         <Table.HeaderCell scope="col" align="right">
                             {historikkLabels.virksomhet}
                         </Table.HeaderCell>

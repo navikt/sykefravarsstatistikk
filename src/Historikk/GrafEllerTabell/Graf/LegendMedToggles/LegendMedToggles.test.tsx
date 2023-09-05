@@ -1,13 +1,13 @@
 import React from 'react';
 import { render, fireEvent, screen, renderHook } from '@testing-library/react';
 import { LegendMedToggles } from './LegendMedToggles';
-import { HistorikkLabel, HistorikkLabels } from '../../../utils/sykefraværshistorikk-utils';
-import * as hooks from '../../../hooks/useOrgnr';
-import * as amplitudeEvents from '../../../amplitude/events';
-import { heiOgHåBarnehage } from '../../../api/mockedApiResponses/altinn-mock';
-import { useAnalytics } from '../../../hooks/useAnalytics';
-import { amplitudeMock } from '../../../api/mockedApiResponses/amplitude-mock';
-import * as iatjenester from '../../../metrikker/iatjenester';
+import { HistorikkLabel, HistorikkLabels } from '../../../../utils/sykefraværshistorikk-utils';
+import * as hooks from '../../../../hooks/useOrgnr';
+import * as amplitudeEvents from '../../../../amplitude/events';
+import { heiOgHåBarnehage } from '../../../../api/mockedApiResponses/altinn-mock';
+import { useAnalytics } from '../../../../hooks/useAnalytics';
+import { amplitudeMock } from '../../../../api/mockedApiResponses/amplitude-mock';
+import * as iatjenester from '../../../../metrikker/iatjenester';
 
 describe('LegendMedToggles', () => {
     beforeEach(() => {

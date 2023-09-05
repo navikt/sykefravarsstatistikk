@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { getFarge, getSymbol } from '../graf-utils';
 import SymbolSvg from './SymbolSvg';
 import classNames from 'classnames';
-import { HistorikkLabel } from '../../../utils/sykefraværshistorikk-utils';
+import { HistorikkLabel } from '../../../../utils/sykefraværshistorikk-utils';
 
 interface Props {
     linje: HistorikkLabel;

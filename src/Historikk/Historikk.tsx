@@ -1,25 +1,16 @@
 import React, { FunctionComponent, useState } from 'react';
 import { RestSykefraværshistorikk } from '../api/kvartalsvis-sykefraværshistorikk-api';
-import Graf from './Graf/Graf';
-import Tabell from './Tabell/Tabell';
 import './Historikk.css';
 import { RestStatus } from '../api/api-utils';
 import { BodyShort, ToggleGroup, Heading, Alert, Skeleton } from '@navikt/ds-react';
-import {
-    getHistorikkLabels,
-    historikkHarOverordnetEnhet,
-    konverterTilKvartalsvisSammenligning,
-} from '../utils/sykefraværshistorikk-utils';
-import { CsvDownloadLink } from './CsvDownloadLink';
-import {sendKnappEvent, sendToogleEvent} from '../amplitude/events';
+import { sendToogleEvent } from '../amplitude/events';
 import { sendSykefraværsstatistikkIaMetrikk } from '../metrikker/iatjenester';
 import { useOrgnr } from '../hooks/useOrgnr';
+import GrafEllerTabell from './GrafEllerTabell/GrafEllerTabell';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
 }
-
-
 
 const Historikk: FunctionComponent<Props> = (props) => {
     const { restSykefraværsstatistikk } = props;
@@ -100,37 +91,11 @@ const GrafOgTabellInnhold = ({
         }
 
         case RestStatus.Suksess: {
-            const harOverordnetEnhet = historikkHarOverordnetEnhet(restSykefraværsstatistikk.data);
-            const historikkLabels = getHistorikkLabels(restSykefraværsstatistikk.data);
-            const kvartalsvisSammenligning = konverterTilKvartalsvisSammenligning(
-                restSykefraværsstatistikk.data
-            );
-            const kvartalsvisSammenligningReversed = kvartalsvisSammenligning.toReversed();
-
-            const GrafEllerTabell =
-                grafEllerTabell === 'graf' ? (
-                    <Graf
-                        kvartalsvisSammenligning={kvartalsvisSammenligning}
-                        historikkLabels={historikkLabels}
-                    />
-                ) : (
-                    <Tabell
-                        kvartalsvisSammenligning={kvartalsvisSammenligningReversed}
-                        historikkLabels={historikkLabels}
-                        harOverordnetEnhet={harOverordnetEnhet}
-                    />
-                );
-
             return (
-                <>
-                    {GrafEllerTabell}
-                    <CsvDownloadLink
-                        kvartalsvisSammenligning={kvartalsvisSammenligningReversed}
-                        harOverordnetEnhet={harOverordnetEnhet}
-                        historikkLabels={historikkLabels}
-                        onClick={() => sendKnappEvent('last ned csv')}
-                    />
-                </>
+                <GrafEllerTabell
+                    restSykefraværsstatistikk={restSykefraværsstatistikk}
+                    grafEllerTabell={grafEllerTabell}
+                />
             );
         }
     }

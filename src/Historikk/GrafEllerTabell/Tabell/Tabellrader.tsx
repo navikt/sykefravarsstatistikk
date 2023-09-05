@@ -1,6 +1,6 @@
-import { Sykefraværsprosent } from '../../api/kvartalsvis-sykefraværshistorikk-api';
+import { Sykefraværsprosent } from '../../../api/kvartalsvis-sykefraværshistorikk-api';
 import React, { FunctionComponent } from 'react';
-import { KvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
+import { KvartalsvisSammenligning } from '../../../utils/sykefraværshistorikk-utils';
 import { formaterProsent } from './tabell-utils';
 import { Table } from '@navikt/ds-react';
 

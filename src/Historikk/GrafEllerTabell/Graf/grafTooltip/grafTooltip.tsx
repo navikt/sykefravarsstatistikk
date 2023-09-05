@@ -3,7 +3,7 @@ import { Tooltip } from 'recharts';
 import './grafTooltip.css';
 import { getTooltipsnavn } from '../graf-utils';
 import { GrafSymbol } from '../GrafSymbol/GrafSymbol';
-import { HistorikkLabel } from '../../../utils/sykefraværshistorikk-utils';
+import { HistorikkLabel } from '../../../../utils/sykefraværshistorikk-utils';
 
 const grafTooltip = () => (
     <Tooltip
