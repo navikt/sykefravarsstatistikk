@@ -36,6 +36,7 @@ export const grafConfig: GrafConfig = {
     tooltipsnavn: {
         virksomhet: 'Virksomhet',
         overordnetEnhet: 'Overordnet enhet',
+        næringEllerBransje: 'Bransje',
         sektor: 'Sektor',
         land: ' Norge ',
     },
