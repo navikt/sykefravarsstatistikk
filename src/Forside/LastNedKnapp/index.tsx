@@ -1,7 +1,7 @@
 import { Button } from '@navikt/ds-react';
 import ReactToPrint from 'react-to-print';
 import { sendKnappEvent } from '../../amplitude/events';
-import { sendIaTjenesteMetrikk } from '../../metrikker/iatjenester';
+import { sendSykefraværsstatistikkIaMetrikk } from '../../metrikker/iatjenester';
 import React from 'react';
 import { DownloadIcon } from '@navikt/aksel-icons';
 import './LastNedKnapp.css';
@@ -18,7 +18,7 @@ export default function LastNedKnapp({
         <ReactToPrint
             onBeforePrint={() => {
                 sendKnappEvent('skriv ut');
-                sendIaTjenesteMetrikk(orgnr);
+                sendSykefraværsstatistikkIaMetrikk(orgnr);
             }}
             onAfterPrint={() => {
                 if (lastNedKnappRef.current) {

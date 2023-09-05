@@ -11,15 +11,20 @@ import {
     konverterTilKvartalsvisSammenligning,
 } from '../utils/sykefraværshistorikk-utils';
 import { CsvDownloadLink } from './CsvDownloadLink';
-import { sendKnappEvent } from '../amplitude/events';
+import {sendKnappEvent, sendToogleEvent} from '../amplitude/events';
+import { sendSykefraværsstatistikkIaMetrikk } from '../metrikker/iatjenester';
+import { useOrgnr } from '../hooks/useOrgnr';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
 }
 
+
+
 const Historikk: FunctionComponent<Props> = (props) => {
     const { restSykefraværsstatistikk } = props;
     const [grafEllerTabell, setGrafEllerTabell] = useState<'graf' | 'tabell'>('graf');
+    const orgnr = useOrgnr() || '';
 
     return (
         <div className="historikk__wrapper">
@@ -38,7 +43,12 @@ const Historikk: FunctionComponent<Props> = (props) => {
                         className="historikk__toggle-group"
                         defaultValue="graf"
                         aria-label="Hvis du bruker skjermleser, bør du velge tabell"
-                        onChange={(value) => setGrafEllerTabell(value as 'graf' | 'tabell')}
+                        onChange={(value) => {
+                            const grafEllerTabell = value as 'graf' | 'tabell';
+                            setGrafEllerTabell(grafEllerTabell);
+                            sendToogleEvent(grafEllerTabell);
+                            sendSykefraværsstatistikkIaMetrikk(orgnr);
+                        }}
                     >
                         <ToggleGroup.Item value="graf">Graf</ToggleGroup.Item>
                         <ToggleGroup.Item value="tabell">Tabell</ToggleGroup.Item>

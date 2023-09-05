@@ -22,7 +22,7 @@ describe('Metrikkutsendelser', () => {
         jest.spyOn(hooks, 'useOrgnr').mockReturnValue(
             valgtBedriftMedSykefraværsstatistikkRettigheter
         );
-        spy = jest.spyOn(metrikker, 'sendIaTjenesteMetrikk');
+        spy = jest.spyOn(metrikker, 'sendSykefraværsstatistikkIaMetrikk');
     });
 
     afterEach(() => {
@@ -56,6 +56,7 @@ describe('Metrikkutsendelser', () => {
             </BrowserRouter>
         );
     }
+
     it('Sender ia-tjenestermetrikk etter ca. 5 sekunder', async () => {
         jest.useFakeTimers();
 
@@ -69,6 +70,35 @@ describe('Metrikkutsendelser', () => {
 
         expect(spy).toHaveBeenCalled();
         jest.useRealTimers();
+    });
+
+    it('Sender ia-tjenestermetrikk ved toggle mellom graf og tabell', async () => {
+        renderForside(false);
+
+        const toggle = screen.getByRole('radio', { name: 'Tabell' });
+
+        expect(toggle).toBeDefined();
+        expect(spy).not.toHaveBeenCalled();
+
+        fireEvent.click(toggle);
+        await waitFor(() => {
+            expect(spy).toHaveBeenCalled();
+        });
+    });
+
+    it('Sender it-metrikk når feltere i historikkgrafen toggles', async () => {
+        renderForside(false);
+
+        const checkbox = screen.getByRole('checkbox', {
+            name: /bransje: produksjon av nærings\- og nytelsesmidler/i,
+        });
+
+        expect(spy).not.toHaveBeenCalled();
+
+        fireEvent.click(checkbox);
+        await waitFor(() => {
+            expect(spy).toHaveBeenCalled();
+        });
     });
 
     it('Sender ia-tjenestermetrikk ved print-klikk', async () => {
