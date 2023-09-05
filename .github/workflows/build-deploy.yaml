@@ -50,7 +50,7 @@ jobs:
 
   deploy-to-dev-gcp:
     name: Deploy to dev-gcp
-    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/use-metrics-package'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/last-ned-knapp-oppdatering'
     needs: docker-build-push
     runs-on: ubuntu-latest
     timeout-minutes: 5
