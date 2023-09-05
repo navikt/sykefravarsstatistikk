@@ -38,12 +38,12 @@ export const LegendMedToggles: FunctionComponent<Props> = ({
                 sendSykefraværsstatistikkIaMetrikk(orgnr);
                 if (value.length > linjerSomSkalVises.length) {
                     // Brukeren har lagt til noe
-                    const verdiHuketAv = value.find((v) => linjerSomSkalVises.indexOf(v) === -1);
-                    sendCheckboxLagtTil(verdiHuketAv);
+                    const verdiLagtTil = value.find((v) => linjerSomSkalVises.indexOf(v) === -1);
+                    sendCheckboxLagtTil(verdiLagtTil);
                 } else if (value.length < linjerSomSkalVises.length) {
                     // Brukeren har fjernet noe
-                    const verdiHuketBort = linjerSomSkalVises.find((v) => value.indexOf(v) === -1);
-                    sendCheckboxFjernet(verdiHuketBort);
+                    const verdiFjernet = linjerSomSkalVises.find((v) => value.indexOf(v) === -1);
+                    sendCheckboxFjernet(verdiFjernet);
                 }
 
                 setLinjerSomSkalVises(value);
