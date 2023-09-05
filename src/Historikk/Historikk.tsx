@@ -11,18 +11,15 @@ import {
     konverterTilKvartalsvisSammenligning,
 } from '../utils/sykefraværshistorikk-utils';
 import { CsvDownloadLink } from './CsvDownloadLink';
-import { sendKnappEvent } from '../amplitude/events';
+import {sendKnappEvent, sendToogleEvent} from '../amplitude/events';
 import { sendSykefraværsstatistikkIaMetrikk } from '../metrikker/iatjenester';
 import { useOrgnr } from '../hooks/useOrgnr';
-import { sendAnalytics } from '../hooks/useAnalytics';
 
 interface Props {
     restSykefraværsstatistikk: RestSykefraværshistorikk;
 }
 
-function sendToogleEvent(tekst: 'graf' | 'tabell') {
-    sendAnalytics('toogle', { tekst });
-}
+
 
 const Historikk: FunctionComponent<Props> = (props) => {
     const { restSykefraværsstatistikk } = props;
