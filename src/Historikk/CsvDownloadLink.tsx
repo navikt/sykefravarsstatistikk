@@ -1,6 +1,6 @@
 import { HistorikkLabels, KvartalsvisSammenligning } from '../utils/sykefraværshistorikk-utils';
 import React, { FunctionComponent } from 'react';
-import { Label, Link } from '@navikt/ds-react';
+import { Button, Link } from '@navikt/ds-react';
 import { DownloadIcon } from '@navikt/aksel-icons';
 import { isDefined } from '../utils/app-utils';
 import { formaterProsent } from './Tabell/tabell-utils';
@@ -54,16 +54,17 @@ export const CsvDownloadLink: FunctionComponent<CsvDownloadLinkProps> = ({
     onClick,
 }) => {
     return (
-        <Link
+        <Button
+            as={Link}
             className={'csv-download-link'}
             href={buildCsvDataUrl(historikkLabels, kvartalsvisSammenligning, harOverordnetEnhet)}
             download={`${historikkLabels.virksomhet}_Sykefraværsstatistikk.csv`}
             target={'_self'}
             onClick={onClick}
+            variant="secondary"
         >
-            <Label size="small">
-                Last ned CSV <DownloadIcon title={'Last ned'} />
-            </Label>
-        </Link>
+            <DownloadIcon title={'Nedlastingsikon'} fontSize="1.75rem" />
+            Last ned CSV
+        </Button>
     );
 };

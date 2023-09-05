@@ -1,10 +1,15 @@
 .csv-download-link {
     float: right;
     margin-top: 20px;
+    text-decoration: none !important;
 }
 
-.csv-download-link > label {
-    cursor: pointer;
+.csv-download-link > span {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .historikk__info-eller-feilmelding {
