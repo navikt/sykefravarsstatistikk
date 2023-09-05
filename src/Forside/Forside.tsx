@@ -8,15 +8,13 @@ import './Forside.css';
 import Historikk from '../Historikk/Historikk';
 import { getBransjeEllerNæringKategori } from './Sammenligningspaneler/GetBransjeEllerNæringKategori';
 import { Statistikkategori } from '../domene/statistikkategori';
-import { Alert, BodyShort, Button, Heading, Skeleton } from '@navikt/ds-react';
-import ReactToPrint from 'react-to-print';
-import { sendKnappEvent } from '../amplitude/events';
-import { sendSykefraværsstatistikkIaMetrikk } from '../metrikker/iatjenester';
+import { Alert, BodyShort, Heading, Skeleton } from '@navikt/ds-react';
 import Tabell, { hentTabellProps } from '../Historikk/Tabell/Tabell';
 import { SlikHarViKommetFramTilDittResultat } from './SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
 import { PeriodeForStatistikk } from './PeriodeForStatistikk';
 import { PubliseringsdatoOppdateringsinfo } from './PubliseringsdatoOppdateringsinfo';
 import TestVersjonBanner from '../Banner/TestVersjonBanner';
+import LastNedKnapp from './LastNedKnapp';
 
 export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
     const orgnr = useOrgnr() || '';
@@ -30,7 +28,6 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
             .includes(orgnr);
 
     const innholdRef = useRef<HTMLDivElement>(null);
-    const lastNedKnappRef = useRef<HTMLButtonElement>(null);
 
     const loading = React.useMemo(() => {
         return [
@@ -136,29 +133,7 @@ export const Forside: FunctionComponent<SykefraværAppData> = (appData) => {
                             Sykefraværsstatistikk for {navnPåVirksomhet}
                         </Heading>
                     </div>
-                    <ReactToPrint
-                        onBeforePrint={() => {
-                            sendKnappEvent('skriv ut');
-                            sendSykefraværsstatistikkIaMetrikk(orgnr);
-                        }}
-                        onAfterPrint={() => {
-                            if (lastNedKnappRef.current) {
-                                lastNedKnappRef.current.focus();
-                            }
-                        }}
-                        content={() => innholdRef.current}
-                        trigger={() => (
-                            <Button
-                                variant="secondary"
-                                lang="nb"
-                                aria-label="Last ned sykefraværsstatistikken"
-                                ref={lastNedKnappRef}
-                                className="forside__innhold__knapp knapp"
-                            >
-                                Last ned
-                            </Button>
-                        )}
-                    />
+                    <LastNedKnapp innholdRef={innholdRef} orgnr={orgnr} />
                     <BodyShort>
                         <strong>Organisasjonsnummer: {orgnr}</strong>
                     </BodyShort>
