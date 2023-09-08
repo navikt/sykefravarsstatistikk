@@ -9,7 +9,7 @@ import Historikk from '../Historikk/Historikk';
 import { getBransjeEllerNæringKategori } from './Sammenligningspaneler/GetBransjeEllerNæringKategori';
 import { Statistikkategori } from '../domene/statistikkategori';
 import { Alert, BodyShort, Heading, Skeleton } from '@navikt/ds-react';
-import Tabell, { hentTabellProps } from '../Historikk/Tabell/Tabell';
+import Tabell, { hentTabellProps } from '../Historikk/GrafEllerTabell/Tabell/Tabell';
 import { SlikHarViKommetFramTilDittResultat } from './SlikHarViKommetFramTilDittResultat/SlikHarViKommetFramTilDittResultat';
 import { PeriodeForStatistikk } from './PeriodeForStatistikk';
 import { PubliseringsdatoOppdateringsinfo } from './PubliseringsdatoOppdateringsinfo';

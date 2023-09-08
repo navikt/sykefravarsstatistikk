@@ -1,33 +1,24 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 
 import './Graf.css';
-import { getLinjerSomHarData } from './graf-utils';
 import { LegendMedToggles } from './LegendMedToggles/LegendMedToggles';
 import GrafVisning from './GrafVisning';
-import { listFilterBuilder } from '../../utils/app-utils';
 import {
     HistorikkLabel,
     HistorikkLabels,
     KvartalsvisSammenligning,
-} from '../../utils/sykefraværshistorikk-utils';
+} from '../../../utils/sykefraværshistorikk-utils';
 
 interface Props {
     kvartalsvisSammenligning: KvartalsvisSammenligning[];
     historikkLabels: HistorikkLabels;
+    linjerSomKanVises: HistorikkLabel[];
+    linjerSomSkalVises: HistorikkLabel[];
+    setLinjerSomSkalVises: (linjer: HistorikkLabel[]) => void;
 }
 
-const defaultLinjer: readonly HistorikkLabel[] = [
-    'virksomhet',
-    'overordnetEnhet',
-    'næringEllerBransje',
-] as const;
-
 const Graf: FunctionComponent<Props> = (props) => {
-    const linjerSomKanVises = getLinjerSomHarData(props.kvartalsvisSammenligning);
-    const linjeFilter = listFilterBuilder(linjerSomKanVises);
-    const [linjerSomSkalVises, setLinjerSomSkalVises] = useState<HistorikkLabel[]>(
-        defaultLinjer.filter(linjeFilter)
-    );
+    const { linjerSomKanVises, linjerSomSkalVises, setLinjerSomSkalVises } = props;
 
     return (
         <>

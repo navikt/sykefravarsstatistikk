@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react';
 import { Button, Link } from '@navikt/ds-react';
 import { DownloadIcon } from '@navikt/aksel-icons';
 import { isDefined } from '../utils/app-utils';
-import { formaterProsent } from './Tabell/tabell-utils';
+import { formaterProsent } from './GrafEllerTabell/Tabell/tabell-utils';
 
 const buildCsvDataUrl = (
     labels: HistorikkLabels,

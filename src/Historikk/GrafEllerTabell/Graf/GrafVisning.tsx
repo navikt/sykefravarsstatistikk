@@ -6,8 +6,11 @@ import grafLinjer from './grafLinjer';
 import './Graf.css';
 import { hentFørsteKvartalFraAlleÅreneIDatagrunnlaget, lagTickString } from './graf-utils';
 import XAkseTick from './XAkseTick';
-import { useInnerWidth } from '../../utils/innerWidth-hook';
-import { HistorikkLabel, KvartalsvisSammenligning } from '../../utils/sykefraværshistorikk-utils';
+import { useInnerWidth } from '../../../utils/innerWidth-hook';
+import {
+    HistorikkLabel,
+    KvartalsvisSammenligning,
+} from '../../../utils/sykefraværshistorikk-utils';
 import YAkseTick from './YAkseTick';
 
 interface Props {

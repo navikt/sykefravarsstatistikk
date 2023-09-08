@@ -1,7 +1,7 @@
 import { Line, Symbols } from 'recharts';
 import React from 'react';
 import { getFarge, getSymbol } from './graf-utils';
-import { HistorikkLabel } from '../../utils/sykefraværshistorikk-utils';
+import { HistorikkLabel } from '../../../utils/sykefraværshistorikk-utils';
 
 const lineWidth = 2;
 const dotSize = 40;

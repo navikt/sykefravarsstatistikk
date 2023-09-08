@@ -1,4 +1,4 @@
-import { Sykefraværsprosent } from '../../api/kvartalsvis-sykefraværshistorikk-api';
+import { Sykefraværsprosent } from '../../../api/kvartalsvis-sykefraværshistorikk-api';
 
 export const formaterProsent = (prosent: Sykefraværsprosent): string => {
     if (prosent.erMaskert) {

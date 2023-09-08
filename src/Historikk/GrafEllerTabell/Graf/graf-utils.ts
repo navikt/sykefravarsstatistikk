@@ -4,8 +4,8 @@ import {
     isHistorikkLabel,
     KvartalsvisSammenligning,
     ÅrstallOgKvartal,
-} from '../../utils/sykefraværshistorikk-utils';
-import { isDefined } from '../../utils/app-utils';
+} from '../../../utils/sykefraværshistorikk-utils';
+import { isDefined } from '../../../utils/app-utils';
 
 export type SymbolType = 'circle' | 'cross' | 'diamond' | 'square' | 'star' | 'triangle' | 'wye';
 type HexFargeType = `#${string}`;
