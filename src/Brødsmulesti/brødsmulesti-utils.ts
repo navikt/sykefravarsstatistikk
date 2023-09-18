@@ -23,8 +23,15 @@ export const getdefaultBrødsmulestiConfig = (minSideUrl?: string): Brødsmulest
             handleMedReactRouter: false,
         },
         {
-            side: 'sykefraværsstatistikk',
+            side: 'forebyggeFravar',
+            lenketekst: 'Forebygge fravær',
             overordnetSide: 'minSideArbeidsgiver',
+            href: '/forebygge-fravar/',
+            handleMedReactRouter: false,
+        },
+        {
+            side: 'sykefraværsstatistikk',
+            overordnetSide: 'forebyggeFravar',
             lenketekst: 'Sykefraværsstatistikk',
             href: BASE_PATH + PATH_FORSIDE,
             handleMedReactRouter: true,
