@@ -42,7 +42,7 @@
     "react-to-print": "^2.14.13",
     "recharts": "2.7.2",
     "swr": "^2.2.0",
-    "zod": "^3.21.4"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
